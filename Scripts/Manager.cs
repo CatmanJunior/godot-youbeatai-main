@@ -154,7 +154,7 @@ public partial class Manager : Node
     [Export] Panel settingsPanel;
     [Export] Slider ClapBiasSlider;
     [Export] Panel achievementspanel;
-    [Export] CheckButton layerLoopToggle;
+    [Export] public CheckButton layerLoopToggle;
     [Export] Label SavingLabel;
     bool savingLabelActive = false;
     float savingLabelTimer = 0;

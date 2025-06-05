@@ -34,7 +34,11 @@ public partial class LayerVoiceOver : Node
         instance ??= this;
 
 		// init record button
-		recordLayerButton.Pressed += () => shouldRecord = !shouldRecord;
+		recordLayerButton.Pressed += () => 
+		{
+			Manager.instance.layerLoopToggle.ButtonPressed = false;
+			shouldRecord = !shouldRecord;
+		};
 
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();

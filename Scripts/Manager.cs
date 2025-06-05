@@ -1166,6 +1166,9 @@ public partial class Manager : Node
 
         if (playing)
         {
+            // volume 1
+            SetGlobalVolume(1);
+
             timeafterplay += ((float)delta);
 
             // keep time (with swing)
@@ -1190,7 +1193,12 @@ public partial class Manager : Node
             if (progressBarValue > 100) progressBarValue = 100;
             progressBar.Value = progressBarValue;
         }
-        else timeafterplay = 0;
+        else
+        {
+            timeafterplay = 0;
+            // volume 0
+            SetGlobalVolume(0);
+        }
 
         // update sprites
         for (int beat = 0; beat < beatsAmount; beat++)
@@ -1246,6 +1254,15 @@ public partial class Manager : Node
 
         // update bpm label
         bpmLabel.Text = bpm.ToString();
+    }
+
+    void SetGlobalVolume(float value)
+    {
+        float db = Mathf.LinearToDb(value);
+        firstAudioPlayer.VolumeDb = db;
+        secondAudioPlayer.VolumeDb = db;
+        thirdAudioPlayer.VolumeDb = db;
+        fourthAudioPlayer.VolumeDb = db;
     }
 
     private void ConvertWavToMp3(string filename)

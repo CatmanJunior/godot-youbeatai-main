@@ -1,6 +1,6 @@
 [gd_scene load_steps=45 format=3 uid="uid://c78m8ijn10kwh"]
 
-[ext_resource type="Script" path="res://Scripts/Manager.cs" id="1_rfd7i"]
+[ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
 [ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="2_1eep1"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="2_1ig4u"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="2_c85ny"]
@@ -12,16 +12,16 @@
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="8_4xf5a"]
 [ext_resource type="Texture2D" uid="uid://ddx3ttnpgkple" path="res://Resources/Textures/ring.png" id="8_llrl4"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="9_nnqde"]
-[ext_resource type="Script" path="res://Scripts/TemplateManager.cs" id="9_t3vou"]
-[ext_resource type="Script" path="res://Scripts/MicrophoneCapture.cs" id="10_4yy8e"]
-[ext_resource type="Script" path="res://Scripts/ReverbDelayManager.cs" id="10_jykfx"]
+[ext_resource type="Script" uid="uid://dgwusorhvls4u" path="res://Scripts/TemplateManager.cs" id="9_t3vou"]
+[ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="10_4yy8e"]
+[ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="10_jykfx"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="10_t1q83"]
-[ext_resource type="Script" path="res://Scripts/MidiManager.cs" id="11_iqwjw"]
-[ext_resource type="Script" path="res://Scripts/DragAndDropButton.cs" id="14_4mig3"]
+[ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="11_iqwjw"]
+[ext_resource type="Script" uid="uid://bs8s08unyjudt" path="res://Scripts/DragAndDropButton.cs" id="14_4mig3"]
 [ext_resource type="Texture2D" uid="uid://b5gky5aods412" path="res://Resources/Textures/rawmic.png" id="15_5hbpj"]
-[ext_resource type="Script" path="res://Scripts/VoiceOverStuff/SongVoiceOver.cs" id="15_5s5qe"]
-[ext_resource type="Script" path="res://Scripts/RecordSampleButton.cs" id="16_ngh84"]
-[ext_resource type="Script" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
+[ext_resource type="Script" uid="uid://858ek2iipynw" path="res://Scripts/VoiceOverStuff/SongVoiceOver.cs" id="15_5s5qe"]
+[ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="16_ngh84"]
+[ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Texture2D" uid="uid://fgq18msakepv" path="res://Resources/Textures/robot.png" id="21_qncea"]
@@ -1164,8 +1164,8 @@ z_index = 2
 position = Vector2(286, -316)
 emitting = false
 amount = 20
-lifetime = 2.0
 texture = ExtResource("20_tvghb")
+lifetime = 2.0
 emission_shape = 2
 emission_sphere_radius = 16.0
 direction = Vector2(0, 0)

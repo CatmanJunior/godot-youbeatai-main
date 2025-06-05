@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqsvcw13b83yp"]
 
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="1_q5h5u"]
-[ext_resource type="Script" path="res://Scripts/BeatSprite.cs" id="2_rbsre"]
+[ext_resource type="Script" uid="uid://bwctu8fpofakc" path="res://Scripts/BeatSprite.cs" id="2_rbsre"]
 
 [node name="Sprite" type="Sprite2D"]
 texture = ExtResource("1_q5h5u")

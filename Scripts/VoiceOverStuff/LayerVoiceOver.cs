@@ -13,7 +13,7 @@ public partial class LayerVoiceOver : Node
 	// recording
 	public AudioStream[] voiceOvers = new AudioStream[10];
 	AudioEffectRecord audioEffectRecord;
-	AudioStreamPlayer2D audioPlayer;
+	public AudioStreamPlayer2D audioPlayer;
 	bool shouldRecord = false;
 	bool recording = false;
 	float recordingTimer = 0;
@@ -24,7 +24,7 @@ public partial class LayerVoiceOver : Node
 	[Export] Button snellerButton;
 	[Export] Button langzamerButton;
 
-	int currentLayer => Manager.instance.currentLayerIndex;
+	public int currentLayer => Manager.instance.currentLayerIndex;
 	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
 	public AudioStream GetCurrentLayerVoiceOver() => voiceOvers[currentLayer];
 

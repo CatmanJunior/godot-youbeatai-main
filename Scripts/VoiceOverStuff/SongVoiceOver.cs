@@ -13,10 +13,12 @@ public partial class SongVoiceOver : Node
 	// recording
 	public AudioStream voiceOver = null;
     AudioEffectRecord audioEffectRecord;
-	AudioStreamPlayer2D audioPlayer;
+	public AudioStreamPlayer2D audioPlayer;
 	bool shouldRecord = false;
 	public bool recording = false;
 	float recordingTimer = 0;
+
+	public float recordingLength = 0;
 
 	public bool finished = false;
 
@@ -39,15 +41,6 @@ public partial class SongVoiceOver : Node
 
 		// setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
-
-		Manager.instance.PlayPauseButton.Pressed += () =>
-		{
-			if (voiceOver != null)
-			{
-				if (audioPlayer.Playing) audioPlayer.Stop();
-				else audioPlayer.Play();
-			}
-		};
     }
 
     public override void _Process(double delta)
@@ -57,10 +50,15 @@ public partial class SongVoiceOver : Node
 
 		// update recording timer
 		if (recording) recordingTimer += (float)delta;
-		else recordingTimer = 0;
+		else
+		{
+			recordingTimer = 0;
+		}
 
 		// set progress bar value
 		if (recording) progressbar.Value = (recordingTimer / (10f * (32f * (60f / (float)Manager.instance.bpm)))) * 2f;
+
+		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
 
 	public void OnBeginning()
@@ -76,6 +74,7 @@ public partial class SongVoiceOver : Node
 			{
 				StartRecording();
 			}
+			else if (voiceOver != null) audioPlayer.Play();
 		}
 	}
 
@@ -101,10 +100,12 @@ public partial class SongVoiceOver : Node
     {
         audioEffectRecord.SetRecordingActive(false);
 		GD.Print("recording stopped");
+		recordingLength = recordingTimer;
 		recording = false;
 		shouldRecord = false;
 		voiceOver = audioEffectRecord.GetRecording();
 		audioPlayer.Stream = voiceOver;
+
 
 		// buttons during recording
 		snellerButton.Disabled = false;

@@ -42,6 +42,16 @@ public partial class LayerVoiceOver : Node
 
 		// setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
+
+		// pause voiceover button
+		Manager.instance.PlayPauseButton.Pressed += () =>
+		{
+			if (voiceOvers[currentLayer] != null)
+			{
+				if (audioPlayer.Playing) audioPlayer.Stop();
+				else audioPlayer.Play();
+			}
+		};
     }
 
     public override void _Process(double delta)

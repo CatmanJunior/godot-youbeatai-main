@@ -33,7 +33,11 @@ public partial class SongVoiceOver : Node
         instance ??= this;
 
 		// init record button
-		recordSongButton.Pressed += () => shouldRecord = !shouldRecord;
+		recordSongButton.Pressed += () =>
+		{
+			Manager.instance.layerLoopToggle.ButtonPressed = true;
+			shouldRecord = !shouldRecord;
+		};
 
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();

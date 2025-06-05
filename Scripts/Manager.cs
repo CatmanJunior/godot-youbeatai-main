@@ -199,7 +199,26 @@ public partial class Manager : Node
         hasclearedlayout = true;
     }
     public void OnRecordButton() => GD.Print("Record");
-    public void OnPlayPauseButton() => playing = !playing;
+
+    public void OnPlayPauseButton()
+    {
+        playing = !playing;
+
+        // pause layer voice over
+        if (LayerVoiceOver.instance.voiceOvers[LayerVoiceOver.instance.currentLayer] != null)
+        {
+            if (LayerVoiceOver.instance.audioPlayer.Playing) LayerVoiceOver.instance.audioPlayer.StreamPaused = true;
+            else LayerVoiceOver.instance.audioPlayer.StreamPaused = false;
+        }
+
+        // pause song voice over
+        if (SongVoiceOver.instance.voiceOver != null)
+        {
+            if (SongVoiceOver.instance.audioPlayer.Playing) SongVoiceOver.instance.audioPlayer.StreamPaused = true;
+            else SongVoiceOver.instance.audioPlayer.StreamPaused = false;
+        }
+    }
+
     public void OnBpmUpButton()
     {
         if (bpm < 300) bpm += 10;
@@ -307,12 +326,36 @@ public partial class Manager : Node
         GD.Print(LayerHasBeats(beatActives));
 
         // switch to next layer
-        GD.Print("switch to the " + layerToUse + "th layer");
+        //GD.Print("switch to the " + layerToUse + "th layer");
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
 
         // update outline
         layerOutline.Position = new Vector2(-574, 317) - new Vector2(0, 1) * (71f * currentLayerIndex);
+
+        // update song voice position
+        if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
+    }
+
+    public void UpdateSongVoiceOverPlayBackPosition()
+    {
+        var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
+
+        var fixedcurrentbeat = currentBeat;
+        if (fixedcurrentbeat >= 31) fixedcurrentbeat = 0;
+
+        //GD.Print("current beat: " + fixedcurrentbeat);
+
+        var timeperbeat = timeperlayer / beatsAmount;
+        var beattimeoffset = timeperbeat * fixedcurrentbeat;
+
+        var seekpos = currentLayerIndex * timeperlayer + beattimeoffset;
+
+        //GD.Print("beat time offset: " + beattimeoffset);
+
+        SongVoiceOver.instance.audioPlayer.Seek(seekpos);
+
+        //GD.Print("layer: " + currentLayerIndex + " - " + "length: " + SongVoiceOver.instance.recordingLength + " - " + "seekpos: " + seekpos);
     }
 
     public bool LayerHasBeats(bool[,] layer)
@@ -1392,7 +1435,11 @@ public partial class Manager : Node
         // if layer looping
         if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (currentBeat == 31) NextLayer();
 
-        if (currentBeat == 0) LayerVoiceOver.instance.OnTop();
+        if (currentBeat == 0)
+        {
+            LayerVoiceOver.instance.OnTop();
+            UpdateSongVoiceOverPlayBackPosition();
+        }
         if (currentLayerIndex == 0 && currentBeat == 0) SongVoiceOver.instance.OnBeginning();
     }
 

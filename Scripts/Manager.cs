@@ -182,13 +182,13 @@ public partial class Manager : Node
 
     public void OnSaveLayoutButton()
     {
-        GD.Print("save");
+        //GD.Print("save");
         savedTemplate = (bool[,])beatActives.Clone();
         savedToLaout = true;
     }
     public void OnLoadLayoutButton()
     {
-        GD.Print("load");
+        //GD.Print("load");
         beatActives = (bool[,])savedTemplate.Clone();
         loadedtemplate = true;
     }
@@ -323,7 +323,7 @@ public partial class Manager : Node
     {
         // save current layer
         SetCurrentLayer(beatActives);
-        GD.Print(LayerHasBeats(beatActives));
+        //GD.Print(LayerHasBeats(beatActives));
 
         // switch to next layer
         //GD.Print("switch to the " + layerToUse + "th layer");

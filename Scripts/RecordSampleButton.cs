@@ -12,11 +12,41 @@ public partial class RecordSampleButton : Sprite2D
 
     private AudioEffectRecord audioEffectRecord;
 
+    private bool recording = false;
+    private float silenceLength = 0;
+    private float recordingLength = 0;
+    private bool hasDetectedSound = false;
+
+    private float recordingVolume => MicrophoneCapture.instance.volume;
+    private float recordingTreshold = 0.01f;
+
     public override void _Ready()
     {
         var busIndex = AudioServer.GetBusIndex("Microphone");
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(busIndex, 1);
 		if (audioEffectRecord == null) GD.Print("no record effect found");
+    }
+
+    public override void _Process(double delta)
+    {
+        if (recording)
+        {
+            recordingLength += (float)delta;
+            if (recordingVolume > recordingTreshold) hasDetectedSound = true;
+            if (!hasDetectedSound) silenceLength += (float)delta;
+        }
+
+        if (ring == 0 && recording)
+        {
+            GD.Print("---------------------");
+            GD.Print("recording: " + recording);
+            GD.Print("volume: " + recordingVolume);
+            GD.Print("length: " + recordingLength);
+            GD.Print("silence: " + silenceLength);
+            GD.Print("detected: " + hasDetectedSound);
+            GD.Print("treshold: " + recordingTreshold);
+            GD.Print("---------------------");
+        }
     }
 
     public override void _Input(InputEvent inputEvent)
@@ -33,6 +63,43 @@ public partial class RecordSampleButton : Sprite2D
         }
     }
 
+    private AudioStreamWav TrimAudioStream(AudioStreamWav original, float secondsToTrim)
+    {
+        byte[] originalData = original.Data;
+        float audioLength = (float)original.GetLength(); // actual length in seconds
+
+        if (audioLength <= 0)
+        {
+            GD.Print("Invalid audio length.");
+            return original;
+        }
+
+        float bytesPerSecond = originalData.Length / audioLength;
+        int frameSize = (original.Stereo ? 2 : 1) * (original.Format == AudioStreamWav.FormatEnum.Format16Bits ? 2 : 1);
+        int rawTrimBytes = Mathf.FloorToInt(secondsToTrim * bytesPerSecond);
+        int alignedTrimBytes = (rawTrimBytes / frameSize) * frameSize;
+
+        GD.Print($"Trim {secondsToTrim} seconds → {alignedTrimBytes} bytes");
+
+        if (alignedTrimBytes >= originalData.Length)
+        {
+            GD.Print("Trim amount exceeds or matches original audio length.");
+            return original;
+        }
+
+        byte[] trimmedData = new byte[originalData.Length - alignedTrimBytes];
+        Array.Copy(originalData, alignedTrimBytes, trimmedData, 0, trimmedData.Length);
+
+        return new AudioStreamWav
+        {
+            Data = trimmedData,
+            Format = original.Format,
+            Stereo = original.Stereo,
+            MixRate = original.MixRate,
+            LoopMode = original.LoopMode
+        };
+    }
+
     void SetVolume(float value)
     {
         float db = Mathf.LinearToDb(value);
@@ -47,6 +114,7 @@ public partial class RecordSampleButton : Sprite2D
         SetVolume(0f);
 		Modulate = new Color(1, 0, 0, 1);
         audioEffectRecord.SetRecordingActive(true);
+        recording = true;
     }
 
     private void StopRecording()
@@ -54,8 +122,12 @@ public partial class RecordSampleButton : Sprite2D
         SetVolume(1);
 		Modulate = new Color(1, 1, 1, 1);
         audioEffectRecord.SetRecordingActive(false);
-		var audioData = audioEffectRecord.GetRecording();
-		recordedAudio = audioData;
+		recordedAudio = audioEffectRecord.GetRecording();
+        recordedAudio = TrimAudioStream((AudioStreamWav)recordedAudio, silenceLength);
+        recording = false;
+        hasDetectedSound = false;
+        silenceLength = 0;
+        recordingLength = 0;
 
         if (ring == 0)
         {

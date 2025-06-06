@@ -123,8 +123,9 @@ public partial class RecordSampleButton : Sprite2D
 		Modulate = new Color(1, 1, 1, 1);
         audioEffectRecord.SetRecordingActive(false);
 		recordedAudio = audioEffectRecord.GetRecording();
-        recordedAudio = TrimAudioStream((AudioStreamWav)recordedAudio, silenceLength);
+        
         recording = false;
+        recordedAudio = TrimAudioStream((AudioStreamWav)recordedAudio, silenceLength);
         hasDetectedSound = false;
         silenceLength = 0;
         recordingLength = 0;

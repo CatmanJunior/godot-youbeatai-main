@@ -1,0 +1,522 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8n1g4l4jrv6d"]
+
+[ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
+
+[node name="scene" type="Node2D"]
+
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "zoekButton", "gebruikButton", "gevondenSoundBankLabel")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 447.0
+offset_top = 138.0
+offset_right = 747.0
+offset_bottom = 636.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l0fe3")
+accousticSlider = NodePath("AcousticSlider")
+emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle")]
+themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
+zoekButton = NodePath("ZoekButton")
+gebruikButton = NodePath("GebruikButton")
+gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
+
+[node name="ZoekButton" type="Button" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -136.0
+offset_top = 121.5
+offset_right = -4.0
+offset_bottom = 156.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Zoek Match"
+
+[node name="GebruikButton" type="Button" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1.0
+offset_top = 121.5
+offset_right = 133.0
+offset_bottom = 156.5
+grow_horizontal = 2
+grow_vertical = 2
+disabled = true
+text = "Gebruik
+"
+
+[node name="TitleLabel" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -257.0
+offset_right = 160.0
+offset_bottom = -197.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 26
+text = "Sound Bank Kiezen:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AcousticSlider" type="HSlider" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -84.0
+offset_top = -172.0
+offset_right = 77.0
+offset_bottom = -147.0
+grow_horizontal = 2
+grow_vertical = 2
+max_value = 1.0
+step = 0.1
+value = 0.5
+
+[node name="Title" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -108.5
+offset_top = -46.5
+offset_right = 112.5
+offset_bottom = -1.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Acoustisch / Electronish"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon1" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.5
+offset_top = -18.5
+offset_right = -84.5
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "🏕️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Icon2" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 77.5
+offset_top = -16.5
+offset_right = 121.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "🪩"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Emoties" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.5
+offset_top = -142.0
+offset_right = 105.5
+offset_bottom = -97.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Emoties"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="emotion1" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = -20.5
+offset_top = 37.0
+offset_right = 20.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "🥳"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion1"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 31.0
+offset_right = 43.0
+offset_bottom = 55.0
+
+[node name="emotion2" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 24.5
+offset_top = 37.0
+offset_right = 65.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "😵‍💫"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion2"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="emotion3" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 37.0
+offset_right = 111.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "😍"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion3"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="emotion4" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 116.5
+offset_top = 37.0
+offset_right = 157.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "😳"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion4"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="emotion5" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 162.5
+offset_top = 37.0
+offset_right = 203.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "🤔"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion5"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+
+[node name="emotion6" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 208.5
+offset_top = 37.0
+offset_right = 249.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "😢"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion6"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+
+[node name="Themas" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.5
+offset_top = -47.0
+offset_right = 105.5
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Themas"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="theme1" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = -20.5
+offset_top = 37.0
+offset_right = 20.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "💔"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme1"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 31.0
+offset_right = 43.0
+offset_bottom = 55.0
+
+[node name="theme2" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 24.5
+offset_top = 37.0
+offset_right = 65.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "🏝️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme2"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="theme3" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 37.0
+offset_right = 111.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "🎂"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme3"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="theme4" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 116.5
+offset_top = 37.0
+offset_right = 157.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "👾"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme4"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="theme5" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 162.5
+offset_top = 37.0
+offset_right = 203.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "🦄"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme5"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+
+[node name="theme6" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 208.5
+offset_top = 37.0
+offset_right = 249.5
+offset_bottom = 79.0
+theme_override_font_sizes/font_size = 28
+text = "🙌"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme6"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+
+[node name="theme7" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = -20.5
+offset_top = 88.0
+offset_right = 20.5
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 28
+text = "🏆"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme7"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 31.0
+offset_right = 43.0
+offset_bottom = 55.0
+
+[node name="theme8" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 24.5
+offset_top = 88.0
+offset_right = 65.5
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 28
+text = "🌟"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme8"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="theme9" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 88.0
+offset_right = 111.5
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 28
+text = "🌞"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme9"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="theme10" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 116.5
+offset_top = 88.0
+offset_right = 157.5
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 28
+text = "🍽️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme10"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+
+[node name="theme11" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 162.5
+offset_top = 88.0
+offset_right = 203.5
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 28
+text = "🌍"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme11"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+
+[node name="theme12" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 208.5
+offset_top = 88.0
+offset_right = 249.5
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 28
+text = "🥕"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme12"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+
+[node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 419.0
+offset_right = 277.0
+offset_bottom = 457.0
+text = "Gevonden Soundbank:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectionLabel" type="Label" parent="SoundBankSelectionMenu/SelectieLabelTitle"]
+layout_mode = 0
+offset_top = 26.0
+offset_right = 263.0
+offset_bottom = 64.0
+text = "........"
+horizontal_alignment = 1
+vertical_alignment = 1

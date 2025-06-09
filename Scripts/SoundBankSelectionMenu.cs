@@ -72,11 +72,9 @@ public partial class SoundBankSelectionMenu : Panel
             // if no matches ignore soundbank
             if (themeMatches == 0 && emotionMatches == 0) continue;
 
-            // normalized (0–1) match score
+            // normalized scores (0–1)
             float themeScore = (float)themeMatches / (float)chosenThemes.Count;
             float emotionScore = (float)emotionMatches / (float)chosenEmotions.Count;
-
-            // normalized (0-1) electronic score (lower is better)
             float electronicScore = 1.0f - (Math.Abs(bank.electronic - chosenElectronicFactor) / 100.0f);
 
             // weighted score

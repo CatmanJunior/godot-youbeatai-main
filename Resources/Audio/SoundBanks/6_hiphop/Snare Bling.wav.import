@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b42yhfk1tr2rr"
+path="res://.godot/imported/Snare Bling.wav-14f7053f75faab3923fe13e40e53d4fe.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_hiphop/Snare Bling.wav"
+dest_files=["res://.godot/imported/Snare Bling.wav-14f7053f75faab3923fe13e40e53d4fe.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

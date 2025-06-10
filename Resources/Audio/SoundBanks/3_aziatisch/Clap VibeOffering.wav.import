@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://b5jbcq8mr23f5"
+path="res://.godot/imported/Clap VibeOffering.wav-f1d42f244ca05b41975df83000d7aff4.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_aziatisch/Clap VibeOffering.wav"
+dest_files=["res://.godot/imported/Clap VibeOffering.wav-f1d42f244ca05b41975df83000d7aff4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

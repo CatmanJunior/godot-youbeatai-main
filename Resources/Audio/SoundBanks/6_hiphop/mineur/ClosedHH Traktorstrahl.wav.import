@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dmqgw35tr7j6"
+path="res://.godot/imported/ClosedHH Traktorstrahl.wav-7b1a5dfcc016ab135ea19762faa77a43.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_hiphop/mineur/ClosedHH Traktorstrahl.wav"
+dest_files=["res://.godot/imported/ClosedHH Traktorstrahl.wav-7b1a5dfcc016ab135ea19762faa77a43.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

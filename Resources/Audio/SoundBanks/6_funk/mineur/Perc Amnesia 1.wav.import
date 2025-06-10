@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://st41d5evt8bu"
+path="res://.godot/imported/Perc Amnesia 1.wav-cd59bb1994954cdbbeeb94ff0b82d210.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_funk/mineur/Perc Amnesia 1.wav"
+dest_files=["res://.godot/imported/Perc Amnesia 1.wav-cd59bb1994954cdbbeeb94ff0b82d210.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

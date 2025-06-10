@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://8hwsk57q2tpt"
+path="res://.godot/imported/Clap Hacker.wav-d2eac9c972a39463b5351e57e94ba93f.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_hiphop/Clap Hacker.wav"
+dest_files=["res://.godot/imported/Clap Hacker.wav-d2eac9c972a39463b5351e57e94ba93f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -42,7 +42,16 @@ public partial class SoundBankSelectionMenu : Panel
         }
 
         zoekButton.Pressed += () => chosenSoundBank = ChooseSoundBank();
-        gebruikButton.Pressed += () => GetTree().ChangeSceneToFile("res://Scenes/main.tscn");
+        gebruikButton.Pressed += () => 
+        {
+            // remember audio bank to use
+            string path = "temp.txt";
+            if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
+            System.IO.File.WriteAllText(path, chosenSoundBank.name);
+
+            // load main scene
+            GetTree().ChangeSceneToFile("res://Scenes/main.tscn");
+        };
     }
 
     public override void _Process(double delta)

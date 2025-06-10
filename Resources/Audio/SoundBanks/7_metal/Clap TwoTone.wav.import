@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dp681fsop8v2q"
+path="res://.godot/imported/Clap TwoTone.wav-2183347d9ba85a1ab88dc7f06fa55f6e.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/7_metal/Clap TwoTone.wav"
+dest_files=["res://.godot/imported/Clap TwoTone.wav-2183347d9ba85a1ab88dc7f06fa55f6e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dfky3mfbug373"
+path="res://.godot/imported/Snare Acidy.wav-656d05fbc2f5e7a5a74638c933a49abf.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/5_dance/Snare Acidy.wav"
+dest_files=["res://.godot/imported/Snare Acidy.wav-656d05fbc2f5e7a5a74638c933a49abf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

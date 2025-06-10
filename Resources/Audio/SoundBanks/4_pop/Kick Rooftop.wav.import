@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://6oiqik0y232j"
+path="res://.godot/imported/Kick Rooftop.wav-e3e204edbbc6525a802e909d3dce70bc.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/4_pop/Kick Rooftop.wav"
+dest_files=["res://.godot/imported/Kick Rooftop.wav-e3e204edbbc6525a802e909d3dce70bc.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

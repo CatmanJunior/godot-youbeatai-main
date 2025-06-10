@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bkyorbxaju0n6"
+path="res://.godot/imported/Clap AlphaCentauri 2.wav-72f6b4821317a7d039d3223de2b0adf6.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/2_acoustisch/Clap AlphaCentauri 2.wav"
+dest_files=["res://.godot/imported/Clap AlphaCentauri 2.wav-72f6b4821317a7d039d3223de2b0adf6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

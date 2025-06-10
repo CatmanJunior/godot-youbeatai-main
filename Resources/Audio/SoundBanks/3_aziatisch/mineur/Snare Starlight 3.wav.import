@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://byuyoybjm6ugv"
+path="res://.godot/imported/Snare Starlight 3.wav-714a5302894d3b8c5a02e854048aacd9.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Snare Starlight 3.wav"
+dest_files=["res://.godot/imported/Snare Starlight 3.wav-714a5302894d3b8c5a02e854048aacd9.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

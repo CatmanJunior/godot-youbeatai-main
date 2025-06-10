@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://44822kuuqtyr"
+path="res://.godot/imported/Stick AB FM  1.wav-bb2c90e302c9f87422527d6215d579a6.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/4_pop/Stick AB FM  1.wav"
+dest_files=["res://.godot/imported/Stick AB FM  1.wav-bb2c90e302c9f87422527d6215d579a6.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

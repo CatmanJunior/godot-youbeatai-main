@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dksjqjioyfgv1"
+path="res://.godot/imported/Perc Okawango 2.wav-6b2c5590906cb199ed5cece86455828b.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/1_new-age/mineur/Perc Okawango 2.wav"
+dest_files=["res://.godot/imported/Perc Okawango 2.wav-6b2c5590906cb199ed5cece86455828b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

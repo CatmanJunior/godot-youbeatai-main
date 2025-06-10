@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://utalb3ckavah"
+path="res://.godot/imported/ClosedHH War 2.wav-031fff5ec88cb50c3400dc542d5757f0.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_hiphop/ClosedHH War 2.wav"
+dest_files=["res://.godot/imported/ClosedHH War 2.wav-031fff5ec88cb50c3400dc542d5757f0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

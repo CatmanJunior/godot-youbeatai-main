@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://byh1nflapopkh"
+path="res://.godot/imported/Perc Elegance.wav-83bdf50c36025727cde5534708381368.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/4_k-pop/Perc Elegance.wav"
+dest_files=["res://.godot/imported/Perc Elegance.wav-83bdf50c36025727cde5534708381368.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

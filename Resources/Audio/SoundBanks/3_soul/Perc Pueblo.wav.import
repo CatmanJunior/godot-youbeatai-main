@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://d4d0a05p0sx1b"
+path="res://.godot/imported/Perc Pueblo.wav-8b6a2b72c852f36fe268c010d7e66cd8.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_soul/Perc Pueblo.wav"
+dest_files=["res://.godot/imported/Perc Pueblo.wav-8b6a2b72c852f36fe268c010d7e66cd8.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

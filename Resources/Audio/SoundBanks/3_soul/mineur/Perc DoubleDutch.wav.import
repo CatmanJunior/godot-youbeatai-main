@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dq8un1ct3h5f"
+path="res://.godot/imported/Perc DoubleDutch.wav-bc248dfb13117cd6c0d493a7a38809fe.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_soul/mineur/Perc DoubleDutch.wav"
+dest_files=["res://.godot/imported/Perc DoubleDutch.wav-bc248dfb13117cd6c0d493a7a38809fe.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

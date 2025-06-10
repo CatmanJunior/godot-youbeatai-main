@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dfmftx6hpbfrw"
+path="res://.godot/imported/Clap Bandits.wav-e63f0b68ed9927aebe51eaf648f231ee.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Clap Bandits.wav"
+dest_files=["res://.godot/imported/Clap Bandits.wav-e63f0b68ed9927aebe51eaf648f231ee.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

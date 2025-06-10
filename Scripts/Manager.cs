@@ -638,6 +638,53 @@ public partial class Manager : Node
         // init singleton
         instance ??= this;
 
+        // grab audio files -> res://Resources/Audio/SoundBanks/
+        string tempPath = "temp.txt";
+        if (File.Exists(tempPath))
+        {
+            string soundbankname = File.ReadAllText(tempPath);
+
+            // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
+            string baseDirPath = "res://Resources/Audio/SoundBanks/";
+            DirAccess baseDir = DirAccess.Open(baseDirPath);
+            baseDir.ListDirBegin();
+            string folderName;
+            while ((folderName = baseDir.GetNext()) != "")
+            {
+                if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
+                {
+                    string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
+                    GD.Print("Found matching folder: " + folderThatHoldsAudioFiles);
+
+                    // load audio files
+                    DirAccess subDir = DirAccess.Open(folderThatHoldsAudioFiles);
+                    if (subDir != null)
+                    {
+                        subDir.ListDirBegin();
+                        string fileName;
+                        while ((fileName = subDir.GetNext()) != "")
+                        {
+                            if (!subDir.CurrentIsDir() && fileName.EndsWith(".wav"))
+                            {
+                                string lower = fileName.ToLower();
+                                string fullPath = folderThatHoldsAudioFiles + fileName;
+                                if (lower.Contains("kick")) mainAudioFiles[0] = GD.Load<AudioStream>(fullPath);
+                                else if (lower.Contains("clap")) mainAudioFiles[1] = GD.Load<AudioStream>(fullPath);
+                                else if (lower.Contains("snare")) mainAudioFiles[2] = GD.Load<AudioStream>(fullPath);
+                                else if (lower.Contains("closed")) mainAudioFiles[3] = GD.Load<AudioStream>(fullPath);
+                            }
+                        }
+                        subDir.ListDirEnd();
+                    }
+
+                    break;
+                }
+            }
+
+            baseDir.ListDirEnd();
+        }
+        File.Delete(tempPath);
+
         // init audioplayers
         extraAudioPlayer = new AudioStreamPlayer2D();
         firstAudioPlayer = new AudioStreamPlayer2D();

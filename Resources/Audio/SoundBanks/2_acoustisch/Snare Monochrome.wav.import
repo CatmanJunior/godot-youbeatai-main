@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://yput8w5w2ha8"
+path="res://.godot/imported/Snare Monochrome.wav-2425e0b2208ed550f6a7f41fc869e55c.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/2_acoustisch/Snare Monochrome.wav"
+dest_files=["res://.godot/imported/Snare Monochrome.wav-2425e0b2208ed550f6a7f41fc869e55c.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

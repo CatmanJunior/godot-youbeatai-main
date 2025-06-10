@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dcq2yte6wm71h"
+path="res://.godot/imported/Kick Overflow.wav-5ac988d88a8073c1bace9636744fdac7.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_reggae/Kick Overflow.wav"
+dest_files=["res://.godot/imported/Kick Overflow.wav-5ac988d88a8073c1bace9636744fdac7.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

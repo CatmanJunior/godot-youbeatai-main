@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bcrqgic454y2p"
+path="res://.godot/imported/Kick SundayMorning 2.wav-06a9660d3aee68dc1e6033f432e76513.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Kick SundayMorning 2.wav"
+dest_files=["res://.godot/imported/Kick SundayMorning 2.wav-06a9660d3aee68dc1e6033f432e76513.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

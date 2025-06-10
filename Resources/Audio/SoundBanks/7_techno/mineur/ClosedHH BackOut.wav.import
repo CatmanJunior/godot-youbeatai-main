@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cjtcpxhkojnsj"
+path="res://.godot/imported/ClosedHH BackOut.wav-6897d0e937d90fc117e712ce3c12e7c4.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/7_techno/mineur/ClosedHH BackOut.wav"
+dest_files=["res://.godot/imported/ClosedHH BackOut.wav-6897d0e937d90fc117e712ce3c12e7c4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

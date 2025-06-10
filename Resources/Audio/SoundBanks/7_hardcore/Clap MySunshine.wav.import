@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dql218c7hv7ld"
+path="res://.godot/imported/Clap MySunshine.wav-0d60a5c6c06594c9330463ae0a634ef3.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav"
+dest_files=["res://.godot/imported/Clap MySunshine.wav-0d60a5c6c06594c9330463ae0a634ef3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

@@ -37,6 +37,7 @@ offset_right = -4.0
 offset_bottom = 156.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 text = "Zoek Match"
 
 [node name="GebruikButton" type="Button" parent="SoundBankSelectionMenu"]
@@ -52,6 +53,7 @@ offset_right = 133.0
 offset_bottom = 156.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 disabled = true
 text = "Gebruik
 "
@@ -87,6 +89,7 @@ offset_right = 77.0
 offset_bottom = -147.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 max_value = 1.0
 step = 0.1
 value = 0.5
@@ -178,6 +181,7 @@ offset_left = -1.0
 offset_top = 31.0
 offset_right = 43.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="emotion2" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
@@ -196,6 +200,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="emotion3" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
@@ -214,6 +219,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="emotion4" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
@@ -232,6 +238,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="emotion5" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
@@ -250,6 +257,7 @@ offset_left = -3.0
 offset_top = 31.0
 offset_right = 41.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="emotion6" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
@@ -268,6 +276,7 @@ offset_left = -3.0
 offset_top = 31.0
 offset_right = 41.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="Themas" type="Label" parent="SoundBankSelectionMenu"]
 layout_mode = 1
@@ -303,6 +312,7 @@ offset_left = -1.0
 offset_top = 31.0
 offset_right = 43.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme2" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -321,6 +331,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme3" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -339,6 +350,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme4" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -357,6 +369,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme5" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -375,6 +388,7 @@ offset_left = -3.0
 offset_top = 31.0
 offset_right = 41.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme6" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -393,6 +407,7 @@ offset_left = -3.0
 offset_top = 31.0
 offset_right = 41.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme7" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -411,6 +426,7 @@ offset_left = -1.0
 offset_top = 31.0
 offset_right = 43.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme8" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -429,6 +445,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme9" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -447,6 +464,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme10" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -465,6 +483,7 @@ offset_left = -2.0
 offset_top = 31.0
 offset_right = 42.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme11" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -483,6 +502,7 @@ offset_left = -3.0
 offset_top = 31.0
 offset_right = 41.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="theme12" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
@@ -501,6 +521,7 @@ offset_left = -3.0
 offset_top = 31.0
 offset_right = 41.0
 offset_bottom = 55.0
+focus_mode = 0
 
 [node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu"]
 layout_mode = 0

@@ -60,7 +60,7 @@ public partial class SongVoiceOver : Node
 		}
 
 		// set progress bar value
-		if (recording) progressbar.Value = (recordingTimer / (10f * (32f * (60f / (float)Manager.instance.bpm)))) * 2f;
+		if (recording) progressbar.Value = (recordingTimer / (10f * (32f * (60f / (float)BpmManager.instance.bpm)))) * 2f;
 
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}

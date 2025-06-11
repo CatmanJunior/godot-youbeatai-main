@@ -33,7 +33,7 @@ partial class MidiManager : Node
 			if (midiEvent.Message == MidiMessage.ControlChange && midiEvent.ControllerNumber == 92)
 			{
 				GD.Print($"BPM Change Detected: {midiEvent.ControllerValue}");
-				Manager.instance.bpm = midiEvent.ControllerValue;
+				BpmManager.instance.bpm = midiEvent.ControllerValue;
 			}
 
 			// notes

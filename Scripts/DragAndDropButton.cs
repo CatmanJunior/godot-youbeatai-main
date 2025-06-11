@@ -78,7 +78,7 @@ public partial class DragAndDropButton : Sprite2D
 		if (pressing) timePressing += (float)delta;
 		else timePressing = 0;
 
-		if (pressing && inside && timePressing > 0.5f && !Manager.instance.beatActives[ring, Manager.instance.currentBeat]) ActivateBeat();
+		if (pressing && inside && timePressing > 0.5f && !Manager.instance.beatActives[ring, BpmManager.instance.currentBeat]) ActivateBeat();
 
 		if (inside) SelfModulate = Manager.instance.colors[ring];
 		else SelfModulate = Manager.instance.colors[ring] * 0.8f;
@@ -87,12 +87,12 @@ public partial class DragAndDropButton : Sprite2D
 	public void ActivateBeat()
 	{
 		GD.Print("add");
-		Manager.instance.beatActives[ring, Manager.instance.currentBeat] = true;
+		Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
 		if (ring == 0) Manager.instance.firstAudioPlayer.Play();
 		if (ring == 1) Manager.instance.secondAudioPlayer.Play();
 		if (ring == 2) Manager.instance.thirdAudioPlayer.Play();
 		if (ring == 3) Manager.instance.fourthAudioPlayer.Play();
-		var position = Manager.instance.beatSprites[ring, Manager.instance.currentBeat].Position;
+		var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
 		Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
 	}
 }

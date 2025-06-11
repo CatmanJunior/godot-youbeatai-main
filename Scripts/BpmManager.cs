@@ -25,8 +25,8 @@ public partial class BpmManager : Node
     public float swing = 0.5f;
 
     // events
-    public Action OnBeatEvent;
-    public Action<int> OnBpmChanged;
+    public Action OnBeatEvent = () => {};
+    public Action<int> OnBpmChanged = (bpm) => {};
 
     public override void _Ready()
     {

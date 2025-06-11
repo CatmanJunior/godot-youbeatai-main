@@ -1083,7 +1083,7 @@ public partial class Manager : Node
 
 
     // event
-    Action<int> OnSwitchLayer;
+    Action<int> OnSwitchLayer = (layer) => {};
     
 
     public override void _Process(double delta)

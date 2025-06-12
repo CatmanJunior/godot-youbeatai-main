@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using NAudio.Wave.SampleProviders;
 using System.Linq;
 using System.Diagnostics;
+using System.Text.Json;
 
 public partial class Manager : Node
 {
@@ -133,6 +134,9 @@ public partial class Manager : Node
     [Export] public CheckButton recordSampleCheckButton3;
 
     BpmManager BpmManager => BpmManager.instance;
+
+    SoundBank chosenSoundBank = null;
+    List<string> chosenEmoticons = null;
 
     // settings menu
     [Export] CheckButton metronome_toggle;
@@ -645,47 +649,53 @@ public partial class Manager : Node
 
         BpmManager.OnBeatEvent += OnBeat;
 
+        // deserialize chosen soundbank
+        string chosen_soundbank_path = "chosen_soundbank.json";
+        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
+        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
+
+        // deserialize chosen emoticons
+        string chosen_emoticons_path = "chosen_emoticons.json";
+        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
+        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
+
         // grab audio files -> res://Resources/Audio/SoundBanks/
-        string tempPath = "temp.txt";
-        if (File.Exists(tempPath))
+        string soundbankname = chosenSoundBank.name;
+        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
+        DirAccess baseDir = DirAccess.Open(baseDirPath);
+        baseDir.ListDirBegin();
+        string folderName;
+        while ((folderName = baseDir.GetNext()) != "")
         {
-            string soundbankname = File.ReadAllText(tempPath);
-
-            // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
-            string baseDirPath = "res://Resources/Audio/SoundBanks/";
-            DirAccess baseDir = DirAccess.Open(baseDirPath);
-            baseDir.ListDirBegin();
-            string folderName;
-            while ((folderName = baseDir.GetNext()) != "")
+            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
             {
-                if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
+                string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
+
+                // load audio files
+                string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
+                string fileName;
+                for (int i = 0; i < files.Length; ++i)
                 {
-                    string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
+                    fileName = files[i];
 
-                    // load audio files
-                    string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
-                    string fileName;
-                    for (int i = 0; i < files.Length; ++i)
+                    if (fileName.EndsWith(".wav"))
                     {
-                        fileName = files[i];
-
-                        if (fileName.EndsWith(".wav"))
-                        {
-                            string lower = fileName.ToLower();
-                            string fullPath = folderThatHoldsAudioFiles + fileName;
-                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
+                        string lower = fileName.ToLower();
+                        string fullPath = folderThatHoldsAudioFiles + fileName;
+                        if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                        else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                        else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                        else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
                     }
-                    break;
                 }
+                break;
             }
-
-            baseDir.ListDirEnd();
         }
-        File.Delete(tempPath);
+        baseDir.ListDirEnd();
+
+        // delete tmep json files
+        File.Delete(chosen_emoticons_path);
+        File.Delete(chosen_soundbank_path);
 
         // init audioplayers
         extraAudioPlayer = new AudioStreamPlayer2D();

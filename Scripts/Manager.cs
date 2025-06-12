@@ -72,6 +72,9 @@ public partial class Manager : Node
     [Export] Button layerButton9;
     [Export] Button layerButton10;
 
+    [Export] Label chosen_emoticons_label;
+
+
     public void EmitBeatParticles(Vector2 position, Color color)
     {
         beat_particles_curtime = 0;
@@ -658,6 +661,7 @@ public partial class Manager : Node
         string chosen_emoticons_path = "chosen_emoticons.json";
         string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
         chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
+        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
 
         // grab audio files -> res://Resources/Audio/SoundBanks/
         string soundbankname = chosenSoundBank.name;

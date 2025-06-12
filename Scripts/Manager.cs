@@ -1227,8 +1227,8 @@ public partial class Manager : Node
         else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 
         // update pointer
-        float intergerFactor = (float)BpmManager.currentBeat / (float)BpmManager.beatsAmount;
-        pointer.RotationDegrees = intergerFactor * 360f;
+        float intergerFactor = (float)((float)(BpmManager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
         // check clap and stomp
         var volume = MicrophoneCapture.instance.volume;
@@ -1259,13 +1259,10 @@ public partial class Manager : Node
         {
             SetGlobalVolume(1);
             timeafterplay += ((float)delta);
-
-            // metronome
-            var baseTimePerBeat = (60f / BpmManager.bpm) / 2;
-            var timePerBeat = (BpmManager.currentBeat % 2 == 1) ? baseTimePerBeat * (1 + BpmManager.swing) : baseTimePerBeat * (1 - (BpmManager.swing / 2));
+            
             slowBeatTimer += (float)delta / 4;
-            if (slowBeatTimer > timePerBeat) slowBeatTimer -= timePerBeat;
-            var beatprogress = slowBeatTimer / timePerBeat;
+            if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
+            var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
             metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
 
             // update progressbar

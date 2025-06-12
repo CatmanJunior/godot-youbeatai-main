@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://cx0bpjp8y6sel" path="res://Resources/Textures/square-outline.png" id="23_vsgbq"]
+[ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xng46"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -75,8 +76,6 @@ font_size = 14
 font_size = 80
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_bao2x"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
@@ -1042,10 +1041,9 @@ texture = SubResource("CanvasTexture_b5jd4")
 [node name="Pointer" type="Sprite2D" parent="UserInterface"]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
-scale = Vector2(4, 100)
-texture = SubResource("CanvasTexture_bao2x")
-centered = false
-offset = Vector2(-0.5, -1)
+scale = Vector2(0.6, 0.85)
+texture = ExtResource("26_7k868")
+offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 z_index = -1

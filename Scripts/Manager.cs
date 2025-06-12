@@ -7,6 +7,7 @@ using NAudio.Lame;
 using System.Collections.Generic;
 using NAudio.Wave.SampleProviders;
 using System.Linq;
+using System.Diagnostics;
 
 public partial class Manager : Node
 {
@@ -17,9 +18,9 @@ public partial class Manager : Node
     [Signal]
     public delegate void OnSwitchLayerEventHandler(int layer);
     [Signal]
-    public delegate void OnClapEventEventHandler();
+    public delegate void OnShouldClapEventEventHandler();
     [Signal]
-    public delegate void OnStompEventEventHandler();
+    public delegate void OnShouldStompEventEventHandler();
 
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
@@ -1429,8 +1430,6 @@ public partial class Manager : Node
         draganddropButton1.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
-
-        EmitSignal(SignalName.OnClapEvent);
     }
 
     public void OnStomp()
@@ -1451,7 +1450,6 @@ public partial class Manager : Node
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
 
-        EmitSignal(SignalName.OnStompEvent);
     }
 
     public void OnBeat()
@@ -1480,6 +1478,20 @@ public partial class Manager : Node
             UpdateSongVoiceOverPlayBackPosition();
         }
         if (currentLayerIndex == 0 && BpmManager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
+
+        bool clap_active = beatActives[0, BpmManager.currentBeat];
+        if (clap_active)
+        {
+            GD.Print("shouldclap");
+            EmitSignal(SignalName.OnShouldClapEvent);
+        }
+
+        bool stomp_active = beatActives[1, BpmManager.currentBeat];
+        if (stomp_active)
+        {
+            GD.Print("shouldstomp");
+            EmitSignal(SignalName.OnShouldStompEvent);
+        }
     }
 
     private Sprite2D CreateOutline(int beat, int ring)

@@ -14,9 +14,12 @@ public partial class Manager : Node
     public static Manager instance = null;
 
     // events
-    public Action<int> OnSwitchLayer = (layer) => {};
-    public Action OnClapEvent = () => {};
-    public Action OnStompEvent = () => {};
+    [Signal]
+    public delegate void OnSwitchLayerEventHandler(int layer);
+    [Signal]
+    public delegate void OnClapEventEventHandler();
+    [Signal]
+    public delegate void OnStompEventEventHandler();
 
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
@@ -335,7 +338,7 @@ public partial class Manager : Node
         // update song voice position
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
 
-        OnSwitchLayer.Invoke(layerToUse);
+        EmitSignal(SignalName.OnSwitchLayer, layerToUse);
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1427,7 +1430,7 @@ public partial class Manager : Node
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
 
-        OnClapEvent.Invoke();
+        EmitSignal(SignalName.OnClapEvent);
     }
 
     public void OnStomp()
@@ -1448,7 +1451,7 @@ public partial class Manager : Node
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
 
-        OnStompEvent.Invoke();
+        EmitSignal(SignalName.OnStompEvent);
     }
 
     public void OnBeat()

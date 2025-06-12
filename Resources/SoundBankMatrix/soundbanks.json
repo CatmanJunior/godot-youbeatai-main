@@ -15,7 +15,7 @@
 	"electronic": 0
   },
   {
-	"name": "lofi",
+	"name": "lo-fi",
 	"themes": [
 	  "👾",
 	  "🐱"
@@ -28,7 +28,7 @@
 	"electronic": 20
   },
   {
-	"name": "nieuw age",
+	"name": "new-age",
 	"themes": [
 	  "💔",
 	  "🌴",
@@ -44,7 +44,7 @@
 	"electronic": 60
   },
   {
-	"name": "accoustisch",
+	"name": "acoustisch",
 	"themes": [
 	  "💔",
 	  "🎂",
@@ -75,7 +75,7 @@
 	"electronic": 10
   },
   {
-	"name": "Tango",
+	"name": "tango",
 	"themes": [
 	  "💔",
 	  "👾",
@@ -91,7 +91,7 @@
 	"electronic": 30
   },
   {
-	"name": "Aziatisch",
+	"name": "aziatisch",
 	"themes": [
 	  "💔",
 	  "👾",
@@ -106,7 +106,7 @@
 	"electronic": 50
   },
   {
-	"name": "Opera",
+	"name": "opera",
 	"themes": [
 	  "💔",
 	  "👾",
@@ -121,7 +121,7 @@
 	"electronic": 20
   },
   {
-	"name": "Raggae",
+	"name": "raggae",
 	"themes": [
 	  "💔",
 	  "🌴",
@@ -137,7 +137,7 @@
 	"electronic": 70
   },
   {
-	"name": "Soul",
+	"name": "soul",
 	"themes": [
 	  "🎂",
 	  "🙌",
@@ -151,7 +151,7 @@
 	"electronic": 50
   },
   {
-	"name": "Balkisch",
+	"name": "balkisch",
 	"themes": [
 	  "🎂",
 	  "🦄",
@@ -228,7 +228,7 @@
 	"electronic": 80
   },
   {
-	"name": "Zuid amerikaans",
+	"name": "zuid-ame",
 	"themes": [
 	  "💔",
 	  "🙌",
@@ -243,7 +243,7 @@
 	"electronic": 20
   },
   {
-	"name": "Funk",
+	"name": "funk",
 	"themes": [
 	  "🌴",
 	  "🏆",
@@ -258,7 +258,7 @@
 	"electronic": 40
   },
   {
-	"name": "Hiphop",
+	"name": "hiphop",
 	"themes": [
 	  "🌴",
 	  "👾",
@@ -272,7 +272,7 @@
 	"electronic": 60
   },
   {
-	"name": "Rock",
+	"name": "rock",
 	"themes": [
 	  "🎂",
 	  "🏆",
@@ -287,7 +287,7 @@
 	"electronic": 50
   },
   {
-	"name": "Hardcore",
+	"name": "hardcore",
 	"themes": [
 	  "💔",
 	  "👾",
@@ -303,7 +303,7 @@
 	"electronic": 90
   },
   {
-	"name": "Metal",
+	"name": "metal",
 	"themes": [
 	  "🌴",
 	  "🦄",
@@ -320,7 +320,7 @@
 	"electronic": 20
   },
   {
-	"name": "Techno",
+	"name": "techno",
 	"themes": [
 	  "🎂",
 	  "🦄",

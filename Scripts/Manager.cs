@@ -1479,14 +1479,17 @@ public partial class Manager : Node
         }
         if (currentLayerIndex == 0 && BpmManager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
 
-        bool clap_active = beatActives[0, BpmManager.currentBeat];
+        int nextbeat = BpmManager.currentBeat + 1;
+        if (nextbeat == 32) nextbeat = 0;
+
+        bool clap_active = beatActives[0, nextbeat];
         if (clap_active)
         {
             GD.Print("shouldclap");
             EmitSignal(SignalName.OnShouldClapEvent);
         }
 
-        bool stomp_active = beatActives[1, BpmManager.currentBeat];
+        bool stomp_active = beatActives[1, nextbeat];
         if (stomp_active)
         {
             GD.Print("shouldstomp");

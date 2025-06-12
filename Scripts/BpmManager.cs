@@ -13,7 +13,7 @@ public partial class BpmManager : Node
         set
         {
             _bpm = value;
-            EmitSignal(SignalName.OnBpmChanged);
+            EmitSignal(SignalName.OnBpmChanged, _bpm);
         }
     }
 

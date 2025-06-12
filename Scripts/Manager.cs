@@ -13,6 +13,14 @@ public partial class Manager : Node
     // singleton
     public static Manager instance = null;
 
+    // events
+    [Signal]
+    public delegate void OnSwitchLayerEventHandler(int layer);
+    [Signal]
+    public delegate void OnClapEventEventHandler();
+    [Signal]
+    public delegate void OnStompEventEventHandler();
+
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
     public AudioStreamPlayer2D secondAudioPlayer;
@@ -330,7 +338,7 @@ public partial class Manager : Node
         // update song voice position
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
 
-        OnSwitchLayer.Invoke(layerToUse);
+        EmitSignal(SignalName.OnSwitchLayer, layerToUse);
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1077,11 +1085,6 @@ public partial class Manager : Node
     // metronome timer
     float slowBeatTimer = 0;
 
-
-    // event
-    Action<int> OnSwitchLayer = (layer) => {};
-    
-
     public override void _Process(double delta)
     {
         time += (float)delta;
@@ -1227,8 +1230,8 @@ public partial class Manager : Node
         else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 
         // update pointer
-        float intergerFactor = (float)BpmManager.currentBeat / (float)BpmManager.beatsAmount;
-        pointer.RotationDegrees = intergerFactor * 360f;
+        float intergerFactor = (float)((float)(BpmManager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
         // check clap and stomp
         var volume = MicrophoneCapture.instance.volume;
@@ -1259,13 +1262,10 @@ public partial class Manager : Node
         {
             SetGlobalVolume(1);
             timeafterplay += ((float)delta);
-
-            // metronome
-            var baseTimePerBeat = (60f / BpmManager.bpm) / 2;
-            var timePerBeat = (BpmManager.currentBeat % 2 == 1) ? baseTimePerBeat * (1 + BpmManager.swing) : baseTimePerBeat * (1 - (BpmManager.swing / 2));
+            
             slowBeatTimer += (float)delta / 4;
-            if (slowBeatTimer > timePerBeat) slowBeatTimer -= timePerBeat;
-            var beatprogress = slowBeatTimer / timePerBeat;
+            if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
+            var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
             metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
 
             // update progressbar
@@ -1429,6 +1429,8 @@ public partial class Manager : Node
         draganddropButton1.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
+
+        EmitSignal(SignalName.OnClapEvent);
     }
 
     public void OnStomp()
@@ -1448,6 +1450,8 @@ public partial class Manager : Node
         draganddropButton0.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
+
+        EmitSignal(SignalName.OnStompEvent);
     }
 
     public void OnBeat()

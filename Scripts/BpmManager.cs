@@ -13,7 +13,7 @@ public partial class BpmManager : Node
         set
         {
             _bpm = value;
-            OnBpmChanged.Invoke(_bpm);
+            EmitSignal(SignalName.OnBpmChanged);
         }
     }
 
@@ -23,10 +23,13 @@ public partial class BpmManager : Node
     public int currentBeat = 31;
     public float beatTimer = 0;
     public float swing = 0.5f;
+    public float timePerBeat;
 
     // events
-    public Action OnBeatEvent = () => {};
-    public Action<int> OnBpmChanged = (bpm) => {};
+    [Signal]
+    public delegate void OnBeatEventEventHandler();
+    [Signal]
+    public delegate void OnBpmChangedEventHandler(float bpm);// = (bpm) => { };
 
     public override void _Ready()
     {
@@ -39,12 +42,12 @@ public partial class BpmManager : Node
         {
             beatTimer += (float)delta;
             var baseTimePerBeat = 60f / bpm / 2;
-            var timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
+            timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
             if (beatTimer > timePerBeat)
             {
                 beatTimer -= timePerBeat;
                 currentBeat = (currentBeat + 1) % beatsAmount;
-                OnBeatEvent.Invoke();
+                EmitSignal(SignalName.OnBeatEvent);
             }
         }
     }

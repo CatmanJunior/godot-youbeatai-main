@@ -13,6 +13,11 @@ public partial class Manager : Node
     // singleton
     public static Manager instance = null;
 
+    // events
+    public Action<int> OnSwitchLayer = (layer) => {};
+    public Action OnClapEvent = () => {};
+    public Action OnStompEvent = () => {};
+
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
     public AudioStreamPlayer2D secondAudioPlayer;
@@ -1077,11 +1082,6 @@ public partial class Manager : Node
     // metronome timer
     float slowBeatTimer = 0;
 
-
-    // event
-    Action<int> OnSwitchLayer = (layer) => {};
-    
-
     public override void _Process(double delta)
     {
         time += (float)delta;
@@ -1429,6 +1429,8 @@ public partial class Manager : Node
         draganddropButton1.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
+
+        OnClapEvent.Invoke();
     }
 
     public void OnStomp()
@@ -1448,6 +1450,8 @@ public partial class Manager : Node
         draganddropButton0.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
+
+        OnStompEvent.Invoke();
     }
 
     public void OnBeat()

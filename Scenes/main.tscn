@@ -1042,6 +1042,11 @@ texture = SubResource("CanvasTexture_b5jd4")
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(0.6, 0.85)
+offset = Vector2(0, -150)
+
+[node name="PointLight2D" type="PointLight2D" parent="UserInterface/Pointer"]
+color = Color(1, 1, 0.698039, 1)
+energy = 4.71
 texture = ExtResource("26_7k868")
 offset = Vector2(0, -150)
 

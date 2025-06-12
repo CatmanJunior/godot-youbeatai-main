@@ -6,6 +6,7 @@ using NAudio.Wave;
 using NAudio.Lame;
 using System.Collections.Generic;
 using NAudio.Wave.SampleProviders;
+using System.Linq;
 
 public partial class Manager : Node
 {
@@ -651,29 +652,24 @@ public partial class Manager : Node
                 if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
                 {
                     string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
-                    GD.Print("Found matching folder: " + folderThatHoldsAudioFiles);
 
                     // load audio files
-                    DirAccess subDir = DirAccess.Open(folderThatHoldsAudioFiles);
-                    if (subDir != null)
+                    string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
+                    string fileName;
+                    for (int i = 0; i < files.Length; ++i)
                     {
-                        subDir.ListDirBegin();
-                        string fileName;
-                        while ((fileName = subDir.GetNext()) != "")
-                        {
-                            if (!subDir.CurrentIsDir() && fileName.EndsWith(".wav"))
-                            {
-                                string lower = fileName.ToLower();
-                                string fullPath = folderThatHoldsAudioFiles + fileName;
-                                if (lower.Contains("kick")) mainAudioFiles[0] = GD.Load<AudioStream>(fullPath);
-                                else if (lower.Contains("clap")) mainAudioFiles[1] = GD.Load<AudioStream>(fullPath);
-                                else if (lower.Contains("snare")) mainAudioFiles[2] = GD.Load<AudioStream>(fullPath);
-                                else if (lower.Contains("closed")) mainAudioFiles[3] = GD.Load<AudioStream>(fullPath);
-                            }
-                        }
-                        subDir.ListDirEnd();
-                    }
+                        fileName = files[i];
 
+                        if (fileName.EndsWith(".wav"))
+                        {
+                            string lower = fileName.ToLower();
+                            string fullPath = folderThatHoldsAudioFiles + fileName;
+                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
                     break;
                 }
             }

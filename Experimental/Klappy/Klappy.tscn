@@ -1,0 +1,313 @@
+[gd_scene load_steps=20 format=3 uid="uid://cawoo3gsyyym5"]
+
+[ext_resource type="PackedScene" uid="uid://n1c53svx8ebl" path="res://Experimental/Klappy/Clap Test Animation.fbx" id="1_fbtxr"]
+[ext_resource type="Script" uid="uid://bpoaf8o2cncdd" path="res://Experimental/Klappy/klappy_animations.gd" id="2_d4ajq"]
+[ext_resource type="Animation" uid="uid://cf4an8jtbmu56" path="res://Experimental/Klappy/Anim_Klappy_Stamp.res" id="2_vxk86"]
+
+[sub_resource type="Animation" id="Animation_qxlub"]
+resource_name = "Robot|RobotAction"
+length = 0.833333
+tracks/0/type = "rotation_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Robot/Skeleton3D:Elbow_R")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.0151077, 0.197333, -0.829829, 0.521742, 0.0416667, 1, 0.00518285, 0.181475, -0.833442, 0.521934, 0.0833333, 1, -0.0224506, 0.136991, -0.841901, 0.52147, 0.125, 1, -0.0646872, 0.068053, -0.850267, 0.517909, 0.166667, 1, -0.117388, -0.0196069, -0.852788, 0.508516, 0.25, 1, -0.229642, -0.212971, -0.826098, 0.468476, 0.266667, 1, -0.247533, -0.247916, -0.817604, 0.456933, 0.291667, 1, -0.276413, -0.296657, -0.799928, 0.442387, 0.333333, 1, -0.311396, -0.360734, -0.773202, 0.418405, 0.375, 1, -0.333107, -0.401248, -0.75301, 0.401268, 0.433333, 1, -0.337596, -0.409915, -0.748422, 0.39732, 0.458333, 1, -0.333107, -0.401248, -0.75301, 0.401268, 0.5, 1, -0.311396, -0.360734, -0.773202, 0.418405, 0.541667, 1, -0.276413, -0.296657, -0.799928, 0.442387, 0.583333, 1, -0.229642, -0.212971, -0.826098, 0.468476, 0.666667, 1, -0.117388, -0.019607, -0.852788, 0.508516, 0.708333, 1, -0.0646871, 0.068053, -0.850268, 0.517909, 0.75, 1, -0.0224506, 0.136991, -0.841901, 0.52147, 0.791667, 1, 0.00518289, 0.181475, -0.833442, 0.521934, 0.833333, 1, 0.0151077, 0.197333, -0.829829, 0.521742)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("Robot/Skeleton3D:Mouth")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.663344, 0.000242452, 0.000526559, 0.748314, 0.0416667, 1, 0.659696, 0.000239888, 0.000527732, 0.751532, 0.0833333, 1, 0.649702, 0.00023289, 0.000530858, 0.760189, 0.125, 1, 0.634734, 0.000222479, 0.000535304, 0.77273, 0.166667, 1, 0.616195, 0.000209698, 0.000540439, 0.787593, 0.25, 1, 0.574605, 0.000181445, 0.000550568, 0.818431, 0.291667, 1, 0.554997, 0.000168312, 0.000554724, 0.831852, 0.333333, 1, 0.538648, 0.000157448, 0.000557905, 0.842531, 0.375, 1, 0.527461, 0.000150058, 0.000559938, 0.849579, 0.433333, 1, 0.52498, 0.000148423, 0.000560373, 0.851115, 0.458333, 1, 0.527461, 0.000150058, 0.000559938, 0.849579, 0.5, 1, 0.538648, 0.000157448, 0.000557905, 0.842531, 0.541667, 1, 0.554997, 0.000168312, 0.000554724, 0.831852, 0.583333, 1, 0.574605, 0.000181445, 0.000550568, 0.818431, 0.666667, 1, 0.616195, 0.000209698, 0.000540439, 0.787593, 0.708333, 1, 0.634734, 0.000222479, 0.000535304, 0.77273, 0.75, 1, 0.649702, 0.00023289, 0.000530858, 0.760189, 0.791667, 1, 0.659696, 0.000239888, 0.000527732, 0.751532, 0.833333, 1, 0.663344, 0.000242452, 0.000526559, 0.748314)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("Robot/Skeleton3D:Elbow_L")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0.0150478, -0.197491, 0.830412, 0.520756, 0.0416667, 1, 0.0051042, -0.181645, 0.834021, 0.520949, 0.0833333, 1, -0.0225814, -0.137191, 0.842471, 0.520491, 0.125, 1, -0.0648972, -0.0682986, 0.850819, 0.516943, 0.166667, 1, -0.117696, 0.019306, 0.853311, 0.507577, 0.25, 1, -0.230156, 0.212559, 0.82654, 0.467631, 0.266667, 1, -0.248083, 0.247487, 0.818027, 0.45611, 0.291667, 1, -0.27701, 0.296202, 0.800324, 0.4416, 0.333333, 1, -0.312056, 0.360248, 0.773561, 0.417669, 0.375, 1, -0.333805, 0.400744, 0.753342, 0.400567, 0.433333, 1, -0.338301, 0.409406, 0.748749, 0.396628, 0.458333, 1, -0.333805, 0.400744, 0.753342, 0.400567, 0.5, 1, -0.312056, 0.360248, 0.773561, 0.417669, 0.541667, 1, -0.27701, 0.296202, 0.800324, 0.4416, 0.583333, 1, -0.230156, 0.212559, 0.82654, 0.467631, 0.666667, 1, -0.117696, 0.019306, 0.853311, 0.507577, 0.708333, 1, -0.0648972, -0.0682986, 0.850819, 0.516943, 0.75, 1, -0.0225814, -0.137191, 0.842471, 0.520491, 0.791667, 1, 0.00510429, -0.181645, 0.834021, 0.520949, 0.833333, 1, 0.0150478, -0.197491, 0.830412, 0.520756)
+tracks/3/type = "position_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("Robot/Skeleton3D:Leg_L")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -0.00507858, -0.00223991, 0.00449339)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("Robot/Skeleton3D:Hand_R")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 9.66247e-11, 0.00522447, -1.11759e-09, 0.0416667, 1, 0.000800565, 0.0053194, 8.73031e-05, 0.0833333, 1, 0.00297353, 0.00557707, 0.000324271, 0.125, 1, 0.00617578, 0.00595679, 0.000673488, 0.166667, 1, 0.0100642, 0.00641789, 0.00109754, 0.25, 1, 0.0185273, 0.00742144, 0.00202047, 0.291667, 1, 0.0224158, 0.00788254, 0.00244451, 0.333333, 1, 0.0256181, 0.00826226, 0.00279373, 0.375, 1, 0.027791, 0.00851993, 0.0030307, 0.458333, 1, 0.027791, 0.00851993, 0.0030307, 0.5, 1, 0.0256181, 0.00826226, 0.00279373, 0.541667, 1, 0.0224158, 0.00788253, 0.00244452, 0.583333, 1, 0.0185273, 0.00742144, 0.00202047, 0.666667, 1, 0.0100642, 0.00641788, 0.00109754, 0.708333, 1, 0.00617578, 0.00595679, 0.000673487, 0.75, 1, 0.00297352, 0.00557707, 0.00032427, 0.791667, 1, 0.000800563, 0.0053194, 8.73021e-05, 0.833333, 1, 9.66247e-11, 0.00522447, -1.11759e-09)
+tracks/5/type = "rotation_3d"
+tracks/5/imported = true
+tracks/5/enabled = true
+tracks/5/path = NodePath("Robot/Skeleton3D:Hand_R")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0.170502, 0.00642558, -0.347515, 0.92202, 0.0416667, 1, 0.170268, 0.00821458, -0.36792, 0.914099, 0.0833333, 1, 0.169166, 0.0132258, -0.424365, 0.88945, 0.125, 1, 0.166158, 0.0209408, -0.509166, 0.844218, 0.166667, 1, 0.16002, 0.030569, -0.611179, 0.774545, 0.25, 1, 0.137329, 0.0503485, -0.804616, 0.575499, 0.291667, 1, 0.123712, 0.0579416, -0.87102, 0.471871, 0.333333, 1, 0.111799, 0.0632335, -0.913424, 0.386211, 0.375, 1, 0.103614, 0.0663171, -0.936142, 0.3294, 0.433333, 1, 0.1018, 0.0669179, -0.940527, 0.317125, 0.458333, 1, 0.103615, 0.066317, -0.936142, 0.3294, 0.5, 1, 0.111799, 0.0632335, -0.913424, 0.386211, 0.541667, 1, 0.123712, 0.0579416, -0.87102, 0.471871, 0.583333, 1, 0.137329, 0.0503486, -0.804616, 0.575499, 0.666667, 1, 0.16002, 0.030569, -0.611179, 0.774545, 0.708333, 1, 0.166158, 0.0209408, -0.509166, 0.844218, 0.75, 1, 0.169166, 0.0132258, -0.424365, 0.88945, 0.791667, 1, 0.170268, 0.00821462, -0.36792, 0.914099, 0.833333, 1, 0.170502, 0.00642558, -0.347515, 0.92202)
+tracks/6/type = "position_3d"
+tracks/6/imported = true
+tracks/6/enabled = true
+tracks/6/path = NodePath("Robot/Skeleton3D:Hand_L")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array(0, 1, -1.98197e-09, 0.00522447, -5.21541e-10, 0.0416667, 1, -0.00079908, 0.0053232, 8.55e-05, 0.0833333, 1, -0.00296802, 0.00559119, 0.000317573, 0.125, 1, -0.00616434, 0.00598612, 0.000659575, 0.166667, 1, -0.0100456, 0.00646568, 0.00107486, 0.25, 1, -0.018493, 0.00750942, 0.00197873, 0.291667, 1, -0.0223743, 0.00798898, 0.00239402, 0.333333, 1, -0.0255706, 0.00838391, 0.00273602, 0.375, 1, -0.0277396, 0.0086519, 0.00296809, 0.458333, 1, -0.0277396, 0.0086519, 0.00296809, 0.5, 1, -0.0255706, 0.00838391, 0.00273602, 0.541667, 1, -0.0223743, 0.00798898, 0.00239402, 0.583333, 1, -0.018493, 0.00750943, 0.00197873, 0.666667, 1, -0.0100456, 0.00646568, 0.00107486, 0.708333, 1, -0.00616434, 0.00598612, 0.000659576, 0.75, 1, -0.00296801, 0.00559119, 0.000317572, 0.791667, 1, -0.000799083, 0.0053232, 8.55006e-05, 0.833333, 1, -1.98197e-09, 0.00522447, -5.21541e-10)
+tracks/7/type = "rotation_3d"
+tracks/7/imported = true
+tracks/7/enabled = true
+tracks/7/path = NodePath("Robot/Skeleton3D:Hand_L")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array(0, 1, 0.170502, -0.00642539, 0.347515, 0.92202, 0.0416667, 1, 0.170258, -0.00827437, 0.368601, 0.913825, 0.0833333, 1, 0.169096, -0.0134695, 0.427086, 0.888157, 0.125, 1, 0.165873, -0.021505, 0.515265, 0.840551, 0.166667, 1, 0.159219, -0.0315682, 0.621506, 0.766409, 0.25, 1, 0.134433, -0.0521345, 0.820727, 0.552827, 0.291667, 1, 0.11963, -0.059875, 0.886945, 0.442077, 0.333333, 1, 0.106789, -0.0651687, 0.927883, 0.351257, 0.375, 1, 0.0980362, -0.0682003, 0.94909, 0.29149, 0.433333, 1, 0.0961061, -0.0687824, 0.953098, 0.278635, 0.458333, 1, 0.0980362, -0.0682003, 0.94909, 0.29149, 0.5, 1, 0.106789, -0.0651687, 0.927883, 0.351257, 0.541667, 1, 0.11963, -0.059875, 0.886945, 0.442077, 0.583333, 1, 0.134433, -0.0521346, 0.820727, 0.552827, 0.666667, 1, 0.159219, -0.0315682, 0.621506, 0.766409, 0.708333, 1, 0.165873, -0.021505, 0.515265, 0.840551, 0.75, 1, 0.169096, -0.0134695, 0.427085, 0.888157, 0.791667, 1, 0.170258, -0.0082744, 0.368601, 0.913825, 0.833333, 1, 0.170502, -0.00642539, 0.347515, 0.92202)
+
+[sub_resource type="Animation" id="Animation_h853c"]
+resource_name = "Robot|Robot_001|Take 001|BaseLayer"
+length = 10.375
+tracks/0/type = "rotation_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Robot/Skeleton3D:Elbow_R")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.0151077, 0.197333, -0.829829, 0.521742)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("Robot/Skeleton3D:Mouth")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.663344, 0.000242452, 0.000526559, 0.748314)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("Robot/Skeleton3D:Elbow_L")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0.0150478, -0.197491, 0.830412, 0.520756)
+tracks/3/type = "position_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("Robot/Skeleton3D:Leg_L")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -0.00507858, -0.00223991, 0.00449339)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("Robot/Skeleton3D:Hand_R")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 9.66247e-11, 0.00522447, -1.11759e-09)
+tracks/5/type = "rotation_3d"
+tracks/5/imported = true
+tracks/5/enabled = true
+tracks/5/path = NodePath("Robot/Skeleton3D:Hand_R")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0.170502, 0.00642558, -0.347515, 0.92202)
+tracks/6/type = "position_3d"
+tracks/6/imported = true
+tracks/6/enabled = true
+tracks/6/path = NodePath("Robot/Skeleton3D:Hand_L")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array(0, 1, -1.98197e-09, 0.00522447, -5.21541e-10)
+tracks/7/type = "rotation_3d"
+tracks/7/imported = true
+tracks/7/enabled = true
+tracks/7/path = NodePath("Robot/Skeleton3D:Hand_L")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array(0, 1, 0.170502, -0.00642539, 0.347515, 0.92202)
+
+[sub_resource type="Animation" id="Animation_ijvyv"]
+resource_name = "Robot|Robot|Scene"
+length = 0.001
+tracks/0/type = "rotation_3d"
+tracks/0/imported = true
+tracks/0/enabled = true
+tracks/0/path = NodePath("Robot/Skeleton3D:Elbow_R")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.0151077, 0.197333, -0.829829, 0.521742)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = true
+tracks/1/enabled = true
+tracks/1/path = NodePath("Robot/Skeleton3D:Mouth")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.663344, 0.000242452, 0.000526559, 0.748314)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = true
+tracks/2/enabled = true
+tracks/2/path = NodePath("Robot/Skeleton3D:Elbow_L")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0.0150478, -0.197491, 0.830412, 0.520756)
+tracks/3/type = "position_3d"
+tracks/3/imported = true
+tracks/3/enabled = true
+tracks/3/path = NodePath("Robot/Skeleton3D:Leg_L")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, -0.00507858, -0.00223991, 0.00449339)
+tracks/4/type = "position_3d"
+tracks/4/imported = true
+tracks/4/enabled = true
+tracks/4/path = NodePath("Robot/Skeleton3D:Hand_R")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 9.66247e-11, 0.00522447, -1.11759e-09)
+tracks/5/type = "rotation_3d"
+tracks/5/imported = true
+tracks/5/enabled = true
+tracks/5/path = NodePath("Robot/Skeleton3D:Hand_R")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = PackedFloat32Array(0, 1, 0.170502, 0.00642558, -0.347515, 0.92202)
+tracks/6/type = "position_3d"
+tracks/6/imported = true
+tracks/6/enabled = true
+tracks/6/path = NodePath("Robot/Skeleton3D:Hand_L")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = PackedFloat32Array(0, 1, -1.98197e-09, 0.00522447, -5.21541e-10)
+tracks/7/type = "rotation_3d"
+tracks/7/imported = true
+tracks/7/enabled = true
+tracks/7/path = NodePath("Robot/Skeleton3D:Hand_L")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = PackedFloat32Array(0, 1, 0.170502, -0.00642539, 0.347515, 0.92202)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d7wnv"]
+_data = {
+&"Robot|RobotAction": SubResource("Animation_qxlub"),
+&"Robot|Robot_001|Take 001|BaseLayer": SubResource("Animation_h853c"),
+&"Robot|Robot|Scene": SubResource("Animation_ijvyv")
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d4ajq"]
+_data = {
+&"Anim_Klappy_Stamp": ExtResource("2_vxk86")
+}
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_fbtxr"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_vxk86"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d4ajq"]
+animation = &"Robot|Robot_001|Take 001|BaseLayer"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_igk12"]
+animation = &"Robot|RobotAction"
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_1ku2n"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eu1dx"]
+animation = &"anim/Anim_Klappy_Stamp"
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_pr1ly"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_igk12"]
+graph_offset = Vector2(-429.336, -113.227)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_vxk86")
+nodes/Add2/position = Vector2(240, -120)
+"nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_fbtxr")
+"nodes/Add2 2/position" = Vector2(480, 80)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_d4ajq")
+"nodes/Animation 2/position" = Vector2(-280, -260)
+nodes/Clap/node = SubResource("AnimationNodeAnimation_igk12")
+nodes/Clap/position = Vector2(-400, -60)
+nodes/ClapTrigger/node = SubResource("AnimationNodeTimeSeek_1ku2n")
+nodes/ClapTrigger/position = Vector2(-80, -80)
+"nodes/Stamp 2/node" = SubResource("AnimationNodeAnimation_eu1dx")
+"nodes/Stamp 2/position" = Vector2(-440, 160)
+nodes/StampTrigger/node = SubResource("AnimationNodeTimeSeek_pr1ly")
+nodes/StampTrigger/position = Vector2(-80, 140)
+nodes/output/position = Vector2(700, 80)
+node_connections = [&"Add2", 0, &"Animation 2", &"Add2", 1, &"ClapTrigger", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"StampTrigger", &"ClapTrigger", 0, &"Clap", &"StampTrigger", 0, &"Stamp 2", &"output", 0, &"Add2 2"]
+
+[sub_resource type="Environment" id="Environment_vxk86"]
+background_mode = 1
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_d4ajq"]
+
+[sub_resource type="Compositor" id="Compositor_igk12"]
+
+[node name="Klappy" type="Node3D"]
+
+[node name="Clap Test Animation" parent="." instance=ExtResource("1_fbtxr")]
+script = ExtResource("2_d4ajq")
+
+[node name="Skeleton3D" parent="Clap Test Animation/Robot" index="0"]
+bones/1/position = Vector3(0.0111647, 0.00431626, 0.00681036)
+bones/1/rotation = Quaternion(0.0151077, 0.197333, -0.829829, 0.521742)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/position = Vector3(-6.26404e-10, 0.00522447, -2.08983e-09)
+bones/2/rotation = Quaternion(0.170502, 0.00642559, -0.347515, 0.92202)
+bones/2/scale = Vector3(1, 1, 1)
+bones/4/position = Vector3(-4.50784e-12, 0.0148348, -4.32066e-10)
+bones/4/rotation = Quaternion(0.663344, 0.000242452, 0.000526559, 0.748314)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
+bones/5/rotation = Quaternion(-0.147766, -0.679207, -0.385983, 0.606515)
+bones/5/scale = Vector3(1, 1, 1)
+bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
+bones/7/rotation = Quaternion(0.1441, 0.150626, 0.383495, 0.89971)
+bones/7/scale = Vector3(1, 1, 1)
+bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
+bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/position = Vector3(-1.84339e-11, 0.00420525, -2.69906e-10)
+bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/position = Vector3(-1.1085e-10, 0.00449158, -1.52595e-10)
+bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.82186, 0.569663)
+bones/11/scale = Vector3(1, 1, 1)
+bones/13/position = Vector3(-0.0109678, 0.00429172, 0.00680292)
+bones/13/rotation = Quaternion(0.0150478, -0.197491, 0.830412, 0.520756)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/position = Vector3(-9.23412e-10, 0.00522447, -9.05053e-10)
+bones/14/rotation = Quaternion(0.170502, -0.00642538, 0.347515, 0.92202)
+bones/14/scale = Vector3(1, 1, 1)
+bones/16/position = Vector3(-0.00507866, -0.00231285, 0.00496329)
+bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/position = Vector3(-7.52688e-10, 0.00420524, 6.35182e-10)
+bones/17/rotation = Quaternion(0.00499257, 0.000264975, -0.358627, 0.933468)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/position = Vector3(-1.68101e-10, 0.00449158, 1.15997e-09)
+bones/18/rotation = Quaternion(-0.00102162, 0.000626931, 0.821698, 0.569922)
+bones/18/scale = Vector3(1, 1, 1)
+
+[node name="AnimationPlayer" parent="Clap Test Animation" index="1"]
+libraries = {
+&"": SubResource("AnimationLibrary_d7wnv"),
+&"anim": SubResource("AnimationLibrary_d4ajq")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Clap Test Animation"]
+tree_root = SubResource("AnimationNodeBlendTree_igk12")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Add2/add_amount = 1.0
+"parameters/Add2 2/add_amount" = 1.0
+parameters/ClapTrigger/seek_request = -1.0
+parameters/StampTrigger/seek_request = -1.0
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.72152, 4.92963)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera3D"]
+environment = SubResource("Environment_vxk86")
+camera_attributes = SubResource("CameraAttributesPractical_d4ajq")
+compositor = SubResource("Compositor_igk12")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.5, -0.707107, 0.5, 0.0794592, 0.612372, 0.786566, -0.862372, -0.353554, 0.362372, 4.6554, 4, 4)
+
+[editable path="Clap Test Animation"]

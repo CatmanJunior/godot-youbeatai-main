@@ -541,7 +541,13 @@ public partial class Manager : Node
     public void SaveSongAsFile(List<bool[,]> loops)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "liedje_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        string final_name = "export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        string beats_name = "beats";
+        string song_name = "song";
+        string layers_name = "layers";
+        string beats_with_song_name = "beats_with_song";
 
         int sampleRate = 48000;
         float secondsPerBeat = 60f / bpm_manager.bpm;
@@ -589,15 +595,15 @@ public partial class Manager : Node
         if (max > 1.0f) for (int i = 0; i < audioData.Length; i++) audioData[i] /= max;
 
         // write file
-        using (var writer = new WaveFileWriter(filename + ".wav", new WaveFormat(sampleRate, 1)))
+        using (var writer = new WaveFileWriter(beats_name + ".wav", new WaveFormat(sampleRate, 1)))
         {
             foreach (var sample in audioData) writer.WriteSample(sample);
             writer.Close();
         }
 
-        ChangePitch(filename + ".wav", 2f);
+        ChangePitch(beats_name + ".wav", 2f);
 
-        // mix with layer voiceovers
+        // export layers voiceovers as single wav
         AudioStream[] voiceovers = LayerVoiceOver.instance.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
@@ -626,8 +632,6 @@ public partial class Manager : Node
                 }
             }
         }
-
-        // combine wavs
         List<string> layer_inputs =
         [
             "layer0.wav",
@@ -641,11 +645,10 @@ public partial class Manager : Node
             "layer8.wav",
             "layer9.wav"
         ];
-        string layer_combined = "layer_combined.wav";
         using (var firstReader = new WaveFileReader(layer_inputs[0]))
         {
             var waveFormat = firstReader.WaveFormat;
-            using (var writer = new WaveFileWriter(layer_combined, waveFormat))
+            using (var writer = new WaveFileWriter(layers_name + ".wav", waveFormat))
             {
                 firstReader.CopyTo(writer);
                 for (int i = 1; i < layer_inputs.Count; i++) using (var reader = new WaveFileReader(layer_inputs[i])) reader.CopyTo(writer);
@@ -653,22 +656,22 @@ public partial class Manager : Node
         }
         for (int i = 0; i < layer_inputs.Count; i++) File.Delete(layer_inputs[i]);
 
-        // mix with song voiceover
-        string combined_with_song_name = filename + "_vc";
-        ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, "voiceover.wav");
-        MixAudioFiles(filename + ".wav", "voiceover.wav", combined_with_song_name + ".wav");
+        // song to wav
+        ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, song_name + ".wav");
 
-        // mix with layer voiceovers
-        MixAudioFiles(combined_with_song_name + ".wav", layer_combined, filename + "_full" + ".wav");
+        // mix everything
+        MixAudioFiles(beats_name + ".wav", song_name + ".wav", beats_with_song_name + ".wav");
+        MixAudioFiles(beats_with_song_name + ".wav", layers_name + ".wav", final_name + ".wav");
 
-        // delete temp wavs
-        File.Delete(filename + ".wav");
-        File.Delete("voiceover.wav");
-        File.Delete(combined_with_song_name + ".wav");
+        // delete temps
+        File.Delete(beats_name + ".wav");
+        File.Delete(layers_name + ".wav");
+        File.Delete(song_name + ".wav");
+        File.Delete(beats_with_song_name + ".wav");
 
         // convert and finish
-        ConvertWavToMp3(filename + "_vc");
-        ShowSavingLabel(filename + "_vc");
+        ConvertWavToMp3(final_name);
+        ShowSavingLabel(final_name);
         hassavedtofile = true;
     }
 

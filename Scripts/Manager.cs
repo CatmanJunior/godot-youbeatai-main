@@ -7,6 +7,8 @@ using NAudio.Lame;
 using System.Collections.Generic;
 using NAudio.Wave.SampleProviders;
 using System.Linq;
+using System.Diagnostics;
+using System.Text.Json;
 
 public partial class Manager : Node
 {
@@ -16,11 +18,10 @@ public partial class Manager : Node
     // events
     [Signal]
     public delegate void OnSwitchLayerEventHandler(int layer);
-
     [Signal]
-    public delegate void OnClapEventEventHandler();
+    public delegate void OnShouldClapEventEventHandler();
     [Signal]
-    public delegate void OnStompEventEventHandler();
+    public delegate void OnShouldStompEventEventHandler();
 
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
@@ -70,6 +71,9 @@ public partial class Manager : Node
     [Export] Button layerButton8;
     [Export] Button layerButton9;
     [Export] Button layerButton10;
+
+    [Export] Label chosen_emoticons_label;
+
 
     public void EmitBeatParticles(Vector2 position, Color color)
     {
@@ -132,7 +136,10 @@ public partial class Manager : Node
     [Export] public CheckButton recordSampleCheckButton2;
     [Export] public CheckButton recordSampleCheckButton3;
 
-    BpmManager BpmManager => BpmManager.instance;
+    BpmManager bpm_manager => BpmManager.instance;
+
+    SoundBank chosenSoundBank = null;
+    List<string> chosenEmoticons = null;
 
     // settings menu
     [Export] CheckButton metronome_toggle;
@@ -179,7 +186,7 @@ public partial class Manager : Node
     bool savedToLaout = false;
 
     // on button functions
-    bool[,] savedTemplate = new bool[4, 32];
+    bool[,] savedTemplate = new bool[4, BpmManager.beatsAmount];
 
     bool loadedtemplate = false;
 
@@ -198,14 +205,14 @@ public partial class Manager : Node
 
     public void OnClearLayoutButton()
     {
-        beatActives = new bool[4, 32];
+        beatActives = new bool[4, BpmManager.beatsAmount];
         hasclearedlayout = true;
     }
     public void OnRecordButton() => GD.Print("Record");
 
     public void OnPlayPauseButton()
     {
-        BpmManager.playing = !BpmManager.playing;
+        bpm_manager.playing = !bpm_manager.playing;
 
         // pause layer voice over
         if (LayerVoiceOver.instance.voiceOvers[LayerVoiceOver.instance.currentLayer] != null)
@@ -224,15 +231,15 @@ public partial class Manager : Node
 
     public void OnBpmUpButton()
     {
-        if (BpmManager.bpm < 300) BpmManager.bpm += 10;
+        if (bpm_manager.bpm < 300) bpm_manager.bpm += 10;
         haschangedbpm = true;
     }
     public void OnBpmDownButton()
     {
-        if (BpmManager.bpm > 40) BpmManager.bpm -= 10;
+        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 10;
         haschangedbpm = true;
     }
-    public void OnResetPlayerButton() => BpmManager.currentBeat = 31;
+    public void OnResetPlayerButton() => bpm_manager.currentBeat = BpmManager.beatsAmount - 1;
 
     public void ShowSavingLabel(string name)
     {
@@ -289,22 +296,22 @@ public partial class Manager : Node
 
     [Export] Sprite2D layerOutline;
 
-    public bool[,] beatActives = new bool[4, 32];
+    public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
 
     public int currentLayerIndex = 0;
 
     public List<bool[,]> layers = new()
     {
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32]
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount]
     };
 
     public bool[,] GetCurrentLayer() => layers[currentLayerIndex];
@@ -346,8 +353,8 @@ public partial class Manager : Node
     {
         var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
 
-        var fixedcurrentbeat = BpmManager.currentBeat;
-        if (fixedcurrentbeat >= 31) fixedcurrentbeat = 0;
+        var fixedcurrentbeat = bpm_manager.currentBeat;
+        if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;
 
         //GD.Print("current beat: " + fixedcurrentbeat);
 
@@ -367,7 +374,7 @@ public partial class Manager : Node
     {
         for (int ring = 0; ring < 4; ring++)
         {
-            for (int beat = 0; beat < 32; beat++)
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
             {
                 bool active = layer[ring, beat];
                 if (active) return true;
@@ -436,43 +443,49 @@ public partial class Manager : Node
     public void MixAudioFiles(string file1, string file2, string outputFile)
     {
         using (var reader1 = new AudioFileReader(file1))
-        using (var reader2 = new AudioFileReader(file2))
         {
-            // Use the format of the input files
-            var outputFormat = reader1.WaveFormat;
-
-            // Create a MixingSampleProvider for the two input files
-            var mixer = new MixingSampleProvider(new[] { reader1.ToSampleProvider(), reader2.ToSampleProvider() });
-
-            // Write the mixed audio to the output file in chunks
-            using (var writer = new WaveFileWriter(outputFile, outputFormat))
+            using (var reader2 = new AudioFileReader(file2))
             {
-                const int bufferSize = 4096; // Process audio in chunks
-                float[] buffer = new float[bufferSize];
+                // Use the format of the input files
+                var outputFormat = reader1.WaveFormat;
 
-                while (true)
+                // Create a MixingSampleProvider for the two input files
+                var mixer = new MixingSampleProvider([reader1.ToSampleProvider(), reader2.ToSampleProvider()]);
+
+                // Write the mixed audio to the output file in chunks
+                using (var writer = new WaveFileWriter(outputFile, outputFormat))
                 {
-                    // Read samples from the mixer
-                    int samplesRead = mixer.Read(buffer, 0, bufferSize);
+                    const int bufferSize = 4096; // Process audio in chunks
+                    float[] buffer = new float[bufferSize];
 
-                    // Exit the loop if no more samples are available
-                    if (samplesRead == 0) break;
+                    while (true)
+                    {
+                        // Read samples from the mixer
+                        int samplesRead = mixer.Read(buffer, 0, bufferSize);
 
-                    // Write the samples to the output file
-                    writer.WriteSamples(buffer, 0, samplesRead);
+                        // Exit the loop if no more samples are available
+                        if (samplesRead == 0) break;
+
+                        // Write the samples to the output file
+                        writer.WriteSamples(buffer, 0, samplesRead);
+                    }
+
+                    writer.Close();
                 }
+                reader2.Close();
             }
+            reader1.Close();
         }
     }
 
     public void SaveBeatAsFile(bool[,] loop)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "beat_" + BpmManager.bpm.ToString() + "bpm_" + sanitizedTime;
+        string filename = "beat_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
 
         int sampleRate = 48000;
-        float secondsPerBeat = 60f / BpmManager.bpm;
-        int beatsPerLoop = 32;
+        float secondsPerBeat = 60f / bpm_manager.bpm;
+        int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
         float[] audioData = new float[totalSamples];
@@ -528,11 +541,17 @@ public partial class Manager : Node
     public void SaveSongAsFile(List<bool[,]> loops)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "liedje_" + BpmManager.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        string final_name = "export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        string beats_name = "beats";
+        string song_name = "song";
+        string layers_name = "layers";
+        string beats_with_song_name = "beats_with_song";
 
         int sampleRate = 48000;
-        float secondsPerBeat = 60f / BpmManager.bpm;
-        int beatsPerLoop = 32;
+        float secondsPerBeat = 60f / bpm_manager.bpm;
+        int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop * loops.Count;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
         float[] audioData = new float[totalSamples];
@@ -576,25 +595,83 @@ public partial class Manager : Node
         if (max > 1.0f) for (int i = 0; i < audioData.Length; i++) audioData[i] /= max;
 
         // write file
-        using (var writer = new WaveFileWriter(filename + ".wav", new WaveFormat(sampleRate, 1)))
+        using (var writer = new WaveFileWriter(beats_name + ".wav", new WaveFormat(sampleRate, 1)))
         {
             foreach (var sample in audioData) writer.WriteSample(sample);
             writer.Close();
         }
 
-        ChangePitch(filename + ".wav", 2f);
+        ChangePitch(beats_name + ".wav", 2f);
 
-        // layer voiceover
-        ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, "voiceover.wav");
-        MixAudioFiles(filename + ".wav", "voiceover.wav", filename + "_vc" + ".wav");
+        // export layers voiceovers as single wav
+        AudioStream[] voiceovers = LayerVoiceOver.instance.voiceOvers;
+        for (int i = 0; i < 10; i++)
+        {
+            string name = "layer" + i.ToString() + ".wav";
+            AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers[i];
+            if (audioStreamWav != null)
+            {
+                // voice wav
+                ConvertAudioStreamWavToWav(audioStreamWav, name);
+            }
+            else
+            {
+                // empty wav
+                float timepb = 60f / BpmManager.instance.bpm / 2;
+                float time = timepb * BpmManager.beatsAmount;
+                int rate = 48000;
+                int channels = 1;
+                int bits = 16;
+                int total = (int)(time * rate * channels);
+                byte[] silence = new byte[total * (bits / 8)];
+                var waveFormat = new WaveFormat(sampleRate, bits, channels);
+                using (var writer = new WaveFileWriter(name, waveFormat))
+                {
+                    writer.Write(silence, 0, silence.Length);
+                    writer.Close();
+                }
+            }
+        }
+        List<string> layer_inputs =
+        [
+            "layer0.wav",
+            "layer1.wav",
+            "layer2.wav",
+            "layer3.wav",
+            "layer4.wav",
+            "layer5.wav",
+            "layer6.wav",
+            "layer7.wav",
+            "layer8.wav",
+            "layer9.wav"
+        ];
+        using (var firstReader = new WaveFileReader(layer_inputs[0]))
+        {
+            var waveFormat = firstReader.WaveFormat;
+            using (var writer = new WaveFileWriter(layers_name + ".wav", waveFormat))
+            {
+                firstReader.CopyTo(writer);
+                for (int i = 1; i < layer_inputs.Count; i++) using (var reader = new WaveFileReader(layer_inputs[i])) reader.CopyTo(writer);
+            }
+        }
+        for (int i = 0; i < layer_inputs.Count; i++) File.Delete(layer_inputs[i]);
 
-        // delete non-voiceover wavs
-        File.Delete(filename + ".wav");
-        File.Delete("voiceover.wav");
+        // song to wav
+        ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, song_name + ".wav");
+
+        // mix everything
+        MixAudioFiles(beats_name + ".wav", song_name + ".wav", beats_with_song_name + ".wav");
+        MixAudioFiles(beats_with_song_name + ".wav", layers_name + ".wav", final_name + ".wav");
+
+        // delete temps
+        File.Delete(beats_name + ".wav");
+        File.Delete(layers_name + ".wav");
+        File.Delete(song_name + ".wav");
+        File.Delete(beats_with_song_name + ".wav");
 
         // convert and finish
-        ConvertWavToMp3(filename + "_vc");
-        ShowSavingLabel(filename + "_vc");
+        ConvertWavToMp3(final_name);
+        ShowSavingLabel(final_name);
         hassavedtofile = true;
     }
 
@@ -638,54 +715,81 @@ public partial class Manager : Node
 
     // --------------------------------
 
+    private float startswing;
+
     public override void _Ready()
     {
         // init singleton
         instance ??= this;
 
-        BpmManager.OnBeatEvent += OnBeat;
+        bpm_manager.OnBeatEvent += OnBeat;
+
+        // deserialize chosen soundbank
+        string chosen_soundbank_path = "chosen_soundbank.json";
+        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
+        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
+
+        // deserialize chosen emoticons
+        string chosen_emoticons_path = "chosen_emoticons.json";
+        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
+        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
+        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
 
         // grab audio files -> res://Resources/Audio/SoundBanks/
-        string tempPath = "temp.txt";
-        if (File.Exists(tempPath))
+        string soundbankname = chosenSoundBank.name;
+        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
+        DirAccess baseDir = DirAccess.Open(baseDirPath);
+        baseDir.ListDirBegin();
+        string folderName;
+        while ((folderName = baseDir.GetNext()) != "")
         {
-            string soundbankname = File.ReadAllText(tempPath);
-
-            // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
-            string baseDirPath = "res://Resources/Audio/SoundBanks/";
-            DirAccess baseDir = DirAccess.Open(baseDirPath);
-            baseDir.ListDirBegin();
-            string folderName;
-            while ((folderName = baseDir.GetNext()) != "")
+            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
             {
-                if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
+                string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
+
+                // load audio files
+                string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
+                string fileName;
+                for (int i = 0; i < files.Length; ++i)
                 {
-                    string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
+                    fileName = files[i];
 
-                    // load audio files
-                    string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
-                    string fileName;
-                    for (int i = 0; i < files.Length; ++i)
+                    if (fileName.EndsWith(".wav"))
                     {
-                        fileName = files[i];
-
-                        if (fileName.EndsWith(".wav"))
-                        {
-                            string lower = fileName.ToLower();
-                            string fullPath = folderThatHoldsAudioFiles + fileName;
-                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
+                        string lower = fileName.ToLower();
+                        string fullPath = folderThatHoldsAudioFiles + fileName;
+                        if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                        else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                        else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                        else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
                     }
-                    break;
                 }
+                break;
             }
-
-            baseDir.ListDirEnd();
         }
-        File.Delete(tempPath);
+        baseDir.ListDirEnd();
+
+        // set swing
+        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
+        BpmManager.instance.swing = chosenswing;
+        startswing = chosenswing;
+        swingslider.Value = chosenswing;
+
+        // set bpm
+        int offset = 0;
+        string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
+        string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
+        Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
+        foreach (string theme in chosenSoundBank.themes)
+        {
+            offset += int.Parse(offsetLookup[theme]);
+            GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
+        }
+        BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
+
+        // delete tmep json files
+        File.Delete(chosen_emoticons_path);
+        File.Delete(chosen_soundbank_path);
 
         // init audioplayers
         extraAudioPlayer = new AudioStreamPlayer2D();
@@ -727,7 +831,7 @@ public partial class Manager : Node
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
         saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
-        ResetPlayerButton.Pressed += () => { OnResetPlayerButton(); BpmManager.playing = true; };
+        ResetPlayerButton.Pressed += () => { OnResetPlayerButton(); bpm_manager.playing = true; };
 
         // skipping / ending the tutorial
         skiptutorialbutton.Pressed += () =>
@@ -854,13 +958,13 @@ public partial class Manager : Node
             // rode ring
             () => AmountOfActives(0) >= 4, // temp
             () => AmountOfActives(0) >= 8, // temp
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
             () => stompedAmount > 4, // temp
 
             // oranje ring
             () => AmountOfActives(1) >= 4, // temp
             () => AmountOfActives(1) >= 8, // temp
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
             () => clappedAmount > 4, // temp
 
             // gele ring
@@ -870,7 +974,7 @@ public partial class Manager : Node
             () => AmountOfActives(3) >= 2, // temp
 
             // alle ringen
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
 
             // progressie bar
             () => progressBar.Value > 50,
@@ -878,17 +982,17 @@ public partial class Manager : Node
             // custom sample
             () => recordSampleButton0.recordedAudio != null,
             () => recordSampleCheckButton0.ButtonPressed == true,
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
 
             // effects
             () => haschangedbpm,
             () => ReverbDelayManager.instance?.reverbSlider.Value != 0 || ReverbDelayManager.instance?.delaySlider.Value != 0,
-            () => BpmManager.swing > 0.1f,
+            () => Mathf.Abs(bpm_manager.swing - startswing) > 0.01f,
 
             // layer voice over
             () => LayerVoiceOver.instance.finished,
             () => layerLoopToggle.ButtonPressed,
-            () => BpmManager.playing == true,
+            () => bpm_manager.playing == true,
             () => savedToLaout == true && loadedtemplate == true,
 
             // song voice over
@@ -1090,7 +1194,7 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
-        if (Input.IsKeyPressed(Key.F6) && BpmManager.bpm != 900) BpmManager.bpm = 900;
+        if (Input.IsKeyPressed(Key.F6) && bpm_manager.bpm != 900) bpm_manager.bpm = 900;
 
         if (!latereadydone)
         {
@@ -1210,7 +1314,7 @@ public partial class Manager : Node
 		if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
 
         // update swing amount
-        BpmManager.swing = (float)swingslider.Value;
+        bpm_manager.swing = (float)swingslider.Value;
 
         // space as play/pause
         var spacedown = Input.IsKeyPressed(Key.Space);
@@ -1219,7 +1323,7 @@ public partial class Manager : Node
 
         // enter as reset player
         var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false) { OnResetPlayerButton(); BpmManager.playing = true; }
+        if (enterdown && enterdownlastframe == false) { OnResetPlayerButton(); bpm_manager.playing = true; }
         enterdownlastframe = enterdown;
 
         // drag&drop
@@ -1231,8 +1335,8 @@ public partial class Manager : Node
         else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 
         // update pointer
-        float intergerFactor = (float)BpmManager.currentBeat / (float)BpmManager.beatsAmount;
-        pointer.RotationDegrees = intergerFactor * 360f;
+        float intergerFactor = (float)((float)(bpm_manager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
         // check clap and stomp
         var volume = MicrophoneCapture.instance.volume;
@@ -1259,17 +1363,14 @@ public partial class Manager : Node
             }
         }
         
-        if (BpmManager.playing)
+        if (bpm_manager.playing)
         {
             SetGlobalVolume(1);
             timeafterplay += ((float)delta);
-
-            // metronome
-            var baseTimePerBeat = (60f / BpmManager.bpm) / 2;
-            var timePerBeat = (BpmManager.currentBeat % 2 == 1) ? baseTimePerBeat * (1 + BpmManager.swing) : baseTimePerBeat * (1 - (BpmManager.swing / 2));
+            
             slowBeatTimer += (float)delta / 4;
-            if (slowBeatTimer > timePerBeat) slowBeatTimer -= timePerBeat;
-            var beatprogress = slowBeatTimer / timePerBeat;
+            if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
+            var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
             metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
 
             // update progressbar
@@ -1292,7 +1393,7 @@ public partial class Manager : Node
 
                 var color = colors[ring];
 
-                if (beat == BpmManager.currentBeat)
+                if (beat == bpm_manager.currentBeat)
                 {
                     if (active) color = color.Lightened(0.75f);
                     else color = new(1, 1, 1, 0.5f);
@@ -1335,7 +1436,7 @@ public partial class Manager : Node
         }
 
         // update bpm label
-        bpmLabel.Text = BpmManager.bpm.ToString();
+        bpmLabel.Text = bpm_manager.bpm.ToString();
     }
 
     void SetGlobalVolume(float value)
@@ -1420,70 +1521,84 @@ public partial class Manager : Node
     {
         if (timeafterplay < 0.2f) return;
         int ring = 1;
-        bool active = beatActives[ring, BpmManager.currentBeat];
-        var sprite = beatSprites[ring, BpmManager.currentBeat];
+        bool active = beatActives[ring, bpm_manager.currentBeat];
+        var sprite = beatSprites[ring, bpm_manager.currentBeat];
         if (active)
         {
             sprite.Scale += Vector2.One;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
-            EmitBeatParticles(beatSprites[ring, BpmManager.currentBeat].Position, colors[ring]);
+            EmitBeatParticles(beatSprites[ring, bpm_manager.currentBeat].Position, colors[ring]);
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
-
-        EmitSignal(SignalName.OnClapEvent);
     }
 
     public void OnStomp()
     {
         if (timeafterplay < 0.2f) return;
         int ring = 0;
-        bool active = beatActives[ring, BpmManager.currentBeat];
-        var sprite = beatSprites[ring, BpmManager.currentBeat];
+        bool active = beatActives[ring, bpm_manager.currentBeat];
+        var sprite = beatSprites[ring, bpm_manager.currentBeat];
         if (active)
         {
             sprite.Scale += Vector2.One;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
-            EmitBeatParticles(beatSprites[ring, BpmManager.currentBeat].Position, colors[ring]);
+            EmitBeatParticles(beatSprites[ring, bpm_manager.currentBeat].Position, colors[ring]);
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
 
-        EmitSignal(SignalName.OnStompEvent);
     }
 
     public void OnBeat()
     {
         if (metronome_sfx_enabled)
         {
-           if (BpmManager.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
+           if (bpm_manager.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
            else PlayExtraSFX(metronomealt_sfx);
         }
 
-        if (beatActives[0, BpmManager.currentBeat]) firstAudioPlayer.Play();
-        if (beatActives[1, BpmManager.currentBeat]) secondAudioPlayer.Play();
-        if (beatActives[2, BpmManager.currentBeat]) thirdAudioPlayer.Play();
-        if (beatActives[3, BpmManager.currentBeat]) fourthAudioPlayer.Play();
+        if (beatActives[0, bpm_manager.currentBeat]) firstAudioPlayer.Play();
+        if (beatActives[1, bpm_manager.currentBeat]) secondAudioPlayer.Play();
+        if (beatActives[2, bpm_manager.currentBeat]) thirdAudioPlayer.Play();
+        if (beatActives[3, bpm_manager.currentBeat]) fourthAudioPlayer.Play();
         clapped = false;
         stomped = false;
 
-        if (BpmManager.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
+        if (bpm_manager.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
 
         // if layer looping
-        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.currentBeat == 31) NextLayer();
+        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (bpm_manager.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (BpmManager.currentBeat == 0)
+        if (bpm_manager.currentBeat == 0)
         {
             LayerVoiceOver.instance.OnTop();
             UpdateSongVoiceOverPlayBackPosition();
         }
-        if (currentLayerIndex == 0 && BpmManager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
+        if (currentLayerIndex == 0 && bpm_manager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
+
+        int nextbeat = bpm_manager.currentBeat + 1;
+        if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
+
+        bool clap_active = beatActives[1, nextbeat];
+        if (clap_active)
+        {
+            GD.Print("shouldclap");
+            EmitSignal(SignalName.OnShouldClapEvent);
+        }
+
+        bool stomp_active = beatActives[0, nextbeat];
+        if (stomp_active)
+        {
+            GD.Print("shouldstomp");
+            EmitSignal(SignalName.OnShouldStompEvent);
+        }
     }
 
     private Sprite2D CreateOutline(int beat, int ring)
@@ -1526,7 +1641,7 @@ public partial class Manager : Node
     static int AmountOfActives(int ring)
     {
         int amount = 0;
-        for (int beat = 0; beat < BpmManager.instance.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
         return amount;
     }
 }

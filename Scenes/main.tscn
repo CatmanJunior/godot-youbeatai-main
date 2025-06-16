@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://cx0bpjp8y6sel" path="res://Resources/Textures/square-outline.png" id="23_vsgbq"]
+[ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xng46"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -76,8 +77,6 @@ font_size = 80
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_bao2x"]
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
 [node name="scene" type="Node2D"]
@@ -93,7 +92,7 @@ current = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "recordSampleCheckButton0", "recordSampleCheckButton1", "recordSampleCheckButton2", "recordSampleCheckButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "recordSampleCheckButton0", "recordSampleCheckButton1", "recordSampleCheckButton2", "recordSampleCheckButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
 script = ExtResource("1_rfd7i")
 metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
@@ -113,6 +112,7 @@ layerButton7 = NodePath("../../UserInterface/SwitchLayerButtons/Layer7")
 layerButton8 = NodePath("../../UserInterface/SwitchLayerButtons/Layer8")
 layerButton9 = NodePath("../../UserInterface/SwitchLayerButtons/Layer9")
 layerButton10 = NodePath("../../UserInterface/SwitchLayerButtons/Layer10")
+chosen_emoticons_label = NodePath("../../chosen_emoticons_label")
 colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
 robotlight = NodePath("../../UserInterface/Robot/RobotLight")
 spritePrefab = ExtResource("2_1eep1")
@@ -1042,10 +1042,14 @@ texture = SubResource("CanvasTexture_b5jd4")
 [node name="Pointer" type="Sprite2D" parent="UserInterface"]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
-scale = Vector2(4, 100)
-texture = SubResource("CanvasTexture_bao2x")
-centered = false
-offset = Vector2(-0.5, -1)
+scale = Vector2(0.6, 0.85)
+offset = Vector2(0, -150)
+
+[node name="PointLight2D" type="PointLight2D" parent="UserInterface/Pointer"]
+color = Color(1, 1, 0.698039, 1)
+energy = 4.71
+texture = ExtResource("26_7k868")
+offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 z_index = -1
@@ -1198,3 +1202,12 @@ show_behind_parent = true
 layout_mode = 0
 offset_right = 238.0
 offset_bottom = 84.0
+
+[node name="chosen_emoticons_label" type="Label" parent="."]
+offset_left = 109.0
+offset_top = 295.0
+offset_right = 309.0
+offset_bottom = 342.0
+theme_override_font_sizes/font_size = 26
+horizontal_alignment = 1
+vertical_alignment = 1

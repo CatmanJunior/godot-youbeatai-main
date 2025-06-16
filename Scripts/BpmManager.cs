@@ -18,17 +18,19 @@ public partial class BpmManager : Node
     }
 
     // timing
-    public int beatsAmount = 32;
+    public static int beatsAmount = 32;
+
     public bool playing = false;
-    public int currentBeat = 31;
+    public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
     public float swing = 0.5f;
+    public float timePerBeat;
 
     // events
     [Signal]
     public delegate void OnBeatEventEventHandler();
     [Signal]
-    public delegate void OnBpmChangedEventHandler(float bpm);// = (bpm) => { };
+    public delegate void OnBpmChangedEventHandler(float bpm);
 
     public override void _Ready()
     {
@@ -41,7 +43,7 @@ public partial class BpmManager : Node
         {
             beatTimer += (float)delta;
             var baseTimePerBeat = 60f / bpm / 2;
-            var timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
+            timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
             if (beatTimer > timePerBeat)
             {
                 beatTimer -= timePerBeat;

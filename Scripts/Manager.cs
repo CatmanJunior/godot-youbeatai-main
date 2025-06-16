@@ -725,12 +725,12 @@ public partial class Manager : Node
         bpm_manager.OnBeatEvent += OnBeat;
 
         // deserialize chosen soundbank
-        string chosen_soundbank_path = "chosen_soundbank.json";
+        string chosen_soundbank_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
         string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
         chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
 
         // deserialize chosen emoticons
-        string chosen_emoticons_path = "chosen_emoticons.json";
+        string chosen_emoticons_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
         string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
         chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
         foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;

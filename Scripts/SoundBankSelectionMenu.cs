@@ -46,16 +46,15 @@ public partial class SoundBankSelectionMenu : Panel
         {
             // remember audio bank to use
             {
-                string path = "chosen_soundbank.json";
+                string path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
                 var json = JsonSerializer.Serialize(chosenSoundBank);
                 if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
                 System.IO.File.WriteAllText(path, json);
             }
-            
 
             // remember chosen emoticons
             {
-                string path = "chosen_emoticons.json";
+                string path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
                 List<string> emoticons = [];
                 emoticons.AddRange(chosenEmotions);
                 emoticons.AddRange(chosenThemes);

@@ -74,7 +74,7 @@ public partial class TemplateManager : Node
         for (int i = 0; i < 4; i++)
         {
             formattedContent += rowLabels[i];
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < BpmManager.beatsAmount; j++)
             {
                 formattedContent += actives[i, j] ? "1" : "0";
             }
@@ -151,20 +151,20 @@ public partial class TemplateManager : Node
             throw new FormatException("Expected 4 lines for the active states.");
         }
 
-        bool[,] boolArray = new bool[4, 32];
+        bool[,] boolArray = new bool[4, BpmManager.beatsAmount];
 
         for (int i = 0; i < 4; i++)
         {
             string line = lines[i].Trim();
             
             // Check if the current line has the expected length
-            if (line.Length != 33) // 1 for label + 32 for binary values
+            if (line.Length != BpmManager.beatsAmount + 1) // 1 for label + BpmManager.instance.beatsAmount for binary values
             {
-                GD.PrintErr($"Invalid line length: {line.Length}. Expected 33 characters.");
+                GD.PrintErr($"Invalid line length: {line.Length}. Expected BpmManager.instance.beatsAmount + 1 characters.");
                 throw new FormatException("Line does not contain enough data.");
             }
 
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < BpmManager.beatsAmount; j++)
             {
                 boolArray[i, j] = line[j + 1] == '1'; // Skip the first character which is the label
             }

@@ -186,7 +186,7 @@ public partial class Manager : Node
     bool savedToLaout = false;
 
     // on button functions
-    bool[,] savedTemplate = new bool[4, 32];
+    bool[,] savedTemplate = new bool[4, BpmManager.beatsAmount];
 
     bool loadedtemplate = false;
 
@@ -205,7 +205,7 @@ public partial class Manager : Node
 
     public void OnClearLayoutButton()
     {
-        beatActives = new bool[4, 32];
+        beatActives = new bool[4, BpmManager.beatsAmount];
         hasclearedlayout = true;
     }
     public void OnRecordButton() => GD.Print("Record");
@@ -239,7 +239,7 @@ public partial class Manager : Node
         if (BpmManager.bpm > 40) BpmManager.bpm -= 10;
         haschangedbpm = true;
     }
-    public void OnResetPlayerButton() => BpmManager.currentBeat = 31;
+    public void OnResetPlayerButton() => BpmManager.currentBeat = BpmManager.beatsAmount - 1;
 
     public void ShowSavingLabel(string name)
     {
@@ -296,22 +296,22 @@ public partial class Manager : Node
 
     [Export] Sprite2D layerOutline;
 
-    public bool[,] beatActives = new bool[4, 32];
+    public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
 
     public int currentLayerIndex = 0;
 
     public List<bool[,]> layers = new()
     {
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32],
-        new bool[4, 32]
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount],
+        new bool[4, BpmManager.beatsAmount]
     };
 
     public bool[,] GetCurrentLayer() => layers[currentLayerIndex];
@@ -354,7 +354,7 @@ public partial class Manager : Node
         var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
 
         var fixedcurrentbeat = BpmManager.currentBeat;
-        if (fixedcurrentbeat >= 31) fixedcurrentbeat = 0;
+        if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;
 
         //GD.Print("current beat: " + fixedcurrentbeat);
 
@@ -374,7 +374,7 @@ public partial class Manager : Node
     {
         for (int ring = 0; ring < 4; ring++)
         {
-            for (int beat = 0; beat < 32; beat++)
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
             {
                 bool active = layer[ring, beat];
                 if (active) return true;
@@ -479,7 +479,7 @@ public partial class Manager : Node
 
         int sampleRate = 48000;
         float secondsPerBeat = 60f / BpmManager.bpm;
-        int beatsPerLoop = 32;
+        int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
         float[] audioData = new float[totalSamples];
@@ -539,7 +539,7 @@ public partial class Manager : Node
 
         int sampleRate = 48000;
         float secondsPerBeat = 60f / BpmManager.bpm;
-        int beatsPerLoop = 32;
+        int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop * loops.Count;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
         float[] audioData = new float[totalSamples];
@@ -1484,7 +1484,7 @@ public partial class Manager : Node
         if (BpmManager.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
 
         // if layer looping
-        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.currentBeat == 31) NextLayer();
+        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
         if (BpmManager.currentBeat == 0)
         {
@@ -1494,7 +1494,7 @@ public partial class Manager : Node
         if (currentLayerIndex == 0 && BpmManager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
 
         int nextbeat = BpmManager.currentBeat + 1;
-        if (nextbeat == 32) nextbeat = 0;
+        if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
 
         bool clap_active = beatActives[0, nextbeat];
         if (clap_active)
@@ -1551,7 +1551,7 @@ public partial class Manager : Node
     static int AmountOfActives(int ring)
     {
         int amount = 0;
-        for (int beat = 0; beat < BpmManager.instance.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
         return amount;
     }
 }

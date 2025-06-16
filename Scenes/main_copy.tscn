@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://go06l7qpaqma"]
+[gd_scene load_steps=49 format=3 uid="uid://bpnc43bcfo8yt"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_0klt1"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="2_2aw6o"]
@@ -1285,10 +1285,22 @@ render_target_update_mode = 4
 [node name="Klappy" parent="SubViewportContainer/SubViewport" instance=ExtResource("30_orymn")]
 
 [node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Klappy/Clap Test Animation/Robot" index="0"]
-bones/0/rotation = Quaternion(0.603589, 0.000468541, -0.000340688, 0.797295)
-bones/9/rotation = Quaternion(0.706814, 0.0141467, 0.707132, 0.0133638)
+bones/0/rotation = Quaternion(0.600564, 0.000467195, -0.000342421, 0.799576)
+bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
+bones/2/position = Vector3(-3.31873e-10, 0.00522447, -1.94082e-09)
+bones/2/rotation = Quaternion(0.160301, 0.00863794, -0.466908, 0.869612)
+bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.00052544, 0.745102)
+bones/9/position = Vector3(0.00529161, -0.00215548, 0.00402698)
+bones/9/rotation = Quaternion(0.706895, 0.0114691, 0.707145, 0.0106851)
 bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
-bones/16/rotation = Quaternion(0.707132, -0.0133665, -0.706814, 0.0141439)
+bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
+bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
+bones/14/position = Vector3(3.92663e-10, 0.00522447, 3.24292e-10)
+bones/14/rotation = Quaternion(0.160301, -0.00863774, 0.466908, 0.869613)
+bones/16/position = Vector3(-0.00554458, -0.00221778, 0.00496329)
+bones/16/rotation = Quaternion(0.707144, -0.0106898, -0.706895, 0.0114643)
+bones/17/position = Vector3(-7.52688e-10, 0.00420524, 6.35182e-10)
+bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
 
 [node name="AnimationTree" parent="SubViewportContainer/SubViewport/Klappy/Clap Test Animation" index="4"]
 parameters/ClapSpeed/scale = -1.0

@@ -443,32 +443,38 @@ public partial class Manager : Node
     public void MixAudioFiles(string file1, string file2, string outputFile)
     {
         using (var reader1 = new AudioFileReader(file1))
-        using (var reader2 = new AudioFileReader(file2))
         {
-            // Use the format of the input files
-            var outputFormat = reader1.WaveFormat;
-
-            // Create a MixingSampleProvider for the two input files
-            var mixer = new MixingSampleProvider(new[] { reader1.ToSampleProvider(), reader2.ToSampleProvider() });
-
-            // Write the mixed audio to the output file in chunks
-            using (var writer = new WaveFileWriter(outputFile, outputFormat))
+            using (var reader2 = new AudioFileReader(file2))
             {
-                const int bufferSize = 4096; // Process audio in chunks
-                float[] buffer = new float[bufferSize];
+                // Use the format of the input files
+                var outputFormat = reader1.WaveFormat;
 
-                while (true)
+                // Create a MixingSampleProvider for the two input files
+                var mixer = new MixingSampleProvider([reader1.ToSampleProvider(), reader2.ToSampleProvider()]);
+
+                // Write the mixed audio to the output file in chunks
+                using (var writer = new WaveFileWriter(outputFile, outputFormat))
                 {
-                    // Read samples from the mixer
-                    int samplesRead = mixer.Read(buffer, 0, bufferSize);
+                    const int bufferSize = 4096; // Process audio in chunks
+                    float[] buffer = new float[bufferSize];
 
-                    // Exit the loop if no more samples are available
-                    if (samplesRead == 0) break;
+                    while (true)
+                    {
+                        // Read samples from the mixer
+                        int samplesRead = mixer.Read(buffer, 0, bufferSize);
 
-                    // Write the samples to the output file
-                    writer.WriteSamples(buffer, 0, samplesRead);
+                        // Exit the loop if no more samples are available
+                        if (samplesRead == 0) break;
+
+                        // Write the samples to the output file
+                        writer.WriteSamples(buffer, 0, samplesRead);
+                    }
+
+                    writer.Close();
                 }
+                reader2.Close();
             }
+            reader1.Close();
         }
     }
 
@@ -591,7 +597,37 @@ public partial class Manager : Node
 
         ChangePitch(filename + ".wav", 2f);
 
-        // layer voiceover
+        // mix with layer voiceovers
+        AudioStream[] voiceovers = LayerVoiceOver.instance.voiceOvers;
+        for (int i = 0; i < 10; i++)
+        {
+            string name = "layer" + i.ToString() + ".wav";
+            AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers[i];
+            if (audioStreamWav != null)
+            {
+                // voice wav
+                ConvertAudioStreamWavToWav(audioStreamWav, name);
+            }
+            else
+            {
+                // empty wav
+                float timepb = 60f / BpmManager.instance.bpm / 2;
+                float time = timepb * BpmManager.beatsAmount;
+                int rate = 48000;
+                int channels = 1;
+                int bits = 16;
+                int total = (int)(time * rate * channels);
+                byte[] silence = new byte[total * (bits / 8)];
+                var waveFormat = new WaveFormat(sampleRate, bits, channels);
+                using (var writer = new WaveFileWriter(name, waveFormat))
+                {
+                    writer.Write(silence, 0, silence.Length);
+                    writer.Close();
+                }
+            }
+        }
+
+        // mix with song voiceover
         ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, "voiceover.wav");
         MixAudioFiles(filename + ".wav", "voiceover.wav", filename + "_vc" + ".wav");
 

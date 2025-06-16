@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://nwpadv3w4nfk"
-path="res://.godot/imported/Stamp Test Animatie.fbx-9ae30197e30aec0ed65a80422aaea609.scn"
+uid="uid://circsrtgisq11"
+path="res://.godot/imported/Stamp Animation Single.fbx-fd7560fee5468cd3f9e62c033fd2fa5d.scn"
 
 [deps]
 
-source_file="res://Experimental/Klappy/Stamp Test Animatie.fbx"
-dest_files=["res://.godot/imported/Stamp Test Animatie.fbx-9ae30197e30aec0ed65a80422aaea609.scn"]
+source_file="res://Experimental/Klappy/Stamp Animation Single.fbx"
+dest_files=["res://.godot/imported/Stamp Animation Single.fbx-fd7560fee5468cd3f9e62c033fd2fa5d.scn"]
 
 [params]
 
@@ -30,14 +30,14 @@ animation/import=true
 animation/fps=30
 animation/trimming=true
 animation/remove_immutable_tracks=true
-animation/import_rest_as_RESET=true
+animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={
 "animations": {
 "Robot|RobotAction": {
 "save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "res://Experimental/Klappy/Anim_Klappy_Stamp.res",
+"save_to_file/path": "res://Experimental/Klappy/Anim_Klappy_Stamp_Single.tres",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,

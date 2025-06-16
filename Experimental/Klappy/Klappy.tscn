@@ -1,8 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://cawoo3gsyyym5"]
+[gd_scene load_steps=22 format=3 uid="uid://cawoo3gsyyym5"]
 
 [ext_resource type="PackedScene" uid="uid://n1c53svx8ebl" path="res://Experimental/Klappy/Clap Test Animation.fbx" id="1_fbtxr"]
 [ext_resource type="Script" uid="uid://bpoaf8o2cncdd" path="res://Experimental/Klappy/klappy_animations.gd" id="2_d4ajq"]
-[ext_resource type="Animation" uid="uid://cf4an8jtbmu56" path="res://Experimental/Klappy/Anim_Klappy_Stamp.res" id="2_vxk86"]
+[ext_resource type="Animation" uid="uid://cg2cu5v7qtve7" path="res://Experimental/Klappy/Anim_Klappy_Stamp_Single.tres" id="3_vxk86"]
 
 [sub_resource type="Animation" id="Animation_qxlub"]
 resource_name = "Robot|RobotAction"
@@ -193,7 +193,7 @@ _data = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_d4ajq"]
 _data = {
-&"Anim_Klappy_Stamp": ExtResource("2_vxk86")
+&"Anim_Klappy_Stamp_Single 2": ExtResource("3_vxk86")
 }
 
 [sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_fbtxr"]
@@ -206,15 +206,19 @@ animation = &"Robot|Robot_001|Take 001|BaseLayer"
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_igk12"]
 animation = &"Robot|RobotAction"
 
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_d4ajq"]
+
 [sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_1ku2n"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_eu1dx"]
-animation = &"anim/Anim_Klappy_Stamp"
+animation = &"anim/Anim_Klappy_Stamp_Single 2"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_igk12"]
 
 [sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_pr1ly"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_igk12"]
-graph_offset = Vector2(-429.336, -113.227)
+graph_offset = Vector2(-500.68, -140.918)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_vxk86")
 nodes/Add2/position = Vector2(240, -120)
 "nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_fbtxr")
@@ -223,14 +227,18 @@ nodes/Add2/position = Vector2(240, -120)
 "nodes/Animation 2/position" = Vector2(-280, -260)
 nodes/Clap/node = SubResource("AnimationNodeAnimation_igk12")
 nodes/Clap/position = Vector2(-400, -60)
+nodes/ClapSpeed/node = SubResource("AnimationNodeTimeScale_d4ajq")
+nodes/ClapSpeed/position = Vector2(80, -40)
 nodes/ClapTrigger/node = SubResource("AnimationNodeTimeSeek_1ku2n")
 nodes/ClapTrigger/position = Vector2(-80, -80)
 "nodes/Stamp 2/node" = SubResource("AnimationNodeAnimation_eu1dx")
 "nodes/Stamp 2/position" = Vector2(-440, 160)
+nodes/StampSpeed/node = SubResource("AnimationNodeTimeScale_igk12")
+nodes/StampSpeed/position = Vector2(160, 160)
 nodes/StampTrigger/node = SubResource("AnimationNodeTimeSeek_pr1ly")
 nodes/StampTrigger/position = Vector2(-80, 140)
-nodes/output/position = Vector2(700, 80)
-node_connections = [&"Add2", 0, &"Animation 2", &"Add2", 1, &"ClapTrigger", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"StampTrigger", &"ClapTrigger", 0, &"Clap", &"StampTrigger", 0, &"Stamp 2", &"output", 0, &"Add2 2"]
+nodes/output/position = Vector2(1000, 80)
+node_connections = [&"Add2", 0, &"Animation 2", &"Add2", 1, &"ClapSpeed", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"StampSpeed", &"ClapSpeed", 0, &"ClapTrigger", &"ClapTrigger", 0, &"Clap", &"StampSpeed", 0, &"StampTrigger", &"StampTrigger", 0, &"Stamp 2", &"output", 0, &"Add2 2"]
 
 [sub_resource type="Environment" id="Environment_vxk86"]
 background_mode = 1
@@ -244,15 +252,22 @@ background_mode = 1
 [node name="Clap Test Animation" parent="." instance=ExtResource("1_fbtxr")]
 script = ExtResource("2_d4ajq")
 
+[node name="Stamp" type="Timer" parent="Clap Test Animation"]
+one_shot = true
+
+[node name="Clap" type="Timer" parent="Clap Test Animation"]
+one_shot = true
+
 [node name="Skeleton3D" parent="Clap Test Animation/Robot" index="0"]
+bones/0/rotation = Quaternion(0.606923, 0.000469924, -0.000338693, 0.79476)
 bones/1/position = Vector3(0.0111647, 0.00431626, 0.00681036)
-bones/1/rotation = Quaternion(0.0151077, 0.197333, -0.829829, 0.521742)
+bones/1/rotation = Quaternion(0.0151078, 0.197333, -0.829829, 0.521742)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/position = Vector3(-6.26404e-10, 0.00522447, -2.08983e-09)
+bones/2/position = Vector3(-6.26404e-10, 0.00522447, -2.08984e-09)
 bones/2/rotation = Quaternion(0.170502, 0.00642559, -0.347515, 0.92202)
 bones/2/scale = Vector3(1, 1, 1)
 bones/4/position = Vector3(-4.50784e-12, 0.0148348, -4.32066e-10)
-bones/4/rotation = Quaternion(0.663344, 0.000242452, 0.000526559, 0.748314)
+bones/4/rotation = Quaternion(0.663345, 0.000242452, 0.000526559, 0.748313)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
 bones/5/rotation = Quaternion(-0.147766, -0.679207, -0.385983, 0.606515)
@@ -260,32 +275,32 @@ bones/5/scale = Vector3(1, 1, 1)
 bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
 bones/7/rotation = Quaternion(0.1441, 0.150626, 0.383495, 0.89971)
 bones/7/scale = Vector3(1, 1, 1)
-bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
+bones/9/position = Vector3(0.00529161, -0.00215548, 0.00402698)
 bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/position = Vector3(-1.84339e-11, 0.00420525, -2.69906e-10)
 bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/position = Vector3(-1.1085e-10, 0.00449158, -1.52595e-10)
-bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.82186, 0.569663)
+bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
 bones/11/scale = Vector3(1, 1, 1)
 bones/13/position = Vector3(-0.0109678, 0.00429172, 0.00680292)
 bones/13/rotation = Quaternion(0.0150478, -0.197491, 0.830412, 0.520756)
 bones/13/scale = Vector3(1, 1, 1)
-bones/14/position = Vector3(-9.23412e-10, 0.00522447, -9.05053e-10)
-bones/14/rotation = Quaternion(0.170502, -0.00642538, 0.347515, 0.92202)
+bones/14/position = Vector3(-9.23411e-10, 0.00522447, -9.05054e-10)
+bones/14/rotation = Quaternion(0.170502, -0.00642539, 0.347515, 0.92202)
 bones/14/scale = Vector3(1, 1, 1)
-bones/16/position = Vector3(-0.00507866, -0.00231285, 0.00496329)
+bones/16/position = Vector3(-0.00507866, -0.00231284, 0.00496329)
 bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
 bones/16/scale = Vector3(1, 1, 1)
-bones/17/position = Vector3(-7.52688e-10, 0.00420524, 6.35182e-10)
+bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
 bones/17/rotation = Quaternion(0.00499257, 0.000264975, -0.358627, 0.933468)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/position = Vector3(-1.68101e-10, 0.00449158, 1.15997e-09)
-bones/18/rotation = Quaternion(-0.00102162, 0.000626931, 0.821698, 0.569922)
+bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
 bones/18/scale = Vector3(1, 1, 1)
 
-[node name="AnimationPlayer" parent="Clap Test Animation" index="1"]
+[node name="AnimationPlayer" parent="Clap Test Animation" index="3"]
 libraries = {
 &"": SubResource("AnimationLibrary_d7wnv"),
 &"anim": SubResource("AnimationLibrary_d4ajq")
@@ -296,7 +311,9 @@ tree_root = SubResource("AnimationNodeBlendTree_igk12")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Add2/add_amount = 1.0
 "parameters/Add2 2/add_amount" = 1.0
+parameters/ClapSpeed/scale = 1.0
 parameters/ClapTrigger/seek_request = -1.0
+parameters/StampSpeed/scale = 1.0
 parameters/StampTrigger/seek_request = -1.0
 
 [node name="Camera3D" type="Camera3D" parent="."]

@@ -12,8 +12,7 @@ func _ready():
 	animation_tree.set("parameters/StampTrigger/seek_request", 10000.0)
 	
 	# default speed for 120 bpm
-	animation_tree.set("parameters/ClapSpeed/scale", beatTime)
-	animation_tree.set("parameters/StampSpeed/scale", beatTime)
+	on_bpm_changed(120)
 	
 	var on_clap_timer := func(): 
 		animation_tree.set("parameters/ClapTrigger/seek_request", 0)
@@ -31,20 +30,20 @@ func _input(event):
 
 # trigger clap animation by setting time to 0.0
 func on_clap():
-	print("clap event for klappy")
 	clap_timer.start()
 
 # trigger stamp animation by setting time to 0.0
 func on_stamp():
-	print("stamp event for klappy")
 	stamp_timer.start()
 
 # adjust animation speed to match bpm
 func on_bpm_changed(bpm:float):
 	beatTime = bpm / 60.0
 	var beat_time_half = (1.0 / beatTime) * 0.5
-	var animationPlayRate = 30.0
-	clap_timer.wait_time = beat_time_half
-	stamp_timer.wait_time = beat_time_half
+	
+	print( "beat per second: %f | half beat duration: %f" % [beatTime, beat_time_half] )
+	
+	clap_timer.wait_time = beat_time_half * 0.5
+	stamp_timer.wait_time = beat_time_half * 0.5
 	animation_tree.set("parameters/StampSpeed/scale", beatTime )
 	animation_tree.set("parameters/ClapSpeed/scale", beatTime )

@@ -1285,17 +1285,10 @@ render_target_update_mode = 4
 [node name="Klappy" parent="SubViewportContainer/SubViewport" instance=ExtResource("30_orymn")]
 
 [node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Klappy/Clap Test Animation/Robot" index="0"]
-bones/1/rotation = Quaternion(0.0151078, 0.197333, -0.829829, 0.521742)
-bones/2/position = Vector3(-6.26404e-10, 0.00522447, -2.08984e-09)
-bones/2/rotation = Quaternion(0.170502, 0.00642559, -0.347516, 0.92202)
-bones/4/rotation = Quaternion(0.663345, 0.000242452, 0.000526559, 0.748314)
-bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
-bones/13/rotation = Quaternion(0.0150478, -0.197491, 0.830412, 0.520756)
-bones/14/position = Vector3(-9.23411e-10, 0.00522447, -9.05054e-10)
-bones/14/rotation = Quaternion(0.170502, -0.00642539, 0.347515, 0.92202)
-bones/16/position = Vector3(-0.00507866, -0.00231284, 0.00496329)
-bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
-bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
+bones/0/rotation = Quaternion(0.603589, 0.000468541, -0.000340688, 0.797295)
+bones/9/rotation = Quaternion(0.706814, 0.0141467, 0.707132, 0.0133638)
+bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
+bones/16/rotation = Quaternion(0.707132, -0.0133665, -0.706814, 0.0141439)
 
 [node name="AnimationTree" parent="SubViewportContainer/SubViewport/Klappy/Clap Test Animation" index="4"]
 parameters/ClapSpeed/scale = -1.0

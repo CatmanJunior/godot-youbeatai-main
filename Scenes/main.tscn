@@ -25,11 +25,11 @@
 [ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
-[ext_resource type="Texture2D" uid="uid://fgq18msakepv" path="res://Resources/Textures/robot.png" id="21_qncea"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://cx0bpjp8y6sel" path="res://Resources/Textures/square-outline.png" id="23_vsgbq"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
+[ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xng46"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -1066,8 +1066,51 @@ texture = SubResource("CanvasTexture_6dn85")
 [node name="Robot" type="Sprite2D" parent="UserInterface"]
 z_index = 4
 position = Vector2(310, -77)
-scale = Vector2(0.205455, 0.205455)
-texture = ExtResource("21_qncea")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UserInterface/Robot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -84.0
+offset_right = 81.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="UserInterface/Robot/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(162, 168)
+render_target_update_mode = 4
+
+[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" instance=ExtResource("30_hpc6h")]
+
+[node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation/Robot" index="0"]
+bones/0/rotation = Quaternion(0.590087, 0.000462703, -0.000348493, 0.807339)
+bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
+bones/2/position = Vector3(-3.31873e-10, 0.00522447, -1.94082e-09)
+bones/2/rotation = Quaternion(0.160301, 0.00863794, -0.466908, 0.869612)
+bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.00052544, 0.745102)
+bones/9/position = Vector3(0.00529161, -0.00215548, 0.00402698)
+bones/9/rotation = Quaternion(0.706984, 0.00225495, 0.707224, 0.00145952)
+bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
+bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
+bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
+bones/14/position = Vector3(3.92663e-10, 0.00522447, 3.24292e-10)
+bones/14/rotation = Quaternion(0.160301, -0.00863774, 0.466908, 0.869613)
+bones/16/position = Vector3(-0.00554458, -0.00221778, 0.00496329)
+bones/16/rotation = Quaternion(0.707224, -0.00148209, -0.706985, 0.00223224)
+bones/17/position = Vector3(-7.52688e-10, 0.00420524, 6.35182e-10)
+bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
+
+[node name="AnimationTree" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" index="4"]
+parameters/ClapSpeed/scale = -1.0
+parameters/StampSpeed/scale = 0.833333
 
 [node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot"]
 position = Vector2(-7.11987, -498.382)
@@ -1211,3 +1254,10 @@ offset_bottom = 342.0
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_bpm_changed"]
+[connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_clap"]
+[connection signal="OnShouldStompEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_stamp"]
+
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation"]

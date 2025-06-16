@@ -19,8 +19,9 @@ public partial class BpmManager : Node
 
     // timing
     public static int beatsAmount = 32;
-    public int currentBeat;
+
     public bool playing = false;
+    public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
     public float swing = 0.5f;
     public float timePerBeat;
@@ -34,7 +35,6 @@ public partial class BpmManager : Node
     public override void _Ready()
     {
         instance ??= this;
-        currentBeat = beatsAmount - 1;
     }
 
     public override void _Process(double delta)

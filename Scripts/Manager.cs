@@ -136,7 +136,7 @@ public partial class Manager : Node
     [Export] public CheckButton recordSampleCheckButton2;
     [Export] public CheckButton recordSampleCheckButton3;
 
-    BpmManager BpmManager => BpmManager.instance;
+    BpmManager bpm_manager => BpmManager.instance;
 
     SoundBank chosenSoundBank = null;
     List<string> chosenEmoticons = null;
@@ -212,7 +212,7 @@ public partial class Manager : Node
 
     public void OnPlayPauseButton()
     {
-        BpmManager.playing = !BpmManager.playing;
+        bpm_manager.playing = !bpm_manager.playing;
 
         // pause layer voice over
         if (LayerVoiceOver.instance.voiceOvers[LayerVoiceOver.instance.currentLayer] != null)
@@ -231,15 +231,15 @@ public partial class Manager : Node
 
     public void OnBpmUpButton()
     {
-        if (BpmManager.bpm < 300) BpmManager.bpm += 10;
+        if (bpm_manager.bpm < 300) bpm_manager.bpm += 10;
         haschangedbpm = true;
     }
     public void OnBpmDownButton()
     {
-        if (BpmManager.bpm > 40) BpmManager.bpm -= 10;
+        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 10;
         haschangedbpm = true;
     }
-    public void OnResetPlayerButton() => BpmManager.currentBeat = BpmManager.beatsAmount - 1;
+    public void OnResetPlayerButton() => bpm_manager.currentBeat = BpmManager.beatsAmount - 1;
 
     public void ShowSavingLabel(string name)
     {
@@ -353,7 +353,7 @@ public partial class Manager : Node
     {
         var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
 
-        var fixedcurrentbeat = BpmManager.currentBeat;
+        var fixedcurrentbeat = bpm_manager.currentBeat;
         if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;
 
         //GD.Print("current beat: " + fixedcurrentbeat);
@@ -475,10 +475,10 @@ public partial class Manager : Node
     public void SaveBeatAsFile(bool[,] loop)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "beat_" + BpmManager.bpm.ToString() + "bpm_" + sanitizedTime;
+        string filename = "beat_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
 
         int sampleRate = 48000;
-        float secondsPerBeat = 60f / BpmManager.bpm;
+        float secondsPerBeat = 60f / bpm_manager.bpm;
         int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
@@ -535,10 +535,10 @@ public partial class Manager : Node
     public void SaveSongAsFile(List<bool[,]> loops)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "liedje_" + BpmManager.bpm.ToString() + "bpm_" + sanitizedTime;
+        string filename = "liedje_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
 
         int sampleRate = 48000;
-        float secondsPerBeat = 60f / BpmManager.bpm;
+        float secondsPerBeat = 60f / bpm_manager.bpm;
         int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop * loops.Count;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
@@ -650,7 +650,7 @@ public partial class Manager : Node
         // init singleton
         instance ??= this;
 
-        BpmManager.OnBeatEvent += OnBeat;
+        bpm_manager.OnBeatEvent += OnBeat;
 
         // deserialize chosen soundbank
         string chosen_soundbank_path = "chosen_soundbank.json";
@@ -741,7 +741,7 @@ public partial class Manager : Node
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
         saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
-        ResetPlayerButton.Pressed += () => { OnResetPlayerButton(); BpmManager.playing = true; };
+        ResetPlayerButton.Pressed += () => { OnResetPlayerButton(); bpm_manager.playing = true; };
 
         // skipping / ending the tutorial
         skiptutorialbutton.Pressed += () =>
@@ -868,13 +868,13 @@ public partial class Manager : Node
             // rode ring
             () => AmountOfActives(0) >= 4, // temp
             () => AmountOfActives(0) >= 8, // temp
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
             () => stompedAmount > 4, // temp
 
             // oranje ring
             () => AmountOfActives(1) >= 4, // temp
             () => AmountOfActives(1) >= 8, // temp
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
             () => clappedAmount > 4, // temp
 
             // gele ring
@@ -884,7 +884,7 @@ public partial class Manager : Node
             () => AmountOfActives(3) >= 2, // temp
 
             // alle ringen
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
 
             // progressie bar
             () => progressBar.Value > 50,
@@ -892,17 +892,17 @@ public partial class Manager : Node
             // custom sample
             () => recordSampleButton0.recordedAudio != null,
             () => recordSampleCheckButton0.ButtonPressed == true,
-            () => BpmManager.playing == true, // temp
+            () => bpm_manager.playing == true, // temp
 
             // effects
             () => haschangedbpm,
             () => ReverbDelayManager.instance?.reverbSlider.Value != 0 || ReverbDelayManager.instance?.delaySlider.Value != 0,
-            () => BpmManager.swing > 0.1f,
+            () => bpm_manager.swing > 0.1f,
 
             // layer voice over
             () => LayerVoiceOver.instance.finished,
             () => layerLoopToggle.ButtonPressed,
-            () => BpmManager.playing == true,
+            () => bpm_manager.playing == true,
             () => savedToLaout == true && loadedtemplate == true,
 
             // song voice over
@@ -1104,7 +1104,7 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
-        if (Input.IsKeyPressed(Key.F6) && BpmManager.bpm != 900) BpmManager.bpm = 900;
+        if (Input.IsKeyPressed(Key.F6) && bpm_manager.bpm != 900) bpm_manager.bpm = 900;
 
         if (!latereadydone)
         {
@@ -1224,7 +1224,7 @@ public partial class Manager : Node
 		if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
 
         // update swing amount
-        BpmManager.swing = (float)swingslider.Value;
+        bpm_manager.swing = (float)swingslider.Value;
 
         // space as play/pause
         var spacedown = Input.IsKeyPressed(Key.Space);
@@ -1233,7 +1233,7 @@ public partial class Manager : Node
 
         // enter as reset player
         var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false) { OnResetPlayerButton(); BpmManager.playing = true; }
+        if (enterdown && enterdownlastframe == false) { OnResetPlayerButton(); bpm_manager.playing = true; }
         enterdownlastframe = enterdown;
 
         // drag&drop
@@ -1245,7 +1245,7 @@ public partial class Manager : Node
         else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 
         // update pointer
-        float intergerFactor = (float)((float)(BpmManager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        float intergerFactor = (float)((float)(bpm_manager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
         pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
         // check clap and stomp
@@ -1273,7 +1273,7 @@ public partial class Manager : Node
             }
         }
         
-        if (BpmManager.playing)
+        if (bpm_manager.playing)
         {
             SetGlobalVolume(1);
             timeafterplay += ((float)delta);
@@ -1303,7 +1303,7 @@ public partial class Manager : Node
 
                 var color = colors[ring];
 
-                if (beat == BpmManager.currentBeat)
+                if (beat == bpm_manager.currentBeat)
                 {
                     if (active) color = color.Lightened(0.75f);
                     else color = new(1, 1, 1, 0.5f);
@@ -1346,7 +1346,7 @@ public partial class Manager : Node
         }
 
         // update bpm label
-        bpmLabel.Text = BpmManager.bpm.ToString();
+        bpmLabel.Text = bpm_manager.bpm.ToString();
     }
 
     void SetGlobalVolume(float value)
@@ -1431,14 +1431,14 @@ public partial class Manager : Node
     {
         if (timeafterplay < 0.2f) return;
         int ring = 1;
-        bool active = beatActives[ring, BpmManager.currentBeat];
-        var sprite = beatSprites[ring, BpmManager.currentBeat];
+        bool active = beatActives[ring, bpm_manager.currentBeat];
+        var sprite = beatSprites[ring, bpm_manager.currentBeat];
         if (active)
         {
             sprite.Scale += Vector2.One;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
-            EmitBeatParticles(beatSprites[ring, BpmManager.currentBeat].Position, colors[ring]);
+            EmitBeatParticles(beatSprites[ring, bpm_manager.currentBeat].Position, colors[ring]);
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
@@ -1450,14 +1450,14 @@ public partial class Manager : Node
     {
         if (timeafterplay < 0.2f) return;
         int ring = 0;
-        bool active = beatActives[ring, BpmManager.currentBeat];
-        var sprite = beatSprites[ring, BpmManager.currentBeat];
+        bool active = beatActives[ring, bpm_manager.currentBeat];
+        var sprite = beatSprites[ring, bpm_manager.currentBeat];
         if (active)
         {
             sprite.Scale += Vector2.One;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
-            EmitBeatParticles(beatSprites[ring, BpmManager.currentBeat].Position, colors[ring]);
+            EmitBeatParticles(beatSprites[ring, bpm_manager.currentBeat].Position, colors[ring]);
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
@@ -1470,30 +1470,30 @@ public partial class Manager : Node
     {
         if (metronome_sfx_enabled)
         {
-           if (BpmManager.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
+           if (bpm_manager.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
            else PlayExtraSFX(metronomealt_sfx);
         }
 
-        if (beatActives[0, BpmManager.currentBeat]) firstAudioPlayer.Play();
-        if (beatActives[1, BpmManager.currentBeat]) secondAudioPlayer.Play();
-        if (beatActives[2, BpmManager.currentBeat]) thirdAudioPlayer.Play();
-        if (beatActives[3, BpmManager.currentBeat]) fourthAudioPlayer.Play();
+        if (beatActives[0, bpm_manager.currentBeat]) firstAudioPlayer.Play();
+        if (beatActives[1, bpm_manager.currentBeat]) secondAudioPlayer.Play();
+        if (beatActives[2, bpm_manager.currentBeat]) thirdAudioPlayer.Play();
+        if (beatActives[3, bpm_manager.currentBeat]) fourthAudioPlayer.Play();
         clapped = false;
         stomped = false;
 
-        if (BpmManager.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
+        if (bpm_manager.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
 
         // if layer looping
-        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
+        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (bpm_manager.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (BpmManager.currentBeat == 0)
+        if (bpm_manager.currentBeat == 0)
         {
             LayerVoiceOver.instance.OnTop();
             UpdateSongVoiceOverPlayBackPosition();
         }
-        if (currentLayerIndex == 0 && BpmManager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
+        if (currentLayerIndex == 0 && bpm_manager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
 
-        int nextbeat = BpmManager.currentBeat + 1;
+        int nextbeat = bpm_manager.currentBeat + 1;
         if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
 
         bool clap_active = beatActives[0, nextbeat];

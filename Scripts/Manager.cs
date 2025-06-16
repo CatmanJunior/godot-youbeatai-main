@@ -715,6 +715,8 @@ public partial class Manager : Node
 
     // --------------------------------
 
+    private float startswing;
+
     public override void _Ready()
     {
         // init singleton
@@ -766,6 +768,13 @@ public partial class Manager : Node
             }
         }
         baseDir.ListDirEnd();
+
+        // set bpm and swing
+        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
+        BpmManager.instance.swing = chosenswing;
+        startswing = chosenswing;
+        swingslider.Value = chosenswing;
+        BpmManager.instance.bpm = chosenSoundBank.bpm;
 
         // delete tmep json files
         File.Delete(chosen_emoticons_path);
@@ -967,7 +976,7 @@ public partial class Manager : Node
             // effects
             () => haschangedbpm,
             () => ReverbDelayManager.instance?.reverbSlider.Value != 0 || ReverbDelayManager.instance?.delaySlider.Value != 0,
-            () => bpm_manager.swing > 0.1f,
+            () => Mathf.Abs(bpm_manager.swing - startswing) > 0.01f,
 
             // layer voice over
             () => LayerVoiceOver.instance.finished,

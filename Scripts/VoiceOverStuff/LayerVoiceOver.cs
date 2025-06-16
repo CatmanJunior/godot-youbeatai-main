@@ -68,10 +68,10 @@ public partial class LayerVoiceOver : Node
 		else recordingTimer = 0;
 
 		// set progress bar value
-		float secondsPerBeat = (60f / BpmManager.instance.bpm) / 2;
-		float secondsPerRotation = secondsPerBeat * BpmManager.beatsAmount;
-		float bpmfactor = BpmManager.beatsAmount / secondsPerRotation;
-		if (recording) textureProgressBar.Value = recordingTimer * bpmfactor;
+		int currentBeat = BpmManager.instance.currentBeat;
+		float beatTimer = BpmManager.instance.beatTimer;
+		float progress = (float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat)));
+		if (recording) textureProgressBar.Value = progress;
 		else
 		{
 			if (GetCurrentLayerVoiceOver() != null) textureProgressBar.Value = (float)BpmManager.beatsAmount;

@@ -1586,14 +1586,14 @@ public partial class Manager : Node
         int nextbeat = bpm_manager.currentBeat + 1;
         if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
 
-        bool clap_active = beatActives[0, nextbeat];
+        bool clap_active = beatActives[1, nextbeat];
         if (clap_active)
         {
             GD.Print("shouldclap");
             EmitSignal(SignalName.OnShouldClapEvent);
         }
 
-        bool stomp_active = beatActives[1, nextbeat];
+        bool stomp_active = beatActives[0, nextbeat];
         if (stomp_active)
         {
             GD.Print("shouldstomp");

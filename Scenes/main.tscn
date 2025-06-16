@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=47 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://cx0bpjp8y6sel" path="res://Resources/Textures/square-outline.png" id="23_vsgbq"]
@@ -241,6 +242,7 @@ offset_bottom = -679.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "🎙️ Liedje Opnemen
 "
 alignment = 0
@@ -259,6 +261,7 @@ offset_bottom = -320.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 14
 theme_override_styles/disabled = SubResource("StyleBoxFlat_xng46")
 theme_override_styles/hover = SubResource("StyleBoxFlat_acarb")
@@ -276,6 +279,7 @@ offset_top = 285.0
 offset_right = -542.0
 offset_bottom = 349.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "🌱"
 
@@ -285,6 +289,7 @@ offset_top = 213.0
 offset_right = -542.0
 offset_bottom = 277.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "📜"
 
@@ -294,6 +299,7 @@ offset_top = 142.0
 offset_right = -542.0
 offset_bottom = 206.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "📜"
 
@@ -303,6 +309,7 @@ offset_top = 71.0
 offset_right = -542.0
 offset_bottom = 135.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "🤩"
 
@@ -311,6 +318,7 @@ offset_left = -606.0
 offset_right = -542.0
 offset_bottom = 64.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "🤩"
 
@@ -320,6 +328,7 @@ offset_top = -71.0
 offset_right = -542.0
 offset_bottom = -7.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "📜"
 
@@ -329,6 +338,7 @@ offset_top = -142.0
 offset_right = -542.0
 offset_bottom = -78.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "📜"
 
@@ -338,6 +348,7 @@ offset_top = -213.0
 offset_right = -542.0
 offset_bottom = -149.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "🤩"
 
@@ -347,6 +358,7 @@ offset_top = -284.0
 offset_right = -542.0
 offset_bottom = -220.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "😃"
 
@@ -356,6 +368,7 @@ offset_top = -355.0
 offset_right = -542.0
 offset_bottom = -291.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
 text = "🏁"
 
@@ -379,6 +392,7 @@ offset_bottom = -49.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "⏯️ Start / Pauze"
 alignment = 0
 
@@ -395,6 +409,7 @@ offset_bottom = -13.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "⏮️ Terug naar begin"
 alignment = 0
 
@@ -411,6 +426,7 @@ offset_bottom = -252.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "🗑️ Leeg Beat"
 alignment = 0
 
@@ -427,6 +443,7 @@ offset_bottom = -216.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "💾 Kopieer Beat"
 alignment = 0
 
@@ -443,6 +460,7 @@ offset_bottom = -180.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "♻️ Plak Beat"
 alignment = 0
 
@@ -459,6 +477,7 @@ offset_bottom = -644.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "🎼 Liedje naar mp3"
 alignment = 0
 
@@ -475,6 +494,7 @@ offset_bottom = -485.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "🐇 Sneller"
 alignment = 0
 
@@ -491,6 +511,7 @@ offset_bottom = -449.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "🐢 Langzamer"
 alignment = 0
 
@@ -507,6 +528,7 @@ offset_bottom = -679.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "📥 Beat naar mp3"
 alignment = 0
 
@@ -524,6 +546,7 @@ offset_left = -12.0
 offset_top = -12.0
 offset_right = 12.0
 offset_bottom = 13.0
+theme = ExtResource("22_hpc6h")
 text = "👞"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -541,6 +564,7 @@ offset_left = -12.5
 offset_top = -12.0
 offset_right = 11.5
 offset_bottom = 13.0
+theme = ExtResource("22_hpc6h")
 text = "🖐️"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -594,6 +618,7 @@ offset_top = 221.0
 offset_right = -480.0
 offset_bottom = 245.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 
 [node name="UseSampleCheckButton1" type="CheckButton" parent="UserInterface/SampleButtons"]
 offset_left = -449.0
@@ -601,6 +626,7 @@ offset_top = 221.0
 offset_right = -405.0
 offset_bottom = 245.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 
 [node name="UseSampleCheckButton2" type="CheckButton" parent="UserInterface/SampleButtons"]
 offset_left = -374.0
@@ -608,6 +634,7 @@ offset_top = 221.0
 offset_right = -330.0
 offset_bottom = 245.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 
 [node name="UseSampleCheckButton3" type="CheckButton" parent="UserInterface/SampleButtons"]
 offset_left = -299.0
@@ -615,6 +642,7 @@ offset_top = 221.0
 offset_right = -255.0
 offset_bottom = 245.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 
 [node name="SettingsButton" type="Button" parent="UserInterface"]
 anchors_preset = 8
@@ -629,6 +657,7 @@ offset_bottom = -479.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "Instellingen ⚙️"
 alignment = 2
 
@@ -652,6 +681,7 @@ offset_bottom = 59.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = ".........."
 
 [node name="TemplateLeftButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
@@ -668,6 +698,7 @@ offset_bottom = 94.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "<"
 
 [node name="TemplateRightButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
@@ -684,6 +715,7 @@ offset_bottom = 94.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = ">"
 
 [node name="ShowTemplateButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
@@ -700,6 +732,7 @@ offset_bottom = 130.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "Tip🔮"
 
 [node name="SetTemplateButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
@@ -716,6 +749,7 @@ offset_bottom = 130.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "Doe 🤖
 "
 
@@ -739,6 +773,7 @@ offset_left = 82.0
 offset_top = -9.0
 offset_right = 134.0
 offset_bottom = 23.0
+theme = ExtResource("22_hpc6h")
 text = "👞"
 label_settings = SubResource("LabelSettings_x0c78")
 horizontal_alignment = 1
@@ -750,6 +785,7 @@ offset_left = -42.0
 offset_top = -7.0
 offset_right = 10.0
 offset_bottom = 25.0
+theme = ExtResource("22_hpc6h")
 text = "🖐🏼"
 label_settings = SubResource("LabelSettings_x0c78")
 horizontal_alignment = 1
@@ -772,6 +808,7 @@ offset_left = -47.0
 offset_top = -5.0
 offset_right = 16.0
 offset_bottom = 27.0
+theme = ExtResource("22_hpc6h")
 text = "🔊"
 label_settings = SubResource("LabelSettings_x0c78")
 horizontal_alignment = 1
@@ -796,6 +833,7 @@ offset_left = -34.0
 offset_top = -5.0
 offset_right = 3.0
 offset_bottom = 27.0
+theme = ExtResource("22_hpc6h")
 text = "🎙️"
 label_settings = SubResource("LabelSettings_5adyu")
 horizontal_alignment = 1
@@ -808,6 +846,7 @@ offset_top = 60.0
 offset_right = 69.0
 offset_bottom = 85.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 2
 
@@ -817,6 +856,7 @@ offset_left = -28.0
 offset_top = -4.0
 offset_right = 9.0
 offset_bottom = 28.0
+theme = ExtResource("22_hpc6h")
 text = "🫀"
 label_settings = SubResource("LabelSettings_fbqyi")
 horizontal_alignment = 1
@@ -828,6 +868,7 @@ offset_left = 42.0
 offset_top = -1.0
 offset_right = 139.0
 offset_bottom = 22.0
+theme = ExtResource("22_hpc6h")
 text = "metronoom"
 label_settings = SubResource("LabelSettings_5dpcw")
 vertical_alignment = 1
@@ -839,6 +880,7 @@ offset_top = 33.0
 offset_right = 68.0
 offset_bottom = 58.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
 
@@ -848,6 +890,7 @@ offset_left = -26.0
 offset_top = -3.0
 offset_right = 11.0
 offset_bottom = 29.0
+theme = ExtResource("22_hpc6h")
 text = "👂🏼"
 label_settings = SubResource("LabelSettings_fbqyi")
 horizontal_alignment = 1
@@ -859,6 +902,7 @@ offset_left = 43.0
 offset_top = 1.0
 offset_right = 130.0
 offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
 text = "voeg beat toe"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
@@ -870,6 +914,7 @@ offset_top = 7.0
 offset_right = 68.0
 offset_bottom = 32.0
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
 
@@ -879,6 +924,7 @@ offset_left = -26.0
 offset_top = -3.0
 offset_right = 11.0
 offset_bottom = 29.0
+theme = ExtResource("22_hpc6h")
 text = "🔁"
 label_settings = SubResource("LabelSettings_fbqyi")
 horizontal_alignment = 1
@@ -890,6 +936,7 @@ offset_left = 43.0
 offset_top = 1.0
 offset_right = 130.0
 offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
 text = "liedje modus"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
@@ -907,6 +954,7 @@ offset_bottom = -5568.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "Record ⏺️"
 alignment = 2
 
@@ -925,6 +973,7 @@ offset_left = 90.5
 offset_right = 237.5
 offset_bottom = 32.0
 scale = Vector2(0.5, 0.5)
+theme = ExtResource("22_hpc6h")
 text = "🌀Swing"
 vertical_alignment = 1
 
@@ -943,6 +992,7 @@ offset_left = 90.5
 offset_right = 237.5
 offset_bottom = 32.0
 scale = Vector2(0.5, 0.5)
+theme = ExtResource("22_hpc6h")
 text = "🏛️ Galm"
 vertical_alignment = 1
 
@@ -961,6 +1011,7 @@ offset_left = 90.5
 offset_right = 237.5
 offset_bottom = 32.0
 scale = Vector2(0.5, 0.5)
+theme = ExtResource("22_hpc6h")
 text = "⛰️ Echo"
 vertical_alignment = 1
 
@@ -992,6 +1043,7 @@ offset_top = 615.0
 offset_right = 156.0
 offset_bottom = 787.0
 scale = Vector2(0.525, 0.525)
+theme = ExtResource("22_hpc6h")
 text = "⚡"
 label_settings = SubResource("LabelSettings_2x3a5")
 horizontal_alignment = 1
@@ -1002,6 +1054,7 @@ offset_left = -329.0
 offset_top = -156.0
 offset_right = -284.0
 offset_bottom = -89.0
+theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1137,6 +1190,7 @@ offset_bottom = -162.0
 layout_mode = 0
 offset_right = 339.0
 offset_bottom = 43.0
+theme = ExtResource("22_hpc6h")
 text = "Huidig Doel:"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1147,6 +1201,7 @@ offset_left = 6.0
 offset_top = 38.0
 offset_right = 334.0
 offset_bottom = 171.0
+theme = ExtResource("22_hpc6h")
 text = "hier komt een instructie"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -1166,6 +1221,7 @@ offset_bottom = -50.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme = ExtResource("22_hpc6h")
 text = "🚫 Stop"
 
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
@@ -1233,6 +1289,7 @@ offset_left = -532.0
 offset_top = -46.0
 offset_right = -294.0
 offset_bottom = 38.0
+theme = ExtResource("22_hpc6h")
 theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
 theme_override_font_sizes/font_size = 16
 text = "Opgeslagen naar:
@@ -1251,6 +1308,7 @@ offset_left = 109.0
 offset_top = 295.0
 offset_right = 309.0
 offset_bottom = 342.0
+theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 26
 horizontal_alignment = 1
 vertical_alignment = 1

@@ -83,7 +83,7 @@ font_size = 80
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
-[node name="scene" type="Node2D"]
+[node name="scene2" type="Node2D"]
 
 [node name="Camera" type="Camera2D" parent="."]
 scale = Vector2(4.12, 1)

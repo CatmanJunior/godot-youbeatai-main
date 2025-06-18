@@ -29,6 +29,21 @@ public partial class Manager : Node
     public AudioStreamPlayer2D thirdAudioPlayer;
     public AudioStreamPlayer2D fourthAudioPlayer;
 
+    public AudioStreamPlayer2D firstAudioPlayerAlt;
+    public AudioStreamPlayer2D secondAudioPlayerAlt;
+    public AudioStreamPlayer2D thirdAudioPlayerAlt;
+    public AudioStreamPlayer2D fourthAudioPlayerAlt;
+
+    public AudioStreamPlayer2D firstAudioPlayerRec;
+    public AudioStreamPlayer2D secondAudioPlayerRec;
+    public AudioStreamPlayer2D thirdAudioPlayerRec;
+    public AudioStreamPlayer2D fourthAudioPlayerRec;
+
+    [Export] public Slider sampleMixSlider0;
+    [Export] public Slider sampleMixSlider1;
+    [Export] public Slider sampleMixSlider2;
+    [Export] public Slider sampleMixSlider3;
+
     // other sfx
     AudioStreamPlayer2D extraAudioPlayer;
     [Export] AudioStream metronome_sfx;
@@ -38,7 +53,8 @@ public partial class Manager : Node
 
     // saving
     [Export] public AudioStream[] mainAudioFiles;
-    public AudioStream[] audioFilesToUse;
+    [Export] public AudioStream[] mainAudioFilesAlt;
+
     [Export] Button saveToWavButton;
     bool hassavedtofile = false;
 
@@ -131,10 +147,6 @@ public partial class Manager : Node
     [Export] public RecordSampleButton recordSampleButton1;
     [Export] public RecordSampleButton recordSampleButton2;
     [Export] public RecordSampleButton recordSampleButton3;
-    [Export] public CheckButton recordSampleCheckButton0;
-    [Export] public CheckButton recordSampleCheckButton1;
-    [Export] public CheckButton recordSampleCheckButton2;
-    [Export] public CheckButton recordSampleCheckButton3;
 
     BpmManager bpm_manager => BpmManager.instance;
 
@@ -256,6 +268,7 @@ public partial class Manager : Node
     }
 
     // on toggle functions
+    /*
     private void OnToggled0(bool toggledOn)
     {
         firstAudioPlayer.Stop();
@@ -280,6 +293,7 @@ public partial class Manager : Node
         audioFilesToUse[3] = toggledOn ? recordSampleButton3.recordedAudio : mainAudioFiles[3];
         fourthAudioPlayer.Stream = audioFilesToUse[3];  
     }
+    */
 
     [Export] Label InstructionLabel;
     int achievementLevel = 0;
@@ -501,7 +515,7 @@ public partial class Manager : Node
                 if (currentLoop[ring, beat])
                 {
                     // get audio sample of beat
-                    AudioStreamWav audioStreamWav = (AudioStreamWav)audioFilesToUse[ring];
+                    AudioStreamWav audioStreamWav = (AudioStreamWav)mainAudioFiles[ring];
                     var audioBytes = audioStreamWav.GetData();
 
                     // Convert byte[] to float[] (each pcm sample is a 16 bit integer also known as a short)
@@ -571,7 +585,7 @@ public partial class Manager : Node
                     if (currentLoop[ring, beat])
                     {
                         // get audio sample of beat
-                        AudioStreamWav audioStreamWav = (AudioStreamWav)audioFilesToUse[ring];
+                        AudioStreamWav audioStreamWav = (AudioStreamWav)mainAudioFiles[ring];
                         var audioBytes = audioStreamWav.GetData();
 
                         // Convert byte[] to float[] (each pcm sample is a 16 bit integer also known as a short)
@@ -793,20 +807,47 @@ public partial class Manager : Node
 
         // init audioplayers
         extraAudioPlayer = new AudioStreamPlayer2D();
+        AddChild(extraAudioPlayer);
+
+        // main
         firstAudioPlayer = new AudioStreamPlayer2D();
         secondAudioPlayer = new AudioStreamPlayer2D();
         thirdAudioPlayer = new AudioStreamPlayer2D();
         fourthAudioPlayer = new AudioStreamPlayer2D();
-        AddChild(extraAudioPlayer);
         AddChild(firstAudioPlayer);
         AddChild(secondAudioPlayer);
         AddChild(thirdAudioPlayer);
         AddChild(fourthAudioPlayer);
-        audioFilesToUse = (AudioStream[])mainAudioFiles.Clone();
+
+        // alt
+        firstAudioPlayerAlt = new AudioStreamPlayer2D();
+        secondAudioPlayerAlt = new AudioStreamPlayer2D();
+        thirdAudioPlayerAlt = new AudioStreamPlayer2D();
+        fourthAudioPlayerAlt = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayerAlt);
+        AddChild(secondAudioPlayerAlt);
+        AddChild(thirdAudioPlayerAlt);
+        AddChild(fourthAudioPlayerAlt);
+
+        // rec
+        firstAudioPlayerRec = new AudioStreamPlayer2D();
+        secondAudioPlayerRec = new AudioStreamPlayer2D();
+        thirdAudioPlayerRec = new AudioStreamPlayer2D();
+        fourthAudioPlayerRec = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayerRec);
+        AddChild(secondAudioPlayerRec);
+        AddChild(thirdAudioPlayerRec);
+        AddChild(fourthAudioPlayerRec);
+
         firstAudioPlayer.Stream = mainAudioFiles[0];
         secondAudioPlayer.Stream = mainAudioFiles[1];
         thirdAudioPlayer.Stream = mainAudioFiles[2];
         fourthAudioPlayer.Stream = mainAudioFiles[3];
+
+        firstAudioPlayerAlt.Stream = mainAudioFilesAlt[0];
+        secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
+        thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
+        fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
 
         layerButton1.Pressed += () => SwitchLayer(1);
         layerButton2.Pressed += () => SwitchLayer(2);
@@ -855,12 +896,6 @@ public partial class Manager : Node
 
         // settings panel
         settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-
-        // checkbuttons
-        recordSampleCheckButton0.Toggled += OnToggled0;
-        recordSampleCheckButton1.Toggled += OnToggled1;
-        recordSampleCheckButton2.Toggled += OnToggled2;
-        recordSampleCheckButton3.Toggled += OnToggled3;
 
         // spawn sprites
         beatSprites = new Sprite2D[4, BpmManager.beatsAmount];
@@ -981,7 +1016,7 @@ public partial class Manager : Node
 
             // custom sample
             () => recordSampleButton0.recordedAudio != null,
-            () => recordSampleCheckButton0.ButtonPressed == true,
+            () => true, // skip for now
             () => bpm_manager.playing == true, // temp
 
             // effects
@@ -1125,10 +1160,6 @@ public partial class Manager : Node
         recordSampleButton1.Visible = visible;
         recordSampleButton2.Visible = visible;
         recordSampleButton3.Visible = visible;
-        recordSampleCheckButton0.Visible = visible;
-        recordSampleCheckButton1.Visible = visible;
-        recordSampleCheckButton2.Visible = visible;
-        recordSampleCheckButton3.Visible = visible;
     }
 
     void SetDragAndDropButtonsVisibility(bool visible)
@@ -1193,6 +1224,43 @@ public partial class Manager : Node
     public override void _Process(double delta)
     {
         time += (float)delta;
+
+        var slider0 = sampleMixSlider0.Value;
+        var slider1 = sampleMixSlider1.Value;
+        var slider2 = sampleMixSlider2.Value;
+        var slider3 = sampleMixSlider3.Value;
+
+        var mainvolume0 = slider0 >= 1 ? slider0 - 1 : 0;
+        var altvolume0 = slider0 <= 1 ? 1 - slider0 : 0;
+        var recvolume0 = slider0 >= 1 ? 1 - (slider0 - 1) : slider0;
+
+        var mainvolume1 = slider1 >= 1 ? slider1 - 1 : 0;
+        var altvolume1 = slider1 <= 1 ? 1 - slider1 : 0;
+        var recvolume1 = slider1 >= 1 ? 1 - (slider1 - 1) : slider1;
+
+        var mainvolume2 = slider2 >= 1 ? slider2 - 1 : 0;
+        var altvolume2 = slider2 <= 1 ? 1 - slider2 : 0;
+        var recvolume2 = slider2 >= 1 ? 1 - (slider2 - 1) : slider2;
+
+        var mainvolume3 = slider3 >= 1 ? slider3 - 1 : 0;
+        var altvolume3 = slider3 <= 1 ? 1 - slider3 : 0;
+        var recvolume3 = slider3 >= 1 ? 1 - (slider3 - 1) : slider3;
+
+        firstAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume0);
+        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume0);
+        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume0);
+
+        secondAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume1);
+        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume1);
+        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume1);
+
+        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume2);
+        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume2);
+        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume2);
+
+        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume3);
+        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume3);
+        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume3);
 
         if (Input.IsKeyPressed(Key.F6) && bpm_manager.bpm != 900) bpm_manager.bpm = 900;
 
@@ -1365,7 +1433,6 @@ public partial class Manager : Node
         
         if (bpm_manager.playing)
         {
-            SetGlobalVolume(1);
             timeafterplay += ((float)delta);
             
             slowBeatTimer += (float)delta / 4;
@@ -1380,7 +1447,6 @@ public partial class Manager : Node
         else
         {
             timeafterplay = 0;
-            SetGlobalVolume(0);
         }
 
         // update sprites
@@ -1439,13 +1505,30 @@ public partial class Manager : Node
         bpmLabel.Text = bpm_manager.bpm.ToString();
     }
 
-    void SetGlobalVolume(float value)
+    void SetMainVolume(float value)
+    {
+        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+    }
+
+    void SetAltVolume(float value)
     {
         float db = Mathf.LinearToDb(value);
-        firstAudioPlayer.VolumeDb = db;
-        secondAudioPlayer.VolumeDb = db;
-        thirdAudioPlayer.VolumeDb = db;
-        fourthAudioPlayer.VolumeDb = db;
+        firstAudioPlayerAlt.VolumeDb = db;
+        secondAudioPlayerAlt.VolumeDb = db;
+        thirdAudioPlayerAlt.VolumeDb = db;
+        fourthAudioPlayerAlt.VolumeDb = db;
+    }
+
+    void SetRecVolume(float value)
+    {
+        float db = Mathf.LinearToDb(value);
+        firstAudioPlayerRec.VolumeDb = db;
+        secondAudioPlayerRec.VolumeDb = db;
+        thirdAudioPlayerRec.VolumeDb = db;
+        fourthAudioPlayerRec.VolumeDb = db;
     }
 
     private void ConvertWavToMp3(string filename)
@@ -1568,6 +1651,17 @@ public partial class Manager : Node
         if (beatActives[1, bpm_manager.currentBeat]) secondAudioPlayer.Play();
         if (beatActives[2, bpm_manager.currentBeat]) thirdAudioPlayer.Play();
         if (beatActives[3, bpm_manager.currentBeat]) fourthAudioPlayer.Play();
+
+        if (beatActives[0, bpm_manager.currentBeat]) firstAudioPlayerAlt.Play();
+        if (beatActives[1, bpm_manager.currentBeat]) secondAudioPlayerAlt.Play();
+        if (beatActives[2, bpm_manager.currentBeat]) thirdAudioPlayerAlt.Play();
+        if (beatActives[3, bpm_manager.currentBeat]) fourthAudioPlayerAlt.Play();
+
+        if (beatActives[0, bpm_manager.currentBeat] && firstAudioPlayerRec.Stream != null) firstAudioPlayerRec.Play();
+        if (beatActives[1, bpm_manager.currentBeat] && secondAudioPlayerRec.Stream != null) secondAudioPlayerRec.Play();
+        if (beatActives[2, bpm_manager.currentBeat] && thirdAudioPlayerRec.Stream != null) thirdAudioPlayerRec.Play();
+        if (beatActives[3, bpm_manager.currentBeat] && fourthAudioPlayerRec.Stream != null) fourthAudioPlayerRec.Play();
+
         clapped = false;
         stomped = false;
 

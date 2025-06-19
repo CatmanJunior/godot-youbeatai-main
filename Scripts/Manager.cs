@@ -1283,7 +1283,6 @@ public partial class Manager : Node
 
     public void SetSampleMixersVisibility(bool visible)
     {
-        return;
         sampleMixer0.Visible = visible;
         sampleMixer1.Visible = visible;
         sampleMixer2.Visible = visible;

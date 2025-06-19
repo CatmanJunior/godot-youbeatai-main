@@ -1050,7 +1050,7 @@ public partial class Manager : Node
             () => SetRingVisibility(3, true), // zet blauw
             null, // druk play
             null, // geef energie
-            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); },
+            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetMixSlidersVisibility(true); },
             null,
             null,
             () => SetEffectButtonsVisibility(true),
@@ -1089,6 +1089,9 @@ public partial class Manager : Node
         SetRingVisibility(1, visible);
         SetRingVisibility(2, visible);
         SetRingVisibility(3, visible);
+
+        // sliders
+        SetMixSlidersVisibility(visible);
 
         // progress bar
         progressBar.Visible = visible;
@@ -1197,6 +1200,14 @@ public partial class Manager : Node
         layerButton8.Disabled = !enabled;
         layerButton9.Disabled = !enabled;
         layerButton10.Disabled = !enabled;
+    }
+
+    public void SetMixSlidersVisibility(bool visible)
+    {
+        sampleMixSlider0.Visible = visible;
+        sampleMixSlider1.Visible = visible;
+        sampleMixSlider2.Visible = visible;
+        sampleMixSlider3.Visible = visible;
     }
 
     // ---------------------------------------------------------------

@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=51 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -50,10 +50,6 @@ corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hpc6h"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kltya"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
@@ -101,12 +97,12 @@ current = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("sampleMixSlider0", "sampleMixSlider1", "sampleMixSlider2", "sampleMixSlider3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
 script = ExtResource("1_rfd7i")
-sampleMixSlider0 = NodePath("../../UserInterface/SampleButtons/Slider0")
-sampleMixSlider1 = NodePath("../../UserInterface/SampleButtons/Slider1")
-sampleMixSlider2 = NodePath("../../UserInterface/SampleButtons/Slider2")
-sampleMixSlider3 = NodePath("../../UserInterface/SampleButtons/Slider3")
+sampleMixer0 = NodePath("../../UserInterface/SampleButtons/SampleMixer0")
+sampleMixer1 = NodePath("../../UserInterface/SampleButtons/SampleMixer1")
+sampleMixer2 = NodePath("../../UserInterface/SampleButtons/SampleMixer2")
+sampleMixer3 = NodePath("../../UserInterface/SampleButtons/SampleMixer3")
 metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
@@ -543,271 +539,455 @@ alignment = 0
 
 [node name="SampleButtons" type="Node" parent="UserInterface"]
 
-[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
-z_index = -4
-position = Vector2(-499, 323)
-scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
-script = ExtResource("14_4mig3")
-
-[node name="emoji" type="Label" parent="UserInterface/SampleButtons/DragAndDropButton0"]
-offset_left = -12.0
-offset_top = -12.0
-offset_right = 12.0
-offset_bottom = 13.0
-theme = ExtResource("22_hpc6h")
-text = "👞"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
-z_index = -4
-position = Vector2(-424, 323)
-scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
-script = ExtResource("14_4mig3")
-ring = 1
-
-[node name="emoji" type="Label" parent="UserInterface/SampleButtons/DragAndDropButton1"]
-offset_left = -12.5
-offset_top = -12.0
-offset_right = 11.5
-offset_bottom = 13.0
-theme = ExtResource("22_hpc6h")
-text = "🖐️"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
-z_index = -4
-position = Vector2(-349, 323)
-scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
-script = ExtResource("14_4mig3")
-ring = 2
-
-[node name="emoji" type="Label" parent="UserInterface/SampleButtons/DragAndDropButton2"]
-offset_left = -11.5
-offset_top = -10.0
-offset_right = 12.5
-offset_bottom = 15.0
-theme = ExtResource("22_hpc6h")
-text = "📣"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
-z_index = -4
-position = Vector2(-274, 323)
-scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
-script = ExtResource("14_4mig3")
-ring = 3
-
-[node name="emoji" type="Label" parent="UserInterface/SampleButtons/DragAndDropButton3"]
-offset_left = -11.0
-offset_top = -11.0
-offset_right = 13.0
-offset_bottom = 14.0
-theme = ExtResource("22_hpc6h")
-text = "⌚"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-499, 267)
+position = Vector2(-499, 178)
 scale = Vector2(0.75, 0.78)
 texture = ExtResource("15_5hbpj")
 script = ExtResource("16_ngh84")
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-425, 267)
+position = Vector2(-425, 178)
 scale = Vector2(0.75, 0.78)
 texture = ExtResource("15_5hbpj")
 script = ExtResource("16_ngh84")
 ring = 1
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-350, 267)
+position = Vector2(-350, 178)
 scale = Vector2(0.75, 0.78)
 texture = ExtResource("15_5hbpj")
 script = ExtResource("16_ngh84")
 ring = 2
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-274, 267)
+position = Vector2(-274, 178)
 scale = Vector2(0.75, 0.78)
 texture = ExtResource("15_5hbpj")
 script = ExtResource("16_ngh84")
 ring = 3
 
-[node name="Slider0" type="VSlider" parent="UserInterface/SampleButtons"]
-offset_left = -517.0
-offset_top = 114.0
-offset_right = -501.0
-offset_bottom = 189.0
-scale = Vector2(1.5, 1.5)
-theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_hpc6h")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_kltya")
-max_value = 2.0
-step = 0.1
-value = 2.0
+[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-499, 281)
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
+script = ExtResource("14_4mig3")
 
-[node name="Label" type="Label" parent="UserInterface/SampleButtons/Slider0"]
-layout_mode = 0
-offset_left = 12.6667
-offset_top = -10.6667
-offset_right = 34.6667
-offset_bottom = 12.3333
+[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-424, 282)
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
+script = ExtResource("14_4mig3")
+ring = 1
+
+[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-349, 282)
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
+script = ExtResource("14_4mig3")
+ring = 2
+
+[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-274, 282)
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
+script = ExtResource("14_4mig3")
+ring = 3
+
+[node name="SampleMixer0" type="Node2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-499, 281)
+
+[node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer0"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -65.0
+offset_right = 16.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = ">"
+metadata/_edit_use_anchors_ = true
+
+[node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer0"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 34.0
+offset_right = 16.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = "<"
+metadata/_edit_use_anchors_ = true
+
+[node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer0"]
+position = Vector2(0, 20)
+
+[node name="Icon0" type="Label" parent="UserInterface/SampleButtons/SampleMixer0/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -44.5
+offset_right = 22.0
+offset_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "👞"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="UserInterface/SampleButtons/Slider0"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 58.6667
-offset_right = 34.0
-offset_bottom = 81.6667
+[node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer0/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.7035
+offset_top = -7.76556
+offset_right = 14.2965
+offset_bottom = 37.2344
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.89182
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "👟"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="UserInterface/SampleButtons/Slider0"]
-layout_mode = 0
-offset_left = 9.33333
-offset_top = 26.0
-offset_right = 31.3333
-offset_bottom = 49.0
+[node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer0/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.02332
+offset_top = -10.9222
+offset_right = 46.0233
+offset_bottom = 34.0778
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 2.07937
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Slider1" type="VSlider" parent="UserInterface/SampleButtons"]
-offset_left = -443.0
-offset_top = 114.0
-offset_right = -427.0
-offset_bottom = 189.0
-scale = Vector2(1.5, 1.5)
-theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_hpc6h")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_kltya")
-max_value = 2.0
-step = 0.1
-value = 2.0
+[node name="SampleMixer1" type="Node2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-424, 281)
 
-[node name="Label" type="Label" parent="UserInterface/SampleButtons/Slider1"]
-layout_mode = 0
-offset_left = 12.6667
-offset_top = -10.6667
-offset_right = 34.6667
-offset_bottom = 12.3333
-text = "🖐️"
+[node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -65.0
+offset_right = 16.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = ">"
+metadata/_edit_use_anchors_ = true
+
+[node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 34.0
+offset_right = 16.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = "<"
+metadata/_edit_use_anchors_ = true
+
+[node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer1"]
+position = Vector2(0, 20)
+
+[node name="Icon0" type="Label" parent="UserInterface/SampleButtons/SampleMixer1/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -26.0
+offset_top = -42.5
+offset_right = 18.0
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
+text = "👏"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="UserInterface/SampleButtons/Slider1"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 58.6667
-offset_right = 34.0
-offset_bottom = 81.6667
+[node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer1/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.7035
+offset_top = -3.76556
+offset_right = 10.2965
+offset_bottom = 41.2344
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.19662
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "🥊"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="UserInterface/SampleButtons/Slider1"]
-layout_mode = 0
-offset_left = 9.33333
-offset_top = 26.0
-offset_right = 31.3333
-offset_bottom = 49.0
+[node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer1/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.02332
+offset_top = -10.9222
+offset_right = 46.0233
+offset_bottom = 34.0778
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 2.07937
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Slider2" type="VSlider" parent="UserInterface/SampleButtons"]
-offset_left = -369.0
-offset_top = 114.0
-offset_right = -353.0
-offset_bottom = 189.0
-scale = Vector2(1.5, 1.5)
-theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_hpc6h")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_kltya")
-max_value = 2.0
-step = 0.1
-value = 2.0
+[node name="SampleMixer2" type="Node2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-349, 281)
 
-[node name="Label" type="Label" parent="UserInterface/SampleButtons/Slider2"]
-layout_mode = 0
-offset_left = 12.6667
-offset_top = -10.6667
-offset_right = 34.6667
-offset_bottom = 12.3333
+[node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -65.0
+offset_right = 16.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = ">"
+metadata/_edit_use_anchors_ = true
+
+[node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 34.0
+offset_right = 16.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = "<"
+metadata/_edit_use_anchors_ = true
+
+[node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer2"]
+position = Vector2(0, 20)
+
+[node name="Icon0" type="Label" parent="UserInterface/SampleButtons/SampleMixer2/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -42.5
+offset_right = 23.0
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "📣"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="UserInterface/SampleButtons/Slider2"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 58.6667
-offset_right = 34.0
-offset_bottom = 81.6667
+[node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer2/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -29.7035
+offset_top = -2.76556
+offset_right = 14.2965
+offset_bottom = 42.2344
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.38407
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "📢"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="UserInterface/SampleButtons/Slider2"]
-layout_mode = 0
-offset_left = 9.33333
-offset_top = 26.0
-offset_right = 31.3333
-offset_bottom = 49.0
+[node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer2/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.02332
+offset_top = -10.9222
+offset_right = 46.0233
+offset_bottom = 34.0778
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 2.07937
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Slider3" type="VSlider" parent="UserInterface/SampleButtons"]
-offset_left = -291.0
-offset_top = 114.0
-offset_right = -275.0
-offset_bottom = 189.0
-scale = Vector2(1.5, 1.5)
-theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_hpc6h")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_kltya")
-max_value = 2.0
-step = 0.1
-value = 2.0
+[node name="SampleMixer3" type="Node2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-274, 281)
 
-[node name="Label" type="Label" parent="UserInterface/SampleButtons/Slider3"]
-layout_mode = 0
-offset_left = 12.6667
-offset_top = -10.6667
-offset_right = 34.6667
-offset_bottom = 12.3333
+[node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = -65.0
+offset_right = 16.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = ">"
+metadata/_edit_use_anchors_ = true
+
+[node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -16.0
+offset_top = 34.0
+offset_right = 16.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(16, 16)
+focus_mode = 0
+text = "<"
+metadata/_edit_use_anchors_ = true
+
+[node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer3"]
+position = Vector2(0, 20)
+
+[node name="Icon0" type="Label" parent="UserInterface/SampleButtons/SampleMixer3/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -22.0
+offset_top = -41.5
+offset_right = 22.0
+offset_bottom = 3.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "⌚"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="UserInterface/SampleButtons/Slider3"]
-layout_mode = 0
-offset_left = 12.0
-offset_top = 58.6667
-offset_right = 34.0
-offset_bottom = 81.6667
+[node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer3/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.7035
+offset_top = -1.76556
+offset_right = 8.29651
+offset_bottom = 43.2344
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -2.08741
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "⏰"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label3" type="Label" parent="UserInterface/SampleButtons/Slider3"]
-layout_mode = 0
-offset_left = 9.33333
-offset_top = 26.0
-offset_right = 31.3333
-offset_bottom = 49.0
+[node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer3/Pivot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 2.02332
+offset_top = -10.9222
+offset_right = 46.0233
+offset_bottom = 34.0778
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 2.07937
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="UserInterface"]
 anchors_preset = 8

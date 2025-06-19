@@ -39,10 +39,11 @@ public partial class Manager : Node
     public AudioStreamPlayer2D thirdAudioPlayerRec;
     public AudioStreamPlayer2D fourthAudioPlayerRec;
 
-    [Export] public Slider sampleMixSlider0;
-    [Export] public Slider sampleMixSlider1;
-    [Export] public Slider sampleMixSlider2;
-    [Export] public Slider sampleMixSlider3;
+    // sample mixers
+    [Export] public Node2D sampleMixer0;
+    [Export] public Node2D sampleMixer1;
+    [Export] public Node2D sampleMixer2;
+    [Export] public Node2D sampleMixer3;
 
     // other sfx
     AudioStreamPlayer2D extraAudioPlayer;
@@ -849,6 +850,84 @@ public partial class Manager : Node
         thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
         fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
 
+        // mixers setup -------------------------------------------------
+
+        void UpdateVolumes(int ring, float mainvolume, float altvolume, float recvolume)
+        {
+            if (ring == 0)
+            {
+                firstAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+                firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+                firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+            }
+            else if (ring == 1)
+            {
+                secondAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+                secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+                secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+            }
+            else if (ring == 2)
+            {
+                thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+                thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+                thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+            }
+            else if (ring == 3)
+            {
+                fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+                fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+                fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+            }
+        }
+
+        void RotatePivot(float rotation, Node2D pivot, int ring)
+        {
+            pivot.RotationDegrees += rotation;
+
+            float fullrotation = Mathf.PosMod(pivot.RotationDegrees, 360f) / 360f;
+
+            float GetCrossfadeVolume(float sectionCenter)
+            {
+                float distance = Mathf.Abs(fullrotation - sectionCenter);
+                if (distance > 0.5f) distance = 1f - distance;
+                float maxDistance = 1f / 3f;
+                return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
+            }
+
+            float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
+            float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
+            float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
+
+            UpdateVolumes(ring, mainvolume, altvolume, recvolume);
+
+            GD.Print($"rot: {fullrotation:F1}, main: {mainvolume:F1}, alt: {altvolume:F1}, rec: {recvolume:F1}");
+
+            var icon0 = pivot.GetChild(0) as Label;
+            var icon1 = pivot.GetChild(1) as Label;
+            var icon2 = pivot.GetChild(2) as Label;
+
+            icon0.Modulate = new Color(1, 1, 1, mainvolume);
+            icon1.Modulate = new Color(1, 1, 1, altvolume);
+            icon2.Modulate = new Color(1, 1, 1, recvolume);
+        }
+
+        void SetupMixer(Node2D mixer, int ring)
+        {
+            var increase = mixer.FindChild("IncreaseButton") as Button;
+            var decrease = mixer.FindChild("DecreaseButton") as Button;
+            var pivot = mixer.FindChild("Pivot") as Node2D;
+            increase.Pressed += () => RotatePivot(10, pivot, ring);
+            decrease.Pressed += () => RotatePivot(-10, pivot, ring);
+            RotatePivot(0, pivot, ring);
+        }
+
+        SetupMixer(sampleMixer0, 0);
+        SetupMixer(sampleMixer1, 1);
+        SetupMixer(sampleMixer2, 2);
+        SetupMixer(sampleMixer3, 3);
+
+        // mixers setup -------------------------------------------------
+
         layerButton1.Pressed += () => SwitchLayer(1);
         layerButton2.Pressed += () => SwitchLayer(2);
         layerButton3.Pressed += () => SwitchLayer(3);
@@ -1050,7 +1129,7 @@ public partial class Manager : Node
             () => SetRingVisibility(3, true), // zet blauw
             null, // druk play
             null, // geef energie
-            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetMixSlidersVisibility(true); },
+            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetSampleMixersVisibility(true); },
             null,
             null,
             () => SetEffectButtonsVisibility(true),
@@ -1091,7 +1170,7 @@ public partial class Manager : Node
         SetRingVisibility(3, visible);
 
         // sliders
-        SetMixSlidersVisibility(visible);
+        SetSampleMixersVisibility(visible);
 
         // progress bar
         progressBar.Visible = visible;
@@ -1202,12 +1281,13 @@ public partial class Manager : Node
         layerButton10.Disabled = !enabled;
     }
 
-    public void SetMixSlidersVisibility(bool visible)
+    public void SetSampleMixersVisibility(bool visible)
     {
-        sampleMixSlider0.Visible = visible;
-        sampleMixSlider1.Visible = visible;
-        sampleMixSlider2.Visible = visible;
-        sampleMixSlider3.Visible = visible;
+        return;
+        sampleMixer0.Visible = visible;
+        sampleMixer1.Visible = visible;
+        sampleMixer2.Visible = visible;
+        sampleMixer3.Visible = visible;
     }
 
     // ---------------------------------------------------------------
@@ -1236,42 +1316,7 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
-        var slider0 = sampleMixSlider0.Value;
-        var slider1 = sampleMixSlider1.Value;
-        var slider2 = sampleMixSlider2.Value;
-        var slider3 = sampleMixSlider3.Value;
-
-        var mainvolume0 = slider0 >= 1 ? slider0 - 1 : 0;
-        var altvolume0 = slider0 <= 1 ? 1 - slider0 : 0;
-        var recvolume0 = slider0 >= 1 ? 1 - (slider0 - 1) : slider0;
-
-        var mainvolume1 = slider1 >= 1 ? slider1 - 1 : 0;
-        var altvolume1 = slider1 <= 1 ? 1 - slider1 : 0;
-        var recvolume1 = slider1 >= 1 ? 1 - (slider1 - 1) : slider1;
-
-        var mainvolume2 = slider2 >= 1 ? slider2 - 1 : 0;
-        var altvolume2 = slider2 <= 1 ? 1 - slider2 : 0;
-        var recvolume2 = slider2 >= 1 ? 1 - (slider2 - 1) : slider2;
-
-        var mainvolume3 = slider3 >= 1 ? slider3 - 1 : 0;
-        var altvolume3 = slider3 <= 1 ? 1 - slider3 : 0;
-        var recvolume3 = slider3 >= 1 ? 1 - (slider3 - 1) : slider3;
-
-        firstAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume0);
-        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume0);
-        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume0);
-
-        secondAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume1);
-        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume1);
-        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume1);
-
-        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume2);
-        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume2);
-        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume2);
-
-        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb((float)mainvolume3);
-        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb((float)altvolume3);
-        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb((float)recvolume3);
+        
 
         if (Input.IsKeyPressed(Key.F6) && bpm_manager.bpm != 900) bpm_manager.bpm = 900;
 

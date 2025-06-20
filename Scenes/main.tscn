@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=54 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -31,8 +31,8 @@
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
-[ext_resource type="Texture2D" uid="uid://cx0bpjp8y6sel" path="res://Resources/Textures/square-outline.png" id="23_vsgbq"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
+[ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xng46"]
@@ -48,6 +48,34 @@ corner_radius_top_left = 40
 corner_radius_top_right = 40
 corner_radius_bottom_right = 40
 corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
+bg_color = Color(0.14, 0.14, 0.14, 1)
+corner_radius_top_left = 800
+corner_radius_top_right = 800
+corner_radius_bottom_right = 800
+corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r33sp"]
+bg_color = Color(0.27, 0.27, 0.27, 1)
+corner_radius_top_left = 800
+corner_radius_top_right = 800
+corner_radius_bottom_right = 800
+corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
+bg_color = Color(0.44, 0.44, 0.44, 1)
+corner_radius_top_left = 800
+corner_radius_top_right = 800
+corner_radius_bottom_right = 800
+corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 800
+corner_radius_top_right = 800
+corner_radius_bottom_right = 800
+corner_radius_bottom_left = 800
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
@@ -285,6 +313,10 @@ offset_bottom = 349.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🌱"
 
 [node name="Layer2" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -295,6 +327,10 @@ offset_bottom = 277.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 
 [node name="Layer3" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -305,6 +341,10 @@ offset_bottom = 206.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 
 [node name="Layer4" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -315,6 +355,10 @@ offset_bottom = 135.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
 
 [node name="Layer5" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -324,6 +368,10 @@ offset_bottom = 64.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
 
 [node name="Layer6" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -334,6 +382,10 @@ offset_bottom = -7.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 
 [node name="Layer7" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -344,6 +396,10 @@ offset_bottom = -78.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 
 [node name="Layer8" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -354,6 +410,10 @@ offset_bottom = -149.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
 
 [node name="Layer9" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -364,6 +424,10 @@ offset_bottom = -220.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "😃"
 
 [node name="Layer10" type="Button" parent="UserInterface/SwitchLayerButtons"]
@@ -374,12 +438,16 @@ offset_bottom = -291.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🏁"
 
 [node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons"]
 position = Vector2(-574, 317)
-scale = Vector2(2.25, 2.25)
-texture = ExtResource("23_vsgbq")
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("27_neg2b")
 
 [node name="MainButtons" type="Node" parent="UserInterface"]
 

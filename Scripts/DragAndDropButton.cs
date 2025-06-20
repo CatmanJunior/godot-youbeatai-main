@@ -88,10 +88,22 @@ public partial class DragAndDropButton : Sprite2D
 	{
 		GD.Print("add");
 		Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
+
 		if (ring == 0) Manager.instance.firstAudioPlayer.Play();
 		if (ring == 1) Manager.instance.secondAudioPlayer.Play();
 		if (ring == 2) Manager.instance.thirdAudioPlayer.Play();
 		if (ring == 3) Manager.instance.fourthAudioPlayer.Play();
+
+		if (ring == 0) Manager.instance.firstAudioPlayerAlt.Play();
+		if (ring == 1) Manager.instance.secondAudioPlayerAlt.Play();
+		if (ring == 2) Manager.instance.thirdAudioPlayerAlt.Play();
+		if (ring == 3) Manager.instance.fourthAudioPlayerAlt.Play();
+
+		if (ring == 0) Manager.instance.firstAudioPlayerRec.Play();
+		if (ring == 1) Manager.instance.secondAudioPlayerRec.Play();
+		if (ring == 2) Manager.instance.thirdAudioPlayerRec.Play();
+		if (ring == 3) Manager.instance.fourthAudioPlayerRec.Play();
+
 		var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
 		Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
 	}

@@ -423,16 +423,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1170.0
-offset_top = -413.0
-offset_right = -990.0
-offset_bottom = -381.0
+offset_left = -1169.0
+offset_top = -376.0
+offset_right = -1137.0
+offset_bottom = -344.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
-text = "🗑️ Leeg Beat"
-alignment = 0
+text = "🗑️
+"
 
 [node name="SaveLayoutButton" type="Button" parent="UserInterface/MainButtons"]
 anchors_preset = 8
@@ -441,15 +441,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -1169.0
-offset_top = -377.0
-offset_right = -989.0
-offset_bottom = -345.0
+offset_top = -341.0
+offset_right = -1137.0
+offset_bottom = -309.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
-text = "💾 Kopieer Beat"
-alignment = 0
+text = "💾
+"
 
 [node name="LoadLayoutButton" type="Button" parent="UserInterface/MainButtons"]
 anchors_preset = 8
@@ -458,15 +458,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -1169.0
-offset_top = -341.0
-offset_right = -989.0
-offset_bottom = -309.0
+offset_top = -305.0
+offset_right = -1137.0
+offset_bottom = -273.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
-text = "♻️ Plak Beat"
-alignment = 0
+text = "♻️
+"
 
 [node name="AllLayersToMp3" type="Button" parent="UserInterface/MainButtons"]
 anchors_preset = 8
@@ -491,16 +491,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1171.0
-offset_top = -517.0
-offset_right = -991.0
-offset_bottom = -485.0
+offset_left = -1170.0
+offset_top = -506.0
+offset_right = -1138.0
+offset_bottom = -474.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
-text = "🐇 Sneller"
-alignment = 0
+text = "🐇"
 
 [node name="BpmDownButton" type="Button" parent="UserInterface/MainButtons"]
 anchors_preset = 8
@@ -508,16 +507,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1171.0
-offset_top = -481.0
-offset_right = -991.0
-offset_bottom = -449.0
+offset_left = -1170.0
+offset_top = -471.0
+offset_right = -1138.0
+offset_bottom = -439.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
-text = "🐢 Langzamer"
-alignment = 0
+text = "🐢"
 
 [node name="SaveToWavButton" type="Button" parent="UserInterface/MainButtons"]
 anchors_preset = 8
@@ -1483,10 +1481,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BpmLabel" type="Label" parent="UserInterface"]
-offset_left = -329.0
-offset_top = -156.0
-offset_right = -284.0
-offset_bottom = -89.0
+offset_left = -477.0
+offset_top = -146.0
+offset_right = -432.0
+offset_bottom = -79.0
 theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
@@ -1539,7 +1537,7 @@ offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 z_index = -1
-position = Vector2(-340.89, -123)
+position = Vector2(-484.89, -113)
 scale = Vector2(4, 62)
 texture = SubResource("CanvasTexture_6dn85")
 

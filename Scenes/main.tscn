@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=50 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -23,7 +23,6 @@
 [ext_resource type="AudioStream" uid="uid://bm0stqqxbut3n" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare Lusine 1.wav" id="12_jwpg7"]
 [ext_resource type="AudioStream" uid="uid://014gstvkgnd0" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/ClosedHH Floating 1.wav" id="13_k2e45"]
 [ext_resource type="Script" uid="uid://bs8s08unyjudt" path="res://Scripts/DragAndDropButton.cs" id="14_4mig3"]
-[ext_resource type="Texture2D" uid="uid://b5gky5aods412" path="res://Resources/Textures/rawmic.png" id="15_5hbpj"]
 [ext_resource type="Script" uid="uid://858ek2iipynw" path="res://Scripts/VoiceOverStuff/SongVoiceOver.cs" id="15_5s5qe"]
 [ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="16_ngh84"]
 [ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
@@ -541,30 +540,110 @@ alignment = 0
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-499, 178)
-scale = Vector2(0.75, 0.78)
-texture = ExtResource("15_5hbpj")
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
 script = ExtResource("16_ngh84")
+
+[node name="MicIcon" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton0"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -31.75
+offset_right = 11.0
+offset_bottom = 13.25
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
+text = "🎤"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-425, 178)
-scale = Vector2(0.75, 0.78)
-texture = ExtResource("15_5hbpj")
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
 script = ExtResource("16_ngh84")
 ring = 1
 
+[node name="MicIcon2" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -31.75
+offset_right = 11.0
+offset_bottom = 13.25
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
+text = "🎤"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-350, 178)
-scale = Vector2(0.75, 0.78)
-texture = ExtResource("15_5hbpj")
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
 script = ExtResource("16_ngh84")
 ring = 2
 
+[node name="MicIcon3" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -31.75
+offset_right = 11.0
+offset_bottom = 13.25
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
+text = "🎤"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-274, 178)
-scale = Vector2(0.75, 0.78)
-texture = ExtResource("15_5hbpj")
+scale = Vector2(2, 2)
+texture = ExtResource("2_1ig4u")
 script = ExtResource("16_ngh84")
 ring = 3
+
+[node name="MicIcon4" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -31.75
+offset_right = 11.0
+offset_bottom = 13.25
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(18, 18)
+theme_override_font_sizes/font_size = 32
+text = "🎤"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
 z_index = -4
@@ -693,7 +772,7 @@ grow_vertical = 2
 rotation = 2.07937
 pivot_offset = Vector2(18, 18)
 theme_override_font_sizes/font_size = 32
-text = "🎙️"
+text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -793,10 +872,9 @@ grow_vertical = 2
 rotation = 2.07937
 pivot_offset = Vector2(18, 18)
 theme_override_font_sizes/font_size = 32
-text = "🎙️"
+text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="SampleMixer2" type="Node2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-349, 281)
@@ -894,10 +972,9 @@ grow_vertical = 2
 rotation = 2.07937
 pivot_offset = Vector2(18, 18)
 theme_override_font_sizes/font_size = 32
-text = "🎙️"
+text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="SampleMixer3" type="Node2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-274, 281)
@@ -995,7 +1072,7 @@ grow_vertical = 2
 rotation = 2.07937
 pivot_offset = Vector2(18, 18)
 theme_override_font_sizes/font_size = 32
-text = "🎙️"
+text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true

@@ -916,8 +916,35 @@ public partial class Manager : Node
             var increase = mixer.FindChild("IncreaseButton") as Button;
             var decrease = mixer.FindChild("DecreaseButton") as Button;
             var pivot = mixer.FindChild("Pivot") as Node2D;
-            increase.Pressed += () => RotatePivot(10, pivot, ring);
-            decrease.Pressed += () => RotatePivot(-10, pivot, ring);
+
+            // increase.Pressed += () => RotatePivot(10, pivot, ring);
+            // decrease.Pressed += () => RotatePivot(-10, pivot, ring);
+
+            var timerInc = new Timer
+            {
+                WaitTime = 0.05,
+                OneShot = false,
+                Autostart = false
+            };
+            AddChild(timerInc);
+
+            var timerDec = new Timer
+            {
+                WaitTime = 0.05,
+                OneShot = false,
+                Autostart = false
+            };
+            AddChild(timerDec);
+
+            timerInc.Timeout += () => RotatePivot(5, pivot, ring);
+            timerDec.Timeout += () => RotatePivot(-5, pivot, ring);
+
+            increase.ButtonDown += () => timerInc.Start();
+            increase.ButtonUp += () => timerInc.Stop();
+
+            decrease.ButtonDown += () => timerDec.Start();
+            decrease.ButtonUp += () => timerDec.Stop();
+            
             RotatePivot(0, pivot, ring);
         }
 

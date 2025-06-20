@@ -11,15 +11,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 447.0
+offset_left = 427.0
 offset_top = 138.0
-offset_right = 747.0
+offset_right = 767.0
 offset_bottom = 636.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l0fe3")
 accousticSlider = NodePath("AcousticSlider")
-emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle")]
+emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle"), NodePath("Emoties/emotion7/toggle")]
 themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
 zoekButton = NodePath("ZoekButton")
 gebruikButton = NodePath("GebruikButton")
@@ -172,9 +172,9 @@ vertical_alignment = 1
 
 [node name="emotion1" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
-offset_left = -20.5
+offset_left = -41.5
 offset_top = 37.0
-offset_right = 20.5
+offset_right = -0.5
 offset_bottom = 79.0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -192,9 +192,9 @@ focus_mode = 0
 
 [node name="emotion2" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
-offset_left = 24.5
+offset_left = 3.5
 offset_top = 37.0
-offset_right = 65.5
+offset_right = 44.5
 offset_bottom = 79.0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -212,9 +212,9 @@ focus_mode = 0
 
 [node name="emotion3" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
-offset_left = 70.5
+offset_left = 49.5
 offset_top = 37.0
-offset_right = 111.5
+offset_right = 90.5
 offset_bottom = 79.0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -232,9 +232,9 @@ focus_mode = 0
 
 [node name="emotion4" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
-offset_left = 116.5
+offset_left = 95.5
 offset_top = 37.0
-offset_right = 157.5
+offset_right = 136.5
 offset_bottom = 79.0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -252,9 +252,9 @@ focus_mode = 0
 
 [node name="emotion5" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
-offset_left = 162.5
+offset_left = 141.5
 offset_top = 37.0
-offset_right = 203.5
+offset_right = 182.5
 offset_bottom = 79.0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -272,9 +272,9 @@ focus_mode = 0
 
 [node name="emotion6" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
-offset_left = 208.5
+offset_left = 187.5
 offset_top = 37.0
-offset_right = 249.5
+offset_right = 228.5
 offset_bottom = 79.0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -283,6 +283,26 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion6"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion7" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 231.5
+offset_top = 37.0
+offset_right = 272.5
+offset_bottom = 79.0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😡"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion7"]
 layout_mode = 0
 offset_left = -3.0
 offset_top = 31.0

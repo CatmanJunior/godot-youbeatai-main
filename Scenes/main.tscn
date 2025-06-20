@@ -657,6 +657,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer0/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -676,6 +677,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer0/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -693,7 +695,6 @@ theme_override_font_sizes/font_size = 32
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="SampleMixer1" type="Node2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-424, 281)
@@ -755,6 +756,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer1/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -774,6 +776,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer1/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -853,6 +856,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer2/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -872,6 +876,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer2/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -951,6 +956,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon1" type="Label" parent="UserInterface/SampleButtons/SampleMixer3/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -970,6 +976,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer3/Pivot"]
+modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

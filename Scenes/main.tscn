@@ -614,7 +614,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = ">"
+text = "↷"
 metadata/_edit_use_anchors_ = true
 
 [node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer0"]
@@ -629,9 +629,10 @@ offset_right = 16.0
 offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.14159
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = "<"
+text = "↶"
 metadata/_edit_use_anchors_ = true
 
 [node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer0"]
@@ -713,7 +714,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = ">"
+text = "↷"
 metadata/_edit_use_anchors_ = true
 
 [node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer1"]
@@ -728,9 +729,10 @@ offset_right = 16.0
 offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.14159
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = "<"
+text = "↶"
 metadata/_edit_use_anchors_ = true
 
 [node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer1"]
@@ -813,7 +815,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = ">"
+text = "↷"
 metadata/_edit_use_anchors_ = true
 
 [node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer2"]
@@ -828,9 +830,10 @@ offset_right = 16.0
 offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.14159
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = "<"
+text = "↶"
 metadata/_edit_use_anchors_ = true
 
 [node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer2"]
@@ -913,7 +916,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = ">"
+text = "↷"
 metadata/_edit_use_anchors_ = true
 
 [node name="DecreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer3"]
@@ -928,9 +931,10 @@ offset_right = 16.0
 offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 3.14159
 pivot_offset = Vector2(16, 16)
 focus_mode = 0
-text = "<"
+text = "↶"
 metadata/_edit_use_anchors_ = true
 
 [node name="Pivot" type="Node2D" parent="UserInterface/SampleButtons/SampleMixer3"]

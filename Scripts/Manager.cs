@@ -1338,6 +1338,8 @@ public partial class Manager : Node
     // metronome timer
     float slowBeatTimer = 0;
 
+    bool first_tts_done = false;
+
     public override void _Process(double delta)
     {
         time += (float)delta;
@@ -1396,6 +1398,21 @@ public partial class Manager : Node
         // other
         metronome_sfx_enabled = metronome_toggle.ButtonPressed;
 
+        void SpeakInstruction(int instruction)
+        {
+            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+            DisplayServer.TtsSpeak(instructions[instruction], voices[0]);
+        }
+
+        // first tts
+        if (!first_tts_done)
+        {
+            SpeakInstruction(0);
+            first_tts_done = true;
+        }
+
         // deal with achievements
         if (achievementLevel != -1)
         {
@@ -1414,6 +1431,7 @@ public partial class Manager : Node
                 achievementLevel++;
                 EmitAchievementParticles();
                 PlayExtraSFX(achievement_sfx);
+                SpeakInstruction(achievementLevel);
             }
         }
 

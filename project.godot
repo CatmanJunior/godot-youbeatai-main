@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.4", "C#", "Mobile")
 [audio]
 
 buses/default_bus_layout="res://Other/default_bus_layout.tres"
+general/text_to_speech=true
 driver/enable_input=true
 
 [display]

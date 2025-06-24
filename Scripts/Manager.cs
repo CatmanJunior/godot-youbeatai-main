@@ -9,6 +9,9 @@ using NAudio.Wave.SampleProviders;
 using System.Linq;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Text.RegularExpressions;
+using System.Text;
+using System.Globalization;
 
 public partial class Manager : Node
 {
@@ -1398,12 +1401,24 @@ public partial class Manager : Node
         // other
         metronome_sfx_enabled = metronome_toggle.ButtonPressed;
 
+        string RemoveEmojis(string input)
+        {
+            var output = "";
+            var stringInfo = new StringInfo(input);
+            for (int i = 0; i < stringInfo.LengthInTextElements; i++)
+            {
+                string element = stringInfo.SubstringByTextElements(i, 1);
+                if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
+            }
+            return output;
+        }
+
         void SpeakInstruction(int instruction)
         {
             var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
             if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-            DisplayServer.TtsSpeak(instructions[instruction], voices[0], 100);
+            DisplayServer.TtsSpeak(RemoveEmojis(instructions[instruction]), voices[0], 100);
         }
 
         // first tts

@@ -1403,7 +1403,7 @@ public partial class Manager : Node
             var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
             if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-            DisplayServer.TtsSpeak(instructions[instruction], voices[0]);
+            DisplayServer.TtsSpeak(instructions[instruction], voices[0], 100);
         }
 
         // first tts

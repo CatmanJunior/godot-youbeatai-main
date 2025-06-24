@@ -1,5 +1,7 @@
 using Godot;
+using NAudio.Mixer;
 using System;
+using System.Threading.Tasks;
 
 public partial class RecordSampleButton : Sprite2D
 {
@@ -19,6 +21,9 @@ public partial class RecordSampleButton : Sprite2D
 
     private float recordingVolume => MicrophoneCapture.instance.volume;
     private float recordingTreshold = 0.01f;
+
+    private Node2D mixerToMove;
+    private Node2D pivotToMove => (Node2D)mixerToMove.FindChild("Pivot");
 
     public override void _Ready()
     {
@@ -136,21 +141,49 @@ public partial class RecordSampleButton : Sprite2D
         {
             manager.firstAudioPlayerRec.Stop();
             manager.firstAudioPlayerRec.Stream = manager.recordSampleButton0.recordedAudio;
+            mixerToMove = manager.sampleMixer0;
+            
         }
         if (ring == 1)
         {
             manager.secondAudioPlayerRec.Stop();
             manager.secondAudioPlayerRec.Stream = manager.recordSampleButton1.recordedAudio;
+            mixerToMove = manager.sampleMixer1;
+
         }
         if (ring == 2)
         {
             manager.thirdAudioPlayerRec.Stop();
             manager.thirdAudioPlayerRec.Stream = manager.recordSampleButton2.recordedAudio;
+            mixerToMove = manager.sampleMixer2;
+
         }
         if (ring == 3)
         {
             manager.fourthAudioPlayerRec.Stop();
             manager.fourthAudioPlayerRec.Stream = manager.recordSampleButton3.recordedAudio;
+            mixerToMove = manager.sampleMixer3;
+        }
+
+        if (pivotToMove.RotationDegrees > -360 / 3) _ = RotateMixerLeft();  // fire-and-forget coroutine
+        else if (pivotToMove.RotationDegrees < -360 / 3) _ = RotateMixerRight();  // fire-and-forget coroutine
+    }
+
+    async Task RotateMixerLeft()
+    {
+        while (pivotToMove.RotationDegrees > -360 / 3)
+        {
+            Manager.instance.RotatePivot(-5, pivotToMove, ring);
+            await Task.Delay(50);
+        }
+    }
+
+    async Task RotateMixerRight()
+    {
+        while (pivotToMove.RotationDegrees < -360 / 3)
+        {
+            Manager.instance.RotatePivot(5, pivotToMove, ring);
+            await Task.Delay(50);
         }
     }
 }

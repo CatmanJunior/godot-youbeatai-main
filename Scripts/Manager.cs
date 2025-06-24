@@ -735,6 +735,102 @@ public partial class Manager : Node
 
     private float startswing;
 
+    void UpdateVolumes(int ring, float mainvolume, float altvolume, float recvolume)
+    {
+        if (ring == 0)
+        {
+            firstAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+        else if (ring == 1)
+        {
+            secondAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+        else if (ring == 2)
+        {
+            thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+        else if (ring == 3)
+        {
+            fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+    }
+
+    public void RotatePivot(float rotation, Node2D pivot, int ring)
+    {
+        pivot.RotationDegrees += rotation;
+
+        float fullrotation = Mathf.PosMod(pivot.RotationDegrees, 360f) / 360f;
+
+        float GetCrossfadeVolume(float sectionCenter)
+        {
+            float distance = Mathf.Abs(fullrotation - sectionCenter);
+            if (distance > 0.5f) distance = 1f - distance;
+            float maxDistance = 1f / 3f;
+            return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
+        }
+
+        float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
+        float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
+        float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
+
+        UpdateVolumes(ring, mainvolume, altvolume, recvolume);
+
+        // GD.Print($"rot: {fullrotation:F1}, main: {mainvolume:F1}, alt: {altvolume:F1}, rec: {recvolume:F1}");
+
+        var icon0 = pivot.GetChild(0) as Label;
+        var icon1 = pivot.GetChild(1) as Label;
+        var icon2 = pivot.GetChild(2) as Label;
+
+        icon0.Modulate = new Color(1, 1, 1, mainvolume);
+        icon1.Modulate = new Color(1, 1, 1, altvolume);
+        icon2.Modulate = new Color(1, 1, 1, recvolume);
+    }
+
+    void SetupMixer(Node2D mixer, int ring)
+    {
+        var increase = mixer.FindChild("IncreaseButton") as Button;
+        var decrease = mixer.FindChild("DecreaseButton") as Button;
+        var pivot = mixer.FindChild("Pivot") as Node2D;
+
+        // increase.Pressed += () => RotatePivot(10, pivot, ring);
+        // decrease.Pressed += () => RotatePivot(-10, pivot, ring);
+
+        var timerInc = new Timer
+        {
+            WaitTime = 0.05,
+            OneShot = false,
+            Autostart = false
+        };
+        AddChild(timerInc);
+
+        var timerDec = new Timer
+        {
+            WaitTime = 0.05,
+            OneShot = false,
+            Autostart = false
+        };
+        AddChild(timerDec);
+
+        timerInc.Timeout += () => RotatePivot(5, pivot, ring);
+        timerDec.Timeout += () => RotatePivot(-5, pivot, ring);
+
+        increase.ButtonDown += () => timerInc.Start();
+        increase.ButtonUp += () => timerInc.Stop();
+
+        decrease.ButtonDown += () => timerDec.Start();
+        decrease.ButtonUp += () => timerDec.Stop();
+        
+        RotatePivot(0, pivot, ring);
+    }
+
     public override void _Ready()
     {
         // init singleton
@@ -855,101 +951,9 @@ public partial class Manager : Node
 
         // mixers setup -------------------------------------------------
 
-        void UpdateVolumes(int ring, float mainvolume, float altvolume, float recvolume)
-        {
-            if (ring == 0)
-            {
-                firstAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-                firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-                firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-            }
-            else if (ring == 1)
-            {
-                secondAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-                secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-                secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-            }
-            else if (ring == 2)
-            {
-                thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-                thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-                thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-            }
-            else if (ring == 3)
-            {
-                fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-                fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-                fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-            }
-        }
+        
 
-        void RotatePivot(float rotation, Node2D pivot, int ring)
-        {
-            pivot.RotationDegrees += rotation;
-
-            float fullrotation = Mathf.PosMod(pivot.RotationDegrees, 360f) / 360f;
-
-            float GetCrossfadeVolume(float sectionCenter)
-            {
-                float distance = Mathf.Abs(fullrotation - sectionCenter);
-                if (distance > 0.5f) distance = 1f - distance;
-                float maxDistance = 1f / 3f;
-                return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
-            }
-
-            float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
-            float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
-            float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
-
-            UpdateVolumes(ring, mainvolume, altvolume, recvolume);
-
-            GD.Print($"rot: {fullrotation:F1}, main: {mainvolume:F1}, alt: {altvolume:F1}, rec: {recvolume:F1}");
-
-            var icon0 = pivot.GetChild(0) as Label;
-            var icon1 = pivot.GetChild(1) as Label;
-            var icon2 = pivot.GetChild(2) as Label;
-
-            icon0.Modulate = new Color(1, 1, 1, mainvolume);
-            icon1.Modulate = new Color(1, 1, 1, altvolume);
-            icon2.Modulate = new Color(1, 1, 1, recvolume);
-        }
-
-        void SetupMixer(Node2D mixer, int ring)
-        {
-            var increase = mixer.FindChild("IncreaseButton") as Button;
-            var decrease = mixer.FindChild("DecreaseButton") as Button;
-            var pivot = mixer.FindChild("Pivot") as Node2D;
-
-            // increase.Pressed += () => RotatePivot(10, pivot, ring);
-            // decrease.Pressed += () => RotatePivot(-10, pivot, ring);
-
-            var timerInc = new Timer
-            {
-                WaitTime = 0.05,
-                OneShot = false,
-                Autostart = false
-            };
-            AddChild(timerInc);
-
-            var timerDec = new Timer
-            {
-                WaitTime = 0.05,
-                OneShot = false,
-                Autostart = false
-            };
-            AddChild(timerDec);
-
-            timerInc.Timeout += () => RotatePivot(5, pivot, ring);
-            timerDec.Timeout += () => RotatePivot(-5, pivot, ring);
-
-            increase.ButtonDown += () => timerInc.Start();
-            increase.ButtonUp += () => timerInc.Stop();
-
-            decrease.ButtonDown += () => timerDec.Start();
-            decrease.ButtonUp += () => timerDec.Stop();
-            
-            RotatePivot(0, pivot, ring);
-        }
+        
 
         SetupMixer(sampleMixer0, 0);
         SetupMixer(sampleMixer1, 1);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=4 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=4 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -33,6 +33,7 @@
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
+[ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xng46"]
@@ -758,7 +759,7 @@ alignment = 0
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-499, 178)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
 
 [node name="MicIcon" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton0"]
@@ -784,7 +785,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-425, 178)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
 ring = 1
 
@@ -811,7 +812,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-350, 178)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
 ring = 2
 
@@ -838,7 +839,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
 position = Vector2(-274, 178)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
 ring = 3
 
@@ -866,14 +867,14 @@ metadata/_edit_use_anchors_ = true
 z_index = -4
 position = Vector2(-499, 281)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
 z_index = -4
 position = Vector2(-424, 282)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 1
 
@@ -881,7 +882,7 @@ ring = 1
 z_index = -4
 position = Vector2(-349, 282)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 2
 
@@ -889,7 +890,7 @@ ring = 2
 z_index = -4
 position = Vector2(-274, 282)
 scale = Vector2(2, 2)
-texture = ExtResource("2_1ig4u")
+texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 3
 

@@ -1346,8 +1346,18 @@ public partial class Manager : Node
     public override void _Process(double delta)
     {
         time += (float)delta;
-
         
+        // layerbutton outline clock rotation
+        if (BpmManager.instance.timePerBeat != 0)
+        {
+            float clockrot = (float)((float)(bpm_manager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+            layerOutline.RotationDegrees = clockrot * 360f - 7f;
+        }
+        else
+        {
+            float clockrot = (float)(bpm_manager.currentBeat / (float)BpmManager.beatsAmount);
+            layerOutline.RotationDegrees = clockrot * 360f - 7f;
+        }
 
         if (Input.IsKeyPressed(Key.F6) && bpm_manager.bpm != 900) bpm_manager.bpm = 900;
 

@@ -29,6 +29,17 @@ public partial class SoundBankSelectionMenu : Panel
                 if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
                 if (!emotionToggle.ButtonPressed) chosenEmotions.Remove(label.Text);
             };
+
+            var icon = emotionToggle.GetParent() as Label;
+            icon.GuiInput += (InputEvent args) =>
+            {
+                if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                {
+                    emotionToggle.ButtonPressed = !emotionToggle.ButtonPressed;
+                    if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
+                    if (!emotionToggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+                }
+            };
         }
 
         foreach (var themeToggle in themeToggles)
@@ -38,6 +49,17 @@ public partial class SoundBankSelectionMenu : Panel
             {
                 if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
                 if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
+            };
+
+            var icon = themeToggle.GetParent() as Label;
+            icon.GuiInput += (InputEvent args) =>
+            {
+                if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                {
+                    themeToggle.ButtonPressed = !themeToggle.ButtonPressed;
+                    if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
+                    if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
+                }
             };
         }
 
@@ -73,6 +95,14 @@ public partial class SoundBankSelectionMenu : Panel
         chosenElectronicFactor = (int)(accousticSlider.Value * 100);
         gebruikButton.Disabled = chosenSoundBank == null;
         gevondenSoundBankLabel.Text = chosenSoundBank?.name;
+
+        string emoticons = "";
+        foreach (var emoticon in chosenEmotions) emoticons += emoticon;
+
+        string themes = "";
+        foreach (var theme in chosenThemes) themes += theme;
+
+        // GD.Print(emoticons + themes);
     }
 
     public SoundBank ChooseSoundBank()

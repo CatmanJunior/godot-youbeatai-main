@@ -38,7 +38,10 @@ public partial class RecordSampleButton : Sprite2D
         {
             recordingLength += (float)delta;
             if (recordingVolume > recordingTreshold) hasDetectedSound = true;
-            if (!hasDetectedSound) silenceLength += (float)delta;
+            if (!hasDetectedSound && recordingLength < BpmManager.instance.timePerBeat) silenceLength += (float)delta;
+
+            var icon = GetChild(0) as Label;
+            icon.RotationDegrees = (Mathf.Clamp(recordingLength, 0, BpmManager.instance.timePerBeat) / BpmManager.instance.timePerBeat) * 360f;
         }
 
         if (ring == 0 && recording)

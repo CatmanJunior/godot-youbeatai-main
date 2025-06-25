@@ -59,7 +59,7 @@ public partial class RecordSampleButton : Sprite2D
                 }
                 else
                 {
-                    fill.Value = percentage;
+                    fill.Value = 1 - percentage;
                 }
             }
         }
@@ -142,7 +142,8 @@ public partial class RecordSampleButton : Sprite2D
     private void StartRecording()
     {
         SetVolume(0f);
-		SelfModulate = new Color(1, 0.5f, 0.5f, 1);
+		var fill = GetChild(0) as TextureProgressBar;
+        fill.Value = 1;
         audioEffectRecord.SetRecordingActive(true);
         recording = true;
     }
@@ -150,7 +151,8 @@ public partial class RecordSampleButton : Sprite2D
     private void StopRecording()
     {
         SetVolume(1);
-		SelfModulate = new Color(1, 1, 1, 1);
+		var fill = GetChild(0) as TextureProgressBar;
+        fill.Value = 0;
         audioEffectRecord.SetRecordingActive(false);
 		recordedAudio = audioEffectRecord.GetRecording();
         

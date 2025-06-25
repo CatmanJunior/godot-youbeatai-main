@@ -49,15 +49,17 @@ public partial class RecordSampleButton : Sprite2D
                 var baseTimePerBeat = 60f / BpmManager.instance.bpm / 2;
                 var percentage = actualSoundLength / (baseTimePerBeat * 2);
 
+                var fill = GetChild(0) as TextureProgressBar;
+
                 if (percentage > 1f)
                 {
+                    fill.Value = 0;
                     pressing = !pressing;
                     StopRecording();
                 }
                 else
                 {
-                    var icon = GetChild(0) as Label;
-                    icon.RotationDegrees = percentage * 360f;
+                    fill.Value = percentage;
                 }
             }
         }
@@ -140,7 +142,7 @@ public partial class RecordSampleButton : Sprite2D
     private void StartRecording()
     {
         SetVolume(0f);
-		Modulate = new Color(1, 0, 0, 1);
+		SelfModulate = new Color(1, 0.5f, 0.5f, 1);
         audioEffectRecord.SetRecordingActive(true);
         recording = true;
     }
@@ -148,7 +150,7 @@ public partial class RecordSampleButton : Sprite2D
     private void StopRecording()
     {
         SetVolume(1);
-		Modulate = new Color(1, 1, 1, 1);
+		SelfModulate = new Color(1, 1, 1, 1);
         audioEffectRecord.SetRecordingActive(false);
 		recordedAudio = audioEffectRecord.GetRecording();
         

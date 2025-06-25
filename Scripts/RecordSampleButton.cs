@@ -18,12 +18,14 @@ public partial class RecordSampleButton : Sprite2D
     private float silenceLength = 0;
     private float recordingLength = 0;
     private bool hasDetectedSound = false;
+    private float actualSoundLength = 0;
 
     private float recordingVolume => MicrophoneCapture.instance.volume;
     private float recordingTreshold = 0.01f;
 
     private Node2D mixerToMove;
     private Node2D pivotToMove => (Node2D)mixerToMove.FindChild("Pivot");
+
 
     public override void _Ready()
     {
@@ -38,12 +40,29 @@ public partial class RecordSampleButton : Sprite2D
         {
             recordingLength += (float)delta;
             if (recordingVolume > recordingTreshold) hasDetectedSound = true;
-            if (!hasDetectedSound && recordingLength < BpmManager.instance.timePerBeat) silenceLength += (float)delta;
+            if (!hasDetectedSound) silenceLength += (float)delta;
 
-            var icon = GetChild(0) as Label;
-            icon.RotationDegrees = (Mathf.Clamp(recordingLength, 0, BpmManager.instance.timePerBeat) / BpmManager.instance.timePerBeat) * 360f;
+            if (hasDetectedSound)
+            {
+                actualSoundLength += (float)delta;
+
+                var baseTimePerBeat = 60f / BpmManager.instance.bpm / 2;
+                var percentage = actualSoundLength / (baseTimePerBeat * 2);
+
+                if (percentage > 1f)
+                {
+                    pressing = !pressing;
+                    StopRecording();
+                }
+                else
+                {
+                    var icon = GetChild(0) as Label;
+                    icon.RotationDegrees = percentage * 360f;
+                }
+            }
         }
 
+        /*
         if (ring == 0 && recording)
         {
             GD.Print("---------------------");
@@ -55,6 +74,7 @@ public partial class RecordSampleButton : Sprite2D
             GD.Print("treshold: " + recordingTreshold);
             GD.Print("---------------------");
         }
+        */
     }
 
     public override void _Input(InputEvent inputEvent)
@@ -137,6 +157,7 @@ public partial class RecordSampleButton : Sprite2D
         hasDetectedSound = false;
         silenceLength = 0;
         recordingLength = 0;
+        actualSoundLength = 0;
 
         var manager = Manager.instance;
 

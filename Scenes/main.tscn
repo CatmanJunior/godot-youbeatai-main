@@ -287,7 +287,7 @@ metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_r33sp"), ExtResource("11_hdf80"), ExtResource("12_jwpg7"), ExtResource("13_k2e45")])
-saveToWavButton = NodePath("../../UserInterface/MainButtons/SaveToWavButton")
+saveToWavButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/SaveToWavButton")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
@@ -333,8 +333,8 @@ metronome = NodePath("../../UserInterface/metronome/metronome_point")
 metronomebg = NodePath("../../UserInterface/metronome")
 bpmLabel = NodePath("../../UserInterface/BpmLabel")
 draganddropthing = NodePath("../../UserInterface/draganddropthing")
-swingslider = NodePath("../../UserInterface/SwingSlider")
-swinglabel = NodePath("../../UserInterface/SwingSlider/SwingLabel")
+swingslider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/SwingSlider")
+swinglabel = NodePath("../../UserInterface/SettingsButton/SettingsPanel/SwingSlider/SwingLabel")
 settingsButton = NodePath("../../UserInterface/SettingsButton")
 settingsPanel = NodePath("../../UserInterface/SettingsButton/SettingsPanel")
 ClapBiasSlider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/ClapStompBias")
@@ -343,7 +343,7 @@ layerLoopToggle = NodePath("../../UserInterface/SettingsButton/SettingsPanel/Lay
 SavingLabel = NodePath("../../SavingLabel")
 InstructionLabel = NodePath("../../UserInterface/AchievementsPanel/InstructionLabel")
 robot = NodePath("../../UserInterface/Robot")
-allLayersToMp3 = NodePath("../../UserInterface/MainButtons/AllLayersToMp3")
+allLayersToMp3 = NodePath("../../UserInterface/SettingsButton/SettingsPanel/AllLayersToMp3")
 layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/Outline")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
@@ -359,8 +359,8 @@ setTemplateButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/S
 
 [node name="ReverbDelayManager" type="Node" parent="Managers" node_paths=PackedStringArray("reverbSlider", "delaySlider")]
 script = ExtResource("10_jykfx")
-reverbSlider = NodePath("../../UserInterface/ReverbSlider")
-delaySlider = NodePath("../../UserInterface/DelaySlider")
+reverbSlider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/ReverbSlider")
+delaySlider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/DelaySlider")
 
 [node name="MidiManager" type="Node" parent="Managers"]
 script = ExtResource("11_iqwjw")
@@ -378,12 +378,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1273.0
-offset_top = -714.0
-offset_right = -1255.0
-offset_bottom = -7.0
+offset_left = -567.0
+offset_top = -713.0
+offset_right = -549.0
+offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 2
+rotation = 1.57079
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -419,10 +420,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1169.0
-offset_top = -711.0
-offset_right = -988.0
-offset_bottom = -679.0
+offset_left = -1218.0
+offset_top = -264.0
+offset_right = -1037.0
+offset_bottom = -232.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -458,10 +459,10 @@ Opnemen
 [node name="SwitchLayerButtons" type="Node" parent="UserInterface"]
 
 [node name="Layer1" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = 285.0
-offset_right = -542.0
-offset_bottom = 349.0
+offset_left = -629.09
+offset_top = -327.09
+offset_right = -565.09
+offset_bottom = -263.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -470,12 +471,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🌱"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer2" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = 213.0
-offset_right = -542.0
-offset_bottom = 277.0
+offset_left = -557.09
+offset_top = -327.09
+offset_right = -493.09
+offset_bottom = -263.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -484,12 +486,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer3" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = 142.0
-offset_right = -542.0
-offset_bottom = 206.0
+offset_left = -486.09
+offset_top = -327.09
+offset_right = -422.09
+offset_bottom = -263.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -498,12 +501,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer4" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = 71.0
-offset_right = -542.0
-offset_bottom = 135.0
+offset_left = -415.09
+offset_top = -327.091
+offset_right = -351.09
+offset_bottom = -263.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -512,11 +516,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer5" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_right = -542.0
-offset_bottom = 64.0
+offset_left = -344.09
+offset_top = -327.091
+offset_right = -280.09
+offset_bottom = -263.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -525,12 +531,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer6" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = -71.0
-offset_right = -542.0
-offset_bottom = -7.0
+offset_left = -273.09
+offset_top = -327.091
+offset_right = -209.09
+offset_bottom = -263.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -539,12 +546,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer7" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = -142.0
-offset_right = -542.0
-offset_bottom = -78.0
+offset_left = -202.09
+offset_top = -327.091
+offset_right = -138.09
+offset_bottom = -263.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -553,12 +561,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer8" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = -213.0
-offset_right = -542.0
-offset_bottom = -149.0
+offset_left = -131.09
+offset_top = -327.091
+offset_right = -67.09
+offset_bottom = -263.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -567,12 +576,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer9" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = -284.0
-offset_right = -542.0
-offset_bottom = -220.0
+offset_left = -60.0901
+offset_top = -327.091
+offset_right = 3.90991
+offset_bottom = -263.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -581,12 +591,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "😃"
+metadata/_edit_use_anchors_ = true
 
 [node name="Layer10" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -606.0
-offset_top = -355.0
-offset_right = -542.0
-offset_bottom = -291.0
+offset_left = 10.9099
+offset_top = -327.092
+offset_right = 74.9099
+offset_bottom = -263.092
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -595,9 +606,11 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🏁"
+metadata/_edit_use_anchors_ = true
 
 [node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons"]
-position = Vector2(-574, 317)
+position = Vector2(-597, -295)
+rotation = 1.57079
 scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
 
@@ -643,10 +656,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1169.0
-offset_top = -376.0
-offset_right = -1137.0
-offset_bottom = -344.0
+offset_left = -1165.0
+offset_top = -606.0
+offset_right = -1133.0
+offset_bottom = -574.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -660,10 +673,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1169.0
-offset_top = -341.0
-offset_right = -1137.0
-offset_bottom = -309.0
+offset_left = -1129.0
+offset_top = -606.0
+offset_right = -1097.0
+offset_bottom = -574.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -677,10 +690,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1169.0
-offset_top = -305.0
-offset_right = -1137.0
-offset_bottom = -273.0
+offset_left = -1093.0
+offset_top = -606.0
+offset_right = -1061.0
+offset_bottom = -574.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -688,33 +701,16 @@ theme = ExtResource("22_hpc6h")
 text = "♻️
 "
 
-[node name="AllLayersToMp3" type="Button" parent="UserInterface/MainButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -730.0
-offset_top = -676.0
-offset_right = -550.0
-offset_bottom = -644.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🎼 Liedje naar mp3"
-alignment = 0
-
 [node name="BpmUpButton" type="Button" parent="UserInterface/MainButtons"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1170.0
-offset_top = -506.0
-offset_right = -1138.0
-offset_bottom = -474.0
+offset_left = -1005.0
+offset_top = -606.0
+offset_right = -973.0
+offset_bottom = -574.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -727,37 +723,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1170.0
-offset_top = -471.0
-offset_right = -1138.0
-offset_bottom = -439.0
+offset_left = -969.0
+offset_top = -606.0
+offset_right = -937.0
+offset_bottom = -574.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "🐢"
 
-[node name="SaveToWavButton" type="Button" parent="UserInterface/MainButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -730.0
-offset_top = -711.0
-offset_right = -550.0
-offset_bottom = -679.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "📥 Beat naar mp3"
-alignment = 0
-
 [node name="SampleButtons" type="Node" parent="UserInterface"]
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-500, 177)
+position = Vector2(-604, 177)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -779,6 +758,7 @@ step = 0.05
 fill_mode = 5
 texture_progress = ExtResource("28_r33sp")
 tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton0"]
 anchors_preset = 8
@@ -801,7 +781,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-425, 178)
+position = Vector2(-529, 178)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -822,6 +802,7 @@ step = 0.05
 fill_mode = 5
 texture_progress = ExtResource("28_r33sp")
 tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon2" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton1"]
 anchors_preset = 8
@@ -844,7 +825,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-350, 178)
+position = Vector2(-454, 178)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -865,6 +846,7 @@ step = 0.05
 fill_mode = 5
 texture_progress = ExtResource("28_r33sp")
 tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon3" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton2"]
 anchors_preset = 8
@@ -887,7 +869,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-274, 178)
+position = Vector2(-378, 178)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -908,6 +890,7 @@ step = 0.05
 fill_mode = 5
 texture_progress = ExtResource("28_r33sp")
 tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon4" type="Label" parent="UserInterface/SampleButtons/SampleRecordingButton3"]
 anchors_preset = 8
@@ -931,14 +914,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
 z_index = -4
-position = Vector2(-499, 281)
+position = Vector2(-603, 281)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
 z_index = -4
-position = Vector2(-424, 282)
+position = Vector2(-528, 282)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
@@ -946,7 +929,7 @@ ring = 1
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
 z_index = -4
-position = Vector2(-349, 282)
+position = Vector2(-453, 282)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
@@ -954,14 +937,14 @@ ring = 2
 
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
 z_index = -4
-position = Vector2(-274, 282)
+position = Vector2(-378, 282)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 3
 
 [node name="SampleMixer0" type="Node2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-499, 281)
+position = Vector2(-603, 281)
 
 [node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer0"]
 anchors_preset = 8
@@ -1039,6 +1022,7 @@ theme_override_font_sizes/font_size = 32
 text = "👟"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer0/Pivot"]
 modulate = Color(1, 1, 1, 0)
@@ -1059,9 +1043,10 @@ theme_override_font_sizes/font_size = 32
 text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SampleMixer1" type="Node2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-424, 281)
+position = Vector2(-528, 281)
 
 [node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer1"]
 anchors_preset = 8
@@ -1139,6 +1124,7 @@ theme_override_font_sizes/font_size = 32
 text = "🥊"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer1/Pivot"]
 modulate = Color(1, 1, 1, 0)
@@ -1159,9 +1145,10 @@ theme_override_font_sizes/font_size = 32
 text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SampleMixer2" type="Node2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-349, 281)
+position = Vector2(-453, 281)
 
 [node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer2"]
 anchors_preset = 8
@@ -1239,6 +1226,7 @@ theme_override_font_sizes/font_size = 32
 text = "📢"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer2/Pivot"]
 modulate = Color(1, 1, 1, 0)
@@ -1259,9 +1247,10 @@ theme_override_font_sizes/font_size = 32
 text = "🎤"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SampleMixer3" type="Node2D" parent="UserInterface/SampleButtons"]
-position = Vector2(-274, 281)
+position = Vector2(-378, 281)
 
 [node name="IncreaseButton" type="Button" parent="UserInterface/SampleButtons/SampleMixer3"]
 anchors_preset = 8
@@ -1339,6 +1328,7 @@ theme_override_font_sizes/font_size = 32
 text = "⏰"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Icon2" type="Label" parent="UserInterface/SampleButtons/SampleMixer3/Pivot"]
 modulate = Color(1, 1, 1, 0)
@@ -1382,7 +1372,7 @@ alignment = 2
 layout_mode = 0
 offset_top = 35.0
 offset_right = 162.0
-offset_bottom = 312.0
+offset_bottom = 455.0
 
 [node name="TemplateButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
 layout_mode = 1
@@ -1392,9 +1382,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -75.0
-offset_top = 27.5
+offset_top = 98.5
 offset_right = 75.0
-offset_bottom = 59.5
+offset_bottom = 130.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1409,9 +1399,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -75.0
-offset_top = 62.5
+offset_top = 133.5
 offset_right = -3.0
-offset_bottom = 94.5
+offset_bottom = 165.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1426,9 +1416,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 3.0
-offset_top = 62.5
+offset_top = 133.5
 offset_right = 75.0
-offset_bottom = 94.5
+offset_bottom = 165.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1443,9 +1433,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -75.0
-offset_top = 98.5
+offset_top = 169.5
 offset_right = -3.0
-offset_bottom = 130.5
+offset_bottom = 201.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1460,9 +1450,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 3.0
-offset_top = 98.5
+offset_top = 169.5
 offset_right = 75.0
-offset_bottom = 130.5
+offset_bottom = 201.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1658,6 +1648,96 @@ text = "liedje modus"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 
+[node name="SwingSlider" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+offset_left = 32.0
+offset_top = 215.0
+offset_right = 151.0
+offset_bottom = 232.0
+max_value = 0.4
+step = 0.01
+
+[node name="SwingLabel" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/SwingSlider"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -10.0
+offset_right = 59.98
+offset_bottom = 33.165
+theme = ExtResource("22_hpc6h")
+text = "🌀"
+vertical_alignment = 1
+
+[node name="ReverbSlider" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+offset_left = 32.0
+offset_top = 167.0
+offset_right = 151.0
+offset_bottom = 184.0
+max_value = 0.5
+step = 0.01
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/ReverbSlider"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -13.0
+offset_right = 59.98
+offset_bottom = 30.165
+theme = ExtResource("22_hpc6h")
+text = "🏛️"
+vertical_alignment = 1
+
+[node name="DelaySlider" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+offset_left = 32.0
+offset_top = 192.0
+offset_right = 151.0
+offset_bottom = 209.0
+max_value = 0.5
+step = 0.01
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/DelaySlider"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -14.0
+offset_right = 59.98
+offset_bottom = 29.165
+theme = ExtResource("22_hpc6h")
+text = "⛰️"
+vertical_alignment = 1
+
+[node name="AllLayersToMp3" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 64.0
+offset_right = 75.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "🎼 Liedje naar mp3"
+alignment = 0
+
+[node name="SaveToWavButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 28.0
+offset_right = 75.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "📥 Beat naar mp3"
+alignment = 0
+
 [node name="RecordButton_old" type="Button" parent="UserInterface"]
 anchors_preset = 8
 anchor_left = 0.5
@@ -1674,63 +1754,6 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "Record ⏺️"
 alignment = 2
-
-[node name="SwingSlider" type="HSlider" parent="UserInterface"]
-offset_left = -531.0
-offset_top = -220.0
-offset_right = -444.0
-offset_bottom = -204.0
-scale = Vector2(2, 2)
-max_value = 0.4
-step = 0.01
-
-[node name="SwingLabel" type="Label" parent="UserInterface/SwingSlider"]
-layout_mode = 0
-offset_left = 90.5
-offset_right = 237.5
-offset_bottom = 32.0
-scale = Vector2(0.5, 0.5)
-theme = ExtResource("22_hpc6h")
-text = "🌀Swing"
-vertical_alignment = 1
-
-[node name="ReverbSlider" type="HSlider" parent="UserInterface"]
-offset_left = -531.0
-offset_top = -290.0
-offset_right = -444.0
-offset_bottom = -274.0
-scale = Vector2(2, 2)
-max_value = 0.5
-step = 0.01
-
-[node name="Label" type="Label" parent="UserInterface/ReverbSlider"]
-layout_mode = 0
-offset_left = 90.5
-offset_right = 237.5
-offset_bottom = 32.0
-scale = Vector2(0.5, 0.5)
-theme = ExtResource("22_hpc6h")
-text = "🏛️ Galm"
-vertical_alignment = 1
-
-[node name="DelaySlider" type="HSlider" parent="UserInterface"]
-offset_left = -531.0
-offset_top = -255.0
-offset_right = -444.0
-offset_bottom = -239.0
-scale = Vector2(2, 2)
-max_value = 0.5
-step = 0.01
-
-[node name="Label" type="Label" parent="UserInterface/DelaySlider"]
-layout_mode = 0
-offset_left = 90.5
-offset_right = 237.5
-offset_bottom = 32.0
-scale = Vector2(0.5, 0.5)
-theme = ExtResource("22_hpc6h")
-text = "⛰️ Echo"
-vertical_alignment = 1
 
 [node name="ProgressBar" type="ProgressBar" parent="UserInterface"]
 anchors_preset = 8
@@ -1767,10 +1790,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BpmLabel" type="Label" parent="UserInterface"]
-offset_left = -477.0
-offset_top = -146.0
-offset_right = -432.0
-offset_bottom = -79.0
+offset_left = -611.11
+offset_top = -151.0
+offset_right = -566.11
+offset_bottom = -84.0
 theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
@@ -1823,7 +1846,7 @@ offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 z_index = -1
-position = Vector2(-484.89, -113)
+position = Vector2(-619, -118)
 scale = Vector2(4, 62)
 texture = SubResource("CanvasTexture_6dn85")
 

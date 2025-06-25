@@ -359,7 +359,7 @@ public partial class Manager : Node
         beatActives = GetCurrentLayer();
 
         // update outline
-        layerOutline.Position = new Vector2(-574, 317) - new Vector2(0, 1) * (71f * currentLayerIndex);
+        layerOutline.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
 
         // update song voice position
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();

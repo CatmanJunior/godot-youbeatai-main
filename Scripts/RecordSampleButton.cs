@@ -193,21 +193,37 @@ public partial class RecordSampleButton : Sprite2D
         else if (pivotToMove.RotationDegrees < -360 / 3) _ = RotateMixerRight();  // fire-and-forget coroutine
     }
 
-    async Task RotateMixerLeft()
-    {
-        while (pivotToMove.RotationDegrees > -360 / 3)
-        {
-            Manager.instance.RotatePivot(-5, pivotToMove, ring);
-            await Task.Delay(50);
-        }
-    }
-
     async Task RotateMixerRight()
     {
+        var increase = mixerToMove.FindChild("IncreaseButton") as Button;
+        var pressedStyle = increase.GetThemeStylebox("pressed") as StyleBoxFlat;
+        var normalStyle = increase.GetThemeStylebox("normal") as StyleBoxFlat;
+        var originalStyle = (StyleBoxFlat)normalStyle.Duplicate();
+        var tempStyle = (StyleBoxFlat)pressedStyle.Duplicate();
+
+        increase.AddThemeStyleboxOverride("normal", tempStyle);
         while (pivotToMove.RotationDegrees < -360 / 3)
         {
             Manager.instance.RotatePivot(5, pivotToMove, ring);
             await Task.Delay(50);
         }
+        increase.AddThemeStyleboxOverride("normal", originalStyle);
+    }
+
+    async Task RotateMixerLeft()
+    {
+        var decrease = mixerToMove.FindChild("DecreaseButton") as Button;
+        var pressedStyle = decrease.GetThemeStylebox("pressed") as StyleBoxFlat;
+        var normalStyle = decrease.GetThemeStylebox("normal") as StyleBoxFlat;
+        var originalStyle = (StyleBoxFlat)normalStyle.Duplicate();
+        var tempStyle = (StyleBoxFlat)pressedStyle.Duplicate();
+
+        decrease.AddThemeStyleboxOverride("normal", tempStyle);
+        while (pivotToMove.RotationDegrees > -360 / 3)
+        {
+            Manager.instance.RotatePivot(-5, pivotToMove, ring);
+            await Task.Delay(50);
+        }
+        decrease.AddThemeStyleboxOverride("normal", originalStyle);
     }
 }

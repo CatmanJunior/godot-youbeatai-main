@@ -240,6 +240,11 @@ public partial class Manager : Node
             if (layerVoiceOver0.audioPlayer.Playing) layerVoiceOver0.audioPlayer.StreamPaused = true;
             else layerVoiceOver0.audioPlayer.StreamPaused = false;
         }
+        if (layerVoiceOver1.voiceOvers[layerVoiceOver1.currentLayer] != null)
+        {
+            if (layerVoiceOver1.audioPlayer.Playing) layerVoiceOver1.audioPlayer.StreamPaused = true;
+            else layerVoiceOver1.audioPlayer.StreamPaused = false;
+        }
 
         // pause song voice over
         if (SongVoiceOver.instance.voiceOver != null)
@@ -1804,6 +1809,7 @@ public partial class Manager : Node
         if (bpm_manager.currentBeat == 0)
         {
             layerVoiceOver0.OnTop();
+            layerVoiceOver1.OnTop();
             UpdateSongVoiceOverPlayBackPosition();
         }
         if (currentLayerIndex == 0 && bpm_manager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();

@@ -22,6 +22,8 @@ public partial class LayerVoiceOver : Node
 	[Export] Button snellerButton;
 	[Export] Button langzamerButton;
 
+	
+
 	public int currentLayer => Manager.instance.currentLayerIndex;
 	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
 	public AudioStream GetCurrentLayerVoiceOver() => voiceOvers[currentLayer];

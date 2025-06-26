@@ -301,7 +301,7 @@ layerButton7 = NodePath("../../UserInterface/SwitchLayerButtons/Layer7")
 layerButton8 = NodePath("../../UserInterface/SwitchLayerButtons/Layer8")
 layerButton9 = NodePath("../../UserInterface/SwitchLayerButtons/Layer9")
 layerButton10 = NodePath("../../UserInterface/SwitchLayerButtons/Layer10")
-chosen_emoticons_label = NodePath("../../chosen_emoticons_label")
+chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
 colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
 robotlight = NodePath("../../UserInterface/Robot/RobotLight")
 spritePrefab = ExtResource("2_1eep1")
@@ -1869,10 +1869,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 80.5
-offset_top = 233.5
-offset_right = 242.5
-offset_bottom = 401.5
+offset_left = -28.5
+offset_top = 244.5
+offset_right = 208.5
+offset_bottom = 412.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.2, 1.2)
@@ -1882,8 +1882,22 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="UserInterface/Robot/SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-size = Vector2i(162, 168)
+size = Vector2i(237, 168)
 render_target_update_mode = 4
+
+[node name="chosen_emoticons_label" type="Label" parent="UserInterface/Robot/SubViewportContainer/SubViewport"]
+z_index = 1
+z_as_relative = false
+offset_left = 19.0
+offset_top = 36.0
+offset_right = 219.0
+offset_bottom = 83.0
+theme = ExtResource("22_hpc6h")
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 32
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" instance=ExtResource("30_hpc6h")]
 
@@ -2078,16 +2092,6 @@ show_behind_parent = true
 layout_mode = 0
 offset_right = 238.0
 offset_bottom = 84.0
-
-[node name="chosen_emoticons_label" type="Label" parent="."]
-offset_left = 109.0
-offset_top = 295.0
-offset_right = 309.0
-offset_bottom = 342.0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 26
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_bpm_changed"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_clap"]

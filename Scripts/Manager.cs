@@ -738,14 +738,18 @@ public partial class Manager : Node
         }
         for (int i = 0; i < layer1_inputs.Count; i++) File.Delete(layer1_inputs[i]);
 
-        // song to wav
-        ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, song_name + ".wav");
-
-        // mix everything
-        MixAudioFiles(beats_name + ".wav", song_name + ".wav", beats_with_song_name + ".wav");
-
+        // mixing
+        var song = (AudioStreamWav)SongVoiceOver.instance.voiceOver;
+        if (song != null)
+        {
+            ConvertAudioStreamWavToWav(song, song_name + ".wav");
+            MixAudioFiles(beats_name + ".wav", song_name + ".wav", beats_with_song_name + ".wav");
+        }
+        else
+        {
+            File.Move(beats_name + ".wav", beats_with_song_name + ".wav");
+        }
         MixAudioFiles(layers0_name + ".wav", layers1_name + ".wav", layers_combined_name + ".wav");
-
         MixAudioFiles(beats_with_song_name + ".wav", layers_combined_name + ".wav", final_name + ".wav");
 
         // delete temps
@@ -753,7 +757,7 @@ public partial class Manager : Node
         File.Delete(layers0_name + ".wav");
         File.Delete(layers1_name + ".wav");
         File.Delete(layers_combined_name + ".wav");
-        File.Delete(song_name + ".wav");
+        if (song != null) File.Delete(song_name + ".wav");
         File.Delete(beats_with_song_name + ".wav");
 
         // convert and finish

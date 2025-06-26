@@ -60,8 +60,8 @@ public partial class LayerVoiceOver : Node
 
     public override void _Process(double delta)
 	{
-		// set color of record button
-		recordLayerButton.Modulate = shouldRecord ? new(1, 0.5f, 0.5f) : new(1, 1, 1);
+		// set color of fake button
+		((RecordBeatButton)recordLayerButton.GetParent()).pressed = shouldRecord;
 
 		// update recording timer
 		if (recording) recordingTimer += (float)delta;

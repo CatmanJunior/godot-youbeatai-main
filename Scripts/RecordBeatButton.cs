@@ -6,16 +6,18 @@ public partial class RecordBeatButton : Sprite2D
 	[Export] int ring = 0;
 
 	bool inside => IsPixelOpaque(GetLocalMousePosition());
-	float timePressing = 0;
-	bool pressing = false;
 
-    Color original;
-    Color darkened;
+    Color original_c;
+    Color hover_c;
+    Color pressed_c;
+
+    public bool pressed = false;
 
     public override void _Ready()
     {
-        original = SelfModulate;
-        darkened = SelfModulate.Darkened(0.2f);
+        original_c = SelfModulate;
+        hover_c = original_c.Lightened(0.2f);
+        pressed_c = new Color(1, 0, 0, 1);
     }
 
 
@@ -23,37 +25,23 @@ public partial class RecordBeatButton : Sprite2D
     {
 		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
 		{
-			// on press
-			if (mouseEvent.IsPressed())
-			{
-				pressing = true;
-			} 
-
 			// on release
 			if (mouseEvent.IsReleased())
 			{
-				pressing = false;
-
-				if (inside) StartRecord();
+				if (inside) OnPressed();
 			}
 		}
     }
 
     public override void _Process(double delta)
     {
-		if (pressing) timePressing += (float)delta;
-		else timePressing = 0;
-		if (inside) SelfModulate = darkened;
-        else SelfModulate = original;
+        if (pressed) SelfModulate = pressed_c;
+        else if (inside) SelfModulate = hover_c;
+        else SelfModulate = original_c;
     }
 
-    public void StartRecord()
+    public void OnPressed()
     {
-        GD.Print("start");
-    }
-
-    public void StopRecord()
-    {
-        GD.Print("stop");
+        // on click
     }
 }

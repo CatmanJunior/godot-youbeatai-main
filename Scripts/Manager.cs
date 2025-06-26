@@ -636,7 +636,7 @@ public partial class Manager : Node
         AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
-            string name = "layer" + i.ToString() + ".wav";
+            string name = "layer" + i.ToString() + "a.wav";
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers0[i];
             if (audioStreamWav != null)
             {
@@ -686,10 +686,10 @@ public partial class Manager : Node
         for (int i = 0; i < layer0_inputs.Count; i++) File.Delete(layer0_inputs[i]);
 
         // export layersvoiceovers1 as single wav
-        AudioStream[] voiceovers1 = layerVoiceOver0.voiceOvers;
+        AudioStream[] voiceovers1 = layerVoiceOver1.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
-            string name = "layer" + i.ToString() + ".wav";
+            string name = "layer" + i.ToString() + "b.wav";
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers1[i];
             if (audioStreamWav != null)
             {

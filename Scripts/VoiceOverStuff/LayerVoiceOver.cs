@@ -22,6 +22,8 @@ public partial class LayerVoiceOver : Node
 	[Export] Button snellerButton;
 	[Export] Button langzamerButton;
 
+	[Export] public Line2D line;
+
 	
 
 	public int currentLayer => Manager.instance.currentLayerIndex;
@@ -54,6 +56,9 @@ public partial class LayerVoiceOver : Node
 				else audioPlayer.Play();
 			}
 		};
+
+		// line
+		UpdateYellowLine();
     }
 
     public override void _Process(double delta)
@@ -129,6 +134,71 @@ public partial class LayerVoiceOver : Node
 		SetVolume(1f);
 
 		finished = true;
+
+		UpdateYellowLine();
+    }
+
+	public void UpdateYellowLine()
+	{
+		line.Width = 1;
+		line.DefaultColor = new(1, 1, 0);
+		line.Antialiased = true;
+		line.Closed = true;
+
+		line.ClearPoints();
+
+		int points = 80;
+		int distance = (30 / 2);
+		for (int i = 0; i < points; i++)
+		{
+			float volumeoffset = 0;
+
+			if (voiceOvers[currentLayer] != null)
+			{
+				float length = (float)voiceOvers[currentLayer].GetLength();
+				float percentage = (float)i / (float)points;
+				float volumesample = GetVolumeAtTime((AudioStreamWav)voiceOvers[currentLayer], percentage * length);
+				volumeoffset = volumesample * 15;
+			}
+
+			float angle = Mathf.Tau * i / (float)points; // tau = 2 * pi
+			Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (distance + volumeoffset);
+			line.AddPoint(offset);
+		}
+	}
+
+	public float GetVolumeAtTime(AudioStreamWav audio, float time)
+    {
+        if (audio == null || audio.Data.Length == 0)
+        {
+            GD.PrintErr("Invalid sample.");
+            return 0f;
+        }
+
+        int sampleRate = audio.MixRate;
+        int channels = audio.Stereo ? 2 : 1;
+        int formatSize = audio.Format == AudioStreamWav.FormatEnum.Format16Bits ? 2 : 1;
+
+        int sampleIndex = (int)(time * sampleRate) * channels;
+        int byteIndex = sampleIndex * formatSize;
+
+        if (byteIndex >= audio.Data.Length - formatSize)
+        {
+            GD.PrintErr("Time exceeds sample length.");
+            return 0f;
+        }
+
+        // Read sample depending on format
+        if (audio.Format == AudioStreamWav.FormatEnum.Format16Bits)
+        {
+            short value = BitConverter.ToInt16(audio.Data, byteIndex);
+            return Mathf.Abs(value / 32768f);
+        }
+        else // 8-bit
+        {
+            sbyte value = (sbyte)audio.Data[byteIndex];
+            return Mathf.Abs(value / 128f);
+        }
     }
 
 	void SetVolume(float value)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=4 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=4 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -34,7 +34,6 @@
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordBeatButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
-[ext_resource type="Texture2D" uid="uid://bwo73r4fev4al" path="res://Resources/Textures/yellow.png" id="28_hdf80"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 
@@ -387,12 +386,13 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton")]
+[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "line")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar0")
 recordLayerButton = NodePath("../../UserInterface/RecordBeatButton0/Button0")
 snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
+line = NodePath("../../UserInterface/RecordBeatButton0/Line0")
 
 [node name="TextureProgressBar0" type="TextureProgressBar" parent="Managers/LayerVoiceOver0"]
 offset_left = -265.0
@@ -405,12 +405,13 @@ step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
 
-[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton")]
+[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "line")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar1")
 recordLayerButton = NodePath("../../UserInterface/RecordBeatButton1/Button1")
 snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
+line = NodePath("../../UserInterface/RecordBeatButton1/Line1")
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Managers/LayerVoiceOver1"]
 offset_left = -256.0
@@ -489,10 +490,7 @@ step = 0.1
 value = 0.5
 metadata/_edit_use_anchors_ = true
 
-[node name="Yellow" type="Sprite2D" parent="UserInterface/RecordBeatButton0"]
-position = Vector2(0.0108643, 0.125)
-scale = Vector2(0.423913, 0.423913)
-texture = ExtResource("28_hdf80")
+[node name="Line0" type="Line2D" parent="UserInterface/RecordBeatButton0"]
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.516666, 0, 1, 1)
@@ -557,10 +555,7 @@ step = 0.1
 value = 0.5
 metadata/_edit_use_anchors_ = true
 
-[node name="Yellow" type="Sprite2D" parent="UserInterface/RecordBeatButton1"]
-position = Vector2(0.0108643, 0.125)
-scale = Vector2(0.423913, 0.423913)
-texture = ExtResource("28_hdf80")
+[node name="Line1" type="Line2D" parent="UserInterface/RecordBeatButton1"]
 
 [node name="RecordSongButton" type="Button" parent="UserInterface"]
 anchors_preset = 8

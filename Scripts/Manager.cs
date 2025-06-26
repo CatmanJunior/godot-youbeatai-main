@@ -374,6 +374,9 @@ public partial class Manager : Node
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
 
         EmitSignal(SignalName.OnSwitchLayer, layerToUse);
+
+        layerVoiceOver0.UpdateYellowLine();
+        layerVoiceOver1.UpdateYellowLine();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()

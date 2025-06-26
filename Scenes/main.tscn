@@ -2167,10 +2167,10 @@ hue_variation_max = 0.55
 
 [node name="SavingLabel" type="Label" parent="."]
 visible = false
-offset_left = -532.0
+offset_left = -449.0
 offset_top = -46.0
 offset_right = -294.0
-offset_bottom = 38.0
+offset_bottom = 106.0
 theme = ExtResource("22_hpc6h")
 theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
 theme_override_font_sizes/font_size = 16
@@ -2182,8 +2182,10 @@ vertical_alignment = 1
 [node name="Panel" type="Panel" parent="SavingLabel"]
 show_behind_parent = true
 layout_mode = 0
-offset_right = 238.0
-offset_bottom = 84.0
+offset_left = -8.0
+offset_top = 2.0
+offset_right = 166.0
+offset_bottom = 154.0
 
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_bpm_changed"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_clap"]

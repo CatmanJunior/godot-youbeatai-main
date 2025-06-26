@@ -1357,10 +1357,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1266.0
-offset_top = -703.0
-offset_right = -1105.0
-offset_bottom = -671.0
+offset_left = -1270.0
+offset_top = -709.0
+offset_right = -1109.0
+offset_bottom = -677.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1793,10 +1793,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BpmLabel" type="Label" parent="UserInterface"]
-offset_left = -597.11
-offset_top = -161.0
-offset_right = -552.11
-offset_bottom = -94.0
+offset_left = 106.89
+offset_top = 281.0
+offset_right = 151.89
+offset_bottom = 348.0
 theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
@@ -1849,7 +1849,7 @@ offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 z_index = -1
-position = Vector2(-605, -128)
+position = Vector2(99, 314)
 scale = Vector2(4, 62)
 texture = SubResource("CanvasTexture_6dn85")
 

@@ -1251,9 +1251,10 @@ public partial class Manager : Node
         // recording
         SongVoiceOver.instance.recordSongButton.Visible = visible;
         SongVoiceOver.instance.progressbar.Visible = visible;
-        layerVoiceOver0.recordLayerButton.Visible = visible;
+
+        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
+        ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
         layerVoiceOver0.textureProgressBar.Visible = visible;
-        layerVoiceOver1.recordLayerButton.Visible = visible;
         layerVoiceOver1.textureProgressBar.Visible = visible;
     }
 

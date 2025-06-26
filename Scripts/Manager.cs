@@ -1000,7 +1000,7 @@ public partial class Manager : Node
             achievementspanel.Visible = false;
 
             // lift settigns panel
-            settingsButton.Position = new(settingsButton.Position.X, -340);
+            //settingsButton.Position = new(settingsButton.Position.X, -340);
 
             // shift robot position
             // robot.Position = new(485, 225);
@@ -1253,8 +1253,6 @@ public partial class Manager : Node
         LoadLayoutButton.Visible = visible;
         ClearLayoutButton.Visible = visible;
         ResetPlayerButton.Visible = visible;
-        saveToWavButton.Visible = visible;
-        allLayersToMp3.Visible = visible;
     }
 
     void SetEffectButtonsVisibility(bool visible)

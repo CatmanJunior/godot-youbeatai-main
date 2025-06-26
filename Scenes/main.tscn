@@ -379,9 +379,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -290.0
-offset_top = -705.0
+offset_top = -709.0
 offset_right = -272.0
-offset_bottom = 2.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 1.57079
@@ -422,9 +422,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -477.0
-offset_top = -600.0
+offset_top = -604.0
 offset_right = -296.0
-offset_bottom = -568.0
+offset_bottom = -572.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -461,9 +461,9 @@ Opnemen
 
 [node name="Layer1" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = -352.09
-offset_top = -319.09
+offset_top = -323.09
 offset_right = -288.09
-offset_bottom = -255.09
+offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -476,9 +476,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer2" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = -280.09
-offset_top = -319.09
+offset_top = -323.09
 offset_right = -216.09
-offset_bottom = -255.09
+offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -491,9 +491,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer3" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = -209.09
-offset_top = -319.09
+offset_top = -323.09
 offset_right = -145.09
-offset_bottom = -255.09
+offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -506,9 +506,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer4" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = -138.09
-offset_top = -319.091
+offset_top = -323.091
 offset_right = -74.09
-offset_bottom = -255.091
+offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -521,9 +521,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer5" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = -67.09
-offset_top = -319.091
+offset_top = -323.091
 offset_right = -3.09
-offset_bottom = -255.091
+offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -536,9 +536,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer6" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = 3.91
-offset_top = -319.091
+offset_top = -323.091
 offset_right = 67.91
-offset_bottom = -255.091
+offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -551,9 +551,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer7" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = 74.91
-offset_top = -319.091
+offset_top = -323.091
 offset_right = 138.91
-offset_bottom = -255.091
+offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -566,9 +566,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer8" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = 145.91
-offset_top = -319.091
+offset_top = -323.091
 offset_right = 209.91
-offset_bottom = -255.091
+offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -581,9 +581,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer9" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = 216.91
-offset_top = -319.091
+offset_top = -323.091
 offset_right = 280.91
-offset_bottom = -255.091
+offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -596,9 +596,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Layer10" type="Button" parent="UserInterface/SwitchLayerButtons"]
 offset_left = 287.91
-offset_top = -319.092
+offset_top = -323.092
 offset_right = 351.91
-offset_bottom = -255.092
+offset_bottom = -259.092
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -610,7 +610,7 @@ text = "🏁"
 metadata/_edit_use_anchors_ = true
 
 [node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons"]
-position = Vector2(-320, -287)
+position = Vector2(-320, -291)
 scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
 
@@ -657,9 +657,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -991.0
-offset_top = -598.0
+offset_top = -602.0
 offset_right = -959.0
-offset_bottom = -566.0
+offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -674,9 +674,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -955.0
-offset_top = -598.0
+offset_top = -602.0
 offset_right = -923.0
-offset_bottom = -566.0
+offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -691,9 +691,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -919.0
-offset_top = -598.0
+offset_top = -602.0
 offset_right = -887.0
-offset_bottom = -566.0
+offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -708,9 +708,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -860.0
-offset_top = -598.0
+offset_top = -602.0
 offset_right = -828.0
-offset_bottom = -566.0
+offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -724,9 +724,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -824.0
-offset_top = -598.0
+offset_top = -602.0
 offset_right = -792.0
-offset_bottom = -566.0
+offset_bottom = -570.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -2042,7 +2042,7 @@ hue_variation_max = 0.55
 
 [node name="AchievementsParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
-position = Vector2(303, -306)
+position = Vector2(303, -310)
 emitting = false
 amount = 20
 texture = ExtResource("20_tvghb")

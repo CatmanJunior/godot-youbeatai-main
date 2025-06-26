@@ -22,9 +22,12 @@ public partial class LayerVoiceOver : Node
 	[Export] Button snellerButton;
 	[Export] Button langzamerButton;
 
-	[Export] public Line2D line;
+	[Export] public Line2D smallLine;
+	[Export] public Line2D bigLine;
 
-	
+	[Export] public int bigLineBaseDist = 280;
+	[Export] public int bigLineVolumeDist = 28;
+	[Export] public bool bigLineReversed = false;
 
 	public int currentLayer => Manager.instance.currentLayerIndex;
 	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
@@ -58,7 +61,8 @@ public partial class LayerVoiceOver : Node
 		};
 
 		// line
-		UpdateYellowLine();
+		SetSmallVolumeline();
+		SetBigVolumeline();
     }
 
     public override void _Process(double delta)
@@ -135,36 +139,40 @@ public partial class LayerVoiceOver : Node
 
 		finished = true;
 
-		UpdateYellowLine();
+		SetSmallVolumeline();
+		SetBigVolumeline();
     }
 
-	public void UpdateYellowLine()
+	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
 	{
-		line.Width = 1;
-		line.DefaultColor = new(1, 1, 0);
-		line.Antialiased = true;
-		line.Closed = true;
-
 		line.ClearPoints();
-
-		int points = 40;
-		int distance = (30 / 2);
 		for (int i = 0; i < points; i++)
 		{
 			float volumeoffset = 0;
-
 			if (voiceOvers[currentLayer] != null)
 			{
 				float length = (float)voiceOvers[currentLayer].GetLength();
 				float percentage = (float)i / (float)points;
-				float volumesample = GetVolumeAtTime((AudioStreamWav)voiceOvers[currentLayer], percentage * length);
-				volumeoffset = volumesample * 15;
+				float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
+				volumeoffset = volume * volumeDist;
 			}
 
-			float angle = Mathf.Tau * i / (float)points; // tau = 2 * pi
-			Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (distance + volumeoffset);
+			float angle = -Mathf.Pi / 2 + Mathf.Tau * i / (float)points;
+			
+			float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
+			Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
 			line.AddPoint(offset);
 		}
+	}
+
+	public void SetSmallVolumeline()
+	{
+		SetVolumeLine(smallLine, voiceOvers[currentLayer], 40, 15, 15);
+	}
+
+	public void SetBigVolumeline()
+	{
+		SetVolumeLine(bigLine, voiceOvers[currentLayer], 100, bigLineBaseDist, bigLineVolumeDist, bigLineReversed);
 	}
 
 	public float GetVolumeAtTime(AudioStreamWav audio, float time)

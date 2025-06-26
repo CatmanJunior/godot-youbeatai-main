@@ -375,8 +375,11 @@ public partial class Manager : Node
 
         EmitSignal(SignalName.OnSwitchLayer, layerToUse);
 
-        layerVoiceOver0.UpdateYellowLine();
-        layerVoiceOver1.UpdateYellowLine();
+        layerVoiceOver0.SetSmallVolumeline();
+        layerVoiceOver1.SetSmallVolumeline();
+
+        layerVoiceOver0.SetBigVolumeline(); // inside
+        layerVoiceOver1.SetBigVolumeline(); // outside
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()

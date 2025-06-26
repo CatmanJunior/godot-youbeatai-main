@@ -147,7 +147,7 @@ public partial class LayerVoiceOver : Node
 
 		line.ClearPoints();
 
-		int points = 80;
+		int points = 40;
 		int distance = (30 / 2);
 		for (int i = 0; i < points; i++)
 		{

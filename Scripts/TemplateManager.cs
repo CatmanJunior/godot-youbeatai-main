@@ -48,60 +48,6 @@ public partial class TemplateManager : Node
         actives = tuple.actives;
     }
 
-    public void CreateNewTemplate(string name, bool[,] actives)
-    {
-        string folderPath = "res://Resources/Templates/";
-        string filePath = folderPath + name + ".txt";
-
-        // Ensure the directory exists
-        var dir = DirAccess.Open(folderPath);
-        if (!dir.DirExists(folderPath))
-        {
-            GD.PrintErr("Directory does not exist: " + folderPath);
-            return;
-        }
-
-        // Check if the file already exists and remove it
-        if (dir.FileExists(filePath))
-        {
-            dir.Remove(filePath);
-            GD.Print($"Deleted existing template file: {filePath}");
-        }
-
-        string[] rowLabels = { "a", "b", "c", "d" };
-        string formattedContent = "";
-
-        for (int i = 0; i < 4; i++)
-        {
-            formattedContent += rowLabels[i];
-            for (int j = 0; j < 32; j++)
-            {
-                formattedContent += actives[i, j] ? "1" : "0";
-            }
-            formattedContent += "\n"; // Ensure each line ends with a newline
-        }
-
-        // Debugging: Print the formatted content before writing it to the file
-        GD.Print("Formatted content to be written:");
-        GD.Print(formattedContent);
-
-        // Writing the file
-        var file = FileAccess.Open(filePath, FileAccess.ModeFlags.Write);
-        file.StoreString(formattedContent); // Write the formatted content
-        file.Close(); // Ensure the file is closed properly
-        GD.Print($"Template {name}.txt created at {filePath}");
-
-        // Debugging: Read the file content immediately after writing
-        var fileCheck = FileAccess.Open(filePath, FileAccess.ModeFlags.Read);
-        string checkContent = fileCheck.GetAsText();
-        GD.Print("Content of the newly created file:");
-        GD.Print(checkContent);
-        fileCheck.Close(); // Close the check file
-
-        // Read templates after saving
-        ReadTemplates();
-    }
-
     (List<string> names, List<string> contents, List<bool[,]> actives) LoadTextFilesInDirectory(string folder)
     {
         string folderPath = $"res://{folder}/";
@@ -151,20 +97,13 @@ public partial class TemplateManager : Node
             throw new FormatException("Expected 4 lines for the active states.");
         }
 
-        bool[,] boolArray = new bool[4, 32];
+        bool[,] boolArray = new bool[4, BpmManager.beatsAmount];
 
         for (int i = 0; i < 4; i++)
         {
             string line = lines[i].Trim();
-            
-            // Check if the current line has the expected length
-            if (line.Length != 33) // 1 for label + 32 for binary values
-            {
-                GD.PrintErr($"Invalid line length: {line.Length}. Expected 33 characters.");
-                throw new FormatException("Line does not contain enough data.");
-            }
 
-            for (int j = 0; j < 32; j++)
+            for (int j = 0; j < BpmManager.beatsAmount; j++)
             {
                 boolArray[i, j] = line[j + 1] == '1'; // Skip the first character which is the label
             }

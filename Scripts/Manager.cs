@@ -573,7 +573,9 @@ public partial class Manager : Node
 
         string beats_name = "beats";
         string song_name = "song";
-        string layers_name = "layers";
+        string layers0_name = "layers0";
+        string layers1_name = "layers1";
+        string layers_combined_name = "layers_combined";
         string beats_with_song_name = "beats_with_song";
 
         int sampleRate = 48000;
@@ -631,11 +633,11 @@ public partial class Manager : Node
         ChangePitch(beats_name + ".wav", 2f);
 
         // export layersvoiceovers0 as single wav
-        AudioStream[] voiceovers = layerVoiceOver0.voiceOvers;
+        AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
             string name = "layer" + i.ToString() + ".wav";
-            AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers[i];
+            AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers0[i];
             if (audioStreamWav != null)
             {
                 // voice wav
@@ -659,40 +661,98 @@ public partial class Manager : Node
                 }
             }
         }
-        List<string> layer_inputs =
+        List<string> layer0_inputs =
         [
-            "layer0.wav",
-            "layer1.wav",
-            "layer2.wav",
-            "layer3.wav",
-            "layer4.wav",
-            "layer5.wav",
-            "layer6.wav",
-            "layer7.wav",
-            "layer8.wav",
-            "layer9.wav"
+            "layer0a.wav",
+            "layer1a.wav",
+            "layer2a.wav",
+            "layer3a.wav",
+            "layer4a.wav",
+            "layer5a.wav",
+            "layer6a.wav",
+            "layer7a.wav",
+            "layer8a.wav",
+            "layer9a.wav"
         ];
-        using (var firstReader = new WaveFileReader(layer_inputs[0]))
+        using (var firstReader = new WaveFileReader(layer0_inputs[0]))
         {
             var waveFormat = firstReader.WaveFormat;
-            using (var writer = new WaveFileWriter(layers_name + ".wav", waveFormat))
+            using (var writer = new WaveFileWriter(layers0_name + ".wav", waveFormat))
             {
                 firstReader.CopyTo(writer);
-                for (int i = 1; i < layer_inputs.Count; i++) using (var reader = new WaveFileReader(layer_inputs[i])) reader.CopyTo(writer);
+                for (int i = 1; i < layer0_inputs.Count; i++) using (var reader = new WaveFileReader(layer0_inputs[i])) reader.CopyTo(writer);
             }
         }
-        for (int i = 0; i < layer_inputs.Count; i++) File.Delete(layer_inputs[i]);
+        for (int i = 0; i < layer0_inputs.Count; i++) File.Delete(layer0_inputs[i]);
+
+        // export layersvoiceovers1 as single wav
+        AudioStream[] voiceovers1 = layerVoiceOver0.voiceOvers;
+        for (int i = 0; i < 10; i++)
+        {
+            string name = "layer" + i.ToString() + ".wav";
+            AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers1[i];
+            if (audioStreamWav != null)
+            {
+                // voice wav
+                ConvertAudioStreamWavToWav(audioStreamWav, name);
+            }
+            else
+            {
+                // empty wav
+                float timepb = 60f / BpmManager.instance.bpm / 2;
+                float time = timepb * BpmManager.beatsAmount;
+                int rate = 48000;
+                int channels = 1;
+                int bits = 16;
+                int total = (int)(time * rate * channels);
+                byte[] silence = new byte[total * (bits / 8)];
+                var waveFormat = new WaveFormat(sampleRate, bits, channels);
+                using (var writer = new WaveFileWriter(name, waveFormat))
+                {
+                    writer.Write(silence, 0, silence.Length);
+                    writer.Close();
+                }
+            }
+        }
+        List<string> layer1_inputs =
+        [
+            "layer0b.wav",
+            "layer1b.wav",
+            "layer2b.wav",
+            "layer3b.wav",
+            "layer4b.wav",
+            "layer5b.wav",
+            "layer6b.wav",
+            "layer7b.wav",
+            "layer8b.wav",
+            "layer9b.wav"
+        ];
+        using (var firstReader = new WaveFileReader(layer1_inputs[0]))
+        {
+            var waveFormat = firstReader.WaveFormat;
+            using (var writer = new WaveFileWriter(layers1_name + ".wav", waveFormat))
+            {
+                firstReader.CopyTo(writer);
+                for (int i = 1; i < layer1_inputs.Count; i++) using (var reader = new WaveFileReader(layer1_inputs[i])) reader.CopyTo(writer);
+            }
+        }
+        for (int i = 0; i < layer1_inputs.Count; i++) File.Delete(layer1_inputs[i]);
 
         // song to wav
         ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, song_name + ".wav");
 
         // mix everything
         MixAudioFiles(beats_name + ".wav", song_name + ".wav", beats_with_song_name + ".wav");
-        MixAudioFiles(beats_with_song_name + ".wav", layers_name + ".wav", final_name + ".wav");
+
+        MixAudioFiles(layers0_name + ".wav", layers1_name + ".wav", layers_combined_name + ".wav");
+
+        MixAudioFiles(beats_with_song_name + ".wav", layers_combined_name + ".wav", final_name + ".wav");
 
         // delete temps
         File.Delete(beats_name + ".wav");
-        File.Delete(layers_name + ".wav");
+        File.Delete(layers0_name + ".wav");
+        File.Delete(layers1_name + ".wav");
+        File.Delete(layers_combined_name + ".wav");
         File.Delete(song_name + ".wav");
         File.Delete(beats_with_song_name + ".wav");
 

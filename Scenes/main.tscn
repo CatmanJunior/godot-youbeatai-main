@@ -378,10 +378,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -567.0
-offset_top = -713.0
-offset_right = -549.0
-offset_bottom = -6.0
+offset_left = -290.0
+offset_top = -705.0
+offset_right = -272.0
+offset_bottom = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 1.57079
@@ -411,6 +411,7 @@ max_value = 32.0
 step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
+metadata/_edit_lock_ = true
 
 [node name="UserInterface" type="Node" parent="."]
 
@@ -420,10 +421,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1218.0
-offset_top = -264.0
-offset_right = -1037.0
-offset_bottom = -232.0
+offset_left = -477.0
+offset_top = -600.0
+offset_right = -296.0
+offset_bottom = -568.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -459,10 +460,10 @@ Opnemen
 [node name="SwitchLayerButtons" type="Node" parent="UserInterface"]
 
 [node name="Layer1" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -629.09
-offset_top = -327.09
-offset_right = -565.09
-offset_bottom = -263.09
+offset_left = -352.09
+offset_top = -319.09
+offset_right = -288.09
+offset_bottom = -255.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -474,10 +475,10 @@ text = "🌱"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer2" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -557.09
-offset_top = -327.09
-offset_right = -493.09
-offset_bottom = -263.09
+offset_left = -280.09
+offset_top = -319.09
+offset_right = -216.09
+offset_bottom = -255.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -489,10 +490,10 @@ text = "📜"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer3" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -486.09
-offset_top = -327.09
-offset_right = -422.09
-offset_bottom = -263.09
+offset_left = -209.09
+offset_top = -319.09
+offset_right = -145.09
+offset_bottom = -255.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -504,10 +505,10 @@ text = "📜"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer4" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -415.09
-offset_top = -327.091
-offset_right = -351.09
-offset_bottom = -263.091
+offset_left = -138.09
+offset_top = -319.091
+offset_right = -74.09
+offset_bottom = -255.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -519,10 +520,10 @@ text = "🤩"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer5" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -344.09
-offset_top = -327.091
-offset_right = -280.09
-offset_bottom = -263.091
+offset_left = -67.09
+offset_top = -319.091
+offset_right = -3.09
+offset_bottom = -255.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -534,10 +535,10 @@ text = "🤩"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer6" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -273.09
-offset_top = -327.091
-offset_right = -209.09
-offset_bottom = -263.091
+offset_left = 3.91
+offset_top = -319.091
+offset_right = 67.91
+offset_bottom = -255.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -549,10 +550,10 @@ text = "📜"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer7" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -202.09
-offset_top = -327.091
-offset_right = -138.09
-offset_bottom = -263.091
+offset_left = 74.91
+offset_top = -319.091
+offset_right = 138.91
+offset_bottom = -255.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -564,10 +565,10 @@ text = "📜"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer8" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -131.09
-offset_top = -327.091
-offset_right = -67.09
-offset_bottom = -263.091
+offset_left = 145.91
+offset_top = -319.091
+offset_right = 209.91
+offset_bottom = -255.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -579,10 +580,10 @@ text = "🤩"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer9" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = -60.0901
-offset_top = -327.091
-offset_right = 3.90991
-offset_bottom = -263.091
+offset_left = 216.91
+offset_top = -319.091
+offset_right = 280.91
+offset_bottom = -255.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -594,10 +595,10 @@ text = "😃"
 metadata/_edit_use_anchors_ = true
 
 [node name="Layer10" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = 10.9099
-offset_top = -327.092
-offset_right = 74.9099
-offset_bottom = -263.092
+offset_left = 287.91
+offset_top = -319.092
+offset_right = 351.91
+offset_bottom = -255.092
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 20
@@ -609,8 +610,7 @@ text = "🏁"
 metadata/_edit_use_anchors_ = true
 
 [node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons"]
-position = Vector2(-597, -295)
-rotation = 1.57079
+position = Vector2(-320, -287)
 scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
 
@@ -656,10 +656,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1165.0
-offset_top = -606.0
-offset_right = -1133.0
-offset_bottom = -574.0
+offset_left = -991.0
+offset_top = -598.0
+offset_right = -959.0
+offset_bottom = -566.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -673,10 +673,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1129.0
-offset_top = -606.0
-offset_right = -1097.0
-offset_bottom = -574.0
+offset_left = -955.0
+offset_top = -598.0
+offset_right = -923.0
+offset_bottom = -566.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -690,10 +690,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1093.0
-offset_top = -606.0
-offset_right = -1061.0
-offset_bottom = -574.0
+offset_left = -919.0
+offset_top = -598.0
+offset_right = -887.0
+offset_bottom = -566.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -707,10 +707,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1005.0
-offset_top = -606.0
-offset_right = -973.0
-offset_bottom = -574.0
+offset_left = -860.0
+offset_top = -598.0
+offset_right = -828.0
+offset_bottom = -566.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -723,10 +723,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -969.0
-offset_top = -606.0
-offset_right = -937.0
-offset_bottom = -574.0
+offset_left = -824.0
+offset_top = -598.0
+offset_right = -792.0
+offset_bottom = -566.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1357,16 +1357,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -241.0
-offset_top = -511.0
-offset_right = -80.0
-offset_bottom = -479.0
+offset_left = -1266.0
+offset_top = -703.0
+offset_right = -1105.0
+offset_bottom = -671.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
-text = "Instellingen ⚙️"
-alignment = 2
+text = "⚙️ Instellingen"
+alignment = 0
 
 [node name="SettingsPanel" type="Panel" parent="UserInterface/SettingsButton"]
 layout_mode = 0
@@ -1649,6 +1649,7 @@ label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 
 [node name="SwingSlider" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
 offset_left = 32.0
 offset_top = 215.0
 offset_right = 151.0
@@ -1667,6 +1668,7 @@ text = "🌀"
 vertical_alignment = 1
 
 [node name="ReverbSlider" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
 offset_left = 32.0
 offset_top = 167.0
 offset_right = 151.0
@@ -1685,6 +1687,7 @@ text = "🏛️"
 vertical_alignment = 1
 
 [node name="DelaySlider" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
 offset_left = 32.0
 offset_top = 192.0
 offset_right = 151.0
@@ -1790,10 +1793,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="BpmLabel" type="Label" parent="UserInterface"]
-offset_left = -611.11
-offset_top = -151.0
-offset_right = -566.11
-offset_bottom = -84.0
+offset_left = -597.11
+offset_top = -161.0
+offset_right = -552.11
+offset_bottom = -94.0
 theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
@@ -1846,7 +1849,7 @@ offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 z_index = -1
-position = Vector2(-619, -118)
+position = Vector2(-605, -128)
 scale = Vector2(4, 62)
 texture = SubResource("CanvasTexture_6dn85")
 
@@ -1866,12 +1869,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -81.0
-offset_top = -84.0
-offset_right = 81.0
-offset_bottom = 84.0
+offset_left = 80.5
+offset_top = 233.5
+offset_right = 242.5
+offset_bottom = 401.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.2, 1.2)
 mouse_filter = 2
 stretch = true
 
@@ -1952,15 +1956,16 @@ texture = ExtResource("22_wax6p")
 metadata/_edit_lock_ = true
 
 [node name="AchievementsPanel" type="Panel" parent="UserInterface"]
-offset_left = 223.0
-offset_top = -340.0
-offset_right = 562.0
-offset_bottom = -162.0
+offset_left = 277.0
+offset_top = 50.0
+offset_right = 558.0
+offset_bottom = 201.0
 
 [node name="Title" type="Label" parent="UserInterface/AchievementsPanel"]
 layout_mode = 0
-offset_right = 339.0
-offset_bottom = 43.0
+offset_top = 2.0
+offset_right = 281.0
+offset_bottom = 45.0
 theme = ExtResource("22_hpc6h")
 text = "Huidig Doel:"
 horizontal_alignment = 1
@@ -1970,10 +1975,10 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 6.0
 offset_top = 38.0
-offset_right = 334.0
-offset_bottom = 171.0
+offset_right = 276.0
+offset_bottom = 145.0
 theme = ExtResource("22_hpc6h")
-text = "hier komt een instructie"
+text = "hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. "
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -1985,10 +1990,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 91.5
-offset_top = -82.0
-offset_right = 165.5
-offset_bottom = -50.0
+offset_left = 61.5
+offset_top = -69.5
+offset_right = 135.5
+offset_bottom = -37.5
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -2037,7 +2042,7 @@ hue_variation_max = 0.55
 
 [node name="AchievementsParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
-position = Vector2(286, -316)
+position = Vector2(303, -306)
 emitting = false
 amount = 20
 texture = ExtResource("20_tvghb")

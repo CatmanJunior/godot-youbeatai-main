@@ -1003,7 +1003,7 @@ public partial class Manager : Node
             settingsButton.Position = new(settingsButton.Position.X, -340);
 
             // shift robot position
-            robot.Position = new(485, 225);
+            // robot.Position = new(485, 225);
 
         };
 

@@ -399,7 +399,7 @@ bigLineVolumeDist = 40
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 closed = true
 width = 4.0
-default_color = Color(1, 1, 0, 1)
+default_color = Color(0.146667, 0.8, 0, 1)
 antialiased = true
 
 [node name="TextureProgressBar0" type="TextureProgressBar" parent="Managers/LayerVoiceOver0"]
@@ -412,6 +412,7 @@ max_value = 32.0
 step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
+tint_progress = Color(0.146667, 0.8, 0, 1)
 
 [node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
@@ -428,7 +429,7 @@ bigLineReversed = true
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 closed = true
 width = 4.0
-default_color = Color(1, 1, 0, 1)
+default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Managers/LayerVoiceOver1"]
@@ -442,6 +443,7 @@ max_value = 32.0
 step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
+tint_progress = Color(0.516666, 0, 1, 1)
 
 [node name="UserInterface" type="Node" parent="."]
 
@@ -511,7 +513,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SmallLine0" type="Line2D" parent="UserInterface/RecordBeatButton0"]
 closed = true
 width = 1.0
-default_color = Color(1, 1, 0, 1)
+default_color = Color(0.146667, 0.8, 0, 1)
 antialiased = true
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface"]
@@ -580,7 +582,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SmallLine1" type="Line2D" parent="UserInterface/RecordBeatButton1"]
 closed = true
 width = 1.0
-default_color = Color(1, 1, 0, 1)
+default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 
 [node name="RecordSongButton" type="Button" parent="UserInterface"]

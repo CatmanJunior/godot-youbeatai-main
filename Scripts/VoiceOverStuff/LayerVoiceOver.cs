@@ -1,11 +1,9 @@
 using Godot;
 using System;
+using System.Diagnostics;
 
 public partial class LayerVoiceOver : Node
 {
-	// singleton
-    public static LayerVoiceOver instance = null;
-
 	// user interface
 	[Export] public TextureProgressBar textureProgressBar;
 	[Export] public Button recordLayerButton;
@@ -30,12 +28,10 @@ public partial class LayerVoiceOver : Node
 
 	public override void _Ready()
     {
-		// init singleton
-        instance ??= this;
-
 		// init record button
 		recordLayerButton.Pressed += () => 
 		{
+			GD.Print("test");
 			Manager.instance.layerLoopToggle.ButtonPressed = false;
 			shouldRecord = !shouldRecord;
 		};

@@ -267,8 +267,10 @@ current = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
 script = ExtResource("1_rfd7i")
+layerVoiceOver0 = NodePath("../LayerVoiceOver0")
+layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 sampleMixer0 = NodePath("../../UserInterface/SampleButtons/SampleMixer0")
 sampleMixer1 = NodePath("../../UserInterface/SampleButtons/SampleMixer1")
 sampleMixer2 = NodePath("../../UserInterface/SampleButtons/SampleMixer2")
@@ -385,14 +387,14 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="LayerVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton")]
+[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar0")
-recordLayerButton = NodePath("../../UserInterface/RecordBeatButton0/Button")
+recordLayerButton = NodePath("../../UserInterface/RecordBeatButton0/Button0")
 snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
 
-[node name="TextureProgressBar0" type="TextureProgressBar" parent="Managers/LayerVoiceOver"]
+[node name="TextureProgressBar0" type="TextureProgressBar" parent="Managers/LayerVoiceOver0"]
 offset_left = -265.0
 offset_top = -267.0
 offset_right = 247.0
@@ -403,7 +405,14 @@ step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
 
-[node name="TextureProgressBar1" type="TextureProgressBar" parent="Managers/LayerVoiceOver"]
+[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton")]
+script = ExtResource("18_tunoq")
+textureProgressBar = NodePath("TextureProgressBar1")
+recordLayerButton = NodePath("../../UserInterface/RecordBeatButton1/Button1")
+snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
+langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
+
+[node name="TextureProgressBar1" type="TextureProgressBar" parent="Managers/LayerVoiceOver1"]
 offset_left = -256.0
 offset_top = -256.0
 offset_right = 256.0
@@ -425,7 +434,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
 
-[node name="Button" type="Button" parent="UserInterface/RecordBeatButton0"]
+[node name="Button0" type="Button" parent="UserInterface/RecordBeatButton0"]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -494,7 +503,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
 
-[node name="Button" type="Button" parent="UserInterface/RecordBeatButton1"]
+[node name="Button1" type="Button" parent="UserInterface/RecordBeatButton1"]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5

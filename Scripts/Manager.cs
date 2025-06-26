@@ -26,6 +26,10 @@ public partial class Manager : Node
     [Signal]
     public delegate void OnShouldStompEventEventHandler();
 
+    // idk
+    [Export] public LayerVoiceOver layerVoiceOver0;
+    [Export] public LayerVoiceOver layerVoiceOver1;
+
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
     public AudioStreamPlayer2D secondAudioPlayer;
@@ -231,10 +235,10 @@ public partial class Manager : Node
         bpm_manager.playing = !bpm_manager.playing;
 
         // pause layer voice over
-        if (LayerVoiceOver.instance.voiceOvers[LayerVoiceOver.instance.currentLayer] != null)
+        if (layerVoiceOver0.voiceOvers[layerVoiceOver0.currentLayer] != null)
         {
-            if (LayerVoiceOver.instance.audioPlayer.Playing) LayerVoiceOver.instance.audioPlayer.StreamPaused = true;
-            else LayerVoiceOver.instance.audioPlayer.StreamPaused = false;
+            if (layerVoiceOver0.audioPlayer.Playing) layerVoiceOver0.audioPlayer.StreamPaused = true;
+            else layerVoiceOver0.audioPlayer.StreamPaused = false;
         }
 
         // pause song voice over
@@ -622,7 +626,7 @@ public partial class Manager : Node
         ChangePitch(beats_name + ".wav", 2f);
 
         // export layers voiceovers as single wav
-        AudioStream[] voiceovers = LayerVoiceOver.instance.voiceOvers;
+        AudioStream[] voiceovers = layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
             string name = "layer" + i.ToString() + ".wav";
@@ -1138,7 +1142,7 @@ public partial class Manager : Node
             () => Mathf.Abs(bpm_manager.swing - startswing) > 0.01f,
 
             // layer voice over
-            () => LayerVoiceOver.instance.finished,
+            () => layerVoiceOver0.finished,
             () => layerLoopToggle.ButtonPressed,
             () => bpm_manager.playing == true,
             () => savedToLaout == true && loadedtemplate == true,
@@ -1169,7 +1173,7 @@ public partial class Manager : Node
             () => SetEffectButtonsVisibility(true),
             null,
             null,
-            () => { LayerVoiceOver.instance.recordLayerButton.Visible = true; LayerVoiceOver.instance.textureProgressBar.Visible = true; },
+            () => { layerVoiceOver0.recordLayerButton.Visible = true; layerVoiceOver0.textureProgressBar.Visible = true; },
 
             // layer voice over
             () => { settingsPanel.Visible = true; SetLayerSwitchButtonsVisibility(true); }, // before doing liedje modus
@@ -1236,8 +1240,8 @@ public partial class Manager : Node
         // recording
         SongVoiceOver.instance.recordSongButton.Visible = visible;
         SongVoiceOver.instance.progressbar.Visible = visible;
-        LayerVoiceOver.instance.recordLayerButton.Visible = visible;
-        LayerVoiceOver.instance.textureProgressBar.Visible = visible;
+        layerVoiceOver0.recordLayerButton.Visible = visible;
+        layerVoiceOver0.textureProgressBar.Visible = visible;
     }
 
     void SetRingVisibility(int ring, bool visible)
@@ -1799,7 +1803,7 @@ public partial class Manager : Node
 
         if (bpm_manager.currentBeat == 0)
         {
-            LayerVoiceOver.instance.OnTop();
+            layerVoiceOver0.OnTop();
             UpdateSongVoiceOverPlayBackPosition();
         }
         if (currentLayerIndex == 0 && bpm_manager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();

@@ -3,8 +3,6 @@ using System;
 
 public partial class RecordBeatButton : Sprite2D
 {
-	[Export] int ring = 0;
-
 	bool inside => IsPixelOpaque(GetLocalMousePosition());
 
     Color original_c;

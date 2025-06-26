@@ -95,7 +95,9 @@ public partial class SongVoiceOver : Node
 		Manager.instance.PlayPauseButton.Disabled = true;
 		Manager.instance.ResetPlayerButton.Disabled = true;
 		recordSongButton.Disabled = true;
-		LayerVoiceOver.instance.recordLayerButton.Disabled = true;
+
+		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
+		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
 		SetVolume(0.5f);
     }
@@ -118,7 +120,9 @@ public partial class SongVoiceOver : Node
 		Manager.instance.PlayPauseButton.Disabled = false;
 		Manager.instance.ResetPlayerButton.Disabled = false;
 		recordSongButton.Disabled = false;
-		LayerVoiceOver.instance.recordLayerButton.Disabled = false;
+
+		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
+		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
 
 		SetVolume(1f);
 

@@ -630,7 +630,7 @@ public partial class Manager : Node
 
         ChangePitch(beats_name + ".wav", 2f);
 
-        // export layers voiceovers as single wav
+        // export layersvoiceovers0 as single wav
         AudioStream[] voiceovers = layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
@@ -1147,7 +1147,7 @@ public partial class Manager : Node
             () => Mathf.Abs(bpm_manager.swing - startswing) > 0.01f,
 
             // layer voice over
-            () => layerVoiceOver0.finished,
+            () => layerVoiceOver0.finished || layerVoiceOver1.finished,
             () => layerLoopToggle.ButtonPressed,
             () => bpm_manager.playing == true,
             () => savedToLaout == true && loadedtemplate == true,
@@ -1178,7 +1178,13 @@ public partial class Manager : Node
             () => SetEffectButtonsVisibility(true),
             null,
             null,
-            () => { layerVoiceOver0.recordLayerButton.Visible = true; layerVoiceOver0.textureProgressBar.Visible = true; },
+            () =>
+            {
+                layerVoiceOver0.recordLayerButton.Visible = true;
+                layerVoiceOver0.textureProgressBar.Visible = true;
+                layerVoiceOver1.recordLayerButton.Visible = true;
+                layerVoiceOver1.textureProgressBar.Visible = true;
+            },
 
             // layer voice over
             () => { settingsPanel.Visible = true; SetLayerSwitchButtonsVisibility(true); }, // before doing liedje modus
@@ -1247,6 +1253,8 @@ public partial class Manager : Node
         SongVoiceOver.instance.progressbar.Visible = visible;
         layerVoiceOver0.recordLayerButton.Visible = visible;
         layerVoiceOver0.textureProgressBar.Visible = visible;
+        layerVoiceOver1.recordLayerButton.Visible = visible;
+        layerVoiceOver1.textureProgressBar.Visible = visible;
     }
 
     void SetRingVisibility(int ring, bool visible)

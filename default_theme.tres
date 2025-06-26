@@ -1,6 +1,6 @@
 [gd_resource type="Theme" load_steps=2 format=3 uid="uid://c0bwj08madm3f"]
 
-[ext_resource type="FontFile" uid="uid://b0odqns17imij" path="res://Fonts/NotoColorEmoji.ttf" id="1_e7bfs"]
+[ext_resource type="FontFile" uid="uid://d1cp3vkc5el5b" path="res://Fonts/seguiemj.ttf" id="1_e7bfs"]
 
 [resource]
 Button/fonts/font = ExtResource("1_e7bfs")

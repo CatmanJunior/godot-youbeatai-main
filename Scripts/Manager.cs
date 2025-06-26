@@ -541,7 +541,13 @@ public partial class Manager : Node
     public void SaveSongAsFile(List<bool[,]> loops)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "liedje_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        string final_name = "export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        string beats_name = "beats";
+        string song_name = "song";
+        string layers_name = "layers";
+        string beats_with_song_name = "beats_with_song";
 
         int sampleRate = 48000;
         float secondsPerBeat = 60f / bpm_manager.bpm;
@@ -589,7 +595,7 @@ public partial class Manager : Node
         if (max > 1.0f) for (int i = 0; i < audioData.Length; i++) audioData[i] /= max;
 
         // write file
-        using (var writer = new WaveFileWriter(filename + ".wav", new WaveFormat(sampleRate, 1)))
+        using (var writer = new WaveFileWriter(beats_name + ".wav", new WaveFormat(sampleRate, 1)))
         {
             foreach (var sample in audioData) writer.WriteSample(sample);
             writer.Close();
@@ -597,47 +603,19 @@ public partial class Manager : Node
 
         ChangePitch(filename + ".wav", 2f);
 
-        // mix with layer voiceovers
-        AudioStream[] voiceovers = LayerVoiceOver.instance.voiceOvers;
-        for (int i = 0; i < 10; i++)
-        {
-            string name = "layer" + i.ToString() + ".wav";
-            AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers[i];
-            if (audioStreamWav != null)
-            {
-                // voice wav
-                ConvertAudioStreamWavToWav(audioStreamWav, name);
-            }
-            else
-            {
-                // empty wav
-                float timepb = 60f / BpmManager.instance.bpm / 2;
-                float time = timepb * BpmManager.beatsAmount;
-                int rate = 48000;
-                int channels = 1;
-                int bits = 16;
-                int total = (int)(time * rate * channels);
-                byte[] silence = new byte[total * (bits / 8)];
-                var waveFormat = new WaveFormat(sampleRate, bits, channels);
-                using (var writer = new WaveFileWriter(name, waveFormat))
-                {
-                    writer.Write(silence, 0, silence.Length);
-                    writer.Close();
-                }
-            }
-        }
-
-        // mix with song voiceover
+        // layer voiceover
         ConvertAudioStreamWavToWav((AudioStreamWav)SongVoiceOver.instance.voiceOver, "voiceover.wav");
         MixAudioFiles(filename + ".wav", "voiceover.wav", filename + "_vc" + ".wav");
 
-        // delete non-voiceover wavs
-        File.Delete(filename + ".wav");
-        File.Delete("voiceover.wav");
+        // delete temps
+        File.Delete(beats_name + ".wav");
+        File.Delete(layers_name + ".wav");
+        File.Delete(song_name + ".wav");
+        File.Delete(beats_with_song_name + ".wav");
 
         // convert and finish
-        ConvertWavToMp3(filename + "_vc");
-        ShowSavingLabel(filename + "_vc");
+        ConvertWavToMp3(final_name);
+        ShowSavingLabel(final_name);
         hassavedtofile = true;
     }
 
@@ -680,6 +658,8 @@ public partial class Manager : Node
     }
 
     // --------------------------------
+
+    private float startswing;
 
     public override void _Ready()
     {
@@ -732,6 +712,24 @@ public partial class Manager : Node
             }
         }
         baseDir.ListDirEnd();
+
+        // set swing
+        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
+        BpmManager.instance.swing = chosenswing;
+        startswing = chosenswing;
+        swingslider.Value = chosenswing;
+
+        // set bpm
+        int offset = 0;
+        string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
+        string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
+        Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
+        foreach (string theme in chosenSoundBank.themes)
+        {
+            offset += int.Parse(offsetLookup[theme]);
+            GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
+        }
+        BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
 
         // delete tmep json files
         File.Delete(chosen_emoticons_path);
@@ -933,7 +931,7 @@ public partial class Manager : Node
             // effects
             () => haschangedbpm,
             () => ReverbDelayManager.instance?.reverbSlider.Value != 0 || ReverbDelayManager.instance?.delaySlider.Value != 0,
-            () => bpm_manager.swing > 0.1f,
+            () => Mathf.Abs(bpm_manager.swing - startswing) > 0.01f,
 
             // layer voice over
             () => LayerVoiceOver.instance.finished,
@@ -1532,14 +1530,14 @@ public partial class Manager : Node
         int nextbeat = bpm_manager.currentBeat + 1;
         if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
 
-        bool clap_active = beatActives[0, nextbeat];
+        bool clap_active = beatActives[1, nextbeat];
         if (clap_active)
         {
             GD.Print("shouldclap");
             EmitSignal(SignalName.OnShouldClapEvent);
         }
 
-        bool stomp_active = beatActives[1, nextbeat];
+        bool stomp_active = beatActives[0, nextbeat];
         if (stomp_active)
         {
             GD.Print("shouldstomp");

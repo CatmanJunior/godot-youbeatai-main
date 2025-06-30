@@ -30,6 +30,10 @@ public partial class Manager : Node
     [Export] public LayerVoiceOver layerVoiceOver0;
     [Export] public LayerVoiceOver layerVoiceOver1;
 
+    [Export] public Label[] Unlockables;
+    [Export] public Label[] UnlockablesQuestion;
+
+
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
     public AudioStreamPlayer2D secondAudioPlayer;
@@ -1436,6 +1440,25 @@ public partial class Manager : Node
     public override void _Process(double delta)
     {
         time += (float)delta;
+
+        // deal with unclockables
+
+        for (int i = 0; i < 6; i++)
+        {
+            float tresh = ((float)i + 1f) / 6f * 100f;
+            GD.Print(tresh);
+            if (progressBarValue > tresh - 10)
+            {
+                Unlockables[i].Visible = true;
+                UnlockablesQuestion[i].Visible = false;
+            }
+            else
+            {
+                Unlockables[i].Visible = false;
+                UnlockablesQuestion[i].Visible = true;
+            }
+        }
+        
         
         // layerbutton outline clock rotation
         if (BpmManager.instance.timePerBeat != 0)

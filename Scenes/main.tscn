@@ -32,7 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
-[ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordBeatButton.cs" id="27_jwpg7"]
+[ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
@@ -360,7 +360,7 @@ script = ExtResource("11_iqwjw")
 [node name="SongVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "snellerButton", "langzamerButton")]
 script = ExtResource("15_5s5qe")
 progressbar = NodePath("SongVoiceOverProgressBar")
-recordSongButton = NodePath("../../UserInterface/RecordSongButton")
+recordSongButton = NodePath("../../UserInterface/RecordSongButton/Button0")
 snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
 
@@ -585,23 +585,58 @@ width = 1.0
 default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 
-[node name="RecordSongButton" type="Button" parent="UserInterface"]
+[node name="RecordSongButton" type="Sprite2D" parent="UserInterface"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+z_index = -4
+position = Vector2(393, -291)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("28_r33sp")
+script = ExtResource("27_jwpg7")
+
+[node name="Button0" type="Button" parent="UserInterface/RecordSongButton"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -477.0
-offset_top = -604.0
-offset_right = -296.0
-offset_bottom = -572.0
+offset_left = -25.0
+offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🎙️ Liedje Opnemen
-"
-alignment = 0
+theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="Label" parent="UserInterface/RecordSongButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -32.5
+offset_right = 9.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(22, 22)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "🎙️"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SwitchLayerButtons" type="Node" parent="UserInterface"]
 

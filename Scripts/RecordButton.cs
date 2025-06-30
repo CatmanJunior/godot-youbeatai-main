@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class RecordBeatButton : Sprite2D
+public partial class RecordButton : Sprite2D
 {
 	bool inside => IsPixelOpaque(GetLocalMousePosition());
 

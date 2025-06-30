@@ -49,8 +49,8 @@ public partial class SongVoiceOver : Node
 
     public override void _Process(double delta)
 	{
-		// set color of record button
-		recordSongButton.Modulate = shouldRecord ? new(1, 0.5f, 0.5f) : new(1, 1, 1);
+		// set color of fake button
+		((RecordButton)recordSongButton.GetParent()).pressed = shouldRecord;
 
 		// update recording timer
 		if (recording) recordingTimer += (float)delta;

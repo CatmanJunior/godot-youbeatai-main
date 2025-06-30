@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cvuk5joj3q5is"
+uid="uid://b02d5aaa1701a"
 path="res://.godot/imported/Clap Bandits.wav-7204a1f3027f984a7a1b0b2822da1a07.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c3cxgarxkyyr2"
+path="res://.godot/imported/Closed_Perc Phon_o 5.wav-df590614a75fde0f18bc945e4f17765a.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_rock/mineur/Closed_Perc Phon_o 5.wav"
+dest_files=["res://.godot/imported/Closed_Perc Phon_o 5.wav-df590614a75fde0f18bc945e4f17765a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

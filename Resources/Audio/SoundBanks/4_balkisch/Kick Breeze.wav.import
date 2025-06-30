@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://codd1dd5xmgie"
+uid="uid://ckvcmf4axgphh"
 path="res://.godot/imported/Kick Breeze.wav-0d941377396b05811fe64e31b84b8b1d.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

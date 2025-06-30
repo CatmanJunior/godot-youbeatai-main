@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dicblfbm7vf6l"
+uid="uid://37so583ddl6y"
 path="res://.godot/imported/Clap Floating.wav-86ee3bd4ce5b3f54a7d9dfe824928d40.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

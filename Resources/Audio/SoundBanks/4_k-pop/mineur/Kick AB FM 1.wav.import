@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://emkqfam3j62y"
+uid="uid://vmc1pmhstp2t"
 path="res://.godot/imported/Kick AB FM 1.wav-9a5c7a09466e6db860dd57c215d9ec8e.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

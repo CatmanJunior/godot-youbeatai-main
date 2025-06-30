@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://djspw5patq6is"
+uid="uid://sefuiwp4k82o"
 path="res://.godot/imported/Snare Bling.wav-7066740bc699105141b234610a819889.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

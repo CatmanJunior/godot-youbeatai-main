@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ny2kseuye3te"
+uid="uid://dyn67xm0psaih"
 path="res://.godot/imported/ClosedHH Amnesia.wav-3cc37069c142ba301f8882f0fb89f854.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

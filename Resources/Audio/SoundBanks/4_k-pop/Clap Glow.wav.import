@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://f2jq1oe8bu5h"
+uid="uid://cilj15pepualk"
 path="res://.godot/imported/Clap Glow.wav-5396f934bd73adea667de6d823091a87.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

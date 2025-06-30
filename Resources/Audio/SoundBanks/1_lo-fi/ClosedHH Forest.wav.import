@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bu8rywsn83ofg"
+uid="uid://cuywkxu6j8o5s"
 path="res://.godot/imported/ClosedHH Forest.wav-92cb15e7c0b83b3062db0f9295995736.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://dsvwgyu3cdkb"
+path="res://.godot/imported/Kick Bazzazian 2.wav-01461390b261b7ce32dc023e5bb85b50.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Kick Bazzazian 2.wav"
+dest_files=["res://.godot/imported/Kick Bazzazian 2.wav-01461390b261b7ce32dc023e5bb85b50.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

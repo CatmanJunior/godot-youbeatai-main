@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c8rj83bk53jcu"
+uid="uid://7l06ded8vxoa"
 path="res://.godot/imported/Clap Amnesia.wav-329a5270ebb83ed264a01065805badda.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

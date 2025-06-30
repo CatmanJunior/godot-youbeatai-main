@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://woyqec5b8j0x"
+uid="uid://dj82d8v1i10vv"
 path="res://.godot/imported/ClosedHH Denim.wav-4882ca341256d60203f8d7bb03ebae72.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

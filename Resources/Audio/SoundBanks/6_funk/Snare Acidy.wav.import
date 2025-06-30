@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://coudm0f7eb4tl"
+uid="uid://6m7uj6j1xdum"
 path="res://.godot/imported/Snare Acidy.wav-570e29cfe2378f062fcc723217a5eb23.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

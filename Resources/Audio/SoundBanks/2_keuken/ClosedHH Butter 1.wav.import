@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dotefsnr3l0vs"
+uid="uid://dy4ueh523rpqx"
 path="res://.godot/imported/ClosedHH Butter 1.wav-a004f721e9fa0c4da73580a6019addd4.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

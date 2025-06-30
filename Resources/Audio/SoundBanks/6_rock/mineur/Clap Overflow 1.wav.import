@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dqoo6wm54rhc3"
+uid="uid://dinxghfhfe4k"
 path="res://.godot/imported/Clap Overflow 1.wav-48be280d509dcd72507668d704ae0a68.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

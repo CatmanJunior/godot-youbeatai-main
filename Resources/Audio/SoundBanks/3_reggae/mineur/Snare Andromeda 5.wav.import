@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://b4t3i3q1ix635"
+uid="uid://dq2137h5khh8b"
 path="res://.godot/imported/Snare Andromeda 5.wav-abd99e97a26082c6b8e525ea11e87372.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

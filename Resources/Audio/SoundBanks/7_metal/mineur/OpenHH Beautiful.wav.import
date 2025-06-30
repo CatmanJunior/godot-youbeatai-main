@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c6nd7hn3dum1n"
+uid="uid://dsq27fhqq0pje"
 path="res://.godot/imported/OpenHH Beautiful.wav-5f55823a3603752f86a45d6a05783425.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

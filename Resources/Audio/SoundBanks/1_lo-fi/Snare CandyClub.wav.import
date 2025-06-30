@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cboj8gjwp1j1b"
+uid="uid://duc4jv7w5emho"
 path="res://.godot/imported/Snare CandyClub.wav-91f545f8d7a8dbe0762edd0f130851c6.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

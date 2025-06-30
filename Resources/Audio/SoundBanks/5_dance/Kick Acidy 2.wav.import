@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cqphgniu7amde"
+uid="uid://c8ekvl7815v4i"
 path="res://.godot/imported/Kick Acidy 2.wav-25799e20d27a286d839fe871270000ed.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

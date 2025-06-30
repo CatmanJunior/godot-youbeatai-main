@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bguq1ihhaxnjd"
+uid="uid://2mli5as68hek"
 path="res://.godot/imported/ClosedHH Sinister 2.wav-35d4da01394c3287b61ff86cc503e275.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://tg3pcb8g1l68"
+path="res://.godot/imported/Snare_Rim Ask.wav-2ff2a2f5248e3c7e9e4fb70236f95a64.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/4_pop/mineur/Snare_Rim Ask.wav"
+dest_files=["res://.godot/imported/Snare_Rim Ask.wav-2ff2a2f5248e3c7e9e4fb70236f95a64.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=2

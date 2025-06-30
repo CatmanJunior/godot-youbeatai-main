@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cukrfp1j2uhwx"
+uid="uid://b8n1joccgqmwp"
 path="res://.godot/imported/ClosedHH FeelTheFunk 2.wav-f3085d03daa4854d7055d35032a2c67a.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

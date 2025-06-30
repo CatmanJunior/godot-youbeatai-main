@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://82nquutfe2rv"
+uid="uid://dwadswxfwulyk"
 path="res://.godot/imported/ClosedHH Andromeda 1.wav-932f6e32722bfa6f985d8aa1a3d2d36d.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

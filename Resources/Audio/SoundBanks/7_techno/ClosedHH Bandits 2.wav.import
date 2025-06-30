@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://3qwjli5a5i0w"
+uid="uid://dfe2o2axnli7g"
 path="res://.godot/imported/ClosedHH Bandits 2.wav-6b1c33c68bcdbb487111a2fae9032329.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

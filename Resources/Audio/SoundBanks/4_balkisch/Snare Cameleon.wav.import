@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://42u25ed8hpt1"
+uid="uid://cyqs7v1jh8j15"
 path="res://.godot/imported/Snare Cameleon.wav-b4937a3916f49afd0ed53c262cdd5982.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

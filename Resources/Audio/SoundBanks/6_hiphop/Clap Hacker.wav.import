@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://8hwsk57q2tpt"
+uid="uid://drykqrtsdnryh"
 path="res://.godot/imported/Clap Hacker.wav-d2eac9c972a39463b5351e57e94ba93f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

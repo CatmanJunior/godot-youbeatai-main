@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://uo62161nylvs"
+uid="uid://bgkgd7isxdqq8"
 path="res://.godot/imported/Kick Flowdown 2.wav-e2ce5c6b2d6a6032e5b1a5bd37c3f52a.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

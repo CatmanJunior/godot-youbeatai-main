@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cew0cv47o06sg"
+uid="uid://dg23rhypshw0l"
 path="res://.godot/imported/Clap Smoky.wav-0a58d69a8e01d52d46cf92c4662b527a.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://i7cs05yht1wf"
+uid="uid://b2ucgyavyitm0"
 path="res://.godot/imported/Clap War.wav-f14314102bf068b8cb9c5d8dac150ac6.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

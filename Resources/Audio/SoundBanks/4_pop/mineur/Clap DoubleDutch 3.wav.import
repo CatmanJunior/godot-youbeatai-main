@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c1o3hfuvvtbky"
+uid="uid://bjbinjdadad4r"
 path="res://.godot/imported/Clap DoubleDutch 3.wav-5c22aea1b24102450c0f58294dfc6529.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

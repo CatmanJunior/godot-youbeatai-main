@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bg7tlvkdwhnf2"
+uid="uid://c7wniun1kc6k4"
 path="res://.godot/imported/ClosedHH Gnarly 2.wav-f8a1d5c7155940821b6a0ac68dbe2fd4.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

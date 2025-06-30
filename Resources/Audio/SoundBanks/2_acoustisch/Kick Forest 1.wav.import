@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://5wrn4h6d3nu1"
+uid="uid://co7i5xf384x1j"
 path="res://.godot/imported/Kick Forest 1.wav-618cf8cebbb97f74fb324f73a9e7a6a5.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

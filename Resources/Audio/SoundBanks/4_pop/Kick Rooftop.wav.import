@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://6oiqik0y232j"
+uid="uid://ctntur8hp4j4n"
 path="res://.godot/imported/Kick Rooftop.wav-e3e204edbbc6525a802e909d3dce70bc.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

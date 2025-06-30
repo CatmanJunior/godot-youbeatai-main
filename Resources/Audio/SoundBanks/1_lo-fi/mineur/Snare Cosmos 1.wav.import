@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dle8xsfq3kess"
+uid="uid://6phiwinlbqwv"
 path="res://.godot/imported/Snare Cosmos 1.wav-6ea19f22b4d2e91c9153a691edf61d28.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

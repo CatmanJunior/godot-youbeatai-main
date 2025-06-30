@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://by0n6t7k5xsbw"
+uid="uid://lslyglmsdtsj"
 path="res://.godot/imported/Kick Orion 2.wav-750966ce10106f4bd8f190d025d97ddf.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

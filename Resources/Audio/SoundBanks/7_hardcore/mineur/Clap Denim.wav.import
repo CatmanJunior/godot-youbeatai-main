@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dn26oh6dtesoo"
+uid="uid://cna7wbhdje4fl"
 path="res://.godot/imported/Clap Denim.wav-4d4923305af146b65c4956e5cd898a76.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://p5drh0wcjrua"
+uid="uid://mrxaxt7o4bgd"
 path="res://.godot/imported/ClosedHH Pueblo.wav-ce766e7acede2b76076387c99e9b79c4.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

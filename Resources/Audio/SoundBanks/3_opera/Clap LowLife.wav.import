@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cxkg63dmdk3pf"
+uid="uid://cahpjypmhsvgv"
 path="res://.godot/imported/Clap LowLife.wav-fcd26f1d8ab2790fd10f8da3b9113544.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cx0v3x2ipt1s3"
+uid="uid://b0uof5pu1qvvs"
 path="res://.godot/imported/Snare Gnarly.wav-06529465b4ed5b8b09f91f833df95cc2.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

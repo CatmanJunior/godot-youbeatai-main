@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://do1mmsvpik8lr"
+uid="uid://qffta4dethj5"
 path="res://.godot/imported/Snare Crystal 1.wav-d80baefd75169b915d9a1b880bbbc835.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

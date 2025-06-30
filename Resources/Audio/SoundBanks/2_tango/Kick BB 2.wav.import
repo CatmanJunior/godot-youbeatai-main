@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://nya4c0svagy0"
+uid="uid://dsf1y2droce3o"
 path="res://.godot/imported/Kick BB 2.wav-c816ed006f169af6cd29ee0375a326da.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

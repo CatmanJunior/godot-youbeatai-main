@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://tr6u0oiwt13p"
+uid="uid://0od12dqxqvbo"
 path="res://.godot/imported/Clap Fit.wav-d067cdab8df93652446d45fdb0aca18c.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

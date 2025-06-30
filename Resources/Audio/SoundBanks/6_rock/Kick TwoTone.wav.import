@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dm3p277m5ht7p"
+uid="uid://d2n4huplighmj"
 path="res://.godot/imported/Kick TwoTone.wav-fd66bb42fb0fd7b3bd1e2983fbbd7af7.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://2v68lrmlj6wl"
+uid="uid://btp8vcdrsan0u"
 path="res://.godot/imported/Clap Discaux.wav-4ae8a13e427bb920ea04eb0c66581cb4.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

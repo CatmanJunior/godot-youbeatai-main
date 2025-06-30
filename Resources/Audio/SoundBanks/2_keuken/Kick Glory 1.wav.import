@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dmty4vjsgsx5w"
+uid="uid://odobipxdwoem"
 path="res://.godot/imported/Kick Glory 1.wav-dc2a7f0d9ebff4d9ae361d1b2929be98.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

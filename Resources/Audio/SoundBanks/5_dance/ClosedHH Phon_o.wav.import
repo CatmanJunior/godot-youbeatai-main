@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cvdowt8kbvyir"
+uid="uid://x7obpk11oa56"
 path="res://.godot/imported/ClosedHH Phon_o.wav-12c5becdefdd308d0ceb55c1bf7f4e3a.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://d2u72amm6mplf"
+uid="uid://cd2ar2pvb3vbd"
 path="res://.godot/imported/ClosedHH Anorac 1.wav-78c02ce3e2036e265b76b3ab86072ddd.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

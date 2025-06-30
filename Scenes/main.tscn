@@ -15,13 +15,13 @@
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="9_nnqde"]
 [ext_resource type="Script" uid="uid://dgwusorhvls4u" path="res://Scripts/TemplateManager.cs" id="9_t3vou"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="10_4yy8e"]
+[ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="10_hdf80"]
 [ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="10_jykfx"]
-[ext_resource type="AudioStream" uid="uid://bmm87gsdckg3s" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick Forest 2.wav" id="10_r33sp"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="10_t1q83"]
-[ext_resource type="AudioStream" uid="uid://dqdiujui4k1ba" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Glow.wav" id="11_hdf80"]
 [ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="11_iqwjw"]
-[ext_resource type="AudioStream" uid="uid://bm0stqqxbut3n" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare Lusine 1.wav" id="12_jwpg7"]
-[ext_resource type="AudioStream" uid="uid://014gstvkgnd0" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/ClosedHH Floating 1.wav" id="13_k2e45"]
+[ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="11_jwpg7"]
+[ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="12_k2e45"]
+[ext_resource type="AudioStream" uid="uid://dftnqqs3hjppb" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Closed_Tam.wav" id="13_536cc"]
 [ext_resource type="Script" uid="uid://bs8s08unyjudt" path="res://Scripts/DragAndDropButton.cs" id="14_4mig3"]
 [ext_resource type="Script" uid="uid://858ek2iipynw" path="res://Scripts/VoiceOverStuff/SongVoiceOver.cs" id="15_5s5qe"]
 [ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="16_ngh84"]
@@ -278,7 +278,7 @@ metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
-mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_r33sp"), ExtResource("11_hdf80"), ExtResource("12_jwpg7"), ExtResource("13_k2e45")])
+mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
 saveToWavButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/SaveToWavButton")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")

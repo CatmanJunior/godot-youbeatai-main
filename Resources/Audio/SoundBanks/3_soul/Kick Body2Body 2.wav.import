@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cruotawegtwpw"
+uid="uid://c2dwgs0hy2csf"
 path="res://.godot/imported/Kick Body2Body 2.wav-9e628c7473e80447b71526c69369c48f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

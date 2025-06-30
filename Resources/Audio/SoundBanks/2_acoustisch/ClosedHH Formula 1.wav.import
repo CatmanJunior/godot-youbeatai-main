@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dqfglb5rkm0gn"
+uid="uid://bbhrn06te3p5l"
 path="res://.godot/imported/ClosedHH Formula 1.wav-fc0cfcefb633402ab2bd864730bf200f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

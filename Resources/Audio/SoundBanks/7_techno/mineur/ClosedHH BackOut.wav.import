@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cjtcpxhkojnsj"
+uid="uid://cqno1pepig43l"
 path="res://.godot/imported/ClosedHH BackOut.wav-6897d0e937d90fc117e712ce3c12e7c4.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

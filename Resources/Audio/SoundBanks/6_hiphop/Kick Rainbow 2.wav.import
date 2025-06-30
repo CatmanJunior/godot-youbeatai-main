@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://d20l12ogoje5d"
+uid="uid://c075vuhpv2t4w"
 path="res://.godot/imported/Kick Rainbow 2.wav-57fa4a1fc6b8a85c272d60a89ee09612.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

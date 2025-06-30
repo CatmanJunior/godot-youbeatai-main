@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bqjafukb7sgnp"
+uid="uid://dsbv88j5iiama"
 path="res://.godot/imported/Kick VibeOffering 2.wav-0dbfee5242574497ab5bac1e35adcd1f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

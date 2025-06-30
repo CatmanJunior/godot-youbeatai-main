@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c3lrnaktpgoxg"
+uid="uid://cqsib0y2evgjc"
 path="res://.godot/imported/ClosedHH Elegance.wav-781d55b762a8ab212dab617410e85481.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

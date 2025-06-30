@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ctgd22p3xqx8b"
+uid="uid://qpr6y32nnmg2"
 path="res://.godot/imported/Clap Sinister 1.wav-6f555bae3923f4e12281a251fe0e89ec.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

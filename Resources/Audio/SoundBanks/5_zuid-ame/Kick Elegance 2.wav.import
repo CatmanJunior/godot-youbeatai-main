@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c5ttmwpourb13"
+uid="uid://cm5io7pphghwk"
 path="res://.godot/imported/Kick Elegance 2.wav-f20b317eca68c3cca77193d13cd94c29.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

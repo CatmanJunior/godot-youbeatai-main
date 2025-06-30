@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://csbrkl5xd3hn8"
+uid="uid://b2wvvwru36ift"
 path="res://.godot/imported/Kick Gnarly 2.wav-9b764665616aa7dea3d1c63bbb4dc535.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

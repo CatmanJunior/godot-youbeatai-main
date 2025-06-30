@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://b5jbcq8mr23f5"
+uid="uid://cdumen0pc2a7g"
 path="res://.godot/imported/Clap VibeOffering.wav-f1d42f244ca05b41975df83000d7aff4.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

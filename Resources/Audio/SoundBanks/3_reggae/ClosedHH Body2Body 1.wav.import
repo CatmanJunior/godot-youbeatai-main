@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://du26xtvlxq2f6"
+uid="uid://bnboakej1u3gl"
 path="res://.godot/imported/ClosedHH Body2Body 1.wav-cdc28dbc58890843bce465ed80819bc9.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

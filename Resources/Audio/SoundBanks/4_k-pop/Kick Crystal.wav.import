@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cxwt3eaubgbil"
+uid="uid://dejpbq2iqc3kl"
 path="res://.godot/imported/Kick Crystal.wav-f89b805d99aaf961ddf9c4ac2791ce6e.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

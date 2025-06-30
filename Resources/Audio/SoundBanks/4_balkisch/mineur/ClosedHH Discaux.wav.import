@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://b112vm82v74m0"
+uid="uid://ojnoc65b86bw"
 path="res://.godot/imported/ClosedHH Discaux.wav-ef9500a43ca6c78ba17c4c801b1f312f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

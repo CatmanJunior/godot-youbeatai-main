@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cq15ywy33lipu"
+uid="uid://csoufanqc2frv"
 path="res://.godot/imported/ClosedHH Omg 2.wav-3fd85ac70ba86b36bc9742f797a4ffe5.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

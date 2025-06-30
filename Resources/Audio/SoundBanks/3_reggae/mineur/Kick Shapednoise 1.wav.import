@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://d3uymdrkbdvqn"
+uid="uid://bspcfiukoeorw"
 path="res://.godot/imported/Kick Shapednoise 1.wav-78daef5baef280b7fb0b6a554b013365.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

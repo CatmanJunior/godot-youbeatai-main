@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cr2d5ld7csuvh"
+uid="uid://sg7hwbuvgnme"
 path="res://.godot/imported/Snare Askari.wav-85f1ea616de8cc94c5673581782c6a08.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

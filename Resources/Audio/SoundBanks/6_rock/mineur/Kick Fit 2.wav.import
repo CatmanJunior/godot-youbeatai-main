@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dk5dxydegphiq"
+uid="uid://bqvgokl472bmq"
 path="res://.godot/imported/Kick Fit 2.wav-cfad0ae313e63df113a679ce989a883e.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

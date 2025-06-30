@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cpal04igce0c"
+uid="uid://bqfufsfbjqp5f"
 path="res://.godot/imported/Kick Hoba.wav-ea26c630fd6bba46a93ebf4cc80da43f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

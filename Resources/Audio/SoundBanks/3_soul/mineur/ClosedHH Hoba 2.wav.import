@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cro4sqr4urpog"
+uid="uid://b5rpk86xknwjs"
 path="res://.godot/imported/ClosedHH Hoba 2.wav-df9075b7cd2337f13c742fae3e679db2.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

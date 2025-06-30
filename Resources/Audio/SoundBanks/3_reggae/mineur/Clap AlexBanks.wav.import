@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://b8dbtlk1mxeng"
+uid="uid://der0kb6d2ynoo"
 path="res://.godot/imported/Clap AlexBanks.wav-b634ae82c2744f42967dcac8e7f2e203.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c3mwu822wsvln"
+uid="uid://bykf5m7qx3o1q"
 path="res://.godot/imported/Kick Bazzazian 1.wav-210304a8584e535aa8af966a321cd434.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

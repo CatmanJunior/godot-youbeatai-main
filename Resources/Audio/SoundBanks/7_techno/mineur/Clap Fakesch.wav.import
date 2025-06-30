@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dsbcrq3dj5euo"
+uid="uid://c0qmg2guj5x5c"
 path="res://.godot/imported/Clap Fakesch.wav-5ae2633571e9bcf1c2b9667ec8c3b2d3.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

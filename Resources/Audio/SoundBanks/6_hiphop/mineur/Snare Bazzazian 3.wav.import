@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bg0dfjnva8d8f"
+uid="uid://dpf2gbxtjafbj"
 path="res://.godot/imported/Snare Bazzazian 3.wav-00c814457ceb29670b9dc3362a236cc0.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

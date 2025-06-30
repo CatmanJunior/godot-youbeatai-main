@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c3qyeq7l3dnla"
+uid="uid://be37oruasvm8u"
 path="res://.godot/imported/Kick Bandits.wav-d4d3b2beb3f733181514b1463cc08594.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

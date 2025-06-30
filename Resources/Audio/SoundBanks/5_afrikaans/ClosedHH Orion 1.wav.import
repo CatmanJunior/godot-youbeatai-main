@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://cjj64tiq5rx4e"
+uid="uid://bk4k6m401s56h"
 path="res://.godot/imported/ClosedHH Orion 1.wav-b3731b1b1d0e55f834e624d2ccdff863.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bvl7fhj2ft64g"
+uid="uid://brixrkbh80hww"
 path="res://.godot/imported/Clap Pueblo.wav-c56eeaf2f9d5449b5a266368f8c01d60.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

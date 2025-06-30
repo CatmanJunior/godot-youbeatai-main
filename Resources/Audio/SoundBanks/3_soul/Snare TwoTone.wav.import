@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bnu58k6sjd6nn"
+uid="uid://ck0ivmwkcp6lp"
 path="res://.godot/imported/Snare TwoTone.wav-948b851892685e567dd489280807e148.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

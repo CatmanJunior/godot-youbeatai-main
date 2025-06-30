@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dp681fsop8v2q"
+uid="uid://lo7i5p1qnvx5"
 path="res://.godot/imported/Clap TwoTone.wav-2183347d9ba85a1ab88dc7f06fa55f6e.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

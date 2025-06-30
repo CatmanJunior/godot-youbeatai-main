@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://ng6kknwgv0sf"
+uid="uid://bkq6n8xf50qja"
 path="res://.godot/imported/Snare Phon_o 1.wav-a7a3f208d5e99c24e87e4d405866ac8b.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

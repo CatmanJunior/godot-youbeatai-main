@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bhmc121fy7fcl"
+uid="uid://dhhjbk72kgmfo"
 path="res://.godot/imported/Clap Modern.wav-fb8f038a6515f24b00d405f4a210cd4f.sample"
 
 [deps]
@@ -21,4 +21,4 @@ edit/normalize=false
 edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
-compress/mode=0
+compress/mode=2

@@ -78,11 +78,15 @@ public partial class LayerVoiceOver : Node
 		int currentBeat = BpmManager.instance.currentBeat;
 		float beatTimer = BpmManager.instance.beatTimer;
 		float progress = (float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat)));
-		if (recording) textureProgressBar.Value = progress;
+		if (recording)
+		{
+			textureProgressBar.Value = progress;
+			bigLine.Visible = false;
+		}
 		else
 		{
-			if (GetCurrentLayerVoiceOver() != null) textureProgressBar.Value = (float)BpmManager.beatsAmount;
-			else textureProgressBar.Value = 0;
+			textureProgressBar.Value = 0;
+			if (GetCurrentLayerVoiceOver() != null) bigLine.Visible = true;
 		}
 	}
 

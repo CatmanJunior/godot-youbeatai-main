@@ -569,11 +569,13 @@ snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUp
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 smallLine = NodePath("../../UserInterface/RecordBeatButton0/SmallLine0")
 bigLine = NodePath("BigLine0")
-bigLineVolumeDist = 40
+bigLineBaseDist = 260
+bigLineVolumeDist = 80
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
+visible = false
 closed = true
-width = 4.0
+width = 12.0
 default_color = Color(0.146667, 0.8, 0, 1)
 antialiased = true
 
@@ -597,13 +599,13 @@ snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUp
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 smallLine = NodePath("../../UserInterface/RecordBeatButton1/SmallLine1")
 bigLine = NodePath("BigLine1")
-bigLineBaseDist = 105
+bigLineBaseDist = 115
 bigLineVolumeDist = 30
 bigLineReversed = true
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
+visible = false
 closed = true
-width = 4.0
 default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 

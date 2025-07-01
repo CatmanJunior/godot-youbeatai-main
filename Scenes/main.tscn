@@ -681,8 +681,14 @@ offset_bottom = -17.5
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
-value = 0.5
+value = 0.4
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="UserInterface/RecordBeatButton0/HSlider"]
+self_modulate = Color(1, 1, 0, 1)
+position = Vector2(37.5, 8.125)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("28_r33sp")
 
 [node name="SmallLine0" type="Line2D" parent="UserInterface/RecordBeatButton0"]
 closed = true
@@ -750,8 +756,14 @@ offset_bottom = -17.5
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
-value = 0.5
+value = 0.4
 metadata/_edit_use_anchors_ = true
+
+[node name="Sprite2D2" type="Sprite2D" parent="UserInterface/RecordBeatButton1/HSlider"]
+self_modulate = Color(1, 1, 0, 1)
+position = Vector2(37.5, 8.125)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("28_r33sp")
 
 [node name="SmallLine1" type="Line2D" parent="UserInterface/RecordBeatButton1"]
 closed = true

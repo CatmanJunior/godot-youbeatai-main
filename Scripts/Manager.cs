@@ -329,6 +329,7 @@ public partial class Manager : Node
     [Export] Button allLayersToMp3;
 
     [Export] Sprite2D layerOutline;
+    [Export] Node2D layerOutlineHolder;
 
     public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
 
@@ -375,7 +376,7 @@ public partial class Manager : Node
         beatActives = GetCurrentLayer();
 
         // update outline
-        layerOutline.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
+        layerOutlineHolder.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
 
         // update song voice position
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();

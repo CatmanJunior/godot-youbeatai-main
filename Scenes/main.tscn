@@ -438,7 +438,7 @@ vertical_alignment = 1
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder")]
 script = ExtResource("1_rfd7i")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
@@ -473,9 +473,9 @@ robotlight = NodePath("../../UserInterface/Robot/RobotLight")
 spritePrefab = ExtResource("2_1eep1")
 texture = ExtResource("2_1ig4u")
 outline = ExtResource("8_llrl4")
-SaveLayoutButton = NodePath("../../UserInterface/MainButtons/SaveLayoutButton")
-LoadLayoutButton = NodePath("../../UserInterface/MainButtons/LoadLayoutButton")
-ClearLayoutButton = NodePath("../../UserInterface/MainButtons/ClearLayoutButton")
+SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton")
+LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/LoadLayoutButton")
+ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/ClearLayoutButton")
 PlayPauseButton = NodePath("../../UserInterface/MainButtons/PlayPauseButton")
 ResetPlayerButton = NodePath("../../UserInterface/MainButtons/ResetPlayerButton")
 BpmUpButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUpButton")
@@ -510,7 +510,8 @@ SavingLabel = NodePath("../../SavingLabel")
 InstructionLabel = NodePath("../../UserInterface/AchievementsPanel/InstructionLabel")
 robot = NodePath("../../UserInterface/Robot")
 allLayersToMp3 = NodePath("../../UserInterface/SettingsButton/SettingsPanel/AllLayersToMp3")
-layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/Outline")
+layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
+layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -988,10 +989,63 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🏁"
 metadata/_edit_use_anchors_ = true
 
-[node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons"]
+[node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
 position = Vector2(-320, -291)
+
+[node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
 scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
+
+[node name="ClearLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -51.0
+offset_top = 45.0
+offset_right = -19.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "🗑️
+"
+
+[node name="SaveLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = 45.0
+offset_right = 17.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "💾
+"
+
+[node name="LoadLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 21.0
+offset_top = 45.0
+offset_right = 53.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "♻️
+"
 
 [node name="MainButtons" type="Node" parent="UserInterface"]
 
@@ -1028,57 +1082,6 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "⏮️ Terug naar begin"
 alignment = 0
-
-[node name="ClearLayoutButton" type="Button" parent="UserInterface/MainButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -991.0
-offset_top = -602.0
-offset_right = -959.0
-offset_bottom = -570.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🗑️
-"
-
-[node name="SaveLayoutButton" type="Button" parent="UserInterface/MainButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -955.0
-offset_top = -602.0
-offset_right = -923.0
-offset_bottom = -570.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "💾
-"
-
-[node name="LoadLayoutButton" type="Button" parent="UserInterface/MainButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -919.0
-offset_top = -602.0
-offset_right = -887.0
-offset_bottom = -570.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "♻️
-"
 
 [node name="SampleButtons" type="Node" parent="UserInterface"]
 

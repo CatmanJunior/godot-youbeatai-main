@@ -1449,7 +1449,6 @@ public partial class Manager : Node
         for (int i = 0; i < 6; i++)
         {
             float tresh = ((float)i + 1f) / 6f * 100f;
-            GD.Print(tresh);
             if (progressBarValue > tresh - 10)
             {
                 Unlockables[i].Visible = true;

@@ -674,19 +674,25 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="HSlider" type="HSlider" parent="UserInterface/RecordBeatButton0"]
-offset_left = -18.5
+offset_left = -12.0
 offset_top = -33.5
-offset_right = 25.5
+offset_right = 18.0
 offset_bottom = -17.5
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
-value = 0.4
+value = 0.5
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="UserInterface/RecordBeatButton0/HSlider"]
 self_modulate = Color(1, 1, 0, 1)
-position = Vector2(37.5, 8.125)
+position = Vector2(33.75, 8.125)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("28_r33sp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="UserInterface/RecordBeatButton0/HSlider"]
+self_modulate = Color(0, 0.823529, 0, 1)
+position = Vector2(-3.75, 8.125)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("28_r33sp")
 
@@ -699,7 +705,7 @@ antialiased = true
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.516666, 0, 1, 1)
 z_index = -4
-position = Vector2(-189, 305)
+position = Vector2(-172, 305)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -749,19 +755,25 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="HSlider" type="HSlider" parent="UserInterface/RecordBeatButton1"]
-offset_left = -18.5
+offset_left = -12.0
 offset_top = -33.5
-offset_right = 25.5
+offset_right = 18.0
 offset_bottom = -17.5
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
-value = 0.4
+value = 0.5
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="UserInterface/RecordBeatButton1/HSlider"]
 self_modulate = Color(1, 1, 0, 1)
-position = Vector2(37.5, 8.125)
+position = Vector2(33.75, 8.125)
+scale = Vector2(0.42, 0.42)
+texture = ExtResource("28_r33sp")
+
+[node name="Sprite2D3" type="Sprite2D" parent="UserInterface/RecordBeatButton1/HSlider"]
+self_modulate = Color(0.516666, 0, 1, 1)
+position = Vector2(-3.75, 8.125)
 scale = Vector2(0.42, 0.42)
 texture = ExtResource("28_r33sp")
 

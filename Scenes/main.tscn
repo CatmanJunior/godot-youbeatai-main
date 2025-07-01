@@ -299,6 +299,7 @@ vertical_alignment = 1
 
 [node name="Unlockable_1" type="Label" parent="Managers/ProgressBar"]
 visible = false
+layout_mode = 0
 offset_left = -15.05
 offset_top = 550.0
 offset_right = 67.95
@@ -310,6 +311,7 @@ vertical_alignment = 1
 
 [node name="Unlockable_2" type="Label" parent="Managers/ProgressBar"]
 visible = false
+layout_mode = 0
 offset_left = -15.05
 offset_top = 464.0
 offset_right = 67.95
@@ -321,6 +323,7 @@ vertical_alignment = 1
 
 [node name="Unlockable_3" type="Label" parent="Managers/ProgressBar"]
 visible = false
+layout_mode = 0
 offset_left = -15.05
 offset_top = 377.0
 offset_right = 67.95
@@ -332,6 +335,7 @@ vertical_alignment = 1
 
 [node name="Unlockable_4" type="Label" parent="Managers/ProgressBar"]
 visible = false
+layout_mode = 0
 offset_left = -15.05
 offset_top = 250.0
 offset_right = 67.95
@@ -343,6 +347,7 @@ vertical_alignment = 1
 
 [node name="Unlockable_5" type="Label" parent="Managers/ProgressBar"]
 visible = false
+layout_mode = 0
 offset_left = -15.05
 offset_top = 163.0
 offset_right = 67.95
@@ -354,6 +359,7 @@ vertical_alignment = 1
 
 [node name="Unlockable_6" type="Label" parent="Managers/ProgressBar"]
 visible = false
+layout_mode = 0
 offset_left = -15.05
 offset_top = 76.0
 offset_right = 67.95
@@ -364,6 +370,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Unlockable_Question_1" type="Label" parent="Managers/ProgressBar"]
+layout_mode = 0
 offset_left = -15.05
 offset_top = 550.0
 offset_right = 67.95
@@ -374,6 +381,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Unlockable_Question_2" type="Label" parent="Managers/ProgressBar"]
+layout_mode = 0
 offset_left = -15.05
 offset_top = 464.0
 offset_right = 67.95
@@ -384,6 +392,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Unlockable_Question_3" type="Label" parent="Managers/ProgressBar"]
+layout_mode = 0
 offset_left = -15.05
 offset_top = 377.0
 offset_right = 67.95
@@ -394,6 +403,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Unlockable_Question_4" type="Label" parent="Managers/ProgressBar"]
+layout_mode = 0
 offset_left = -15.05
 offset_top = 250.0
 offset_right = 67.95
@@ -404,6 +414,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Unlockable_Question_5" type="Label" parent="Managers/ProgressBar"]
+layout_mode = 0
 offset_left = -15.05
 offset_top = 163.0
 offset_right = 67.95
@@ -414,6 +425,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Unlockable_Question_6" type="Label" parent="Managers/ProgressBar"]
+layout_mode = 0
 offset_left = -15.05
 offset_top = 76.0
 offset_right = 67.95

@@ -94,7 +94,7 @@ public partial class SoundBankSelectionMenu : Panel
     {
         chosenElectronicFactor = (int)(accousticSlider.Value * 100);
         gebruikButton.Disabled = chosenSoundBank == null;
-        gevondenSoundBankLabel.Text = chosenSoundBank?.name;
+        gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (" + chosenSoundBank?.bpm + "bpm, " + chosenSoundBank?.swing + "% swing)";
 
         string emoticons = "";
         foreach (var emoticon in chosenEmotions) emoticons += emoticon;

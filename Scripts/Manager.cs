@@ -70,6 +70,9 @@ public partial class Manager : Node
     [Export] Button saveToWavButton;
     bool hassavedtofile = false;
 
+
+    
+
     // particles
     [Export] public CpuParticles2D beat_particles;
     private Vector2 beat_particles_position;

@@ -591,7 +591,7 @@ focus_mode = 0
 layout_mode = 0
 offset_left = 14.0
 offset_top = 419.0
-offset_right = 277.0
+offset_right = 324.0
 offset_bottom = 457.0
 theme = ExtResource("2_ie3tb")
 text = "Gevonden Soundbank:"
@@ -601,7 +601,7 @@ vertical_alignment = 1
 [node name="SelectionLabel" type="Label" parent="SoundBankSelectionMenu/SelectieLabelTitle"]
 layout_mode = 0
 offset_top = 26.0
-offset_right = 263.0
+offset_right = 307.0
 offset_bottom = 64.0
 theme = ExtResource("2_ie3tb")
 text = "........"

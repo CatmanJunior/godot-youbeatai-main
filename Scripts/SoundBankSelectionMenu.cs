@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.IO;
 
 public partial class SoundBankSelectionMenu : Panel
 {
@@ -18,6 +19,9 @@ public partial class SoundBankSelectionMenu : Panel
     [Export] Label gevondenSoundBankLabel;
 
     private SoundBank chosenSoundBank = null;
+
+    // other settings to remember
+    [Export] OptionButton hoeveelBeats;    
 
     public override void _Ready()
     {
@@ -68,21 +72,28 @@ public partial class SoundBankSelectionMenu : Panel
         {
             // remember audio bank to use
             {
-                string path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
+                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
                 var json = JsonSerializer.Serialize(chosenSoundBank);
-                if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-                System.IO.File.WriteAllText(path, json);
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, json);
             }
 
             // remember chosen emoticons
             {
-                string path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
+                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
                 List<string> emoticons = [];
                 emoticons.AddRange(chosenEmotions);
                 emoticons.AddRange(chosenThemes);
                 var json = JsonSerializer.Serialize(emoticons);
-                if (System.IO.File.Exists(path)) System.IO.File.Delete(path);
-                System.IO.File.WriteAllText(path, json);
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, json);
+            }
+
+            // remember other settings
+            {
+                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, hoeveelBeats.Text);
             }
 
             // load main scene
@@ -147,13 +158,13 @@ public partial class SoundBankSelectionMenu : Panel
     public List<SoundBank> LoadSoundBanks()
     {
         string path = "res://Resources/SoundBankMatrix/soundbanks.json";
-        if (!FileAccess.FileExists(path))
+        if (!Godot.FileAccess.FileExists(path))
         {
             GD.Print("json file not found");
             return null;
         }
 
-        var file = FileAccess.Open(path, FileAccess.ModeFlags.Read);
+        var file = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read);
         string jsonText = file.GetAsText();
 
         var soundbanks = JsonSerializer.Deserialize<List<SoundBank>>(jsonText);

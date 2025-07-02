@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.IO;
+using System.Text.Json;
 
 public partial class BpmManager : Node
 {
@@ -18,7 +20,19 @@ public partial class BpmManager : Node
     }
 
     // timing
-    public static int beatsAmount = 32;
+    public static int beatsAmount = ReadBeatsAmount();
+
+    private static int ReadBeatsAmount()
+    {
+        string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
+
+        int amount = int.Parse(File.ReadAllText(path));
+
+        File.Delete(path);
+
+        return amount;
+    }
+
 
     public bool playing = false;
     public int currentBeat = beatsAmount - 1;

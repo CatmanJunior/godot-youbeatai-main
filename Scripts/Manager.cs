@@ -33,6 +33,7 @@ public partial class Manager : Node
     [Export] public Label[] Unlockables;
     [Export] public Label[] UnlockablesQuestion;
 
+    [Export] public Button restartButton;
 
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
@@ -1066,6 +1067,11 @@ public partial class Manager : Node
 
         SaveLayoutButton.Pressed += OnSaveLayoutButton;
         LoadLayoutButton.Pressed += OnLoadLayoutButton;
+
+        restartButton.Pressed += () => 
+        {
+            GetTree().ChangeSceneToFile("res://Scenes/soundbank.tscn");
+        };
 
         ClearLayoutButton.Pressed += OnClearLayoutButton;
         PlayPauseButton.Pressed += OnPlayPauseButton;

@@ -22,7 +22,6 @@ public partial class SoundBankSelectionMenu : Panel
 
     // other settings to remember
     [Export] OptionButton hoeveelBeats;
-    [Export] TextEdit emailAdress;
 
     public override void _Ready()
     {
@@ -95,13 +94,6 @@ public partial class SoundBankSelectionMenu : Panel
                 string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
                 if (File.Exists(path)) File.Delete(path);
                 File.WriteAllText(path, hoeveelBeats.Text);
-            }
-
-            // remember email adress
-            {
-                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "email_adress.txt");
-                if (File.Exists(path)) File.Delete(path);
-                File.WriteAllText(path, emailAdress.Text);
             }
 
             // load main scene

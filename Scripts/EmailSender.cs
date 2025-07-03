@@ -5,12 +5,11 @@ using Godot;
 
 public class EmailSender
 {
-    public static void SendWav(string globalWavPath)
+    public static void SendWav(string globalWavPath, string to)
     {
         string from = "youbeatai@gmail.com";
         string pass = "plkqkbpemvqierqw";
         
-        string to = ReadEmailAdress();
         string subject = "Hier is je liedje!";
         string body = "Het liedje is als bestand bijgevoegt";
 
@@ -25,12 +24,5 @@ public class EmailSender
         };
 
         smtpClient.Send(message);
-    }
-
-    private static string ReadEmailAdress()
-    {
-        string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "email_adress.txt");
-        string email = File.ReadAllText(path);
-        return email;
     }
 }

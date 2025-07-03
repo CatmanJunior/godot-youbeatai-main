@@ -19,6 +19,8 @@ public partial class Manager : Node
     // singleton
     public static Manager instance = null;
 
+    [Export] TextEdit emailAdress;
+
     // events
     [Signal]
     public delegate void OnSwitchLayerEventHandler(int layer);
@@ -784,18 +786,12 @@ public partial class Manager : Node
         hassavedtofile = true;
 
         // send to email
-        SendToEmail(final_name + ".mp3");
+        if (emailAdress.Text != "") SendToEmail(final_name + ".mp3", emailAdress.Text);
     }
 
-    async void SendToEmail(string final_name)
+    async void SendToEmail(string final_name, string to)
     {
-        Action task = () =>
-        {
-            var emailfilepath = ProjectSettings.GlobalizePath(final_name);
-            GD.Print("sending: " + emailfilepath);
-            EmailSender.SendWav(emailfilepath);
-        };
-
+        Action task = () => EmailSender.SendWav(ProjectSettings.GlobalizePath(final_name), to);
         await Task.Run(task);
     }
 

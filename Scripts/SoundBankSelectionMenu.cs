@@ -109,11 +109,21 @@ public partial class SoundBankSelectionMenu : Panel
         };
     }
 
+    Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
+
+    private int GetOffset()
+    {
+        int offset = 0;
+        foreach (string theme in chosenThemes) offset += int.Parse(offsetLookup[theme]);
+        return offset;
+    }
+
     public override void _Process(double delta)
     {
+
         chosenElectronicFactor = (int)(accousticSlider.Value * 100);
         gebruikButton.Disabled = chosenSoundBank == null;
-        gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (" + chosenSoundBank?.bpm + "bpm, " + chosenSoundBank?.swing + "% swing)";
+        gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ")";
 
         string emoticons = "";
         foreach (var emoticon in chosenEmotions) emoticons += emoticon;

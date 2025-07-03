@@ -37,6 +37,16 @@ public partial class SongVoiceOver : Node
 		{
 			Manager.instance.layerLoopToggle.ButtonPressed = true;
 			shouldRecord = !shouldRecord;
+
+			// metronoom aan
+			Manager.instance.metronome_toggle.ButtonPressed = true;
+
+			// 4 beats voor de eerste noot op eerste laag
+			Manager.instance.SwitchLayer(10);
+			BpmManager.instance.currentBeat = BpmManager.beatsAmount - 4;
+
+			// playing true
+			BpmManager.instance.playing = true;
 		};
 
 		// create audioplayer
@@ -100,6 +110,8 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
 		SetVolume(0.5f);
+
+		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
 
     private void StopRecording()

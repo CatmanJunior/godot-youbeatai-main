@@ -38,9 +38,17 @@ public partial class LayerVoiceOver : Node
 		// init record button
 		recordLayerButton.Pressed += () => 
 		{
-			GD.Print("test");
 			Manager.instance.layerLoopToggle.ButtonPressed = false;
 			shouldRecord = !shouldRecord;
+
+			// metronoom aan
+			Manager.instance.metronome_toggle.ButtonPressed = true;
+
+			// 4 beats voor de eerste noot
+			BpmManager.instance.currentBeat = BpmManager.beatsAmount - 4;
+
+			// playing true
+			BpmManager.instance.playing = true;
 		};
 
 		// create audioplayer
@@ -120,6 +128,8 @@ public partial class LayerVoiceOver : Node
 		SongVoiceOver.instance.recordSongButton.Disabled = true;
 
 		SetVolume(0.5f);
+
+		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
 
     private void StopRecording()

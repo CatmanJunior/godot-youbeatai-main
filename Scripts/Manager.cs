@@ -170,7 +170,7 @@ public partial class Manager : Node
     List<string> chosenEmoticons = null;
 
     // settings menu
-    [Export] CheckButton metronome_toggle;
+    [Export] public CheckButton metronome_toggle;
     [Export] ProgressBar micmeter;
     [Export] CheckButton add_beats;
     [Export] Slider volume_treshold;

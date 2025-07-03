@@ -529,7 +529,7 @@ public partial class Manager : Node
         string filename = "beat_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
 
         int sampleRate = 48000;
-        float secondsPerBeat = 60f / bpm_manager.bpm;
+        float secondsPerBeat = BpmManager.instance.baseTimePerBeat;
         int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
@@ -597,7 +597,7 @@ public partial class Manager : Node
         string beats_with_song_name = "beats_with_song";
 
         int sampleRate = 48000;
-        float secondsPerBeat = 60f / bpm_manager.bpm;
+        float secondsPerBeat = BpmManager.instance.baseTimePerBeat;
         int beatsPerLoop = BpmManager.beatsAmount;
         int totalBeats = beatsPerLoop * loops.Count;
         int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
@@ -664,7 +664,7 @@ public partial class Manager : Node
             else
             {
                 // empty wav
-                float timepb = 60f / BpmManager.instance.bpm / 2;
+                float timepb = BpmManager.instance.baseTimePerBeat;
                 float time = timepb * BpmManager.beatsAmount;
                 int rate = 48000;
                 int channels = 1;
@@ -717,7 +717,7 @@ public partial class Manager : Node
             else
             {
                 // empty wav
-                float timepb = 60f / BpmManager.instance.bpm / 2;
+                float timepb = BpmManager.instance.baseTimePerBeat;
                 float time = timepb * BpmManager.beatsAmount;
                 int rate = 48000;
                 int channels = 1;

@@ -38,6 +38,8 @@ public partial class BpmManager : Node
     public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
     public float swing = 0.5f;
+    
+    public float baseTimePerBeat;
     public float timePerBeat;
 
     // events
@@ -56,7 +58,7 @@ public partial class BpmManager : Node
         if (playing)
         {
             beatTimer += (float)delta;
-            var baseTimePerBeat = 60f / bpm / 2;
+            baseTimePerBeat = 60f / bpm / 2;
             timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
             if (beatTimer > timePerBeat)
             {

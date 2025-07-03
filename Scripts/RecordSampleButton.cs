@@ -46,7 +46,7 @@ public partial class RecordSampleButton : Sprite2D
             {
                 actualSoundLength += (float)delta;
 
-                var baseTimePerBeat = 60f / BpmManager.instance.bpm / 2;
+                var baseTimePerBeat = BpmManager.instance.baseTimePerBeat;
                 var percentage = actualSoundLength / (baseTimePerBeat * 2);
 
                 var fill = GetChild(0) as TextureProgressBar;

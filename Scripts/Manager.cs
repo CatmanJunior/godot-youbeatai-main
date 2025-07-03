@@ -12,6 +12,7 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Globalization;
+using System.Threading.Tasks;
 
 public partial class Manager : Node
 {
@@ -775,10 +776,27 @@ public partial class Manager : Node
         if (song != null) File.Delete(song_name + ".wav");
         File.Delete(beats_with_song_name + ".wav");
 
-        // convert and finish
+        // convert
         ConvertWavToMp3(final_name);
+
+        // finish
         ShowSavingLabel(final_name);
         hassavedtofile = true;
+
+        // send to email
+        SendToEmail(final_name + ".mp3");
+    }
+
+    async void SendToEmail(string final_name)
+    {
+        Action task = () =>
+        {
+            var emailfilepath = ProjectSettings.GlobalizePath(final_name);
+            GD.Print("sending: " + emailfilepath);
+            EmailSender.SendWav(emailfilepath);
+        };
+
+        await Task.Run(task);
     }
 
     public void ChangePitch(string filePath, float pitchFactor)

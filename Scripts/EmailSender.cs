@@ -5,8 +5,8 @@ public class EmailSender
 {
     public static void SendWav(string globalWavPath)
     {
-        string appPassword = "your-16-digit-app-password";
         string from = "youbeatai@gmail.com";
+        string pass = "plkqkbpemvqierqw";
         
         string to = "youbeatai@gmail.com";
         string subject = "Hier is je liedje!";
@@ -19,7 +19,7 @@ public class EmailSender
         var smtpClient = new SmtpClient("smtp.gmail.com", 587)
         {
             EnableSsl = true,
-            Credentials = new NetworkCredential(from, appPassword)
+            Credentials = new NetworkCredential(from, pass)
         };
 
         smtpClient.Send(message);

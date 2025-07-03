@@ -58,7 +58,7 @@ public partial class BpmManager : Node
         if (playing)
         {
             beatTimer += (float)delta;
-            baseTimePerBeat = 60f / bpm / 2;
+            baseTimePerBeat = 60f / bpm / 4;
             timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
             if (beatTimer > timePerBeat)
             {

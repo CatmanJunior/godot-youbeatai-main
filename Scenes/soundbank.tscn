@@ -5,7 +5,7 @@
 
 [node name="scene" type="Node2D"]
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "zoekButton", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "zoekButton", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats", "emailAdress")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,6 +25,7 @@ zoekButton = NodePath("ZoekButton")
 gebruikButton = NodePath("GebruikButton")
 gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
 hoeveelBeats = NodePath("../OtherSelectionMenu/HoeveelBeats/OptionButton")
+emailAdress = NodePath("../OtherSelectionMenu/EmailAdress/TextEdit")
 
 [node name="ZoekButton" type="Button" parent="SoundBankSelectionMenu"]
 layout_mode = 1
@@ -674,3 +675,30 @@ popup/item_1/text = "16"
 popup/item_1/id = 1
 popup/item_2/text = "8"
 popup/item_2/id = 2
+
+[node name="EmailAdress" type="Label" parent="OtherSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.5
+offset_top = -35.5
+offset_right = 78.5
+offset_bottom = -5.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+text = "Jouw Email Adress:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="OtherSelectionMenu/EmailAdress"]
+layout_mode = 0
+offset_left = -12.0
+offset_top = 28.0
+offset_right = 181.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 13
+placeholder_text = "jouwemailadress@gmail.com"

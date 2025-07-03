@@ -1,5 +1,7 @@
+using System.IO;
 using System.Net;
 using System.Net.Mail;
+using Godot;
 
 public class EmailSender
 {
@@ -8,7 +10,7 @@ public class EmailSender
         string from = "youbeatai@gmail.com";
         string pass = "plkqkbpemvqierqw";
         
-        string to = "youbeatai@gmail.com";
+        string to = ReadEmailAdress();
         string subject = "Hier is je liedje!";
         string body = "Het liedje is als bestand bijgevoegt";
 
@@ -23,5 +25,12 @@ public class EmailSender
         };
 
         smtpClient.Send(message);
+    }
+
+    private static string ReadEmailAdress()
+    {
+        string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "email_adress.txt");
+        string email = File.ReadAllText(path);
+        return email;
     }
 }

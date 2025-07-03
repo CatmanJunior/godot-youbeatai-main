@@ -1070,7 +1070,15 @@ public partial class Manager : Node
 
         restartButton.Pressed += () => 
         {
-            GetTree().ChangeSceneToFile("res://Scenes/soundbank.tscn");
+            if (Engine.IsEditorHint())
+            {
+                GetTree().ChangeSceneToFile("res://Scenes/soundbank.tscn");
+            }
+            else
+            {
+                OS.Execute(OS.GetExecutablePath(), []);
+                GetTree().Quit();
+            }
         };
 
         ClearLayoutButton.Pressed += OnClearLayoutButton;

@@ -1120,6 +1120,8 @@ public partial class Manager : Node
             // shift robot position
             // robot.Position = new(485, 225);
 
+            // end text to speach
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         };
 
         // settings panel

@@ -229,6 +229,7 @@ public partial class Manager : Node
         savedTemplate = (bool[,])beatActives.Clone();
         savedToLaout = true;
     }
+
     public void OnLoadLayoutButton()
     {
         //GD.Print("load");
@@ -241,6 +242,7 @@ public partial class Manager : Node
         beatActives = new bool[4, BpmManager.beatsAmount];
         hasclearedlayout = true;
     }
+
     public void OnRecordButton() => GD.Print("Record");
 
     public void OnPlayPauseButton()
@@ -1475,12 +1477,52 @@ public partial class Manager : Node
 
     bool first_tts_done = false;
 
+    private bool _ctrlCWasPressed = false;
+    private bool _ctrlVWasPressed = false;
+
     public override void _Process(double delta)
     {
         time += (float)delta;
 
-        // deal with unclockables
+        bool isCtrlPressed = Input.IsKeyPressed(Key.Ctrl);
+        bool isCPressed = Input.IsKeyPressed(Key.C);
+        bool isVPressed = Input.IsKeyPressed(Key.V);
 
+        // Handle Ctrl+C
+        if (isCtrlPressed && isCPressed)
+        {
+            if (!_ctrlCWasPressed)
+            {
+                GD.Print("Ctrl + C pressed!");
+                _ctrlCWasPressed = true;
+
+                // TODO: Add your copy logic here
+                OnSaveLayoutButton();
+            }
+        }
+        else
+        {
+            _ctrlCWasPressed = false;
+        }
+
+        // Handle Ctrl+V
+        if (isCtrlPressed && isVPressed)
+        {
+            if (!_ctrlVWasPressed)
+            {
+                GD.Print("Ctrl + V pressed!");
+                _ctrlVWasPressed = true;
+
+                // TODO: Add your paste logic here
+                OnLoadLayoutButton();
+            }
+        }
+        else
+        {
+            _ctrlVWasPressed = false;
+        }
+
+        // deal with unclockables
         for (int i = 0; i < 6; i++)
         {
             float tresh = ((float)i + 1f) / 6f * 100f;

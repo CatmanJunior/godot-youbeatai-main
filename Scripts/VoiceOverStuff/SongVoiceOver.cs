@@ -43,7 +43,7 @@ public partial class SongVoiceOver : Node
 
 			// 4 beats voor de eerste noot op eerste laag
 			Manager.instance.SwitchLayer(10);
-			BpmManager.instance.currentBeat = BpmManager.beatsAmount - 4;
+			BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
 
 			// playing true
 			BpmManager.instance.playing = true;

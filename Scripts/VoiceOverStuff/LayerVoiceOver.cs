@@ -45,7 +45,7 @@ public partial class LayerVoiceOver : Node
 			Manager.instance.metronome_toggle.ButtonPressed = true;
 
 			// 4 beats voor de eerste noot
-			BpmManager.instance.currentBeat = BpmManager.beatsAmount - 4;
+			BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
 
 			// playing true
 			BpmManager.instance.playing = true;

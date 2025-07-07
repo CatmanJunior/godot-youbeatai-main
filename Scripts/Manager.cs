@@ -37,6 +37,8 @@ public partial class Manager : Node
     [Export] public Label[] UnlockablesQuestion;
 
     [Export] public Button restartButton;
+    
+    [Export] public Button muteSpeach;
 
 	// audio
     public AudioStreamPlayer2D firstAudioPlayer;
@@ -1077,6 +1079,8 @@ public partial class Manager : Node
 
         allLayersToMp3.Pressed += AllLayersToMp3;
 
+        muteSpeach.Pressed += DisplayServer.TtsStop;
+
        
 
         SaveLayoutButton.Pressed += OnSaveLayoutButton;
@@ -1571,6 +1575,8 @@ public partial class Manager : Node
 
         void SpeakInstruction(int instruction)
         {
+            if (muteSpeach.ButtonPressed) return;
+
             var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
             if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();

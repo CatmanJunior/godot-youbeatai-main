@@ -445,7 +445,7 @@ vertical_alignment = 1
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailAdress", "layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "restartButton", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailAdress", "layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "restartButton", "muteSpeach", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder")]
 script = ExtResource("1_rfd7i")
 emailAdress = NodePath("../../UserInterface/EmailAdress/TextEdit")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
@@ -453,6 +453,7 @@ layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 Unlockables = [NodePath("../ProgressBar/Unlockable_1"), NodePath("../ProgressBar/Unlockable_2"), NodePath("../ProgressBar/Unlockable_3"), NodePath("../ProgressBar/Unlockable_4"), NodePath("../ProgressBar/Unlockable_5"), NodePath("../ProgressBar/Unlockable_6")]
 UnlockablesQuestion = [NodePath("../ProgressBar/Unlockable_Question_1"), NodePath("../ProgressBar/Unlockable_Question_2"), NodePath("../ProgressBar/Unlockable_Question_3"), NodePath("../ProgressBar/Unlockable_Question_4"), NodePath("../ProgressBar/Unlockable_Question_5"), NodePath("../ProgressBar/Unlockable_Question_6")]
 restartButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/RestartButton")
+muteSpeach = NodePath("../../UserInterface/MuteSpeachToggle")
 sampleMixer0 = NodePath("../../UserInterface/SampleButtons/SampleMixer0")
 sampleMixer1 = NodePath("../../UserInterface/SampleButtons/SampleMixer1")
 sampleMixer2 = NodePath("../../UserInterface/SampleButtons/SampleMixer2")
@@ -1758,6 +1759,42 @@ offset_bottom = -12.0
 scale = Vector2(2, 2)
 theme = ExtResource("22_hpc6h")
 text = "🔁"
+label_settings = SubResource("LabelSettings_fbqyi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface"]
+offset_left = 471.0
+offset_top = -304.0
+offset_right = 515.0
+offset_bottom = -279.0
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="UserInterface/MuteSpeachToggle"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = -37.0
+offset_right = 22.0
+offset_bottom = -12.0
+scale = Vector2(2, 2)
+theme = ExtResource("22_hpc6h")
+text = "🤖"
+label_settings = SubResource("LabelSettings_fbqyi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UserInterface/MuteSpeachToggle"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = -29.0
+offset_right = 29.0
+offset_bottom = -4.0
+scale = Vector2(1.34, 1.34)
+theme = ExtResource("22_hpc6h")
+text = "❌"
 label_settings = SubResource("LabelSettings_fbqyi")
 horizontal_alignment = 1
 vertical_alignment = 1

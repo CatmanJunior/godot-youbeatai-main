@@ -18,6 +18,8 @@ public partial class SoundBankSelectionMenu : Panel
     [Export] Button gebruikButton;
     [Export] Label gevondenSoundBankLabel;
 
+    public List<SoundBank> soundbanks;
+
     private SoundBank chosenSoundBank = null;
 
     // other settings to remember
@@ -65,9 +67,10 @@ public partial class SoundBankSelectionMenu : Panel
                     if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
                 }
             };
+
+            soundbanks = LoadSoundBanks();
         }
 
-        zoekButton.Pressed += () => chosenSoundBank = ChooseSoundBank();
         gebruikButton.Pressed += () => 
         {
             // remember audio bank to use
@@ -106,13 +109,12 @@ public partial class SoundBankSelectionMenu : Panel
     private int GetOffset()
     {
         int offset = 0;
-        foreach (string theme in chosenThemes) offset += int.Parse(offsetLookup[theme]);
+        foreach (string theme in chosenThemes) if (offsetLookup.ContainsKey(theme)) offset += int.Parse(offsetLookup[theme]);
         return offset;
     }
 
     public override void _Process(double delta)
     {
-
         chosenElectronicFactor = (int)(accousticSlider.Value * 100);
         gebruikButton.Disabled = chosenSoundBank == null;
         gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ")";
@@ -124,12 +126,12 @@ public partial class SoundBankSelectionMenu : Panel
         foreach (var theme in chosenThemes) themes += theme;
 
         // GD.Print(emoticons + themes);
+
+        chosenSoundBank = ChooseSoundBank();
     }
 
     public SoundBank ChooseSoundBank()
     {
-        var soundbanks = LoadSoundBanks();
-
         SoundBank bestMatch = null;
         float bestScore = float.MinValue;
 

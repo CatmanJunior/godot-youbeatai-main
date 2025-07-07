@@ -14,7 +14,6 @@ public partial class SoundBankSelectionMenu : Panel
     [Export] CheckButton[] emotionToggles;
     [Export] CheckButton[] themeToggles;
 
-    [Export] Button zoekButton;
     [Export] Button gebruikButton;
     [Export] Label gevondenSoundBankLabel;
 

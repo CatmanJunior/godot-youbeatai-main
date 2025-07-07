@@ -5,7 +5,7 @@
 
 [node name="scene" type="Node2D"]
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "zoekButton", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -21,26 +21,9 @@ script = ExtResource("1_l0fe3")
 accousticSlider = NodePath("AcousticSlider")
 emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle"), NodePath("Emoties/emotion7/toggle")]
 themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
-zoekButton = NodePath("ZoekButton")
 gebruikButton = NodePath("GebruikButton")
 gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
 hoeveelBeats = NodePath("../OtherSelectionMenu/HoeveelBeats/OptionButton")
-
-[node name="ZoekButton" type="Button" parent="SoundBankSelectionMenu"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -136.0
-offset_top = 121.5
-offset_right = -4.0
-offset_bottom = 156.5
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-text = "Zoek Match"
 
 [node name="GebruikButton" type="Button" parent="SoundBankSelectionMenu"]
 layout_mode = 1
@@ -49,9 +32,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 1.0
+offset_left = -71.0
 offset_top = 121.5
-offset_right = 133.0
+offset_right = 61.0
 offset_bottom = 156.5
 grow_horizontal = 2
 grow_vertical = 2

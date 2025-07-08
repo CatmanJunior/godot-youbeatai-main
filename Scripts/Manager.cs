@@ -1216,8 +1216,8 @@ public partial class Manager : Node
 			"Klap 👏 en stamp 👞 op het goede moment! Geef me 50% energie ⚡ om naar de volgende stap te gaan!",
 			
 			// custom sample
-			"Je hebt het ritme te pakken! Nu gaan we onze eigen geluid maken, houd het microfoon 🎤 icoontje boven het rode 🔴 knopje ingedrukt een spreek iets in je microfoon",
-			"Druk op de toggle boven de microfoon 🎤 icoontje om het opgenomen geluid te activeren",
+			"Je hebt het ritme te pakken! Nu gaan we onze eigen geluid maken, druk op het het microfoon 🎤 icoontje, en spreek iets in je microfoon",
+			"Draai nu de schijf van geluidjes naar de microfoon 🎤 icoontje om het opgenomen geluid te activeren",
 			"Druk op '⏯ Start' om te horen hoe je eigen geluidje klinkt",
 
 			// effects

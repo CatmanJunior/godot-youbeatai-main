@@ -1221,9 +1221,6 @@ public partial class Manager : Node
 			"Druk op '⏯ Start' om te horen hoe je eigen geluidje klinkt",
 
 			// effects
-			"We gaan de beat sneller maken. Druk op '🐇 Sneller' om de beat het sneller te maken",
-			"Druk op de '🏛 Galm' of de '⛰ Echo'  knop. voor speciale echo's",
-			"Tijd voor wat '🌀 Swing' in de beat. sleep het swing balkje naar het midden.",
 
             // layer voice over
             "door op de '🎤 Beat Opnemen' in het midden van de beats te drukken kan je jou stem over de beat opnemen. hij begint met opnemen als die beat ovenaan is.",
@@ -1271,9 +1268,6 @@ public partial class Manager : Node
             () => bpm_manager.playing == true, // temp
 
             // effects
-            () => haschangedbpm,
-            () => ReverbDelayManager.instance?.reverbSlider.Value != 0 || ReverbDelayManager.instance?.delaySlider.Value != 0,
-            () => Mathf.Abs(bpm_manager.swing - startswing) > 0.01f,
 
             // layer voice over
             () => layerVoiceOver0.finished || layerVoiceOver1.finished,
@@ -1301,9 +1295,6 @@ public partial class Manager : Node
             null, // druk play
             null, // geef energie
             () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetSampleMixersVisibility(true); },
-            null,
-            null,
-            () => SetEffectButtonsVisibility(true),
             null,
             null,
             () =>

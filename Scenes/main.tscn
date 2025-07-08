@@ -455,7 +455,7 @@ vertical_alignment = 1
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "restartButton", "muteSpeach", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "emailPrompt", "emailInput", "emailEnter")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "restartButton", "muteSpeach", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "emailPrompt", "emailInput", "emailEnter", "cross")]
 script = ExtResource("1_rfd7i")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
@@ -488,7 +488,7 @@ layerButton9 = NodePath("../../UserInterface/SwitchLayerButtons/Layer9")
 layerButton10 = NodePath("../../UserInterface/SwitchLayerButtons/Layer10")
 chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
 colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
-robotlight = NodePath("../../UserInterface/Robot/RobotLight")
+robotlight = NodePath("../../UserInterface/Robot/SubViewportContainer/RobotLight")
 spritePrefab = ExtResource("2_1eep1")
 texture = ExtResource("2_1ig4u")
 outline = ExtResource("8_llrl4")
@@ -511,7 +511,7 @@ metronome_toggle = NodePath("../../UserInterface/SettingsButton/SettingsPanel/Me
 micmeter = NodePath("../../UserInterface/SettingsButton/SettingsPanel/MicMeter")
 add_beats = NodePath("../../UserInterface/SettingsButton/SettingsPanel/AddBeatsToggle")
 volume_treshold = NodePath("../../UserInterface/SettingsButton/SettingsPanel/VolumeTreshold")
-skiptutorialbutton = NodePath("../../UserInterface/AchievementsPanel/SkipTutorialButton")
+skiptutorialbutton = NodePath("../../UserInterface/Robot/AchievementsPanel/SkipTutorialButton")
 progressBar = NodePath("../ProgressBar")
 pointer = NodePath("../../UserInterface/Pointer")
 metronome = NodePath("../../UserInterface/metronome/metronome_point")
@@ -523,10 +523,10 @@ swinglabel = NodePath("../../UserInterface/SettingsButton/SettingsPanel/SwingSli
 settingsButton = NodePath("../../UserInterface/SettingsButton")
 settingsPanel = NodePath("../../UserInterface/SettingsButton/SettingsPanel")
 ClapBiasSlider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/ClapStompBias")
-achievementspanel = NodePath("../../UserInterface/AchievementsPanel")
+achievementspanel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 layerLoopToggle = NodePath("../../UserInterface/LayerLoopToggle")
 SavingLabel = NodePath("../../SavingLabel")
-InstructionLabel = NodePath("../../UserInterface/AchievementsPanel/InstructionLabel")
+InstructionLabel = NodePath("../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
 robot = NodePath("../../UserInterface/Robot")
 allLayersToMp3 = NodePath("../../UserInterface/SettingsButton/SettingsPanel/AllLayersToMp3")
 layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
@@ -534,6 +534,7 @@ layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHol
 emailPrompt = NodePath("../../EmailPrompt")
 emailInput = NodePath("../../EmailPrompt/Input")
 emailEnter = NodePath("../../EmailPrompt/Enter")
+cross = NodePath("../../UserInterface/Cross/Node2D")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -554,10 +555,11 @@ delaySlider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/DelaySl
 [node name="MidiManager" type="Node" parent="Managers"]
 script = ExtResource("11_iqwjw")
 
-[node name="SongVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "snellerButton", "langzamerButton")]
+[node name="SongVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "recordSongSprite", "snellerButton", "langzamerButton")]
 script = ExtResource("15_5s5qe")
 progressbar = NodePath("SongVoiceOverProgressBar")
 recordSongButton = NodePath("../../UserInterface/RecordSongButton/Button0")
+recordSongSprite = NodePath("../../UserInterface/RecordSongButton")
 snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 
@@ -2252,27 +2254,29 @@ texture = ExtResource("2_1ig4u")
 
 [node name="Cross" type="Node" parent="UserInterface"]
 
-[node name="Vertical" type="Sprite2D" parent="UserInterface/Cross"]
+[node name="Node2D" type="Node2D" parent="UserInterface/Cross"]
+
+[node name="Vertical" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="Horizontal" type="Sprite2D" parent="UserInterface/Cross"]
+[node name="Horizontal" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 1.5708
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="Vertical2" type="Sprite2D" parent="UserInterface/Cross"]
+[node name="Vertical2" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 0.785398
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="Horizontal2" type="Sprite2D" parent="UserInterface/Cross"]
+[node name="Horizontal2" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = -0.785398
@@ -2305,7 +2309,59 @@ texture = SubResource("CanvasTexture_6dn85")
 
 [node name="Robot" type="Sprite2D" parent="UserInterface"]
 z_index = 4
-position = Vector2(310, -77)
+position = Vector2(420, 180)
+
+[node name="AchievementsPanel" type="Panel" parent="UserInterface/Robot"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.5
+offset_top = -140.5
+offset_right = 140.5
+offset_bottom = 10.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UserInterface/Robot/AchievementsPanel"]
+layout_mode = 0
+offset_top = 2.0
+offset_right = 281.0
+offset_bottom = 45.0
+theme = ExtResource("22_hpc6h")
+text = "Huidig Doel:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="UserInterface/Robot/AchievementsPanel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 38.0
+offset_right = 276.0
+offset_bottom = 145.0
+theme = ExtResource("22_hpc6h")
+text = "hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. "
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SkipTutorialButton" type="Button" parent="UserInterface/Robot/AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 61.5
+offset_top = -69.5
+offset_right = 135.5
+offset_bottom = -37.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "🚫 Stop"
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UserInterface/Robot"]
 anchors_preset = 8
@@ -2313,10 +2369,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -28.5
-offset_top = 244.5
-offset_right = 208.5
-offset_bottom = 412.5
+offset_left = -140.0
+offset_top = -28.5
+offset_right = 97.0
+offset_bottom = 139.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.2, 1.2)
@@ -2398,65 +2454,21 @@ skin = SubResource("Skin_bq71u")
 parameters/ClapSpeed/scale = -1.0
 parameters/StampSpeed/scale = 0.833333
 
-[node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot"]
-position = Vector2(-7.11987, -498.382)
+[node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
+position = Vector2(17.4001, -619.485)
+scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.918, 0.59, 1)
 energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 20.0
 metadata/_edit_lock_ = true
 
-[node name="Grijs" type="Sprite2D" parent="UserInterface/Robot"]
+[node name="Grijs" type="Sprite2D" parent="UserInterface/Robot/SubViewportContainer"]
 z_index = -20
-position = Vector2(-1457.08, -95.1813)
-scale = Vector2(32.0423, 50.2745)
+position = Vector2(-1190.9, -283.484)
+scale = Vector2(26.7019, 41.8954)
 texture = ExtResource("22_wax6p")
 metadata/_edit_lock_ = true
-
-[node name="AchievementsPanel" type="Panel" parent="UserInterface"]
-offset_left = 277.0
-offset_top = 50.0
-offset_right = 558.0
-offset_bottom = 201.0
-
-[node name="Title" type="Label" parent="UserInterface/AchievementsPanel"]
-layout_mode = 0
-offset_top = 2.0
-offset_right = 281.0
-offset_bottom = 45.0
-theme = ExtResource("22_hpc6h")
-text = "Huidig Doel:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="InstructionLabel" type="Label" parent="UserInterface/AchievementsPanel"]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 38.0
-offset_right = 276.0
-offset_bottom = 145.0
-theme = ExtResource("22_hpc6h")
-text = "hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie. "
-horizontal_alignment = 1
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="SkipTutorialButton" type="Button" parent="UserInterface/AchievementsPanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 61.5
-offset_top = -69.5
-offset_right = 135.5
-offset_bottom = -37.5
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🚫 Stop"
 
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2

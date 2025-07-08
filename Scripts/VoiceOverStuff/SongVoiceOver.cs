@@ -9,6 +9,7 @@ public partial class SongVoiceOver : Node
 	// user interface
 	[Export] public ProgressBar progressbar;
 	[Export] public Button recordSongButton;
+	[Export] public Sprite2D recordSongSprite;
 
 	// recording
 	public AudioStream voiceOver = null;

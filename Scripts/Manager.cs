@@ -950,6 +950,9 @@ public partial class Manager : Node
         RotatePivot(0, pivot, ring);
     }
 
+    void SetRobotNormal() { robot.Position = new Vector2(420, 180); robot.Scale = new Vector2(1, 1); }
+    void SetRobotBig() { robot.Position = new Vector2(0, 0); robot.Scale = new Vector2(1.5f, 1.5f); }
+
     public override void _Ready()
     {
         // init singleton
@@ -1184,8 +1187,8 @@ public partial class Manager : Node
         }
 
         // setup achievements
-        instructions = new string[26]
-        {
+        instructions =
+        [
             // intro
 			"Hoi ik ben Klappy!, we gaan een beat maken en ik ga je daarbij helpen. klap 👏 in je handen om verder te gaan",
 			
@@ -1197,7 +1200,6 @@ public partial class Manager : Node
 
 			// oranje ring
 			"Dit is nog een 🟠 beat ring, plaats nu 4 beats in het midden van de rode beats",
-			"Helemaal goed! zet 4 🟠 beats op een plek die jij wil!",
 			"Druk nu op '⏯ Start' om je beat te horen",
 			"Als je klapt 👏 met je handen wanneer er een oranje 🟠 beat klinkt krijgen ik energie ⚡",
 
@@ -1233,22 +1235,21 @@ public partial class Manager : Node
             "Laten we nu het hele liedje opnemen door op de '🎙️ Liedje Opnemen' links bovenin het scherm te drukken. Dan begin hij met opnemen als hij bij de eerste beat op de eerst laag is",
             "Als je tevreden bent dan kan je ook echt je '🎼 Liedje naar mp3'",
             "Druk op de '🚫 Stop' knop om de tutorial te eindigen",
-        };
+        ];
 
-        conditions = new Func<bool>[26]
-        {
+        conditions =
+        [
             // intro
             () => clapped, // t key is debug only
 
             // rode ring
             () => AmountOfActives(0) >= 4, // temp
-            () => AmountOfActives(0) >= 8, // temp
+            () => AmountOfActives(0) >= 6, // temp
             () => bpm_manager.playing == true, // temp
             () => stompedAmount > 4, // temp
 
             // oranje ring
             () => AmountOfActives(1) >= 4, // temp
-            () => AmountOfActives(1) >= 8, // temp
             () => bpm_manager.playing == true, // temp
             () => clappedAmount > 4, // temp
 
@@ -1284,16 +1285,15 @@ public partial class Manager : Node
             () => SongVoiceOver.instance.finished,
             () => hassavedtofile == true,
             () => false
-        };
-        
-        outcomes = new Action[]
-        {
-            () => SetRingVisibility(0, true),
+        ];
+
+        outcomes =
+        [
+            () => { SetRingVisibility(0, true); cross.Visible = true; SetRobotNormal(); },
             null,
-            () => PlayPauseButton.Visible = true,
+            () => { PlayPauseButton.Visible = true; ResetPlayerButton.Visible = true;},
             () => progressBar.Visible = true,
             () => SetRingVisibility(1, true),
-            null,
             null,
             null,
             () => SetRingVisibility(2, true), // zet geel
@@ -1324,7 +1324,7 @@ public partial class Manager : Node
             null, // before saving to file
             () => SetEntireInterfaceVisibility(true), // enable all
             null
-        };
+        ];
     }
 
     void _LateReady()
@@ -1336,7 +1336,11 @@ public partial class Manager : Node
         achievementspanel.Visible = true;
         settingsButton.Visible = true;
         settingsPanel.Visible = false;
+
+        SetRobotBig();
     }
+
+    [Export] public Node2D cross;
 
     public void SetEntireInterfaceVisibility(bool visible)
     {
@@ -1358,9 +1362,6 @@ public partial class Manager : Node
         // main buttons
         SetMainButtonsVisibility(visible);
 
-        // effect buttons
-        SetEffectButtonsVisibility(visible);
-
         // recording buttons
         SetRecordingButtonsVisibility(visible);
 
@@ -1373,11 +1374,23 @@ public partial class Manager : Node
         // settings menu
         settingsButton.Visible = visible;
 
+        layerLoopToggle.Visible = visible;
+
+        muteSpeach.Visible = visible;
+        cross.Visible = visible;
+
+        bpmLabel.Visible = visible;
+        metronome.Visible = visible;
+        metronomebg.Visible = visible;
+        chosen_emoticons_label.Visible = visible;
+
+
         // achievements panel
         achievementspanel.Visible = visible;
 
         // recording
         SongVoiceOver.instance.recordSongButton.Visible = visible;
+        SongVoiceOver.instance.recordSongSprite.Visible = visible;
         SongVoiceOver.instance.progressbar.Visible = visible;
 
         ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
@@ -1385,6 +1398,7 @@ public partial class Manager : Node
         layerVoiceOver0.textureProgressBar.Visible = visible;
         layerVoiceOver1.textureProgressBar.Visible = visible;
     }
+    
 
     void SetRingVisibility(int ring, bool visible)
     {

@@ -1304,13 +1304,18 @@ public partial class Manager : Node
             },
 
             // layer voice over
-            () => { settingsPanel.Visible = true; SetLayerSwitchButtonsVisibility(true); }, // before doing liedje modus
-            null, // before pressing play
-            () => SetMainButtonsVisibility(true), // before saving to layout
-            () => { SongVoiceOver.instance.recordSongButton.Visible = true; SongVoiceOver.instance.progressbar.Visible = true; }, // before recording song
+            () => { SetLayerSwitchButtonsVisibility(true); layerLoopToggle.Visible = true;}, // before doing liedje modus
+            () => SetMainButtonsVisibility(true), // before pressing play
+            null, // before saving to layout
+            () =>
+			{
+				SongVoiceOver.instance.recordSongButton.Visible = true;
+        		SongVoiceOver.instance.recordSongSprite.Visible = true;
+        		SongVoiceOver.instance.progressbar.Visible = true;
+			},
 
             // song voice over
-            null, // before saving to file
+            () => { settingsButton.Visible = true; settingsPanel.Visible = true; }, // before saving to file
             () => SetEntireInterfaceVisibility(true), // enable all
             null
         ];
@@ -1323,8 +1328,6 @@ public partial class Manager : Node
 
         // start with showing tutorial
         achievementspanel.Visible = true;
-        settingsButton.Visible = true;
-        settingsPanel.Visible = false;
 
         SetRobotBig();
     }

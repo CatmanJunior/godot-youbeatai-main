@@ -1194,7 +1194,7 @@ public partial class Manager : Node
 			
 			// rode ring
 			"Dit is een 🔴 beat ring, plaats nu 4 beats op de witte streepjes",
-			"Helemaal goed! zet 4 🔴 beats op een plek die jij wil",
+			"Helemaal goed! zet nog 2 🔴 beats op een plek die jij wil",
 			"Druk nu op '⏯ Start' om je beat te horen",
 			"Als je stompt 👞 met je voet op de grond precies wanneer er een rode beat is krijg ik energie ⚡",
 

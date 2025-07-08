@@ -1223,7 +1223,7 @@ public partial class Manager : Node
 			// effects
 
             // layer voice over
-            "door op de '🎤 Beat Opnemen' in het midden van de beats te drukken kan je jou stem over de beat opnemen. hij begint met opnemen als die beat ovenaan is.",
+            "door op de groene microfoon '🎙️' knop te drukken, kan je jou stem over de beat opnemen. hij begint met opnemen als die beat ovenaan is.",
             "Bij '⚙️ Instellingen' kan je '🔁 Liedje Modus' aanzetten zodat de Beats achter elkaar afgespeeld worden",
             "Druk op '⏯ Start' om te horen hoe je eigen beats achter elkaar klinken",
             "Liedjes hebben een patroon: 'Intro🌱, Couplet📜, Refrein🤩 en Einde🏁'. Om je beats naar een andere laag te verplaatsen druk '💾 Kopieer Beat' en '♻️ Plak Beat'",

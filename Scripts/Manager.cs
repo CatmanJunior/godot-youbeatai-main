@@ -19,8 +19,6 @@ public partial class Manager : Node
     // singleton
     public static Manager instance = null;
 
-    [Export] TextEdit emailAdress;
-
     // events
     [Signal]
     public delegate void OnSwitchLayerEventHandler(int layer);
@@ -432,11 +430,23 @@ public partial class Manager : Node
         return false;
     }
 
+    [Export] public Panel emailPrompt;
+    [Export] public TextEdit emailInput;
+    [Export] public Button emailEnter;
+
     public void AllLayersToMp3()
     {
-        GD.Print("saving all layers to an mp3 file");
         SetCurrentLayer(beatActives);
         SaveSongAsFile(layers);
+
+        // set aside email prompt
+        emailPrompt.Position = new Vector2(-2000, emailPrompt.Position.Y);
+    }
+
+    public void OpenEmailPrompt()
+    {
+        // show email prompt
+        emailPrompt.Position = new Vector2(-128, emailPrompt.Position.Y);
     }
 
     public void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
@@ -790,7 +800,7 @@ public partial class Manager : Node
         hassavedtofile = true;
 
         // send to email
-        if (emailAdress.Text != "") SendToEmail(final_name + ".mp3", emailAdress.Text);
+        if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
     }
 
     async void SendToEmail(string final_name, string to)
@@ -1079,7 +1089,8 @@ public partial class Manager : Node
         layerButton9.Pressed += () => SwitchLayer(9);
         layerButton10.Pressed += () => SwitchLayer(10);
 
-        allLayersToMp3.Pressed += AllLayersToMp3;
+        allLayersToMp3.Pressed += OpenEmailPrompt;
+        emailEnter.Pressed += AllLayersToMp3;
 
         muteSpeach.Pressed += DisplayServer.TtsStop;
 

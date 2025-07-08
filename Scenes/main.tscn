@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=4 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=64 format=4 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -260,6 +260,16 @@ bind/13/name = &"Foot_L"
 bind/13/bone = -1
 bind/13/pose = Transform3D(-0.00758653, 0.0618848, -0.998054, -0.000483646, -0.998084, -0.0618831, -0.99997, 1.31537e-05, 0.00760189, 0.000487409, 0.00153029, -0.0052773)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
 [node name="scene" type="Node2D"]
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -445,9 +455,8 @@ vertical_alignment = 1
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailAdress", "layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "restartButton", "muteSpeach", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "Unlockables", "UnlockablesQuestion", "restartButton", "muteSpeach", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3", "saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "chosen_emoticons_label", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "emailPrompt", "emailInput", "emailEnter")]
 script = ExtResource("1_rfd7i")
-emailAdress = NodePath("../../UserInterface/EmailAdress/TextEdit")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 Unlockables = [NodePath("../ProgressBar/Unlockable_1"), NodePath("../ProgressBar/Unlockable_2"), NodePath("../ProgressBar/Unlockable_3"), NodePath("../ProgressBar/Unlockable_4"), NodePath("../ProgressBar/Unlockable_5"), NodePath("../ProgressBar/Unlockable_6")]
@@ -522,6 +531,9 @@ robot = NodePath("../../UserInterface/Robot")
 allLayersToMp3 = NodePath("../../UserInterface/SettingsButton/SettingsPanel/AllLayersToMp3")
 layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
 layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder")
+emailPrompt = NodePath("../../EmailPrompt")
+emailInput = NodePath("../../EmailPrompt/Input")
+emailEnter = NodePath("../../EmailPrompt/Enter")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -2446,32 +2458,6 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "🚫 Stop"
 
-[node name="EmailAdress" type="Label" parent="UserInterface"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -720.5
-offset_top = -75.5
-offset_right = -558.5
-offset_bottom = -45.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("22_hpc6h")
-text = "Jouw Email Adress:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="TextEdit" type="TextEdit" parent="UserInterface/EmailAdress"]
-layout_mode = 0
-offset_left = -12.0
-offset_top = 28.0
-offset_right = 181.0
-offset_bottom = 61.0
-theme_override_font_sizes/font_size = 13
-placeholder_text = "jouwemailadress@gmail.com"
-
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
 emitting = false
@@ -2552,6 +2538,56 @@ offset_left = -8.0
 offset_top = 2.0
 offset_right = 166.0
 offset_bottom = 154.0
+
+[node name="EmailPrompt" type="Panel" parent="."]
+z_index = 10
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2000.0
+offset_top = -77.0
+offset_right = -1744.0
+offset_bottom = 77.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Title" type="Label" parent="EmailPrompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.5
+offset_top = -56.5
+offset_right = 81.5
+offset_bottom = -26.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("22_hpc6h")
+text = "Jouw Email Adress:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Input" type="TextEdit" parent="EmailPrompt"]
+layout_mode = 0
+offset_left = 30.5
+offset_top = 62.5
+offset_right = 223.5
+offset_bottom = 95.5
+theme_override_font_sizes/font_size = 13
+placeholder_text = "jouwemailadress@gmail.com"
+
+[node name="Enter" type="Button" parent="EmailPrompt"]
+layout_mode = 0
+offset_left = 66.0
+offset_top = 115.0
+offset_right = 189.0
+offset_bottom = 142.0
+text = "Doorgaan"
 
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_bpm_changed"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_clap"]

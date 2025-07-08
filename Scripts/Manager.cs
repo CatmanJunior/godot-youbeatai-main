@@ -582,7 +582,7 @@ public partial class Manager : Node
         ChangePitch(filename + ".wav", 2f);
 
         // convert and finish
-        //ConvertWavToMp3(filename);
+        ConvertWavToMp3(filename);
         ShowSavingLabel(filename);
         hassavedtofile = true;
     }

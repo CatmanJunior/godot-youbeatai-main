@@ -1504,6 +1504,8 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
+		if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
+
         bool isCtrlPressed = Input.IsKeyPressed(Key.Ctrl);
         bool isCPressed = Input.IsKeyPressed(Key.C);
         bool isVPressed = Input.IsKeyPressed(Key.V);

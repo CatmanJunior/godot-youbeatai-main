@@ -1299,10 +1299,8 @@ public partial class Manager : Node
             null,
             () =>
             {
-                layerVoiceOver0.recordLayerButton.Visible = true;
-                layerVoiceOver0.textureProgressBar.Visible = true;
-                layerVoiceOver1.recordLayerButton.Visible = true;
-                layerVoiceOver1.textureProgressBar.Visible = true;
+				((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = true;
+				layerVoiceOver0.textureProgressBar.Visible = true;
             },
 
             // layer voice over

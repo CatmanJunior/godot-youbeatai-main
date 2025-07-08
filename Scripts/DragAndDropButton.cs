@@ -55,19 +55,19 @@ public partial class DragAndDropButton : Sprite2D
     {
 		w_pressed_lastframe = w_pressed;
 		w_pressed = Input.IsKeyPressed(Key.A);
-		if (w_pressed != w_pressed_lastframe && ring == 0 && w_pressed) ActivateBeat();
+		// if (w_pressed != w_pressed_lastframe && ring == 0 && w_pressed) ActivateBeat();
 
 		a_pressed_lastframe = a_pressed;
 		a_pressed = Input.IsKeyPressed(Key.S);
-		if (a_pressed != a_pressed_lastframe && ring == 1 && a_pressed) ActivateBeat();
+		// if (a_pressed != a_pressed_lastframe && ring == 1 && a_pressed) ActivateBeat();
 
 		s_pressed_lastframe = s_pressed;
 		s_pressed = Input.IsKeyPressed(Key.D);
-		if (s_pressed != s_pressed_lastframe && ring == 2 && s_pressed) ActivateBeat();
+		// if (s_pressed != s_pressed_lastframe && ring == 2 && s_pressed) ActivateBeat();
 
 		d_pressed_lastframe = d_pressed;
 		d_pressed = Input.IsKeyPressed(Key.F);
-		if (d_pressed != d_pressed_lastframe && ring == 3 && d_pressed) ActivateBeat();
+		// if (d_pressed != d_pressed_lastframe && ring == 3 && d_pressed) ActivateBeat();
 
 
 		holdingOutside = pressing && !inside;

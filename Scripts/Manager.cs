@@ -433,6 +433,7 @@ public partial class Manager : Node
     [Export] public Panel emailPrompt;
     [Export] public TextEdit emailInput;
     [Export] public Button emailEnter;
+    public bool emailPromptOpen = false;
 
     public void AllLayersToMp3()
     {
@@ -441,12 +442,14 @@ public partial class Manager : Node
 
         // set aside email prompt
         emailPrompt.Position = new Vector2(-2000, emailPrompt.Position.Y);
+        emailPromptOpen = false;
     }
 
     public void OpenEmailPrompt()
     {
         // show email prompt
         emailPrompt.Position = new Vector2(-128, emailPrompt.Position.Y);
+        emailPromptOpen = true;
     }
 
     public void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
@@ -1716,12 +1719,12 @@ public partial class Manager : Node
 
         // space as play/pause
         var spacedown = Input.IsKeyPressed(Key.Space);
-        if (spacedown && spacedownlastframe == false) OnPlayPauseButton();
+        if (spacedown && spacedownlastframe == false && !emailPromptOpen) OnPlayPauseButton();
         spacedownlastframe = spacedown;
 
         // enter as reset player
         var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false) { OnResetPlayerButton(); bpm_manager.playing = true; }
+        if (enterdown && enterdownlastframe == false &&  !emailPromptOpen) { OnResetPlayerButton(); bpm_manager.playing = true; }
         enterdownlastframe = enterdown;
 
         // drag&drop
@@ -1746,7 +1749,7 @@ public partial class Manager : Node
         {
             if (!clapped)
             {
-                OnClap();
+                if (!emailPromptOpen) OnClap();
                 clapped = true;
             }
         }
@@ -1756,7 +1759,7 @@ public partial class Manager : Node
         {
             if (!stomped)
             {
-                OnStomp();
+                if (!emailPromptOpen) OnStomp();
                 stomped = true;
             }
         }

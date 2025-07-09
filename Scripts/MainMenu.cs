@@ -40,7 +40,7 @@ public partial class MainMenu : Node
                 ""emotions"": [
                     ""😁""
                 ],
-                ""bpm"": 60,
+                ""bpm"": 70,
                 ""swing"": 0,
                 ""electronic"": 50
                 }";

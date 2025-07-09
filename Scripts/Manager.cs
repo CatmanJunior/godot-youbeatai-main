@@ -1033,17 +1033,24 @@ public partial class Manager : Node
         startswing = chosenswing;
         swingslider.Value = chosenswing;
 
-        // set bpm
-        int offset = 0;
-        string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
-        string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
-        Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
-        foreach (string theme in chosenSoundBank.themes)
+        // set bpm offset
+        if (!useTutorial)
         {
-            offset += int.Parse(offsetLookup[theme]);
-            GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
+            int offset = 0;
+            string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
+            string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
+            Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
+            foreach (string theme in chosenSoundBank.themes)
+            {
+                offset += int.Parse(offsetLookup[theme]);
+                GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
+            }
+            BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
         }
-        BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
+        else
+        {
+            BpmManager.instance.bpm = chosenSoundBank.bpm;
+        }
 
         // delete tmep json files
         File.Delete(chosen_emoticons_path);

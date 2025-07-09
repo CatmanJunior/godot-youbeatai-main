@@ -19,7 +19,16 @@ public partial class Manager : Node
     // singleton
     public static Manager instance = null;
 
-    public bool useTutorial = false;
+    public bool useTutorial = ReadUseTutorial();
+
+    private static bool ReadUseTutorial()
+    {
+        string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
+        bool use = bool.Parse(File.ReadAllText(path));
+        GD.Print("use tutorial: " + use.ToString());
+        File.Delete(path);
+        return use;
+    }
 
     // events
     [Signal]

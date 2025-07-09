@@ -98,6 +98,13 @@ public partial class SoundBankSelectionMenu : Panel
                 File.WriteAllText(path, hoeveelBeats.Text);
             }
 
+            // remember if tutorial should be enabled or not
+            {
+                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, false.ToString());
+            }
+
             // load main scene
             GetTree().ChangeSceneToFile("res://Scenes/main.tscn");
         };

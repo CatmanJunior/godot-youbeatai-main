@@ -1174,6 +1174,8 @@ public partial class Manager : Node
 
             // end text to speach
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+
+            SetRobotNormal();
         };
 
         // settings panel

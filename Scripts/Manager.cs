@@ -19,6 +19,8 @@ public partial class Manager : Node
     // singleton
     public static Manager instance = null;
 
+    public bool useTutorial = false;
+
     // events
     [Signal]
     public delegate void OnSwitchLayerEventHandler(int layer);
@@ -1323,13 +1325,19 @@ public partial class Manager : Node
 
     void _LateReady()
     {
-        // disable entire interface
-        SetEntireInterfaceVisibility(false);
-
-        // start with showing tutorial
-        achievementspanel.Visible = true;
-
-        SetRobotBig();
+        if (useTutorial) // enable tutorial
+        {
+            SetEntireInterfaceVisibility(false);
+            achievementspanel.Visible = true;
+            SetRobotBig();
+        }
+        else // disable tutorial
+        {
+            achievementLevel = -1;
+            SetEntireInterfaceVisibility(true);
+            achievementspanel.Visible = false;
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        }
     }
 
     [Export] public Node2D cross;
@@ -1648,14 +1656,14 @@ public partial class Manager : Node
         }
 
         // first tts
-        if (!first_tts_done)
+        if (!first_tts_done && useTutorial)
         {
             SpeakInstruction(0);
             first_tts_done = true;
         }
 
         // deal with achievements
-        if (achievementLevel != -1)
+        if (achievementLevel != -1 && useTutorial)
         {
             string instruction = instructions[achievementLevel];
             Func<bool> condition = conditions[achievementLevel];

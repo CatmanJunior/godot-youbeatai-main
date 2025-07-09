@@ -24,11 +24,18 @@ public partial class BpmManager : Node
 
     private static int ReadBeatsAmount()
     {
-        string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
-
-        int amount = int.Parse(File.ReadAllText(path));
-
-        File.Delete(path);
+        int amount;
+        try
+        {
+            string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
+            string content = File.ReadAllText(path);
+            amount = int.Parse(content);
+            if (File.Exists(path)) File.Delete(path);
+        }
+        catch
+        {
+            amount = 16;
+        }
 
         return amount;
     }

@@ -23,10 +23,21 @@ public partial class Manager : Node
 
     private static bool ReadUseTutorial()
     {
-        string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
-        bool use = bool.Parse(File.ReadAllText(path));
+        bool use;
+        try
+        {
+            string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
+            string content = File.ReadAllText(path);
+            use = bool.Parse(content);
+            if (File.Exists(path)) File.Delete(path);
+        }
+        catch
+        {
+            use = true;
+        }
+
         GD.Print("use tutorial: " + use.ToString());
-        File.Delete(path);
+        
         return use;
     }
 

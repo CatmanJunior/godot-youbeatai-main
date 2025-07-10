@@ -1935,6 +1935,12 @@ public partial class Manager : Node
             GD.Print("shouldstomp");
             EmitSignal(SignalName.OnShouldStompEvent);
         }
+
+        // high hat trick
+        float scale = 1f + (Random.Shared.NextSingle() - 0.5f);
+        fourthAudioPlayer.PitchScale = scale;
+        fourthAudioPlayerAlt.PitchScale = scale;
+        fourthAudioPlayerRec.PitchScale = scale;
     }
 
     private Sprite2D CreateOutline(int beat, int ring)

@@ -673,7 +673,7 @@ public partial class Manager : Node
             writer.Close();
         }
 
-        ChangePitch(filename + ".wav", 2f);
+        ChangePitch(beats_name + ".wav", 2f);
 
         // export layersvoiceovers0 as single wav
         AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;

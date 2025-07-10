@@ -110,7 +110,7 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
-		SetVolume(0.5f);
+		SetVolume(0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
     }

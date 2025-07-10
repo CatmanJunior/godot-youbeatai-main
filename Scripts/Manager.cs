@@ -1124,7 +1124,7 @@ public partial class Manager : Node
         {
             if (Engine.IsEditorHint())
             {
-                GetTree().ChangeSceneToFile("res://Scenes/soundbank.tscn");
+                GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
             }
             else
             {

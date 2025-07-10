@@ -6,7 +6,20 @@ var recording: AudioStream
 @export var audio_player: AudioStreamPlayer2D
 var data: PackedVector2Array
 
+@export var timer: Timer
+
+var proccess = 0
+
+var _synth = null
+
+func _init() -> void:
+	print("hoi")
+	_synth = Synth.new()
+	_synth.waveform = 2
+
 func _ready():
+	add_child(_synth)
+	
 	# We get the index of the "Record" bus.
 	var idx = AudioServer.get_bus_index("Microphone")
 	# And use it to retrieve its first effect, which has been defined
@@ -51,6 +64,9 @@ func get_peak_frequency(audio_data: PackedFloat32Array, sample_rate := 44100.0)-
 	var peak := 0.0
 	
 	for index in range(length):
+		if index * (sample_rate / length) > 10000:
+			continue
+			
 		var e : float = fft[index]
 		if e > peak:
 			peak_index = index
@@ -68,12 +84,33 @@ func stop_recording():
 	recording = recorder.get_recording()
 	recorder.set_recording_active(false)
 	
+	timer.wait_time = recording.get_length() / len(data)
+	print("recording length %f" % [recording.get_length()])
+	print("recording data length %d" % [len(data)])
 	print(data)
 
 func play_recording():
 	print(recording)
 	audio_player.stream = recording
-	audio_player.play()
+	
+	_synth.pitch = data[proccess][0]
+	_synth.volume = data[proccess][1] * 5
+	_synth.start()
+	timer.start()
 
 func stop_playing():
-	audio_player.stop()
+	timer.stop()
+	_synth.stop()
+
+func _input(event):
+	if event is InputEventKey and event.pressed and event.keycode == KEY_SPACE:
+		if audio_player.playing:
+			audio_player.stop()
+		else:
+			audio_player.play()
+
+func _on_timer_timeout():
+	proccess = (proccess + 1) % len(data)
+	_synth.pitch = data[proccess][0]
+	_synth.volume = data[proccess][1] * 5
+	

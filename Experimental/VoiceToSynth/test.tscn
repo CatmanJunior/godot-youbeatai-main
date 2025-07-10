@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=6 format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://dmvorc4lk1tjf" path="res://Experimental/VoiceToSynth/record_voice.gd" id="1_0nud8"]
+[ext_resource type="PackedScene" uid="uid://t4jyo3xi7apn" path="res://addons/synth/demo/ui/waveform_visualizer.tscn" id="2_3d6la"]
 
 [sub_resource type="Gradient" id="Gradient_f7m3q"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -18,9 +19,11 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VoiceRecorder" type="Node" parent="." node_paths=PackedStringArray("audio_player")]
+[node name="VoiceRecorder" type="Node" parent="." node_paths=PackedStringArray("audio_player", "timer")]
+unique_name_in_owner = true
 script = ExtResource("1_0nud8")
 audio_player = NodePath("../playback")
+timer = NodePath("../Timer")
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -57,7 +60,11 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
+[node name="Waveform" parent="HSplitContainer/MarginContainer" instance=ExtResource("2_3d6la")]
+position = Vector2(93, 250)
+
 [node name="TextureRect" type="TextureRect" parent="HSplitContainer/MarginContainer"]
+visible = false
 layout_mode = 2
 texture = SubResource("GradientTexture1D_0nud8")
 
@@ -68,7 +75,11 @@ bus = &"Microphone"
 
 [node name="playback" type="AudioStreamPlayer2D" parent="."]
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="start_recording"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="stop_recording"]
 [connection signal="pressed" from="HSplitContainer/Actions/Play" to="VoiceRecorder" method="play_recording"]
 [connection signal="pressed" from="HSplitContainer/Actions/Stop" to="VoiceRecorder" method="stop_playing"]
+[connection signal="timeout" from="Timer" to="VoiceRecorder" method="_on_timer_timeout"]

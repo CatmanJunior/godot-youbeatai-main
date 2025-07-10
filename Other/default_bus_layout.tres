@@ -2,6 +2,7 @@
 
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_04ot4"]
 resource_name = "Capture"
+buffer_length = 0.05
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vcuto"]
 resource_name = "Record"

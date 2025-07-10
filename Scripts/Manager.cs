@@ -1358,7 +1358,7 @@ public partial class Manager : Node
         {
             SetEntireInterfaceVisibility(false);
             achievementspanel.Visible = true;
-            SetRobotBig();
+            //SetRobotBig();
         }
         else // disable tutorial
         {

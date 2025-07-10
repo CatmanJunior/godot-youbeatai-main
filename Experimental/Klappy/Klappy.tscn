@@ -41,6 +41,7 @@ animation = &"animations/Anim_Stamp_Animation_Single"
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_6i03r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_igk12"]
+graph_offset = Vector2(-591, 92)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_vxk86")
 nodes/Add2/position = Vector2(240, -120)
 "nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_fbtxr")
@@ -63,12 +64,6 @@ node_connections = [&"Add2", 0, &"Idle", &"Add2", 1, &"ClapTrigger", &"Add2 2", 
 [node name="Klappy" type="Node3D"]
 script = ExtResource("2_d4ajq")
 
-[node name="Stamp" type="Timer" parent="."]
-one_shot = true
-
-[node name="Clap" type="Timer" parent="."]
-one_shot = true
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.72152, 4.92963)
 
@@ -80,26 +75,26 @@ compositor = SubResource("Compositor_igk12")
 [node name="model" parent="." instance=ExtResource("17_8c4xi")]
 
 [node name="Skeleton3D" parent="model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.606923, 0.000469924, -0.000338693, 0.79476)
+bones/0/rotation = Quaternion(0.58971, -0.0210996, -0.0298472, 0.806787)
 bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
 bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/position = Vector3(5.68294e-10, 0.00522447, -1.00984e-09)
-bones/2/rotation = Quaternion(0.160301, 0.00863793, -0.466908, 0.869612)
+bones/2/position = Vector3(0.000122607, 0.00678814, 0.000408064)
+bones/2/rotation = Quaternion(0.170502, 0.00642557, -0.347515, 0.92202)
 bones/2/scale = Vector3(1, 1, 1)
 bones/4/position = Vector3(-3.17935e-12, 0.0148348, -3.93007e-10)
-bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.000525439, 0.745103)
+bones/4/rotation = Quaternion(0.663344, 0.000242452, 0.000526559, 0.748314)
 bones/4/scale = Vector3(1, 1, 1)
 bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
 bones/5/rotation = Quaternion(-0.159763, -0.671292, -0.399951, 0.603226)
 bones/5/scale = Vector3(1, 1, 1)
-bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
+bones/7/position = Vector3(3.41713e-05, 0.0162051, 0.00671337)
 bones/7/rotation = Quaternion(0.153684, 0.159081, 0.362227, 0.905465)
 bones/7/scale = Vector3(1, 1, 1)
-bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
-bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
+bones/9/position = Vector3(0.00529178, -0.00229546, 0.00398238)
+bones/9/rotation = Quaternion(0.731109, 0.0101679, 0.682155, -0.00643442)
 bones/9/scale = Vector3(1, 1, 1)
-bones/10/position = Vector3(1.87594e-10, 0.00420525, -2.69906e-10)
+bones/10/position = Vector3(-6.41305e-11, 0.00420524, 1.85071e-10)
 bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
 bones/10/scale = Vector3(1, 1, 1)
 bones/11/position = Vector3(7.16123e-11, 0.00449158, -1.52029e-10)
@@ -108,13 +103,13 @@ bones/11/scale = Vector3(1, 1, 1)
 bones/13/position = Vector3(-0.0109679, 0.00308128, 0.0112381)
 bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
 bones/13/scale = Vector3(1, 1, 1)
-bones/14/position = Vector3(-6.6629e-10, 0.00522447, 8.15075e-10)
-bones/14/rotation = Quaternion(0.160301, -0.00863775, 0.466908, 0.869613)
+bones/14/position = Vector3(-0.000455613, 0.0110351, 0.00151638)
+bones/14/rotation = Quaternion(0.170502, -0.00642538, 0.347515, 0.92202)
 bones/14/scale = Vector3(1, 1, 1)
-bones/16/position = Vector3(-0.00507851, -0.00216698, 0.00402349)
-bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
+bones/16/position = Vector3(-0.00554416, -0.00229483, 0.00395247)
+bones/16/rotation = Quaternion(0.682154, 0.00643215, -0.731109, 0.0101658)
 bones/16/scale = Vector3(1, 1, 1)
-bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
+bones/17/position = Vector3(9.22241e-05, 0.0044895, -1.75543e-05)
 bones/17/rotation = Quaternion(0.00499249, 0.000264613, -0.358627, 0.933468)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/position = Vector3(-4.31259e-10, 0.00449158, 3.9602e-10)
@@ -135,7 +130,6 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="model"]
 tree_root = SubResource("AnimationNodeBlendTree_igk12")
-anim_player = NodePath("../AnimationPlayer")
 parameters/Add2/add_amount = 1.0
 "parameters/Add2 2/add_amount" = 1.0
 parameters/ClapTrigger/seek_request = -1.0

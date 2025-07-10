@@ -42,39 +42,38 @@ public partial class Manager : Node
     }
 
     // events
-    [Signal]
-    public delegate void OnSwitchLayerEventHandler(int layer);
-    [Signal]
-    public delegate void OnShouldClapEventEventHandler();
-    [Signal]
-    public delegate void OnShouldStompEventEventHandler();
+    [Signal] public delegate void OnSwitchLayerEventHandler(int layer);
+    [Signal] public delegate void OnShouldClapEventEventHandler();
+    [Signal] public delegate void OnShouldStompEventEventHandler();
 
-    // idk
+    // layer voice overs
     [Export] public LayerVoiceOver layerVoiceOver0;
     [Export] public LayerVoiceOver layerVoiceOver1;
-
+    
+    // unlockables
     [Export] public Label[] Unlockables;
     [Export] public Label[] UnlockablesQuestion;
 
-    [Export] public Button restartButton;
-    
-    [Export] public Button muteSpeach;
-
-	// audio
+	// audio stream players
     public AudioStreamPlayer2D firstAudioPlayer;
     public AudioStreamPlayer2D secondAudioPlayer;
     public AudioStreamPlayer2D thirdAudioPlayer;
     public AudioStreamPlayer2D fourthAudioPlayer;
-
     public AudioStreamPlayer2D firstAudioPlayerAlt;
     public AudioStreamPlayer2D secondAudioPlayerAlt;
     public AudioStreamPlayer2D thirdAudioPlayerAlt;
     public AudioStreamPlayer2D fourthAudioPlayerAlt;
-
     public AudioStreamPlayer2D firstAudioPlayerRec;
     public AudioStreamPlayer2D secondAudioPlayerRec;
     public AudioStreamPlayer2D thirdAudioPlayerRec;
     public AudioStreamPlayer2D fourthAudioPlayerRec;
+
+    // other audio
+    AudioStreamPlayer2D extraAudioPlayer;
+    [Export] AudioStream metronome_sfx;
+    [Export] AudioStream metronomealt_sfx;
+    [Export] AudioStream achievement_sfx;
+    bool metronome_sfx_enabled = false;
 
     // sample mixers
     [Export] public Node2D sampleMixer0;
@@ -82,22 +81,16 @@ public partial class Manager : Node
     [Export] public Node2D sampleMixer2;
     [Export] public Node2D sampleMixer3;
 
-    // other sfx
-    AudioStreamPlayer2D extraAudioPlayer;
-    [Export] AudioStream metronome_sfx;
-    [Export] AudioStream metronomealt_sfx;
-    [Export] AudioStream achievement_sfx;
-    bool metronome_sfx_enabled = false;
-
     // saving
     [Export] public AudioStream[] mainAudioFiles;
     [Export] public AudioStream[] mainAudioFilesAlt;
 
+    // other
+    [Export] public Button restartButton;
+    [Export] public Button muteSpeach;
     [Export] Button saveToWavButton;
     bool hassavedtofile = false;
-
-
-    
+    [Export] Label chosen_emoticons_label;
 
     // particles
     [Export] public CpuParticles2D beat_particles;
@@ -106,12 +99,10 @@ public partial class Manager : Node
     private float beat_particles_curtime;
     private Color beat_particles_color;
     private bool beat_particles_emitting = false;
-
     [Export] public CpuParticles2D pbar_particles;
     private float pbar_particles_time;
     private float pbar_particles_curtime;
     private bool pbar_particles_emitting = false;
-
     [Export] public CpuParticles2D achievement_particles;
     private float achievement_particles_time;
     private float achievement_particles_curtime;
@@ -128,9 +119,6 @@ public partial class Manager : Node
     [Export] Button layerButton8;
     [Export] Button layerButton9;
     [Export] Button layerButton10;
-
-    [Export] Label chosen_emoticons_label;
-
 
     public void EmitBeatParticles(Vector2 position, Color color)
     {

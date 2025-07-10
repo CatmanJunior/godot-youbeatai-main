@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var animation_tree = $AnimationTree
+@onready var animation_tree = $model/AnimationTree
 @onready var stamp_timer = $Stamp
 @onready var clap_timer = $Clap
 
@@ -24,7 +24,7 @@ func _ready():
 	stamp_timer.timeout.connect(on_stamp_timer)
 
 func init():
-	animation_tree = $AnimationTree
+	animation_tree = $model/AnimationTree
 	stamp_timer = $Stamp
 	clap_timer = $Clap
 
@@ -52,5 +52,4 @@ func on_bpm_changed(bpm:float):
 	var beat_time_half = (1.0 / beat_time) * 0.25	
 	clap_timer.wait_time = beat_time_half
 	stamp_timer.wait_time = beat_time_half
-	animation_tree.set("parameters/StampSpeed/scale", beat_time )
-	animation_tree.set("parameters/ClapSpeed/scale", beat_time )
+	animation_tree.set("parameters/TimeScale/scale", beat_time )

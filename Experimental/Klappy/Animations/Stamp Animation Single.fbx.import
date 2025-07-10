@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://circsrtgisq11"
+uid="uid://ds013krkdr1u5"
 path="res://.godot/imported/Stamp Animation Single.fbx-b4c90992277ce2f86fe9b6c47b421fc8.scn"
 
 [deps]
@@ -37,7 +37,7 @@ _subresources={
 "Robot|RobotAction": {
 "save_to_file/enabled": true,
 "save_to_file/keep_custom_tracks": "",
-"save_to_file/path": "uid://cg2cu5v7qtve7",
+"save_to_file/path": "res://Experimental/Klappy/Animations/Anim_Stamp_Animation_Single.tres",
 "settings/loop_mode": 0,
 "slice_1/end_frame": 0,
 "slice_1/loop_mode": 0,

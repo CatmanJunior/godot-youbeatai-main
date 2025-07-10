@@ -1,0 +1,24 @@
+[gd_resource type="StandardMaterial3D" load_steps=8 format=3 uid="uid://c421qn87d0g6f"]
+
+[ext_resource type="Texture2D" uid="uid://6sq868geon1o" path="res://Experimental/Klappy/Textures/TKleppy_TransparantLamp_Base_color.png" id="1_vmv8e"]
+[ext_resource type="Texture2D" uid="uid://c6861iv1h71u0" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Mixed_AO.png" id="2_vmv8e"]
+[ext_resource type="Texture2D" uid="uid://bbdui4uy126cw" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Emissive.png" id="3_3c4jy"]
+[ext_resource type="Texture2D" uid="uid://bxyflfntaqcsg" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Height.png" id="3_l3scn"]
+[ext_resource type="Texture2D" uid="uid://sjqo18an6nx0" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Metallic.png" id="4_3c4jy"]
+[ext_resource type="Texture2D" uid="uid://dhie2jay02qqe" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Normal_OpenGL.png" id="5_hstag"]
+[ext_resource type="Texture2D" uid="uid://rk0njqqcy68u" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Roughness.png" id="6_4fc1t"]
+
+[resource]
+albedo_texture = ExtResource("1_vmv8e")
+metallic = 1.0
+metallic_texture = ExtResource("4_3c4jy")
+roughness_texture = ExtResource("6_4fc1t")
+emission_enabled = true
+emission_texture = ExtResource("3_3c4jy")
+normal_enabled = true
+normal_texture = ExtResource("5_hstag")
+ao_enabled = true
+ao_texture = ExtResource("2_vmv8e")
+heightmap_enabled = true
+heightmap_scale = 0.1
+heightmap_texture = ExtResource("3_l3scn")

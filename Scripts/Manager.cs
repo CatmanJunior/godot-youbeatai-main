@@ -1,15 +1,16 @@
 using Godot;
+
 using System;
 using System.IO;
-
-using NAudio.Wave;
-using NAudio.Lame;
-using System.Collections.Generic;
-using NAudio.Wave.SampleProviders;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Globalization;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+
+using NAudio.Wave;
+using NAudio.Lame;
+using NAudio.Wave.SampleProviders;
 
 public partial class Manager : Node
 {
@@ -1356,144 +1357,7 @@ public partial class Manager : Node
 
     [Export] public Node2D cross;
 
-    public void SetEntireInterfaceVisibility(bool visible)
-    {
-        // rings
-        SetRingVisibility(0, visible);
-        SetRingVisibility(1, visible);
-        SetRingVisibility(2, visible);
-        SetRingVisibility(3, visible);
-
-        // sliders
-        SetSampleMixersVisibility(visible);
-
-        // progress bar
-        progressBar.Visible = visible;
-
-        // playpause button
-        PlayPauseButton.Visible = visible;
-
-        // main buttons
-        SetMainButtonsVisibility(visible);
-
-        // recording buttons
-        SetRecordingButtonsVisibility(visible);
-
-        // draganddrop buttons
-        SetDragAndDropButtonsVisibility(visible);
-
-        // layer switch buttons
-        SetLayerSwitchButtonsVisibility(visible);
-
-        // settings menu
-        settingsButton.Visible = visible;
-
-        layerLoopToggle.Visible = visible;
-
-        muteSpeach.Visible = visible;
-        cross.Visible = visible;
-
-        bpmLabel.Visible = visible;
-        metronome.Visible = visible;
-        metronomebg.Visible = visible;
-        chosen_emoticons_label.Visible = visible;
-
-
-        // achievements panel
-        achievementspanel.Visible = visible;
-
-        // recording
-        SongVoiceOver.instance.recordSongButton.Visible = visible;
-        SongVoiceOver.instance.recordSongSprite.Visible = visible;
-        SongVoiceOver.instance.progressbar.Visible = visible;
-
-        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
-        ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
-        layerVoiceOver0.textureProgressBar.Visible = visible;
-        layerVoiceOver1.textureProgressBar.Visible = visible;
-    }
     
-
-    void SetRingVisibility(int ring, bool visible)
-    {
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatSprites[ring, beat].Visible = visible;
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatOutlines[ring, beat].Visible = visible;
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) templateSprites[ring, beat].Visible = visible;
-    }
-
-    void SetMainButtonsVisibility(bool visible)
-    {
-        SaveLayoutButton.Visible = visible;
-        LoadLayoutButton.Visible = visible;
-        ClearLayoutButton.Visible = visible;
-        ResetPlayerButton.Visible = visible;
-    }
-
-    void SetEffectButtonsVisibility(bool visible)
-    {
-        BpmUpButton.Visible = visible;
-        BpmDownButton.Visible = visible;
-        bpmLabel.Visible = visible;
-        swingslider.Visible = visible;
-        swinglabel.Visible = visible;
-        metronome.Visible = visible;
-        metronomebg.Visible = visible;
-        ReverbDelayManager.instance.reverbSlider.Visible = visible;
-        ReverbDelayManager.instance.delaySlider.Visible = visible;
-    }
-
-    void SetRecordingButtonsVisibility(bool visible)
-    {
-        recordSampleButton0.Visible = visible;
-        recordSampleButton1.Visible = visible;
-        recordSampleButton2.Visible = visible;
-        recordSampleButton3.Visible = visible;
-    }
-
-    void SetDragAndDropButtonsVisibility(bool visible)
-    {
-        draganddropButton0.Visible = visible;
-        draganddropButton1.Visible = visible;
-        draganddropButton2.Visible = visible;
-        draganddropButton3.Visible = visible;
-    }
-
-    public void SetLayerSwitchButtonsVisibility(bool visible)
-    {
-        layerButton1.Visible = visible;
-        layerButton2.Visible = visible;
-        layerButton3.Visible = visible;
-        layerButton4.Visible = visible;
-        layerButton5.Visible = visible;
-        layerButton6.Visible = visible;
-        layerButton7.Visible = visible;
-        layerButton8.Visible = visible;
-        layerButton9.Visible = visible;
-        layerButton10.Visible = visible;
-        layerOutline.Visible = visible;
-    }
-
-    public void SetLayerSwitchButtonsEnabled(bool enabled)
-    {
-        layerButton1.Disabled = !enabled;
-        layerButton2.Disabled = !enabled;
-        layerButton3.Disabled = !enabled;
-        layerButton4.Disabled = !enabled;
-        layerButton5.Disabled = !enabled;
-        layerButton6.Disabled = !enabled;
-        layerButton7.Disabled = !enabled;
-        layerButton8.Disabled = !enabled;
-        layerButton9.Disabled = !enabled;
-        layerButton10.Disabled = !enabled;
-    }
-
-    public void SetSampleMixersVisibility(bool visible)
-    {
-        sampleMixer0.Visible = visible;
-        sampleMixer1.Visible = visible;
-        sampleMixer2.Visible = visible;
-        sampleMixer3.Visible = visible;
-    }
 
     // ---------------------------------------------------------------
 
@@ -2102,4 +1966,147 @@ public partial class Manager : Node
         for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
         return amount;
     }
+
+    #region Visibility
+
+    public void SetEntireInterfaceVisibility(bool visible)
+    {
+        // rings
+        SetRingVisibility(0, visible);
+        SetRingVisibility(1, visible);
+        SetRingVisibility(2, visible);
+        SetRingVisibility(3, visible);
+
+        // sliders
+        SetSampleMixersVisibility(visible);
+
+        // progress bar
+        progressBar.Visible = visible;
+
+        // playpause button
+        PlayPauseButton.Visible = visible;
+
+        // main buttons
+        SetMainButtonsVisibility(visible);
+
+        // recording buttons
+        SetRecordingButtonsVisibility(visible);
+
+        // draganddrop buttons
+        SetDragAndDropButtonsVisibility(visible);
+
+        // layer switch buttons
+        SetLayerSwitchButtonsVisibility(visible);
+
+        // settings menu
+        settingsButton.Visible = visible;
+
+        layerLoopToggle.Visible = visible;
+
+        muteSpeach.Visible = visible;
+        cross.Visible = visible;
+
+        bpmLabel.Visible = visible;
+        metronome.Visible = visible;
+        metronomebg.Visible = visible;
+        chosen_emoticons_label.Visible = visible;
+
+
+        // achievements panel
+        achievementspanel.Visible = visible;
+
+        // recording
+        SongVoiceOver.instance.recordSongButton.Visible = visible;
+        SongVoiceOver.instance.recordSongSprite.Visible = visible;
+        SongVoiceOver.instance.progressbar.Visible = visible;
+
+        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
+        ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
+        layerVoiceOver0.textureProgressBar.Visible = visible;
+        layerVoiceOver1.textureProgressBar.Visible = visible;
+    }
+    
+
+    void SetRingVisibility(int ring, bool visible)
+    {
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatSprites[ring, beat].Visible = visible;
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatOutlines[ring, beat].Visible = visible;
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) templateSprites[ring, beat].Visible = visible;
+    }
+
+    void SetMainButtonsVisibility(bool visible)
+    {
+        SaveLayoutButton.Visible = visible;
+        LoadLayoutButton.Visible = visible;
+        ClearLayoutButton.Visible = visible;
+        ResetPlayerButton.Visible = visible;
+    }
+
+    void SetEffectButtonsVisibility(bool visible)
+    {
+        BpmUpButton.Visible = visible;
+        BpmDownButton.Visible = visible;
+        bpmLabel.Visible = visible;
+        swingslider.Visible = visible;
+        swinglabel.Visible = visible;
+        metronome.Visible = visible;
+        metronomebg.Visible = visible;
+        ReverbDelayManager.instance.reverbSlider.Visible = visible;
+        ReverbDelayManager.instance.delaySlider.Visible = visible;
+    }
+
+    void SetRecordingButtonsVisibility(bool visible)
+    {
+        recordSampleButton0.Visible = visible;
+        recordSampleButton1.Visible = visible;
+        recordSampleButton2.Visible = visible;
+        recordSampleButton3.Visible = visible;
+    }
+
+    void SetDragAndDropButtonsVisibility(bool visible)
+    {
+        draganddropButton0.Visible = visible;
+        draganddropButton1.Visible = visible;
+        draganddropButton2.Visible = visible;
+        draganddropButton3.Visible = visible;
+    }
+
+    public void SetLayerSwitchButtonsVisibility(bool visible)
+    {
+        layerButton1.Visible = visible;
+        layerButton2.Visible = visible;
+        layerButton3.Visible = visible;
+        layerButton4.Visible = visible;
+        layerButton5.Visible = visible;
+        layerButton6.Visible = visible;
+        layerButton7.Visible = visible;
+        layerButton8.Visible = visible;
+        layerButton9.Visible = visible;
+        layerButton10.Visible = visible;
+        layerOutline.Visible = visible;
+    }
+
+    public void SetLayerSwitchButtonsEnabled(bool enabled)
+    {
+        layerButton1.Disabled = !enabled;
+        layerButton2.Disabled = !enabled;
+        layerButton3.Disabled = !enabled;
+        layerButton4.Disabled = !enabled;
+        layerButton5.Disabled = !enabled;
+        layerButton6.Disabled = !enabled;
+        layerButton7.Disabled = !enabled;
+        layerButton8.Disabled = !enabled;
+        layerButton9.Disabled = !enabled;
+        layerButton10.Disabled = !enabled;
+    }
+
+    public void SetSampleMixersVisibility(bool visible)
+    {
+        sampleMixer0.Visible = visible;
+        sampleMixer1.Visible = visible;
+        sampleMixer2.Visible = visible;
+        sampleMixer3.Visible = visible;
+    }
+        
+    #endregion
 }

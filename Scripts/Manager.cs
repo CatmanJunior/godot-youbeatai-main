@@ -85,7 +85,7 @@ public partial class Manager : Node
 
     // other
     [Export] public Button restartButton;
-    [Export] public Button muteSpeach;
+    [Export] public CheckButton muteSpeach;
     [Export] Button saveToWavButton;
     bool hassavedtofile = false;
     [Export] Label chosen_emoticons_label;
@@ -965,6 +965,20 @@ public partial class Manager : Node
     {
         // init singleton
         instance ??= this;
+
+        var label1 = layerLoopToggle.GetChild(0) as Label;
+        label1.GuiInput += args =>
+        {
+            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+        };
+
+        var label2 = muteSpeach.GetChild(0) as Label;
+        label2.GuiInput += args =>
+        {
+            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                muteSpeach.ButtonPressed = !muteSpeach.ButtonPressed;
+        };
 
         bpm_manager.OnBeatEvent += OnBeat;
 

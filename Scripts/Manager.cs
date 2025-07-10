@@ -19,6 +19,10 @@ public partial class Manager : Node
 
     public bool useTutorial = ReadUseTutorial();
 
+    float beatScale32 = 1;
+    float beatScale16 = 1.6f;
+    float beatScale8 = 1;
+
     private static bool ReadUseTutorial()
     {
         bool use;
@@ -1709,7 +1713,12 @@ public partial class Manager : Node
 
                 sprite.Modulate = color;
 
-                if (sprite.Scale.X > 1) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
+                float scale = 1;
+                if (BpmManager.beatsAmount == 32) scale = beatScale32;
+                if (BpmManager.beatsAmount == 16) scale = beatScale16;
+                if (BpmManager.beatsAmount == 8) scale = beatScale8;
+
+                if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
             }
         }
 
@@ -1946,34 +1955,61 @@ public partial class Manager : Node
     private Sprite2D CreateOutline(int beat, int ring)
     {
         var sprite = new Sprite2D();
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-        float distance = (4 - ring) * 30 + 110;
-        sprite.Position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+        sprite.Position = SpritePosition(beat, ring);
+
+        float scale = 1;
+        if (BpmManager.beatsAmount == 32) scale = beatScale32;
+        if (BpmManager.beatsAmount == 16) scale = beatScale16;
+        if (BpmManager.beatsAmount == 8) scale = beatScale8;
+        sprite.Scale = Vector2.One * scale;
+
         sprite.Texture = outline;
         return sprite;
+    }
+
+    private Vector2 SpritePosition(int beat, int ring)
+    {
+        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
+
+        float distance = 0;
+
+        if (BpmManager.beatsAmount == 32)
+        {
+            distance = (4 - ring) * 30 + 110;
+        }
+        else if (BpmManager.beatsAmount == 16)
+        {
+            distance = (4 - ring) * 45 + 56;
+        }
+
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
     }
 
     private Sprite2D CreateSprite(int beat, int ring)
     {
         var sprite = (Sprite2D)spritePrefab.Instantiate();
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-        float distance = (4 - ring) * 30 + 110;
-        sprite.Position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-        sprite.Texture = texture;
+        sprite.Position = SpritePosition(beat, ring);
 
         BeatSprite beatSprite = sprite as BeatSprite;
         beatSprite.spriteIndex = beat;
         beatSprite.ring = ring;
 
+        float scale = 1;
+        if (BpmManager.beatsAmount == 32) scale = beatScale32;
+        if (BpmManager.beatsAmount == 16) scale = beatScale16;
+        if (BpmManager.beatsAmount == 8) scale = beatScale8;
+        sprite.Scale = Vector2.One * scale;
+
+        sprite.Texture = texture;
+        
         return sprite;
     }
 
     private Sprite2D CreateTemplateSprite(int beat, int ring)
     {
         var sprite = new Sprite2D();
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-        float distance = (4 - ring) * 30 + 110;
-        sprite.Position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+        sprite.Position = SpritePosition(beat, ring);
+
         sprite.Texture = texture;
         sprite.Modulate = new Color(0, 0, 0, 1);
         sprite.Scale = Vector2.One * 0.2f;

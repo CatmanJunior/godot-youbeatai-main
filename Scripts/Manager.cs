@@ -6,11 +6,8 @@ using NAudio.Wave;
 using NAudio.Lame;
 using System.Collections.Generic;
 using NAudio.Wave.SampleProviders;
-using System.Linq;
-using System.Diagnostics;
 using System.Text.Json;
 using System.Text.RegularExpressions;
-using System.Text;
 using System.Globalization;
 using System.Threading.Tasks;
 

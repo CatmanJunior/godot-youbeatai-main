@@ -1,7 +1,5 @@
 using Godot;
-using System;
 using System.IO;
-using System.Text.Json;
 
 public partial class BpmManager : Node
 {

@@ -1,7 +1,5 @@
-using System.IO;
 using System.Net;
 using System.Net.Mail;
-using Godot;
 
 public class EmailSender
 {

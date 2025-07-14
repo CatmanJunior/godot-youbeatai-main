@@ -976,13 +976,15 @@ public partial class Manager : Node
             if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
                 layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
         };
-
+        
+        /*
         var label2 = muteSpeach.GetChild(0) as Label;
         label2.GuiInput += args =>
         {
             if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
                 muteSpeach.ButtonPressed = !muteSpeach.ButtonPressed;
         };
+        */
 
         bpm_manager.OnBeatEvent += OnBeat;
 

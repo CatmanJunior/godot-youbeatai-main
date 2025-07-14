@@ -10,11 +10,6 @@ public partial class MainMenu : Node
 
     public override void _Ready()
     {
-        // without microphone permission app won't function
-        if( OS.RequestPermission("android.permission.RECORD_ANDROID") == false )
-        {
-            GetTree().Quit();
-        }
 
         freeButton.Pressed += () =>
         {

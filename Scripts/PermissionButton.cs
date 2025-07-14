@@ -12,11 +12,7 @@ public partial class PermissionButton : Button
             if (OS.GetName() == "Android")
             {
                 // ask permission
-                if (OS.RequestPermission("android.permission.RECORD_ANDROID") == false)
-                {
-                    // if not granted then quit
-                    GetTree().Quit();
-                }
+                OS.RequestPermission("android.permission.RECORD_AUDIO");
             }
         };
     }

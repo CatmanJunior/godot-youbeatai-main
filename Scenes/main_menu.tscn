@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://88rxelg1bo3"]
+[gd_scene load_steps=4 format=3 uid="uid://88rxelg1bo3"]
 
 [ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
+[ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
 
 [node name="scene" type="Node2D"]
 
@@ -42,18 +43,28 @@ vertical_alignment = 1
 
 [node name="SpelenButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
-offset_left = 124.555
+offset_left = 50.0
 offset_top = 113.0
-offset_right = 273.555
+offset_right = 348.0
 offset_bottom = 152.0
 focus_mode = 0
 text = "Vrij Spelen"
 
 [node name="TutorialButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
-offset_left = 124.555
+offset_left = 50.0
 offset_top = 164.0
-offset_right = 273.555
+offset_right = 348.0
 offset_bottom = 203.0
 focus_mode = 0
 text = "Tutorial Spelen"
+
+[node name="PermissionButton" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 215.0
+offset_right = 348.0
+offset_bottom = 254.0
+focus_mode = 0
+text = "Microfoon Toegang Verlenen"
+script = ExtResource("3_1ehe0")

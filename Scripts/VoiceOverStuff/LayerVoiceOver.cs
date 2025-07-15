@@ -3,6 +3,9 @@ using System;
 
 public partial class LayerVoiceOver : Node
 {
+	[Signal] public delegate void OnStartedRecordingEventHandler();
+	[Signal] public delegate void OnStoppedRecordingEventHandler();
+
 	// user interface
 	[Export] public TextureProgressBar textureProgressBar;
 	[Export] public Button recordLayerButton;
@@ -111,15 +114,15 @@ public partial class LayerVoiceOver : Node
 		}
 	}
 
-    private void StartRecording()
-    {
+	private void StartRecording()
+	{
 		recording = true;
-        audioEffectRecord.SetRecordingActive(true);
+		audioEffectRecord.SetRecordingActive(true);
 		GD.Print("recording started");
 
 		// buttons during recording
 		snellerButton.Disabled = true;
-		langzamerButton.Disabled= true;
+		langzamerButton.Disabled = true;
 		Manager.instance.SetLayerSwitchButtonsEnabled(false);
 		Manager.instance.PlayPauseButton.Disabled = true;
 		Manager.instance.ResetPlayerButton.Disabled = true;
@@ -129,6 +132,7 @@ public partial class LayerVoiceOver : Node
 		SetVolume(0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
+		EmitSignal(SignalName.OnStartedRecording);
     }
 
     private void StopRecording()
@@ -152,6 +156,7 @@ public partial class LayerVoiceOver : Node
 
 		finished = true;
 
+		EmitSignal(SignalName.OnStoppedRecording);
 		SetSmallVolumeline();
 		SetBigVolumeline();
     }

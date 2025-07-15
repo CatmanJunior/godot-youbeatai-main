@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=58 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -32,6 +32,7 @@
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
+[ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="26_jwpg7"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
@@ -443,6 +444,9 @@ smallLine = NodePath("../../UserInterface/RecordBeatButton0/SmallLine0")
 bigLine = NodePath("BigLine0")
 bigLineBaseDist = 265
 bigLineVolumeDist = 80
+
+[node name="VoiceRecorder" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_jwpg7")]
+bpmManager = NodePath("../../BPM")
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 visible = false
@@ -2251,31 +2255,23 @@ vertical_alignment = 1
 
 [node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" instance=ExtResource("30_hpc6h")]
 
-[node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="2"]
+[node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
 
 [node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
 bones/0/rotation = Quaternion(0.606923, 0.000469924, -0.000338693, 0.79476)
-bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
-bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
 bones/2/position = Vector3(5.68294e-10, 0.00522447, -1.00984e-09)
 bones/2/rotation = Quaternion(0.160301, 0.00863793, -0.466908, 0.869612)
 bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.000525439, 0.745103)
-bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
 bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
 bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
 bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
 bones/10/position = Vector3(1.87594e-10, 0.00420525, -2.69906e-10)
-bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
-bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
-bones/13/position = Vector3(-0.0109679, 0.00308128, 0.0112381)
-bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
 bones/14/position = Vector3(-6.6629e-10, 0.00522447, 8.15075e-10)
 bones/14/rotation = Quaternion(0.160301, -0.00863775, 0.466908, 0.869613)
 bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
 bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
-bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
 
 [node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)
@@ -2426,6 +2422,10 @@ text = "Doorgaan"
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_bpm_changed"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_clap"]
 [connection signal="OnShouldStompEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_stamp"]
+[connection signal="OnSwitchLayer" from="Managers/Manager" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_current_layer_changed"]
+[connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver0/VoiceRecorder" method="on_microphone_input"]
+[connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="start_recording"]
+[connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="stop_recording"]
 
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]

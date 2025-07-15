@@ -441,13 +441,13 @@ snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUp
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 smallLine = NodePath("../../UserInterface/RecordBeatButton0/SmallLine0")
 bigLine = NodePath("BigLine0")
-bigLineBaseDist = 260
+bigLineBaseDist = 265
 bigLineVolumeDist = 80
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 visible = false
 closed = true
-width = 12.0
+width = 6.0
 default_color = Color(0.146667, 0.8, 0, 1)
 antialiased = true
 
@@ -471,13 +471,14 @@ snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUp
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 smallLine = NodePath("../../UserInterface/RecordBeatButton1/SmallLine1")
 bigLine = NodePath("BigLine1")
-bigLineBaseDist = 115
-bigLineVolumeDist = 30
+bigLineBaseDist = 70
+bigLineVolumeDist = 20
 bigLineReversed = true
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 visible = false
 closed = true
+width = 4.0
 default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 
@@ -486,7 +487,7 @@ offset_left = -256.0
 offset_top = -256.0
 offset_right = 256.0
 offset_bottom = 256.0
-scale = Vector2(0.47, 0.47)
+scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(256, 256)
 max_value = 1.0
 step = 0.01

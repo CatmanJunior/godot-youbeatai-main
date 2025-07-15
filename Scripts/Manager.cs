@@ -1009,25 +1009,46 @@ public partial class Manager : Node
         {
             if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
             {
-                string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
-
-                // load audio files
-                string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
-                string fileName;
-                for (int i = 0; i < files.Length; ++i)
+                // main audio files
                 {
-                    fileName = files[i];
-
-                    if (fileName.EndsWith(".wav"))
+                    string major_dir = baseDirPath + folderName + "/";
+                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
                     {
-                        string lower = fileName.ToLower();
-                        string fullPath = folderThatHoldsAudioFiles + fileName;
-                        if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                        else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                        else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                        else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = major_dir + file;
+                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
                     }
                 }
+
+                // alt audio files
+                {
+                    string minor_dir = baseDirPath + folderName + "/mineur/";
+                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
+                    {
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = minor_dir + file;
+                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
+                }
+                
                 break;
             }
         }

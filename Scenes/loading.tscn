@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://boh0od1y4wa8p"]
 
-[ext_resource type="Script" uid="uid://rwgnwuwj70i1" path="res://Scenes/Loading.cs" id="1_fim2r"]
+[ext_resource type="Script" uid="uid://rwgnwuwj70i1" path="res://Scripts/Loading.cs" id="1_fim2r"]
 [ext_resource type="SpriteFrames" uid="uid://1mictkronqdo" path="res://loadanim.tres" id="2_k66n3"]
 
 [node name="LaadScherm" type="Panel" node_paths=PackedStringArray("animation")]

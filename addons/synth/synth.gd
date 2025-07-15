@@ -33,19 +33,19 @@ var _last_waveform_data: PackedVector2Array = []
 var _frames_available: int = 0
 
 var playing = false
-var pitch: float = 440
-var waveform: int = 0
-var width: float = 0.5
-var volume: float = 1 :
+@export var pitch: float = 440
+@export var waveform: int = 0
+@export var width: float = 0.5
+@export var volume: float = 1 :
 	set(v):
 		volume = v
 		audio_stream_player.volume_db = linear_to_db(volume)
-var cutoff: float = 5000 :
+@export var cutoff: float = 5000 :
 	set(v):
 		cutoff = clamp(v, 1, sample_rate / 2.0 - (sample_rate / 100.0))
-var filter: int = 0
-var resonance: float = 1.0
-
+@export var filter: int = 0
+@export var resonance: float = 1.0
+@export var audio_bus: StringName
 
 var _thread: Thread
 
@@ -55,6 +55,7 @@ func _ready():
 	audio_stream_player = AudioStreamPlayer.new()
 	add_child(audio_stream_player)
 	audio_stream_player.stream = AudioStreamGenerator.new()
+	audio_stream_player.bus = audio_bus
 	audio_stream_player.stream.mix_rate = sample_rate
 	# how many seconds to buffer ahead. we want to keep this as low as possible to avoid latency
 	# length of buffer_size * 2 because less doesn't seem to keep up
@@ -124,7 +125,7 @@ func set_property(value, property):
 
 func fill_buffer(prefill = false):
 	_frames_available = audio_stream_generator.get_frames_available()
-	print(_frames_available)
+	#print(_frames_available)
 
 	# when we use fill by frame, we process single frames as soon as they are available
 	# in chunk mode, we wait unti there's a big enough chunk

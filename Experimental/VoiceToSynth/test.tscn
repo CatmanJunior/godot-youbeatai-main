@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=10 format=3 uid="uid://cwuewtnywilyk"]
 
-[ext_resource type="Script" uid="uid://dmvorc4lk1tjf" path="res://Experimental/VoiceToSynth/record_voice.gd" id="1_0nud8"]
+[ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
 [ext_resource type="PackedScene" uid="uid://t4jyo3xi7apn" path="res://addons/synth/demo/ui/waveform_visualizer.tscn" id="2_3d6la"]
+[ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="3_k0mxu"]
+[ext_resource type="Script" uid="uid://ciuedwyx4vnlp" path="res://Experimental/VoiceToSynth/levelLabel.gd" id="3_m3rh1"]
+[ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
+[ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
 
 [sub_resource type="Gradient" id="Gradient_f7m3q"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -19,11 +23,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VoiceRecorder" type="Node" parent="." node_paths=PackedStringArray("audio_player", "timer")]
+[node name="BPMManager" type="Node" parent="."]
+script = ExtResource("6_k0mxu")
+playing = true
+
+[node name="MicrophoneCapture" type="Node" parent="."]
+script = ExtResource("1_kki6v")
+
+[node name="VoiceRecorder" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("3_k0mxu")]
 unique_name_in_owner = true
-script = ExtResource("1_0nud8")
-audio_player = NodePath("../playback")
-timer = NodePath("../Timer")
+bpmManager = NodePath("../BPMManager")
+
+[node name="Synth" parent="VoiceRecorder" index="1"]
+audio_bus = &"Synth"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -53,6 +65,25 @@ layout_mode = 2
 text = "⏹️Stop"
 alignment = 0
 
+[node name="Button" type="Button" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "Test envelope"
+
+[node name="Label" type="Label" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "level"
+horizontal_alignment = 1
+script = ExtResource("3_m3rh1")
+
+[node name="ColorRect" type="ColorRect" parent="HSplitContainer/Actions" node_paths=PackedStringArray("timer")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+script = ExtResource("5_a0dxq")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="HSplitContainer/Actions/ColorRect"]
+one_shot = true
+
 [node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 20
@@ -60,8 +91,9 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Waveform" parent="HSplitContainer/MarginContainer" instance=ExtResource("2_3d6la")]
+[node name="Waveform" parent="HSplitContainer/MarginContainer" node_paths=PackedStringArray("_synth") instance=ExtResource("2_3d6la")]
 position = Vector2(93, 250)
+_synth = NodePath("../../../VoiceRecorder/Synth")
 
 [node name="TextureRect" type="TextureRect" parent="HSplitContainer/MarginContainer"]
 visible = false
@@ -73,13 +105,7 @@ stream = SubResource("AudioStreamMicrophone_0nud8")
 autoplay = true
 bus = &"Microphone"
 
-[node name="playback" type="AudioStreamPlayer2D" parent="."]
+[connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
+[connection signal="timeout" from="HSplitContainer/Actions/ColorRect/Timer" to="HSplitContainer/Actions/ColorRect" method="_on_reset"]
 
-[node name="Timer" type="Timer" parent="."]
-wait_time = 0.05
-
-[connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="start_recording"]
-[connection signal="button_up" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="stop_recording"]
-[connection signal="pressed" from="HSplitContainer/Actions/Play" to="VoiceRecorder" method="play_recording"]
-[connection signal="pressed" from="HSplitContainer/Actions/Stop" to="VoiceRecorder" method="stop_playing"]
-[connection signal="timeout" from="Timer" to="VoiceRecorder" method="_on_timer_timeout"]
+[editable path="VoiceRecorder"]

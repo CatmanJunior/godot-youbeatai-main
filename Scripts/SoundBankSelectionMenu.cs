@@ -106,7 +106,7 @@ public partial class SoundBankSelectionMenu : Panel
             }
 
             // load main scene
-            GetTree().ChangeSceneToFile("res://Scenes/main.tscn");
+            GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
         };
     }
 

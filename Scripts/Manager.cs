@@ -19,6 +19,10 @@ public partial class Manager : Node
 
     public bool useTutorial = ReadUseTutorial();
 
+    float beatScale32 = 1;
+    float beatScale16 = 1.6f;
+    float beatScale8 = 1;
+
     private static bool ReadUseTutorial()
     {
         bool use;
@@ -85,7 +89,7 @@ public partial class Manager : Node
 
     // other
     [Export] public Button restartButton;
-    [Export] public Button muteSpeach;
+    [Export] public CheckButton muteSpeach;
     [Export] Button saveToWavButton;
     bool hassavedtofile = false;
     [Export] Label chosen_emoticons_label;
@@ -673,7 +677,7 @@ public partial class Manager : Node
             writer.Close();
         }
 
-        ChangePitch(filename + ".wav", 2f);
+        ChangePitch(beats_name + ".wav", 2f);
 
         // export layersvoiceovers0 as single wav
         AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;
@@ -966,6 +970,22 @@ public partial class Manager : Node
         // init singleton
         instance ??= this;
 
+        var label1 = layerLoopToggle.GetChild(0) as Label;
+        label1.GuiInput += args =>
+        {
+            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+        };
+        
+        /*
+        var label2 = muteSpeach.GetChild(0) as Label;
+        label2.GuiInput += args =>
+        {
+            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                muteSpeach.ButtonPressed = !muteSpeach.ButtonPressed;
+        };
+        */
+
         bpm_manager.OnBeatEvent += OnBeat;
 
         // deserialize chosen soundbank
@@ -989,25 +1009,46 @@ public partial class Manager : Node
         {
             if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
             {
-                string folderThatHoldsAudioFiles = baseDirPath + folderName + "/";
-
-                // load audio files
-                string[] files = ResourceLoader.ListDirectory(folderThatHoldsAudioFiles);
-                string fileName;
-                for (int i = 0; i < files.Length; ++i)
+                // main audio files
                 {
-                    fileName = files[i];
-
-                    if (fileName.EndsWith(".wav"))
+                    string major_dir = baseDirPath + folderName + "/";
+                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
                     {
-                        string lower = fileName.ToLower();
-                        string fullPath = folderThatHoldsAudioFiles + fileName;
-                        if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                        else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                        else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                        else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = major_dir + file;
+                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
                     }
                 }
+
+                // alt audio files
+                {
+                    string minor_dir = baseDirPath + folderName + "/mineur/";
+                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
+                    {
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = minor_dir + file;
+                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
+                }
+                
                 break;
             }
         }
@@ -1344,7 +1385,7 @@ public partial class Manager : Node
         {
             SetEntireInterfaceVisibility(false);
             achievementspanel.Visible = true;
-            SetRobotBig();
+            //SetRobotBig();
         }
         else // disable tutorial
         {
@@ -1503,7 +1544,7 @@ public partial class Manager : Node
         var lightvalue = progressBarValue / 100;
         if (lightvalue > 1) lightvalue = 1;
         float pulsed = ((((Mathf.Sin(time * 4) + 1) / 2) / 2) + 0.5f);
-        robotlight.Energy = lightvalue * pulsed;
+        robotlight.Energy = lightvalue;
 
         // update micmeter
         micmeter.Value = MicrophoneCapture.instance.volume;
@@ -1695,7 +1736,12 @@ public partial class Manager : Node
 
                 sprite.Modulate = color;
 
-                if (sprite.Scale.X > 1) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
+                float scale = 1;
+                if (BpmManager.beatsAmount == 32) scale = beatScale32;
+                if (BpmManager.beatsAmount == 16) scale = beatScale16;
+                if (BpmManager.beatsAmount == 8) scale = beatScale8;
+
+                if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
             }
         }
 
@@ -1921,39 +1967,73 @@ public partial class Manager : Node
             GD.Print("shouldstomp");
             EmitSignal(SignalName.OnShouldStompEvent);
         }
+
+        // high hat trick (highhattrick)
+        float strength = 0.5f;
+        float scale = 1f + ((Random.Shared.NextSingle() - 0.5f) * strength);
+        fourthAudioPlayer.PitchScale = scale;
+        fourthAudioPlayerAlt.PitchScale = scale;
+        fourthAudioPlayerRec.PitchScale = scale;
     }
 
     private Sprite2D CreateOutline(int beat, int ring)
     {
         var sprite = new Sprite2D();
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-        float distance = (4 - ring) * 30 + 110;
-        sprite.Position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+        sprite.Position = SpritePosition(beat, ring);
+
+        float scale = 1;
+        if (BpmManager.beatsAmount == 32) scale = beatScale32;
+        if (BpmManager.beatsAmount == 16) scale = beatScale16;
+        if (BpmManager.beatsAmount == 8) scale = beatScale8;
+        sprite.Scale = Vector2.One * scale;
+
         sprite.Texture = outline;
         return sprite;
+    }
+
+    private Vector2 SpritePosition(int beat, int ring)
+    {
+        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
+
+        float distance = 0;
+
+        if (BpmManager.beatsAmount == 32)
+        {
+            distance = (4 - ring) * 30 + 110;
+        }
+        else if (BpmManager.beatsAmount == 16)
+        {
+            distance = (4 - ring) * 45 + 56;
+        }
+
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
     }
 
     private Sprite2D CreateSprite(int beat, int ring)
     {
         var sprite = (Sprite2D)spritePrefab.Instantiate();
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-        float distance = (4 - ring) * 30 + 110;
-        sprite.Position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-        sprite.Texture = texture;
+        sprite.Position = SpritePosition(beat, ring);
 
         BeatSprite beatSprite = sprite as BeatSprite;
         beatSprite.spriteIndex = beat;
         beatSprite.ring = ring;
 
+        float scale = 1;
+        if (BpmManager.beatsAmount == 32) scale = beatScale32;
+        if (BpmManager.beatsAmount == 16) scale = beatScale16;
+        if (BpmManager.beatsAmount == 8) scale = beatScale8;
+        sprite.Scale = Vector2.One * scale;
+
+        sprite.Texture = texture;
+        
         return sprite;
     }
 
     private Sprite2D CreateTemplateSprite(int beat, int ring)
     {
         var sprite = new Sprite2D();
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-        float distance = (4 - ring) * 30 + 110;
-        sprite.Position = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+        sprite.Position = SpritePosition(beat, ring);
+
         sprite.Texture = texture;
         sprite.Modulate = new Color(0, 0, 0, 1);
         sprite.Scale = Vector2.One * 0.2f;

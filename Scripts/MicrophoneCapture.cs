@@ -23,6 +23,7 @@ public partial class MicrophoneCapture : Node
 
         audioStreamPlayer = new AudioStreamPlayer();
         AddChild(audioStreamPlayer);
+        audioStreamPlayer.Finished += () => audioStreamPlayer.Play();
 
         audioStreamPlayer.Stream = new AudioStreamMicrophone();
 

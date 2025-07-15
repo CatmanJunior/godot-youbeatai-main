@@ -1,5 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=11 format=3 uid="uid://cwuewtnywilyk"]
 
+[ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
 [ext_resource type="PackedScene" uid="uid://t4jyo3xi7apn" path="res://addons/synth/demo/ui/waveform_visualizer.tscn" id="2_3d6la"]
 [ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="3_k0mxu"]
@@ -22,10 +23,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_a0dxq")
 
 [node name="BPMManager" type="Node" parent="."]
 script = ExtResource("6_k0mxu")
-playing = true
 
 [node name="MicrophoneCapture" type="Node" parent="."]
 script = ExtResource("1_kki6v")
@@ -82,6 +83,7 @@ script = ExtResource("5_a0dxq")
 timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="HSplitContainer/Actions/ColorRect"]
+wait_time = 0.05
 one_shot = true
 
 [node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
@@ -106,6 +108,13 @@ autoplay = true
 bus = &"Microphone"
 
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
+[connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="VoiceRecorder" method="on_microphone_input"]
+[connection signal="button_down" from="HSplitContainer/Actions/Record" to="." method="start"]
+[connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="start_recording"]
+[connection signal="button_up" from="HSplitContainer/Actions/Record" to="." method="stop"]
+[connection signal="button_up" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="stop_recording"]
+[connection signal="pressed" from="HSplitContainer/Actions/Play" to="VoiceRecorder" method="play_recording"]
+[connection signal="pressed" from="HSplitContainer/Actions/Stop" to="VoiceRecorder" method="stop_playing"]
 [connection signal="timeout" from="HSplitContainer/Actions/ColorRect/Timer" to="HSplitContainer/Actions/ColorRect" method="_on_reset"]
 
 [editable path="VoiceRecorder"]

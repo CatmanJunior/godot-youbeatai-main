@@ -2035,6 +2035,7 @@ text = "📥 Beat naar mp3"
 alignment = 0
 
 [node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
 offset_left = 24.0
 offset_top = 5.0
 offset_right = 68.0
@@ -2057,6 +2058,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/MuteSpeachToggle"]
+layout_mode = 0
 offset_left = 43.0
 offset_top = 1.0
 offset_right = 130.0
@@ -2249,28 +2251,7 @@ vertical_alignment = 1
 
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="2"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
-
-[node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.606923, 0.000469924, -0.000338693, 0.79476)
-bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
-bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
-bones/2/position = Vector3(5.68294e-10, 0.00522447, -1.00984e-09)
-bones/2/rotation = Quaternion(0.160301, 0.00863793, -0.466908, 0.869612)
-bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.000525439, 0.745103)
-bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
-bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
-bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
-bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
-bones/10/position = Vector3(1.87594e-10, 0.00420525, -2.69906e-10)
-bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
-bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
-bones/13/position = Vector3(-0.0109679, 0.00308128, 0.0112381)
-bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
-bones/14/position = Vector3(-6.6629e-10, 0.00522447, 8.15075e-10)
-bones/14/rotation = Quaternion(0.160301, -0.00863775, 0.466908, 0.869613)
-bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
-bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
-bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
+current = true
 
 [node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)

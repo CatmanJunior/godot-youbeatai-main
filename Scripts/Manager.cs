@@ -1947,8 +1947,9 @@ public partial class Manager : Node
             EmitSignal(SignalName.OnShouldStompEvent);
         }
 
-        // high hat trick
-        float scale = 1f + (Random.Shared.NextSingle() - 0.5f);
+        // high hat trick (highhattrick)
+        float strength = 0.5f;
+        float scale = 1f + ((Random.Shared.NextSingle() - 0.5f) * strength);
         fourthAudioPlayer.PitchScale = scale;
         fourthAudioPlayerAlt.PitchScale = scale;
         fourthAudioPlayerRec.PitchScale = scale;

@@ -38,8 +38,17 @@ public partial class BpmManager : Node
         return amount;
     }
 
+    [Export]
+    private bool _playing;
+    public bool playing
+    {
+        set {
+            EmitSignal(SignalName.OnPlayingChanged, value);
+            _playing = value;
+        }
+        get => _playing;
+    }
 
-    public bool playing = false;
     public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
     public float swing = 0.5f;
@@ -52,6 +61,9 @@ public partial class BpmManager : Node
     public delegate void OnBeatEventEventHandler();
     [Signal]
     public delegate void OnBpmChangedEventHandler(float bpm);
+
+    [Signal]
+    public delegate void OnPlayingChangedEventHandler(bool playing);
 
     public override void _Ready()
     {

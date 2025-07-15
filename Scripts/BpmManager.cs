@@ -19,7 +19,7 @@ public partial class BpmManager : Node
 
     // timing
     public static int beatsAmount = ReadBeatsAmount();
-
+    public int amount_of_beats => ReadBeatsAmount();
     private static int ReadBeatsAmount()
     {
         int amount;

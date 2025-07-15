@@ -13,11 +13,14 @@ public partial class MicrophoneCapture : Node
 
     public float volume = 0;
     public float frequency = 0;
+    
+    [Signal]
+    public delegate void OnMicrophoneInputEventHandler(float volume, float frequency);
 
     public override void _Ready()
     {
         instance ??= this;
-        
+
         audioStreamPlayer = new AudioStreamPlayer();
         AddChild(audioStreamPlayer);
 
@@ -32,11 +35,14 @@ public partial class MicrophoneCapture : Node
     public override void _Process(double delta)
     {
 		var frames = audioEffectCapture.GetFramesAvailable();
-		if (frames > 0)
-		{
-			Godot.Vector2[] audioData = audioEffectCapture.GetBuffer(frames);
-			volume = GetVolumeFromAudioData(audioData);
+        if (frames > 0)
+        {
+            Godot.Vector2[] audioData = audioEffectCapture.GetBuffer(frames);
+            volume = GetVolumeFromAudioData(audioData);
             frequency = GetPeakFrequency(PerformFFT(ConvertToMono(audioData)));
+
+            // Call signal
+            EmitSignal(SignalName.OnMicrophoneInput, volume, frequency);
 		}
     }
 

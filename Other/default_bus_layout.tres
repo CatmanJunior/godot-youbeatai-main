@@ -2,11 +2,13 @@
 
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_04ot4"]
 resource_name = "Capture"
+buffer_length = 0.2
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vcuto"]
 resource_name = "Record"
 
 [resource]
+bus/0/volume_db = -4.25003
 bus/1/name = &"Microphone"
 bus/1/solo = false
 bus/1/mute = true
@@ -17,3 +19,9 @@ bus/1/effect/0/effect = SubResource("AudioEffectCapture_04ot4")
 bus/1/effect/0/enabled = true
 bus/1/effect/1/effect = SubResource("AudioEffectRecord_vcuto")
 bus/1/effect/1/enabled = true
+bus/2/name = &"Synth"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = 0.0
+bus/2/send = &"Master"

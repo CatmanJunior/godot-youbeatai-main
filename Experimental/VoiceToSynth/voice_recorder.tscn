@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bfroto1jhb10b"]
+
+[ext_resource type="Script" uid="uid://dmvorc4lk1tjf" path="res://Experimental/VoiceToSynth/record_voice.gd" id="1_xctr7"]
+[ext_resource type="Script" uid="uid://c1afydyq3gb80" path="res://Experimental/VoiceToSynth/envelope.gd" id="2_a82c1"]
+[ext_resource type="Script" uid="uid://bocy4ptrkjlbp" path="res://addons/synth/synth.gd" id="3_lagtm"]
+
+[node name="VoiceRecorder" type="Node" node_paths=PackedStringArray("bpmManager", "envelope", "_synth")]
+script = ExtResource("1_xctr7")
+bpmManager = NodePath("")
+envelope = NodePath("Envelope")
+_synth = NodePath("Synth")
+
+[node name="Envelope" type="Node" parent="."]
+script = ExtResource("2_a82c1")
+attack_time = 0.05
+decay_time = 0.301
+sustain_level = 0.3
+sustain_time = 0.05
+release_time = 0.15
+metadata/_custom_type_script = "uid://c1afydyq3gb80"
+
+[node name="Synth" type="Node" parent="."]
+script = ExtResource("3_lagtm")
+waveform = 1
+filter = 1
+metadata/_custom_type_script = "uid://bocy4ptrkjlbp"
+
+[connection signal="level_changed" from="Envelope" to="." method="_on_envelope_level_changed"]

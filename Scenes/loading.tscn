@@ -1,11 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://boh0od1y4wa8p"]
+[gd_scene load_steps=3 format=3 uid="uid://boh0od1y4wa8p"]
 
 [ext_resource type="Script" uid="uid://rwgnwuwj70i1" path="res://Scenes/Loading.cs" id="1_fim2r"]
+[ext_resource type="SpriteFrames" uid="uid://1mictkronqdo" path="res://loadanim.tres" id="2_k66n3"]
 
-[node name="LaadScherm" type="Panel"]
+[node name="LaadScherm" type="Panel" node_paths=PackedStringArray("animation")]
 offset_right = 1280.0
 offset_bottom = 720.0
 script = ExtResource("1_fim2r")
+animation = NodePath("AnimatedSprite2D")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
@@ -18,3 +20,9 @@ theme_override_font_sizes/font_size = 48
 text = "Het spel is aan het laden....."
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(640, 422)
+sprite_frames = ExtResource("2_k66n3")
+frame = 39
+frame_progress = 0.371644

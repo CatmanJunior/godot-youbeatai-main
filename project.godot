@@ -34,14 +34,14 @@ window/stretch/mode="canvas_items"
 
 project/assembly_name="youbeatai-godot"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/synth/plugin.cfg")
+
 [gui]
 
 theme/custom="uid://c0bwj08madm3f"
 theme/custom_font="uid://d1cp3vkc5el5b"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/synth/plugin.cfg")
 
 [rendering]
 

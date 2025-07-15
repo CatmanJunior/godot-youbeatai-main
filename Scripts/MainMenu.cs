@@ -19,9 +19,6 @@ public partial class MainMenu : Node
 
         tutorialButton.Pressed += () =>
         {
-            // load main scene with tutorial enabled
-            GetTree().ChangeSceneToFile("res://Scenes/main.tscn");
-
             // remember if tutorial should be enabled or not
             {
                 string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
@@ -65,6 +62,9 @@ public partial class MainMenu : Node
                 if (File.Exists(path)) File.Delete(path);
                 File.WriteAllText(path, "16");
             }
+
+            // load main scene with tutorial enabled
+            GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
         };
     }
 }

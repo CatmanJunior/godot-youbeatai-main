@@ -10,6 +10,8 @@ public partial class LayerVoiceOver : Node
 	[Export] public TextureProgressBar textureProgressBar;
 	[Export] public Button recordLayerButton;
 
+	[Export] public Slider volumeSlider;
+
 	// recording
 	public AudioStream[] voiceOvers = new AudioStream[10];
 	AudioEffectRecord audioEffectRecord;
@@ -31,12 +33,30 @@ public partial class LayerVoiceOver : Node
 	[Export] public int bigLineVolumeDist = 28;
 	[Export] public bool bigLineReversed = false;
 
+	private double volume = 0.5;
+
 	public int currentLayer => Manager.instance.currentLayerIndex;
 	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
 	public AudioStream GetCurrentLayerVoiceOver() => voiceOvers[currentLayer];
 
 	public override void _Ready()
     {
+		if (volumeSlider != null)
+		{ 
+			volumeSlider.ValueChanged += (double volume) =>
+			{
+				double new_volume = 1 - volume;
+				volume = new_volume;
+				SetVolume(new_volume);
+			};
+
+		}
+
+		BpmManager.instance.OnPlayingChanged += (playing) =>
+		{
+			OnTop();
+		};
+
 		// init record button
 		recordLayerButton.Pressed += () => 
 		{
@@ -177,7 +197,7 @@ public partial class LayerVoiceOver : Node
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
 
-		SetVolume(1f);
+		SetVolume(volume);
 
 		finished = true;
 
@@ -252,9 +272,9 @@ public partial class LayerVoiceOver : Node
         }
     }
 
-	void SetVolume(float value)
+	void SetVolume(double value)
     {
-        float db = Mathf.LinearToDb(value);
+        float db = Mathf.LinearToDb((float)value);
         Manager.instance.firstAudioPlayer.VolumeDb = db;
         Manager.instance.secondAudioPlayer.VolumeDb = db;
         Manager.instance.thirdAudioPlayer.VolumeDb = db;

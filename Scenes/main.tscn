@@ -434,10 +434,11 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
+[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "volumeSlider", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar0")
 recordLayerButton = NodePath("../../UserInterface/RecordBeatButton0/Button0")
+volumeSlider = NodePath("../../UserInterface/RecordBeatButton0/HSlider")
 snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 smallLine = NodePath("../../UserInterface/RecordBeatButton0/SmallLine0")
@@ -467,10 +468,11 @@ fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
 tint_progress = Color(0.146667, 0.8, 0, 1)
 
-[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
+[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "volumeSlider", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar1")
 recordLayerButton = NodePath("../../UserInterface/RecordBeatButton1/Button1")
+volumeSlider = NodePath("../../UserInterface/RecordBeatButton1/HSlider")
 snellerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 smallLine = NodePath("../../UserInterface/RecordBeatButton1/SmallLine1")
@@ -2426,6 +2428,7 @@ text = "Doorgaan"
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver0/VoiceRecorder" method="on_microphone_input"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="stop_recording"]
+[connection signal="value_changed" from="UserInterface/RecordBeatButton0/HSlider" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_volume_slider_changed"]
 
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]

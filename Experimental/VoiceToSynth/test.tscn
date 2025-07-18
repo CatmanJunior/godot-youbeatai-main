@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=12 format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://ciuedwyx4vnlp" path="res://Experimental/VoiceToSynth/levelLabel.gd" id="3_m3rh1"]
 [ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
+[ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="8_71jf6"]
 
 [sub_resource type="Gradient" id="Gradient_f7m3q"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -16,7 +17,7 @@ gradient = SubResource("Gradient_f7m3q")
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_0nud8"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" node_paths=PackedStringArray("bpm")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,6 +25,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a0dxq")
+bpm = NodePath("BPMManager")
 
 [node name="BPMManager" type="Node" parent="."]
 script = ExtResource("6_k0mxu")
@@ -34,9 +36,6 @@ script = ExtResource("1_kki6v")
 [node name="VoiceRecorder" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("3_k0mxu")]
 unique_name_in_owner = true
 bpmManager = NodePath("../BPMManager")
-
-[node name="Synth" parent="VoiceRecorder" index="1"]
-audio_bus = &"Synth"
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -107,14 +106,18 @@ stream = SubResource("AudioStreamMicrophone_0nud8")
 autoplay = true
 bus = &"Microphone"
 
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_71jf6")
+autoplay = true
+
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="VoiceRecorder" method="on_microphone_input"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="." method="start"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="start_recording"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="." method="stop"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="stop_recording"]
-[connection signal="pressed" from="HSplitContainer/Actions/Play" to="VoiceRecorder" method="play_recording"]
-[connection signal="pressed" from="HSplitContainer/Actions/Stop" to="VoiceRecorder" method="stop_playing"]
+[connection signal="pressed" from="HSplitContainer/Actions/Play" to="." method="start_playing"]
+[connection signal="pressed" from="HSplitContainer/Actions/Stop" to="." method="stop_playing"]
 [connection signal="timeout" from="HSplitContainer/Actions/ColorRect/Timer" to="HSplitContainer/Actions/ColorRect" method="_on_reset"]
 
 [editable path="VoiceRecorder"]

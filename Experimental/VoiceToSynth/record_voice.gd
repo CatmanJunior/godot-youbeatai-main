@@ -4,6 +4,8 @@ extends Node
 @export var envelope: Envelope
 @export var _synth: Synth
 
+@export var volume: float = 0.5
+
 var recorder: AudioEffectRecord
 var data: PackedVector3Array
 @export var samples: Array[PackedVector3Array] = []
@@ -34,6 +36,9 @@ func _on_timer_timeout():
 	_synth.volume = 0
 	envelope.play()
 
+func _on_volume_slider_changed(value: float):
+	volume = value
+
 func _on_playing_changed(playing: bool):
 	if playing:
 		play_recording()
@@ -46,7 +51,7 @@ func _on_envelope_level_changed(level: float):
 		return
 	var rms_value = get_sample()[bpmManager.currentBeat][1]
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-	_synth.volume = level * remap(log_value, -80, 10, 0, 1)
+	_synth.volume = volume * level * remap(log_value, -80, 10, 0, 1)
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
@@ -61,7 +66,10 @@ func start_recording():
 	print("start recording")
 	data.clear()
 	get_sample().clear()
-	_synth.stop()
+	
+	if _synth.playing:
+		_synth.stop()
+	
 	start_record_time = Time.get_unix_time_from_system()
 
 func stop_recording():
@@ -90,6 +98,9 @@ func play_recording():
 	_on_timer_timeout()
 
 func stop_playing():
+	if not _synth.playing:
+		return
+
 	_synth.stop()
 	
 func get_sample() -> PackedVector3Array:

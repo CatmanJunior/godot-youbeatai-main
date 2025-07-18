@@ -114,6 +114,8 @@ func thread_loop():
 
 
 func stop():
+	if not playing:
+		return
 	playing = false
 	print_debug(_thread.wait_to_finish())
 

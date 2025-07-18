@@ -1,6 +1,7 @@
 extends Control
 
 var recorder: AudioEffectRecord
+@export var bpm: Node
 
 func _ready():
 	# We get the index of the "Record" bus.
@@ -14,3 +15,11 @@ func start():
 	
 func stop():
 	recorder.set_recording_active(false)
+
+
+func stop_playing():
+	bpm.playing = false
+	
+
+func start_playing():
+	bpm.playing = true

@@ -113,6 +113,8 @@ public partial class LayerVoiceOver : Node
 		}
 	}
 
+	bool shouldUpdateLines = false;
+
 	public void OnTop() // tested: gets called on time
 	{
 		if (audioPlayer.Playing) audioPlayer.Stop();
@@ -127,6 +129,13 @@ public partial class LayerVoiceOver : Node
 
 			shouldMeasureAudioDelay = true;
 			audioDelayBeginMs = Time.GetTicksMsec();
+		}
+
+		if (shouldUpdateLines)
+		{
+			SetSmallVolumeline();
+			SetBigVolumeline();
+			shouldUpdateLines = false;
 		}
 	}
 
@@ -173,8 +182,8 @@ public partial class LayerVoiceOver : Node
 		finished = true;
 
 		EmitSignal(SignalName.OnStoppedRecording);
-		SetSmallVolumeline();
-		SetBigVolumeline();
+
+		shouldUpdateLines = true;
     }
 
 	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)

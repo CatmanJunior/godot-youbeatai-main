@@ -23,7 +23,7 @@ func _ready():
 	bpmManager.OnPlayingChanged.connect(_on_playing_changed)
 
 func _on_timer_timeout():
-	if bpmManager.currentBeat == 0 and bpmManager.playing and _synth.playing == false:
+	if bpmManager.currentBeat == 0 and bpmManager.playing and _synth.playing == false and len(get_sample()) > 0:
 		_synth.start()
 
 	if bpmManager.currentBeat >= len(get_sample()):

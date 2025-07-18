@@ -75,8 +75,16 @@ public partial class LayerVoiceOver : Node
 		SetBigVolumeline();
     }
 
+	bool shouldmeasure = false;
+
     public override void _Process(double delta)
 	{
+		if (shouldmeasure && audioPlayer.GetPlaybackPosition() > 1)
+		{
+			GD.Print("Playback position is moving since: " + Time.GetTicksMsec());
+			shouldmeasure = false;
+		}
+
 		// set color of fake button
 		((RecordButton)recordLayerButton.GetParent()).pressed = shouldRecord;
 
@@ -100,7 +108,7 @@ public partial class LayerVoiceOver : Node
 		}
 	}
 
-	public void OnTop()
+	public void OnTop() // tested: gets called on time
 	{
 		if (audioPlayer.Playing) audioPlayer.Stop();
 
@@ -109,8 +117,11 @@ public partial class LayerVoiceOver : Node
 
 		if (!recording)
 		{
-			audioPlayer.Stream = GetCurrentLayerVoiceOver();
-			audioPlayer.Play();
+			audioPlayer.Stream = GetCurrentLayerVoiceOver();  // tested: gets called on time
+			audioPlayer.Play(); // tested: gets called on time
+
+			shouldmeasure = true;
+			GD.Print("Called: Play() at: " + Time.GetTicksMsec());
 		}
 	}
 

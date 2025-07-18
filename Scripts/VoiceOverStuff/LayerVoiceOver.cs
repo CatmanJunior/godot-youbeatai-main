@@ -86,7 +86,7 @@ public partial class LayerVoiceOver : Node
 		{
 			audioDelayEndMs = Time.GetTicksMsec();
 			audioDelayTotalSeconds = ((float)audioDelayEndMs - (float)audioDelayBeginMs) / 1000f;
-			GD.Print("⚠️ " + audioDelayTotalSeconds.ToString("0.000"));
+			GD.Print("⚠️ audio delay is: " + audioDelayTotalSeconds.ToString("0.000") + " seconds");
 			shouldMeasureAudioDelay = false;
 		}
 

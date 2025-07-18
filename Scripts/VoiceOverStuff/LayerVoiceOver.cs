@@ -75,14 +75,19 @@ public partial class LayerVoiceOver : Node
 		SetBigVolumeline();
     }
 
-	bool shouldmeasure = false;
+	bool shouldMeasureAudioDelay = false;
+	ulong audioDelayBeginMs;
+	ulong audioDelayEndMs;
+	float audioDelayTotalSeconds;
 
     public override void _Process(double delta)
 	{
-		if (shouldmeasure && audioPlayer.GetPlaybackPosition() > 1)
+		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 1)
 		{
-			GD.Print("Playback position is moving since: " + Time.GetTicksMsec());
-			shouldmeasure = false;
+			audioDelayEndMs = Time.GetTicksMsec();
+			audioDelayTotalSeconds = ((float)audioDelayEndMs - (float)audioDelayBeginMs) / 1000f;
+			GD.Print("⚠️ " + audioDelayTotalSeconds.ToString("0.000"));
+			shouldMeasureAudioDelay = false;
 		}
 
 		// set color of fake button
@@ -120,8 +125,8 @@ public partial class LayerVoiceOver : Node
 			audioPlayer.Stream = GetCurrentLayerVoiceOver();  // tested: gets called on time
 			audioPlayer.Play(); // tested: gets called on time
 
-			shouldmeasure = true;
-			GD.Print("Called: Play() at: " + Time.GetTicksMsec());
+			shouldMeasureAudioDelay = true;
+			audioDelayBeginMs = Time.GetTicksMsec();
 		}
 	}
 

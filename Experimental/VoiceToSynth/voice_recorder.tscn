@@ -4,9 +4,8 @@
 [ext_resource type="Script" uid="uid://c1afydyq3gb80" path="res://Experimental/VoiceToSynth/envelope.gd" id="2_a82c1"]
 [ext_resource type="Script" uid="uid://bocy4ptrkjlbp" path="res://addons/synth/synth.gd" id="3_lagtm"]
 
-[node name="VoiceRecorder" type="Node" node_paths=PackedStringArray("bpmManager", "envelope", "_synth")]
+[node name="VoiceRecorder" type="Node" node_paths=PackedStringArray("envelope", "_synth")]
 script = ExtResource("1_xctr7")
-bpmManager = NodePath("")
 envelope = NodePath("Envelope")
 _synth = NodePath("Synth")
 
@@ -23,6 +22,7 @@ metadata/_custom_type_script = "uid://c1afydyq3gb80"
 script = ExtResource("3_lagtm")
 waveform = 1
 filter = 1
+audio_bus = &"Synth"
 metadata/_custom_type_script = "uid://bocy4ptrkjlbp"
 
 [connection signal="level_changed" from="Envelope" to="." method="_on_envelope_level_changed"]

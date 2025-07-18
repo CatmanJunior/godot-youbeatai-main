@@ -82,7 +82,7 @@ public partial class LayerVoiceOver : Node
 
     public override void _Process(double delta)
 	{
-		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 1)
+		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 0)
 		{
 			audioDelayEndMs = Time.GetTicksMsec();
 			audioDelayTotalSeconds = ((float)audioDelayEndMs - (float)audioDelayBeginMs) / 1000f;

@@ -82,11 +82,11 @@ public partial class LayerVoiceOver : Node
 
     public override void _Process(double delta)
 	{
-		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 1)
+		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 0)
 		{
 			audioDelayEndMs = Time.GetTicksMsec();
 			audioDelayTotalSeconds = ((float)audioDelayEndMs - (float)audioDelayBeginMs) / 1000f;
-			GD.Print("⚠️ " + audioDelayTotalSeconds.ToString("0.000"));
+			GD.Print("⚠️ audio delay is: " + audioDelayTotalSeconds.ToString("0.000") + " seconds");
 			shouldMeasureAudioDelay = false;
 		}
 
@@ -113,6 +113,8 @@ public partial class LayerVoiceOver : Node
 		}
 	}
 
+	bool shouldUpdateLines = false;
+
 	public void OnTop() // tested: gets called on time
 	{
 		if (audioPlayer.Playing) audioPlayer.Stop();
@@ -127,6 +129,13 @@ public partial class LayerVoiceOver : Node
 
 			shouldMeasureAudioDelay = true;
 			audioDelayBeginMs = Time.GetTicksMsec();
+		}
+
+		if (shouldUpdateLines)
+		{
+			SetSmallVolumeline();
+			SetBigVolumeline();
+			shouldUpdateLines = false;
 		}
 	}
 
@@ -173,8 +182,8 @@ public partial class LayerVoiceOver : Node
 		finished = true;
 
 		EmitSignal(SignalName.OnStoppedRecording);
-		SetSmallVolumeline();
-		SetBigVolumeline();
+
+		shouldUpdateLines = true;
     }
 
 	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)

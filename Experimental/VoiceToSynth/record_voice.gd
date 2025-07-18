@@ -61,7 +61,10 @@ func start_recording():
 	print("start recording")
 	data.clear()
 	get_sample().clear()
-	_synth.stop()
+	
+	if _synth.playing:
+		_synth.stop()
+	
 	start_record_time = Time.get_unix_time_from_system()
 
 func stop_recording():
@@ -90,6 +93,9 @@ func play_recording():
 	_on_timer_timeout()
 
 func stop_playing():
+	if not _synth.playing:
+		return
+
 	_synth.stop()
 	
 func get_sample() -> PackedVector3Array:

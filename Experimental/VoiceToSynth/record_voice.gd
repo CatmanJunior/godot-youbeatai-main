@@ -79,6 +79,10 @@ func stop_recording():
 	print("samples(%d) \n %s" % [len(get_sample()), get_sample()])
 
 func play_recording():
+	# do not start if already playing
+	if _synth.playing or len(get_sample()) == 0:
+		return
+
 	_synth.volume = 0
 	_synth.start()
 	

@@ -43,7 +43,8 @@ public partial class BpmManager : Node
     public bool playing
     {
         set {
-            EmitSignal(SignalName.OnPlayingChanged, value);
+            if (_playing != value )
+                EmitSignal(SignalName.OnPlayingChanged, value);
             _playing = value;
         }
         get => _playing;

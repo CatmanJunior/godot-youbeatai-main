@@ -6,11 +6,12 @@ using System.IO;
 
 public partial class SoundBankSelectionMenu : Panel
 {
-    public int chosenElectronicFactor;
+    public int chosenElectronicFactorSoundBank;
+    public int chosenElectronicFactorThemes = -1;
+
     public List<string> chosenThemes = [];
     public List<string> chosenEmotions = [];
 
-    [Export] Slider accousticSlider;
     [Export] CheckButton[] emotionToggles;
     [Export] CheckButton[] themeToggles;
 
@@ -119,19 +120,44 @@ public partial class SoundBankSelectionMenu : Panel
         return offset;
     }
 
+    Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
+
     public override void _Process(double delta)
     {
-        chosenElectronicFactor = (int)(accousticSlider.Value * 100);
+        int a = 0, b = 0, c = 0;
+        if (chosenThemes.Count > 0)
+        {
+            foreach (string theme in chosenThemes)
+            {
+                int e = int.Parse(lookup[theme]);
+                if (e == 0) a++;
+                if (e == 1) b++;
+                if (e == 2) c++;
+            }
+        }
+
+        string elecStr = "none";
+        if (a > 0 || b > 0 || c > 0)
+        {
+            int largestvalue = Math.Max(a, Math.Max(b, c));
+            if (largestvalue == a) chosenElectronicFactorThemes = 0;
+            if (largestvalue == b) chosenElectronicFactorThemes = 1;
+            if (largestvalue == c) chosenElectronicFactorThemes = 2;
+            if (chosenElectronicFactorThemes == 0) elecStr = "accoustisch";
+            if (chosenElectronicFactorThemes == 1) elecStr = "normaal";
+            if (chosenElectronicFactorThemes == 2) elecStr = "electrisch";
+        }
+        
+
+        gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ") " + "(" + elecStr + ")";
+
         gebruikButton.Disabled = chosenSoundBank == null;
-        gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ")";
 
         string emoticons = "";
         foreach (var emoticon in chosenEmotions) emoticons += emoticon;
 
         string themes = "";
         foreach (var theme in chosenThemes) themes += theme;
-
-        // GD.Print(emoticons + themes);
 
         chosenSoundBank = ChooseSoundBank();
     }
@@ -157,10 +183,16 @@ public partial class SoundBankSelectionMenu : Panel
             // normalized scores (0–1)
             float themeScore = (float)themeMatches / (float)chosenThemes.Count;
             float emotionScore = (float)emotionMatches / (float)chosenEmotions.Count;
-            float electronicScore = 1.0f - (Math.Abs(bank.electronic - chosenElectronicFactor) / 100.0f);
 
             // weighted score
-            float totalScore = (themeScore * 0.5f) + (emotionScore * 0.3f) + (electronicScore * 0.2f);
+            float totalScore = (themeScore * 0.5f) + (emotionScore * 0.3f);
+
+            // if 2 banks allign, use electronic factor to decide
+            if (bestScore == totalScore)
+            {
+                if (chosenElectronicFactorThemes == bank.electronic) totalScore += 0.01f;
+                if (chosenElectronicFactorThemes != bank.electronic) totalScore -= 0.01f;
+            }
 
             // if score is better overwrite best match
             if (totalScore > bestScore)

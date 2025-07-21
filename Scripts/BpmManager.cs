@@ -39,12 +39,14 @@ public partial class BpmManager : Node
         return amount;
     }
 
+    
+    private bool _playing;
     [Export]
-    public   bool _playing;
     public bool playing
     {
-        set {
-            if (_playing != value )
+        set
+        {
+            if (_playing != value)
                 EmitSignal(SignalName.OnPlayingChanged, value);
             _playing = value;
         }

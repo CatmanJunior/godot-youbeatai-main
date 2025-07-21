@@ -450,7 +450,7 @@ bigLineVolumeDist = 80
 bpmManager = NodePath("../../BPM")
 
 [node name="Envelope" parent="Managers/LayerVoiceOver0/VoiceRecorder" index="0"]
-attack_time = 0.301
+attack_time = 0.001
 decay_time = 0.101
 sustain_level = 1.0
 sustain_time = 0.201
@@ -458,7 +458,7 @@ sustain_time = 0.201
 [node name="Synth" parent="Managers/LayerVoiceOver0/VoiceRecorder" index="1"]
 cutoff = 1000.0
 resonance = 2.5
-audio_bus = &"Purple"
+audio_bus = &"Green"
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 visible = false
@@ -499,8 +499,13 @@ octaveRange = Vector2i(5, 6)
 
 [node name="Envelope" parent="Managers/LayerVoiceOver1/VoiceRecorder" index="0"]
 attack_time = 0.101
-decay_time = 0.041
-release_time = 0.101
+decay_time = 0.101
+sustain_level = 0.701
+sustain_time = 0.051
+release_time = 0.001
+
+[node name="Synth" parent="Managers/LayerVoiceOver1/VoiceRecorder" index="1"]
+audio_bus = &"Purple"
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 visible = false
@@ -2447,6 +2452,7 @@ text = "Doorgaan"
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_clap"]
 [connection signal="OnShouldStompEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_stamp"]
 [connection signal="OnSwitchLayer" from="Managers/Manager" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_current_layer_changed"]
+[connection signal="OnSwitchLayer" from="Managers/Manager" to="Managers/LayerVoiceOver1/VoiceRecorder" method="_on_current_layer_changed"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver0/VoiceRecorder" method="on_microphone_input"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver1/VoiceRecorder" method="on_microphone_input"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="start_recording"]
@@ -2454,6 +2460,7 @@ text = "Doorgaan"
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="stop_recording"]
 [connection signal="value_changed" from="UserInterface/RecordBeatButton0/HSlider" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_volume_slider_changed"]
+[connection signal="value_changed" from="UserInterface/RecordBeatButton1/HSlider" to="Managers/LayerVoiceOver1/VoiceRecorder" method="_on_volume_slider_changed"]
 
 [editable path="Managers/LayerVoiceOver0/VoiceRecorder"]
 [editable path="Managers/LayerVoiceOver1/VoiceRecorder"]

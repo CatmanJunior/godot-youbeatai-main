@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=8 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_04ot4"]
 resource_name = "Capture"
@@ -6,6 +6,29 @@ buffer_length = 0.2
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vcuto"]
 resource_name = "Record"
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_6n6ik"]
+resource_name = "Phaser"
+feedback = 0.2
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_6n6ik"]
+resource_name = "Delay"
+tap1_level_db = -10.0
+tap2_active = false
+tap2_delay_ms = 250.0
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_6n6ik"]
+resource_name = "LowPassFilter"
+cutoff_hz = 246.0
+
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_6n6ik"]
+resource_name = "Chorus"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_xic54"]
+resource_name = "Reverb"
+room_size = 0.1
+spread = 0.4
+wet = 0.1
 
 [resource]
 bus/0/volume_db = -4.25003
@@ -23,5 +46,27 @@ bus/2/name = &"Synth"
 bus/2/solo = false
 bus/2/mute = false
 bus/2/bypass_fx = false
-bus/2/volume_db = -19.6683
+bus/2/volume_db = -14.0622
 bus/2/send = &"Master"
+bus/3/name = &"Purple"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -5.625
+bus/3/send = &"Synth"
+bus/3/effect/0/effect = SubResource("AudioEffectPhaser_6n6ik")
+bus/3/effect/0/enabled = true
+bus/3/effect/1/effect = SubResource("AudioEffectDelay_6n6ik")
+bus/3/effect/1/enabled = true
+bus/4/name = &"Green"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = 0.860514
+bus/4/send = &"Synth"
+bus/4/effect/0/effect = SubResource("AudioEffectLowPassFilter_6n6ik")
+bus/4/effect/0/enabled = true
+bus/4/effect/1/effect = SubResource("AudioEffectChorus_6n6ik")
+bus/4/effect/1/enabled = true
+bus/4/effect/2/effect = SubResource("AudioEffectReverb_xic54")
+bus/4/effect/2/enabled = true

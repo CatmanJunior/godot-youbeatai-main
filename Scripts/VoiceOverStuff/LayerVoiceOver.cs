@@ -54,7 +54,7 @@ public partial class LayerVoiceOver : Node
 
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
-			OnTop();
+			//OnTop();
 		};
 
 		// init record button

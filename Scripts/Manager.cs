@@ -21,7 +21,7 @@ public partial class Manager : Node
 
     float beatScale32 = 1;
     float beatScale16 = 1.6f;
-    float beatScale8 = 1;
+    float beatScale8 = 1.6f;
 
     private static bool ReadUseTutorial()
     {
@@ -2004,6 +2004,10 @@ public partial class Manager : Node
             distance = (4 - ring) * 30 + 110;
         }
         else if (BpmManager.beatsAmount == 16)
+        {
+            distance = (4 - ring) * 45 + 56;
+        }
+        else if (BpmManager.beatsAmount == 8)
         {
             distance = (4 - ring) * 45 + 56;
         }

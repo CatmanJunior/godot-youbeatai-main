@@ -283,12 +283,12 @@ public partial class Manager : Node
 
     public void OnBpmUpButton()
     {
-        if (bpm_manager.bpm < 300) bpm_manager.bpm += 10;
+        if (bpm_manager.bpm < 300) bpm_manager.bpm += 5;
         haschangedbpm = true;
     }
     public void OnBpmDownButton()
     {
-        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 10;
+        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 5;
         haschangedbpm = true;
     }
     public void OnResetPlayerButton() => bpm_manager.currentBeat = BpmManager.beatsAmount - 1;

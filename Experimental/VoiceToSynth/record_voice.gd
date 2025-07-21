@@ -77,8 +77,7 @@ func stop_recording():
 	print("recording data length %d" % [len(data)])
 
 	get_sample().clear()
-	var beatDuration = (60.0/bpmManager.bpm)/4.0
-
+	var beatDuration = 60.0/bpmManager.bpm
 	for sample in data:
 		if sample.z > len(get_sample()) * beatDuration:
 			get_sample().push_back(sample)

@@ -37,5 +37,4 @@ func on_bpm_changed(bpm:float):
 		init()
 	# catch for when bpm change is called before onready
 	beat_time = bpm / 60.0
-	var beat_time_half = (1.0 / beat_time) * 0.25	
-	animation_tree.set("parameters/TimeScale/scale", beat_time )
+	animation_tree.set("parameters/TimeScale/scale", 1.0 / beat_time )

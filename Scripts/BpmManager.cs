@@ -7,6 +7,7 @@ public partial class BpmManager : Node
 
     // bpm
     private int _bpm = 120;
+    [Export]
     public int bpm
     {
         get => _bpm;
@@ -39,7 +40,7 @@ public partial class BpmManager : Node
     }
 
     [Export]
-    private bool _playing;
+    public   bool _playing;
     public bool playing
     {
         set {
@@ -50,9 +51,9 @@ public partial class BpmManager : Node
         get => _playing;
     }
 
-    public int currentBeat = beatsAmount - 1;
+    [Export ]public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
-    public float swing = 0.5f;
+    [Export] public float swing = 0.5f;
     
     public float baseTimePerBeat;
     public float timePerBeat;
@@ -76,8 +77,12 @@ public partial class BpmManager : Node
         if (playing)
         {
             beatTimer += (float)delta;
-            baseTimePerBeat = 60f / bpm / 4;
-            timePerBeat = (currentBeat % 2 == 1) ? baseTimePerBeat * (1 + swing) : baseTimePerBeat * (1 - (swing / 2));
+            baseTimePerBeat = 60f / bpm;
+            timePerBeat =
+                (currentBeat % 2 == 1) ?
+                    baseTimePerBeat + (baseTimePerBeat * swing) 
+                    : baseTimePerBeat - (baseTimePerBeat * swing);
+
             if (beatTimer > timePerBeat)
             {
                 beatTimer -= timePerBeat;

@@ -450,14 +450,15 @@ bigLineVolumeDist = 80
 bpmManager = NodePath("../../BPM")
 
 [node name="Envelope" parent="Managers/LayerVoiceOver0/VoiceRecorder" index="0"]
-attack_time = 0.001
-decay_time = 0.001
+attack_time = 0.301
+decay_time = 0.101
 sustain_level = 1.0
 sustain_time = 0.201
 
 [node name="Synth" parent="Managers/LayerVoiceOver0/VoiceRecorder" index="1"]
 cutoff = 1000.0
 resonance = 2.5
+audio_bus = &"Purple"
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 visible = false

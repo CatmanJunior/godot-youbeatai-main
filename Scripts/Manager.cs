@@ -165,7 +165,6 @@ public partial class Manager : Node
     [Export] Button LoadLayoutButton;
     [Export] Button ClearLayoutButton;
     [Export] public Button PlayPauseButton;
-    [Export] public Button ResetPlayerButton;
     [Export] Button BpmUpButton;
     [Export] Button BpmDownButton;
 
@@ -1179,7 +1178,6 @@ public partial class Manager : Node
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
         saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
-        ResetPlayerButton.Pressed += () => { OnResetPlayerButton(); bpm_manager.playing = true; };
 
         // skipping / ending the tutorial
         skiptutorialbutton.Pressed += () =>
@@ -1343,7 +1341,7 @@ public partial class Manager : Node
         [
             () => { SetRingVisibility(0, true); cross.Visible = true; SetRobotNormal(); },
             null,
-            () => { PlayPauseButton.Visible = true; ResetPlayerButton.Visible = true;},
+            () => PlayPauseButton.Visible = true,
             () => progressBar.Visible = true,
             () => SetRingVisibility(1, true),
             null,
@@ -2119,7 +2117,6 @@ public partial class Manager : Node
         SaveLayoutButton.Visible = visible;
         LoadLayoutButton.Visible = visible;
         ClearLayoutButton.Visible = visible;
-        ResetPlayerButton.Visible = visible;
     }
 
     void SetEffectButtonsVisibility(bool visible)

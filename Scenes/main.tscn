@@ -345,7 +345,7 @@ SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolde
 LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/LoadLayoutButton")
 ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/ClearLayoutButton")
 PlayPauseButton = NodePath("../../UserInterface/MainButtons/RandomButtons/PlayPauseButton")
-ResetPlayerButton = NodePath("../../UserInterface/MainButtons/RandomButtons/ResetPlayerButton")
+ResetPlayerButton = NodePath("")
 BpmUpButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmUpButton")
 BpmDownButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/BpmDownButton")
 draganddropButton0 = NodePath("../../UserInterface/SampleButtons/DragAndDropButton0")
@@ -966,23 +966,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
-
-[node name="ResetPlayerButton" type="Button" parent="UserInterface/MainButtons/RandomButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.0
-offset_top = 8e+06
-offset_right = 112.0
-offset_bottom = 8.00003e+06
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "⏮️ Terug Gaan"
-alignment = 0
 
 [node name="SampleButtons" type="Node" parent="UserInterface"]
 

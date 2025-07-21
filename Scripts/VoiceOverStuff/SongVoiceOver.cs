@@ -103,7 +103,6 @@ public partial class SongVoiceOver : Node
 		langzamerButton.Disabled= true;
 		Manager.instance.SetLayerSwitchButtonsEnabled(false);
 		Manager.instance.PlayPauseButton.Disabled = true;
-		Manager.instance.ResetPlayerButton.Disabled = true;
 		recordSongButton.Disabled = true;
 
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
@@ -130,7 +129,6 @@ public partial class SongVoiceOver : Node
 		langzamerButton.Disabled= false;
 		Manager.instance.SetLayerSwitchButtonsEnabled(true);
 		Manager.instance.PlayPauseButton.Disabled = false;
-		Manager.instance.ResetPlayerButton.Disabled = false;
 		recordSongButton.Disabled = false;
 
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;

@@ -189,6 +189,10 @@ public partial class Manager : Node
     [Export] CheckButton add_beats;
     [Export] Slider volume_treshold;
 
+    [Export] Panel settingsPanel;
+    [Export] Button settingsButton;
+    [Export] Button settingsBackButton;
+
     // other interface
     [Export] Button skiptutorialbutton;
     [Export] ProgressBar progressBar;
@@ -202,8 +206,7 @@ public partial class Manager : Node
     public int holdingforring;
     [Export] Slider swingslider;
     [Export] Label swinglabel;
-    [Export] Button settingsButton;
-    [Export] Panel settingsPanel;
+    
     [Export] Slider ClapBiasSlider;
     [Export] Panel achievementspanel;
     [Export] public CheckButton layerLoopToggle;
@@ -1205,6 +1208,7 @@ public partial class Manager : Node
 
         // settings panel
         settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
+        settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 
         // spawn sprites
         beatSprites = new Sprite2D[4, BpmManager.beatsAmount];

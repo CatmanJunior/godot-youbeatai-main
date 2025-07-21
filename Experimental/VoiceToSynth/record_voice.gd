@@ -20,7 +20,8 @@ func _ready():
 	# as an "AudioEffectRecord" resource.
 	recorder = AudioServer.get_bus_effect(idx, 1) 
 	samples.resize(10)
-	samples.fill(PackedVector3Array())
+	for index in range(len(samples)):
+		samples[index] = PackedVector3Array([])
 	
 	bpmManager.OnBeatEvent.connect(_on_timer_timeout)
 	bpmManager.OnPlayingChanged.connect(_on_playing_changed)
@@ -30,6 +31,7 @@ func _on_timer_timeout():
 		_synth.start()
 
 	if bpmManager.currentBeat >= len(get_sample()):
+		_synth.volume = 0
 		return
 	
 	var current = get_sample()[bpmManager.currentBeat]
@@ -59,6 +61,7 @@ func _on_envelope_level_changed(level: float):
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
+	print(layer)
 
 func on_microphone_input(volume: float, frequency: float):
 	if not recorder.is_recording_active():

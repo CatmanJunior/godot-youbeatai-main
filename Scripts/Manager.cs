@@ -21,7 +21,7 @@ public partial class Manager : Node
 
     float beatScale32 = 1;
     float beatScale16 = 1.6f;
-    float beatScale8 = 1;
+    float beatScale8 = 1.6f;
 
     private static bool ReadUseTutorial()
     {
@@ -165,7 +165,6 @@ public partial class Manager : Node
     [Export] Button LoadLayoutButton;
     [Export] Button ClearLayoutButton;
     [Export] public Button PlayPauseButton;
-    [Export] public Button ResetPlayerButton;
     [Export] Button BpmUpButton;
     [Export] Button BpmDownButton;
 
@@ -190,6 +189,10 @@ public partial class Manager : Node
     [Export] CheckButton add_beats;
     [Export] Slider volume_treshold;
 
+    [Export] Panel settingsPanel;
+    [Export] Button settingsButton;
+    [Export] Button settingsBackButton;
+
     // other interface
     [Export] Button skiptutorialbutton;
     [Export] ProgressBar progressBar;
@@ -203,8 +206,7 @@ public partial class Manager : Node
     public int holdingforring;
     [Export] Slider swingslider;
     [Export] Label swinglabel;
-    [Export] Button settingsButton;
-    [Export] Panel settingsPanel;
+    
     [Export] Slider ClapBiasSlider;
     [Export] Panel achievementspanel;
     [Export] public CheckButton layerLoopToggle;
@@ -281,12 +283,12 @@ public partial class Manager : Node
 
     public void OnBpmUpButton()
     {
-        if (bpm_manager.bpm < 300) bpm_manager.bpm += 10;
+        if (bpm_manager.bpm < 300) bpm_manager.bpm += 5;
         haschangedbpm = true;
     }
     public void OnBpmDownButton()
     {
-        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 10;
+        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 5;
         haschangedbpm = true;
     }
     public void OnResetPlayerButton() => bpm_manager.currentBeat = BpmManager.beatsAmount - 1;
@@ -616,14 +618,15 @@ public partial class Manager : Node
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
 
-        string final_name = "export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
 
-        string beats_name = "beats";
-        string song_name = "song";
-        string layers0_name = "layers0";
-        string layers1_name = "layers1";
-        string layers_combined_name = "layers_combined";
-        string beats_with_song_name = "beats_with_song";
+        string final_name = user("export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime);
+        string beats_name = user("beats");
+        string song_name = user("song");
+        string layers0_name = user("layers0");
+        string layers1_name = user("layers1");
+        string layers_combined_name = user("layers_combined");
+        string beats_with_song_name = user("beats_with_song");
 
         int sampleRate = 48000;
         float secondsPerBeat = BpmManager.instance.baseTimePerBeat * 2;
@@ -683,7 +686,7 @@ public partial class Manager : Node
         AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
-            string name = "layer" + i.ToString() + "a.wav";
+            string name = user("layer" + i.ToString() + "a.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers0[i];
             if (audioStreamWav != null)
             {
@@ -710,16 +713,16 @@ public partial class Manager : Node
         }
         List<string> layer0_inputs =
         [
-            "layer0a.wav",
-            "layer1a.wav",
-            "layer2a.wav",
-            "layer3a.wav",
-            "layer4a.wav",
-            "layer5a.wav",
-            "layer6a.wav",
-            "layer7a.wav",
-            "layer8a.wav",
-            "layer9a.wav"
+            user("layer0a.wav"),
+            user("layer1a.wav"),
+            user("layer2a.wav"),
+            user("layer3a.wav"),
+            user("layer4a.wav"),
+            user("layer5a.wav"),
+            user("layer6a.wav"),
+            user("layer7a.wav"),
+            user("layer8a.wav"),
+            user("layer9a.wav")
         ];
         using (var firstReader = new WaveFileReader(layer0_inputs[0]))
         {
@@ -736,7 +739,7 @@ public partial class Manager : Node
         AudioStream[] voiceovers1 = layerVoiceOver1.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
-            string name = "layer" + i.ToString() + "b.wav";
+            string name = user("layer" + i.ToString() + "b.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers1[i];
             if (audioStreamWav != null)
             {
@@ -763,16 +766,16 @@ public partial class Manager : Node
         }
         List<string> layer1_inputs =
         [
-            "layer0b.wav",
-            "layer1b.wav",
-            "layer2b.wav",
-            "layer3b.wav",
-            "layer4b.wav",
-            "layer5b.wav",
-            "layer6b.wav",
-            "layer7b.wav",
-            "layer8b.wav",
-            "layer9b.wav"
+            user("layer0b.wav"),
+            user("layer1b.wav"),
+            user("layer2b.wav"),
+            user("layer3b.wav"),
+            user("layer4b.wav"),
+            user("layer5b.wav"),
+            user("layer6b.wav"),
+            user("layer7b.wav"),
+            user("layer8b.wav"),
+            user("layer9b.wav")
         ];
         using (var firstReader = new WaveFileReader(layer1_inputs[0]))
         {
@@ -807,15 +810,22 @@ public partial class Manager : Node
         if (song != null) File.Delete(song_name + ".wav");
         File.Delete(beats_with_song_name + ".wav");
 
-        // convert
-        ConvertWavToMp3(final_name);
-
-        // finish
         ShowSavingLabel(final_name);
         hassavedtofile = true;
+        
+        if (OS.GetName() == "Windows") // convert to mp3 with naudio
+        {
+            // convert
+            ConvertWavToMp3(final_name);
 
-        // send to email
-        if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
+            // send to email
+            if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
+        }
+        if (OS.GetName() == "Android") // avoid naudio, send plain wav file
+        {
+            // send to email
+            if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
+        }
     }
 
     async void SendToEmail(string final_name, string to)
@@ -1151,7 +1161,7 @@ public partial class Manager : Node
         layerButton9.Pressed += () => SwitchLayer(9);
         layerButton10.Pressed += () => SwitchLayer(10);
 
-        allLayersToMp3.Pressed += OpenEmailPrompt;
+        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AllLayersToMp3;
 
         muteSpeach.Pressed += DisplayServer.TtsStop;
@@ -1179,7 +1189,6 @@ public partial class Manager : Node
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
         saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
-        ResetPlayerButton.Pressed += () => { OnResetPlayerButton(); bpm_manager.playing = true; };
 
         // skipping / ending the tutorial
         skiptutorialbutton.Pressed += () =>
@@ -1207,6 +1216,7 @@ public partial class Manager : Node
 
         // settings panel
         settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
+        settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 
         // spawn sprites
         beatSprites = new Sprite2D[4, BpmManager.beatsAmount];
@@ -1343,7 +1353,7 @@ public partial class Manager : Node
         [
             () => { SetRingVisibility(0, true); cross.Visible = true; SetRobotNormal(); },
             null,
-            () => { PlayPauseButton.Visible = true; ResetPlayerButton.Visible = true;},
+            () => PlayPauseButton.Visible = true,
             () => progressBar.Visible = true,
             () => SetRingVisibility(1, true),
             null,
@@ -2005,6 +2015,10 @@ public partial class Manager : Node
         {
             distance = (4 - ring) * 45 + 56;
         }
+        else if (BpmManager.beatsAmount == 8)
+        {
+            distance = (4 - ring) * 45 + 56;
+        }
 
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
     }
@@ -2119,7 +2133,6 @@ public partial class Manager : Node
         SaveLayoutButton.Visible = visible;
         LoadLayoutButton.Visible = visible;
         ClearLayoutButton.Visible = visible;
-        ResetPlayerButton.Visible = visible;
     }
 
     void SetEffectButtonsVisibility(bool visible)

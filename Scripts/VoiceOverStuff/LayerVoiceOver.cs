@@ -54,7 +54,7 @@ public partial class LayerVoiceOver : Node
 
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
-			OnTop();
+			//OnTop();
 		};
 
 		// init record button
@@ -172,7 +172,6 @@ public partial class LayerVoiceOver : Node
 		langzamerButton.Disabled = true;
 		Manager.instance.SetLayerSwitchButtonsEnabled(false);
 		Manager.instance.PlayPauseButton.Disabled = true;
-		Manager.instance.ResetPlayerButton.Disabled = true;
 		recordLayerButton.Disabled = true;
 		SongVoiceOver.instance.recordSongButton.Disabled = true;
 
@@ -195,7 +194,6 @@ public partial class LayerVoiceOver : Node
 		langzamerButton.Disabled= false;
 		Manager.instance.SetLayerSwitchButtonsEnabled(true);
 		Manager.instance.PlayPauseButton.Disabled = false;
-		Manager.instance.ResetPlayerButton.Disabled = false;
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
 

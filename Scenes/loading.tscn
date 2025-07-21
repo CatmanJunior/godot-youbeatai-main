@@ -17,7 +17,7 @@ offset_right = 990.0
 offset_bottom = 319.0
 pivot_offset = Vector2(350, 50)
 theme_override_font_sizes/font_size = 48
-text = "Het spel is aan het laden....."
+text = "Nog even geduld....."
 horizontal_alignment = 1
 vertical_alignment = 1
 

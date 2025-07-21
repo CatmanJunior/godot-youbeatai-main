@@ -5,25 +5,25 @@
 
 [node name="scene" type="Node2D"]
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 427.0
-offset_top = 138.0
-offset_right = 767.0
-offset_bottom = 636.0
+offset_left = 335.0
+offset_top = 32.0
+offset_right = 675.0
+offset_bottom = 530.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.29699, 1.29699)
 script = ExtResource("1_l0fe3")
-accousticSlider = NodePath("AcousticSlider")
 emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle"), NodePath("Emoties/emotion7/toggle")]
 themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
 gebruikButton = NodePath("GebruikButton")
 gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
-hoeveelBeats = NodePath("../OtherSelectionMenu/HoeveelBeats/OptionButton")
+hoeveelBeats = NodePath("../OtherSelectionMenu/OptionButton")
 
 [node name="GebruikButton" type="Button" parent="SoundBankSelectionMenu"]
 layout_mode = 1
@@ -32,15 +32,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -71.0
-offset_top = 121.5
-offset_right = 61.0
-offset_bottom = 156.5
+offset_left = -94.0
+offset_top = 99.0
+offset_right = 85.0
+offset_bottom = 141.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 disabled = true
-text = "Gebruik
+text = "✅ Gebruik
 "
 
 [node name="TitleLabel" type="Label" parent="SoundBankSelectionMenu"]
@@ -51,88 +51,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -160.0
-offset_top = -257.0
+offset_top = -250.832
 offset_right = 160.0
-offset_bottom = -197.0
+offset_bottom = -190.832
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 26
-text = "Sound Bank Kiezen:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AcousticSlider" type="HSlider" parent="SoundBankSelectionMenu"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -84.0
-offset_top = -172.0
-offset_right = 77.0
-offset_bottom = -147.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-max_value = 1.0
-step = 0.1
-value = 0.5
-
-[node name="Title" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -108.5
-offset_top = -46.5
-offset_right = 112.5
-offset_bottom = -1.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-text = "Acoustisch / Electronish"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Icon1" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.5
-offset_top = -18.5
-offset_right = -84.5
-offset_bottom = 26.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-theme_override_font_sizes/font_size = 32
-text = "🏕️"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Icon2" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 77.5
-offset_top = -16.5
-offset_right = 121.5
-offset_bottom = 28.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-theme_override_font_sizes/font_size = 32
-text = "🪩"
+text = "Wat voor liedje wil je?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -144,12 +70,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -115.5
-offset_top = -142.0
+offset_top = -179.009
 offset_right = 105.5
-offset_bottom = -97.0
+offset_bottom = -134.009
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 25
 text = "Emoties"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -309,12 +236,13 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -115.5
-offset_top = -47.0
+offset_top = -65.5044
 offset_right = 105.5
-offset_bottom = -2.0
+offset_bottom = -20.5044
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 25
 text = "Themas"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -574,9 +502,9 @@ focus_mode = 0
 [node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu"]
 layout_mode = 0
 offset_left = 14.0
-offset_top = 419.0
+offset_top = 406.664
 offset_right = 324.0
-offset_bottom = 457.0
+offset_bottom = 444.664
 theme = ExtResource("2_ie3tb")
 text = "Gevonden Soundbank:"
 horizontal_alignment = 1
@@ -601,12 +529,13 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 795.0
 offset_top = 138.0
-offset_right = 998.0
-offset_bottom = 391.0
+offset_right = 1092.0
+offset_bottom = 355.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="OtherSelectionMenu"]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -632,24 +561,26 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -114.5
-offset_top = -79.5
-offset_right = 46.5
-offset_bottom = -34.5
+offset_left = -121.5
+offset_top = -101.5
+offset_right = 51.5
+offset_bottom = -65.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.44248, 1.44248)
 theme = ExtResource("2_ie3tb")
 text = "Hoeveel beats:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="OptionButton" type="OptionButton" parent="OtherSelectionMenu/HoeveelBeats"]
+[node name="OptionButton" type="OptionButton" parent="OtherSelectionMenu"]
 layout_mode = 0
-offset_left = 139.0
-offset_top = 10.0
-offset_right = 189.0
-offset_bottom = 34.0
+offset_left = 58.0
+offset_top = 68.0
+offset_right = 258.0
+offset_bottom = 108.0
 focus_mode = 0
+theme_override_font_sizes/font_size = 28
 selected = 1
 item_count = 3
 popup/item_0/text = "32"

@@ -43,7 +43,7 @@ public partial class Loading : Panel
         while (!isloaded)
         {
             isloaded = ResourceLoader.LoadThreadedGetStatus("res://Scenes/main.tscn") == ResourceLoader.ThreadLoadStatus.Loaded;
-            await Task.Delay(1000);
+            await Task.Delay(100);
         }
 
         // if async loading is done, switch the scene

@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8n1g4l4jrv6d"]
+[gd_scene load_steps=3 format=3 uid="uid://b8n1g4l4jrv6d"]
 
 [ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ie3tb"]
-[ext_resource type="Script" uid="uid://cxpjksw7ppq0a" path="res://Scripts/OptionButton.cs" id="3_a7rio"]
 
 [node name="scene" type="Node2D"]
 
@@ -666,4 +665,3 @@ popup/item_1/text = "16"
 popup/item_1/id = 1
 popup/item_2/text = "8"
 popup/item_2/id = 2
-script = ExtResource("3_a7rio")

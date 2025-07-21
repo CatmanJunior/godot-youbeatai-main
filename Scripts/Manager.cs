@@ -616,16 +616,19 @@ public partial class Manager : Node
 
     public void SaveSongAsFile(List<bool[,]> loops)
     {
+        settingsPanel.Visible = false;
+
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
 
-        string final_name = "export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
 
-        string beats_name = "beats";
-        string song_name = "song";
-        string layers0_name = "layers0";
-        string layers1_name = "layers1";
-        string layers_combined_name = "layers_combined";
-        string beats_with_song_name = "beats_with_song";
+        string final_name = user("export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime);
+        string beats_name = user("beats");
+        string song_name = user("song");
+        string layers0_name = user("layers0");
+        string layers1_name = user("layers1");
+        string layers_combined_name = user("layers_combined");
+        string beats_with_song_name = user("beats_with_song");
 
         int sampleRate = 48000;
         float secondsPerBeat = BpmManager.instance.baseTimePerBeat * 2;
@@ -685,7 +688,7 @@ public partial class Manager : Node
         AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
-            string name = "layer" + i.ToString() + "a.wav";
+            string name = user("layer" + i.ToString() + "a.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers0[i];
             if (audioStreamWav != null)
             {
@@ -712,16 +715,16 @@ public partial class Manager : Node
         }
         List<string> layer0_inputs =
         [
-            "layer0a.wav",
-            "layer1a.wav",
-            "layer2a.wav",
-            "layer3a.wav",
-            "layer4a.wav",
-            "layer5a.wav",
-            "layer6a.wav",
-            "layer7a.wav",
-            "layer8a.wav",
-            "layer9a.wav"
+            user("layer0a.wav"),
+            user("layer1a.wav"),
+            user("layer2a.wav"),
+            user("layer3a.wav"),
+            user("layer4a.wav"),
+            user("layer5a.wav"),
+            user("layer6a.wav"),
+            user("layer7a.wav"),
+            user("layer8a.wav"),
+            user("layer9a.wav")
         ];
         using (var firstReader = new WaveFileReader(layer0_inputs[0]))
         {
@@ -738,7 +741,7 @@ public partial class Manager : Node
         AudioStream[] voiceovers1 = layerVoiceOver1.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
-            string name = "layer" + i.ToString() + "b.wav";
+            string name = user("layer" + i.ToString() + "b.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers1[i];
             if (audioStreamWav != null)
             {
@@ -765,16 +768,16 @@ public partial class Manager : Node
         }
         List<string> layer1_inputs =
         [
-            "layer0b.wav",
-            "layer1b.wav",
-            "layer2b.wav",
-            "layer3b.wav",
-            "layer4b.wav",
-            "layer5b.wav",
-            "layer6b.wav",
-            "layer7b.wav",
-            "layer8b.wav",
-            "layer9b.wav"
+            user("layer0b.wav"),
+            user("layer1b.wav"),
+            user("layer2b.wav"),
+            user("layer3b.wav"),
+            user("layer4b.wav"),
+            user("layer5b.wav"),
+            user("layer6b.wav"),
+            user("layer7b.wav"),
+            user("layer8b.wav"),
+            user("layer9b.wav")
         ];
         using (var firstReader = new WaveFileReader(layer1_inputs[0]))
         {

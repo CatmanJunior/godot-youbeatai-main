@@ -616,8 +616,6 @@ public partial class Manager : Node
 
     public void SaveSongAsFile(List<bool[,]> loops)
     {
-        settingsPanel.Visible = false;
-
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
 
         var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
@@ -812,15 +810,22 @@ public partial class Manager : Node
         if (song != null) File.Delete(song_name + ".wav");
         File.Delete(beats_with_song_name + ".wav");
 
-        // convert
-        ConvertWavToMp3(final_name);
-
-        // finish
         ShowSavingLabel(final_name);
         hassavedtofile = true;
+        
+        if (OS.GetName() == "Windows") // convert to mp3 with naudio
+        {
+            // convert
+            ConvertWavToMp3(final_name);
 
-        // send to email
-        if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
+            // send to email
+            if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
+        }
+        if (OS.GetName() == "Android") // avoid naudio, send plain wav file
+        {
+            // send to email
+            if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
+        }
     }
 
     async void SendToEmail(string final_name, string to)
@@ -1156,7 +1161,7 @@ public partial class Manager : Node
         layerButton9.Pressed += () => SwitchLayer(9);
         layerButton10.Pressed += () => SwitchLayer(10);
 
-        allLayersToMp3.Pressed += OpenEmailPrompt;
+        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AllLayersToMp3;
 
         muteSpeach.Pressed += DisplayServer.TtsStop;

@@ -16,14 +16,19 @@ var time: float = 0
 func _process(delta):
 	time += delta
 
+	update_envelope()
+
+func play() -> float:
+	time = 0
+	update_envelope()
+	return current_level
+
+func get_duration():
+	return attack_time + decay_time + sustain_time + release_time
+
+func update_envelope():
 	var attack = lerpf( 0.0, 1.0, clampf(time/max(attack_time,0.001), 0.0, 1.0) )
 	var sustain = lerpf( 1.0, sustain_level, clampf((time-attack_time)/max(decay_time,0.001), 0.0, 1.0) )
 	var release = lerpf( 1.0, 0.0, clampf((time - attack_time - decay_time - sustain_time) /max(0.001,release_time), 0.0, 1.0) )
 	current_level = attack * sustain * release
 	level_changed.emit(current_level)
-
-func play():
-	time = 0
-
-func get_duration():
-	return attack_time + decay_time + sustain_time + release_time

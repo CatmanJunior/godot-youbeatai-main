@@ -82,7 +82,7 @@ func stop_recording():
 	print("recording data length %d" % [len(data)])
 
 	get_sample().clear()
-	var beatDuration = 60.0/bpmManager.bpm
+	var beatDuration = 60.0/bpmManager.bpm /4.0
 	
 	# TODO: reduce array size with needed kernel
 	# kernel size should maybe be depend on reduction amount?

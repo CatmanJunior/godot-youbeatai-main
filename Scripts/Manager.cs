@@ -1705,8 +1705,8 @@ public partial class Manager : Node
     {
         if (metronome_sfx_enabled)
         {
-           if (BpmManager.instance.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
-           else PlayExtraSFX(metronomealt_sfx);
+            int beatsPerQuarter = BpmManager.beatsAmount / 4;
+            if (BpmManager.instance.currentBeat % beatsPerQuarter == 0) PlayExtraSFX(metronome_sfx);
         }
 
         if (beatActives[0, BpmManager.instance.currentBeat]) firstAudioPlayer.Play();

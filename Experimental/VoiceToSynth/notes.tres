@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="Notes" load_steps=143 format=3 uid="uid://c0la6lq62g4pv"]
 
-[ext_resource type="Script" uid="uid://cga5k43vl7kxt" path="res://Experimental/VoiceToSynth/notes.gd" id="1_etwnv"]
-[ext_resource type="Script" uid="uid://du6imj65cyna5" path="res://Experimental/VoiceToSynth/Octave.gd" id="1_h5r0s"]
-[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="2_ce618"]
+[ext_resource type="Script" path="res://Experimental/VoiceToSynth/notes.gd" id="1_etwnv"]
+[ext_resource type="Script" path="res://Experimental/VoiceToSynth/Octave.gd" id="1_h5r0s"]
+[ext_resource type="Script" path="res://Experimental/VoiceToSynth/Note.gd" id="2_ce618"]
 
 [sub_resource type="Resource" id="Resource_h5r0s"]
 script = ExtResource("2_ce618")

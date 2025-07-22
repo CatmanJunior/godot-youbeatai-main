@@ -17,231 +17,21 @@ public partial class Manager : Node
     public static Manager instance = null;
 
     #region Ready
+
     public override void _Ready()
     {
-        // init singleton
         instance ??= this;
-
-        var label1 = layerLoopToggle.GetChild(0) as Label;
-        label1.GuiInput += args =>
-        {
-            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
-        };
-
         BpmManager.instance.OnBeatEvent += OnBeat;
-
-        // deserialize chosen soundbank
-        string chosen_soundbank_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
-        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
-        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
-
-        // deserialize chosen emoticons
-        string chosen_emoticons_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
-        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
-        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
-        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
-
-        // grab audio files -> res://Resources/Audio/SoundBanks/
-        string soundbankname = chosenSoundBank.name;
-        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
-        DirAccess baseDir = DirAccess.Open(baseDirPath);
-        baseDir.ListDirBegin();
-        string folderName;
-        while ((folderName = baseDir.GetNext()) != "")
-        {
-            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
-            {
-                // main audio files
-                {
-                    string major_dir = baseDirPath + folderName + "/";
-                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
-                    string file;
-                    for (int i = 0; i < major_files.Length; ++i)
-                    {
-                        file = major_files[i];
-                        if (file.EndsWith(".wav"))
-                        {
-                            string lower = file.ToLower();
-                            string fullPath = major_dir + file;
-                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
-                    }
-                }
-
-                // alt audio files
-                {
-                    string minor_dir = baseDirPath + folderName + "/mineur/";
-                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
-                    string file;
-                    for (int i = 0; i < major_files.Length; ++i)
-                    {
-                        file = major_files[i];
-                        if (file.EndsWith(".wav"))
-                        {
-                            string lower = file.ToLower();
-                            string fullPath = minor_dir + file;
-                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
-                    }
-                }
-
-                break;
-            }
-        }
-        baseDir.ListDirEnd();
-
-        // set swing
-        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
-        BpmManager.instance.swing = chosenswing;
-        startswing = chosenswing;
-        swingslider.Value = chosenswing;
-
-        // set bpm offset
-        if (!useTutorial)
-        {
-            int offset = 0;
-            string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
-            string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
-            Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
-            foreach (string theme in chosenSoundBank.themes)
-            {
-                offset += int.Parse(offsetLookup[theme]);
-                GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
-            }
-            BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
-        }
-        else
-        {
-            BpmManager.instance.bpm = chosenSoundBank.bpm;
-        }
-
-        // delete tmep json files
-        File.Delete(chosen_emoticons_path);
-        File.Delete(chosen_soundbank_path);
-
-        // init audioplayers
-        sfxAudioPlayer = new AudioStreamPlayer2D();
-        AddChild(sfxAudioPlayer);
-
-        // main
-        firstAudioPlayer = new AudioStreamPlayer2D();
-        secondAudioPlayer = new AudioStreamPlayer2D();
-        thirdAudioPlayer = new AudioStreamPlayer2D();
-        fourthAudioPlayer = new AudioStreamPlayer2D();
-        AddChild(firstAudioPlayer);
-        AddChild(secondAudioPlayer);
-        AddChild(thirdAudioPlayer);
-        AddChild(fourthAudioPlayer);
-
-        // alt
-        firstAudioPlayerAlt = new AudioStreamPlayer2D();
-        secondAudioPlayerAlt = new AudioStreamPlayer2D();
-        thirdAudioPlayerAlt = new AudioStreamPlayer2D();
-        fourthAudioPlayerAlt = new AudioStreamPlayer2D();
-        AddChild(firstAudioPlayerAlt);
-        AddChild(secondAudioPlayerAlt);
-        AddChild(thirdAudioPlayerAlt);
-        AddChild(fourthAudioPlayerAlt);
-
-        // rec
-        firstAudioPlayerRec = new AudioStreamPlayer2D();
-        secondAudioPlayerRec = new AudioStreamPlayer2D();
-        thirdAudioPlayerRec = new AudioStreamPlayer2D();
-        fourthAudioPlayerRec = new AudioStreamPlayer2D();
-        AddChild(firstAudioPlayerRec);
-        AddChild(secondAudioPlayerRec);
-        AddChild(thirdAudioPlayerRec);
-        AddChild(fourthAudioPlayerRec);
-
-        firstAudioPlayer.Stream = mainAudioFiles[0];
-        secondAudioPlayer.Stream = mainAudioFiles[1];
-        thirdAudioPlayer.Stream = mainAudioFiles[2];
-        fourthAudioPlayer.Stream = mainAudioFiles[3];
-
-        firstAudioPlayerAlt.Stream = mainAudioFilesAlt[0];
-        secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
-        thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
-        fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
-
-        // mixers setup -------------------------------------------------
-
-
-
-
-
-        SetupMixer(sampleMixer0, 0);
-        SetupMixer(sampleMixer1, 1);
-        SetupMixer(sampleMixer2, 2);
-        SetupMixer(sampleMixer3, 3);
-
-        // mixers setup -------------------------------------------------
-
-        layerButton1.Pressed += () => SwitchLayer(1);
-        layerButton2.Pressed += () => SwitchLayer(2);
-        layerButton3.Pressed += () => SwitchLayer(3);
-        layerButton4.Pressed += () => SwitchLayer(4);
-        layerButton5.Pressed += () => SwitchLayer(5);
-        layerButton6.Pressed += () => SwitchLayer(6);
-        layerButton7.Pressed += () => SwitchLayer(7);
-        layerButton8.Pressed += () => SwitchLayer(8);
-        layerButton9.Pressed += () => SwitchLayer(9);
-        layerButton10.Pressed += () => SwitchLayer(10);
-
-        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
-        emailEnter.Pressed += AllLayersToMp3;
-
-        muteSpeach.Pressed += DisplayServer.TtsStop;
-
-
-
-        SaveLayoutButton.Pressed += OnSaveLayoutButton;
-        LoadLayoutButton.Pressed += OnLoadLayoutButton;
-
-        restartButton.Pressed += () =>
-        {
-            if (Engine.IsEditorHint())
-            {
-                GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
-            }
-            else
-            {
-                OS.Execute(OS.GetExecutablePath(), []);
-                GetTree().Quit();
-            }
-        };
-
-        ClearLayoutButton.Pressed += OnClearLayoutButton;
-        PlayPauseButton.Pressed += OnPlayPauseButton;
-        BpmUpButton.Pressed += OnBpmUpButton;
-        BpmDownButton.Pressed += OnBpmDownButton;
-        saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
-
-        // skipping the tutorial
-        skiptutorialbutton.Pressed += () =>
-        {
-            achievementLevel = -1;
-            SetEntireInterfaceVisibility(true);
-            achievementspanel.Visible = false;
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        };
-
-        // settings panel
-        settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-        settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-
+        ReadJsonFromPreviousSceneAndSetValues();
+        InitAllAudioPlayers();
+        SetupAllMixers();
+        InitButtonActions();
         SpritePlacement();
         SetupTutorial();
     }
-
-    #endregion
     
+    #endregion
+
     #region Process
     public override void _Process(double delta)
     {
@@ -616,6 +406,46 @@ public partial class Manager : Node
     public AudioStreamPlayer2D thirdAudioPlayerRec;
     public AudioStreamPlayer2D fourthAudioPlayerRec;
     public AudioStreamPlayer2D sfxAudioPlayer;
+
+    private void InitAllAudioPlayers()
+    {
+        // init audioplayers
+        sfxAudioPlayer = new AudioStreamPlayer2D();
+        AddChild(sfxAudioPlayer);
+        firstAudioPlayer = new AudioStreamPlayer2D();
+        secondAudioPlayer = new AudioStreamPlayer2D();
+        thirdAudioPlayer = new AudioStreamPlayer2D();
+        fourthAudioPlayer = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayer);
+        AddChild(secondAudioPlayer);
+        AddChild(thirdAudioPlayer);
+        AddChild(fourthAudioPlayer);
+        firstAudioPlayerAlt = new AudioStreamPlayer2D();
+        secondAudioPlayerAlt = new AudioStreamPlayer2D();
+        thirdAudioPlayerAlt = new AudioStreamPlayer2D();
+        fourthAudioPlayerAlt = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayerAlt);
+        AddChild(secondAudioPlayerAlt);
+        AddChild(thirdAudioPlayerAlt);
+        AddChild(fourthAudioPlayerAlt);
+        firstAudioPlayerRec = new AudioStreamPlayer2D();
+        secondAudioPlayerRec = new AudioStreamPlayer2D();
+        thirdAudioPlayerRec = new AudioStreamPlayer2D();
+        fourthAudioPlayerRec = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayerRec);
+        AddChild(secondAudioPlayerRec);
+        AddChild(thirdAudioPlayerRec);
+        AddChild(fourthAudioPlayerRec);
+        firstAudioPlayer.Stream = mainAudioFiles[0];
+        secondAudioPlayer.Stream = mainAudioFiles[1];
+        thirdAudioPlayer.Stream = mainAudioFiles[2];
+        fourthAudioPlayer.Stream = mainAudioFiles[3];
+        firstAudioPlayerAlt.Stream = mainAudioFilesAlt[0];
+        secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
+        thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
+        fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
+    }
+
     #endregion
 
     #region AudioFiles
@@ -768,6 +598,56 @@ public partial class Manager : Node
     [Export] Sprite2D layerOutline;
     [Export] Node2D layerOutlineHolder;
 
+    private void InitButtonActions()
+    {
+        layerButton1.Pressed += () => SwitchLayer(1);
+        layerButton2.Pressed += () => SwitchLayer(2);
+        layerButton3.Pressed += () => SwitchLayer(3);
+        layerButton4.Pressed += () => SwitchLayer(4);
+        layerButton5.Pressed += () => SwitchLayer(5);
+        layerButton6.Pressed += () => SwitchLayer(6);
+        layerButton7.Pressed += () => SwitchLayer(7);
+        layerButton8.Pressed += () => SwitchLayer(8);
+        layerButton9.Pressed += () => SwitchLayer(9);
+        layerButton10.Pressed += () => SwitchLayer(10);
+        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
+        emailEnter.Pressed += AllLayersToMp3;
+        muteSpeach.Pressed += DisplayServer.TtsStop;
+        SaveLayoutButton.Pressed += OnSaveLayoutButton;
+        LoadLayoutButton.Pressed += OnLoadLayoutButton;
+        restartButton.Pressed += () =>
+        {
+            if (Engine.IsEditorHint()) GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
+            else
+            {
+                OS.Execute(OS.GetExecutablePath(), []);
+                GetTree().Quit();
+            }
+        };
+        ClearLayoutButton.Pressed += OnClearLayoutButton;
+        PlayPauseButton.Pressed += OnPlayPauseButton;
+        BpmUpButton.Pressed += OnBpmUpButton;
+        BpmDownButton.Pressed += OnBpmDownButton;
+        saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
+        skiptutorialbutton.Pressed += () =>
+        {
+            achievementLevel = -1;
+            SetEntireInterfaceVisibility(true);
+            achievementspanel.Visible = false;
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        };
+        settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
+        settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
+        var label1 = layerLoopToggle.GetChild(0) as Label;
+        label1.GuiInput += args =>
+        {
+            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+            {
+                layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+            }
+        };
+    }
+
     #endregion
 
     #region Layers
@@ -835,6 +715,108 @@ public partial class Manager : Node
             }
         }
         return false;
+    }
+
+    #endregion
+
+    #region AudioBankJson
+
+    private void ReadJsonFromPreviousSceneAndSetValues()
+    {
+        // deserialize chosen soundbank
+        string chosen_soundbank_path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
+        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
+        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
+
+        // deserialize chosen emoticons
+        string chosen_emoticons_path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
+        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
+        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
+        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
+
+        // grab audio files -> res://Resources/Audio/SoundBanks/
+        string soundbankname = chosenSoundBank.name;
+        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
+        DirAccess baseDir = DirAccess.Open(baseDirPath);
+        baseDir.ListDirBegin();
+        string folderName;
+        while ((folderName = baseDir.GetNext()) != "")
+        {
+            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
+            {
+                // main audio files
+                {
+                    string major_dir = baseDirPath + folderName + "/";
+                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
+                    {
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = major_dir + file;
+                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
+                }
+
+                // alt audio files
+                {
+                    string minor_dir = baseDirPath + folderName + "/mineur/";
+                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
+                    {
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = minor_dir + file;
+                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+        baseDir.ListDirEnd();
+
+        // set swing
+        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
+        BpmManager.instance.swing = chosenswing;
+        startswing = chosenswing;
+        swingslider.Value = chosenswing;
+
+        // set bpm offset
+        if (!useTutorial)
+        {
+            int offset = 0;
+            string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
+            string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
+            Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
+            foreach (string theme in chosenSoundBank.themes)
+            {
+                offset += int.Parse(offsetLookup[theme]);
+                GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
+            }
+            BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
+        }
+        else
+        {
+            BpmManager.instance.bpm = chosenSoundBank.bpm;
+        }
+
+        // delete tmep json files
+        File.Delete(chosen_emoticons_path);
+        File.Delete(chosen_soundbank_path);
     }
 
     #endregion
@@ -1409,6 +1391,14 @@ public partial class Manager : Node
     [Export] public Node2D sampleMixer1;
     [Export] public Node2D sampleMixer2;
     [Export] public Node2D sampleMixer3;
+
+    private void SetupAllMixers()
+    {
+        SetupMixer(sampleMixer0, 0);
+        SetupMixer(sampleMixer1, 1);
+        SetupMixer(sampleMixer2, 2);
+        SetupMixer(sampleMixer3, 3);
+    }
 
     public void RotatePivot(float rotation, Node2D pivot, int ring)
     {

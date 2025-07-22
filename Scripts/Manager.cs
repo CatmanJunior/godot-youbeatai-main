@@ -14,49 +14,25 @@ using NAudio.Wave.SampleProviders;
 
 public partial class Manager : Node
 {
-    // singleton
     public static Manager instance = null;
 
-    public bool useTutorial = ReadUseTutorial();
+    #region BeatActives
+    public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
+    public int currentLayerIndex = 0;
+    #endregion
 
-    float beatScale32 = 1;
-    float beatScale16 = 1.6f;
-    float beatScale8 = 1.6f;
-
-    private static bool ReadUseTutorial()
-    {
-        bool use;
-        try
-        {
-            string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
-            string content = File.ReadAllText(path);
-            use = bool.Parse(content);
-            if (File.Exists(path)) File.Delete(path);
-        }
-        catch
-        {
-            use = true;
-        }
-
-        GD.Print("use tutorial: " + use.ToString());
-        
-        return use;
-    }
-
-    // events
+    #region Events
     [Signal] public delegate void OnSwitchLayerEventHandler(int layer);
     [Signal] public delegate void OnShouldClapEventEventHandler();
     [Signal] public delegate void OnShouldStompEventEventHandler();
+    #endregion
 
-    // layer voice overs
+    #region VoiceOver
     [Export] public LayerVoiceOver layerVoiceOver0;
     [Export] public LayerVoiceOver layerVoiceOver1;
-    
-    // unlockables
-    [Export] public Label[] Unlockables;
-    [Export] public Label[] UnlockablesQuestion;
+    #endregion
 
-	// audio stream players
+    #region AudioPlayers
     public AudioStreamPlayer2D firstAudioPlayer;
     public AudioStreamPlayer2D secondAudioPlayer;
     public AudioStreamPlayer2D thirdAudioPlayer;
@@ -69,32 +45,50 @@ public partial class Manager : Node
     public AudioStreamPlayer2D secondAudioPlayerRec;
     public AudioStreamPlayer2D thirdAudioPlayerRec;
     public AudioStreamPlayer2D fourthAudioPlayerRec;
+    public AudioStreamPlayer2D sfxAudioPlayer;
+    #endregion
 
-    // other audio
-    AudioStreamPlayer2D extraAudioPlayer;
+    #region AudioFiles
+    [Export] public AudioStream[] mainAudioFiles;
+    [Export] public AudioStream[] mainAudioFilesAlt;
     [Export] AudioStream metronome_sfx;
     [Export] AudioStream metronomealt_sfx;
     [Export] AudioStream achievement_sfx;
-    bool metronome_sfx_enabled = false;
+    #endregion
 
-    // sample mixers
-    [Export] public Node2D sampleMixer0;
-    [Export] public Node2D sampleMixer1;
-    [Export] public Node2D sampleMixer2;
-    [Export] public Node2D sampleMixer3;
-
-    // saving
-    [Export] public AudioStream[] mainAudioFiles;
-    [Export] public AudioStream[] mainAudioFilesAlt;
-
-    // other
-    [Export] public Button restartButton;
-    [Export] public CheckButton muteSpeach;
-    [Export] Button saveToWavButton;
+    #region Other
+    bool loadedtemplate = false;
     bool hassavedtofile = false;
-    [Export] Label chosen_emoticons_label;
+    bool metronome_sfx_enabled = false;
+    bool up_pressed = false;
+	bool up_pressed_lastframe = false;
+    bool dn_pressed = false;
+	bool dn_pressed_lastframe = false;
+    bool lf_pressed = false;
+	bool lf_pressed_lastframe = false;
+    bool rt_pressed = false;
+	bool rt_pressed_lastframe = false;
+    bool f7_pressed = false;
+	bool f7_pressed_lastframe = false;
+    float time = 0;
+    float slowBeatTimer = 0;
+    bool first_tts_done = false;
+    private bool _ctrlCWasPressed = false;
+    private bool _ctrlVWasPressed = false;
+    public bool showTemplate = false;
+    public bool selectedTemplate = false;
+    bool haschangedbpm = false;
+    bool hasclearedlayout = false;
+    private bool spacedownlastframe = false;
+    private bool enterdownlastframe = false;
+    float timeafterplay = 0;
+    bool savedToLaout = false;
+    [Export] public Color[] colors;
+    [Export] PointLight2D robotlight;
+    private float startswing;
+    #endregion
 
-    // particles
+    #region Particles
     [Export] public CpuParticles2D beat_particles;
     private Vector2 beat_particles_position;
     private float beat_particles_time;
@@ -109,18 +103,6 @@ public partial class Manager : Node
     private float achievement_particles_time;
     private float achievement_particles_curtime;
     private bool achievement_particles_emitting = false;
-
-    // switch layer buttons
-    [Export] Button layerButton1;
-    [Export] Button layerButton2;
-    [Export] Button layerButton3;
-    [Export] Button layerButton4;
-    [Export] Button layerButton5;
-    [Export] Button layerButton6;
-    [Export] Button layerButton7;
-    [Export] Button layerButton8;
-    [Export] Button layerButton9;
-    [Export] Button layerButton10;
 
     public void EmitBeatParticles(Vector2 position, Color color)
     {
@@ -144,21 +126,21 @@ public partial class Manager : Node
         achievement_particles_time = 0.5f;
         achievement_particles_emitting = true;
     }
+    #endregion
 
-    // colors
-    [Export] public Color[] colors;
+    #region UserInterface
 
-    // idk
-    [Export] PointLight2D robotlight;
-
-    // beats
-    [Export] PackedScene spritePrefab;
-    [Export] Texture2D texture;
-    [Export] Texture2D outline;
-    Sprite2D[,] beatOutlines;
-    public Sprite2D[,] beatSprites;
-    Sprite2D[,] templateSprites;
-    
+    // switch layer buttons
+    [Export] Button layerButton1;
+    [Export] Button layerButton2;
+    [Export] Button layerButton3;
+    [Export] Button layerButton4;
+    [Export] Button layerButton5;
+    [Export] Button layerButton6;
+    [Export] Button layerButton7;
+    [Export] Button layerButton8;
+    [Export] Button layerButton9;
+    [Export] Button layerButton10;
 
     // left buttons
     [Export] Button SaveLayoutButton;
@@ -178,22 +160,21 @@ public partial class Manager : Node
     [Export] public RecordSampleButton recordSampleButton2;
     [Export] public RecordSampleButton recordSampleButton3;
 
-    BpmManager bpm_manager => BpmManager.instance;
-
-    SoundBank chosenSoundBank = null;
-    List<string> chosenEmoticons = null;
-
-    // settings menu
+    // other interface
+    [Export] public Label[] Unlockables;
+    [Export] public Label[] UnlockablesQuestion;
+    [Export] public Button restartButton;
+    [Export] public CheckButton muteSpeach;
+    [Export] Button saveToWavButton;
+    [Export] public Node2D cross;
+    [Export] Label chosen_emoticons_label;
     [Export] public CheckButton metronome_toggle;
     [Export] ProgressBar micmeter;
     [Export] CheckButton add_beats;
     [Export] Slider volume_treshold;
-
     [Export] Panel settingsPanel;
     [Export] Button settingsButton;
     [Export] Button settingsBackButton;
-
-    // other interface
     [Export] Button skiptutorialbutton;
     [Export] ProgressBar progressBar;
     float progressBarValue = 0;
@@ -206,154 +187,20 @@ public partial class Manager : Node
     public int holdingforring;
     [Export] Slider swingslider;
     [Export] Label swinglabel;
-    
     [Export] Slider ClapBiasSlider;
     [Export] Panel achievementspanel;
     [Export] public CheckButton layerLoopToggle;
     [Export] Label SavingLabel;
     bool savingLabelActive = false;
     float savingLabelTimer = 0;
-
-    // clapping and stomping
-    bool stomped = false;
-    bool clapped = false;
-    int clappedAmount = 0;
-    int stompedAmount = 0;
-
-    // other
-    public bool showTemplate = false;
-    public bool selectedTemplate = false;
-    bool haschangedbpm = false;
-    bool hasclearedlayout = false;
-    private bool spacedownlastframe = false;
-    private bool enterdownlastframe = false;
-    float timeafterplay = 0;
-    bool savedToLaout = false;
-
-    // on button functions
-    bool[,] savedTemplate = new bool[4, BpmManager.beatsAmount];
-
-    bool loadedtemplate = false;
-
-    public void OnSaveLayoutButton()
-    {
-        //GD.Print("save");
-        savedTemplate = (bool[,])beatActives.Clone();
-        savedToLaout = true;
-    }
-
-    public void OnLoadLayoutButton()
-    {
-        //GD.Print("load");
-        beatActives = (bool[,])savedTemplate.Clone();
-        loadedtemplate = true;
-    }
-
-    public void OnClearLayoutButton()
-    {
-        beatActives = new bool[4, BpmManager.beatsAmount];
-        hasclearedlayout = true;
-    }
-
-    public void OnRecordButton() => GD.Print("Record");
-
-    public void OnPlayPauseButton()
-    {
-        bpm_manager.playing = !bpm_manager.playing;
-
-        // pause layer voice over
-        if (layerVoiceOver0.voiceOvers[layerVoiceOver0.currentLayer] != null)
-        {
-            if (layerVoiceOver0.audioPlayer.Playing) layerVoiceOver0.audioPlayer.StreamPaused = true;
-            else layerVoiceOver0.audioPlayer.StreamPaused = false;
-        }
-        if (layerVoiceOver1.voiceOvers[layerVoiceOver1.currentLayer] != null)
-        {
-            if (layerVoiceOver1.audioPlayer.Playing) layerVoiceOver1.audioPlayer.StreamPaused = true;
-            else layerVoiceOver1.audioPlayer.StreamPaused = false;
-        }
-
-        // pause song voice over
-        if (SongVoiceOver.instance.voiceOver != null)
-        {
-            if (SongVoiceOver.instance.audioPlayer.Playing) SongVoiceOver.instance.audioPlayer.StreamPaused = true;
-            else SongVoiceOver.instance.audioPlayer.StreamPaused = false;
-        }
-    }
-
-    public void OnBpmUpButton()
-    {
-        if (bpm_manager.bpm < 300) bpm_manager.bpm += 5;
-        haschangedbpm = true;
-    }
-    public void OnBpmDownButton()
-    {
-        if (bpm_manager.bpm > 40) bpm_manager.bpm -= 5;
-        haschangedbpm = true;
-    }
-    public void OnResetPlayerButton() => bpm_manager.currentBeat = BpmManager.beatsAmount - 1;
-
-    public void ShowSavingLabel(string name)
-    {
-        savingLabelActive = true;
-        savingLabelTimer = 0;
-        SavingLabel.Text = "Opgeslagen naar:" + "\n" + name;
-    }
-
-    private void PlayExtraSFX(AudioStream audioStream)
-    {
-        extraAudioPlayer.Stop();
-        extraAudioPlayer.Stream = audioStream;
-        extraAudioPlayer.Play();
-    }
-
-    // on toggle functions
-    /*
-    private void OnToggled0(bool toggledOn)
-    {
-        firstAudioPlayer.Stop();
-        audioFilesToUse[0] = toggledOn ? recordSampleButton0.recordedAudio : mainAudioFiles[0];
-        firstAudioPlayer.Stream = audioFilesToUse[0];
-    }
-    private void OnToggled1(bool toggledOn)
-    {
-        secondAudioPlayer.Stop();
-        audioFilesToUse[1] = toggledOn ? recordSampleButton1.recordedAudio : mainAudioFiles[1];
-        secondAudioPlayer.Stream = audioFilesToUse[1];
-    }
-    private void OnToggled2(bool toggledOn)
-    {
-        thirdAudioPlayer.Stop();
-        audioFilesToUse[2] = toggledOn ? recordSampleButton2.recordedAudio : mainAudioFiles[2];
-        thirdAudioPlayer.Stream = audioFilesToUse[2];
-    }
-    private void OnToggled3(bool toggledOn)
-    {
-        fourthAudioPlayer.Stop();
-        audioFilesToUse[3] = toggledOn ? recordSampleButton3.recordedAudio : mainAudioFiles[3];
-        fourthAudioPlayer.Stream = audioFilesToUse[3];  
-    }
-    */
-
     [Export] Label InstructionLabel;
-    int achievementLevel = 0;
-
-    string[] instructions = null;
-    Func<bool>[] conditions = null;
-    Action[] outcomes = null;
-
-    [Export] Sprite2D robot;
-
-    // ---------------------------
-
     [Export] Button allLayersToMp3;
-
     [Export] Sprite2D layerOutline;
     [Export] Node2D layerOutlineHolder;
 
-    public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
+    #endregion
 
-    public int currentLayerIndex = 0;
+    #region Layers
 
     public List<bool[,]> layers = new()
     {
@@ -371,13 +218,11 @@ public partial class Manager : Node
 
     public bool[,] GetCurrentLayer() => layers[currentLayerIndex];
     public bool[,] SetCurrentLayer(bool[,] value) => layers[currentLayerIndex] = value;
-
     public void NextLayer()
     {
         if (currentLayerIndex == 9) SwitchLayer(1);
         else SwitchLayer(currentLayerIndex + 2);
     }
-
     public void PreviousLayer()
     {
         if (currentLayerIndex == 0) SwitchLayer(10);
@@ -386,49 +231,27 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
-        // save current layer
         SetCurrentLayer(beatActives);
-        //GD.Print(LayerHasBeats(beatActives));
-
-        // switch to next layer
-        //GD.Print("switch to the " + layerToUse + "th layer");
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
-
-        // update outline
         layerOutlineHolder.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
-
-        // update song voice position
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
-
         EmitSignal(SignalName.OnSwitchLayer, layerToUse);
-
         layerVoiceOver0.SetSmallVolumeline();
         layerVoiceOver1.SetSmallVolumeline();
-
-        layerVoiceOver0.SetBigVolumeline(); // inside
-        layerVoiceOver1.SetBigVolumeline(); // outside
+        layerVoiceOver0.SetBigVolumeline();
+        layerVoiceOver1.SetBigVolumeline();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
     {
         var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
-
-        var fixedcurrentbeat = bpm_manager.currentBeat;
+        var fixedcurrentbeat = BpmManager.instance.currentBeat;
         if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;
-
-        //GD.Print("current beat: " + fixedcurrentbeat);
-
         var timeperbeat = timeperlayer / BpmManager.beatsAmount;
         var beattimeoffset = timeperbeat * fixedcurrentbeat;
-
         var seekpos = currentLayerIndex * timeperlayer + beattimeoffset;
-
-        //GD.Print("beat time offset: " + beattimeoffset);
-
         SongVoiceOver.instance.audioPlayer.Seek(seekpos);
-
-        //GD.Print("layer: " + currentLayerIndex + " - " + "length: " + SongVoiceOver.instance.recordingLength + " - " + "seekpos: " + seekpos);
     }
 
     public bool LayerHasBeats(bool[,] layer)
@@ -444,26 +267,103 @@ public partial class Manager : Node
         return false;
     }
 
+    #endregion
+
+    #region Email
     [Export] public Panel emailPrompt;
     [Export] public TextEdit emailInput;
     [Export] public Button emailEnter;
     public bool emailPromptOpen = false;
-
-    public void AllLayersToMp3()
-    {
-        SetCurrentLayer(beatActives);
-        SaveSongAsFile(layers);
-
-        // set aside email prompt
-        emailPrompt.Position = new Vector2(-2000, emailPrompt.Position.Y);
-        emailPromptOpen = false;
-    }
-
     public void OpenEmailPrompt()
     {
         // show email prompt
         emailPrompt.Position = new Vector2(-128, emailPrompt.Position.Y);
         emailPromptOpen = true;
+    }
+    public void CloseEmailPrompt()
+    {
+        // set aside email prompt
+        emailPrompt.Position = new Vector2(-2000, emailPrompt.Position.Y);
+        emailPromptOpen = false;
+    }
+    #endregion
+
+    #region AudioSaving
+
+    public void AllLayersToMp3()
+    {
+        SetCurrentLayer(beatActives);
+        SaveSongAsFile(layers);
+        CloseEmailPrompt();
+    }
+
+    private void ConvertWavToMp3(string filename)
+    {
+        var reader = new AudioFileReader(filename + ".wav");
+        var writer = new LameMP3FileWriter(filename + ".mp3", reader.WaveFormat, LAMEPreset.STANDARD);
+        reader.CopyTo(writer);
+        reader.Close();
+        writer.Close();
+        File.Delete(filename + ".wav");
+    }
+
+    public static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
+    {
+        // get original audio data
+        var originalData = audioStream.Data;
+        var originalSampleRate = audioStream.MixRate;
+        var stereo = audioStream.Stereo;
+        var originalFormat = audioStream.Format;
+
+        // no resampling or conversion needed
+        if (originalSampleRate == newSampleRate && !stereo) return audioStream; 
+
+        // convert data to float for processing
+        var sampleCount = originalData.Length / sizeof(float);
+        var originalSamples = new float[sampleCount];
+        Buffer.BlockCopy(originalData, 0, originalSamples, 0, originalData.Length);
+
+        // if stereo convert to mono
+        float[] monoSamples;
+        if (stereo)
+        {
+            monoSamples = new float[sampleCount / 2];
+            for (int i = 0; i < monoSamples.Length; i++) monoSamples[i] = (originalSamples[i * 2] + originalSamples[i * 2 + 1]) / 2.0f;
+        }
+        else monoSamples = originalSamples;
+
+        // calc ratio
+        float ratio = (float)newSampleRate / originalSampleRate;
+
+        // create buffer
+        int newSampleCount = (int)(monoSamples.Length * ratio);
+        var resampledSamples = new float[newSampleCount];
+
+        // linear interpolation to resample
+        for (int i = 0; i < newSampleCount; i++)
+        {
+            float originalPosition = i / ratio;
+            int originalIndex = (int)Math.Floor(originalPosition);
+            float frac = originalPosition - originalIndex;
+
+            if (originalIndex < monoSamples.Length - 1) resampledSamples[i] = monoSamples[originalIndex] * (1 - frac) + monoSamples[originalIndex + 1] * frac;
+            else resampledSamples[i] = monoSamples[originalIndex];
+        }
+
+        // resampled data back to byte array
+        var newData = new byte[resampledSamples.Length * sizeof(float)];
+        Buffer.BlockCopy(resampledSamples, 0, newData, 0, newData.Length);
+
+        // create new audiostreamwav with updated sample rate
+        var newAudioStream = new AudioStreamWav
+        {
+            Data = newData,
+            MixRate = newSampleRate,
+            Format = originalFormat,
+            Stereo = false
+        };
+
+        return newAudioStream;
     }
 
     public void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
@@ -557,7 +457,7 @@ public partial class Manager : Node
     public void SaveBeatAsFile(bool[,] loop)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "beat_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime;
+        string filename = "beat_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime;
 
         int sampleRate = 48000;
         float secondsPerBeat = BpmManager.instance.baseTimePerBeat * 2;
@@ -620,7 +520,7 @@ public partial class Manager : Node
 
         var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
 
-        string final_name = user("export_" + bpm_manager.bpm.ToString() + "bpm_" + sanitizedTime);
+        string final_name = user("export_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
         string beats_name = user("beats");
         string song_name = user("song");
         string layers0_name = user("layers0");
@@ -872,9 +772,35 @@ public partial class Manager : Node
         using (var writer = new WaveFileWriter(filePath, waveFormat)) writer.WriteSamples(outputBuffer.ToArray(), 0, outputBuffer.Count);
     }
 
-    // --------------------------------
+    #endregion
 
-    private float startswing;
+    #region Volume
+
+    void SetMainVolume(float value)
+    {
+        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+    }
+
+    void SetAltVolume(float value)
+    {
+        float db = Mathf.LinearToDb(value);
+        firstAudioPlayerAlt.VolumeDb = db;
+        secondAudioPlayerAlt.VolumeDb = db;
+        thirdAudioPlayerAlt.VolumeDb = db;
+        fourthAudioPlayerAlt.VolumeDb = db;
+    }
+
+    void SetRecVolume(float value)
+    {
+        float db = Mathf.LinearToDb(value);
+        firstAudioPlayerRec.VolumeDb = db;
+        secondAudioPlayerRec.VolumeDb = db;
+        thirdAudioPlayerRec.VolumeDb = db;
+        fourthAudioPlayerRec.VolumeDb = db;
+    }
 
     void UpdateVolumes(int ring, float mainvolume, float altvolume, float recvolume)
     {
@@ -904,6 +830,16 @@ public partial class Manager : Node
         }
     }
 
+    #endregion
+
+    #region Mixing
+
+    // sample mixers
+    [Export] public Node2D sampleMixer0;
+    [Export] public Node2D sampleMixer1;
+    [Export] public Node2D sampleMixer2;
+    [Export] public Node2D sampleMixer3;
+
     public void RotatePivot(float rotation, Node2D pivot, int ring)
     {
         pivot.RotationDegrees += rotation;
@@ -924,8 +860,6 @@ public partial class Manager : Node
 
         UpdateVolumes(ring, mainvolume, altvolume, recvolume);
 
-        // GD.Print($"rot: {fullrotation:F1}, main: {mainvolume:F1}, alt: {altvolume:F1}, rec: {recvolume:F1}");
-
         var icon0 = pivot.GetChild(0) as Label;
         var icon1 = pivot.GetChild(1) as Label;
         var icon2 = pivot.GetChild(2) as Label;
@@ -940,9 +874,6 @@ public partial class Manager : Node
         var increase = mixer.FindChild("IncreaseButton") as Button;
         var decrease = mixer.FindChild("DecreaseButton") as Button;
         var pivot = mixer.FindChild("Pivot") as Node2D;
-
-        // increase.Pressed += () => RotatePivot(10, pivot, ring);
-        // decrease.Pressed += () => RotatePivot(-10, pivot, ring);
 
         var timerInc = new Timer
         {
@@ -971,10 +902,200 @@ public partial class Manager : Node
         
         RotatePivot(0, pivot, ring);
     }
+    #endregion
 
-    void SetRobotNormal() { robot.Position = new Vector2(420, 180); robot.Scale = new Vector2(1, 1); }
-    void SetRobotBig() { robot.Position = new Vector2(0, 0); robot.Scale = new Vector2(1.5f, 1.5f); }
+    #region Tutorial
 
+    int achievementLevel = 0;
+    bool tutorialActivated = false;
+
+    string[] instructions = null;
+    Func<bool>[] conditions = null;
+    Action[] outcomes = null;
+
+    void TryActivateTutorial()
+    {
+        if (useTutorial) // enable tutorial
+        {
+            SetEntireInterfaceVisibility(false);
+            achievementspanel.Visible = true;
+        }
+        else // disable tutorial
+        {
+            achievementLevel = -1;
+            SetEntireInterfaceVisibility(true);
+            achievementspanel.Visible = false;
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        }
+    }
+
+    // flag if tutorial mode should be enabled
+    public bool useTutorial = ReadUseTutorial();
+    private static bool ReadUseTutorial()
+    {
+        bool use;
+        try
+        {
+            string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
+            string content = File.ReadAllText(path);
+            use = bool.Parse(content);
+            if (File.Exists(path)) File.Delete(path);
+        }
+        catch
+        {
+            use = true;
+        }
+
+        GD.Print("use tutorial: " + use.ToString());
+        
+        return use;
+    }
+    private void SetupTutorial()
+    {
+        var actives = (int ring) =>
+        {
+            int amount = 0;
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
+            return amount;
+        };
+
+        // setup achievements
+        instructions =
+        [
+            // intro
+			"Hoi ik ben Klappy!, we gaan een beat maken en ik ga je daarbij helpen. klap 👏 in je handen om verder te gaan",
+			
+			// rode ring
+			"Dit is een 🔴 beat ring, plaats nu 4 beats op de witte streepjes",
+            "Helemaal goed! zet nog 2 🔴 beats op een plek die jij wil",
+            "Druk nu op '⏯ Start' om je beat te horen",
+            "Als je stompt 👞 met je voet op de grond precies wanneer er een rode beat is krijg ik energie ⚡",
+
+			// oranje ring
+			"Dit is nog een 🟠 beat ring, plaats nu 4 beats in het midden van de rode beats",
+            "Druk nu op '⏯ Start' om je beat te horen",
+            "Als je klapt 👏 met je handen wanneer er een oranje 🟠 beat klinkt krijgen ik energie ⚡",
+
+			// gele ring
+			"Dit is nog een 🟡 beat ring, plaats nu 2 harde beats waar je wilt op deze ring",
+
+			// blauwe ring
+			"Dit is nog een 🔵 beat ring, plaats nu 2 beats waar je wilt op deze ring",
+
+			// alle ringen
+			"Druk nog een keer op '⏯ Start', luister naar alle beats bij elkaar!",
+			
+			// progressiebar
+			"Klap 👏 en stamp 👞 op het goede moment! Geef me 50% energie ⚡ om naar de volgende stap te gaan!",
+			
+			// custom sample
+			"Je hebt het ritme te pakken! Nu gaan we onze eigen geluid maken, druk op het het microfoon 🎤 icoontje, en spreek iets in je microfoon",
+            "Draai nu de schijf van geluidjes naar de microfoon 🎤 icoontje om het opgenomen geluid te activeren",
+            "Druk op '⏯ Start' om te horen hoe je eigen geluidje klinkt",
+
+			// effects
+
+            // layer voice over
+            "door op de groene microfoon '🎙️' knop te drukken, kan je jou stem over de beat opnemen. hij begint met opnemen als die beat ovenaan is.",
+            "Links boven in het scherm kan je '🔁 Liedje Modus' aanzetten zodat de Beats achter elkaar afgespeeld worden",
+            "Druk op '⏯ Start' om te horen hoe je eigen beats achter elkaar klinken",
+            "Druk '💾 Kopieer Beat' en dan daarna '♻️ Plak Beat' op een andere laag",
+
+            // song voice over
+            "Laten we nu het hele liedje opnemen door op de '🎙️ Liedje Opnemen' links bovenin het scherm te drukken. Dan begin hij met opnemen als hij bij de eerste beat op de eerst laag is",
+            "Als je tevreden bent dan kan je ook echt je '🎼 Liedje naar mp3'",
+            "Druk op de '🚫 Stop' knop om de tutorial te eindigen",
+        ];
+
+        conditions =
+        [
+            // intro
+            () => clapped, // t key is debug only
+
+            // rode ring
+            () => actives(0) >= 4, // temp
+            () => actives(0) >= 6, // temp
+            () => BpmManager.instance.playing == true, // temp
+            () => stompedAmount > 4, // temp
+
+            // oranje ring
+            () => actives(1) >= 4, // temp
+            () => BpmManager.instance.playing == true, // temp
+            () => clappedAmount > 4, // temp
+
+            // gele ring
+            () => actives(2) >= 2, // temp
+
+            // blauwe ring
+            () => actives(3) >= 2, // temp
+
+            // alle ringen
+            () => BpmManager.instance.playing == true, // temp
+
+            // progressie bar
+            () => progressBar.Value > 50,
+
+            // custom sample
+            () => recordSampleButton0.recordedAudio != null,
+            () => true, // skip for now
+            () => BpmManager.instance.playing == true, // temp
+
+            // effects
+
+            // layer voice over
+            () => layerVoiceOver0.finished || layerVoiceOver1.finished,
+            () => layerLoopToggle.ButtonPressed,
+            () => BpmManager.instance.playing == true,
+            () => savedToLaout == true && loadedtemplate == true,
+
+            // song voice over
+            () => SongVoiceOver.instance.finished,
+            () => hassavedtofile == true,
+            () => false
+        ];
+
+        outcomes =
+        [
+            () => { SetRingVisibility(0, true); cross.Visible = true; },
+            null,
+            () => PlayPauseButton.Visible = true,
+            () => progressBar.Visible = true,
+            () => SetRingVisibility(1, true),
+            null,
+            null,
+            () => SetRingVisibility(2, true), // zet geel
+            () => SetRingVisibility(3, true), // zet blauw
+            null, // druk play
+            null, // geef energie
+            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetSampleMixersVisibility(true); },
+            null,
+            null,
+            () =>
+            {
+                ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = true;
+                layerVoiceOver0.textureProgressBar.Visible = true;
+            },
+
+            // layer voice over
+            () => { SetLayerSwitchButtonsVisibility(true); layerLoopToggle.Visible = true;}, // before doing liedje modus
+            () => SetMainButtonsVisibility(true), // before pressing play
+            null, // before saving to layout
+            () =>
+            {
+                SongVoiceOver.instance.recordSongButton.Visible = true;
+                SongVoiceOver.instance.recordSongSprite.Visible = true;
+                SongVoiceOver.instance.progressbar.Visible = true;
+            },
+
+            // song voice over
+            () => { settingsButton.Visible = true; settingsPanel.Visible = true; }, // before saving to file
+            () => SetEntireInterfaceVisibility(true), // enable all
+            null
+        ];
+    }
+    #endregion
+
+    #region Ready
     public override void _Ready()
     {
         // init singleton
@@ -986,17 +1107,8 @@ public partial class Manager : Node
             if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
                 layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
         };
-        
-        /*
-        var label2 = muteSpeach.GetChild(0) as Label;
-        label2.GuiInput += args =>
-        {
-            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                muteSpeach.ButtonPressed = !muteSpeach.ButtonPressed;
-        };
-        */
 
-        bpm_manager.OnBeatEvent += OnBeat;
+        BpmManager.instance.OnBeatEvent += OnBeat;
 
         // deserialize chosen soundbank
         string chosen_soundbank_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
@@ -1058,7 +1170,7 @@ public partial class Manager : Node
                         }
                     }
                 }
-                
+
                 break;
             }
         }
@@ -1094,8 +1206,8 @@ public partial class Manager : Node
         File.Delete(chosen_soundbank_path);
 
         // init audioplayers
-        extraAudioPlayer = new AudioStreamPlayer2D();
-        AddChild(extraAudioPlayer);
+        sfxAudioPlayer = new AudioStreamPlayer2D();
+        AddChild(sfxAudioPlayer);
 
         // main
         firstAudioPlayer = new AudioStreamPlayer2D();
@@ -1139,9 +1251,9 @@ public partial class Manager : Node
 
         // mixers setup -------------------------------------------------
 
-        
 
-        
+
+
 
         SetupMixer(sampleMixer0, 0);
         SetupMixer(sampleMixer1, 1);
@@ -1166,12 +1278,12 @@ public partial class Manager : Node
 
         muteSpeach.Pressed += DisplayServer.TtsStop;
 
-       
+
 
         SaveLayoutButton.Pressed += OnSaveLayoutButton;
         LoadLayoutButton.Pressed += OnLoadLayoutButton;
 
-        restartButton.Pressed += () => 
+        restartButton.Pressed += () =>
         {
             if (Engine.IsEditorHint())
             {
@@ -1190,253 +1302,26 @@ public partial class Manager : Node
         BpmDownButton.Pressed += OnBpmDownButton;
         saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
 
-        // skipping / ending the tutorial
+        // skipping the tutorial
         skiptutorialbutton.Pressed += () =>
         {
-            // disable achievement management
             achievementLevel = -1;
-            
-            // first enable full ui
             SetEntireInterfaceVisibility(true);
-
-            // disable achievements panel
             achievementspanel.Visible = false;
-
-            // lift settigns panel
-            //settingsButton.Position = new(settingsButton.Position.X, -340);
-
-            // shift robot position
-            // robot.Position = new(485, 225);
-
-            // end text to speach
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-
-            SetRobotNormal();
         };
 
         // settings panel
         settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
         settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 
-        // spawn sprites
-        beatSprites = new Sprite2D[4, BpmManager.beatsAmount];
-        for (int ring = 0; ring < 4; ring++)
-        {
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-            {
-                var sprite = CreateSprite(beat, ring);
-                AddChild(sprite);
-                beatSprites[ring, beat] = sprite;
-            }
-        }
-
-        // spawn outlines
-        beatOutlines = new Sprite2D[4, BpmManager.beatsAmount];
-        for (int ring = 0; ring < 4; ring++)
-        {
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-            {
-                var outline = CreateOutline(beat, ring);
-                AddChild(outline);
-                beatOutlines[ring, beat] = outline;
-            }
-        }
-
-        // spawn template sprites
-        templateSprites = new Sprite2D[4, BpmManager.beatsAmount];
-        for (int ring = 0; ring < 4; ring++)
-        {
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-            {
-                var sprite = CreateTemplateSprite(beat, ring);
-                AddChild(sprite);
-                templateSprites[ring, beat] = sprite;
-            }
-        }
-
-        // setup achievements
-        instructions =
-        [
-            // intro
-			"Hoi ik ben Klappy!, we gaan een beat maken en ik ga je daarbij helpen. klap 👏 in je handen om verder te gaan",
-			
-			// rode ring
-			"Dit is een 🔴 beat ring, plaats nu 4 beats op de witte streepjes",
-			"Helemaal goed! zet nog 2 🔴 beats op een plek die jij wil",
-			"Druk nu op '⏯ Start' om je beat te horen",
-			"Als je stompt 👞 met je voet op de grond precies wanneer er een rode beat is krijg ik energie ⚡",
-
-			// oranje ring
-			"Dit is nog een 🟠 beat ring, plaats nu 4 beats in het midden van de rode beats",
-			"Druk nu op '⏯ Start' om je beat te horen",
-			"Als je klapt 👏 met je handen wanneer er een oranje 🟠 beat klinkt krijgen ik energie ⚡",
-
-			// gele ring
-			"Dit is nog een 🟡 beat ring, plaats nu 2 harde beats waar je wilt op deze ring",
-
-			// blauwe ring
-			"Dit is nog een 🔵 beat ring, plaats nu 2 beats waar je wilt op deze ring",
-
-			// alle ringen
-			"Druk nog een keer op '⏯ Start', luister naar alle beats bij elkaar!",
-			
-			// progressiebar
-			"Klap 👏 en stamp 👞 op het goede moment! Geef me 50% energie ⚡ om naar de volgende stap te gaan!",
-			
-			// custom sample
-			"Je hebt het ritme te pakken! Nu gaan we onze eigen geluid maken, druk op het het microfoon 🎤 icoontje, en spreek iets in je microfoon",
-			"Draai nu de schijf van geluidjes naar de microfoon 🎤 icoontje om het opgenomen geluid te activeren",
-			"Druk op '⏯ Start' om te horen hoe je eigen geluidje klinkt",
-
-			// effects
-
-            // layer voice over
-            "door op de groene microfoon '🎙️' knop te drukken, kan je jou stem over de beat opnemen. hij begint met opnemen als die beat ovenaan is.",
-            "Links boven in het scherm kan je '🔁 Liedje Modus' aanzetten zodat de Beats achter elkaar afgespeeld worden",
-            "Druk op '⏯ Start' om te horen hoe je eigen beats achter elkaar klinken",
-            "Druk '💾 Kopieer Beat' en dan daarna '♻️ Plak Beat' op een andere laag",
-
-            // song voice over
-            "Laten we nu het hele liedje opnemen door op de '🎙️ Liedje Opnemen' links bovenin het scherm te drukken. Dan begin hij met opnemen als hij bij de eerste beat op de eerst laag is",
-            "Als je tevreden bent dan kan je ook echt je '🎼 Liedje naar mp3'",
-            "Druk op de '🚫 Stop' knop om de tutorial te eindigen",
-        ];
-
-        conditions =
-        [
-            // intro
-            () => clapped, // t key is debug only
-
-            // rode ring
-            () => AmountOfActives(0) >= 4, // temp
-            () => AmountOfActives(0) >= 6, // temp
-            () => bpm_manager.playing == true, // temp
-            () => stompedAmount > 4, // temp
-
-            // oranje ring
-            () => AmountOfActives(1) >= 4, // temp
-            () => bpm_manager.playing == true, // temp
-            () => clappedAmount > 4, // temp
-
-            // gele ring
-            () => AmountOfActives(2) >= 2, // temp
-
-            // blauwe ring
-            () => AmountOfActives(3) >= 2, // temp
-
-            // alle ringen
-            () => bpm_manager.playing == true, // temp
-
-            // progressie bar
-            () => progressBar.Value > 50,
-
-            // custom sample
-            () => recordSampleButton0.recordedAudio != null,
-            () => true, // skip for now
-            () => bpm_manager.playing == true, // temp
-
-            // effects
-
-            // layer voice over
-            () => layerVoiceOver0.finished || layerVoiceOver1.finished,
-            () => layerLoopToggle.ButtonPressed,
-            () => bpm_manager.playing == true,
-            () => savedToLaout == true && loadedtemplate == true,
-
-            // song voice over
-            () => SongVoiceOver.instance.finished,
-            () => hassavedtofile == true,
-            () => false
-        ];
-
-        outcomes =
-        [
-            () => { SetRingVisibility(0, true); cross.Visible = true; SetRobotNormal(); },
-            null,
-            () => PlayPauseButton.Visible = true,
-            () => progressBar.Visible = true,
-            () => SetRingVisibility(1, true),
-            null,
-            null,
-            () => SetRingVisibility(2, true), // zet geel
-            () => SetRingVisibility(3, true), // zet blauw
-            null, // druk play
-            null, // geef energie
-            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetSampleMixersVisibility(true); },
-            null,
-            null,
-            () =>
-            {
-				((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = true;
-				layerVoiceOver0.textureProgressBar.Visible = true;
-            },
-
-            // layer voice over
-            () => { SetLayerSwitchButtonsVisibility(true); layerLoopToggle.Visible = true;}, // before doing liedje modus
-            () => SetMainButtonsVisibility(true), // before pressing play
-            null, // before saving to layout
-            () =>
-			{
-				SongVoiceOver.instance.recordSongButton.Visible = true;
-        		SongVoiceOver.instance.recordSongSprite.Visible = true;
-        		SongVoiceOver.instance.progressbar.Visible = true;
-			},
-
-            // song voice over
-            () => { settingsButton.Visible = true; settingsPanel.Visible = true; }, // before saving to file
-            () => SetEntireInterfaceVisibility(true), // enable all
-            null
-        ];
+        SpritePlacement();
+        SetupTutorial();
     }
 
-    void _LateReady()
-    {
-        if (useTutorial) // enable tutorial
-        {
-            SetEntireInterfaceVisibility(false);
-            achievementspanel.Visible = true;
-            //SetRobotBig();
-        }
-        else // disable tutorial
-        {
-            achievementLevel = -1;
-            SetEntireInterfaceVisibility(true);
-            achievementspanel.Visible = false;
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        }
-    }
-
-    [Export] public Node2D cross;
-
+    #endregion
     
-
-    // ---------------------------------------------------------------
-
-    // arrow keys
-    bool up_pressed = false;
-	bool up_pressed_lastframe = false;
-    bool dn_pressed = false;
-	bool dn_pressed_lastframe = false;
-    bool lf_pressed = false;
-	bool lf_pressed_lastframe = false;
-    bool rt_pressed = false;
-	bool rt_pressed_lastframe = false;
-
-    bool f7_pressed = false;
-	bool f7_pressed_lastframe = false;
-
-    bool latereadydone = false;
-
-    float time = 0;
-
-    // metronome timer
-    float slowBeatTimer = 0;
-
-    bool first_tts_done = false;
-
-    private bool _ctrlCWasPressed = false;
-    private bool _ctrlVWasPressed = false;
-
+    #region Process
     public override void _Process(double delta)
     {
         time += (float)delta;
@@ -1452,10 +1337,7 @@ public partial class Manager : Node
         {
             if (!_ctrlCWasPressed)
             {
-                GD.Print("Ctrl + C pressed!");
                 _ctrlCWasPressed = true;
-
-                // TODO: Add your copy logic here
                 OnSaveLayoutButton();
             }
         }
@@ -1469,10 +1351,7 @@ public partial class Manager : Node
         {
             if (!_ctrlVWasPressed)
             {
-                GD.Print("Ctrl + V pressed!");
                 _ctrlVWasPressed = true;
-
-                // TODO: Add your paste logic here
                 OnLoadLayoutButton();
             }
         }
@@ -1501,28 +1380,25 @@ public partial class Manager : Node
         // layerbutton outline clock rotation
         if (BpmManager.instance.timePerBeat != 0)
         {
-            float clockrot = (float)((float)(bpm_manager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+            float clockrot = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
             layerOutline.RotationDegrees = clockrot * 360f - 7f;
         }
         else
         {
-            float clockrot = (float)(bpm_manager.currentBeat / (float)BpmManager.beatsAmount);
+            float clockrot = (float)(BpmManager.instance.currentBeat / (float)BpmManager.beatsAmount);
             layerOutline.RotationDegrees = clockrot * 360f - 7f;
         }
 
-        if (Input.IsKeyPressed(Key.F6) && bpm_manager.bpm != 900) bpm_manager.bpm = 900;
+        if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
 
-        if (!latereadydone)
+        if (!tutorialActivated)
         {
-            _LateReady();
-            latereadydone = true;
+            TryActivateTutorial();
+            tutorialActivated = true;
         }
 
         // saving label
-        if (savingLabelActive && savingLabelTimer < 4)
-        {
-            savingLabelTimer += (float)delta;
-        }
+        if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
         else savingLabelActive = false;
 
         SavingLabel.Visible = savingLabelActive;
@@ -1660,7 +1536,7 @@ public partial class Manager : Node
 		if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
 
         // update swing amount
-        bpm_manager.swing = (float)swingslider.Value;
+        BpmManager.instance.swing = (float)swingslider.Value;
 
         // space as play/pause
         var spacedown = Input.IsKeyPressed(Key.Space);
@@ -1669,7 +1545,7 @@ public partial class Manager : Node
 
         // enter as reset player
         var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false &&  !emailPromptOpen) { OnResetPlayerButton(); bpm_manager.playing = true; }
+        if (enterdown && enterdownlastframe == false && !emailPromptOpen) { /* do something with enter */ }
         enterdownlastframe = enterdown;
 
         // drag&drop
@@ -1681,7 +1557,7 @@ public partial class Manager : Node
         else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 
         // update pointer
-        float intergerFactor = (float)((float)(bpm_manager.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        float intergerFactor = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
         pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
         // check clap and stomp
@@ -1709,7 +1585,7 @@ public partial class Manager : Node
             }
         }
         
-        if (bpm_manager.playing)
+        if (BpmManager.instance.playing)
         {
             timeafterplay += ((float)delta);
             
@@ -1737,7 +1613,7 @@ public partial class Manager : Node
 
                 var color = colors[ring];
 
-                if (beat == bpm_manager.currentBeat)
+                if (beat == BpmManager.instance.currentBeat)
                 {
                     if (active) color = color.Lightened(0.75f);
                     else color = new(1, 1, 1, 0.5f);
@@ -1785,116 +1661,29 @@ public partial class Manager : Node
         }
 
         // update bpm label
-        bpmLabel.Text = bpm_manager.bpm.ToString();
+        bpmLabel.Text = BpmManager.instance.bpm.ToString();
     }
+    #endregion
 
-    void SetMainVolume(float value)
-    {
-        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-    }
+    #region ClapStompBeat
 
-    void SetAltVolume(float value)
-    {
-        float db = Mathf.LinearToDb(value);
-        firstAudioPlayerAlt.VolumeDb = db;
-        secondAudioPlayerAlt.VolumeDb = db;
-        thirdAudioPlayerAlt.VolumeDb = db;
-        fourthAudioPlayerAlt.VolumeDb = db;
-    }
-
-    void SetRecVolume(float value)
-    {
-        float db = Mathf.LinearToDb(value);
-        firstAudioPlayerRec.VolumeDb = db;
-        secondAudioPlayerRec.VolumeDb = db;
-        thirdAudioPlayerRec.VolumeDb = db;
-        fourthAudioPlayerRec.VolumeDb = db;
-    }
-
-    private void ConvertWavToMp3(string filename)
-    {
-        var reader = new AudioFileReader(filename + ".wav");
-        var writer = new LameMP3FileWriter(filename + ".mp3", reader.WaveFormat, LAMEPreset.STANDARD);
-        reader.CopyTo(writer);
-        reader.Close();
-        writer.Close();
-        File.Delete(filename + ".wav");
-    }
-
-    public static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
-    {
-        // get original audio data
-        var originalData = audioStream.Data;
-        var originalSampleRate = audioStream.MixRate;
-        var stereo = audioStream.Stereo;
-        var originalFormat = audioStream.Format;
-
-        // no resampling or conversion needed
-        if (originalSampleRate == newSampleRate && !stereo) return audioStream; 
-
-        // convert data to float for processing
-        var sampleCount = originalData.Length / sizeof(float);
-        var originalSamples = new float[sampleCount];
-        Buffer.BlockCopy(originalData, 0, originalSamples, 0, originalData.Length);
-
-        // if stereo convert to mono
-        float[] monoSamples;
-        if (stereo)
-        {
-            monoSamples = new float[sampleCount / 2];
-            for (int i = 0; i < monoSamples.Length; i++) monoSamples[i] = (originalSamples[i * 2] + originalSamples[i * 2 + 1]) / 2.0f;
-        }
-        else monoSamples = originalSamples;
-
-        // calc ratio
-        float ratio = (float)newSampleRate / originalSampleRate;
-
-        // create buffer
-        int newSampleCount = (int)(monoSamples.Length * ratio);
-        var resampledSamples = new float[newSampleCount];
-
-        // linear interpolation to resample
-        for (int i = 0; i < newSampleCount; i++)
-        {
-            float originalPosition = i / ratio;
-            int originalIndex = (int)Math.Floor(originalPosition);
-            float frac = originalPosition - originalIndex;
-
-            if (originalIndex < monoSamples.Length - 1) resampledSamples[i] = monoSamples[originalIndex] * (1 - frac) + monoSamples[originalIndex + 1] * frac;
-            else resampledSamples[i] = monoSamples[originalIndex];
-        }
-
-        // resampled data back to byte array
-        var newData = new byte[resampledSamples.Length * sizeof(float)];
-        Buffer.BlockCopy(resampledSamples, 0, newData, 0, newData.Length);
-
-        // create new audiostreamwav with updated sample rate
-        var newAudioStream = new AudioStreamWav
-        {
-            Data = newData,
-            MixRate = newSampleRate,
-            Format = originalFormat,
-            Stereo = false
-        };
-
-        return newAudioStream;
-    }
+    bool stomped = false;
+    bool clapped = false;
+    int clappedAmount = 0;
+    int stompedAmount = 0;
 
     public void OnClap()
     {
         if (timeafterplay < 0.2f) return;
         int ring = 1;
-        bool active = beatActives[ring, bpm_manager.currentBeat];
-        var sprite = beatSprites[ring, bpm_manager.currentBeat];
+        bool active = beatActives[ring, BpmManager.instance.currentBeat];
+        var sprite = beatSprites[ring, BpmManager.instance.currentBeat];
         if (active)
         {
             sprite.Scale += Vector2.One;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
-            EmitBeatParticles(beatSprites[ring, bpm_manager.currentBeat].Position, colors[ring]);
+            EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
@@ -1906,14 +1695,14 @@ public partial class Manager : Node
     {
         if (timeafterplay < 0.2f) return;
         int ring = 0;
-        bool active = beatActives[ring, bpm_manager.currentBeat];
-        var sprite = beatSprites[ring, bpm_manager.currentBeat];
+        bool active = beatActives[ring, BpmManager.instance.currentBeat];
+        var sprite = beatSprites[ring, BpmManager.instance.currentBeat];
         if (active)
         {
             sprite.Scale += Vector2.One;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
-            EmitBeatParticles(beatSprites[ring, bpm_manager.currentBeat].Position, colors[ring]);
+            EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
@@ -1926,66 +1715,106 @@ public partial class Manager : Node
     {
         if (metronome_sfx_enabled)
         {
-           if (bpm_manager.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
+           if (BpmManager.instance.currentBeat % 4 == 0) PlayExtraSFX(metronome_sfx);
            else PlayExtraSFX(metronomealt_sfx);
         }
 
-        if (beatActives[0, bpm_manager.currentBeat]) firstAudioPlayer.Play();
-        if (beatActives[1, bpm_manager.currentBeat]) secondAudioPlayer.Play();
-        if (beatActives[2, bpm_manager.currentBeat]) thirdAudioPlayer.Play();
-        if (beatActives[3, bpm_manager.currentBeat]) fourthAudioPlayer.Play();
+        if (beatActives[0, BpmManager.instance.currentBeat]) firstAudioPlayer.Play();
+        if (beatActives[1, BpmManager.instance.currentBeat]) secondAudioPlayer.Play();
+        if (beatActives[2, BpmManager.instance.currentBeat]) thirdAudioPlayer.Play();
+        if (beatActives[3, BpmManager.instance.currentBeat]) fourthAudioPlayer.Play();
 
-        if (beatActives[0, bpm_manager.currentBeat]) firstAudioPlayerAlt.Play();
-        if (beatActives[1, bpm_manager.currentBeat]) secondAudioPlayerAlt.Play();
-        if (beatActives[2, bpm_manager.currentBeat]) thirdAudioPlayerAlt.Play();
-        if (beatActives[3, bpm_manager.currentBeat]) fourthAudioPlayerAlt.Play();
+        if (beatActives[0, BpmManager.instance.currentBeat]) firstAudioPlayerAlt.Play();
+        if (beatActives[1, BpmManager.instance.currentBeat]) secondAudioPlayerAlt.Play();
+        if (beatActives[2, BpmManager.instance.currentBeat]) thirdAudioPlayerAlt.Play();
+        if (beatActives[3, BpmManager.instance.currentBeat]) fourthAudioPlayerAlt.Play();
 
-        if (beatActives[0, bpm_manager.currentBeat] && firstAudioPlayerRec.Stream != null) firstAudioPlayerRec.Play();
-        if (beatActives[1, bpm_manager.currentBeat] && secondAudioPlayerRec.Stream != null) secondAudioPlayerRec.Play();
-        if (beatActives[2, bpm_manager.currentBeat] && thirdAudioPlayerRec.Stream != null) thirdAudioPlayerRec.Play();
-        if (beatActives[3, bpm_manager.currentBeat] && fourthAudioPlayerRec.Stream != null) fourthAudioPlayerRec.Play();
+        if (beatActives[0, BpmManager.instance.currentBeat] && firstAudioPlayerRec.Stream != null) firstAudioPlayerRec.Play();
+        if (beatActives[1, BpmManager.instance.currentBeat] && secondAudioPlayerRec.Stream != null) secondAudioPlayerRec.Play();
+        if (beatActives[2, BpmManager.instance.currentBeat] && thirdAudioPlayerRec.Stream != null) thirdAudioPlayerRec.Play();
+        if (beatActives[3, BpmManager.instance.currentBeat] && fourthAudioPlayerRec.Stream != null) fourthAudioPlayerRec.Play();
 
         clapped = false;
         stomped = false;
 
-        if (bpm_manager.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
+        if (BpmManager.instance.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
 
-        // if layer looping
-        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (bpm_manager.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
+        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (bpm_manager.currentBeat == 0)
+        if (BpmManager.instance.currentBeat == 0)
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
             UpdateSongVoiceOverPlayBackPosition();
         }
-        if (currentLayerIndex == 0 && bpm_manager.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
+        if (currentLayerIndex == 0 && BpmManager.instance.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
 
-        int nextbeat = bpm_manager.currentBeat + 1;
+        int nextbeat = BpmManager.instance.currentBeat + 1;
         if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
 
         bool clap_active = beatActives[1, nextbeat];
-        if (clap_active)
-        {
-            GD.Print("shouldclap");
-            EmitSignal(SignalName.OnShouldClapEvent);
-        }
+        if (clap_active) EmitSignal(SignalName.OnShouldClapEvent);
 
         bool stomp_active = beatActives[0, nextbeat];
-        if (stomp_active)
-        {
-            GD.Print("shouldstomp");
-            EmitSignal(SignalName.OnShouldStompEvent);
-        }
+        if (stomp_active) EmitSignal(SignalName.OnShouldStompEvent);
 
-        // high hat trick (highhattrick)
         float strength = 0.5f;
         float scale = 1f + ((Random.Shared.NextSingle() - 0.5f) * strength);
         fourthAudioPlayer.PitchScale = scale;
         fourthAudioPlayerAlt.PitchScale = scale;
         fourthAudioPlayerRec.PitchScale = scale;
     }
+    #endregion
 
+    #region SpriteCreation
+    float beatScale32 = 1;
+    float beatScale16 = 1.6f;
+    float beatScale8 = 1.6f;
+    [Export] PackedScene spritePrefab;
+    [Export] Texture2D texture;
+    [Export] Texture2D outline;
+    Sprite2D[,] beatOutlines;
+    public Sprite2D[,] beatSprites;
+    Sprite2D[,] templateSprites;
+
+    void SpritePlacement()
+    {
+        // spawn sprites
+        beatSprites = new Sprite2D[4, BpmManager.beatsAmount];
+        for (int ring = 0; ring < 4; ring++)
+        {
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            {
+                var sprite = CreateSprite(beat, ring);
+                AddChild(sprite);
+                beatSprites[ring, beat] = sprite;
+            }
+        }
+
+        // spawn outlines
+        beatOutlines = new Sprite2D[4, BpmManager.beatsAmount];
+        for (int ring = 0; ring < 4; ring++)
+        {
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            {
+                var outline = CreateOutline(beat, ring);
+                AddChild(outline);
+                beatOutlines[ring, beat] = outline;
+            }
+        }
+
+        // spawn template sprites
+        templateSprites = new Sprite2D[4, BpmManager.beatsAmount];
+        for (int ring = 0; ring < 4; ring++)
+        {
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            {
+                var sprite = CreateTemplateSprite(beat, ring);
+                AddChild(sprite);
+                templateSprites[ring, beat] = sprite;
+            }
+        }
+    }
     private Sprite2D CreateOutline(int beat, int ring)
     {
         var sprite = new Sprite2D();
@@ -2007,18 +1836,9 @@ public partial class Manager : Node
 
         float distance = 0;
 
-        if (BpmManager.beatsAmount == 32)
-        {
-            distance = (4 - ring) * 30 + 110;
-        }
-        else if (BpmManager.beatsAmount == 16)
-        {
-            distance = (4 - ring) * 45 + 56;
-        }
-        else if (BpmManager.beatsAmount == 8)
-        {
-            distance = (4 - ring) * 45 + 56;
-        }
+        if (BpmManager.beatsAmount == 32) distance = (4 - ring) * 30 + 110;
+        else if (BpmManager.beatsAmount == 16) distance = (4 - ring) * 45 + 56;
+        else if (BpmManager.beatsAmount == 8) distance = (4 - ring) * 45 + 56;
 
         return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
     }
@@ -2047,79 +1867,45 @@ public partial class Manager : Node
     {
         var sprite = new Sprite2D();
         sprite.Position = SpritePosition(beat, ring);
-
         sprite.Texture = texture;
         sprite.Modulate = new Color(0, 0, 0, 1);
         sprite.Scale = Vector2.One * 0.2f;
         return sprite;
     }
-
-    static int AmountOfActives(int ring)
-    {
-        int amount = 0;
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
-        return amount;
-    }
+    #endregion
 
     #region Visibility
-
+    
     public void SetEntireInterfaceVisibility(bool visible)
     {
-        // rings
         SetRingVisibility(0, visible);
         SetRingVisibility(1, visible);
         SetRingVisibility(2, visible);
         SetRingVisibility(3, visible);
-
-        // sliders
         SetSampleMixersVisibility(visible);
-
-        // progress bar
         progressBar.Visible = visible;
-
-        // playpause button
         PlayPauseButton.Visible = visible;
-
-        // main buttons
         SetMainButtonsVisibility(visible);
-
-        // recording buttons
         SetRecordingButtonsVisibility(visible);
-
-        // draganddrop buttons
         SetDragAndDropButtonsVisibility(visible);
-
-        // layer switch buttons
         SetLayerSwitchButtonsVisibility(visible);
-
-        // settings menu
         settingsButton.Visible = visible;
-
         layerLoopToggle.Visible = visible;
-
         muteSpeach.Visible = visible;
         cross.Visible = visible;
-
         bpmLabel.Visible = visible;
         metronome.Visible = visible;
         metronomebg.Visible = visible;
         chosen_emoticons_label.Visible = visible;
-
-
-        // achievements panel
         achievementspanel.Visible = visible;
-
-        // recording
         SongVoiceOver.instance.recordSongButton.Visible = visible;
         SongVoiceOver.instance.recordSongSprite.Visible = visible;
         SongVoiceOver.instance.progressbar.Visible = visible;
-
         ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
         ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
         layerVoiceOver0.textureProgressBar.Visible = visible;
         layerVoiceOver1.textureProgressBar.Visible = visible;
     }
-    
 
     void SetRingVisibility(int ring, bool visible)
     {
@@ -2200,6 +1986,81 @@ public partial class Manager : Node
         sampleMixer2.Visible = visible;
         sampleMixer3.Visible = visible;
     }
-        
+    #endregion
+
+    #region Other
+
+    SoundBank chosenSoundBank = null;
+    List<string> chosenEmoticons = null;
+    bool[,] beatClipboard = new bool[4, BpmManager.beatsAmount];
+
+    public void OnSaveLayoutButton()
+    {
+        beatClipboard = (bool[,])beatActives.Clone();
+        savedToLaout = true;
+    }
+
+    public void OnLoadLayoutButton()
+    {
+        beatActives = (bool[,])beatClipboard.Clone();
+        loadedtemplate = true;
+    }
+
+    public void OnClearLayoutButton()
+    {
+        beatActives = new bool[4, BpmManager.beatsAmount];
+        hasclearedlayout = true;
+    }
+
+    public void OnPlayPauseButton()
+    {
+        BpmManager.instance.playing = !BpmManager.instance.playing;
+
+        // pause layer voice over
+        if (layerVoiceOver0.voiceOvers[layerVoiceOver0.currentLayer] != null)
+        {
+            if (layerVoiceOver0.audioPlayer.Playing) layerVoiceOver0.audioPlayer.StreamPaused = true;
+            else layerVoiceOver0.audioPlayer.StreamPaused = false;
+        }
+        if (layerVoiceOver1.voiceOvers[layerVoiceOver1.currentLayer] != null)
+        {
+            if (layerVoiceOver1.audioPlayer.Playing) layerVoiceOver1.audioPlayer.StreamPaused = true;
+            else layerVoiceOver1.audioPlayer.StreamPaused = false;
+        }
+
+        // pause song voice over
+        if (SongVoiceOver.instance.voiceOver != null)
+        {
+            if (SongVoiceOver.instance.audioPlayer.Playing) SongVoiceOver.instance.audioPlayer.StreamPaused = true;
+            else SongVoiceOver.instance.audioPlayer.StreamPaused = false;
+        }
+    }
+
+    public void OnBpmUpButton()
+    {
+        if (BpmManager.instance.bpm < 300) BpmManager.instance.bpm += 5;
+        haschangedbpm = true;
+    }
+    
+    public void OnBpmDownButton()
+    {
+        if (BpmManager.instance.bpm > 40) BpmManager.instance.bpm -= 5;
+        haschangedbpm = true;
+    }
+
+    public void ShowSavingLabel(string name)
+    {
+        savingLabelActive = true;
+        savingLabelTimer = 0;
+        SavingLabel.Text = "Opgeslagen naar:" + "\n" + name;
+    }
+
+    private void PlayExtraSFX(AudioStream audioStream)
+    {
+        sfxAudioPlayer.Stop();
+        sfxAudioPlayer.Stream = audioStream;
+        sfxAudioPlayer.Play();
+    }
+    
     #endregion
 }

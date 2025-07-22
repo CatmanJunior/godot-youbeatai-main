@@ -16,6 +16,576 @@ public partial class Manager : Node
 {
     public static Manager instance = null;
 
+    #region Ready
+    public override void _Ready()
+    {
+        // init singleton
+        instance ??= this;
+
+        var label1 = layerLoopToggle.GetChild(0) as Label;
+        label1.GuiInput += args =>
+        {
+            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+        };
+
+        BpmManager.instance.OnBeatEvent += OnBeat;
+
+        // deserialize chosen soundbank
+        string chosen_soundbank_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
+        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
+        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
+
+        // deserialize chosen emoticons
+        string chosen_emoticons_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
+        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
+        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
+        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
+
+        // grab audio files -> res://Resources/Audio/SoundBanks/
+        string soundbankname = chosenSoundBank.name;
+        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
+        DirAccess baseDir = DirAccess.Open(baseDirPath);
+        baseDir.ListDirBegin();
+        string folderName;
+        while ((folderName = baseDir.GetNext()) != "")
+        {
+            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
+            {
+                // main audio files
+                {
+                    string major_dir = baseDirPath + folderName + "/";
+                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
+                    {
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = major_dir + file;
+                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
+                }
+
+                // alt audio files
+                {
+                    string minor_dir = baseDirPath + folderName + "/mineur/";
+                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
+                    string file;
+                    for (int i = 0; i < major_files.Length; ++i)
+                    {
+                        file = major_files[i];
+                        if (file.EndsWith(".wav"))
+                        {
+                            string lower = file.ToLower();
+                            string fullPath = minor_dir + file;
+                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
+                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
+                        }
+                    }
+                }
+
+                break;
+            }
+        }
+        baseDir.ListDirEnd();
+
+        // set swing
+        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
+        BpmManager.instance.swing = chosenswing;
+        startswing = chosenswing;
+        swingslider.Value = chosenswing;
+
+        // set bpm offset
+        if (!useTutorial)
+        {
+            int offset = 0;
+            string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
+            string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
+            Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
+            foreach (string theme in chosenSoundBank.themes)
+            {
+                offset += int.Parse(offsetLookup[theme]);
+                GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
+            }
+            BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
+        }
+        else
+        {
+            BpmManager.instance.bpm = chosenSoundBank.bpm;
+        }
+
+        // delete tmep json files
+        File.Delete(chosen_emoticons_path);
+        File.Delete(chosen_soundbank_path);
+
+        // init audioplayers
+        sfxAudioPlayer = new AudioStreamPlayer2D();
+        AddChild(sfxAudioPlayer);
+
+        // main
+        firstAudioPlayer = new AudioStreamPlayer2D();
+        secondAudioPlayer = new AudioStreamPlayer2D();
+        thirdAudioPlayer = new AudioStreamPlayer2D();
+        fourthAudioPlayer = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayer);
+        AddChild(secondAudioPlayer);
+        AddChild(thirdAudioPlayer);
+        AddChild(fourthAudioPlayer);
+
+        // alt
+        firstAudioPlayerAlt = new AudioStreamPlayer2D();
+        secondAudioPlayerAlt = new AudioStreamPlayer2D();
+        thirdAudioPlayerAlt = new AudioStreamPlayer2D();
+        fourthAudioPlayerAlt = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayerAlt);
+        AddChild(secondAudioPlayerAlt);
+        AddChild(thirdAudioPlayerAlt);
+        AddChild(fourthAudioPlayerAlt);
+
+        // rec
+        firstAudioPlayerRec = new AudioStreamPlayer2D();
+        secondAudioPlayerRec = new AudioStreamPlayer2D();
+        thirdAudioPlayerRec = new AudioStreamPlayer2D();
+        fourthAudioPlayerRec = new AudioStreamPlayer2D();
+        AddChild(firstAudioPlayerRec);
+        AddChild(secondAudioPlayerRec);
+        AddChild(thirdAudioPlayerRec);
+        AddChild(fourthAudioPlayerRec);
+
+        firstAudioPlayer.Stream = mainAudioFiles[0];
+        secondAudioPlayer.Stream = mainAudioFiles[1];
+        thirdAudioPlayer.Stream = mainAudioFiles[2];
+        fourthAudioPlayer.Stream = mainAudioFiles[3];
+
+        firstAudioPlayerAlt.Stream = mainAudioFilesAlt[0];
+        secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
+        thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
+        fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
+
+        // mixers setup -------------------------------------------------
+
+
+
+
+
+        SetupMixer(sampleMixer0, 0);
+        SetupMixer(sampleMixer1, 1);
+        SetupMixer(sampleMixer2, 2);
+        SetupMixer(sampleMixer3, 3);
+
+        // mixers setup -------------------------------------------------
+
+        layerButton1.Pressed += () => SwitchLayer(1);
+        layerButton2.Pressed += () => SwitchLayer(2);
+        layerButton3.Pressed += () => SwitchLayer(3);
+        layerButton4.Pressed += () => SwitchLayer(4);
+        layerButton5.Pressed += () => SwitchLayer(5);
+        layerButton6.Pressed += () => SwitchLayer(6);
+        layerButton7.Pressed += () => SwitchLayer(7);
+        layerButton8.Pressed += () => SwitchLayer(8);
+        layerButton9.Pressed += () => SwitchLayer(9);
+        layerButton10.Pressed += () => SwitchLayer(10);
+
+        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
+        emailEnter.Pressed += AllLayersToMp3;
+
+        muteSpeach.Pressed += DisplayServer.TtsStop;
+
+
+
+        SaveLayoutButton.Pressed += OnSaveLayoutButton;
+        LoadLayoutButton.Pressed += OnLoadLayoutButton;
+
+        restartButton.Pressed += () =>
+        {
+            if (Engine.IsEditorHint())
+            {
+                GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
+            }
+            else
+            {
+                OS.Execute(OS.GetExecutablePath(), []);
+                GetTree().Quit();
+            }
+        };
+
+        ClearLayoutButton.Pressed += OnClearLayoutButton;
+        PlayPauseButton.Pressed += OnPlayPauseButton;
+        BpmUpButton.Pressed += OnBpmUpButton;
+        BpmDownButton.Pressed += OnBpmDownButton;
+        saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
+
+        // skipping the tutorial
+        skiptutorialbutton.Pressed += () =>
+        {
+            achievementLevel = -1;
+            SetEntireInterfaceVisibility(true);
+            achievementspanel.Visible = false;
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        };
+
+        // settings panel
+        settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
+        settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
+
+        SpritePlacement();
+        SetupTutorial();
+    }
+
+    #endregion
+    
+    #region Process
+    public override void _Process(double delta)
+    {
+        time += (float)delta;
+
+		if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
+
+        bool isCtrlPressed = Input.IsKeyPressed(Key.Ctrl);
+        bool isCPressed = Input.IsKeyPressed(Key.C);
+        bool isVPressed = Input.IsKeyPressed(Key.V);
+
+        // Handle Ctrl+C
+        if (isCtrlPressed && isCPressed)
+        {
+            if (!_ctrlCWasPressed)
+            {
+                _ctrlCWasPressed = true;
+                OnSaveLayoutButton();
+            }
+        }
+        else
+        {
+            _ctrlCWasPressed = false;
+        }
+
+        // Handle Ctrl+V
+        if (isCtrlPressed && isVPressed)
+        {
+            if (!_ctrlVWasPressed)
+            {
+                _ctrlVWasPressed = true;
+                OnLoadLayoutButton();
+            }
+        }
+        else
+        {
+            _ctrlVWasPressed = false;
+        }
+
+        // deal with unclockables
+        for (int i = 0; i < 6; i++)
+        {
+            float tresh = ((float)i + 1f) / 6f * 100f;
+            if (progressBarValue > tresh - 10)
+            {
+                Unlockables[i].Visible = true;
+                UnlockablesQuestion[i].Visible = false;
+            }
+            else
+            {
+                Unlockables[i].Visible = false;
+                UnlockablesQuestion[i].Visible = true;
+            }
+        }
+        
+        
+        // layerbutton outline clock rotation
+        if (BpmManager.instance.timePerBeat != 0)
+        {
+            float clockrot = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+            layerOutline.RotationDegrees = clockrot * 360f - 7f;
+        }
+        else
+        {
+            float clockrot = (float)(BpmManager.instance.currentBeat / (float)BpmManager.beatsAmount);
+            layerOutline.RotationDegrees = clockrot * 360f - 7f;
+        }
+
+        if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
+
+        if (!tutorialActivated)
+        {
+            TryActivateTutorial();
+            tutorialActivated = true;
+        }
+
+        // saving label
+        if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
+        else savingLabelActive = false;
+
+        SavingLabel.Visible = savingLabelActive;
+
+        // switch layer buttons
+        layerButton1.Modulate = new Color(1, 1, 1, 1);
+        layerButton2.Modulate = new Color(1, 1, 1, 1);
+        layerButton3.Modulate = new Color(1, 1, 1, 1);
+        layerButton4.Modulate = new Color(1, 1, 1, 1);
+        layerButton5.Modulate = new Color(1, 1, 1, 1);
+        layerButton6.Modulate = new Color(1, 1, 1, 1);
+        layerButton7.Modulate = new Color(1, 1, 1, 1);
+        layerButton8.Modulate = new Color(1, 1, 1, 1);
+        layerButton9.Modulate = new Color(1, 1, 1, 1);
+        layerButton10.Modulate = new Color(1, 1, 1, 1);
+        if (!LayerHasBeats(layers[0])) layerButton1.Modulate = layerButton1.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[1])) layerButton2.Modulate = layerButton2.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[2])) layerButton3.Modulate = layerButton3.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[3])) layerButton4.Modulate = layerButton4.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[4])) layerButton5.Modulate = layerButton5.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[5])) layerButton6.Modulate = layerButton6.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[6])) layerButton7.Modulate = layerButton7.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[7])) layerButton8.Modulate = layerButton8.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[8])) layerButton9.Modulate = layerButton9.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[9])) layerButton10.Modulate = layerButton10.Modulate.Darkened(0.5f);
+
+
+        // update robot light
+        var lightvalue = progressBarValue / 100;
+        if (lightvalue > 1) lightvalue = 1;
+        float pulsed = ((((Mathf.Sin(time * 4) + 1) / 2) / 2) + 0.5f);
+        robotlight.Energy = lightvalue;
+
+        // update micmeter
+        micmeter.Value = MicrophoneCapture.instance.volume;
+
+        // other
+        metronome_sfx_enabled = metronome_toggle.ButtonPressed;
+
+        string RemoveEmojis(string input)
+        {
+            var output = "";
+            var stringInfo = new StringInfo(input);
+            for (int i = 0; i < stringInfo.LengthInTextElements; i++)
+            {
+                string element = stringInfo.SubstringByTextElements(i, 1);
+                if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
+            }
+            return output;
+        }
+
+        void SpeakInstruction(int instruction)
+        {
+            if (muteSpeach.ButtonPressed) return;
+
+            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+            DisplayServer.TtsSpeak(RemoveEmojis(instructions[instruction]), voices[0], 100);
+        }
+
+        // first tts
+        if (!first_tts_done && useTutorial)
+        {
+            SpeakInstruction(0);
+            first_tts_done = true;
+        }
+
+        // deal with achievements
+        if (achievementLevel != -1 && useTutorial)
+        {
+            string instruction = instructions[achievementLevel];
+            Func<bool> condition = conditions[achievementLevel];
+            Action outcome = outcomes[achievementLevel];
+            InstructionLabel.Text = instruction;
+
+            f7_pressed_lastframe = f7_pressed;
+		    f7_pressed = Input.IsKeyPressed(Key.F7);
+		    bool skip = f7_pressed && f7_pressed != f7_pressed_lastframe;
+
+            if (condition() || skip)
+            {
+                if (outcome != null) outcome();
+                achievementLevel++;
+                EmitAchievementParticles();
+                PlayExtraSFX(achievement_sfx);
+                SpeakInstruction(achievementLevel);
+            }
+        }
+
+        // deal with beat particles
+        if (beat_particles_emitting && beat_particles_curtime < beat_particles_time)
+        {
+            beat_particles.Color = beat_particles_color;
+            beat_particles.Position = beat_particles_position;
+            beat_particles.Emitting = true;
+            beat_particles_curtime += (float)delta;
+        }
+        else
+        {
+            beat_particles.Emitting = false;
+            beat_particles_emitting = false;
+        }
+
+        // deal with progress bar particles
+        if (pbar_particles_emitting && pbar_particles_curtime < pbar_particles_time)
+        {
+            pbar_particles.Emitting = true;
+            pbar_particles_curtime += (float)delta;
+        }
+        else
+        {
+            pbar_particles.Emitting = false;
+            pbar_particles_emitting = false;
+        }
+
+        // deal with progress bar particles
+        if (achievement_particles_emitting && achievement_particles_curtime < achievement_particles_time)
+        {
+            achievement_particles.Emitting = true;
+            achievement_particles_curtime += (float)delta;
+        }
+        else
+        {
+            achievement_particles.Emitting = false;
+            achievement_particles_emitting = false;
+        }
+
+        // deal with arrowkeys
+        up_pressed_lastframe = up_pressed;
+		up_pressed = Input.IsKeyPressed(Key.Up);
+		if (up_pressed && up_pressed != up_pressed_lastframe) OnBpmUpButton();
+        dn_pressed_lastframe = dn_pressed;
+		dn_pressed = Input.IsKeyPressed(Key.Down);
+		if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
+
+        // update swing amount
+        BpmManager.instance.swing = (float)swingslider.Value;
+
+        // space as play/pause
+        var spacedown = Input.IsKeyPressed(Key.Space);
+        if (spacedown && spacedownlastframe == false && !emailPromptOpen) OnPlayPauseButton();
+        spacedownlastframe = spacedown;
+
+        // enter as reset player
+        var enterdown = Input.IsKeyPressed(Key.Enter);
+        if (enterdown && enterdownlastframe == false && !emailPromptOpen) { /* do something with enter */ }
+        enterdownlastframe = enterdown;
+
+        // drag&drop
+        if (dragginganddropping)
+        {
+            draganddropthing.Modulate = colors[holdingforring];
+            draganddropthing.Position = GetViewport().GetMousePosition() - (DisplayServer.WindowGetSize() / 2);
+        }
+        else draganddropthing.Modulate = new Color(1, 1, 1, 0);
+
+        // update pointer
+        float intergerFactor = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        pointer.RotationDegrees = intergerFactor * 360f - 7f;
+
+        // check clap and stomp
+        var volume = MicrophoneCapture.instance.volume;
+        var frequency = MicrophoneCapture.instance.frequency;
+
+        var treshold = volume_treshold.Value;
+        var shouldclap = volume > treshold && frequency > ClapBiasSlider.Value;
+        if (shouldclap || Input.IsKeyPressed(Key.N))
+        {
+            if (!clapped)
+            {
+                if (!emailPromptOpen) OnClap();
+                clapped = true;
+            }
+        }
+        
+        bool shouldstomp = volume > treshold && frequency < ClapBiasSlider.Value;
+        if (shouldstomp || Input.IsKeyPressed(Key.M))
+        {
+            if (!stomped)
+            {
+                if (!emailPromptOpen) OnStomp();
+                stomped = true;
+            }
+        }
+        
+        if (BpmManager.instance.playing)
+        {
+            timeafterplay += ((float)delta);
+            
+            slowBeatTimer += (float)delta / 4;
+            if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
+            var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
+            metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
+
+            // update progressbar
+            if (progressBarValue > 100) progressBarValue = 100;
+            progressBar.Value = progressBarValue;
+        }
+        else
+        {
+            timeafterplay = 0;
+        }
+
+        // update sprites
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+        {
+            for (int ring = 0; ring < 4; ring++)
+            {
+                var sprite = beatSprites[ring, beat];
+                var active = beatActives[ring, beat];
+
+                var color = colors[ring];
+
+                if (beat == BpmManager.instance.currentBeat)
+                {
+                    if (active) color = color.Lightened(0.75f);
+                    else color = new(1, 1, 1, 0.5f);
+                }
+                else if (!active) color.A = 0.2f;
+
+                sprite.Modulate = color;
+
+                float scale = 1;
+                if (BpmManager.beatsAmount == 32) scale = beatScale32;
+                if (BpmManager.beatsAmount == 16) scale = beatScale16;
+                if (BpmManager.beatsAmount == 8) scale = beatScale8;
+
+                if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
+            }
+        }
+
+        // bloop
+        float factor = 2;
+        if (draganddropButton0.Scale.X > 2) draganddropButton0.Scale -= Vector2.One * (float)delta * factor;
+        if (draganddropButton1.Scale.X > 2) draganddropButton1.Scale -= Vector2.One * (float)delta * factor;
+        if (draganddropButton2.Scale.X > 2) draganddropButton2.Scale -= Vector2.One * (float)delta * factor;
+        if (draganddropButton3.Scale.X > 2) draganddropButton3.Scale -= Vector2.One * (float)delta * factor;
+
+        // update outlines
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+        {
+            for (int ring = 0; ring < 4; ring++)
+            {
+                var outline = beatOutlines[ring, beat];
+                outline.Modulate = colors[ring];
+            }
+        }
+
+        // update template sprites
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+        {
+            for (int ring = 0; ring < 4; ring++)
+            {
+                var sprite = templateSprites[ring, beat];
+                var active = TemplateManager.instance.GetCurrentActives()[ring, beat];
+                sprite.Modulate = new Color(0, 0, 0, 0);
+                if (active && showTemplate) sprite.Modulate = new Color(0, 0, 0, 1);
+            }
+        }
+
+        // update bpm label
+        bpmLabel.Text = BpmManager.instance.bpm.ToString();
+    }
+    #endregion
+
     #region BeatActives
     public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
     public int currentLayerIndex = 0;
@@ -1092,576 +1662,6 @@ public partial class Manager : Node
             () => SetEntireInterfaceVisibility(true), // enable all
             null
         ];
-    }
-    #endregion
-
-    #region Ready
-    public override void _Ready()
-    {
-        // init singleton
-        instance ??= this;
-
-        var label1 = layerLoopToggle.GetChild(0) as Label;
-        label1.GuiInput += args =>
-        {
-            if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
-        };
-
-        BpmManager.instance.OnBeatEvent += OnBeat;
-
-        // deserialize chosen soundbank
-        string chosen_soundbank_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
-        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
-        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
-
-        // deserialize chosen emoticons
-        string chosen_emoticons_path = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
-        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
-        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
-        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
-
-        // grab audio files -> res://Resources/Audio/SoundBanks/
-        string soundbankname = chosenSoundBank.name;
-        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
-        DirAccess baseDir = DirAccess.Open(baseDirPath);
-        baseDir.ListDirBegin();
-        string folderName;
-        while ((folderName = baseDir.GetNext()) != "")
-        {
-            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
-            {
-                // main audio files
-                {
-                    string major_dir = baseDirPath + folderName + "/";
-                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
-                    string file;
-                    for (int i = 0; i < major_files.Length; ++i)
-                    {
-                        file = major_files[i];
-                        if (file.EndsWith(".wav"))
-                        {
-                            string lower = file.ToLower();
-                            string fullPath = major_dir + file;
-                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
-                    }
-                }
-
-                // alt audio files
-                {
-                    string minor_dir = baseDirPath + folderName + "/mineur/";
-                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
-                    string file;
-                    for (int i = 0; i < major_files.Length; ++i)
-                    {
-                        file = major_files[i];
-                        if (file.EndsWith(".wav"))
-                        {
-                            string lower = file.ToLower();
-                            string fullPath = minor_dir + file;
-                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
-                    }
-                }
-
-                break;
-            }
-        }
-        baseDir.ListDirEnd();
-
-        // set swing
-        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
-        BpmManager.instance.swing = chosenswing;
-        startswing = chosenswing;
-        swingslider.Value = chosenswing;
-
-        // set bpm offset
-        if (!useTutorial)
-        {
-            int offset = 0;
-            string path = "res://Resources/SoundBankMatrix/bpmoffset.json";
-            string offsetjson = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read).GetAsText();
-            Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(offsetjson);
-            foreach (string theme in chosenSoundBank.themes)
-            {
-                offset += int.Parse(offsetLookup[theme]);
-                GD.Print("add: " + offsetLookup[theme] + " / total: " + offset);
-            }
-            BpmManager.instance.bpm = chosenSoundBank.bpm + offset;
-        }
-        else
-        {
-            BpmManager.instance.bpm = chosenSoundBank.bpm;
-        }
-
-        // delete tmep json files
-        File.Delete(chosen_emoticons_path);
-        File.Delete(chosen_soundbank_path);
-
-        // init audioplayers
-        sfxAudioPlayer = new AudioStreamPlayer2D();
-        AddChild(sfxAudioPlayer);
-
-        // main
-        firstAudioPlayer = new AudioStreamPlayer2D();
-        secondAudioPlayer = new AudioStreamPlayer2D();
-        thirdAudioPlayer = new AudioStreamPlayer2D();
-        fourthAudioPlayer = new AudioStreamPlayer2D();
-        AddChild(firstAudioPlayer);
-        AddChild(secondAudioPlayer);
-        AddChild(thirdAudioPlayer);
-        AddChild(fourthAudioPlayer);
-
-        // alt
-        firstAudioPlayerAlt = new AudioStreamPlayer2D();
-        secondAudioPlayerAlt = new AudioStreamPlayer2D();
-        thirdAudioPlayerAlt = new AudioStreamPlayer2D();
-        fourthAudioPlayerAlt = new AudioStreamPlayer2D();
-        AddChild(firstAudioPlayerAlt);
-        AddChild(secondAudioPlayerAlt);
-        AddChild(thirdAudioPlayerAlt);
-        AddChild(fourthAudioPlayerAlt);
-
-        // rec
-        firstAudioPlayerRec = new AudioStreamPlayer2D();
-        secondAudioPlayerRec = new AudioStreamPlayer2D();
-        thirdAudioPlayerRec = new AudioStreamPlayer2D();
-        fourthAudioPlayerRec = new AudioStreamPlayer2D();
-        AddChild(firstAudioPlayerRec);
-        AddChild(secondAudioPlayerRec);
-        AddChild(thirdAudioPlayerRec);
-        AddChild(fourthAudioPlayerRec);
-
-        firstAudioPlayer.Stream = mainAudioFiles[0];
-        secondAudioPlayer.Stream = mainAudioFiles[1];
-        thirdAudioPlayer.Stream = mainAudioFiles[2];
-        fourthAudioPlayer.Stream = mainAudioFiles[3];
-
-        firstAudioPlayerAlt.Stream = mainAudioFilesAlt[0];
-        secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
-        thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
-        fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
-
-        // mixers setup -------------------------------------------------
-
-
-
-
-
-        SetupMixer(sampleMixer0, 0);
-        SetupMixer(sampleMixer1, 1);
-        SetupMixer(sampleMixer2, 2);
-        SetupMixer(sampleMixer3, 3);
-
-        // mixers setup -------------------------------------------------
-
-        layerButton1.Pressed += () => SwitchLayer(1);
-        layerButton2.Pressed += () => SwitchLayer(2);
-        layerButton3.Pressed += () => SwitchLayer(3);
-        layerButton4.Pressed += () => SwitchLayer(4);
-        layerButton5.Pressed += () => SwitchLayer(5);
-        layerButton6.Pressed += () => SwitchLayer(6);
-        layerButton7.Pressed += () => SwitchLayer(7);
-        layerButton8.Pressed += () => SwitchLayer(8);
-        layerButton9.Pressed += () => SwitchLayer(9);
-        layerButton10.Pressed += () => SwitchLayer(10);
-
-        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
-        emailEnter.Pressed += AllLayersToMp3;
-
-        muteSpeach.Pressed += DisplayServer.TtsStop;
-
-
-
-        SaveLayoutButton.Pressed += OnSaveLayoutButton;
-        LoadLayoutButton.Pressed += OnLoadLayoutButton;
-
-        restartButton.Pressed += () =>
-        {
-            if (Engine.IsEditorHint())
-            {
-                GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
-            }
-            else
-            {
-                OS.Execute(OS.GetExecutablePath(), []);
-                GetTree().Quit();
-            }
-        };
-
-        ClearLayoutButton.Pressed += OnClearLayoutButton;
-        PlayPauseButton.Pressed += OnPlayPauseButton;
-        BpmUpButton.Pressed += OnBpmUpButton;
-        BpmDownButton.Pressed += OnBpmDownButton;
-        saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
-
-        // skipping the tutorial
-        skiptutorialbutton.Pressed += () =>
-        {
-            achievementLevel = -1;
-            SetEntireInterfaceVisibility(true);
-            achievementspanel.Visible = false;
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        };
-
-        // settings panel
-        settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-        settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-
-        SpritePlacement();
-        SetupTutorial();
-    }
-
-    #endregion
-    
-    #region Process
-    public override void _Process(double delta)
-    {
-        time += (float)delta;
-
-		if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
-
-        bool isCtrlPressed = Input.IsKeyPressed(Key.Ctrl);
-        bool isCPressed = Input.IsKeyPressed(Key.C);
-        bool isVPressed = Input.IsKeyPressed(Key.V);
-
-        // Handle Ctrl+C
-        if (isCtrlPressed && isCPressed)
-        {
-            if (!_ctrlCWasPressed)
-            {
-                _ctrlCWasPressed = true;
-                OnSaveLayoutButton();
-            }
-        }
-        else
-        {
-            _ctrlCWasPressed = false;
-        }
-
-        // Handle Ctrl+V
-        if (isCtrlPressed && isVPressed)
-        {
-            if (!_ctrlVWasPressed)
-            {
-                _ctrlVWasPressed = true;
-                OnLoadLayoutButton();
-            }
-        }
-        else
-        {
-            _ctrlVWasPressed = false;
-        }
-
-        // deal with unclockables
-        for (int i = 0; i < 6; i++)
-        {
-            float tresh = ((float)i + 1f) / 6f * 100f;
-            if (progressBarValue > tresh - 10)
-            {
-                Unlockables[i].Visible = true;
-                UnlockablesQuestion[i].Visible = false;
-            }
-            else
-            {
-                Unlockables[i].Visible = false;
-                UnlockablesQuestion[i].Visible = true;
-            }
-        }
-        
-        
-        // layerbutton outline clock rotation
-        if (BpmManager.instance.timePerBeat != 0)
-        {
-            float clockrot = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
-            layerOutline.RotationDegrees = clockrot * 360f - 7f;
-        }
-        else
-        {
-            float clockrot = (float)(BpmManager.instance.currentBeat / (float)BpmManager.beatsAmount);
-            layerOutline.RotationDegrees = clockrot * 360f - 7f;
-        }
-
-        if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
-
-        if (!tutorialActivated)
-        {
-            TryActivateTutorial();
-            tutorialActivated = true;
-        }
-
-        // saving label
-        if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
-        else savingLabelActive = false;
-
-        SavingLabel.Visible = savingLabelActive;
-
-        // switch layer buttons
-        layerButton1.Modulate = new Color(1, 1, 1, 1);
-        layerButton2.Modulate = new Color(1, 1, 1, 1);
-        layerButton3.Modulate = new Color(1, 1, 1, 1);
-        layerButton4.Modulate = new Color(1, 1, 1, 1);
-        layerButton5.Modulate = new Color(1, 1, 1, 1);
-        layerButton6.Modulate = new Color(1, 1, 1, 1);
-        layerButton7.Modulate = new Color(1, 1, 1, 1);
-        layerButton8.Modulate = new Color(1, 1, 1, 1);
-        layerButton9.Modulate = new Color(1, 1, 1, 1);
-        layerButton10.Modulate = new Color(1, 1, 1, 1);
-        if (!LayerHasBeats(layers[0])) layerButton1.Modulate = layerButton1.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[1])) layerButton2.Modulate = layerButton2.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[2])) layerButton3.Modulate = layerButton3.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[3])) layerButton4.Modulate = layerButton4.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[4])) layerButton5.Modulate = layerButton5.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[5])) layerButton6.Modulate = layerButton6.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[6])) layerButton7.Modulate = layerButton7.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[7])) layerButton8.Modulate = layerButton8.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[8])) layerButton9.Modulate = layerButton9.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[9])) layerButton10.Modulate = layerButton10.Modulate.Darkened(0.5f);
-
-
-        // update robot light
-        var lightvalue = progressBarValue / 100;
-        if (lightvalue > 1) lightvalue = 1;
-        float pulsed = ((((Mathf.Sin(time * 4) + 1) / 2) / 2) + 0.5f);
-        robotlight.Energy = lightvalue;
-
-        // update micmeter
-        micmeter.Value = MicrophoneCapture.instance.volume;
-
-        // other
-        metronome_sfx_enabled = metronome_toggle.ButtonPressed;
-
-        string RemoveEmojis(string input)
-        {
-            var output = "";
-            var stringInfo = new StringInfo(input);
-            for (int i = 0; i < stringInfo.LengthInTextElements; i++)
-            {
-                string element = stringInfo.SubstringByTextElements(i, 1);
-                if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
-            }
-            return output;
-        }
-
-        void SpeakInstruction(int instruction)
-        {
-            if (muteSpeach.ButtonPressed) return;
-
-            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
-            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-            DisplayServer.TtsSpeak(RemoveEmojis(instructions[instruction]), voices[0], 100);
-        }
-
-        // first tts
-        if (!first_tts_done && useTutorial)
-        {
-            SpeakInstruction(0);
-            first_tts_done = true;
-        }
-
-        // deal with achievements
-        if (achievementLevel != -1 && useTutorial)
-        {
-            string instruction = instructions[achievementLevel];
-            Func<bool> condition = conditions[achievementLevel];
-            Action outcome = outcomes[achievementLevel];
-            InstructionLabel.Text = instruction;
-
-            f7_pressed_lastframe = f7_pressed;
-		    f7_pressed = Input.IsKeyPressed(Key.F7);
-		    bool skip = f7_pressed && f7_pressed != f7_pressed_lastframe;
-
-            if (condition() || skip)
-            {
-                if (outcome != null) outcome();
-                achievementLevel++;
-                EmitAchievementParticles();
-                PlayExtraSFX(achievement_sfx);
-                SpeakInstruction(achievementLevel);
-            }
-        }
-
-        // deal with beat particles
-        if (beat_particles_emitting && beat_particles_curtime < beat_particles_time)
-        {
-            beat_particles.Color = beat_particles_color;
-            beat_particles.Position = beat_particles_position;
-            beat_particles.Emitting = true;
-            beat_particles_curtime += (float)delta;
-        }
-        else
-        {
-            beat_particles.Emitting = false;
-            beat_particles_emitting = false;
-        }
-
-        // deal with progress bar particles
-        if (pbar_particles_emitting && pbar_particles_curtime < pbar_particles_time)
-        {
-            pbar_particles.Emitting = true;
-            pbar_particles_curtime += (float)delta;
-        }
-        else
-        {
-            pbar_particles.Emitting = false;
-            pbar_particles_emitting = false;
-        }
-
-        // deal with progress bar particles
-        if (achievement_particles_emitting && achievement_particles_curtime < achievement_particles_time)
-        {
-            achievement_particles.Emitting = true;
-            achievement_particles_curtime += (float)delta;
-        }
-        else
-        {
-            achievement_particles.Emitting = false;
-            achievement_particles_emitting = false;
-        }
-
-        // deal with arrowkeys
-        up_pressed_lastframe = up_pressed;
-		up_pressed = Input.IsKeyPressed(Key.Up);
-		if (up_pressed && up_pressed != up_pressed_lastframe) OnBpmUpButton();
-        dn_pressed_lastframe = dn_pressed;
-		dn_pressed = Input.IsKeyPressed(Key.Down);
-		if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
-
-        // update swing amount
-        BpmManager.instance.swing = (float)swingslider.Value;
-
-        // space as play/pause
-        var spacedown = Input.IsKeyPressed(Key.Space);
-        if (spacedown && spacedownlastframe == false && !emailPromptOpen) OnPlayPauseButton();
-        spacedownlastframe = spacedown;
-
-        // enter as reset player
-        var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false && !emailPromptOpen) { /* do something with enter */ }
-        enterdownlastframe = enterdown;
-
-        // drag&drop
-        if (dragginganddropping)
-        {
-            draganddropthing.Modulate = colors[holdingforring];
-            draganddropthing.Position = GetViewport().GetMousePosition() - (DisplayServer.WindowGetSize() / 2);
-        }
-        else draganddropthing.Modulate = new Color(1, 1, 1, 0);
-
-        // update pointer
-        float intergerFactor = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
-        pointer.RotationDegrees = intergerFactor * 360f - 7f;
-
-        // check clap and stomp
-        var volume = MicrophoneCapture.instance.volume;
-        var frequency = MicrophoneCapture.instance.frequency;
-
-        var treshold = volume_treshold.Value;
-        var shouldclap = volume > treshold && frequency > ClapBiasSlider.Value;
-        if (shouldclap || Input.IsKeyPressed(Key.N))
-        {
-            if (!clapped)
-            {
-                if (!emailPromptOpen) OnClap();
-                clapped = true;
-            }
-        }
-        
-        bool shouldstomp = volume > treshold && frequency < ClapBiasSlider.Value;
-        if (shouldstomp || Input.IsKeyPressed(Key.M))
-        {
-            if (!stomped)
-            {
-                if (!emailPromptOpen) OnStomp();
-                stomped = true;
-            }
-        }
-        
-        if (BpmManager.instance.playing)
-        {
-            timeafterplay += ((float)delta);
-            
-            slowBeatTimer += (float)delta / 4;
-            if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
-            var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
-            metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
-
-            // update progressbar
-            if (progressBarValue > 100) progressBarValue = 100;
-            progressBar.Value = progressBarValue;
-        }
-        else
-        {
-            timeafterplay = 0;
-        }
-
-        // update sprites
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-        {
-            for (int ring = 0; ring < 4; ring++)
-            {
-                var sprite = beatSprites[ring, beat];
-                var active = beatActives[ring, beat];
-
-                var color = colors[ring];
-
-                if (beat == BpmManager.instance.currentBeat)
-                {
-                    if (active) color = color.Lightened(0.75f);
-                    else color = new(1, 1, 1, 0.5f);
-                }
-                else if (!active) color.A = 0.2f;
-
-                sprite.Modulate = color;
-
-                float scale = 1;
-                if (BpmManager.beatsAmount == 32) scale = beatScale32;
-                if (BpmManager.beatsAmount == 16) scale = beatScale16;
-                if (BpmManager.beatsAmount == 8) scale = beatScale8;
-
-                if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
-            }
-        }
-
-        // bloop
-        float factor = 2;
-        if (draganddropButton0.Scale.X > 2) draganddropButton0.Scale -= Vector2.One * (float)delta * factor;
-        if (draganddropButton1.Scale.X > 2) draganddropButton1.Scale -= Vector2.One * (float)delta * factor;
-        if (draganddropButton2.Scale.X > 2) draganddropButton2.Scale -= Vector2.One * (float)delta * factor;
-        if (draganddropButton3.Scale.X > 2) draganddropButton3.Scale -= Vector2.One * (float)delta * factor;
-
-        // update outlines
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-        {
-            for (int ring = 0; ring < 4; ring++)
-            {
-                var outline = beatOutlines[ring, beat];
-                outline.Modulate = colors[ring];
-            }
-        }
-
-        // update template sprites
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-        {
-            for (int ring = 0; ring < 4; ring++)
-            {
-                var sprite = templateSprites[ring, beat];
-                var active = TemplateManager.instance.GetCurrentActives()[ring, beat];
-                sprite.Modulate = new Color(0, 0, 0, 0);
-                if (active && showTemplate) sprite.Modulate = new Color(0, 0, 0, 1);
-            }
-        }
-
-        // update bpm label
-        bpmLabel.Text = BpmManager.instance.bpm.ToString();
     }
     #endregion
 

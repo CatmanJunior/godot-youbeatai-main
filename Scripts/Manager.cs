@@ -138,9 +138,9 @@ public partial class Manager : Node
 
 
         // update robot light
-        var lightvalue = progressBarValue / 100;
+        var lightvalue = MicrophoneCapture.instance.volume * 8;
         if (lightvalue > 1) lightvalue = 1;
-        float pulsed = ((((Mathf.Sin(time * 4) + 1) / 2) / 2) + 0.5f);
+        if (lightvalue < 0.05f) lightvalue = 0;
         robotlight.Energy = lightvalue;
 
         // update micmeter

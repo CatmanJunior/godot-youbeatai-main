@@ -29,7 +29,7 @@
         ],
         "bpm": 60,
         "swing": 50,
-        "electronic": 20
+        "electronic": 1
     },
     {
         "name": "new-age",
@@ -45,7 +45,7 @@
         ],
         "bpm": 75,
         "swing": 15,
-        "electronic": 60
+        "electronic": 2
     },
     {
         "name": "acoustisch",
@@ -63,7 +63,7 @@
         ],
         "bpm": 70,
         "swing": 20,
-        "electronic": 10
+        "electronic": 0
     },
     {
         "name": "keuken",
@@ -78,7 +78,7 @@
         ],
         "bpm": 80,
         "swing": 25,
-        "electronic": 10
+        "electronic": 1
     },
     {
         "name": "tango",
@@ -95,7 +95,7 @@
         ],
         "bpm": 85,
         "swing": 40,
-        "electronic": 30
+        "electronic": 2
     },
     {
         "name": "aziatisch",
@@ -112,7 +112,7 @@
         ],
         "bpm": 90,
         "swing": 50,
-        "electronic": 50
+        "electronic": 2
     },
     {
         "name": "opera",
@@ -127,7 +127,7 @@
         ],
         "bpm": 70,
         "swing": 10,
-        "electronic": 20
+        "electronic": 1
     },
     {
         "name": "raggae",
@@ -144,7 +144,7 @@
         ],
         "bpm": 70,
         "swing": 70,
-        "electronic": 70
+        "electronic": 0
     },
     {
         "name": "soul",
@@ -159,7 +159,7 @@
         ],
         "bpm": 80,
         "swing": 65,
-        "electronic": 50
+        "electronic": 1
     },
     {
         "name": "balkisch",
@@ -175,7 +175,7 @@
         ],
         "bpm": 90,
         "swing": 60,
-        "electronic": 30
+        "electronic": 0
     },
     {
         "name": "k-pop",
@@ -191,7 +191,7 @@
         ],
         "bpm": 100,
         "swing": 10,
-        "electronic": 90
+        "electronic": 2
     },
     {
         "name": "pop",
@@ -207,7 +207,7 @@
         ],
         "bpm": 110,
         "swing": 25,
-        "electronic": 70
+        "electronic": 1
     },
     {
         "name": "afrikaans",
@@ -224,7 +224,7 @@
         ],
         "bpm": 115,
         "swing": 55,
-        "electronic": 30
+        "electronic": 0
     },
     {
         "name": "dance",
@@ -239,7 +239,7 @@
         ],
         "bpm": 120,
         "swing": 5,
-        "electronic": 80
+        "electronic": 2
     },
     {
         "name": "zuid-ame",
@@ -256,7 +256,7 @@
         ],
         "bpm": 110,
         "swing": 55,
-        "electronic": 20
+        "electronic": 0
     },
     {
         "name": "funk",
@@ -271,7 +271,7 @@
         ],
         "bpm": 90,
         "swing": 60,
-        "electronic": 40
+        "electronic": 1
     },
     {
         "name": "hiphop",
@@ -285,7 +285,7 @@
         ],
         "bpm": 85,
         "swing": 70,
-        "electronic": 60
+        "electronic": 2
     },
     {
         "name": "rock",
@@ -300,7 +300,7 @@
         ],
         "bpm": 110,
         "swing": 15,
-        "electronic": 50
+        "electronic": 0
     },
     {
         "name": "hardcore",
@@ -316,7 +316,7 @@
         ],
         "bpm": 160,
         "swing": 0,
-        "electronic": 90
+        "electronic": 1
     },
     {
         "name": "metal",
@@ -334,7 +334,7 @@
         ],
         "bpm": 130,
         "swing": 0,
-        "electronic": 20
+        "electronic": 2
     },
     {
         "name": "techno",
@@ -348,6 +348,6 @@
         ],
         "bpm": 140,
         "swing": 5,
-        "electronic": 100
+        "electronic": 2
     }
 ]

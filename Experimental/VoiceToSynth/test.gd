@@ -3,6 +3,8 @@ extends Control
 var recorder: AudioEffectRecord
 @export var bpm: Node
 
+@export var audio: AudioStreamPlayer2D
+
 func _ready():
 	# We get the index of the "Record" bus.
 	var idx = AudioServer.get_bus_index("Microphone")
@@ -20,6 +22,9 @@ func stop():
 func stop_playing():
 	bpm.playing = false
 	
+func play():
+	audio.play()
+
 
 func start_playing():
 	bpm.playing = true

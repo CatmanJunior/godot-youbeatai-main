@@ -42,19 +42,19 @@ public partial class LayerVoiceOver : Node
 	public override void _Ready()
     {
 		if (volumeSlider != null)
-		{ 
+		{	
 			volumeSlider.ValueChanged += (double volume) =>
 			{
 				double new_volume = 1 - volume;
 				volume = new_volume;
-				SetVolume(new_volume);
+				audioPlayer.VolumeLinear = (float)new_volume * 1.5f;
 			};
 
 		}
 
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
-			OnTop();
+			//OnTop();
 		};
 
 		// init record button
@@ -66,8 +66,8 @@ public partial class LayerVoiceOver : Node
 			// metronoom aan
 			Manager.instance.metronome_toggle.ButtonPressed = true;
 
-			// 4 beats voor de eerste noot
-			BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
+			// begin on top with the build up
+			BpmManager.instance.currentBeat = 0;
 
 			// playing true
 			BpmManager.instance.playing = true;
@@ -76,9 +76,11 @@ public partial class LayerVoiceOver : Node
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
 		AddChild(audioPlayer);
+		if( volumeSlider != null )
+			audioPlayer.VolumeLinear = 0.5f;
 
 		// setup record effect
-        audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
+		audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
 
 		// pause voiceover button
 		Manager.instance.PlayPauseButton.Pressed += () =>

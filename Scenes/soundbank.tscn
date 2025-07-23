@@ -1,12 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8n1g4l4jrv6d"]
+[gd_scene load_steps=3 format=3 uid="uid://b8n1g4l4jrv6d"]
 
 [ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ie3tb"]
-[ext_resource type="Script" uid="uid://cxpjksw7ppq0a" path="res://Scripts/OptionButton.cs" id="3_a7rio"]
 
 [node name="scene" type="Node2D"]
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("accousticSlider", "emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -20,7 +19,6 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.29699, 1.29699)
 script = ExtResource("1_l0fe3")
-accousticSlider = NodePath("AcousticSlider")
 emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle"), NodePath("Emoties/emotion7/toggle")]
 themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
 gebruikButton = NodePath("GebruikButton")
@@ -61,81 +59,6 @@ grow_vertical = 2
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 26
 text = "Wat voor liedje wil je?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="AcousticSlider" type="HSlider" parent="SoundBankSelectionMenu"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -84.0
-offset_top = -172.0
-offset_right = 77.0
-offset_bottom = -147.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-max_value = 1.0
-step = 0.1
-value = 0.5
-
-[node name="Title" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -108.5
-offset_top = -46.5
-offset_right = 112.5
-offset_bottom = -1.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-text = "Acoustisch / Electronish"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Icon1" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.5
-offset_top = -18.5
-offset_right = -84.5
-offset_bottom = 26.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-theme_override_font_sizes/font_size = 32
-text = "🏕️"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Icon2" type="Label" parent="SoundBankSelectionMenu/AcousticSlider"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 77.5
-offset_top = -16.5
-offset_right = 121.5
-offset_bottom = 28.5
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-theme_override_font_sizes/font_size = 32
-text = "🪩"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -666,4 +589,3 @@ popup/item_1/text = "16"
 popup/item_1/id = 1
 popup/item_2/text = "8"
 popup/item_2/id = 2
-script = ExtResource("3_a7rio")

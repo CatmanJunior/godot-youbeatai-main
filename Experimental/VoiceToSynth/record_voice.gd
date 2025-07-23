@@ -3,8 +3,9 @@ extends Node
 @export var bpmManager: Node
 @export var envelope: Envelope
 @export var _synth: Synth
-
+@export var notes: Notes
 @export var volume: float = 0.5
+@export var octaveRange: Vector2i
 
 var recorder: AudioEffectRecord
 var data: PackedVector3Array
@@ -19,7 +20,8 @@ func _ready():
 	# as an "AudioEffectRecord" resource.
 	recorder = AudioServer.get_bus_effect(idx, 1) 
 	samples.resize(10)
-	samples.fill(PackedVector3Array())
+	for index in range(len(samples)):
+		samples[index] = PackedVector3Array([])
 	
 	bpmManager.OnBeatEvent.connect(_on_timer_timeout)
 	bpmManager.OnPlayingChanged.connect(_on_playing_changed)
@@ -29,12 +31,12 @@ func _on_timer_timeout():
 		_synth.start()
 
 	if bpmManager.currentBeat >= len(get_sample()):
+		_synth.volume = 0
 		return
 	
 	var current = get_sample()[bpmManager.currentBeat]
 	_synth.pitch = current[0]
-	_synth.volume = 0
-	envelope.play()
+	_synth.volume = envelope.play()
 
 func _on_volume_slider_changed(value: float):
 	volume = value
@@ -50,15 +52,21 @@ func _on_envelope_level_changed(level: float):
 	if bpmManager.currentBeat >= len(get_sample()):
 		return
 	var rms_value = get_sample()[bpmManager.currentBeat][1]
+	if rms_value == 0:
+		_synth.volume = 0
+		return
+	
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
 	_synth.volume = volume * level * remap(log_value, -80, 10, 0, 1)
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
+	print(layer)
 
 func on_microphone_input(volume: float, frequency: float):
 	if not recorder.is_recording_active():
 		return
+		
 	var time = Time.get_unix_time_from_system() - start_record_time
 	data.push_back(Vector3(frequency, volume, time))
 	
@@ -77,10 +85,26 @@ func stop_recording():
 	print("recording data length %d" % [len(data)])
 
 	get_sample().clear()
-	var beatDuration = (60.0/bpmManager.bpm)/4.0
-
+	var beats_per_bar = 4.0
+	var beatDuration = 60.0 / bpmManager.bpm / beats_per_bar
+	
+	# TODO: reduce array size with needed kernel
+	# kernel size should maybe be depend on reduction amount?
 	for sample in data:
 		if sample.z > len(get_sample()) * beatDuration:
+			# clamp frequency to octave range closests note
+			var closest_diff: float = 9999
+			var closest: Note = notes.get_octave(octaveRange.x).notes[0]
+			
+			for octaveNumber in range(octaveRange.x, octaveRange.y + 1):
+				var octave = notes.get_octave(octaveNumber)
+				for note in octave.notes:
+					var diff: float = abs(sample.x - note.frequency)
+					if diff < closest_diff:
+						closest_diff = diff
+						closest = note
+			
+			sample.x = closest.frequency
 			get_sample().push_back(sample)
 	
 	get_sample().resize(bpmManager.amount_of_beats)	

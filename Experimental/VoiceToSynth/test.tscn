@@ -17,7 +17,7 @@ gradient = SubResource("Gradient_f7m3q")
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_0nud8"]
 
-[node name="Control" type="Control" node_paths=PackedStringArray("bpm")]
+[node name="Control" type="Control" node_paths=PackedStringArray("bpm", "audio")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,9 +26,11 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a0dxq")
 bpm = NodePath("BPMManager")
+audio = NodePath("AudioStreamPlayer2D")
 
 [node name="BPMManager" type="Node" parent="."]
 script = ExtResource("6_k0mxu")
+swing = 0.0
 
 [node name="MicrophoneCapture" type="Node" parent="."]
 script = ExtResource("1_kki6v")
@@ -36,6 +38,15 @@ script = ExtResource("1_kki6v")
 [node name="VoiceRecorder" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("3_k0mxu")]
 unique_name_in_owner = true
 bpmManager = NodePath("../BPMManager")
+volume = 1.0
+octaveRange = Vector2i(5, 6)
+
+[node name="Envelope" parent="VoiceRecorder" index="0"]
+attack_time = 0.101
+decay_time = 0.041
+sustain_level = 0.301
+sustain_time = 0.051
+release_time = 0.101
 
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
@@ -82,8 +93,8 @@ script = ExtResource("5_a0dxq")
 timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="HSplitContainer/Actions/ColorRect"]
-wait_time = 0.05
-one_shot = true
+wait_time = 0.1
+autostart = true
 
 [node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
 layout_mode = 2
@@ -108,10 +119,11 @@ bus = &"Microphone"
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_71jf6")
-autoplay = true
 
+[connection signal="OnBeatEvent" from="BPMManager" to="." method="play"]
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="VoiceRecorder" method="on_microphone_input"]
+[connection signal="level_changed" from="VoiceRecorder/Envelope" to="HSplitContainer/Actions/Label" method="_on_level_changed"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="." method="start"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="start_recording"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="." method="stop"]

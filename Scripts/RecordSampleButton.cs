@@ -84,7 +84,7 @@ public partial class RecordSampleButton : Sprite2D
         if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
         {
             // On Mouse Down
-            if (mouseEvent.IsPressed() && inside)
+            if (mouseEvent.IsPressed() && inside && !Manager.instance.IsAnyMixerLocked())
             {
                 pressing = !pressing;
                 if (pressing) StartRecording();
@@ -141,6 +141,7 @@ public partial class RecordSampleButton : Sprite2D
 
     private void StartRecording()
     {
+        Manager.instance.isMixerLocked[ring] = true;
         SetVolume(0f);
 		var fill = GetChild(0) as TextureProgressBar;
         fill.Value = 1;
@@ -212,6 +213,8 @@ public partial class RecordSampleButton : Sprite2D
             await Task.Delay(50);
         }
         increase.AddThemeStyleboxOverride("normal", originalStyle);
+
+        Manager.instance.isMixerLocked[ring] = false;
     }
 
     async Task RotateMixerLeft()
@@ -229,5 +232,7 @@ public partial class RecordSampleButton : Sprite2D
             await Task.Delay(50);
         }
         decrease.AddThemeStyleboxOverride("normal", originalStyle);
+
+        Manager.instance.isMixerLocked[ring] = false;
     }
 }

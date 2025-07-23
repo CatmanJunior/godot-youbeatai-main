@@ -1335,6 +1335,14 @@ public partial class Manager : Node
     [Export] public Node2D sampleMixer2;
     [Export] public Node2D sampleMixer3;
 
+    public bool[] isMixerLocked = [false, false, false, false];
+    
+    public bool IsAnyMixerLocked()
+    {
+        foreach (bool locked in isMixerLocked) if (locked) return true;
+        return false;
+    }    
+
     private void UpdateAllMixerVolumes(bool log = false)
     {
         var v0 = UpdateMixerVolumes(0);

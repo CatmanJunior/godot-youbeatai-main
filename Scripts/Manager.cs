@@ -37,6 +37,8 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
+        UpdateAllMixerVolumes();
+
 		if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
 
         bool isCtrlPressed = Input.IsKeyPressed(Key.Ctrl);
@@ -1326,36 +1328,49 @@ public partial class Manager : Node
 
     #endregion
 
-    #region Volume
+    #region Mixing
 
-    void SetMainVolume(float value)
+    [Export] public Node2D sampleMixer0;
+    [Export] public Node2D sampleMixer1;
+    [Export] public Node2D sampleMixer2;
+    [Export] public Node2D sampleMixer3;
+
+    private void UpdateAllMixerVolumes(bool log = false)
     {
-        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
-        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(value);
+        var v0 = UpdateMixerVolumes(0);
+        var v1 = UpdateMixerVolumes(1);
+        var v2 = UpdateMixerVolumes(2);
+        var v3 = UpdateMixerVolumes(3);
+
+        if (log)
+        {
+            GD.Print("");
+            GD.Print("---------- changing mix volumes ---------");
+            GD.Print("0: " + v0.main.ToString("0.0") + "/" + v0.alt.ToString("0.0") + "/" + v0.rec.ToString("0.0"));
+            GD.Print("1: " + v1.main.ToString("0.0") + "/" + v1.alt.ToString("0.0") + "/" + v1.rec.ToString("0.0"));
+            GD.Print("2: " + v2.main.ToString("0.0") + "/" + v2.alt.ToString("0.0") + "/" + v2.rec.ToString("0.0"));
+            GD.Print("3: " + v3.main.ToString("0.0") + "/" + v3.alt.ToString("0.0") + "/" + v3.rec.ToString("0.0"));
+            GD.Print("-----------------------------------------");
+            GD.Print("");
+        }
     }
 
-    void SetAltVolume(float value)
+    private (float main, float alt, float rec) UpdateMixerVolumes(int ring)
     {
-        float db = Mathf.LinearToDb(value);
-        firstAudioPlayerAlt.VolumeDb = db;
-        secondAudioPlayerAlt.VolumeDb = db;
-        thirdAudioPlayerAlt.VolumeDb = db;
-        fourthAudioPlayerAlt.VolumeDb = db;
-    }
+        float fullrotation = Mathf.PosMod(GetPivotForRing(ring).RotationDegrees, 360f) / 360f;
 
-    void SetRecVolume(float value)
-    {
-        float db = Mathf.LinearToDb(value);
-        firstAudioPlayerRec.VolumeDb = db;
-        secondAudioPlayerRec.VolumeDb = db;
-        thirdAudioPlayerRec.VolumeDb = db;
-        fourthAudioPlayerRec.VolumeDb = db;
-    }
+        float GetCrossfadeVolume(float sectionCenter)
+        {
+            float distance = Mathf.Abs(fullrotation - sectionCenter);
+            if (distance > 0.5f) distance = 1f - distance;
+            float maxDistance = 1f / 3f;
+            return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
+        }
 
-    void UpdateVolumes(int ring, float mainvolume, float altvolume, float recvolume)
-    {
+        float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
+        float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
+        float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
+
         if (ring == 0)
         {
             firstAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
@@ -1380,17 +1395,9 @@ public partial class Manager : Node
             fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
             fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
         }
+
+        return (mainvolume, altvolume, recvolume);
     }
-
-    #endregion
-
-    #region Mixing
-
-    // sample mixers
-    [Export] public Node2D sampleMixer0;
-    [Export] public Node2D sampleMixer1;
-    [Export] public Node2D sampleMixer2;
-    [Export] public Node2D sampleMixer3;
 
     private void SetupAllMixers()
     {
@@ -1400,33 +1407,34 @@ public partial class Manager : Node
         SetupMixer(sampleMixer3, 3);
     }
 
+    private Node2D GetMixerForRing(int ring)
+    {
+        if (ring == 0) return sampleMixer0;
+        else if (ring == 1) return sampleMixer1;
+        else if (ring == 2) return sampleMixer2;
+        else if (ring == 3) return sampleMixer3;
+        else return null;
+    }
+
+    private Node2D GetPivotForRing(int ring)
+    {
+        var mixer = GetMixerForRing(ring);
+        return (Node2D)mixer.FindChild("Pivot");
+    }
+
     public void RotatePivot(float rotation, Node2D pivot, int ring)
     {
         pivot.RotationDegrees += rotation;
 
-        float fullrotation = Mathf.PosMod(pivot.RotationDegrees, 360f) / 360f;
-
-        float GetCrossfadeVolume(float sectionCenter)
-        {
-            float distance = Mathf.Abs(fullrotation - sectionCenter);
-            if (distance > 0.5f) distance = 1f - distance;
-            float maxDistance = 1f / 3f;
-            return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
-        }
-
-        float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
-        float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
-        float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
-
-        UpdateVolumes(ring, mainvolume, altvolume, recvolume);
+        var volumes = UpdateMixerVolumes(ring);
 
         var icon0 = pivot.GetChild(0) as Label;
         var icon1 = pivot.GetChild(1) as Label;
         var icon2 = pivot.GetChild(2) as Label;
 
-        icon0.Modulate = new Color(1, 1, 1, mainvolume);
-        icon1.Modulate = new Color(1, 1, 1, altvolume);
-        icon2.Modulate = new Color(1, 1, 1, recvolume);
+        icon0.Modulate = new Color(1, 1, 1, volumes.main);
+        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
+        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
     }
 
     void SetupMixer(Node2D mixer, int ring)

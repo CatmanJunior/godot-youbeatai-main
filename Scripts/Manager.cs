@@ -33,74 +33,20 @@ public partial class Manager : Node
     #endregion
 
     #region Process
+
     public override void _Process(double delta)
     {
         time += (float)delta;
 
         UpdateAllMixerVolumes();
 
-		if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
+        if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
 
-        bool isCtrlPressed = Input.IsKeyPressed(Key.Ctrl);
-        bool isCPressed = Input.IsKeyPressed(Key.C);
-        bool isVPressed = Input.IsKeyPressed(Key.V);
+        HandleCopyPasting();
 
-        // Handle Ctrl+C
-        if (isCtrlPressed && isCPressed)
-        {
-            if (!_ctrlCWasPressed)
-            {
-                _ctrlCWasPressed = true;
-                OnSaveLayoutButton();
-            }
-        }
-        else
-        {
-            _ctrlCWasPressed = false;
-        }
+        UpdateAchievementsVisibility();
 
-        // Handle Ctrl+V
-        if (isCtrlPressed && isVPressed)
-        {
-            if (!_ctrlVWasPressed)
-            {
-                _ctrlVWasPressed = true;
-                OnLoadLayoutButton();
-            }
-        }
-        else
-        {
-            _ctrlVWasPressed = false;
-        }
-
-        // deal with unclockables
-        for (int i = 0; i < 6; i++)
-        {
-            float tresh = ((float)i + 1f) / 6f * 100f;
-            if (progressBarValue > tresh - 10)
-            {
-                Unlockables[i].Visible = true;
-                UnlockablesQuestion[i].Visible = false;
-            }
-            else
-            {
-                Unlockables[i].Visible = false;
-                UnlockablesQuestion[i].Visible = true;
-            }
-        }
-        
-        
-        // layerbutton outline clock rotation
-        if (BpmManager.instance.timePerBeat != 0)
-        {
-            float clockrot = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
-            layerOutline.RotationDegrees = clockrot * 360f - 7f;
-        }
-        else
-        {
-            float clockrot = (float)(BpmManager.instance.currentBeat / (float)BpmManager.beatsAmount);
-            layerOutline.RotationDegrees = clockrot * 360f - 7f;
-        }
+        UpdateLayerOutlineSpriteRotation();
 
         if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
 
@@ -110,143 +56,32 @@ public partial class Manager : Node
             tutorialActivated = true;
         }
 
-        // saving label
         if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
         else savingLabelActive = false;
-
         SavingLabel.Visible = savingLabelActive;
 
-        // switch layer buttons
-        layerButton1.Modulate = new Color(1, 1, 1, 1);
-        layerButton2.Modulate = new Color(1, 1, 1, 1);
-        layerButton3.Modulate = new Color(1, 1, 1, 1);
-        layerButton4.Modulate = new Color(1, 1, 1, 1);
-        layerButton5.Modulate = new Color(1, 1, 1, 1);
-        layerButton6.Modulate = new Color(1, 1, 1, 1);
-        layerButton7.Modulate = new Color(1, 1, 1, 1);
-        layerButton8.Modulate = new Color(1, 1, 1, 1);
-        layerButton9.Modulate = new Color(1, 1, 1, 1);
-        layerButton10.Modulate = new Color(1, 1, 1, 1);
-        if (!LayerHasBeats(layers[0])) layerButton1.Modulate = layerButton1.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[1])) layerButton2.Modulate = layerButton2.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[2])) layerButton3.Modulate = layerButton3.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[3])) layerButton4.Modulate = layerButton4.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[4])) layerButton5.Modulate = layerButton5.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[5])) layerButton6.Modulate = layerButton6.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[6])) layerButton7.Modulate = layerButton7.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[7])) layerButton8.Modulate = layerButton8.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[8])) layerButton9.Modulate = layerButton9.Modulate.Darkened(0.5f);
-        if (!LayerHasBeats(layers[9])) layerButton10.Modulate = layerButton10.Modulate.Darkened(0.5f);
+        UpdateLayerSwitchButtonsColors();
 
-
-        // update robot light
         var lightvalue = MicrophoneCapture.instance.volume * 8;
         if (lightvalue > 1) lightvalue = 1;
         if (lightvalue < 0.05f) lightvalue = 0;
         robotlight.Energy = lightvalue;
 
-        // update micmeter
         micmeter.Value = MicrophoneCapture.instance.volume;
 
-        // other
         metronome_sfx_enabled = metronome_toggle.ButtonPressed;
 
-        string RemoveEmojis(string input)
-        {
-            var output = "";
-            var stringInfo = new StringInfo(input);
-            for (int i = 0; i < stringInfo.LengthInTextElements; i++)
-            {
-                string element = stringInfo.SubstringByTextElements(i, 1);
-                if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
-            }
-            return output;
-        }
+        UpdateTutorial();
 
-        void SpeakInstruction(int instruction)
-        {
-            if (muteSpeach.ButtonPressed) return;
-
-            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
-            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-            DisplayServer.TtsSpeak(RemoveEmojis(instructions[instruction]), voices[0], 100);
-        }
-
-        // first tts
-        if (!first_tts_done && useTutorial)
-        {
-            SpeakInstruction(0);
-            first_tts_done = true;
-        }
-
-        // deal with achievements
-        if (achievementLevel != -1 && useTutorial)
-        {
-            string instruction = instructions[achievementLevel];
-            Func<bool> condition = conditions[achievementLevel];
-            Action outcome = outcomes[achievementLevel];
-            InstructionLabel.Text = instruction;
-
-            f7_pressed_lastframe = f7_pressed;
-		    f7_pressed = Input.IsKeyPressed(Key.F7);
-		    bool skip = f7_pressed && f7_pressed != f7_pressed_lastframe;
-
-            if (condition() || skip)
-            {
-                if (outcome != null) outcome();
-                achievementLevel++;
-                EmitAchievementParticles();
-                PlayExtraSFX(achievement_sfx);
-                SpeakInstruction(achievementLevel);
-            }
-        }
-
-        // deal with beat particles
-        if (beat_particles_emitting && beat_particles_curtime < beat_particles_time)
-        {
-            beat_particles.Color = beat_particles_color;
-            beat_particles.Position = beat_particles_position;
-            beat_particles.Emitting = true;
-            beat_particles_curtime += (float)delta;
-        }
-        else
-        {
-            beat_particles.Emitting = false;
-            beat_particles_emitting = false;
-        }
-
-        // deal with progress bar particles
-        if (pbar_particles_emitting && pbar_particles_curtime < pbar_particles_time)
-        {
-            pbar_particles.Emitting = true;
-            pbar_particles_curtime += (float)delta;
-        }
-        else
-        {
-            pbar_particles.Emitting = false;
-            pbar_particles_emitting = false;
-        }
-
-        // deal with progress bar particles
-        if (achievement_particles_emitting && achievement_particles_curtime < achievement_particles_time)
-        {
-            achievement_particles.Emitting = true;
-            achievement_particles_curtime += (float)delta;
-        }
-        else
-        {
-            achievement_particles.Emitting = false;
-            achievement_particles_emitting = false;
-        }
+        HandleParticles(delta);
 
         // deal with arrowkeys
         up_pressed_lastframe = up_pressed;
-		up_pressed = Input.IsKeyPressed(Key.Up);
-		if (up_pressed && up_pressed != up_pressed_lastframe) OnBpmUpButton();
+        up_pressed = Input.IsKeyPressed(Key.Up);
+        if (up_pressed && up_pressed != up_pressed_lastframe) OnBpmUpButton();
         dn_pressed_lastframe = dn_pressed;
-		dn_pressed = Input.IsKeyPressed(Key.Down);
-		if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
+        dn_pressed = Input.IsKeyPressed(Key.Down);
+        if (dn_pressed && dn_pressed != dn_pressed_lastframe) OnBpmDownButton();
 
         // update swing amount
         BpmManager.instance.swing = (float)swingslider.Value;
@@ -273,114 +108,33 @@ public partial class Manager : Node
         float intergerFactor = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
         pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
-        // check clap and stomp
-        var volume = MicrophoneCapture.instance.volume;
-        var frequency = MicrophoneCapture.instance.frequency;
+        CheckIfClappingOrStomping();
 
-        var treshold = volume_treshold.Value;
-        var shouldclap = volume > treshold && frequency > ClapBiasSlider.Value;
-        if (shouldclap || Input.IsKeyPressed(Key.N))
-        {
-            if (!clapped)
-            {
-                if (!emailPromptOpen) OnClap();
-                clapped = true;
-            }
-        }
-        
-        bool shouldstomp = volume > treshold && frequency < ClapBiasSlider.Value;
-        if (shouldstomp || Input.IsKeyPressed(Key.M))
-        {
-            if (!stomped)
-            {
-                if (!emailPromptOpen) OnStomp();
-                stomped = true;
-            }
-        }
-        
         if (BpmManager.instance.playing)
         {
             timeafterplay += ((float)delta);
-            
+
             slowBeatTimer += (float)delta / 4;
             if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
             var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
             metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
 
-            // update progressbar
             if (progressBarValue > 100) progressBarValue = 100;
             progressBar.Value = progressBarValue;
         }
-        else
-        {
-            timeafterplay = 0;
-        }
+        else timeafterplay = 0;
 
-        // update sprites
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-        {
-            for (int ring = 0; ring < 4; ring++)
-            {
-                var sprite = beatSprites[ring, beat];
-                var active = beatActives[ring, beat];
+        UpdateBeatSprites(delta);
 
-                var color = colors[ring];
-
-                if (beat == BpmManager.instance.currentBeat)
-                {
-                    if (active) color = color.Lightened(0.75f);
-                    else color = new(1, 1, 1, 0.5f);
-                }
-                else if (!active) color.A = 0.2f;
-
-                sprite.Modulate = color;
-
-                float scale = 1;
-                if (BpmManager.beatsAmount == 32) scale = beatScale32;
-                if (BpmManager.beatsAmount == 16) scale = beatScale16;
-                if (BpmManager.beatsAmount == 8) scale = beatScale8;
-
-                if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
-            }
-        }
-
-        // bloop
-        float factor = 2;
-        if (draganddropButton0.Scale.X > 2) draganddropButton0.Scale -= Vector2.One * (float)delta * factor;
-        if (draganddropButton1.Scale.X > 2) draganddropButton1.Scale -= Vector2.One * (float)delta * factor;
-        if (draganddropButton2.Scale.X > 2) draganddropButton2.Scale -= Vector2.One * (float)delta * factor;
-        if (draganddropButton3.Scale.X > 2) draganddropButton3.Scale -= Vector2.One * (float)delta * factor;
-
-        // update outlines
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-        {
-            for (int ring = 0; ring < 4; ring++)
-            {
-                var outline = beatOutlines[ring, beat];
-                outline.Modulate = colors[ring];
-            }
-        }
-
-        // update template sprites
-        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-        {
-            for (int ring = 0; ring < 4; ring++)
-            {
-                var sprite = templateSprites[ring, beat];
-                var active = TemplateManager.instance.GetCurrentActives()[ring, beat];
-                sprite.Modulate = new Color(0, 0, 0, 0);
-                if (active && showTemplate) sprite.Modulate = new Color(0, 0, 0, 1);
-            }
-        }
-
-        // update bpm label
         bpmLabel.Text = BpmManager.instance.bpm.ToString();
     }
+
     #endregion
 
     #region BeatActives
+
     public bool[,] beatActives = new bool[4, BpmManager.beatsAmount];
-    public int currentLayerIndex = 0;
+
     #endregion
 
     #region Events
@@ -458,38 +212,6 @@ public partial class Manager : Node
     [Export] AudioStream achievement_sfx;
     #endregion
 
-    #region Other
-    bool loadedtemplate = false;
-    bool hassavedtofile = false;
-    bool metronome_sfx_enabled = false;
-    bool up_pressed = false;
-	bool up_pressed_lastframe = false;
-    bool dn_pressed = false;
-	bool dn_pressed_lastframe = false;
-    bool lf_pressed = false;
-	bool lf_pressed_lastframe = false;
-    bool rt_pressed = false;
-	bool rt_pressed_lastframe = false;
-    bool f7_pressed = false;
-	bool f7_pressed_lastframe = false;
-    float time = 0;
-    float slowBeatTimer = 0;
-    bool first_tts_done = false;
-    private bool _ctrlCWasPressed = false;
-    private bool _ctrlVWasPressed = false;
-    public bool showTemplate = false;
-    public bool selectedTemplate = false;
-    bool haschangedbpm = false;
-    bool hasclearedlayout = false;
-    private bool spacedownlastframe = false;
-    private bool enterdownlastframe = false;
-    float timeafterplay = 0;
-    bool savedToLaout = false;
-    [Export] public Color[] colors;
-    [Export] PointLight2D robotlight;
-    private float startswing;
-    #endregion
-
     #region Particles
     [Export] public CpuParticles2D beat_particles;
     private Vector2 beat_particles_position;
@@ -505,6 +227,47 @@ public partial class Manager : Node
     private float achievement_particles_time;
     private float achievement_particles_curtime;
     private bool achievement_particles_emitting = false;
+
+    private void HandleParticles(double delta)
+    {
+        // deal with beat particles
+        if (beat_particles_emitting && beat_particles_curtime < beat_particles_time)
+        {
+            beat_particles.Color = beat_particles_color;
+            beat_particles.Position = beat_particles_position;
+            beat_particles.Emitting = true;
+            beat_particles_curtime += (float)delta;
+        }
+        else
+        {
+            beat_particles.Emitting = false;
+            beat_particles_emitting = false;
+        }
+
+        // deal with progress bar particles
+        if (pbar_particles_emitting && pbar_particles_curtime < pbar_particles_time)
+        {
+            pbar_particles.Emitting = true;
+            pbar_particles_curtime += (float)delta;
+        }
+        else
+        {
+            pbar_particles.Emitting = false;
+            pbar_particles_emitting = false;
+        }
+
+        // deal with progress bar particles
+        if (achievement_particles_emitting && achievement_particles_curtime < achievement_particles_time)
+        {
+            achievement_particles.Emitting = true;
+            achievement_particles_curtime += (float)delta;
+        }
+        else
+        {
+            achievement_particles.Emitting = false;
+            achievement_particles_emitting = false;
+        }
+    }
 
     public void EmitBeatParticles(Vector2 position, Color color)
     {
@@ -599,6 +362,17 @@ public partial class Manager : Node
     [Export] Button allLayersToMp3;
     [Export] Sprite2D layerOutline;
     [Export] Node2D layerOutlineHolder;
+    float beatScale32 = 1;
+    float beatScale16 = 1.6f;
+    float beatScale8 = 1.6f;
+    [Export] PackedScene spritePrefab;
+    [Export] Texture2D texture;
+    [Export] Texture2D outline;
+    Sprite2D[,] beatOutlines;
+    public Sprite2D[,] beatSprites;
+    Sprite2D[,] templateSprites;
+    [Export] public Color[] colors;
+    [Export] PointLight2D robotlight;
 
     private void InitButtonActions()
     {
@@ -633,7 +407,7 @@ public partial class Manager : Node
         saveToWavButton.Pressed += () => SaveBeatAsFile(beatActives);
         skiptutorialbutton.Pressed += () =>
         {
-            achievementLevel = -1;
+            tutorial_level = -1;
             SetEntireInterfaceVisibility(true);
             achievementspanel.Visible = false;
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
@@ -650,9 +424,204 @@ public partial class Manager : Node
         };
     }
 
+    private void UpdateLayerOutlineSpriteRotation()
+    {
+        if (BpmManager.instance.timePerBeat != 0)
+        {
+            float clockrot = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+            layerOutline.RotationDegrees = clockrot * 360f - 7f;
+        }
+        else
+        {
+            float clockrot = (float)(BpmManager.instance.currentBeat / (float)BpmManager.beatsAmount);
+            layerOutline.RotationDegrees = clockrot * 360f - 7f;
+        }
+    }
+
+    private void UpdateBeatSprites(double delta)
+    {
+        // update drag and drop button sprite scale
+        if (draganddropButton0.Scale.X > 2) draganddropButton0.Scale -= Vector2.One * (float)delta * 2;
+        if (draganddropButton1.Scale.X > 2) draganddropButton1.Scale -= Vector2.One * (float)delta * 2;
+        if (draganddropButton2.Scale.X > 2) draganddropButton2.Scale -= Vector2.One * (float)delta * 2;
+        if (draganddropButton3.Scale.X > 2) draganddropButton3.Scale -= Vector2.One * (float)delta * 2;
+
+        // update beat sprites
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+        {
+            for (int ring = 0; ring < 4; ring++)
+            {
+                var sprite = beatSprites[ring, beat];
+                var active = beatActives[ring, beat];
+
+                var color = colors[ring];
+
+                if (beat == BpmManager.instance.currentBeat)
+                {
+                    if (active) color = color.Lightened(0.75f);
+                    else color = new(1, 1, 1, 0.5f);
+                }
+                else if (!active) color.A = 0.2f;
+
+                sprite.Modulate = color;
+
+                float scale = 1;
+                if (BpmManager.beatsAmount == 32) scale = beatScale32;
+                if (BpmManager.beatsAmount == 16) scale = beatScale16;
+                if (BpmManager.beatsAmount == 8) scale = beatScale8;
+
+                if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
+            }
+        }
+
+        // update beat outline sprites
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+        {
+            for (int ring = 0; ring < 4; ring++)
+            {
+                var outline = beatOutlines[ring, beat];
+                outline.Modulate = colors[ring];
+            }
+        }
+
+        // update template sprites
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+        {
+            for (int ring = 0; ring < 4; ring++)
+            {
+                var sprite = templateSprites[ring, beat];
+                var active = TemplateManager.instance.GetCurrentActives()[ring, beat];
+                sprite.Modulate = new Color(0, 0, 0, 0);
+                if (active && showTemplate) sprite.Modulate = new Color(0, 0, 0, 1);
+            }
+        }
+    }
+
+    void SpritePlacement()
+    {
+        // spawn sprites
+        beatSprites = new Sprite2D[4, BpmManager.beatsAmount];
+        for (int ring = 0; ring < 4; ring++)
+        {
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            {
+                var sprite = CreateSprite(beat, ring);
+                AddChild(sprite);
+                beatSprites[ring, beat] = sprite;
+            }
+        }
+
+        // spawn outlines
+        beatOutlines = new Sprite2D[4, BpmManager.beatsAmount];
+        for (int ring = 0; ring < 4; ring++)
+        {
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            {
+                var outline = CreateOutline(beat, ring);
+                AddChild(outline);
+                beatOutlines[ring, beat] = outline;
+            }
+        }
+
+        // spawn template sprites
+        templateSprites = new Sprite2D[4, BpmManager.beatsAmount];
+        for (int ring = 0; ring < 4; ring++)
+        {
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            {
+                var sprite = CreateTemplateSprite(beat, ring);
+                AddChild(sprite);
+                templateSprites[ring, beat] = sprite;
+            }
+        }
+    }
+    private Sprite2D CreateOutline(int beat, int ring)
+    {
+        var sprite = new Sprite2D();
+        sprite.Position = SpritePosition(beat, ring);
+
+        float scale = 1;
+        if (BpmManager.beatsAmount == 32) scale = beatScale32;
+        if (BpmManager.beatsAmount == 16) scale = beatScale16;
+        if (BpmManager.beatsAmount == 8) scale = beatScale8;
+        sprite.Scale = Vector2.One * scale;
+
+        sprite.Texture = outline;
+        return sprite;
+    }
+
+    private Vector2 SpritePosition(int beat, int ring)
+    {
+        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
+
+        float distance = 0;
+
+        if (BpmManager.beatsAmount == 32) distance = (4 - ring) * 30 + 110;
+        else if (BpmManager.beatsAmount == 16) distance = (4 - ring) * 45 + 56;
+        else if (BpmManager.beatsAmount == 8) distance = (4 - ring) * 45 + 56;
+
+        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
+    }
+
+    private Sprite2D CreateSprite(int beat, int ring)
+    {
+        var sprite = (Sprite2D)spritePrefab.Instantiate();
+        sprite.Position = SpritePosition(beat, ring);
+
+        BeatSprite beatSprite = sprite as BeatSprite;
+        beatSprite.spriteIndex = beat;
+        beatSprite.ring = ring;
+
+        float scale = 1;
+        if (BpmManager.beatsAmount == 32) scale = beatScale32;
+        if (BpmManager.beatsAmount == 16) scale = beatScale16;
+        if (BpmManager.beatsAmount == 8) scale = beatScale8;
+        sprite.Scale = Vector2.One * scale;
+
+        sprite.Texture = texture;
+        
+        return sprite;
+    }
+
+    private Sprite2D CreateTemplateSprite(int beat, int ring)
+    {
+        var sprite = new Sprite2D();
+        sprite.Position = SpritePosition(beat, ring);
+        sprite.Texture = texture;
+        sprite.Modulate = new Color(0, 0, 0, 1);
+        sprite.Scale = Vector2.One * 0.2f;
+        return sprite;
+    }
+
+    private void UpdateLayerSwitchButtonsColors()
+    {
+        layerButton1.Modulate = new Color(1, 1, 1, 1);
+        layerButton2.Modulate = new Color(1, 1, 1, 1);
+        layerButton3.Modulate = new Color(1, 1, 1, 1);
+        layerButton4.Modulate = new Color(1, 1, 1, 1);
+        layerButton5.Modulate = new Color(1, 1, 1, 1);
+        layerButton6.Modulate = new Color(1, 1, 1, 1);
+        layerButton7.Modulate = new Color(1, 1, 1, 1);
+        layerButton8.Modulate = new Color(1, 1, 1, 1);
+        layerButton9.Modulate = new Color(1, 1, 1, 1);
+        layerButton10.Modulate = new Color(1, 1, 1, 1);
+        if (!LayerHasBeats(layers[0])) layerButton1.Modulate = layerButton1.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[1])) layerButton2.Modulate = layerButton2.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[2])) layerButton3.Modulate = layerButton3.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[3])) layerButton4.Modulate = layerButton4.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[4])) layerButton5.Modulate = layerButton5.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[5])) layerButton6.Modulate = layerButton6.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[6])) layerButton7.Modulate = layerButton7.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[7])) layerButton8.Modulate = layerButton8.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[8])) layerButton9.Modulate = layerButton9.Modulate.Darkened(0.5f);
+        if (!LayerHasBeats(layers[9])) layerButton10.Modulate = layerButton10.Modulate.Darkened(0.5f);
+    }
+
     #endregion
 
     #region Layers
+
+    public int currentLayerIndex = 0;
 
     public List<bool[,]> layers = new()
     {
@@ -722,6 +691,9 @@ public partial class Manager : Node
     #endregion
 
     #region AudioBankJson
+
+    SoundBank chosenSoundBank = null;
+    List<string> chosenEmoticons = null;
 
     private void ReadJsonFromPreviousSceneAndSetValues()
     {
@@ -1482,7 +1454,7 @@ public partial class Manager : Node
 
     #region Tutorial
 
-    int achievementLevel = 0;
+    int tutorial_level = 0;
     bool tutorialActivated = false;
 
     string[] instructions = null;
@@ -1498,7 +1470,7 @@ public partial class Manager : Node
         }
         else // disable tutorial
         {
-            achievementLevel = -1;
+            tutorial_level = -1;
             SetEntireInterfaceVisibility(true);
             achievementspanel.Visible = false;
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
@@ -1669,6 +1641,59 @@ public partial class Manager : Node
             null
         ];
     }
+
+    private void UpdateTutorial()
+    {
+        void SpeakTutorialInstruction(int instruction)
+        {
+            if (muteSpeach.ButtonPressed) return;
+
+            var without_emoticons = (string input) =>
+            {
+                var output = "";
+                var stringInfo = new StringInfo(input);
+                for (int i = 0; i < stringInfo.LengthInTextElements; i++)
+                {
+                    string element = stringInfo.SubstringByTextElements(i, 1);
+                    if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
+                }
+                return output;
+            };
+
+            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+            DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
+        }
+
+        if (!first_tts_done && useTutorial)
+        {
+            SpeakTutorialInstruction(0);
+            first_tts_done = true;
+        }
+
+        if (tutorial_level != -1 && useTutorial)
+        {
+            string instruction = instructions[tutorial_level];
+            Func<bool> condition = conditions[tutorial_level];
+            Action outcome = outcomes[tutorial_level];
+            InstructionLabel.Text = instruction;
+
+            f7_pressed_lastframe = f7_pressed;
+            f7_pressed = Input.IsKeyPressed(Key.F7);
+            bool skip = f7_pressed && f7_pressed != f7_pressed_lastframe;
+
+            if (condition() || skip)
+            {
+                if (outcome != null) outcome();
+                tutorial_level++;
+                EmitAchievementParticles();
+                PlayExtraSFX(achievement_sfx);
+                SpeakTutorialInstruction(tutorial_level);
+            }
+        }
+    }
+
     #endregion
 
     #region ClapStompBeat
@@ -1677,6 +1702,34 @@ public partial class Manager : Node
     bool clapped = false;
     int clappedAmount = 0;
     int stompedAmount = 0;
+
+    private void CheckIfClappingOrStomping()
+    {
+        // check clap and stomp
+        var volume = MicrophoneCapture.instance.volume;
+        var frequency = MicrophoneCapture.instance.frequency;
+
+        var treshold = volume_treshold.Value;
+        var shouldclap = volume > treshold && frequency > ClapBiasSlider.Value;
+        if (shouldclap || Input.IsKeyPressed(Key.N))
+        {
+            if (!clapped)
+            {
+                if (!emailPromptOpen) OnClap();
+                clapped = true;
+            }
+        }
+
+        bool shouldstomp = volume > treshold && frequency < ClapBiasSlider.Value;
+        if (shouldstomp || Input.IsKeyPressed(Key.M))
+        {
+            if (!stomped)
+            {
+                if (!emailPromptOpen) OnStomp();
+                stomped = true;
+            }
+        }
+    }
 
     public void OnClap()
     {
@@ -1769,114 +1822,6 @@ public partial class Manager : Node
         fourthAudioPlayer.PitchScale = scale;
         fourthAudioPlayerAlt.PitchScale = scale;
         fourthAudioPlayerRec.PitchScale = scale;
-    }
-    #endregion
-
-    #region SpriteCreation
-    float beatScale32 = 1;
-    float beatScale16 = 1.6f;
-    float beatScale8 = 1.6f;
-    [Export] PackedScene spritePrefab;
-    [Export] Texture2D texture;
-    [Export] Texture2D outline;
-    Sprite2D[,] beatOutlines;
-    public Sprite2D[,] beatSprites;
-    Sprite2D[,] templateSprites;
-
-    void SpritePlacement()
-    {
-        // spawn sprites
-        beatSprites = new Sprite2D[4, BpmManager.beatsAmount];
-        for (int ring = 0; ring < 4; ring++)
-        {
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-            {
-                var sprite = CreateSprite(beat, ring);
-                AddChild(sprite);
-                beatSprites[ring, beat] = sprite;
-            }
-        }
-
-        // spawn outlines
-        beatOutlines = new Sprite2D[4, BpmManager.beatsAmount];
-        for (int ring = 0; ring < 4; ring++)
-        {
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-            {
-                var outline = CreateOutline(beat, ring);
-                AddChild(outline);
-                beatOutlines[ring, beat] = outline;
-            }
-        }
-
-        // spawn template sprites
-        templateSprites = new Sprite2D[4, BpmManager.beatsAmount];
-        for (int ring = 0; ring < 4; ring++)
-        {
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-            {
-                var sprite = CreateTemplateSprite(beat, ring);
-                AddChild(sprite);
-                templateSprites[ring, beat] = sprite;
-            }
-        }
-    }
-    private Sprite2D CreateOutline(int beat, int ring)
-    {
-        var sprite = new Sprite2D();
-        sprite.Position = SpritePosition(beat, ring);
-
-        float scale = 1;
-        if (BpmManager.beatsAmount == 32) scale = beatScale32;
-        if (BpmManager.beatsAmount == 16) scale = beatScale16;
-        if (BpmManager.beatsAmount == 8) scale = beatScale8;
-        sprite.Scale = Vector2.One * scale;
-
-        sprite.Texture = outline;
-        return sprite;
-    }
-
-    private Vector2 SpritePosition(int beat, int ring)
-    {
-        float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount - Mathf.Pi / 2;
-
-        float distance = 0;
-
-        if (BpmManager.beatsAmount == 32) distance = (4 - ring) * 30 + 110;
-        else if (BpmManager.beatsAmount == 16) distance = (4 - ring) * 45 + 56;
-        else if (BpmManager.beatsAmount == 8) distance = (4 - ring) * 45 + 56;
-
-        return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
-    }
-
-    private Sprite2D CreateSprite(int beat, int ring)
-    {
-        var sprite = (Sprite2D)spritePrefab.Instantiate();
-        sprite.Position = SpritePosition(beat, ring);
-
-        BeatSprite beatSprite = sprite as BeatSprite;
-        beatSprite.spriteIndex = beat;
-        beatSprite.ring = ring;
-
-        float scale = 1;
-        if (BpmManager.beatsAmount == 32) scale = beatScale32;
-        if (BpmManager.beatsAmount == 16) scale = beatScale16;
-        if (BpmManager.beatsAmount == 8) scale = beatScale8;
-        sprite.Scale = Vector2.One * scale;
-
-        sprite.Texture = texture;
-        
-        return sprite;
-    }
-
-    private Sprite2D CreateTemplateSprite(int beat, int ring)
-    {
-        var sprite = new Sprite2D();
-        sprite.Position = SpritePosition(beat, ring);
-        sprite.Texture = texture;
-        sprite.Modulate = new Color(0, 0, 0, 1);
-        sprite.Scale = Vector2.One * 0.2f;
-        return sprite;
     }
     #endregion
 
@@ -1992,13 +1937,57 @@ public partial class Manager : Node
         sampleMixer2.Visible = visible;
         sampleMixer3.Visible = visible;
     }
+
+    private void UpdateAchievementsVisibility()
+    {
+        for (int i = 0; i < 6; i++)
+        {
+            float tresh = ((float)i + 1f) / 6f * 100f;
+            if (progressBarValue > tresh - 10)
+            {
+                Unlockables[i].Visible = true;
+                UnlockablesQuestion[i].Visible = false;
+            }
+            else
+            {
+                Unlockables[i].Visible = false;
+                UnlockablesQuestion[i].Visible = true;
+            }
+        }
+    }
+
     #endregion
 
     #region Other
 
-    SoundBank chosenSoundBank = null;
-    List<string> chosenEmoticons = null;
+    bool loadedtemplate = false;
+    bool hassavedtofile = false;
+    bool metronome_sfx_enabled = false;
+    bool up_pressed = false;
+	bool up_pressed_lastframe = false;
+    bool dn_pressed = false;
+	bool dn_pressed_lastframe = false;
+    bool lf_pressed = false;
+	bool lf_pressed_lastframe = false;
+    bool rt_pressed = false;
+	bool rt_pressed_lastframe = false;
+    bool f7_pressed = false;
+	bool f7_pressed_lastframe = false;
+    float time = 0;
+    float slowBeatTimer = 0;
+    bool first_tts_done = false;
+    private bool ctrlc_pressed = false;
+    private bool ctrl_v_pressed = false;
     bool[,] beatClipboard = new bool[4, BpmManager.beatsAmount];
+    public bool showTemplate = false;
+    public bool selectedTemplate = false;
+    bool haschangedbpm = false;
+    bool hasclearedlayout = false;
+    private bool spacedownlastframe = false;
+    private bool enterdownlastframe = false;
+    float timeafterplay = 0;
+    bool savedToLaout = false;
+    private float startswing;
 
     public void OnSaveLayoutButton()
     {
@@ -2066,6 +2055,29 @@ public partial class Manager : Node
         sfxAudioPlayer.Stop();
         sfxAudioPlayer.Stream = audioStream;
         sfxAudioPlayer.Play();
+    }
+
+    private void HandleCopyPasting()
+    {
+        if (Input.IsKeyPressed(Key.Ctrl) && Input.IsKeyPressed(Key.C))
+        {
+            if (!ctrlc_pressed)
+            {
+                ctrlc_pressed = true;
+                OnSaveLayoutButton();
+            }
+        }
+        else ctrlc_pressed = false;
+
+        if (Input.IsKeyPressed(Key.Ctrl) && Input.IsKeyPressed(Key.V))
+        {
+            if (!ctrl_v_pressed)
+            {
+                ctrl_v_pressed = true;
+                OnLoadLayoutButton();
+            }
+        }
+        else ctrl_v_pressed = false;
     }
     
     #endregion

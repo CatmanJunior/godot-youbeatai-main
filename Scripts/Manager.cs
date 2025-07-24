@@ -1426,8 +1426,31 @@ public partial class Manager : Node
         return false;
     }
 
+    public void SetAllMixerVolumesOnly(float volume)
+    {
+        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+    }
+
     private void UpdateAllMixerVolumes(bool log = false)
     {
+        // temporarily lower mixer volumes during voice record
+        if (layerVoiceOver0.recording || layerVoiceOver1.recording)
+        {
+            SetAllMixerVolumesOnly(0.1f);
+            return;
+        }
+
         var v0 = UpdateMixerVolumes(0);
         var v1 = UpdateMixerVolumes(1);
         var v2 = UpdateMixerVolumes(2);

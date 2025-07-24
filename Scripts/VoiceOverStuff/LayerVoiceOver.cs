@@ -18,7 +18,7 @@ public partial class LayerVoiceOver : Node
 	public AudioStreamPlayer2D audioPlayer;
 	bool shouldRecord = false;
 
-	bool recording = false;
+	public bool recording = false;
 	bool shouldUpdateProgressBar = false;
 
 	float recordingTimer = 0;
@@ -61,7 +61,6 @@ public partial class LayerVoiceOver : Node
 				double new_volume = 1 - volume;
 				audioPlayer.VolumeLinear = (float)new_volume * 1.5f;
 			};
-
 		}
 
 		BpmManager.instance.OnPlayingChanged += (playing) =>
@@ -181,9 +180,6 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.PlayPauseButton.Disabled = true;
 		recordLayerButton.Disabled = true;
 		SongVoiceOver.instance.recordSongButton.Disabled = true;
-
-		SetVolume(0.1f);
-
 		Manager.instance.metronome_toggle.ButtonPressed = false;
 
 		shouldUpdateProgressBar = true;
@@ -207,7 +203,6 @@ public partial class LayerVoiceOver : Node
 		{
 			audioEffectRecord.SetRecordingActive(false);
 			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
-			SetVolume(1.0);
 			GD.Print("recording stopped");
 			recording = false;
 			shouldRecord = false;
@@ -290,14 +285,5 @@ public partial class LayerVoiceOver : Node
             sbyte value = (sbyte)audio.Data[byteIndex];
             return Mathf.Abs(value / 128f);
         }
-    }
-
-	void SetVolume(double value)
-    {
-        float db = Mathf.LinearToDb((float)value);
-        Manager.instance.firstAudioPlayer.VolumeDb = db;
-        Manager.instance.secondAudioPlayer.VolumeDb = db;
-        Manager.instance.thirdAudioPlayer.VolumeDb = db;
-        Manager.instance.fourthAudioPlayer.VolumeDb = db;
     }
 }

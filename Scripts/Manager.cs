@@ -392,8 +392,9 @@ public partial class Manager : Node
         allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AllLayersToMp3;
         muteSpeach.Pressed += DisplayServer.TtsStop;
-        SaveLayoutButton.Pressed += OnSaveLayoutButton;
-        LoadLayoutButton.Pressed += OnLoadLayoutButton;
+        SaveLayoutButton.Pressed += CopyLayer;
+        LoadLayoutButton.Pressed += PasteLayer;
+        ClearLayoutButton.Pressed += ClearLayer;
         restartButton.Pressed += () =>
         {
             if (Engine.IsEditorHint()) GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
@@ -403,7 +404,6 @@ public partial class Manager : Node
                 GetTree().Quit();
             }
         };
-        ClearLayoutButton.Pressed += OnClearLayoutButton;
         PlayPauseButton.Pressed += OnPlayPauseButton;
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
@@ -1309,6 +1309,8 @@ public partial class Manager : Node
 
     LayerPivotRotations[] rememberedPivotRotationsPerLayer = new LayerPivotRotations[10];
 
+    LayerPivotRotations clipboardPivotRotations = new LayerPivotRotations();
+
     struct LayerPivotRotations
     {
         public float[] rotations = [0f, 0f, 0f, 0f];
@@ -1347,6 +1349,44 @@ public partial class Manager : Node
 
         // set remembered pivot rotations
         for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(remembered_rotations[i], pivots[i], i);
+    }
+
+    public void CopyPivotRotationsForCurrentLayerToClipboard()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather current rotations
+        float[] current_rotations = new float[4];
+        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
+
+        // save rotations for current layer to clipboard
+        clipboardPivotRotations = new LayerPivotRotations(current_rotations);
+    }
+
+    public void PastePivotRotationsForCurrentLayerFromClipboard()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather remembered rotations
+        float[] copied_rotations = clipboardPivotRotations.rotations;
+        copied_rotations ??= [0, 0, 0, 0];
+
+        // set remembered pivot rotations
+        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(copied_rotations[i], pivots[i], i);
+    }
+
+    public void ClearPivotRotationsForCurrentLayer()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // reset rotations
+        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(0, pivots[i], i);
     }
 
     public void SetPivotRotationOffset(float rotation, Node2D pivot, int ring)
@@ -2045,19 +2085,37 @@ public partial class Manager : Node
     bool savedToLaout = false;
     private float startswing;
 
-    public void OnSaveLayoutButton()
+    public void CopyLayer()
+    {
+        CopyBeatLayoutToClipboard();
+        CopyPivotRotationsForCurrentLayerToClipboard();
+    }
+
+    public void PasteLayer()
+    {
+        PasteBeatLayoutFromClipboard();
+        PastePivotRotationsForCurrentLayerFromClipboard();
+    }
+
+    public void ClearLayer()
+    {
+        ClearLayout();
+        ClearPivotRotationsForCurrentLayer();
+    }
+
+    public void CopyBeatLayoutToClipboard()
     {
         beatClipboard = (bool[,])beatActives.Clone();
         savedToLaout = true;
     }
 
-    public void OnLoadLayoutButton()
+    public void PasteBeatLayoutFromClipboard()
     {
         beatActives = (bool[,])beatClipboard.Clone();
         loadedtemplate = true;
     }
 
-    public void OnClearLayoutButton()
+    public void ClearLayout()
     {
         beatActives = new bool[4, BpmManager.beatsAmount];
         hasclearedlayout = true;
@@ -2120,7 +2178,7 @@ public partial class Manager : Node
             if (!ctrlc_pressed)
             {
                 ctrlc_pressed = true;
-                OnSaveLayoutButton();
+                CopyLayer();
             }
         }
         else ctrlc_pressed = false;
@@ -2130,7 +2188,7 @@ public partial class Manager : Node
             if (!ctrl_v_pressed)
             {
                 ctrl_v_pressed = true;
-                OnLoadLayoutButton();
+                PasteLayer();
             }
         }
         else ctrl_v_pressed = false;

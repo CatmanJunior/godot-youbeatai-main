@@ -127,6 +127,8 @@ public partial class Manager : Node
         UpdateBeatSprites(delta);
 
         bpmLabel.Text = BpmManager.instance.bpm.ToString();
+
+        songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
     }
 
     #endregion
@@ -329,6 +331,7 @@ public partial class Manager : Node
     [Export] public Label[] Unlockables;
     [Export] public Label[] UnlockablesQuestion;
     [Export] public Button restartButton;
+    [Export] public Panel songModeBackPanel;
     [Export] public CheckButton muteSpeach;
     [Export] Button saveToWavButton;
     [Export] public Node2D cross;

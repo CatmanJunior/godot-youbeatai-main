@@ -1,4 +1,4 @@
-[gd_scene load_steps=58 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=59 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -71,6 +71,13 @@ corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1aky"]
+bg_color = Color(0, 0.65098, 0.929412, 1)
+corner_radius_top_left = 34
+corner_radius_top_right = 34
+corner_radius_bottom_right = 34
+corner_radius_bottom_left = 34
 
 [sub_resource type="LabelSettings" id="LabelSettings_fbqyi"]
 
@@ -304,7 +311,7 @@ vertical_alignment = 1
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "robotlight", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "emailPrompt", "emailInput", "emailEnter", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3")]
 script = ExtResource("1_rfd7i")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
@@ -313,8 +320,6 @@ mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11
 metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
-colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
-robotlight = NodePath("../../UserInterface/Robot/SubViewportContainer/RobotLight")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
@@ -345,6 +350,7 @@ recordSampleButton3 = NodePath("../../UserInterface/ControlsGroup/SampleRecordin
 Unlockables = [NodePath("../ProgressBar/Unlockable_1"), NodePath("../ProgressBar/Unlockable_2"), NodePath("../ProgressBar/Unlockable_3"), NodePath("../ProgressBar/Unlockable_4"), NodePath("../ProgressBar/Unlockable_5"), NodePath("../ProgressBar/Unlockable_6")]
 UnlockablesQuestion = [NodePath("../ProgressBar/Unlockable_Question_1"), NodePath("../ProgressBar/Unlockable_Question_2"), NodePath("../ProgressBar/Unlockable_Question_3"), NodePath("../ProgressBar/Unlockable_Question_4"), NodePath("../ProgressBar/Unlockable_Question_5"), NodePath("../ProgressBar/Unlockable_Question_6")]
 restartButton = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
+songModeBackPanel = NodePath("../../UserInterface/SwitchLayerButtons/SongModeBackPanel")
 muteSpeach = NodePath("../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 saveToWavButton = NodePath("../../UserInterface/SettingsPanel/Buttons/SaveToWavButton")
 cross = NodePath("../../UserInterface/Cross/Node2D")
@@ -373,6 +379,11 @@ InstructionLabel = NodePath("../../UserInterface/Robot/AchievementsPanel/Instruc
 allLayersToMp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersToMp3")
 layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
 layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder")
+spritePrefab = ExtResource("2_1eep1")
+texture = ExtResource("2_1ig4u")
+outline = ExtResource("8_llrl4")
+colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
+robotlight = NodePath("../../UserInterface/Robot/SubViewportContainer/RobotLight")
 emailPrompt = NodePath("../../EmailPrompt")
 emailInput = NodePath("../../EmailPrompt/Input")
 emailEnter = NodePath("../../EmailPrompt/Enter")
@@ -380,9 +391,6 @@ sampleMixer0 = NodePath("../../UserInterface/ControlsGroup/SampleMixer0")
 sampleMixer1 = NodePath("../../UserInterface/ControlsGroup/SampleMixer1")
 sampleMixer2 = NodePath("../../UserInterface/ControlsGroup/SampleMixer2")
 sampleMixer3 = NodePath("../../UserInterface/ControlsGroup/SampleMixer3")
-spritePrefab = ExtResource("2_1eep1")
-texture = ExtResource("2_1ig4u")
-outline = ExtResource("8_llrl4")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -1352,7 +1360,7 @@ antialiased = true
 [node name="RecordSongButton" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.8, 0.8, 0.8, 1)
 z_index = -4
-position = Vector2(393, -291)
+position = Vector2(395, -291)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -1612,12 +1620,21 @@ theme = ExtResource("22_hpc6h")
 text = "♻️
 "
 
+[node name="SongModeBackPanel" type="Panel" parent="UserInterface/SwitchLayerButtons"]
+visible = false
+z_index = -10
+offset_left = -360.0
+offset_top = -329.0
+offset_right = 360.0
+offset_bottom = -253.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_o1aky")
+
 [node name="LayerLoopToggle" type="CheckButton" parent="UserInterface"]
 layout_mode = 0
-offset_left = 433.0
-offset_top = -274.0
-offset_right = 477.0
-offset_bottom = -249.0
+offset_left = 432.0
+offset_top = -275.0
+offset_right = 476.0
+offset_bottom = -250.0
 scale = Vector2(1.42518, 1.42518)
 focus_mode = 0
 theme = ExtResource("22_hpc6h")

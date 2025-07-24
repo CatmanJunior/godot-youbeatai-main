@@ -37,8 +37,20 @@ public partial class LayerVoiceOver : Node
 	[Export] public bool bigLineReversed = false;
 
 	public int currentLayer => Manager.instance.currentLayerIndex;
-	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
-	public AudioStream GetCurrentLayerVoiceOver() => voiceOvers[currentLayer];
+
+	public void SetCurrentLayerVoiceOver(AudioStream voiceOver)
+	{
+		voiceOvers[currentLayer] = voiceOver;
+		audioPlayer.Stream = GetCurrentLayerVoiceOver();
+		audioPlayer.Stop();
+		audioPlayer.Play();
+		shouldUpdateLines = true; 
+	}
+
+	public AudioStream GetCurrentLayerVoiceOver()
+	{
+		return voiceOvers[currentLayer];
+	}
 
 	public override void _Ready()
     {

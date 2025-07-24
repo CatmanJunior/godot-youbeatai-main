@@ -2085,22 +2085,46 @@ public partial class Manager : Node
     bool savedToLaout = false;
     private float startswing;
 
+    AudioStream clipboardLayerVoice0;
+    AudioStream clipboardLayerVoice1;
+
     public void CopyLayer()
     {
         CopyBeatLayoutToClipboard();
         CopyPivotRotationsForCurrentLayerToClipboard();
+        CopyLayerVoiceToClipBoard();
     }
 
     public void PasteLayer()
     {
         PasteBeatLayoutFromClipboard();
         PastePivotRotationsForCurrentLayerFromClipboard();
+        PasteLayerVoiceFromClipBoard();
     }
 
     public void ClearLayer()
     {
         ClearLayout();
         ClearPivotRotationsForCurrentLayer();
+        ClearLayerVoiceOver();
+    }
+
+    public void CopyLayerVoiceToClipBoard()
+    {
+        clipboardLayerVoice0 = layerVoiceOver0.GetCurrentLayerVoiceOver();
+        clipboardLayerVoice1 = layerVoiceOver1.GetCurrentLayerVoiceOver();
+    }
+
+    public void PasteLayerVoiceFromClipBoard()
+    {
+        layerVoiceOver0.SetCurrentLayerVoiceOver(clipboardLayerVoice0);
+        layerVoiceOver1.SetCurrentLayerVoiceOver(clipboardLayerVoice1);
+    }
+
+    public void ClearLayerVoiceOver()
+    {
+        layerVoiceOver0.SetCurrentLayerVoiceOver(null);
+        layerVoiceOver1.SetCurrentLayerVoiceOver(null);
     }
 
     public void CopyBeatLayoutToClipboard()

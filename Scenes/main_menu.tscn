@@ -69,3 +69,11 @@ offset_bottom = 254.0
 focus_mode = 0
 text = "🎙️ Microfoon Toegang Verlenen"
 script = ExtResource("3_1ehe0")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 356.0
+offset_top = 587.0
+offset_right = 698.0
+offset_bottom = 614.0
+scale = Vector2(1.66415, 1.66415)
+text = "⬆️ Kies \"Alleen deze keer toegang verlenen\" ⬆️"

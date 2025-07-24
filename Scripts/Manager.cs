@@ -652,6 +652,7 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
+        RememberAllPivotRotationsForCurrentLayer();
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
@@ -662,6 +663,7 @@ public partial class Manager : Node
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
+        ReApplyAllPivotRotationsForCurrentLayer();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1302,6 +1304,72 @@ public partial class Manager : Node
 
     #region Mixing
 
+    LayerPivotRotations[] rememberedPivotRotationsPerLayer = new LayerPivotRotations[10];
+
+    struct LayerPivotRotations
+    {
+        public float[] rotations = [0f, 0f, 0f, 0f];
+
+        public LayerPivotRotations(float[] rotations)
+        {
+            this.rotations = rotations;
+        }
+    }
+
+    // call before layer change
+    public void RememberAllPivotRotationsForCurrentLayer()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather current rotations
+        float[] current_rotations = new float[4];
+        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
+
+        // save rotations for current layer
+        rememberedPivotRotationsPerLayer[currentLayerIndex] = new LayerPivotRotations(current_rotations);
+    }
+
+    // call after layer change
+    public void ReApplyAllPivotRotationsForCurrentLayer()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather remembered rotations
+        float[] remembered_rotations = rememberedPivotRotationsPerLayer[currentLayerIndex].rotations;
+        remembered_rotations ??= [0, 0, 0, 0];
+
+        // set remembered pivot rotations
+        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(remembered_rotations[i], pivots[i], i);
+    }
+
+    public void SetPivotRotationOffset(float rotation, Node2D pivot, int ring)
+    {
+        pivot.RotationDegrees += rotation;
+        var volumes = UpdateMixerVolumes(ring);
+        UpdateMixerIcons(pivot, volumes);
+    }
+
+    public void SetPivotRotationAbsolute(float rotation, Node2D pivot, int ring)
+    {
+        pivot.RotationDegrees = rotation;
+        var volumes = UpdateMixerVolumes(ring);
+        UpdateMixerIcons(pivot, volumes);
+    }
+
+    private static void UpdateMixerIcons(Node2D pivot, (float main, float alt, float rec) volumes)
+    {
+        var icon0 = pivot.GetChild(0) as Label;
+        var icon1 = pivot.GetChild(1) as Label;
+        var icon2 = pivot.GetChild(2) as Label;
+        icon0.Modulate = new Color(1, 1, 1, volumes.main);
+        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
+        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
+    }
+
     [Export] public Node2D sampleMixer0;
     [Export] public Node2D sampleMixer1;
     [Export] public Node2D sampleMixer2;
@@ -1313,7 +1381,7 @@ public partial class Manager : Node
     {
         foreach (bool locked in isMixerLocked) if (locked) return true;
         return false;
-    }    
+    }
 
     private void UpdateAllMixerVolumes(bool log = false)
     {
@@ -1402,21 +1470,6 @@ public partial class Manager : Node
         return (Node2D)mixer.FindChild("Pivot");
     }
 
-    public void RotatePivot(float rotation, Node2D pivot, int ring)
-    {
-        pivot.RotationDegrees += rotation;
-
-        var volumes = UpdateMixerVolumes(ring);
-
-        var icon0 = pivot.GetChild(0) as Label;
-        var icon1 = pivot.GetChild(1) as Label;
-        var icon2 = pivot.GetChild(2) as Label;
-
-        icon0.Modulate = new Color(1, 1, 1, volumes.main);
-        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
-        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
-    }
-
     void SetupMixer(Node2D mixer, int ring)
     {
         var increase = mixer.FindChild("IncreaseButton") as Button;
@@ -1439,8 +1492,8 @@ public partial class Manager : Node
         };
         AddChild(timerDec);
 
-        timerInc.Timeout += () => RotatePivot(5, pivot, ring);
-        timerDec.Timeout += () => RotatePivot(-5, pivot, ring);
+        timerInc.Timeout += () => SetPivotRotationOffset(5, pivot, ring);
+        timerDec.Timeout += () => SetPivotRotationOffset(-5, pivot, ring);
 
         increase.ButtonDown += () => timerInc.Start();
         increase.ButtonUp += () => timerInc.Stop();
@@ -1448,7 +1501,7 @@ public partial class Manager : Node
         decrease.ButtonDown += () => timerDec.Start();
         decrease.ButtonUp += () => timerDec.Stop();
         
-        RotatePivot(0, pivot, ring);
+        SetPivotRotationOffset(0, pivot, ring);
     }
     #endregion
 

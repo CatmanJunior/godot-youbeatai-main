@@ -17,7 +17,10 @@ public partial class LayerVoiceOver : Node
 	AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
 	bool shouldRecord = false;
+
 	bool recording = false;
+	bool shouldUpdateProgressBar = false;
+
 	float recordingTimer = 0;
 
 	public bool finished = false;
@@ -51,7 +54,7 @@ public partial class LayerVoiceOver : Node
 
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
-			//OnTop();
+			// OnTop();
 		};
 
 		// init record button
@@ -121,15 +124,20 @@ public partial class LayerVoiceOver : Node
 		float beatTimer = BpmManager.instance.beatTimer;
 		float progress = ((float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat))) / BpmManager.beatsAmount);
 
-		if (recording)
+		if (shouldUpdateProgressBar)
 		{
 			textureProgressBar.Value = progress;
-			bigLine.Visible = false;
 		}
 		else
 		{
 			textureProgressBar.Value = 0;
-			if (GetCurrentLayerVoiceOver() != null) bigLine.Visible = true;
+		}
+
+		if (shouldUpdateLines)
+		{
+			SetSmallVolumeline();
+			SetBigVolumeline();
+			shouldUpdateLines = false;
 		}
 	}
 
@@ -150,13 +158,6 @@ public partial class LayerVoiceOver : Node
 			shouldMeasureAudioDelay = true;
 			audioDelayBeginMs = Time.GetTicksMsec();
 		}
-
-		if (shouldUpdateLines)
-		{
-			SetSmallVolumeline();
-			SetBigVolumeline();
-			shouldUpdateLines = false;
-		}
 	}
 
 	private void StartRecording()
@@ -172,7 +173,9 @@ public partial class LayerVoiceOver : Node
 		SetVolume(0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
-		
+
+		shouldUpdateProgressBar = true;
+		bigLine.Visible = false;
 
 		GetTree().CreateTimer(0.39).Timeout += () =>
 		{
@@ -185,6 +188,9 @@ public partial class LayerVoiceOver : Node
 
     private void StopRecording()
     {
+		shouldUpdateProgressBar = false;
+		bigLine.Visible = true;
+
 		GetTree().CreateTimer(0.39).Timeout += () =>
 		{
 			audioEffectRecord.SetRecordingActive(false);
@@ -201,7 +207,7 @@ public partial class LayerVoiceOver : Node
 
 		// buttons after recording
 		snellerButton.Disabled = false;
-		langzamerButton.Disabled= false;
+		langzamerButton.Disabled = false;
 		Manager.instance.SetLayerSwitchButtonsEnabled(true);
 		Manager.instance.PlayPauseButton.Disabled = false;
 		recordLayerButton.Disabled = false;

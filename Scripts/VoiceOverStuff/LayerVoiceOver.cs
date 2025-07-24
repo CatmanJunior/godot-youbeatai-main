@@ -163,10 +163,6 @@ public partial class LayerVoiceOver : Node
 
 	private void StartRecording()
 	{
-		recording = true;
-		audioEffectRecord.SetRecordingActive(true);
-		GD.Print("recording started");
-
 		// buttons during recording
 		snellerButton.Disabled = true;
 		langzamerButton.Disabled = true;
@@ -178,16 +174,32 @@ public partial class LayerVoiceOver : Node
 		SetVolume(0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
-		EmitSignal(SignalName.OnStartedRecording);
+		
+
+		GetTree().CreateTimer(0.3).Timeout += () =>
+		{
+			recording = true;
+			audioEffectRecord.SetRecordingActive(true);
+			GD.Print("recording started");
+			EmitSignal(SignalName.OnStartedRecording);
+		};
     }
 
     private void StopRecording()
     {
-        audioEffectRecord.SetRecordingActive(false);
-		GD.Print("recording stopped");
-		recording = false;
-		shouldRecord = false;
-		SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
+		GetTree().CreateTimer(0.3).Timeout += () =>
+		{
+			audioEffectRecord.SetRecordingActive(false);
+			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
+			SetVolume(volume);
+			GD.Print("recording stopped");
+			recording = false;
+			shouldRecord = false;
+			finished = true;
+			shouldUpdateLines = true;
+
+			EmitSignal(SignalName.OnStoppedRecording);
+		};
 
 		// buttons after recording
 		snellerButton.Disabled = false;
@@ -196,14 +208,6 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.PlayPauseButton.Disabled = false;
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
-
-		SetVolume(volume);
-
-		finished = true;
-
-		EmitSignal(SignalName.OnStoppedRecording);
-
-		shouldUpdateLines = true;
     }
 
 	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)

@@ -94,10 +94,14 @@ public partial class SongVoiceOver : Node
 
     private void StartRecording()
     {
-		recording = true;
-        audioEffectRecord.SetRecordingActive(true);
-		GD.Print("recording started");
+		GetTree().CreateTimer(0.37).Timeout += () =>
+		{
+			recording = true;
+			audioEffectRecord.SetRecordingActive(true);
+			GD.Print("recording started");
+		};
 
+		SetVolume(0.1f);
 		// buttons during recording
 		snellerButton.Disabled = true;
 		langzamerButton.Disabled= true;
@@ -108,21 +112,22 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
-		SetVolume(0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
 
     private void StopRecording()
     {
-        audioEffectRecord.SetRecordingActive(false);
-		GD.Print("recording stopped");
-		recordingLength = recordingTimer;
-		recording = false;
-		shouldRecord = false;
-		voiceOver = audioEffectRecord.GetRecording();
-		audioPlayer.Stream = voiceOver;
-
+		GetTree().CreateTimer(0.37).Timeout += () =>
+		{
+			audioEffectRecord.SetRecordingActive(false);
+			GD.Print("recording stopped");
+			recordingLength = recordingTimer;
+			recording = false;
+			shouldRecord = false;
+			voiceOver = audioEffectRecord.GetRecording();
+			audioPlayer.Stream = voiceOver;
+		};
 
 		// buttons during recording
 		snellerButton.Disabled = false;

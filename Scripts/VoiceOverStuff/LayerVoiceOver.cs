@@ -176,7 +176,7 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.metronome_toggle.ButtonPressed = false;
 		
 
-		GetTree().CreateTimer(0.3).Timeout += () =>
+		GetTree().CreateTimer(0.37).Timeout += () =>
 		{
 			recording = true;
 			audioEffectRecord.SetRecordingActive(true);
@@ -187,7 +187,7 @@ public partial class LayerVoiceOver : Node
 
     private void StopRecording()
     {
-		GetTree().CreateTimer(0.3).Timeout += () =>
+		GetTree().CreateTimer(0.37).Timeout += () =>
 		{
 			audioEffectRecord.SetRecordingActive(false);
 			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());

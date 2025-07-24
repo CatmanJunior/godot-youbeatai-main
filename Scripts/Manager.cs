@@ -1445,7 +1445,9 @@ public partial class Manager : Node
     private void UpdateAllMixerVolumes(bool log = false)
     {
         // temporarily lower mixer volumes during voice record
-        if (layerVoiceOver0.recording || layerVoiceOver1.recording)
+        bool anyrecord = layerVoiceOver0.recording || layerVoiceOver1.recording;
+        bool anyfake = layerVoiceOver0.shouldUpdateProgressBar || layerVoiceOver1.shouldUpdateProgressBar;
+        if (anyrecord || anyfake)
         {
             SetAllMixerVolumesOnly(0.1f);
             return;

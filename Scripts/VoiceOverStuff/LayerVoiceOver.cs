@@ -19,7 +19,7 @@ public partial class LayerVoiceOver : Node
 	bool shouldRecord = false;
 
 	public bool recording = false;
-	bool shouldUpdateProgressBar = false;
+	public bool shouldUpdateProgressBar = false;
 
 	float recordingTimer = 0;
 

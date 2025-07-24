@@ -33,8 +33,6 @@ public partial class LayerVoiceOver : Node
 	[Export] public int bigLineVolumeDist = 28;
 	[Export] public bool bigLineReversed = false;
 
-	private double volume = 0.5;
-
 	public int currentLayer => Manager.instance.currentLayerIndex;
 	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
 	public AudioStream GetCurrentLayerVoiceOver() => voiceOvers[currentLayer];
@@ -46,7 +44,6 @@ public partial class LayerVoiceOver : Node
 			volumeSlider.ValueChanged += (double volume) =>
 			{
 				double new_volume = 1 - volume;
-				volume = new_volume;
 				audioPlayer.VolumeLinear = (float)new_volume * 1.5f;
 			};
 
@@ -76,8 +73,8 @@ public partial class LayerVoiceOver : Node
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
 		AddChild(audioPlayer);
-		if( volumeSlider != null )
-			audioPlayer.VolumeLinear = 0.5f;
+		if( volumeSlider != null ) audioPlayer.VolumeLinear = 0.5f;
+		audioPlayer.Bus = "Voice";
 
 		// setup record effect
 		audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
@@ -123,6 +120,7 @@ public partial class LayerVoiceOver : Node
 		int currentBeat = BpmManager.instance.currentBeat;
 		float beatTimer = BpmManager.instance.beatTimer;
 		float progress = ((float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat))) / BpmManager.beatsAmount);
+
 		if (recording)
 		{
 			textureProgressBar.Value = progress;
@@ -176,7 +174,7 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.metronome_toggle.ButtonPressed = false;
 		
 
-		GetTree().CreateTimer(0.3).Timeout += () =>
+		GetTree().CreateTimer(0.39).Timeout += () =>
 		{
 			recording = true;
 			audioEffectRecord.SetRecordingActive(true);
@@ -187,11 +185,11 @@ public partial class LayerVoiceOver : Node
 
     private void StopRecording()
     {
-		GetTree().CreateTimer(0.3).Timeout += () =>
+		GetTree().CreateTimer(0.39).Timeout += () =>
 		{
 			audioEffectRecord.SetRecordingActive(false);
 			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
-			SetVolume(volume);
+			SetVolume(1.0);
 			GD.Print("recording stopped");
 			recording = false;
 			shouldRecord = false;

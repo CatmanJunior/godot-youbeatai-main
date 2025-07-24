@@ -455,6 +455,7 @@ bigLineVolumeDist = 110
 
 [node name="VoiceRecorder" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_jwpg7")]
 bpmManager = NodePath("../../BPM")
+volume = 0.0
 
 [node name="Envelope" parent="Managers/LayerVoiceOver0/VoiceRecorder" index="0"]
 attack_time = 0.001
@@ -502,7 +503,7 @@ bigLineReversed = true
 
 [node name="VoiceRecorder" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_jwpg7")]
 bpmManager = NodePath("../../BPM")
-volume = 1.0
+volume = 0.0
 octaveRange = Vector2i(5, 6)
 
 [node name="Envelope" parent="Managers/LayerVoiceOver1/VoiceRecorder" index="0"]
@@ -1255,7 +1256,6 @@ offset_bottom = -14.8866
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
-value = 0.5
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton0/HSlider"]
@@ -1336,7 +1336,6 @@ offset_bottom = -14.8866
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
-value = 0.5
 metadata/_edit_use_anchors_ = true
 
 [node name="Sprite2D2" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton1/HSlider"]
@@ -2403,6 +2402,8 @@ text = "Doorgaan"
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="stop_recording"]
+[connection signal="value_changed" from="UserInterface/ControlsGroup/RecordBeatButton0/HSlider" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_volume_slider_changed"]
+[connection signal="value_changed" from="UserInterface/ControlsGroup/RecordBeatButton1/HSlider" to="Managers/LayerVoiceOver1/VoiceRecorder" method="_on_volume_slider_changed"]
 
 [editable path="Managers/LayerVoiceOver0/VoiceRecorder"]
 [editable path="Managers/LayerVoiceOver1/VoiceRecorder"]

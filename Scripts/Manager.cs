@@ -661,7 +661,7 @@ public partial class Manager : Node
         beatActives = GetCurrentLayer();
         layerOutlineHolder.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
         if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
-        EmitSignal(SignalName.OnSwitchLayer, layerToUse);
+        EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
         layerVoiceOver0.SetSmallVolumeline();
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();

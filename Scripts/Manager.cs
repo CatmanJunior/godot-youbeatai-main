@@ -379,16 +379,16 @@ public partial class Manager : Node
 
     private void InitButtonActions()
     {
-        layerButton1.Pressed += () => SwitchLayer(1);
-        layerButton2.Pressed += () => SwitchLayer(2);
-        layerButton3.Pressed += () => SwitchLayer(3);
-        layerButton4.Pressed += () => SwitchLayer(4);
-        layerButton5.Pressed += () => SwitchLayer(5);
-        layerButton6.Pressed += () => SwitchLayer(6);
-        layerButton7.Pressed += () => SwitchLayer(7);
-        layerButton8.Pressed += () => SwitchLayer(8);
-        layerButton9.Pressed += () => SwitchLayer(9);
-        layerButton10.Pressed += () => SwitchLayer(10);
+        layerButton1.Pressed += () => { SwitchLayer(1); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton2.Pressed += () => { SwitchLayer(2); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton3.Pressed += () => { SwitchLayer(3); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton4.Pressed += () => { SwitchLayer(4); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton5.Pressed += () => { SwitchLayer(5); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton6.Pressed += () => { SwitchLayer(6); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton7.Pressed += () => { SwitchLayer(7); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
         allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AllLayersToMp3;
         muteSpeach.Pressed += DisplayServer.TtsStop;
@@ -660,7 +660,6 @@ public partial class Manager : Node
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
         layerOutlineHolder.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
-        if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
         EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
         layerVoiceOver0.SetSmallVolumeline();
         layerVoiceOver1.SetSmallVolumeline();
@@ -671,6 +670,8 @@ public partial class Manager : Node
 
     public void UpdateSongVoiceOverPlayBackPosition()
     {
+        if (SongVoiceOver.instance.voiceOver == null) return;
+        if (SongVoiceOver.instance.audioPlayer.Playing == false) SongVoiceOver.instance.audioPlayer.Play();
         var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
         var fixedcurrentbeat = BpmManager.instance.currentBeat;
         if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;
@@ -678,6 +679,7 @@ public partial class Manager : Node
         var beattimeoffset = timeperbeat * fixedcurrentbeat;
         var seekpos = currentLayerIndex * timeperlayer + beattimeoffset;
         SongVoiceOver.instance.audioPlayer.Seek(seekpos);
+        GD.Print("seek song position to new position");
     }
 
     public bool LayerHasBeats(bool[,] layer)
@@ -1921,13 +1923,12 @@ public partial class Manager : Node
 
         if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (BpmManager.instance.currentBeat == 0)
+        if (BpmManager.instance.currentBeat == 0 && currentLayerIndex == 0)
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
-            UpdateSongVoiceOverPlayBackPosition();
+            SongVoiceOver.instance.OnTop();
         }
-        if (currentLayerIndex == 0 && BpmManager.instance.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
 
         int nextbeat = BpmManager.instance.currentBeat + 1;
         if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;

@@ -75,7 +75,7 @@ public partial class SongVoiceOver : Node
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
 
-	public void OnBeginning()
+	public void OnTop()
 	{
 		if (recording)
 		{
@@ -84,24 +84,17 @@ public partial class SongVoiceOver : Node
 		}
 		else
 		{
-			if (shouldRecord)
-			{
-				StartRecording();
-			}
+			if (shouldRecord) StartRecording();
 			else if (voiceOver != null) audioPlayer.Play();
 		}
 	}
 
     private void StartRecording()
     {
-		GetTree().CreateTimer(0.37).Timeout += () =>
-		{
-			recording = true;
-			audioEffectRecord.SetRecordingActive(true);
-			GD.Print("recording started");
-		};
+		recording = true;
+        audioEffectRecord.SetRecordingActive(true);
+		GD.Print("recording started");
 
-		SetVolume(0.1f);
 		// buttons during recording
 		snellerButton.Disabled = true;
 		langzamerButton.Disabled= true;
@@ -112,22 +105,20 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
+		SetVolume(0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
 
     private void StopRecording()
     {
-		GetTree().CreateTimer(0.37).Timeout += () =>
-		{
-			audioEffectRecord.SetRecordingActive(false);
-			GD.Print("recording stopped");
-			recordingLength = recordingTimer;
-			recording = false;
-			shouldRecord = false;
-			voiceOver = audioEffectRecord.GetRecording();
-			audioPlayer.Stream = voiceOver;
-		};
+        audioEffectRecord.SetRecordingActive(false);
+		GD.Print("recording stopped");
+		recordingLength = recordingTimer;
+		recording = false;
+		shouldRecord = false;
+		voiceOver = audioEffectRecord.GetRecording();
+		audioPlayer.Stream = voiceOver;
 
 		// buttons during recording
 		snellerButton.Disabled = false;

@@ -209,7 +209,7 @@ public partial class Manager : Node
     #region AudioFiles
     [Export] public AudioStream[] mainAudioFiles;
     [Export] public AudioStream[] mainAudioFilesAlt;
-    [Export] AudioStream metronome_sfx;
+    [Export] public AudioStream metronome_sfx;
     [Export] AudioStream metronomealt_sfx;
     [Export] AudioStream achievement_sfx;
     #endregion
@@ -2214,7 +2214,7 @@ public partial class Manager : Node
         SavingLabel.Text = "Opgeslagen naar:" + "\n" + name;
     }
 
-    private void PlayExtraSFX(AudioStream audioStream)
+    public void PlayExtraSFX(AudioStream audioStream)
     {
         sfxAudioPlayer.Stop();
         sfxAudioPlayer.Stream = audioStream;

@@ -82,6 +82,9 @@ public partial class LayerVoiceOver : Node
 
 			// playing true
 			BpmManager.instance.playing = true;
+
+			// also play metronome sound on first beat
+			Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
 		};
 
 		// create audioplayer

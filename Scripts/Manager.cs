@@ -339,6 +339,7 @@ public partial class Manager : Node
     [Export] public CheckButton metronome_toggle;
     [Export] ProgressBar micmeter;
     [Export] CheckButton add_beats;
+    [Export] public CheckButton button_is_clap;
     [Export] Slider volume_treshold;
     [Export] Panel settingsPanel;
     [Export] Button settingsButton;

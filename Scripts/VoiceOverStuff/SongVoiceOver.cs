@@ -142,5 +142,6 @@ public partial class SongVoiceOver : Node
         Manager.instance.secondAudioPlayer.VolumeDb = db;
         Manager.instance.thirdAudioPlayer.VolumeDb = db;
         Manager.instance.fourthAudioPlayer.VolumeDb = db;
+		audioPlayer.VolumeDb = db;
     }
 }

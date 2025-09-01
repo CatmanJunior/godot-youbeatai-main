@@ -195,6 +195,8 @@ public partial class LayerVoiceOver : Node
 			GD.Print("recording started");
 			EmitSignal(SignalName.OnStartedRecording);
 		};
+
+		SetVolume(0.1f);
     }
 
     private void StopRecording()
@@ -222,6 +224,18 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.PlayPauseButton.Disabled = false;
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
+
+		SetVolume(1f);
+    }
+
+	void SetVolume(float value)
+    {
+        float db = Mathf.LinearToDb(value);
+        Manager.instance.firstAudioPlayer.VolumeDb = db;
+        Manager.instance.secondAudioPlayer.VolumeDb = db;
+        Manager.instance.thirdAudioPlayer.VolumeDb = db;
+        Manager.instance.fourthAudioPlayer.VolumeDb = db;
+		audioPlayer.VolumeDb = db;
     }
 
 	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)

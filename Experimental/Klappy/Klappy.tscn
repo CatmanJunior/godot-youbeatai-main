@@ -41,7 +41,7 @@ animation = &"animations/Anim_Stamp_Animation_Single"
 [sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_6i03r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_igk12"]
-graph_offset = Vector2(-591, 92)
+graph_offset = Vector2(-500, 92)
 nodes/Add2/node = SubResource("AnimationNodeAdd2_vxk86")
 nodes/Add2/position = Vector2(240, -120)
 "nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_fbtxr")
@@ -75,11 +75,11 @@ compositor = SubResource("Compositor_igk12")
 [node name="model" parent="." instance=ExtResource("17_8c4xi")]
 
 [node name="Skeleton3D" parent="model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.58971, -0.0210996, -0.0298472, 0.806787)
+bones/0/rotation = Quaternion(0.590087, 0.000462703, -0.000348493, 0.807339)
 bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
 bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/position = Vector3(0.000122607, 0.00678814, 0.000408064)
+bones/2/position = Vector3(1.35042e-09, 0.00522447, -1.2666e-09)
 bones/2/rotation = Quaternion(0.170502, 0.00642557, -0.347515, 0.92202)
 bones/2/scale = Vector3(1, 1, 1)
 bones/4/position = Vector3(-3.17935e-12, 0.0148348, -3.93007e-10)
@@ -92,7 +92,7 @@ bones/7/position = Vector3(3.41713e-05, 0.0162051, 0.00671337)
 bones/7/rotation = Quaternion(0.153684, 0.159081, 0.362227, 0.905465)
 bones/7/scale = Vector3(1, 1, 1)
 bones/9/position = Vector3(0.00529178, -0.00229546, 0.00398238)
-bones/9/rotation = Quaternion(0.731109, 0.0101679, 0.682155, -0.00643442)
+bones/9/rotation = Quaternion(0.706984, 0.00225495, 0.707224, 0.00145952)
 bones/9/scale = Vector3(1, 1, 1)
 bones/10/position = Vector3(-6.41305e-11, 0.00420524, 1.85071e-10)
 bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
@@ -103,11 +103,11 @@ bones/11/scale = Vector3(1, 1, 1)
 bones/13/position = Vector3(-0.0109679, 0.00308128, 0.0112381)
 bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
 bones/13/scale = Vector3(1, 1, 1)
-bones/14/position = Vector3(-0.000455613, 0.0110351, 0.00151638)
+bones/14/position = Vector3(-3.1665e-10, 0.00522447, -3.72529e-10)
 bones/14/rotation = Quaternion(0.170502, -0.00642538, 0.347515, 0.92202)
 bones/14/scale = Vector3(1, 1, 1)
 bones/16/position = Vector3(-0.00554416, -0.00229483, 0.00395247)
-bones/16/rotation = Quaternion(0.682154, 0.00643215, -0.731109, 0.0101658)
+bones/16/rotation = Quaternion(0.707224, -0.00148209, -0.706985, 0.00223224)
 bones/16/scale = Vector3(1, 1, 1)
 bones/17/position = Vector3(9.22241e-05, 0.0044895, -1.75543e-05)
 bones/17/rotation = Quaternion(0.00499249, 0.000264613, -0.358627, 0.933468)
@@ -130,6 +130,7 @@ libraries = {
 
 [node name="AnimationTree" type="AnimationTree" parent="model"]
 tree_root = SubResource("AnimationNodeBlendTree_igk12")
+anim_player = NodePath("../AnimationPlayer")
 parameters/Add2/add_amount = 1.0
 "parameters/Add2 2/add_amount" = 1.0
 parameters/ClapTrigger/seek_request = -1.0

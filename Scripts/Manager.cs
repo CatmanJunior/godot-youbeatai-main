@@ -127,6 +127,8 @@ public partial class Manager : Node
         UpdateBeatSprites(delta);
 
         bpmLabel.Text = BpmManager.instance.bpm.ToString();
+
+        songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
     }
 
     #endregion
@@ -207,7 +209,7 @@ public partial class Manager : Node
     #region AudioFiles
     [Export] public AudioStream[] mainAudioFiles;
     [Export] public AudioStream[] mainAudioFilesAlt;
-    [Export] AudioStream metronome_sfx;
+    [Export] public AudioStream metronome_sfx;
     [Export] AudioStream metronomealt_sfx;
     [Export] AudioStream achievement_sfx;
     #endregion
@@ -329,6 +331,7 @@ public partial class Manager : Node
     [Export] public Label[] Unlockables;
     [Export] public Label[] UnlockablesQuestion;
     [Export] public Button restartButton;
+    [Export] public Panel songModeBackPanel;
     [Export] public CheckButton muteSpeach;
     [Export] Button saveToWavButton;
     [Export] public Node2D cross;
@@ -336,6 +339,7 @@ public partial class Manager : Node
     [Export] public CheckButton metronome_toggle;
     [Export] ProgressBar micmeter;
     [Export] CheckButton add_beats;
+    [Export] public CheckButton button_is_clap;
     [Export] Slider volume_treshold;
     [Export] Panel settingsPanel;
     [Export] Button settingsButton;
@@ -376,21 +380,22 @@ public partial class Manager : Node
 
     private void InitButtonActions()
     {
-        layerButton1.Pressed += () => SwitchLayer(1);
-        layerButton2.Pressed += () => SwitchLayer(2);
-        layerButton3.Pressed += () => SwitchLayer(3);
-        layerButton4.Pressed += () => SwitchLayer(4);
-        layerButton5.Pressed += () => SwitchLayer(5);
-        layerButton6.Pressed += () => SwitchLayer(6);
-        layerButton7.Pressed += () => SwitchLayer(7);
-        layerButton8.Pressed += () => SwitchLayer(8);
-        layerButton9.Pressed += () => SwitchLayer(9);
-        layerButton10.Pressed += () => SwitchLayer(10);
+        layerButton1.Pressed += () => { SwitchLayer(1); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton2.Pressed += () => { SwitchLayer(2); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton3.Pressed += () => { SwitchLayer(3); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton4.Pressed += () => { SwitchLayer(4); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton5.Pressed += () => { SwitchLayer(5); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton6.Pressed += () => { SwitchLayer(6); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton7.Pressed += () => { SwitchLayer(7); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
         allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AllLayersToMp3;
         muteSpeach.Pressed += DisplayServer.TtsStop;
-        SaveLayoutButton.Pressed += OnSaveLayoutButton;
-        LoadLayoutButton.Pressed += OnLoadLayoutButton;
+        SaveLayoutButton.Pressed += CopyLayer;
+        LoadLayoutButton.Pressed += PasteLayer;
+        ClearLayoutButton.Pressed += ClearLayer;
         restartButton.Pressed += () =>
         {
             if (Engine.IsEditorHint()) GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
@@ -400,7 +405,6 @@ public partial class Manager : Node
                 GetTree().Quit();
             }
         };
-        ClearLayoutButton.Pressed += OnClearLayoutButton;
         PlayPauseButton.Pressed += OnPlayPauseButton;
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
@@ -652,20 +656,23 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
+        RememberAllPivotRotationsForCurrentLayer();
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
         layerOutlineHolder.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
-        if (SongVoiceOver.instance.voiceOver != null) UpdateSongVoiceOverPlayBackPosition();
-        EmitSignal(SignalName.OnSwitchLayer, layerToUse);
+        EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
         layerVoiceOver0.SetSmallVolumeline();
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
+        ReApplyAllPivotRotationsForCurrentLayer();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
     {
+        if (SongVoiceOver.instance.voiceOver == null) return;
+        if (SongVoiceOver.instance.audioPlayer.Playing == false) SongVoiceOver.instance.audioPlayer.Play();
         var timeperlayer = SongVoiceOver.instance.recordingLength / 10;
         var fixedcurrentbeat = BpmManager.instance.currentBeat;
         if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;
@@ -673,6 +680,7 @@ public partial class Manager : Node
         var beattimeoffset = timeperbeat * fixedcurrentbeat;
         var seekpos = currentLayerIndex * timeperlayer + beattimeoffset;
         SongVoiceOver.instance.audioPlayer.Seek(seekpos);
+        GD.Print("seek song position to new position");
     }
 
     public bool LayerHasBeats(bool[,] layer)
@@ -1302,6 +1310,112 @@ public partial class Manager : Node
 
     #region Mixing
 
+    LayerPivotRotations[] rememberedPivotRotationsPerLayer = new LayerPivotRotations[10];
+
+    LayerPivotRotations clipboardPivotRotations = new LayerPivotRotations();
+
+    struct LayerPivotRotations
+    {
+        public float[] rotations = [0f, 0f, 0f, 0f];
+
+        public LayerPivotRotations(float[] rotations)
+        {
+            this.rotations = rotations;
+        }
+    }
+
+    // call before layer change
+    public void RememberAllPivotRotationsForCurrentLayer()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather current rotations
+        float[] current_rotations = new float[4];
+        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
+
+        // save rotations for current layer
+        rememberedPivotRotationsPerLayer[currentLayerIndex] = new LayerPivotRotations(current_rotations);
+    }
+
+    // call after layer change
+    public void ReApplyAllPivotRotationsForCurrentLayer()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather remembered rotations
+        float[] remembered_rotations = rememberedPivotRotationsPerLayer[currentLayerIndex].rotations;
+        remembered_rotations ??= [0, 0, 0, 0];
+
+        // set remembered pivot rotations
+        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(remembered_rotations[i], pivots[i], i);
+    }
+
+    public void CopyPivotRotationsForCurrentLayerToClipboard()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather current rotations
+        float[] current_rotations = new float[4];
+        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
+
+        // save rotations for current layer to clipboard
+        clipboardPivotRotations = new LayerPivotRotations(current_rotations);
+    }
+
+    public void PastePivotRotationsForCurrentLayerFromClipboard()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // gather remembered rotations
+        float[] copied_rotations = clipboardPivotRotations.rotations;
+        copied_rotations ??= [0, 0, 0, 0];
+
+        // set remembered pivot rotations
+        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(copied_rotations[i], pivots[i], i);
+    }
+
+    public void ClearPivotRotationsForCurrentLayer()
+    {
+        // gather pivots
+        Node2D[] pivots = new Node2D[4];
+        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
+
+        // reset rotations
+        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(0, pivots[i], i);
+    }
+
+    public void SetPivotRotationOffset(float rotation, Node2D pivot, int ring)
+    {
+        pivot.RotationDegrees += rotation;
+        var volumes = UpdateMixerVolumes(ring);
+        UpdateMixerIcons(pivot, volumes);
+    }
+
+    public void SetPivotRotationAbsolute(float rotation, Node2D pivot, int ring)
+    {
+        pivot.RotationDegrees = rotation;
+        var volumes = UpdateMixerVolumes(ring);
+        UpdateMixerIcons(pivot, volumes);
+    }
+
+    private static void UpdateMixerIcons(Node2D pivot, (float main, float alt, float rec) volumes)
+    {
+        var icon0 = pivot.GetChild(0) as Label;
+        var icon1 = pivot.GetChild(1) as Label;
+        var icon2 = pivot.GetChild(2) as Label;
+        icon0.Modulate = new Color(1, 1, 1, volumes.main);
+        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
+        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
+    }
+
     [Export] public Node2D sampleMixer0;
     [Export] public Node2D sampleMixer1;
     [Export] public Node2D sampleMixer2;
@@ -1313,10 +1427,35 @@ public partial class Manager : Node
     {
         foreach (bool locked in isMixerLocked) if (locked) return true;
         return false;
-    }    
+    }
+
+    public void SetAllMixerVolumesOnly(float volume)
+    {
+        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+    }
 
     private void UpdateAllMixerVolumes(bool log = false)
     {
+        // temporarily lower mixer volumes during voice record
+        bool anyrecord = layerVoiceOver0.recording || layerVoiceOver1.recording;
+        bool anyfake = layerVoiceOver0.shouldUpdateProgressBar || layerVoiceOver1.shouldUpdateProgressBar;
+        if (anyrecord || anyfake)
+        {
+            SetAllMixerVolumesOnly(0.1f);
+            return;
+        }
+
         var v0 = UpdateMixerVolumes(0);
         var v1 = UpdateMixerVolumes(1);
         var v2 = UpdateMixerVolumes(2);
@@ -1402,21 +1541,6 @@ public partial class Manager : Node
         return (Node2D)mixer.FindChild("Pivot");
     }
 
-    public void RotatePivot(float rotation, Node2D pivot, int ring)
-    {
-        pivot.RotationDegrees += rotation;
-
-        var volumes = UpdateMixerVolumes(ring);
-
-        var icon0 = pivot.GetChild(0) as Label;
-        var icon1 = pivot.GetChild(1) as Label;
-        var icon2 = pivot.GetChild(2) as Label;
-
-        icon0.Modulate = new Color(1, 1, 1, volumes.main);
-        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
-        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
-    }
-
     void SetupMixer(Node2D mixer, int ring)
     {
         var increase = mixer.FindChild("IncreaseButton") as Button;
@@ -1439,8 +1563,8 @@ public partial class Manager : Node
         };
         AddChild(timerDec);
 
-        timerInc.Timeout += () => RotatePivot(5, pivot, ring);
-        timerDec.Timeout += () => RotatePivot(-5, pivot, ring);
+        timerInc.Timeout += () => SetPivotRotationOffset(5, pivot, ring);
+        timerDec.Timeout += () => SetPivotRotationOffset(-5, pivot, ring);
 
         increase.ButtonDown += () => timerInc.Start();
         increase.ButtonUp += () => timerInc.Stop();
@@ -1448,7 +1572,7 @@ public partial class Manager : Node
         decrease.ButtonDown += () => timerDec.Start();
         decrease.ButtonUp += () => timerDec.Stop();
         
-        RotatePivot(0, pivot, ring);
+        SetPivotRotationOffset(0, pivot, ring);
     }
     #endregion
 
@@ -1800,13 +1924,12 @@ public partial class Manager : Node
 
         if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (BpmManager.instance.currentBeat == 0)
+        if (BpmManager.instance.currentBeat == 0 && currentLayerIndex == 0)
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
-            UpdateSongVoiceOverPlayBackPosition();
+            SongVoiceOver.instance.OnTop();
         }
-        if (currentLayerIndex == 0 && BpmManager.instance.currentBeat == 0) SongVoiceOver.instance.OnBeginning();
 
         int nextbeat = BpmManager.instance.currentBeat + 1;
         if (nextbeat == BpmManager.beatsAmount) nextbeat = 0;
@@ -1989,19 +2112,61 @@ public partial class Manager : Node
     bool savedToLaout = false;
     private float startswing;
 
-    public void OnSaveLayoutButton()
+    AudioStream clipboardLayerVoice0;
+    AudioStream clipboardLayerVoice1;
+
+    public void CopyLayer()
+    {
+        CopyBeatLayoutToClipboard();
+        CopyPivotRotationsForCurrentLayerToClipboard();
+        CopyLayerVoiceToClipBoard();
+    }
+
+    public void PasteLayer()
+    {
+        PasteBeatLayoutFromClipboard();
+        PastePivotRotationsForCurrentLayerFromClipboard();
+        PasteLayerVoiceFromClipBoard();
+    }
+
+    public void ClearLayer()
+    {
+        ClearLayout();
+        ClearPivotRotationsForCurrentLayer();
+        ClearLayerVoiceOver();
+    }
+
+    public void CopyLayerVoiceToClipBoard()
+    {
+        clipboardLayerVoice0 = layerVoiceOver0.GetCurrentLayerVoiceOver();
+        clipboardLayerVoice1 = layerVoiceOver1.GetCurrentLayerVoiceOver();
+    }
+
+    public void PasteLayerVoiceFromClipBoard()
+    {
+        layerVoiceOver0.SetCurrentLayerVoiceOver(clipboardLayerVoice0);
+        layerVoiceOver1.SetCurrentLayerVoiceOver(clipboardLayerVoice1);
+    }
+
+    public void ClearLayerVoiceOver()
+    {
+        layerVoiceOver0.SetCurrentLayerVoiceOver(null);
+        layerVoiceOver1.SetCurrentLayerVoiceOver(null);
+    }
+
+    public void CopyBeatLayoutToClipboard()
     {
         beatClipboard = (bool[,])beatActives.Clone();
         savedToLaout = true;
     }
 
-    public void OnLoadLayoutButton()
+    public void PasteBeatLayoutFromClipboard()
     {
         beatActives = (bool[,])beatClipboard.Clone();
         loadedtemplate = true;
     }
 
-    public void OnClearLayoutButton()
+    public void ClearLayout()
     {
         beatActives = new bool[4, BpmManager.beatsAmount];
         hasclearedlayout = true;
@@ -2050,7 +2215,7 @@ public partial class Manager : Node
         SavingLabel.Text = "Opgeslagen naar:" + "\n" + name;
     }
 
-    private void PlayExtraSFX(AudioStream audioStream)
+    public void PlayExtraSFX(AudioStream audioStream)
     {
         sfxAudioPlayer.Stop();
         sfxAudioPlayer.Stream = audioStream;
@@ -2064,7 +2229,7 @@ public partial class Manager : Node
             if (!ctrlc_pressed)
             {
                 ctrlc_pressed = true;
-                OnSaveLayoutButton();
+                CopyLayer();
             }
         }
         else ctrlc_pressed = false;
@@ -2074,7 +2239,7 @@ public partial class Manager : Node
             if (!ctrl_v_pressed)
             {
                 ctrl_v_pressed = true;
-                OnLoadLayoutButton();
+                PasteLayer();
             }
         }
         else ctrl_v_pressed = false;

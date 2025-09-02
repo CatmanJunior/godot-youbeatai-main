@@ -17,7 +17,10 @@ public partial class LayerVoiceOver : Node
 	AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
 	bool shouldRecord = false;
-	bool recording = false;
+
+	public bool recording = false;
+	public bool shouldUpdateProgressBar = false;
+
 	float recordingTimer = 0;
 
 	public bool finished = false;
@@ -33,11 +36,21 @@ public partial class LayerVoiceOver : Node
 	[Export] public int bigLineVolumeDist = 28;
 	[Export] public bool bigLineReversed = false;
 
-	private double volume = 0.5;
-
 	public int currentLayer => Manager.instance.currentLayerIndex;
-	public void SetCurrentLayerVoiceOver(AudioStream voiceOver) => voiceOvers[currentLayer] = voiceOver;
-	public AudioStream GetCurrentLayerVoiceOver() => voiceOvers[currentLayer];
+
+	public void SetCurrentLayerVoiceOver(AudioStream voiceOver)
+	{
+		voiceOvers[currentLayer] = voiceOver;
+		audioPlayer.Stream = GetCurrentLayerVoiceOver();
+		audioPlayer.Stop();
+		audioPlayer.Play();
+		shouldUpdateLines = true; 
+	}
+
+	public AudioStream GetCurrentLayerVoiceOver()
+	{
+		return voiceOvers[currentLayer];
+	}
 
 	public override void _Ready()
     {
@@ -46,15 +59,13 @@ public partial class LayerVoiceOver : Node
 			volumeSlider.ValueChanged += (double volume) =>
 			{
 				double new_volume = 1 - volume;
-				volume = new_volume;
 				audioPlayer.VolumeLinear = (float)new_volume * 1.5f;
 			};
-
 		}
 
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
-			//OnTop();
+			// OnTop();
 		};
 
 		// init record button
@@ -71,13 +82,16 @@ public partial class LayerVoiceOver : Node
 
 			// playing true
 			BpmManager.instance.playing = true;
+
+			// also play metronome sound on first beat
+			Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
 		};
 
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
 		AddChild(audioPlayer);
-		if( volumeSlider != null )
-			audioPlayer.VolumeLinear = 0.5f;
+		if( volumeSlider != null ) audioPlayer.VolumeLinear = 0.5f;
+		audioPlayer.Bus = "Voice";
 
 		// setup record effect
 		audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
@@ -123,15 +137,21 @@ public partial class LayerVoiceOver : Node
 		int currentBeat = BpmManager.instance.currentBeat;
 		float beatTimer = BpmManager.instance.beatTimer;
 		float progress = ((float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat))) / BpmManager.beatsAmount);
-		if (recording)
+
+		if (shouldUpdateProgressBar)
 		{
 			textureProgressBar.Value = progress;
-			bigLine.Visible = false;
 		}
 		else
 		{
 			textureProgressBar.Value = 0;
-			if (GetCurrentLayerVoiceOver() != null) bigLine.Visible = true;
+		}
+
+		if (shouldUpdateLines)
+		{
+			SetSmallVolumeline();
+			SetBigVolumeline();
+			shouldUpdateLines = false;
 		}
 	}
 
@@ -152,21 +172,10 @@ public partial class LayerVoiceOver : Node
 			shouldMeasureAudioDelay = true;
 			audioDelayBeginMs = Time.GetTicksMsec();
 		}
-
-		if (shouldUpdateLines)
-		{
-			SetSmallVolumeline();
-			SetBigVolumeline();
-			shouldUpdateLines = false;
-		}
 	}
 
 	private void StartRecording()
 	{
-		recording = true;
-		audioEffectRecord.SetRecordingActive(true);
-		GD.Print("recording started");
-
 		// buttons during recording
 		snellerButton.Disabled = true;
 		langzamerButton.Disabled = true;
@@ -174,36 +183,59 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.PlayPauseButton.Disabled = true;
 		recordLayerButton.Disabled = true;
 		SongVoiceOver.instance.recordSongButton.Disabled = true;
+		Manager.instance.metronome_toggle.ButtonPressed = false;
+
+		shouldUpdateProgressBar = true;
+		bigLine.Visible = false;
+
+		GetTree().CreateTimer(0.39).Timeout += () =>
+		{
+			recording = true;
+			audioEffectRecord.SetRecordingActive(true);
+			GD.Print("recording started");
+			EmitSignal(SignalName.OnStartedRecording);
+		};
 
 		SetVolume(0.1f);
-
-		Manager.instance.metronome_toggle.ButtonPressed = false;
-		EmitSignal(SignalName.OnStartedRecording);
     }
 
     private void StopRecording()
     {
-        audioEffectRecord.SetRecordingActive(false);
-		GD.Print("recording stopped");
-		recording = false;
-		shouldRecord = false;
-		SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
+		shouldUpdateProgressBar = false;
+		bigLine.Visible = true;
+
+		GetTree().CreateTimer(0.39).Timeout += () =>
+		{
+			audioEffectRecord.SetRecordingActive(false);
+			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
+			GD.Print("recording stopped");
+			recording = false;
+			shouldRecord = false;
+			finished = true;
+			shouldUpdateLines = true;
+
+			EmitSignal(SignalName.OnStoppedRecording);
+		};
 
 		// buttons after recording
 		snellerButton.Disabled = false;
-		langzamerButton.Disabled= false;
+		langzamerButton.Disabled = false;
 		Manager.instance.SetLayerSwitchButtonsEnabled(true);
 		Manager.instance.PlayPauseButton.Disabled = false;
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
 
-		SetVolume(volume);
+		SetVolume(1f);
+    }
 
-		finished = true;
-
-		EmitSignal(SignalName.OnStoppedRecording);
-
-		shouldUpdateLines = true;
+	void SetVolume(float value)
+    {
+        float db = Mathf.LinearToDb(value);
+        Manager.instance.firstAudioPlayer.VolumeDb = db;
+        Manager.instance.secondAudioPlayer.VolumeDb = db;
+        Manager.instance.thirdAudioPlayer.VolumeDb = db;
+        Manager.instance.fourthAudioPlayer.VolumeDb = db;
+		audioPlayer.VolumeDb = db;
     }
 
 	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
@@ -270,14 +302,5 @@ public partial class LayerVoiceOver : Node
             sbyte value = (sbyte)audio.Data[byteIndex];
             return Mathf.Abs(value / 128f);
         }
-    }
-
-	void SetVolume(double value)
-    {
-        float db = Mathf.LinearToDb((float)value);
-        Manager.instance.firstAudioPlayer.VolumeDb = db;
-        Manager.instance.secondAudioPlayer.VolumeDb = db;
-        Manager.instance.thirdAudioPlayer.VolumeDb = db;
-        Manager.instance.fourthAudioPlayer.VolumeDb = db;
     }
 }

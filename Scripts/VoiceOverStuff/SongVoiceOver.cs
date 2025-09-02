@@ -75,7 +75,7 @@ public partial class SongVoiceOver : Node
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
 
-	public void OnBeginning()
+	public void OnTop()
 	{
 		if (recording)
 		{
@@ -84,10 +84,7 @@ public partial class SongVoiceOver : Node
 		}
 		else
 		{
-			if (shouldRecord)
-			{
-				StartRecording();
-			}
+			if (shouldRecord) StartRecording();
 			else if (voiceOver != null) audioPlayer.Play();
 		}
 	}
@@ -123,7 +120,6 @@ public partial class SongVoiceOver : Node
 		voiceOver = audioEffectRecord.GetRecording();
 		audioPlayer.Stream = voiceOver;
 
-
 		// buttons during recording
 		snellerButton.Disabled = false;
 		langzamerButton.Disabled= false;
@@ -146,5 +142,6 @@ public partial class SongVoiceOver : Node
         Manager.instance.secondAudioPlayer.VolumeDb = db;
         Manager.instance.thirdAudioPlayer.VolumeDb = db;
         Manager.instance.fourthAudioPlayer.VolumeDb = db;
+		audioPlayer.VolumeDb = db;
     }
 }

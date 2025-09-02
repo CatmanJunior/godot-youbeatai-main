@@ -209,7 +209,7 @@ public partial class RecordSampleButton : Sprite2D
         increase.AddThemeStyleboxOverride("normal", tempStyle);
         while (pivotToMove.RotationDegrees < -360 / 3)
         {
-            Manager.instance.RotatePivot(5, pivotToMove, ring);
+            Manager.instance.SetPivotRotationOffset(5, pivotToMove, ring);
             await Task.Delay(50);
         }
         increase.AddThemeStyleboxOverride("normal", originalStyle);
@@ -228,7 +228,7 @@ public partial class RecordSampleButton : Sprite2D
         decrease.AddThemeStyleboxOverride("normal", tempStyle);
         while (pivotToMove.RotationDegrees > -360 / 3)
         {
-            Manager.instance.RotatePivot(-5, pivotToMove, ring);
+            Manager.instance.SetPivotRotationOffset(-5, pivotToMove, ring);
             await Task.Delay(50);
         }
         decrease.AddThemeStyleboxOverride("normal", originalStyle);

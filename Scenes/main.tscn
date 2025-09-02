@@ -1,4 +1,4 @@
-[gd_scene load_steps=59 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=60 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -35,6 +35,7 @@
 [ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="26_jwpg7"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
+[ext_resource type="Texture2D" uid="uid://chbucgfpwa1a" path="res://Resources/Textures/triangle.png" id="28_k2e45"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 
@@ -560,12 +561,64 @@ theme_override_font_sizes/font_size = 25
 text = "⚙️ Instellingen"
 alignment = 0
 
+[node name="ChaosPad" type="Node2D" parent="UserInterface"]
+position = Vector2(-434, 59)
+
+[node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
+scale = Vector2(0.385, 0.385)
+texture = ExtResource("28_k2e45")
+
+[node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
+position = Vector2(-490.909, 288.312)
+
+[node name="PointTop" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
+position = Vector2(0, -490.909)
+scale = Vector2(1, 1)
+
+[node name="PointRight" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
+position = Vector2(488.312, 288.312)
+
+[node name="PointLeftIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
+offset_left = -488.312
+offset_top = 200.0
+offset_right = -364.312
+offset_bottom = 324.0
+theme_override_font_sizes/font_size = 90
+text = "🍎"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
+offset_left = -62.3376
+offset_top = -475.325
+offset_right = 61.6624
+offset_bottom = -351.325
+theme_override_font_sizes/font_size = 90
+text = "🎙️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
+offset_left = 361.039
+offset_top = 200.0
+offset_right = 485.039
+offset_bottom = 324.0
+theme_override_font_sizes/font_size = 90
+text = "🍏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
+self_modulate = Color(0.26, 0.26, 0.26, 1)
+scale = Vector2(2.5974, 2.5974)
+texture = ExtResource("2_1ig4u")
+
 [node name="ControlsGroup" type="Node2D" parent="UserInterface"]
 position = Vector2(172, -101)
 scale = Vector2(1.27546, 1.27546)
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-604, 255.403)
+position = Vector2(-589.887, 255.403)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -610,7 +663,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-529, 256.403)
+position = Vector2(-514.887, 256.403)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -654,7 +707,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-454, 256.403)
+position = Vector2(-439.887, 256.403)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -698,7 +751,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-378, 256.403)
+position = Vector2(-363.887, 256.403)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -743,14 +796,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-603, 324.906)
+position = Vector2(-588.887, 324.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-528, 325.906)
+position = Vector2(-513.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
@@ -758,7 +811,7 @@ ring = 1
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-453, 325.906)
+position = Vector2(-438.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
@@ -766,7 +819,7 @@ ring = 2
 
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-378, 325.906)
+position = Vector2(-363.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")

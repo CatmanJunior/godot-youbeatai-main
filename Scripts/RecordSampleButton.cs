@@ -84,7 +84,7 @@ public partial class RecordSampleButton : Sprite2D
         if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
         {
             // On Mouse Down
-            if (mouseEvent.IsPressed() && inside && !Manager.instance.IsAnyMixerLocked())
+            if (mouseEvent.IsPressed() && inside)
             {
                 pressing = !pressing;
                 if (pressing) StartRecording();
@@ -141,7 +141,6 @@ public partial class RecordSampleButton : Sprite2D
 
     private void StartRecording()
     {
-        Manager.instance.isMixerLocked[ring] = true;
         SetVolume(0f);
 		var fill = GetChild(0) as TextureProgressBar;
         fill.Value = 1;
@@ -170,69 +169,24 @@ public partial class RecordSampleButton : Sprite2D
         {
             manager.firstAudioPlayerRec.Stop();
             manager.firstAudioPlayerRec.Stream = manager.recordSampleButton0.recordedAudio;
-            mixerToMove = manager.sampleMixer0;
             
         }
         if (ring == 1)
         {
             manager.secondAudioPlayerRec.Stop();
             manager.secondAudioPlayerRec.Stream = manager.recordSampleButton1.recordedAudio;
-            mixerToMove = manager.sampleMixer1;
 
         }
         if (ring == 2)
         {
             manager.thirdAudioPlayerRec.Stop();
             manager.thirdAudioPlayerRec.Stream = manager.recordSampleButton2.recordedAudio;
-            mixerToMove = manager.sampleMixer2;
 
         }
         if (ring == 3)
         {
             manager.fourthAudioPlayerRec.Stop();
             manager.fourthAudioPlayerRec.Stream = manager.recordSampleButton3.recordedAudio;
-            mixerToMove = manager.sampleMixer3;
         }
-
-        if (pivotToMove.RotationDegrees > -360 / 3) _ = RotateMixerLeft();  // fire-and-forget coroutine
-        else if (pivotToMove.RotationDegrees < -360 / 3) _ = RotateMixerRight();  // fire-and-forget coroutine
-    }
-
-    async Task RotateMixerRight()
-    {
-        var increase = mixerToMove.FindChild("IncreaseButton") as Button;
-        var pressedStyle = increase.GetThemeStylebox("pressed") as StyleBoxFlat;
-        var normalStyle = increase.GetThemeStylebox("normal") as StyleBoxFlat;
-        var originalStyle = (StyleBoxFlat)normalStyle.Duplicate();
-        var tempStyle = (StyleBoxFlat)pressedStyle.Duplicate();
-
-        increase.AddThemeStyleboxOverride("normal", tempStyle);
-        while (pivotToMove.RotationDegrees < -360 / 3)
-        {
-            Manager.instance.SetPivotRotationOffset(5, pivotToMove, ring);
-            await Task.Delay(50);
-        }
-        increase.AddThemeStyleboxOverride("normal", originalStyle);
-
-        Manager.instance.isMixerLocked[ring] = false;
-    }
-
-    async Task RotateMixerLeft()
-    {
-        var decrease = mixerToMove.FindChild("DecreaseButton") as Button;
-        var pressedStyle = decrease.GetThemeStylebox("pressed") as StyleBoxFlat;
-        var normalStyle = decrease.GetThemeStylebox("normal") as StyleBoxFlat;
-        var originalStyle = (StyleBoxFlat)normalStyle.Duplicate();
-        var tempStyle = (StyleBoxFlat)pressedStyle.Duplicate();
-
-        decrease.AddThemeStyleboxOverride("normal", tempStyle);
-        while (pivotToMove.RotationDegrees > -360 / 3)
-        {
-            Manager.instance.SetPivotRotationOffset(-5, pivotToMove, ring);
-            await Task.Delay(50);
-        }
-        decrease.AddThemeStyleboxOverride("normal", originalStyle);
-
-        Manager.instance.isMixerLocked[ring] = false;
     }
 }

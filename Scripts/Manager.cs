@@ -24,7 +24,6 @@ public partial class Manager : Node
         BpmManager.instance.OnBeatEvent += OnBeat;
         ReadJsonFromPreviousSceneAndSetValues();
         InitAllAudioPlayers();
-        SetupAllMixers();
         InitButtonActions();
         SpritePlacement();
         SetupTutorial();
@@ -38,7 +37,7 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
-        UpdateAllMixerVolumes();
+        UpdateAllMixingVolumesForLayer();
 
         if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
 
@@ -656,7 +655,7 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
-        RememberAllPivotRotationsForCurrentLayer();
+        // TODO: remember mixing for layer
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
@@ -666,7 +665,7 @@ public partial class Manager : Node
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
-        ReApplyAllPivotRotationsForCurrentLayer();
+        // TODO: reapply mixing for layer
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1310,156 +1309,21 @@ public partial class Manager : Node
 
     #region Mixing
 
-    LayerPivotRotations[] rememberedPivotRotationsPerLayer = new LayerPivotRotations[10];
-
-    LayerPivotRotations clipboardPivotRotations = new LayerPivotRotations();
-
-    struct LayerPivotRotations
-    {
-        public float[] rotations = [0f, 0f, 0f, 0f];
-
-        public LayerPivotRotations(float[] rotations)
-        {
-            this.rotations = rotations;
-        }
-    }
-
-    // call before layer change
-    public void RememberAllPivotRotationsForCurrentLayer()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather current rotations
-        float[] current_rotations = new float[4];
-        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
-
-        // save rotations for current layer
-        rememberedPivotRotationsPerLayer[currentLayerIndex] = new LayerPivotRotations(current_rotations);
-    }
-
-    // call after layer change
-    public void ReApplyAllPivotRotationsForCurrentLayer()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather remembered rotations
-        float[] remembered_rotations = rememberedPivotRotationsPerLayer[currentLayerIndex].rotations;
-        remembered_rotations ??= [0, 0, 0, 0];
-
-        // set remembered pivot rotations
-        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(remembered_rotations[i], pivots[i], i);
-    }
-
-    public void CopyPivotRotationsForCurrentLayerToClipboard()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather current rotations
-        float[] current_rotations = new float[4];
-        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
-
-        // save rotations for current layer to clipboard
-        clipboardPivotRotations = new LayerPivotRotations(current_rotations);
-    }
-
-    public void PastePivotRotationsForCurrentLayerFromClipboard()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather remembered rotations
-        float[] copied_rotations = clipboardPivotRotations.rotations;
-        copied_rotations ??= [0, 0, 0, 0];
-
-        // set remembered pivot rotations
-        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(copied_rotations[i], pivots[i], i);
-    }
-
-    public void ClearPivotRotationsForCurrentLayer()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // reset rotations
-        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(0, pivots[i], i);
-    }
-
-    public void SetPivotRotationOffset(float rotation, Node2D pivot, int ring)
-    {
-        pivot.RotationDegrees += rotation;
-        var volumes = UpdateMixerVolumes(ring);
-        UpdateMixerIcons(pivot, volumes);
-    }
-
-    public void SetPivotRotationAbsolute(float rotation, Node2D pivot, int ring)
-    {
-        pivot.RotationDegrees = rotation;
-        var volumes = UpdateMixerVolumes(ring);
-        UpdateMixerIcons(pivot, volumes);
-    }
-
-    private static void UpdateMixerIcons(Node2D pivot, (float main, float alt, float rec) volumes)
-    {
-        var icon0 = pivot.GetChild(0) as Label;
-        var icon1 = pivot.GetChild(1) as Label;
-        var icon2 = pivot.GetChild(2) as Label;
-        icon0.Modulate = new Color(1, 1, 1, volumes.main);
-        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
-        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
-    }
-
-    [Export] public Node2D sampleMixer0;
-    [Export] public Node2D sampleMixer1;
-    [Export] public Node2D sampleMixer2;
-    [Export] public Node2D sampleMixer3;
-
-    public bool[] isMixerLocked = [false, false, false, false];
-    
-    public bool IsAnyMixerLocked()
-    {
-        foreach (bool locked in isMixerLocked) if (locked) return true;
-        return false;
-    }
-
-    public void SetAllMixerVolumesOnly(float volume)
-    {
-        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-    }
-
-    private void UpdateAllMixerVolumes(bool log = false)
+    private void UpdateAllMixingVolumesForLayer(bool log = false)
     {
         // temporarily lower mixer volumes during voice record
         bool anyrecord = layerVoiceOver0.recording || layerVoiceOver1.recording;
         bool anyfake = layerVoiceOver0.shouldUpdateProgressBar || layerVoiceOver1.shouldUpdateProgressBar;
         if (anyrecord || anyfake)
         {
-            SetAllMixerVolumesOnly(0.1f);
+            SetAllMixerVolumesOnlyForLayer(0.1f);
             return;
         }
 
-        var v0 = UpdateMixerVolumes(0);
-        var v1 = UpdateMixerVolumes(1);
-        var v2 = UpdateMixerVolumes(2);
-        var v3 = UpdateMixerVolumes(3);
+        var v0 = CalcAndUpdateMixingVolumesForRing(0);
+        var v1 = CalcAndUpdateMixingVolumesForRing(1);
+        var v2 = CalcAndUpdateMixingVolumesForRing(2);
+        var v3 = CalcAndUpdateMixingVolumesForRing(3);
 
         if (log)
         {
@@ -1474,21 +1338,11 @@ public partial class Manager : Node
         }
     }
 
-    private (float main, float alt, float rec) UpdateMixerVolumes(int ring)
+    private (float main, float alt, float rec) CalcAndUpdateMixingVolumesForRing(int ring)
     {
-        float fullrotation = Mathf.PosMod(GetPivotForRing(ring).RotationDegrees, 360f) / 360f;
+        float mainvolume = 1, altvolume = 1, recvolume = 1;
 
-        float GetCrossfadeVolume(float sectionCenter)
-        {
-            float distance = Mathf.Abs(fullrotation - sectionCenter);
-            if (distance > 0.5f) distance = 1f - distance;
-            float maxDistance = 1f / 3f;
-            return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
-        }
-
-        float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
-        float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
-        float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
+        // todo: calculate volumes based on chaos pad
 
         if (ring == 0)
         {
@@ -1518,62 +1372,22 @@ public partial class Manager : Node
         return (mainvolume, altvolume, recvolume);
     }
 
-    private void SetupAllMixers()
+    public void SetAllMixerVolumesOnlyForLayer(float volume)
     {
-        SetupMixer(sampleMixer0, 0);
-        SetupMixer(sampleMixer1, 1);
-        SetupMixer(sampleMixer2, 2);
-        SetupMixer(sampleMixer3, 3);
+        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
+        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
     }
 
-    private Node2D GetMixerForRing(int ring)
-    {
-        if (ring == 0) return sampleMixer0;
-        else if (ring == 1) return sampleMixer1;
-        else if (ring == 2) return sampleMixer2;
-        else if (ring == 3) return sampleMixer3;
-        else return null;
-    }
-
-    private Node2D GetPivotForRing(int ring)
-    {
-        var mixer = GetMixerForRing(ring);
-        return (Node2D)mixer.FindChild("Pivot");
-    }
-
-    void SetupMixer(Node2D mixer, int ring)
-    {
-        var increase = mixer.FindChild("IncreaseButton") as Button;
-        var decrease = mixer.FindChild("DecreaseButton") as Button;
-        var pivot = mixer.FindChild("Pivot") as Node2D;
-
-        var timerInc = new Timer
-        {
-            WaitTime = 0.05,
-            OneShot = false,
-            Autostart = false
-        };
-        AddChild(timerInc);
-
-        var timerDec = new Timer
-        {
-            WaitTime = 0.05,
-            OneShot = false,
-            Autostart = false
-        };
-        AddChild(timerDec);
-
-        timerInc.Timeout += () => SetPivotRotationOffset(5, pivot, ring);
-        timerDec.Timeout += () => SetPivotRotationOffset(-5, pivot, ring);
-
-        increase.ButtonDown += () => timerInc.Start();
-        increase.ButtonUp += () => timerInc.Stop();
-
-        decrease.ButtonDown += () => timerDec.Start();
-        decrease.ButtonUp += () => timerDec.Stop();
-        
-        SetPivotRotationOffset(0, pivot, ring);
-    }
     #endregion
 
     #region Tutorial
@@ -1739,7 +1553,7 @@ public partial class Manager : Node
             () => SetRingVisibility(3, true), // zet blauw
             null, // druk play
             null, // geef energie
-            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetSampleMixersVisibility(true); },
+            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); },
             null,
             null,
             () =>
@@ -1956,7 +1770,6 @@ public partial class Manager : Node
         SetRingVisibility(1, visible);
         SetRingVisibility(2, visible);
         SetRingVisibility(3, visible);
-        SetSampleMixersVisibility(visible);
         progressBar.Visible = visible;
         PlayPauseButton.Visible = visible;
         SetMainButtonsVisibility(visible);
@@ -2053,14 +1866,6 @@ public partial class Manager : Node
         layerButton10.Disabled = !enabled;
     }
 
-    public void SetSampleMixersVisibility(bool visible)
-    {
-        sampleMixer0.Visible = visible;
-        sampleMixer1.Visible = visible;
-        sampleMixer2.Visible = visible;
-        sampleMixer3.Visible = visible;
-    }
-
     private void UpdateAchievementsVisibility()
     {
         for (int i = 0; i < 6; i++)
@@ -2118,21 +1923,21 @@ public partial class Manager : Node
     public void CopyLayer()
     {
         CopyBeatLayoutToClipboard();
-        CopyPivotRotationsForCurrentLayerToClipboard();
+        // TODO: copy mixing for layer
         CopyLayerVoiceToClipBoard();
     }
 
     public void PasteLayer()
     {
         PasteBeatLayoutFromClipboard();
-        PastePivotRotationsForCurrentLayerFromClipboard();
+        // TODO: paste mixing for layer
         PasteLayerVoiceFromClipBoard();
     }
 
     public void ClearLayer()
     {
         ClearLayout();
-        ClearPivotRotationsForCurrentLayer();
+        // TODO: clear mixing for layer
         ClearLayerVoiceOver();
     }
 

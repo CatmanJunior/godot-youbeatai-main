@@ -37,8 +37,6 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
-        UpdateAllMixingVolumesForLayer();
-
         if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
 
         HandleCopyPasting();
@@ -1342,7 +1340,7 @@ public partial class Manager : Node
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
         // update volumes
-        UpdateMixingVolumesForRing(0);
+        UpdateMixingVolumeForLayer(true);
     }
 
     private (float main, float alt, float rec) UpdateMixingVolumesForRing(int ring)
@@ -1379,7 +1377,7 @@ public partial class Manager : Node
         return (mainvolume, altvolume, recvolume);
     }
 
-    private void UpdateAllMixingVolumesForLayer(bool log = false)
+    private void UpdateMixingVolumeForLayer(bool log = false)
     {
         // temporarily lower mixer volumes during voice record
         bool anyrecord = layerVoiceOver0.recording || layerVoiceOver1.recording;
@@ -1399,10 +1397,10 @@ public partial class Manager : Node
         {
             GD.Print("");
             GD.Print("---------- changing mix volumes ---------");
-            GD.Print("0: " + v0.main.ToString("0.0") + "/" + v0.alt.ToString("0.0") + "/" + v0.rec.ToString("0.0"));
-            GD.Print("1: " + v1.main.ToString("0.0") + "/" + v1.alt.ToString("0.0") + "/" + v1.rec.ToString("0.0"));
-            GD.Print("2: " + v2.main.ToString("0.0") + "/" + v2.alt.ToString("0.0") + "/" + v2.rec.ToString("0.0"));
-            GD.Print("3: " + v3.main.ToString("0.0") + "/" + v3.alt.ToString("0.0") + "/" + v3.rec.ToString("0.0"));
+            GD.Print("ring 0: " + v0.main.ToString("0.00") + "/" + v0.alt.ToString("0.00") + "/" + v0.rec.ToString("0.00"));
+            GD.Print("ring 1: " + v1.main.ToString("0.00") + "/" + v1.alt.ToString("0.00") + "/" + v1.rec.ToString("0.00"));
+            GD.Print("ring 2: " + v2.main.ToString("0.00") + "/" + v2.alt.ToString("0.00") + "/" + v2.rec.ToString("0.00"));
+            GD.Print("ring 3: " + v3.main.ToString("0.00") + "/" + v3.alt.ToString("0.00") + "/" + v3.rec.ToString("0.00"));
             GD.Print("-----------------------------------------");
             GD.Print("");
         }

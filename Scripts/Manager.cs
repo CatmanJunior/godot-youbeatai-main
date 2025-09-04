@@ -27,6 +27,7 @@ public partial class Manager : Node
         InitButtonActions();
         SpritePlacement();
         SetupTutorial();
+        OnReadyMixing();
     }
     
     #endregion
@@ -128,6 +129,8 @@ public partial class Manager : Node
         bpmLabel.Text = BpmManager.instance.bpm.ToString();
 
         songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
+
+        OnUpdateMixing((float)delta);
     }
 
     #endregion
@@ -1309,6 +1312,54 @@ public partial class Manager : Node
 
     #region Mixing
 
+    [Export] public Node2D[] outerPoints = new Node2D[3]; // left, top, right
+    [Export] public Node2D knobPoint;
+    [Export] public Node2D triangle;
+
+    private float[] maxKnobToOuterDists = new float[3];
+    private float[] curKnobToOuterDists = new float[3];
+    private float[] curKnobToOuterDists01 = new float[3];
+
+    private float[] KnobToOutersDists()
+    {
+        return [Dist(knobPoint, outerPoints[0]), Dist(knobPoint, outerPoints[1]), Dist(knobPoint, outerPoints[2])];
+    }
+
+    private float[] KnobToOutersDists01()
+    {
+        var dists01 = new float[3];
+        for (int i = 0; i < outerPoints.Length; i++) dists01[i] = curKnobToOuterDists[i] / maxKnobToOuterDists[i];
+        return dists01;
+    }
+
+    private float Dist(Node2D a, Node2D b)
+    {
+        var dist = a.GlobalPosition.DistanceTo(b.GlobalPosition);
+        return dist;
+    }
+
+    private void OnReadyMixing()
+    {
+        // calculate dists max
+        maxKnobToOuterDists = KnobToOutersDists();
+    }
+
+    private void OnUpdateMixing(float delta)
+    {
+        // calculate dists
+        curKnobToOuterDists = KnobToOutersDists();
+
+        // calculate dists 01
+        for (int i = 0; i < outerPoints.Length; i++) curKnobToOuterDists01[i] = curKnobToOuterDists[i] / maxKnobToOuterDists[i];
+
+        GD.Print("------------------");
+        for (int i = 0; i < outerPoints.Length; i++) GD.Print(curKnobToOuterDists01[i]);
+        GD.Print("------------------");
+
+        // todo: for now only effect red ring volumes
+        CalcAndUpdateMixingVolumesForRing(0);
+    }
+
     private void UpdateAllMixingVolumesForLayer(bool log = false)
     {
         // temporarily lower mixer volumes during voice record
@@ -1340,9 +1391,10 @@ public partial class Manager : Node
 
     private (float main, float alt, float rec) CalcAndUpdateMixingVolumesForRing(int ring)
     {
-        float mainvolume = 1, altvolume = 1, recvolume = 1;
-
         // todo: calculate volumes based on chaos pad
+        float mainvolume = curKnobToOuterDists01[0];
+        float recvolume = curKnobToOuterDists01[1];
+        float altvolume = curKnobToOuterDists01[2];
 
         if (ring == 0)
         {

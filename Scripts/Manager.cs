@@ -1315,6 +1315,46 @@ public partial class Manager : Node
     [Export] public Node2D knobPoint;
     private Vector3 weights;
 
+    bool IsInsideTriangle(Vector3 weights)
+    {
+        return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
+    }
+
+    private Vector2 ClosestPointOnTriangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+    {
+        var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
+        {
+            Vector2 ab = b - a;
+            float t = (p - a).Dot(ab) / ab.LengthSquared();
+            t = Mathf.Clamp(t, 0f, 1f);
+            return a + ab * t;
+        };
+
+        Vector2 p0 = ClosestPointOnSegment(p, a, b);
+        Vector2 p1 = ClosestPointOnSegment(p, b, c);
+        Vector2 p2 = ClosestPointOnSegment(p, c, a);
+
+        float d0 = p.DistanceSquaredTo(p0);
+        float d1 = p.DistanceSquaredTo(p1);
+        float d2 = p.DistanceSquaredTo(p2);
+
+        float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
+        if (minDist == d0) return p0;
+        if (minDist == d1) return p1;
+        return p2;
+    }
+
+    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
+    {
+        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
+        float distance = knobPos.DistanceTo(closest);
+
+        // Simple mapping: max distance 200 pixels -> 0 volume
+        float maxDistance = 100f;
+        float master = Mathf.Clamp(1f - (distance / maxDistance), 0f, 1f);
+        return master;
+    }
+
     private void OnUpdateMixing(float delta)
     {
         weights = GetBarycentricWeights
@@ -1325,6 +1365,16 @@ public partial class Manager : Node
             outerPoints[2].GlobalPosition
         );
 
+        float masterVolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knobPoint.GlobalPosition, outerPoints[0].GlobalPosition, outerPoints[1].GlobalPosition, outerPoints[2].GlobalPosition);
+        weights *= masterVolume;
+
+        // clamp
+        weights = new Vector3(
+            Mathf.Clamp(weights.X, 0f, 1f),
+            Mathf.Clamp(weights.Y, 0f, 1f),
+            Mathf.Clamp(weights.Z, 0f, 1f)
+        );
+        
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
         CalcAndUpdateMixingVolumesForRing(0);
@@ -1352,15 +1402,9 @@ public partial class Manager : Node
         float w = (d00 * d21 - d01 * d20) / denom;
         float u = 1.0f - v - w;
 
-        // clamp
-        Vector3 clamped = new Vector3(
-            Mathf.Clamp(u, 0f, 1f),
-            Mathf.Clamp(v, 0f, 1f),
-            Mathf.Clamp(w, 0f, 1f)
-        );
-        clamped /= clamped.X + clamped.Y + clamped.Z;
+        Vector3 nonclamped = new Vector3(u, v, w);
 
-        return clamped;
+        return nonclamped;
     }
 
     private (float main, float alt, float rec) CalcAndUpdateMixingVolumesForRing(int ring)

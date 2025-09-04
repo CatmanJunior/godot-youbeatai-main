@@ -92,6 +92,8 @@ public partial class DragAndDropButton : Sprite2D
 			else ActivateBeat();
 		}
 		else ActivateBeat();
+
+		Manager.instance.ChangeActiveChaosPadRing(ring);
 	}
 
 	public void ActivateBeat()

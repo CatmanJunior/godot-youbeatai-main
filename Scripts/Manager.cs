@@ -27,6 +27,7 @@ public partial class Manager : Node
         InitButtonActions();
         SpritePlacement();
         SetupTutorial();
+        OnReadyMixing();
     }
     
     #endregion
@@ -1312,30 +1313,37 @@ public partial class Manager : Node
     private Vector2[] knobPositionAllLayers = new Vector2[40];
     private Vector2[] knobPositionClipboard = new Vector2[4];
 
+    public int chaosPadActiveRing = 0;
+
     [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
     [Export] public Node2D knob;
 
+    [Export] public Sprite2D triangleSprite;
+
     private Vector3 weights;
 
-    // call before layer change
     public void RememberKnobPositionsForCurrentLayer()
     {
-        // gather positions
-
-        // save positions for current layer
+        // remember knob of active ring
+        knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing] = knob.GlobalPosition;
     }
 
-    // call after layer change
     public void ReApplyKnobPositionsForCurrentLayer()
     {
-        // gather positions
-
-        // set remembered positions
+        // re apply knob of active ring
+        knob.GlobalPosition = knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing];
     }
 
     public void CopyKnobPositionsForCurrenLayer(){}
     public void PasteKnobPositionsForCurrenLayer(){}
     public void ClearKnobPositionsForCurrenLayer(){}
+
+    private void OnReadyMixing()
+    {
+        for (int i = 0; i < knobPositionAllLayers.Length; i++) knobPositionAllLayers[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < knobPositionClipboard.Length; i++) knobPositionClipboard[i] = triangleSprite.GlobalPosition;
+        ChangeActiveChaosPadRing(0);
+    }
 
     private void OnUpdateMixing(float delta)
     {
@@ -1362,15 +1370,55 @@ public partial class Manager : Node
         // debug
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
-        // update volumes
-        UpdateMixingVolumeForLayer(false);
+        // update volumes of active ring
+        UpdateMixingVolumesForRing(chaosPadActiveRing);
     }
 
-    private (float main, float alt, float rec) UpdateMixingVolumesForRing(int ring)
+    public void ChangeActiveChaosPadRing(int newring)
+    {
+        // save knob position
+        knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing] = knob.GlobalPosition;
+
+        // switch ring
+        chaosPadActiveRing = newring;
+
+        // remember knob position
+        knob.GlobalPosition = knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing];
+
+        // set chaos pad color to active ring
+        StartChaosPadColorChange(0.2f);
+    }
+
+    async private void StartChaosPadColorChange(float duration)
+    {
+        var old_color = triangleSprite.SelfModulate;
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+        var new_color = colors[chaosPadActiveRing];
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        triangleSprite.SelfModulate = new_color;
+    }
+
+    private void UpdateMixingVolumesForRing(int ring)
     {
         float mainvolume = weights.X;
-        float altvolume  = weights.Y;
-        float recvolume  = weights.Z;
+        float recvolume  = weights.Y;
+        float altvolume  = weights.Z;
 
         if (ring == 0)
         {
@@ -1396,53 +1444,6 @@ public partial class Manager : Node
             fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
             fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
         }
-
-        return (mainvolume, altvolume, recvolume);
-    }
-
-    private void UpdateMixingVolumeForLayer(bool log = false)
-    {
-        // temporarily lower mixer volumes during voice record
-        bool anyrecord = layerVoiceOver0.recording || layerVoiceOver1.recording;
-        bool anyfake = layerVoiceOver0.shouldUpdateProgressBar || layerVoiceOver1.shouldUpdateProgressBar;
-        if (anyrecord || anyfake)
-        {
-            SetAllMixerVolumesOnlyForLayer(0.1f);
-            return;
-        }
-
-        var v0 = UpdateMixingVolumesForRing(0);
-        var v1 = UpdateMixingVolumesForRing(1);
-        var v2 = UpdateMixingVolumesForRing(2);
-        var v3 = UpdateMixingVolumesForRing(3);
-
-        if (log)
-        {
-            GD.Print("");
-            GD.Print("---------- changing mix volumes ---------");
-            GD.Print("ring 0: " + v0.main.ToString("0.00") + "/" + v0.alt.ToString("0.00") + "/" + v0.rec.ToString("0.00"));
-            GD.Print("ring 1: " + v1.main.ToString("0.00") + "/" + v1.alt.ToString("0.00") + "/" + v1.rec.ToString("0.00"));
-            GD.Print("ring 2: " + v2.main.ToString("0.00") + "/" + v2.alt.ToString("0.00") + "/" + v2.rec.ToString("0.00"));
-            GD.Print("ring 3: " + v3.main.ToString("0.00") + "/" + v3.alt.ToString("0.00") + "/" + v3.rec.ToString("0.00"));
-            GD.Print("-----------------------------------------");
-            GD.Print("");
-        }
-    }
-
-    public void SetAllMixerVolumesOnlyForLayer(float volume)
-    {
-        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
     }
 
     private Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)

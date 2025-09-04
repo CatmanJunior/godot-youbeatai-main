@@ -60,6 +60,8 @@ public partial class Manager : Node
 
         UpdateLayerSwitchButtonsColors();
 
+        PlayPauseButton.Text = BpmManager.instance.playing ? "⏸️" : "▶️";
+
         var lightvalue = MicrophoneCapture.instance.volume * 8;
         if (lightvalue > 1) lightvalue = 1;
         if (lightvalue < 0.05f) lightvalue = 0;

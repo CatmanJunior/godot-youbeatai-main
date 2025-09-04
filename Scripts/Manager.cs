@@ -1325,13 +1325,7 @@ public partial class Manager : Node
             outerPoints[2].GlobalPosition
         );
 
-        if (Input.IsKeyPressed(Key.P))
-        {
-            GD.Print(weights.X);
-            GD.Print(weights.Y);
-            GD.Print(weights.Z);
-            GD.Print("----------");
-        }
+        if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
         CalcAndUpdateMixingVolumesForRing(0);
     }

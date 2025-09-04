@@ -565,10 +565,11 @@ text = "⚙️ Instellingen"
 alignment = 0
 
 [node name="ChaosPad" type="Node2D" parent="UserInterface"]
-position = Vector2(-434, 59)
+position = Vector2(-435, 53)
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
-scale = Vector2(0.385, 0.385)
+self_modulate = Color(1, 0.993667, 0.62, 1)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("28_k2e45")
 
 [node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
@@ -581,40 +582,42 @@ position = Vector2(0, -490.909)
 position = Vector2(488.312, 288.312)
 
 [node name="PointLeftIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -488.312
-offset_top = 200.0
-offset_right = -364.312
-offset_bottom = 324.0
-theme_override_font_sizes/font_size = 90
+offset_left = -594.805
+offset_top = 171.429
+offset_right = -494.805
+offset_bottom = 271.429
+scale = Vector2(2.275, 2.275)
+theme_override_font_sizes/font_size = 65
 text = "🍎"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -62.3376
-offset_top = -475.325
-offset_right = 61.6624
-offset_bottom = -351.325
-theme_override_font_sizes/font_size = 90
+offset_left = -114.286
+offset_top = -589.61
+offset_right = -14.2857
+offset_bottom = -489.61
+scale = Vector2(2.275, 2.275)
+theme_override_font_sizes/font_size = 65
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = 361.039
-offset_top = 200.0
-offset_right = 485.039
-offset_bottom = 324.0
-theme_override_font_sizes/font_size = 90
+offset_left = 376.623
+offset_top = 176.623
+offset_right = 476.623
+offset_bottom = 276.623
+scale = Vector2(2.275, 2.275)
+theme_override_font_sizes/font_size = 65
 text = "🍏"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
-self_modulate = Color(0.26, 0.26, 0.26, 1)
 z_index = 2000
-scale = Vector2(2.5974, 2.5974)
-texture = ExtResource("2_1ig4u")
+scale = Vector2(6, 6)
+texture = ExtResource("28_r33sp")
 script = ExtResource("29_536cc")
 
 [node name="ControlsGroup" type="Node2D" parent="UserInterface"]

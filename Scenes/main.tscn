@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=61 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -37,6 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="Texture2D" uid="uid://chbucgfpwa1a" path="res://Resources/Textures/triangle.png" id="28_k2e45"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
+[ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
@@ -612,8 +613,10 @@ vertical_alignment = 1
 
 [node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
 self_modulate = Color(0.26, 0.26, 0.26, 1)
+z_index = 2000
 scale = Vector2(2.5974, 2.5974)
 texture = ExtResource("2_1ig4u")
+script = ExtResource("29_536cc")
 
 [node name="ControlsGroup" type="Node2D" parent="UserInterface"]
 position = Vector2(172, -101)

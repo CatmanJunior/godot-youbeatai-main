@@ -569,7 +569,6 @@ alignment = 0
 position = Vector2(-435, 53)
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
-self_modulate = Color(1, 0.993667, 0.62, 1)
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("28_536cc")
 

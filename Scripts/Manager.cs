@@ -1311,103 +1311,41 @@ public partial class Manager : Node
 
     #region Mixing
 
-    [Export] public Node2D[] outerPoints = new Node2D[3]; // left, top, right
-    [Export] public Node2D knobPoint;
+    [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
+    [Export] public Node2D knob;
+
     private Vector3 weights;
-
-    bool IsInsideTriangle(Vector3 weights)
-    {
-        return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
-    }
-
-    private Vector2 ClosestPointOnTriangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
-    {
-        var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
-        {
-            Vector2 ab = b - a;
-            float t = (p - a).Dot(ab) / ab.LengthSquared();
-            t = Mathf.Clamp(t, 0f, 1f);
-            return a + ab * t;
-        };
-
-        Vector2 p0 = ClosestPointOnSegment(p, a, b);
-        Vector2 p1 = ClosestPointOnSegment(p, b, c);
-        Vector2 p2 = ClosestPointOnSegment(p, c, a);
-
-        float d0 = p.DistanceSquaredTo(p0);
-        float d1 = p.DistanceSquaredTo(p1);
-        float d2 = p.DistanceSquaredTo(p2);
-
-        float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
-        if (minDist == d0) return p0;
-        if (minDist == d1) return p1;
-        return p2;
-    }
-
-    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
-    {
-        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
-        float distance = knobPos.DistanceTo(closest);
-
-        // Simple mapping: max distance 200 pixels -> 0 volume
-        float maxDistance = 100f;
-        float master = Mathf.Clamp(1f - (distance / maxDistance), 0f, 1f);
-        return master;
-    }
 
     private void OnUpdateMixing(float delta)
     {
+        // inner triangle blending
         weights = GetBarycentricWeights
         (
-            knobPoint.GlobalPosition,
-            outerPoints[0].GlobalPosition,
-            outerPoints[1].GlobalPosition,
-            outerPoints[2].GlobalPosition
+            knob.GlobalPosition,
+            corners[0].GlobalPosition,
+            corners[1].GlobalPosition,
+            corners[2].GlobalPosition
         );
 
-        float masterVolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knobPoint.GlobalPosition, outerPoints[0].GlobalPosition, outerPoints[1].GlobalPosition, outerPoints[2].GlobalPosition);
+        // outer triangle volume
+        float masterVolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
         weights *= masterVolume;
 
-        // clamp
+        // clamp weights
         weights = new Vector3(
             Mathf.Clamp(weights.X, 0f, 1f),
             Mathf.Clamp(weights.Y, 0f, 1f),
             Mathf.Clamp(weights.Z, 0f, 1f)
         );
         
+        // debug
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
-        CalcAndUpdateMixingVolumesForRing(0);
+        // update volumes
+        UpdateMixingVolumesForRing(0);
     }
 
-    private Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
-    {
-        // compute vectors
-        Vector2 v0 = b - a;
-        Vector2 v1 = c - a;
-        Vector2 v2 = p - a;
-
-        // compute dot products
-        float d00 = v0.Dot(v0);
-        float d01 = v0.Dot(v1);
-        float d11 = v1.Dot(v1);
-        float d20 = v2.Dot(v0);
-        float d21 = v2.Dot(v1);
-
-        // ompute denominator
-        float denom = d00 * d11 - d01 * d01;
-
-        // compute barycentric coordinates
-        float v = (d11 * d20 - d01 * d21) / denom;
-        float w = (d00 * d21 - d01 * d20) / denom;
-        float u = 1.0f - v - w;
-
-        Vector3 nonclamped = new Vector3(u, v, w);
-
-        return nonclamped;
-    }
-
-    private (float main, float alt, float rec) CalcAndUpdateMixingVolumesForRing(int ring)
+    private (float main, float alt, float rec) UpdateMixingVolumesForRing(int ring)
     {
         float mainvolume = weights.X;
         float altvolume  = weights.Y;
@@ -1452,10 +1390,10 @@ public partial class Manager : Node
             return;
         }
 
-        var v0 = CalcAndUpdateMixingVolumesForRing(0);
-        var v1 = CalcAndUpdateMixingVolumesForRing(1);
-        var v2 = CalcAndUpdateMixingVolumesForRing(2);
-        var v3 = CalcAndUpdateMixingVolumesForRing(3);
+        var v0 = UpdateMixingVolumesForRing(0);
+        var v1 = UpdateMixingVolumesForRing(1);
+        var v2 = UpdateMixingVolumesForRing(2);
+        var v3 = UpdateMixingVolumesForRing(3);
 
         if (log)
         {
@@ -1484,6 +1422,73 @@ public partial class Manager : Node
         fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
         fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
         fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
+    }
+
+    private Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+    {
+        // compute vectors
+        Vector2 v0 = b - a;
+        Vector2 v1 = c - a;
+        Vector2 v2 = p - a;
+
+        // compute dot products
+        float d00 = v0.Dot(v0);
+        float d01 = v0.Dot(v1);
+        float d11 = v1.Dot(v1);
+        float d20 = v2.Dot(v0);
+        float d21 = v2.Dot(v1);
+
+        // ompute denominator
+        float denom = d00 * d11 - d01 * d01;
+
+        // compute barycentric coordinates
+        float v = (d11 * d20 - d01 * d21) / denom;
+        float w = (d00 * d21 - d01 * d20) / denom;
+        float u = 1.0f - v - w;
+
+        Vector3 nonclamped = new Vector3(u, v, w);
+
+        return nonclamped;
+    }
+
+    bool IsInsideTriangle(Vector3 weights)
+    {
+        return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
+    }
+
+    private Vector2 ClosestPointOnTriangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+    {
+        var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
+        {
+            Vector2 ab = b - a;
+            float t = (p - a).Dot(ab) / ab.LengthSquared();
+            t = Mathf.Clamp(t, 0f, 1f);
+            return a + ab * t;
+        };
+
+        Vector2 p0 = ClosestPointOnSegment(p, a, b);
+        Vector2 p1 = ClosestPointOnSegment(p, b, c);
+        Vector2 p2 = ClosestPointOnSegment(p, c, a);
+
+        float d0 = p.DistanceSquaredTo(p0);
+        float d1 = p.DistanceSquaredTo(p1);
+        float d2 = p.DistanceSquaredTo(p2);
+
+        float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
+        if (minDist == d0) return p0;
+        if (minDist == d1) return p1;
+        return p2;
+    }
+
+    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
+    {
+        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
+        float distance = knobPos.DistanceTo(closest);
+
+        // Simple mapping: max distance 200 pixels -> 0 volume
+        float maxDistance = 100f;
+        float master = Mathf.Clamp(1f - (distance / maxDistance), 0f, 1f);
+        return master;
     }
 
     #endregion

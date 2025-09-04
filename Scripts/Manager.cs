@@ -655,7 +655,7 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
-        // TODO: remember mixing for layer
+        RememberKnobPositionsForCurrentLayer();
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
@@ -665,7 +665,7 @@ public partial class Manager : Node
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
-        // TODO: reapply mixing for layer
+        ReApplyKnobPositionsForCurrentLayer();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1309,10 +1309,33 @@ public partial class Manager : Node
 
     #region Mixing
 
+    private Vector2[] knobPositionAllLayers = new Vector2[40];
+    private Vector2[] knobPositionClipboard = new Vector2[4];
+
     [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
     [Export] public Node2D knob;
 
     private Vector3 weights;
+
+    // call before layer change
+    public void RememberKnobPositionsForCurrentLayer()
+    {
+        // gather positions
+
+        // save positions for current layer
+    }
+
+    // call after layer change
+    public void ReApplyKnobPositionsForCurrentLayer()
+    {
+        // gather positions
+
+        // set remembered positions
+    }
+
+    public void CopyKnobPositionsForCurrenLayer(){}
+    public void PasteKnobPositionsForCurrenLayer(){}
+    public void ClearKnobPositionsForCurrenLayer(){}
 
     private void OnUpdateMixing(float delta)
     {
@@ -1340,7 +1363,7 @@ public partial class Manager : Node
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
         // update volumes
-        UpdateMixingVolumeForLayer(true);
+        UpdateMixingVolumeForLayer(false);
     }
 
     private (float main, float alt, float rec) UpdateMixingVolumesForRing(int ring)
@@ -2024,21 +2047,21 @@ public partial class Manager : Node
     public void CopyLayer()
     {
         CopyBeatLayoutToClipboard();
-        // TODO: copy mixing for layer
+        CopyKnobPositionsForCurrenLayer();
         CopyLayerVoiceToClipBoard();
     }
 
     public void PasteLayer()
     {
         PasteBeatLayoutFromClipboard();
-        // TODO: paste mixing for layer
+        PasteKnobPositionsForCurrenLayer();
         PasteLayerVoiceFromClipBoard();
     }
 
     public void ClearLayer()
     {
         ClearLayout();
-        // TODO: clear mixing for layer
+        ClearKnobPositionsForCurrenLayer();
         ClearLayerVoiceOver();
     }
 

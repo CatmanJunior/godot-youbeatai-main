@@ -1330,7 +1330,7 @@ public partial class Manager : Node
 
     public void ReApplyKnobPositionsForCurrentLayer()
     {
-        // re apply knob of active ring
+        // reapply knob of active ring
         knob.GlobalPosition = knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing];
     }
 
@@ -1863,11 +1863,15 @@ public partial class Manager : Node
 
         if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (BpmManager.instance.currentBeat == 0 && currentLayerIndex == 0)
+        if (BpmManager.instance.currentBeat == 0)
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
-            SongVoiceOver.instance.OnTop();
+            
+            if (currentLayerIndex == 0)
+            {
+                SongVoiceOver.instance.OnTop();
+            }
         }
 
         int nextbeat = BpmManager.instance.currentBeat + 1;

@@ -27,7 +27,6 @@ public partial class Manager : Node
         InitButtonActions();
         SpritePlacement();
         SetupTutorial();
-        OnReadyMixing();
     }
     
     #endregion
@@ -1314,50 +1313,94 @@ public partial class Manager : Node
 
     [Export] public Node2D[] outerPoints = new Node2D[3]; // left, top, right
     [Export] public Node2D knobPoint;
-    [Export] public Node2D triangle;
-
-    private float[] maxKnobToOuterDists = new float[3];
-    private float[] curKnobToOuterDists = new float[3];
-    private float[] curKnobToOuterDists01 = new float[3];
-
-    private float[] KnobToOutersDists()
-    {
-        return [Dist(knobPoint, outerPoints[0]), Dist(knobPoint, outerPoints[1]), Dist(knobPoint, outerPoints[2])];
-    }
-
-    private float[] KnobToOutersDists01()
-    {
-        var dists01 = new float[3];
-        for (int i = 0; i < outerPoints.Length; i++) dists01[i] = curKnobToOuterDists[i] / maxKnobToOuterDists[i];
-        return dists01;
-    }
-
-    private float Dist(Node2D a, Node2D b)
-    {
-        var dist = a.GlobalPosition.DistanceTo(b.GlobalPosition);
-        return dist;
-    }
-
-    private void OnReadyMixing()
-    {
-        // calculate dists max
-        maxKnobToOuterDists = KnobToOutersDists();
-    }
+    private Vector3 weights;
 
     private void OnUpdateMixing(float delta)
     {
-        // calculate dists
-        curKnobToOuterDists = KnobToOutersDists();
+        weights = GetBarycentricWeights
+        (
+            knobPoint.GlobalPosition,
+            outerPoints[0].GlobalPosition,
+            outerPoints[1].GlobalPosition,
+            outerPoints[2].GlobalPosition
+        );
 
-        // calculate dists 01
-        for (int i = 0; i < outerPoints.Length; i++) curKnobToOuterDists01[i] = curKnobToOuterDists[i] / maxKnobToOuterDists[i];
+        if (Input.IsKeyPressed(Key.P))
+        {
+            GD.Print(weights.X);
+            GD.Print(weights.Y);
+            GD.Print(weights.Z);
+            GD.Print("----------");
+        }
 
-        GD.Print("------------------");
-        for (int i = 0; i < outerPoints.Length; i++) GD.Print(curKnobToOuterDists01[i]);
-        GD.Print("------------------");
-
-        // todo: for now only effect red ring volumes
         CalcAndUpdateMixingVolumesForRing(0);
+    }
+
+    private Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+    {
+        // compute vectors
+        Vector2 v0 = b - a;
+        Vector2 v1 = c - a;
+        Vector2 v2 = p - a;
+
+        // compute dot products
+        float d00 = v0.Dot(v0);
+        float d01 = v0.Dot(v1);
+        float d11 = v1.Dot(v1);
+        float d20 = v2.Dot(v0);
+        float d21 = v2.Dot(v1);
+
+        // ompute denominator
+        float denom = d00 * d11 - d01 * d01;
+
+        // compute barycentric coordinates
+        float v = (d11 * d20 - d01 * d21) / denom;
+        float w = (d00 * d21 - d01 * d20) / denom;
+        float u = 1.0f - v - w;
+
+        // clamp
+        Vector3 clamped = new Vector3(
+            Mathf.Clamp(u, 0f, 1f),
+            Mathf.Clamp(v, 0f, 1f),
+            Mathf.Clamp(w, 0f, 1f)
+        );
+        clamped /= clamped.X + clamped.Y + clamped.Z;
+
+        return clamped;
+    }
+
+    private (float main, float alt, float rec) CalcAndUpdateMixingVolumesForRing(int ring)
+    {
+        float mainvolume = weights.X;
+        float altvolume  = weights.Y;
+        float recvolume  = weights.Z;
+
+        if (ring == 0)
+        {
+            firstAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+        else if (ring == 1)
+        {
+            secondAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+        else if (ring == 2)
+        {
+            thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+        else if (ring == 3)
+        {
+            fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
+            fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
+            fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
+        }
+
+        return (mainvolume, altvolume, recvolume);
     }
 
     private void UpdateAllMixingVolumesForLayer(bool log = false)
@@ -1387,41 +1430,6 @@ public partial class Manager : Node
             GD.Print("-----------------------------------------");
             GD.Print("");
         }
-    }
-
-    private (float main, float alt, float rec) CalcAndUpdateMixingVolumesForRing(int ring)
-    {
-        // todo: calculate volumes based on chaos pad
-        float mainvolume = curKnobToOuterDists01[0];
-        float recvolume = curKnobToOuterDists01[1];
-        float altvolume = curKnobToOuterDists01[2];
-
-        if (ring == 0)
-        {
-            firstAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-            firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-            firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-        }
-        else if (ring == 1)
-        {
-            secondAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-            secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-            secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-        }
-        else if (ring == 2)
-        {
-            thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-            thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-            thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-        }
-        else if (ring == 3)
-        {
-            fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(mainvolume);
-            fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
-            fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
-        }
-
-        return (mainvolume, altvolume, recvolume);
     }
 
     public void SetAllMixerVolumesOnlyForLayer(float volume)

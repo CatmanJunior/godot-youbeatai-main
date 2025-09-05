@@ -1355,9 +1355,6 @@ public partial class Manager : Node
 
     public void SamplesMixing_ChangeRing(int newring)
     {
-        // set chaospad mode
-        chaosPadMode = ChaosPadMode.SampleMixing;
-
         // save knob position
         SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
 
@@ -1391,6 +1388,9 @@ public partial class Manager : Node
             iconMain.Text = "⌚";
             iconAlt.Text = "⏰";
         }
+
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SampleMixing;
     }
 
     async private void SamplesMixing_StartTriangleColorChange(float duration)
@@ -1491,9 +1491,6 @@ public partial class Manager : Node
 
     public void SynthMixing_ChangeSynth(int synth)
     {
-        // set chaospad mode
-        chaosPadMode = ChaosPadMode.SynthMixing;
-        
         // save knob position
         SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
 
@@ -1517,6 +1514,9 @@ public partial class Manager : Node
             iconMain.Text = "🟣";
             iconAlt.Text = "🎹";
         }
+
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SynthMixing;
     }
 
     async private void SynthMixing_StartTriangleColorChange(float duration)

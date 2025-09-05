@@ -1315,6 +1315,8 @@ public partial class Manager : Node
     private Vector2[] knobPositionAllLayers = new Vector2[40];
     private Vector2[] knobPositionClipboard = new Vector2[4];
 
+    public float outerTriangleSize = 60;
+
     public int chaosPadActiveRing = 0;
 
     [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
@@ -1508,10 +1510,7 @@ public partial class Manager : Node
     {
         Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
         float distance = knobPos.DistanceTo(closest);
-
-        // Simple mapping: max distance 200 pixels -> 0 volume
-        float maxDistance = 100f;
-        float master = Mathf.Clamp(1f - (distance / maxDistance), 0f, 1f);
+        float master = Mathf.Clamp(1f - (distance / outerTriangleSize), 0f, 1f);
         return master;
     }
 

@@ -847,7 +847,7 @@ ring = 3
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
-position = Vector2(-207.221, 321.999)
+position = Vector2(-182.132, 321.999)
 scale = Vector2(1.8, 1.8)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -899,9 +899,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HSlider" type="HSlider" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
 offset_left = -22.3673
-offset_top = -30.8866
+offset_top = 655.576
 offset_right = 35.1877
-offset_bottom = -14.8866
+offset_bottom = 671.576
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1
@@ -927,7 +927,7 @@ antialiased = true
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
-position = Vector2(-65.2912, 321.999)
+position = Vector2(-90.3802, 321.999)
 scale = Vector2(1.8, 1.8)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -980,9 +980,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="HSlider" type="HSlider" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
 offset_left = -22.3673
-offset_top = -30.8866
+offset_top = 655.576
 offset_right = 35.1877
-offset_bottom = -14.8866
+offset_bottom = 671.576
 scale = Vector2(0.8, 0.8)
 max_value = 1.0
 step = 0.1

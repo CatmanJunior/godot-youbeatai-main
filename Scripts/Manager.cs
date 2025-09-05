@@ -1550,7 +1550,14 @@ public partial class Manager : Node
 
     private void SynthMixing_UpdateMixingVolumesForSynth(int synth)
     {
-        // TODO: connect to synth sliders
+        if (synth == 0)
+        {
+            layerVoiceOver0.volumeSlider.Value = weights.X;
+        }
+        if (synth == 1)
+        {
+            layerVoiceOver1.volumeSlider.Value = weights.X;
+        }
     }
 
     #endregion

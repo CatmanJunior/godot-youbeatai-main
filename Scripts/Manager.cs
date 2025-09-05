@@ -1326,8 +1326,8 @@ public partial class Manager : Node
     [Export] public Sprite2D triangleSprite;
     [Export] public Label iconMain;
     [Export] public Label iconAlt;
-    private Vector3 weights;
-    private float outerTriangleSize = 60;
+    public Vector3 weights;
+    public float outerTriangleSize = 40;
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
 
     #region SamplesMixing
@@ -1602,7 +1602,7 @@ public partial class Manager : Node
         if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth);
     }
 
-    private Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+    public Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
     {
         // compute vectors
         Vector2 v0 = b - a;
@@ -1629,7 +1629,7 @@ public partial class Manager : Node
         return nonclamped;
     }
 
-    bool IsInsideTriangle(Vector3 weights)
+    public bool IsInsideTriangle(Vector3 weights)
     {
         return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
     }

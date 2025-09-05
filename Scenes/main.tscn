@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -73,6 +73,16 @@ corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwxat"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.12, 0.12, 0.12, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1aky"]
 bg_color = Color(0, 0.65098, 0.929412, 1)
@@ -336,8 +346,8 @@ layerButton8 = NodePath("../../UserInterface/SwitchLayerButtons/Layer8")
 layerButton9 = NodePath("../../UserInterface/SwitchLayerButtons/Layer9")
 layerButton10 = NodePath("../../UserInterface/SwitchLayerButtons/Layer10")
 SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton")
-LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/LoadLayoutButton")
-ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/ClearLayoutButton")
+LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton/LoadLayoutButton")
+ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton/ClearLayoutButton")
 PlayPauseButton = NodePath("../../UserInterface/PlayPauseButtonHolder/PlayPauseButton")
 BpmUpButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 BpmDownButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
@@ -1206,54 +1216,68 @@ position = Vector2(-320, -291)
 scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
 
-[node name="ClearLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -66.0
-offset_top = 43.0
-offset_right = -26.0
-offset_bottom = 83.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🗑️
-"
-
 [node name="SaveLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 43.0
-offset_right = 20.0
-offset_bottom = 83.0
+offset_left = -30.0
+offset_top = 45.0
+offset_right = 30.0
+offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
 text = "💾
 "
 
-[node name="LoadLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
+[node name="Panel" type="Panel" parent="UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton"]
+show_behind_parent = true
+offset_left = -70.0
+offset_top = -4.0
+offset_right = 130.0
+offset_bottom = 64.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kwxat")
+
+[node name="ClearLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 27.0
-offset_top = 43.0
-offset_right = 67.0
-offset_bottom = 83.0
+offset_left = -96.0
+offset_top = -30.0
+offset_right = -36.0
+offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+text = "🗑️
+"
+
+[node name="LoadLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/SaveLayoutButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 36.0
+offset_top = -30.0
+offset_right = 96.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
 text = "♻️
 "
 

@@ -342,6 +342,7 @@ public partial class Manager : Node
     [Export] ProgressBar micmeter;
     [Export] CheckButton add_beats;
     [Export] public CheckButton button_is_clap;
+    [Export] public CheckButton button_add_beats;
     [Export] Slider volume_treshold;
     [Export] Panel settingsPanel;
     [Export] Button settingsButton;
@@ -1841,7 +1842,7 @@ public partial class Manager : Node
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
 
-        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
+        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ButtonBehaviour();
     }
 
     public void OnStomp()
@@ -1860,7 +1861,7 @@ public partial class Manager : Node
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
 
-        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
+        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ButtonBehaviour();
 
     }
 

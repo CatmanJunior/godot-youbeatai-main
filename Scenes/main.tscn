@@ -157,6 +157,7 @@ theme_override_styles/background = ExtResource("9_nnqde")
 theme_override_styles/fill = ExtResource("10_t1q83")
 rounded = true
 fill_mode = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="EnergyIcon" type="Label" parent="Managers/ProgressBar"]
 z_index = 4
@@ -171,6 +172,7 @@ text = "⚡"
 label_settings = SubResource("LabelSettings_2x3a5")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_1" type="Label" parent="Managers/ProgressBar"]
 visible = false
@@ -254,6 +256,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_2" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -265,6 +268,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_3" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -276,6 +280,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_4" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -287,6 +292,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_5" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -298,6 +304,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_6" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -309,11 +316,12 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "corners", "knob", "triangleSprite", "iconMain", "iconAlt")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "corners", "knob", "triangleSprite", "iconMain", "iconAlt")]
 script = ExtResource("1_rfd7i")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
@@ -361,6 +369,7 @@ metronome_toggle = NodePath("../../UserInterface/SettingsPanel/Sliders/Metronome
 micmeter = NodePath("../../UserInterface/SettingsPanel/MicMeter")
 add_beats = NodePath("../../UserInterface/SettingsPanel/Sliders/AddBeatsToggle")
 button_is_clap = NodePath("../../UserInterface/SettingsPanel/Sliders/ButtonIsClap")
+button_add_beats = NodePath("../../UserInterface/SettingsPanel/Sliders/Knop adds beat")
 volume_treshold = NodePath("../../UserInterface/SettingsPanel/Sliders/VolumeTreshold")
 settingsPanel = NodePath("../../UserInterface/SettingsPanel")
 settingsButton = NodePath("../../UserInterface/SettingsButton")
@@ -542,11 +551,13 @@ step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
 tint_progress = Color(0.516666, 0, 1, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="UserInterface" type="Control" parent="."]
 z_as_relative = false
 layout_mode = 3
 anchors_preset = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="UserInterface"]
 layout_mode = 1
@@ -1283,6 +1294,7 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/LayerLoopToggle"]
 layout_mode = 0
@@ -1297,6 +1309,7 @@ text = "🔁"
 label_settings = SubResource("LabelSettings_fbqyi")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BpmLabel" type="Label" parent="UserInterface"]
 layout_mode = 0
@@ -1308,6 +1321,7 @@ theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="draganddropthing" type="Sprite2D" parent="UserInterface"]
 modulate = Color(1, 1, 1, 0)
@@ -1363,6 +1377,7 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 34
 text = "⏯️
 "
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="UserInterface/PlayPauseButtonHolder/PlayPauseButton"]
 show_behind_parent = true
@@ -1380,6 +1395,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
+metadata/_edit_use_anchors_ = true
 
 [node name="Pointer" type="Sprite2D" parent="UserInterface"]
 modulate = Color(0.78, 0.78, 0.78, 1)
@@ -1423,6 +1439,7 @@ offset_right = 140.5
 offset_bottom = -120.5
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="UserInterface/Robot/AchievementsPanel"]
 layout_mode = 0
@@ -1434,6 +1451,7 @@ theme_override_font_sizes/font_size = 20
 text = "Huidig Doel:"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="InstructionLabel" type="Label" parent="UserInterface/Robot/AchievementsPanel"]
 layout_mode = 0
@@ -1447,6 +1465,7 @@ text = "hier komt een instructie. hier komt een instructie. hier komt een instru
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="SkipTutorialButton" type="Button" parent="UserInterface/Robot/AchievementsPanel"]
 layout_mode = 1
@@ -1464,6 +1483,7 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "🚫 Stop"
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UserInterface/Robot"]
 anchors_preset = 8
@@ -1480,6 +1500,7 @@ grow_vertical = 2
 scale = Vector2(1.2, 1.2)
 mouse_filter = 2
 stretch = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="UserInterface/Robot/SubViewportContainer"]
 transparent_bg = true
@@ -1567,6 +1588,7 @@ theme_override_font_sizes/font_size = 40
 text = "Instellingen"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Back" type="Button" parent="UserInterface/SettingsPanel"]
 layout_mode = 0
@@ -1684,13 +1706,14 @@ scale = Vector2(2.52787, 2.52787)
 
 [node name="MetronomeToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
-offset_top = -9.40597
+offset_top = -18.1089
 offset_right = 75.0
-offset_bottom = 14.594
+offset_bottom = 5.89106
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
 layout_mode = 0
@@ -1702,6 +1725,7 @@ theme_override_font_sizes/font_size = 15
 text = "🫀"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
 layout_mode = 0
@@ -1711,46 +1735,18 @@ theme = ExtResource("22_hpc6h")
 text = "metronoom"
 label_settings = SubResource("LabelSettings_5dpcw")
 vertical_alignment = 1
-
-[node name="AddBeatsToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
-offset_left = -75.0
-offset_top = 35.0
-offset_right = 75.0
-offset_bottom = 59.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 15
-text = "👂🏼"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-theme = ExtResource("22_hpc6h")
-text = "voeg beat toe"
-label_settings = SubResource("LabelSettings_x8qo7")
-vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonIsClap" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
-offset_top = 12.8469
+offset_top = 3.35274
 offset_right = 75.0
-offset_bottom = 36.8469
+offset_bottom = 27.3527
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
 layout_mode = 0
@@ -1762,25 +1758,98 @@ theme_override_font_sizes/font_size = 15
 text = "👏"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.0659313
+anchor_bottom = -0.0659313
 offset_right = 87.0
 offset_bottom = 23.0
 theme = ExtResource("22_hpc6h")
 text = "knop is klap"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
-offset_top = 59.0
+offset_top = 21.1543
 offset_right = 75.0
-offset_bottom = 83.0
+offset_bottom = 45.1543
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+button_pressed = true
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 4.0
+offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 15
+text = "🔘"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 0
+offset_right = 87.0
+offset_bottom = 23.0
+theme = ExtResource("22_hpc6h")
+text = "knop adds beat"
+label_settings = SubResource("LabelSettings_x8qo7")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AddBeatsToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+offset_left = -75.0
+offset_top = 41.3294
+offset_right = 75.0
+offset_bottom = 65.3294
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 4.0
+offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 15
+text = "👂🏼"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
+layout_mode = 0
+offset_right = 87.0
+offset_bottom = 23.0
+theme = ExtResource("22_hpc6h")
+text = "klap adds beat"
+label_settings = SubResource("LabelSettings_x8qo7")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+offset_left = -75.0
+offset_top = 61.3735
+offset_right = 75.0
+offset_bottom = 85.3735
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/MuteSpeachToggle"]
 layout_mode = 0
@@ -1793,6 +1862,7 @@ theme_override_font_sizes/font_size = 15
 text = "🔇"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MuteSpeachToggle"]
 layout_mode = 0
@@ -1802,6 +1872,7 @@ theme = ExtResource("22_hpc6h")
 text = "mute klappy"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="VolumeTreshold" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -1812,6 +1883,7 @@ focus_mode = 0
 max_value = 1.0
 step = 0.001
 value = 0.1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold"]
 layout_mode = 0
@@ -1823,6 +1895,7 @@ theme_override_font_sizes/font_size = 15
 text = "🔊"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ClapStompBias" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -1836,6 +1909,7 @@ min_value = 100.0
 max_value = 1400.0
 step = 50.0
 value = 800.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ClapStompBias"]
 layout_mode = 0
@@ -1847,6 +1921,7 @@ theme_override_font_sizes/font_size = 15
 text = "👞"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ClapStompBias"]
 layout_mode = 0
@@ -1858,6 +1933,7 @@ theme_override_font_sizes/font_size = 15
 text = "🖐🏼"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SwingSlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -1866,6 +1942,7 @@ offset_right = 75.0
 offset_bottom = 148.0
 max_value = 0.4
 step = 0.01
+metadata/_edit_use_anchors_ = true
 
 [node name="SwingLabel" type="Label" parent="UserInterface/SettingsPanel/Sliders/SwingSlider"]
 layout_mode = 0
@@ -1877,6 +1954,7 @@ theme_override_font_sizes/font_size = 15
 text = "🌀"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ReverbSlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -1885,6 +1963,7 @@ offset_right = 75.0
 offset_bottom = 168.0
 max_value = 0.5
 step = 0.01
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ReverbSlider"]
 layout_mode = 0
@@ -1896,6 +1975,7 @@ theme_override_font_sizes/font_size = 15
 text = "🏛️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DelaySlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -1904,6 +1984,7 @@ offset_right = 75.0
 offset_bottom = 188.0
 max_value = 0.5
 step = 0.01
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/DelaySlider"]
 layout_mode = 0
@@ -1915,6 +1996,7 @@ theme_override_font_sizes/font_size = 15
 text = "⛰️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="MicMeter" type="ProgressBar" parent="UserInterface/SettingsPanel"]
 layout_mode = 1
@@ -1932,6 +2014,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_3brpt")
 max_value = 1.0
 value = 0.1
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/MicMeter"]
 layout_mode = 0
@@ -1942,6 +2025,7 @@ text = "🎙️"
 label_settings = SubResource("LabelSettings_5adyu")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2

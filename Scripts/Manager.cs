@@ -1464,7 +1464,7 @@ public partial class Manager : Node
         }
     }
 
-    private float SamplesMixing_MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
+    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
     {
         var ClosestPointOnTriangle = (Vector2 p, Vector2 a, Vector2 b, Vector2 c) =>
         {
@@ -1612,9 +1612,6 @@ public partial class Manager : Node
             corners[2].GlobalPosition
         );
 
-        // outer triangle volume for sample mixing
-        float mastervolume = IsInsideTriangle(weights) ? 1f : SamplesMixing_MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
-
         // clamp weights
         weights = new Vector3
         (
@@ -1622,9 +1619,12 @@ public partial class Manager : Node
             Mathf.Clamp(weights.Y, 0f, 1f),
             Mathf.Clamp(weights.Z, 0f, 1f)
         );
-        
+
         // debug weights
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
+
+        // outer triangle effects master volume
+        float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
 
         // update volumes of active ring
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);

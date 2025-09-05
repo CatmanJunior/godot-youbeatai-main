@@ -582,7 +582,7 @@ alignment = 0
 position = Vector2(-435, 141)
 
 [node name="MicButtonLocation" type="Node2D" parent="UserInterface/ChaosPad"]
-position = Vector2(-134, -179)
+position = Vector2(0, -260.72)
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
 scale = Vector2(0.4, 0.4)
@@ -641,7 +641,7 @@ position = Vector2(172, -101)
 scale = Vector2(1.27546, 1.27546)
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-500, 500)
+position = Vector2(-292.232, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -686,7 +686,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-500, 500)
+position = Vector2(-229.509, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -730,7 +730,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-500, 500)
+position = Vector2(-166.787, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -774,7 +774,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-500, 500)
+position = Vector2(-104.064, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -851,7 +851,7 @@ ring = 3
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
 z_index = -4
-position = Vector2(-177.555, 325.906)
+position = Vector2(-172.85, 327.474)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("33_aqgau")
@@ -859,7 +859,7 @@ script = ExtResource("33_aqgau")
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
 z_index = -4
-position = Vector2(-92.8793, 325.906)
+position = Vector2(-97.5834, 327.474)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("33_aqgau")
@@ -867,7 +867,7 @@ id = 1
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
-position = Vector2(-500, 500)
+position = Vector2(-41.3418, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -925,7 +925,7 @@ antialiased = true
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
-position = Vector2(-500, 500)
+position = Vector2(21.3804, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")

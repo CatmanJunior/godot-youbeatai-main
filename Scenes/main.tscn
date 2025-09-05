@@ -454,11 +454,10 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "volumeSlider", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
+[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar0")
 recordLayerButton = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton0/Button0")
-volumeSlider = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton0/HSlider")
 snellerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 smallLine = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton0/SmallLine0")
@@ -502,11 +501,10 @@ texture_progress = ExtResource("19_mlc13")
 tint_progress = Color(0.146667, 0.8, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "volumeSlider", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
+[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar1")
 recordLayerButton = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton1/Button1")
-volumeSlider = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton1/HSlider")
 snellerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 smallLine = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton1/SmallLine1")
@@ -897,28 +895,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="HSlider" type="HSlider" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
-offset_left = -22.3673
-offset_top = 655.576
-offset_right = 35.1877
-offset_bottom = 671.576
-scale = Vector2(0.8, 0.8)
-max_value = 1.0
-step = 0.1
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton0/HSlider"]
-self_modulate = Color(1, 1, 0, 1)
-position = Vector2(57.162, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
-
-[node name="Sprite2D2" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton0/HSlider"]
-self_modulate = Color(0, 0.823529, 0, 1)
-position = Vector2(-1.02768, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
-
 [node name="SmallLine0" type="Line2D" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
 closed = true
 width = 1.0
@@ -977,28 +953,6 @@ text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="HSlider" type="HSlider" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
-offset_left = -22.3673
-offset_top = 655.576
-offset_right = 35.1877
-offset_bottom = 671.576
-scale = Vector2(0.8, 0.8)
-max_value = 1.0
-step = 0.1
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D2" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton1/HSlider"]
-self_modulate = Color(1, 1, 0, 1)
-position = Vector2(57.162, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
-
-[node name="Sprite2D3" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton1/HSlider"]
-self_modulate = Color(0.516666, 0, 1, 1)
-position = Vector2(-1.02768, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
 
 [node name="SmallLine1" type="Line2D" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
 closed = true
@@ -2170,8 +2124,6 @@ text = "Doorgaan"
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="stop_recording"]
-[connection signal="value_changed" from="UserInterface/ControlsGroup/RecordBeatButton0/HSlider" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_volume_slider_changed"]
-[connection signal="value_changed" from="UserInterface/ControlsGroup/RecordBeatButton1/HSlider" to="Managers/LayerVoiceOver1/VoiceRecorder" method="_on_volume_slider_changed"]
 
 [editable path="Managers/LayerVoiceOver0/VoiceRecorder"]
 [editable path="Managers/LayerVoiceOver1/VoiceRecorder"]

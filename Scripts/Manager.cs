@@ -1418,11 +1418,11 @@ public partial class Manager : Node
         triangleSprite.SelfModulate = new_color;
     }
 
-    private void SamplesMixing_UpdateMixingVolumesForRing(int ring)
+    private void SamplesMixing_UpdateMixingVolumesForRing(int ring, float mastervolume)
     {
-        float mainvolume = weights.X;
-        float recvolume  = weights.Y;
-        float altvolume  = weights.Z;
+        float mainvolume = weights.X * mastervolume;
+        float recvolume  = weights.Y * mastervolume;
+        float altvolume  = weights.Z * mastervolume;
 
         if (ring == 0)
         {
@@ -1548,15 +1548,17 @@ public partial class Manager : Node
         triangleSprite.SelfModulate = new_color;
     }
 
-    private void SynthMixing_UpdateMixingVolumesForSynth(int synth)
+    private void SynthMixing_UpdateMixingVolumesForSynth(int synth, float mastervolume)
     {
         if (synth == 0)
         {
-            layerVoiceOver0.volumeSlider.Value = weights.X;
+            layerVoiceOver0.audioPlayer.VolumeLinear = weights.X * mastervolume * 1.5f;
+            GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", weights.Y * mastervolume);
         }
         if (synth == 1)
         {
-            layerVoiceOver1.volumeSlider.Value = weights.X;
+            layerVoiceOver1.audioPlayer.VolumeLinear = weights.X * mastervolume * 1.5f;
+            GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", weights.Y * mastervolume);
         }
     }
 
@@ -1584,7 +1586,7 @@ public partial class Manager : Node
         );
 
         // outer triangle volume for sample mixing
-        if (chaosPadMode == ChaosPadMode.SampleMixing) weights *= IsInsideTriangle(weights) ? 1f : SamplesMixing_MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+        float mastervolume = IsInsideTriangle(weights) ? 1f : SamplesMixing_MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
 
         // clamp weights
         weights = new Vector3
@@ -1598,8 +1600,8 @@ public partial class Manager : Node
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
 
         // update volumes of active ring
-        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing);
-        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth);
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
+        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
     }
 
     public Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)

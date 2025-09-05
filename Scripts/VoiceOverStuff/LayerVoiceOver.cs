@@ -10,8 +10,6 @@ public partial class LayerVoiceOver : Node
 	[Export] public TextureProgressBar textureProgressBar;
 	[Export] public Button recordLayerButton;
 
-	[Export] public Slider volumeSlider;
-
 	// recording
 	public AudioStream[] voiceOvers = new AudioStream[10];
 	AudioEffectRecord audioEffectRecord;
@@ -54,15 +52,6 @@ public partial class LayerVoiceOver : Node
 
 	public override void _Ready()
     {
-		if (volumeSlider != null)
-		{	
-			volumeSlider.ValueChanged += (double volume) =>
-			{
-				double new_volume = 1 - volume;
-				audioPlayer.VolumeLinear = (float)new_volume * 1.5f;
-			};
-		}
-
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
 			// OnTop();
@@ -90,7 +79,6 @@ public partial class LayerVoiceOver : Node
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
 		AddChild(audioPlayer);
-		if( volumeSlider != null ) audioPlayer.VolumeLinear = 0.5f;
 		audioPlayer.Bus = "Voice";
 
 		// setup record effect

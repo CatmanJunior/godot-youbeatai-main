@@ -1324,6 +1324,9 @@ public partial class Manager : Node
 
     [Export] public Sprite2D triangleSprite;
 
+    [Export] public Label iconMain;
+    [Export] public Label iconAlt;
+
     private Vector3 weights;
 
     public void RememberKnobPositionsForCurrentLayer()
@@ -1391,6 +1394,33 @@ public partial class Manager : Node
 
         // set chaos pad color to active ring
         StartChaosPadColorChange(0.2f);
+
+        // update icons
+        UpdateChaosPadIcons();
+    }
+
+    private void UpdateChaosPadIcons()
+    {
+        if (chaosPadActiveRing == 0)
+        {
+            iconMain.Text = "👞";
+            iconAlt.Text = "👟";
+        }
+        if (chaosPadActiveRing == 1)
+        {
+            iconMain.Text = "👏";
+            iconAlt.Text = "🥊";
+        }
+        if (chaosPadActiveRing == 2)
+        {
+            iconMain.Text = "📣";
+            iconAlt.Text = "📢";
+        }
+        if (chaosPadActiveRing == 3)
+        {
+            iconMain.Text = "⌚";
+            iconAlt.Text = "⏰";
+        }
     }
 
     async private void StartChaosPadColorChange(float duration)

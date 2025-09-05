@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using NAudio.Wave;
 using NAudio.Lame;
 using NAudio.Wave.SampleProviders;
+using System.Diagnostics.CodeAnalysis;
 
 public partial class Manager : Node
 {
@@ -659,7 +660,7 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
-        RememberKnobPositionsForCurrentLayer();
+        SamplesMixing_RememberKnobsForLayer();
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
@@ -669,7 +670,7 @@ public partial class Manager : Node
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
-        ReApplyKnobPositionsForCurrentLayer();
+        SamplesMixing_ReApplyKnobsForLayer();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1313,122 +1314,90 @@ public partial class Manager : Node
 
     #region Mixing
 
-    private Vector2[] knobPositionAllLayers = new Vector2[40];
-    private Vector2[] knobPositionClipboard = new Vector2[4];
+    public enum ChaosPadMode
+    {
+        SampleMixing,
+        SynthMixing
+    }
 
-    public float outerTriangleSize = 60;
-
-    public int chaosPadActiveRing = 0;
-
+    // chaos pad
     [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
     [Export] public Node2D knob;
-
     [Export] public Sprite2D triangleSprite;
-
     [Export] public Label iconMain;
     [Export] public Label iconAlt;
-
     private Vector3 weights;
+    private float outerTriangleSize = 60;
+    public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
 
-    public void RememberKnobPositionsForCurrentLayer()
+    #region SamplesMixing
+
+    // sample mixing specifics
+    private Vector2[] SamplesMixing_knobPositions = new Vector2[40];
+    private Vector2[] SamplesMixing_knobPositionsClipboard = new Vector2[4];
+    public int SamplesMixing_activeRing = 0;
+
+    public void SamplesMixing_RememberKnobsForLayer()
     {
         // remember knob of active ring
-        knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing] = knob.GlobalPosition;
+        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
     }
 
-    public void ReApplyKnobPositionsForCurrentLayer()
+    public void SamplesMixing_ReApplyKnobsForLayer()
     {
         // reapply knob of active ring
-        knob.GlobalPosition = knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing];
+        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
     }
 
-    public void CopyKnobPositionsForCurrenLayer(){}
-    public void PasteKnobPositionsForCurrenLayer(){}
-    public void ClearKnobPositionsForCurrenLayer(){}
+    public void SamplesMixing_CopyKnobsForLayer(){}
+    public void SamplesMixing_PasteKnobsLayer(){}
+    public void SamplesMixing_ClearKnobsForLayer(){}
 
-    private void OnReadyMixing()
+    public void SamplesMixing_ChangeRing(int newring)
     {
-        for (int i = 0; i < knobPositionAllLayers.Length; i++) knobPositionAllLayers[i] = triangleSprite.GlobalPosition;
-        for (int i = 0; i < knobPositionClipboard.Length; i++) knobPositionClipboard[i] = triangleSprite.GlobalPosition;
-        ChangeActiveChaosPadRing(0);
-    }
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SampleMixing;
 
-    private void OnUpdateMixing(float delta)
-    {
-        // inner triangle blending
-        weights = GetBarycentricWeights
-        (
-            knob.GlobalPosition,
-            corners[0].GlobalPosition,
-            corners[1].GlobalPosition,
-            corners[2].GlobalPosition
-        );
-
-        // outer triangle volume
-        float masterVolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
-        weights *= masterVolume;
-
-        // clamp weights
-        weights = new Vector3(
-            Mathf.Clamp(weights.X, 0f, 1f),
-            Mathf.Clamp(weights.Y, 0f, 1f),
-            Mathf.Clamp(weights.Z, 0f, 1f)
-        );
-        
-        // debug
-        if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
-
-        // update volumes of active ring
-        UpdateMixingVolumesForRing(chaosPadActiveRing);
-    }
-
-    public void ChangeActiveChaosPadRing(int newring)
-    {
         // save knob position
-        knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing] = knob.GlobalPosition;
+        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
 
         // switch ring
-        chaosPadActiveRing = newring;
+        SamplesMixing_activeRing = newring;
 
         // remember knob position
-        knob.GlobalPosition = knobPositionAllLayers[(currentLayerIndex * 4) + chaosPadActiveRing];
+        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
 
         // set chaos pad color to active ring
-        StartChaosPadColorChange(0.2f);
+        SamplesMixing_StartTriangleColorChange(0.2f);
 
         // update icons
-        UpdateChaosPadIcons();
-    }
-
-    private void UpdateChaosPadIcons()
-    {
-        if (chaosPadActiveRing == 0)
+        if (SamplesMixing_activeRing == 0)
         {
             iconMain.Text = "👞";
             iconAlt.Text = "👟";
         }
-        if (chaosPadActiveRing == 1)
+        if (SamplesMixing_activeRing == 1)
         {
             iconMain.Text = "👏";
             iconAlt.Text = "🥊";
         }
-        if (chaosPadActiveRing == 2)
+        if (SamplesMixing_activeRing == 2)
         {
             iconMain.Text = "📣";
             iconAlt.Text = "📢";
         }
-        if (chaosPadActiveRing == 3)
+        if (SamplesMixing_activeRing == 3)
         {
             iconMain.Text = "⌚";
             iconAlt.Text = "⏰";
         }
     }
 
-    async private void StartChaosPadColorChange(float duration)
+    async private void SamplesMixing_StartTriangleColorChange(float duration)
     {
         var old_color = triangleSprite.SelfModulate;
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
-        var new_color = colors[chaosPadActiveRing];
+        var new_color = colors[SamplesMixing_activeRing];
         var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
         float elapsed = 0f;
@@ -1449,7 +1418,7 @@ public partial class Manager : Node
         triangleSprite.SelfModulate = new_color;
     }
 
-    private void UpdateMixingVolumesForRing(int ring)
+    private void SamplesMixing_UpdateMixingVolumesForRing(int ring)
     {
         float mainvolume = weights.X;
         float recvolume  = weights.Y;
@@ -1479,6 +1448,151 @@ public partial class Manager : Node
             fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
             fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
         }
+    }
+
+    private float SamplesMixing_MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
+    {
+        var ClosestPointOnTriangle = (Vector2 p, Vector2 a, Vector2 b, Vector2 c) =>
+        {
+            var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
+            {
+                Vector2 ab = b - a;
+                float t = (p - a).Dot(ab) / ab.LengthSquared();
+                t = Mathf.Clamp(t, 0f, 1f);
+                return a + ab * t;
+            };
+
+            Vector2 p0 = ClosestPointOnSegment(p, a, b);
+            Vector2 p1 = ClosestPointOnSegment(p, b, c);
+            Vector2 p2 = ClosestPointOnSegment(p, c, a);
+
+            float d0 = p.DistanceSquaredTo(p0);
+            float d1 = p.DistanceSquaredTo(p1);
+            float d2 = p.DistanceSquaredTo(p2);
+
+            float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
+            if (minDist == d0) return p0;
+            if (minDist == d1) return p1;
+            return p2;
+        };
+
+        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
+        float distance = knobPos.DistanceTo(closest);
+        float master = Mathf.Clamp(1f - (distance / outerTriangleSize), 0f, 1f);
+        return master;
+    }
+
+    #endregion
+
+    #region SynthMixing
+
+    private Vector2[] SynthMixing_knobPositions = new Vector2[2];
+    public int SynthMixing_activeSynth = 0;
+
+    public void SynthMixing_ChangeSynth(int synth)
+    {
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SynthMixing;
+        
+        // save knob position
+        SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+
+        // switch synth
+        SynthMixing_activeSynth = synth;
+
+        // remember knob position
+        knob.GlobalPosition = SynthMixing_knobPositions[SynthMixing_activeSynth];
+
+        // set chaos pad color to active ring
+        SynthMixing_StartTriangleColorChange(0.2f);
+
+        // update icons
+        if (SynthMixing_activeSynth == 0)
+        {
+            iconMain.Text = "🟢";
+            iconAlt.Text = "🎹";
+        }
+        if (SynthMixing_activeSynth == 1)
+        {
+            iconMain.Text = "🟣";
+            iconAlt.Text = "🎹";
+        }
+    }
+
+    async private void SynthMixing_StartTriangleColorChange(float duration)
+    {
+        var old_color = triangleSprite.SelfModulate;
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+
+        var new_color = new Color();
+        if (SynthMixing_activeSynth == 0) new_color = Color.FromHsv(110f / 255f, 1, 1);
+        if (SynthMixing_activeSynth == 1) new_color = Color.FromHtml("#aa00ff");
+
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        triangleSprite.SelfModulate = new_color;
+    }
+
+    private void SynthMixing_UpdateMixingVolumesForSynth(int synth)
+    {
+        // TODO: connect to synth sliders
+    }
+
+    #endregion
+
+    private void OnReadyMixing()
+    {
+        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = triangleSprite.GlobalPosition;
+
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+    }
+
+    private void OnUpdateMixing(float delta)
+    {
+        // inner triangle blending
+        weights = GetBarycentricWeights
+        (
+            knob.GlobalPosition,
+            corners[0].GlobalPosition,
+            corners[1].GlobalPosition,
+            corners[2].GlobalPosition
+        );
+
+        // outer triangle volume for sample mixing
+        if (chaosPadMode == ChaosPadMode.SampleMixing) weights *= IsInsideTriangle(weights) ? 1f : SamplesMixing_MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+
+        // clamp weights
+        weights = new Vector3
+        (
+            Mathf.Clamp(weights.X, 0f, 1f),
+            Mathf.Clamp(weights.Y, 0f, 1f),
+            Mathf.Clamp(weights.Z, 0f, 1f)
+        );
+        
+        // debug weights
+        if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
+
+        // update volumes of active ring
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing);
+        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth);
     }
 
     private Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
@@ -1511,38 +1625,6 @@ public partial class Manager : Node
     bool IsInsideTriangle(Vector3 weights)
     {
         return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
-    }
-
-    private Vector2 ClosestPointOnTriangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
-    {
-        var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
-        {
-            Vector2 ab = b - a;
-            float t = (p - a).Dot(ab) / ab.LengthSquared();
-            t = Mathf.Clamp(t, 0f, 1f);
-            return a + ab * t;
-        };
-
-        Vector2 p0 = ClosestPointOnSegment(p, a, b);
-        Vector2 p1 = ClosestPointOnSegment(p, b, c);
-        Vector2 p2 = ClosestPointOnSegment(p, c, a);
-
-        float d0 = p.DistanceSquaredTo(p0);
-        float d1 = p.DistanceSquaredTo(p1);
-        float d2 = p.DistanceSquaredTo(p2);
-
-        float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
-        if (minDist == d0) return p0;
-        if (minDist == d1) return p1;
-        return p2;
-    }
-
-    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
-    {
-        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
-        float distance = knobPos.DistanceTo(closest);
-        float master = Mathf.Clamp(1f - (distance / outerTriangleSize), 0f, 1f);
-        return master;
     }
 
     #endregion
@@ -2084,21 +2166,21 @@ public partial class Manager : Node
     public void CopyLayer()
     {
         CopyBeatLayoutToClipboard();
-        CopyKnobPositionsForCurrenLayer();
+        SamplesMixing_CopyKnobsForLayer();
         CopyLayerVoiceToClipBoard();
     }
 
     public void PasteLayer()
     {
         PasteBeatLayoutFromClipboard();
-        PasteKnobPositionsForCurrenLayer();
+        SamplesMixing_PasteKnobsLayer();
         PasteLayerVoiceFromClipBoard();
     }
 
     public void ClearLayer()
     {
         ClearLayout();
-        ClearKnobPositionsForCurrenLayer();
+        SamplesMixing_ClearKnobsForLayer();
         ClearLayerVoiceOver();
     }
 

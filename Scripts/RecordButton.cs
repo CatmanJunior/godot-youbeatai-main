@@ -2,6 +2,8 @@ using Godot;
 
 public partial class RecordButton : Sprite2D
 {
+    [Export] int id;
+
 	bool inside => IsPixelOpaque(GetLocalMousePosition());
 
     Color original_c;
@@ -35,6 +37,22 @@ public partial class RecordButton : Sprite2D
         if (pressed) SelfModulate = pressed_c;
         else if (inside) SelfModulate = hover_c;
         else SelfModulate = original_c;
+
+        // on hovering over it change chaos pad
+        if (inside)
+        {
+            // when comming from sample mixer
+            if (Manager.instance.chaosPadMode == Manager.ChaosPadMode.SampleMixing)
+            {
+                // always call change
+                Manager.instance.SynthMixing_ChangeSynth(id);
+            }
+            else
+            {
+                // only change when change is not already made
+                if (Manager.instance.SynthMixing_activeSynth != id) Manager.instance.SynthMixing_ChangeSynth(id);
+            }
+        }
     }
 
     public void OnPressed()

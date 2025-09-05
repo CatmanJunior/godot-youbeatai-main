@@ -93,7 +93,7 @@ public partial class DragAndDropButton : Sprite2D
 		}
 		else ButtonBehaviour();
 
-		Manager.instance.ChangeActiveChaosPadRing(ring);
+		Manager.instance.SamplesMixing_ChangeRing(ring);
 	}
 
 	public void ButtonBehaviour()

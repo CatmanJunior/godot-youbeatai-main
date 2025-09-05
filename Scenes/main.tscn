@@ -931,6 +931,7 @@ position = Vector2(-65.2912, 321.999)
 scale = Vector2(1.8, 1.8)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
+id = 1
 
 [node name="Button1" type="Button" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
 anchors_preset = 8

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
+[ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -321,7 +322,7 @@ metadata/_edit_use_anchors_ = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "corners", "knob", "triangleSprite", "iconMain", "iconAlt")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "corners", "knob", "triangleSprite", "iconMain", "iconAlt", "micButtonLocation")]
 script = ExtResource("1_rfd7i")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
@@ -404,6 +405,7 @@ knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
 triangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
 iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
+micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -577,7 +579,10 @@ text = "⚙️ Instellingen"
 alignment = 0
 
 [node name="ChaosPad" type="Node2D" parent="UserInterface"]
-position = Vector2(-435, 53)
+position = Vector2(-435, 141)
+
+[node name="MicButtonLocation" type="Node2D" parent="UserInterface/ChaosPad"]
+position = Vector2(-134, -179)
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
 scale = Vector2(0.4, 0.4)
@@ -636,7 +641,7 @@ position = Vector2(172, -101)
 scale = Vector2(1.27546, 1.27546)
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-589.887, 255.403)
+position = Vector2(-500, 500)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -681,7 +686,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-514.887, 256.403)
+position = Vector2(-500, 500)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -725,7 +730,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-439.887, 256.403)
+position = Vector2(-500, 500)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -769,7 +774,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-363.887, 256.403)
+position = Vector2(-500, 500)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -843,10 +848,27 @@ texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 3
 
+[node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+self_modulate = Color(0.146667, 0.8, 0, 1)
+z_index = -4
+position = Vector2(-177.555, 325.906)
+scale = Vector2(2, 2)
+texture = ExtResource("28_r33sp")
+script = ExtResource("33_aqgau")
+
+[node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+self_modulate = Color(0.516666, 0, 1, 1)
+z_index = -4
+position = Vector2(-92.8793, 325.906)
+scale = Vector2(2, 2)
+texture = ExtResource("28_r33sp")
+script = ExtResource("33_aqgau")
+id = 1
+
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
-position = Vector2(-182.132, 321.999)
-scale = Vector2(1.8, 1.8)
+position = Vector2(-500, 500)
+scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
 
@@ -903,8 +925,8 @@ antialiased = true
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
-position = Vector2(-90.3802, 321.999)
-scale = Vector2(1.8, 1.8)
+position = Vector2(-500, 500)
+scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
 id = 1

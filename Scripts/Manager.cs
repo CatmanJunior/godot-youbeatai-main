@@ -1329,6 +1329,7 @@ public partial class Manager : Node
     public Vector3 weights;
     public float outerTriangleSize = 40;
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
+    [Export] public Node2D micButtonLocation;
 
     #region SamplesMixing
 
@@ -1388,6 +1389,19 @@ public partial class Manager : Node
             iconMain.Text = "⌚";
             iconAlt.Text = "⏰";
         }
+
+        // set mic button location
+        Node2D[] micButtons = 
+        [
+            recordSampleButton0, 
+            recordSampleButton1, 
+            recordSampleButton2, 
+            recordSampleButton3, 
+            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(), 
+            (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
+        ];
+        for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
+        micButtons[SamplesMixing_activeRing].GlobalPosition = micButtonLocation.GlobalPosition;
 
         // set chaospad mode
         chaosPadMode = ChaosPadMode.SampleMixing;
@@ -1515,6 +1529,19 @@ public partial class Manager : Node
             iconAlt.Text = "🎹";
         }
 
+        // set mic button location
+        Node2D[] micButtons = 
+        [
+            recordSampleButton0, 
+            recordSampleButton1, 
+            recordSampleButton2, 
+            recordSampleButton3, 
+            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(), 
+            (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
+        ];
+        for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
+        micButtons[4 + SynthMixing_activeSynth].GlobalPosition = micButtonLocation.GlobalPosition;
+
         // set chaospad mode
         chaosPadMode = ChaosPadMode.SynthMixing;
     }
@@ -1525,7 +1552,7 @@ public partial class Manager : Node
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
         var new_color = new Color();
-        if (SynthMixing_activeSynth == 0) new_color = Color.FromHsv(110f / 255f, 1, 1);
+        if (SynthMixing_activeSynth == 0) new_color = Color.FromHtml("#25cc00");
         if (SynthMixing_activeSynth == 1) new_color = Color.FromHtml("#aa00ff");
 
         var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);

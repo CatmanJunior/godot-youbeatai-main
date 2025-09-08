@@ -15,7 +15,7 @@ public partial class LayerVoiceOver : Node
 	public AudioStream[] voiceOvers = new AudioStream[10];
 	AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
-	bool shouldRecord = false;
+	public bool shouldRecord = false;
 
 	public bool recording = false;
 	public bool shouldUpdateProgressBar = false;
@@ -185,7 +185,12 @@ public partial class LayerVoiceOver : Node
 			EmitSignal(SignalName.OnStartedRecording);
 		};
 
-		SetVolume(0.1f);
+		SetVolumeBeats(0.1f); // beats
+		SongVoiceOver.instance.SetVolumeSongVoice(0.1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
     }
 
     private void StopRecording()
@@ -214,17 +219,20 @@ public partial class LayerVoiceOver : Node
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
 
-		SetVolume(1f);
+		SetVolumeBeats(1f); // beats
+		SongVoiceOver.instance.SetVolumeSongVoice(1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
     }
 
-	void SetVolume(float value)
+	public void SetVolumeBeats(float value)
     {
-        float db = Mathf.LinearToDb(value);
-        Manager.instance.firstAudioPlayer.VolumeDb = db;
-        Manager.instance.secondAudioPlayer.VolumeDb = db;
-        Manager.instance.thirdAudioPlayer.VolumeDb = db;
-        Manager.instance.fourthAudioPlayer.VolumeDb = db;
-		audioPlayer.VolumeDb = db;
+        Manager.instance.firstAudioPlayer.VolumeLinear = value;
+        Manager.instance.secondAudioPlayer.VolumeLinear = value;
+        Manager.instance.thirdAudioPlayer.VolumeLinear = value;
+        Manager.instance.fourthAudioPlayer.VolumeLinear = value;
     }
 
 	public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)

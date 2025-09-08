@@ -105,7 +105,12 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
-		SetVolume(0.1f);
+		SetVolumeBeats(0.1f); // beats
+		SetVolumeSongVoice(0.1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
@@ -130,18 +135,26 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
 
-		SetVolume(1f);
+		SetVolumeBeats(1f); // beats
+		SetVolumeSongVoice(1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
 
 		finished = true;
     }
 
-	void SetVolume(float value)
+	public void SetVolumeBeats(float value)
     {
-        float db = Mathf.LinearToDb(value);
-        Manager.instance.firstAudioPlayer.VolumeDb = db;
-        Manager.instance.secondAudioPlayer.VolumeDb = db;
-        Manager.instance.thirdAudioPlayer.VolumeDb = db;
-        Manager.instance.fourthAudioPlayer.VolumeDb = db;
-		audioPlayer.VolumeDb = db;
+        Manager.instance.firstAudioPlayer.VolumeLinear = value;
+        Manager.instance.secondAudioPlayer.VolumeLinear = value;
+        Manager.instance.thirdAudioPlayer.VolumeLinear = value;
+        Manager.instance.fourthAudioPlayer.VolumeLinear = value;
+    }
+
+	public void SetVolumeSongVoice(float value)
+    {
+		audioPlayer.VolumeDb = value;
     }
 }

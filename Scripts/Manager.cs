@@ -1627,8 +1627,18 @@ public partial class Manager : Node
         float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
 
         // update volumes of active ring
-        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
-        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
+        bool anyrec = 
+            SongVoiceOver.instance.recording || 
+            layerVoiceOver0.recording || 
+            layerVoiceOver0.shouldRecord || 
+            layerVoiceOver1.recording || 
+            layerVoiceOver1.shouldRecord;
+
+        if (!anyrec)
+        {
+            if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
+            if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
+        }
     }
 
     public Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)

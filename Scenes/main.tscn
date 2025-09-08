@@ -584,10 +584,10 @@ alignment = 0
 position = Vector2(-435, 141)
 
 [node name="MicButtonLocation" type="Node2D" parent="UserInterface/ChaosPad"]
-position = Vector2(0, -260.72)
+position = Vector2(0, -216.72)
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
-scale = Vector2(0.4, 0.4)
+scale = Vector2(0.3, 0.3)
 texture = ExtResource("28_536cc")
 
 [node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
@@ -600,33 +600,33 @@ position = Vector2(-10, -460)
 position = Vector2(376.667, 233.333)
 
 [node name="PointLeftIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -490.0
-offset_top = 120.0
-offset_right = -390.0
-offset_bottom = 220.0
-scale = Vector2(2.275, 2.275)
+offset_left = -540.0
+offset_top = 76.667
+offset_right = -440.0
+offset_bottom = 176.667
+scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🍎"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -126.667
-offset_top = -556.667
-offset_right = -26.6667
-offset_bottom = -456.667
-scale = Vector2(2.275, 2.275)
+offset_left = -163.334
+offset_top = -600.0
+offset_right = -63.3333
+offset_bottom = -500.0
+scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = 263.333
-offset_top = 116.667
-offset_right = 363.333
-offset_bottom = 216.667
-scale = Vector2(2.275, 2.275)
+offset_left = 213.333
+offset_top = 73.334
+offset_right = 313.333
+offset_bottom = 173.334
+scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🍏"
 horizontal_alignment = 1
@@ -634,7 +634,7 @@ vertical_alignment = 1
 
 [node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
 z_index = 2
-scale = Vector2(5, 5)
+scale = Vector2(7, 7)
 texture = ExtResource("28_r33sp")
 script = ExtResource("29_536cc")
 

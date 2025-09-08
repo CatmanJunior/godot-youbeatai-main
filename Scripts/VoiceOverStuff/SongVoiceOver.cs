@@ -147,10 +147,25 @@ public partial class SongVoiceOver : Node
 
 	public void SetVolumeBeats(float value)
     {
-        Manager.instance.firstAudioPlayer.VolumeLinear = value;
-        Manager.instance.secondAudioPlayer.VolumeLinear = value;
-        Manager.instance.thirdAudioPlayer.VolumeLinear = value;
-        Manager.instance.fourthAudioPlayer.VolumeLinear = value;
+		// red
+		Manager.instance.firstAudioPlayer.VolumeLinear = value;
+		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.firstAudioPlayerRec.VolumeLinear = value;
+
+		// orange
+		Manager.instance.secondAudioPlayer.VolumeLinear = value;
+		Manager.instance.secondAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.secondAudioPlayerRec.VolumeLinear = value;
+
+		// yellow
+		Manager.instance.thirdAudioPlayer.VolumeLinear = value;
+		Manager.instance.thirdAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.thirdAudioPlayerRec.VolumeLinear = value;
+
+		// blue
+		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
+		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
     }
 
 	public void SetVolumeSongVoice(float value)

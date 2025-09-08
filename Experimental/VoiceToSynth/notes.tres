@@ -7,6 +7,7 @@
 [sub_resource type="Resource" id="Resource_h5r0s"]
 script = ExtResource("2_ce618")
 name = "C1"
+id = 0
 frequency = 8.1758
 
 [sub_resource type="Resource" id="Resource_ce618"]

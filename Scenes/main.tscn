@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
@@ -35,9 +35,11 @@
 [ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="26_jwpg7"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
+[ext_resource type="Texture2D" uid="uid://mx66dr2ct711" path="res://Resources/Textures/triangle_fade.png" id="28_536cc"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
+[ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
-[ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="35_k2e45"]
+[ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -45,15 +47,8 @@ font_size = 80
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
-bg_color = Color(0.44, 0.44, 0.44, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
+bg_color = Color(0.14, 0.14, 0.14, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
@@ -66,8 +61,15 @@ corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
-bg_color = Color(0.14, 0.14, 0.14, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
+bg_color = Color(0.44, 0.44, 0.44, 1)
+corner_radius_top_left = 800
+corner_radius_top_right = 800
+corner_radius_bottom_right = 800
+corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
@@ -156,6 +158,7 @@ theme_override_styles/background = ExtResource("9_nnqde")
 theme_override_styles/fill = ExtResource("10_t1q83")
 rounded = true
 fill_mode = 3
+metadata/_edit_use_anchors_ = true
 
 [node name="EnergyIcon" type="Label" parent="Managers/ProgressBar"]
 z_index = 4
@@ -170,6 +173,7 @@ text = "⚡"
 label_settings = SubResource("LabelSettings_2x3a5")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_1" type="Label" parent="Managers/ProgressBar"]
 visible = false
@@ -253,6 +257,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_2" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -264,6 +269,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_3" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -275,6 +281,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_4" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -286,6 +293,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_5" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -297,6 +305,7 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Unlockable_Question_6" type="Label" parent="Managers/ProgressBar"]
 layout_mode = 0
@@ -308,11 +317,12 @@ theme_override_font_sizes/font_size = 30
 text = "❔"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "sampleMixer0", "sampleMixer1", "sampleMixer2", "sampleMixer3")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "emailPrompt", "emailInput", "emailEnter", "corners", "knob", "triangleSprite", "iconMain", "iconAlt", "micButtonLocation")]
 script = ExtResource("1_rfd7i")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
@@ -360,6 +370,7 @@ metronome_toggle = NodePath("../../UserInterface/SettingsPanel/Sliders/Metronome
 micmeter = NodePath("../../UserInterface/SettingsPanel/MicMeter")
 add_beats = NodePath("../../UserInterface/SettingsPanel/Sliders/AddBeatsToggle")
 button_is_clap = NodePath("../../UserInterface/SettingsPanel/Sliders/ButtonIsClap")
+button_add_beats = NodePath("../../UserInterface/SettingsPanel/Sliders/Knop adds beat")
 volume_treshold = NodePath("../../UserInterface/SettingsPanel/Sliders/VolumeTreshold")
 settingsPanel = NodePath("../../UserInterface/SettingsPanel")
 settingsButton = NodePath("../../UserInterface/SettingsButton")
@@ -389,10 +400,12 @@ robotlight = NodePath("../../UserInterface/Robot/SubViewportContainer/RobotLight
 emailPrompt = NodePath("../../EmailPrompt")
 emailInput = NodePath("../../EmailPrompt/Input")
 emailEnter = NodePath("../../EmailPrompt/Enter")
-sampleMixer0 = NodePath("../../UserInterface/ControlsGroup/SampleMixer0")
-sampleMixer1 = NodePath("../../UserInterface/ControlsGroup/SampleMixer1")
-sampleMixer2 = NodePath("../../UserInterface/ControlsGroup/SampleMixer2")
-sampleMixer3 = NodePath("../../UserInterface/ControlsGroup/SampleMixer3")
+corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
+knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
+triangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
+iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
+iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
+micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -443,11 +456,10 @@ max_value = 1.0
 fill_mode = 3
 show_percentage = false
 
-[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "volumeSlider", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
+[node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar0")
 recordLayerButton = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton0/Button0")
-volumeSlider = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton0/HSlider")
 snellerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 smallLine = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton0/SmallLine0")
@@ -491,11 +503,10 @@ texture_progress = ExtResource("19_mlc13")
 tint_progress = Color(0.146667, 0.8, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "volumeSlider", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
+[node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
 textureProgressBar = NodePath("TextureProgressBar1")
 recordLayerButton = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton1/Button1")
-volumeSlider = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton1/HSlider")
 snellerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 smallLine = NodePath("../../UserInterface/ControlsGroup/RecordBeatButton1/SmallLine1")
@@ -540,11 +551,13 @@ step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
 tint_progress = Color(0.516666, 0, 1, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="UserInterface" type="Control" parent="."]
 z_as_relative = false
 layout_mode = 3
 anchors_preset = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="UserInterface"]
 layout_mode = 1
@@ -565,12 +578,70 @@ theme_override_font_sizes/font_size = 25
 text = "⚙️ Instellingen"
 alignment = 0
 
+[node name="ChaosPad" type="Node2D" parent="UserInterface"]
+position = Vector2(-435, 141)
+
+[node name="MicButtonLocation" type="Node2D" parent="UserInterface/ChaosPad"]
+position = Vector2(0, -260.72)
+
+[node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("28_536cc")
+
+[node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
+position = Vector2(-383.333, 240)
+
+[node name="PointTop" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
+position = Vector2(-10, -460)
+
+[node name="PointRight" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
+position = Vector2(376.667, 233.333)
+
+[node name="PointLeftIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
+offset_left = -490.0
+offset_top = 120.0
+offset_right = -390.0
+offset_bottom = 220.0
+scale = Vector2(2.275, 2.275)
+theme_override_font_sizes/font_size = 48
+text = "🍎"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
+offset_left = -126.667
+offset_top = -556.667
+offset_right = -26.6667
+offset_bottom = -456.667
+scale = Vector2(2.275, 2.275)
+theme_override_font_sizes/font_size = 48
+text = "🎙️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
+offset_left = 263.333
+offset_top = 116.667
+offset_right = 363.333
+offset_bottom = 216.667
+scale = Vector2(2.275, 2.275)
+theme_override_font_sizes/font_size = 48
+text = "🍏"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
+z_index = 2000
+scale = Vector2(5, 5)
+texture = ExtResource("28_r33sp")
+script = ExtResource("29_536cc")
+
 [node name="ControlsGroup" type="Node2D" parent="UserInterface"]
 position = Vector2(172, -101)
 scale = Vector2(1.27546, 1.27546)
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-604, 180.136)
+position = Vector2(-292.232, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -615,7 +686,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-529, 181.136)
+position = Vector2(-229.509, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -659,7 +730,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-454, 181.136)
+position = Vector2(-166.787, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -703,7 +774,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-378, 181.136)
+position = Vector2(-104.064, 399.644)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("16_ngh84")
@@ -748,14 +819,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-603, 281)
+position = Vector2(-588.887, 324.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-528, 282)
+position = Vector2(-513.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
@@ -763,7 +834,7 @@ ring = 1
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-453, 282)
+position = Vector2(-438.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
@@ -771,440 +842,33 @@ ring = 2
 
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
-position = Vector2(-378, 282)
+position = Vector2(-363.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 3
 
-[node name="SampleMixer0" type="Node2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-603, 281)
+[node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+self_modulate = Color(0.146667, 0.8, 0, 1)
+z_index = -4
+position = Vector2(-172.85, 327.474)
+scale = Vector2(2, 2)
+texture = ExtResource("28_r33sp")
+script = ExtResource("33_aqgau")
 
-[node name="IncreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer0"]
-self_modulate = Color(0.84, 0.1428, 0.1428, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -65.0
-offset_right = 16.0
-offset_bottom = -33.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↷"
-metadata/_edit_use_anchors_ = true
-
-[node name="DecreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer0"]
-self_modulate = Color(0.84, 0.1428, 0.1428, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = 34.0
-offset_right = 16.0
-offset_bottom = 66.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 3.14159
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↶"
-metadata/_edit_use_anchors_ = true
-
-[node name="Pivot" type="Node2D" parent="UserInterface/ControlsGroup/SampleMixer0"]
-position = Vector2(0, 20)
-
-[node name="Icon0" type="Label" parent="UserInterface/ControlsGroup/SampleMixer0/Pivot"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -44.5
-offset_right = 22.0
-offset_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "👞"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon1" type="Label" parent="UserInterface/ControlsGroup/SampleMixer0/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.7035
-offset_top = -7.76556
-offset_right = 14.2965
-offset_bottom = 37.2344
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.89182
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon2" type="Label" parent="UserInterface/ControlsGroup/SampleMixer0/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 2.02332
-offset_top = -10.9222
-offset_right = 46.0233
-offset_bottom = 34.0778
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 2.07937
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "🎤"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SampleMixer1" type="Node2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-528, 281)
-
-[node name="IncreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer1"]
-self_modulate = Color(1, 0.433333, 0, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -65.0
-offset_right = 16.0
-offset_bottom = -33.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↷"
-metadata/_edit_use_anchors_ = true
-
-[node name="DecreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer1"]
-self_modulate = Color(1, 0.433333, 0, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = 34.0
-offset_right = 16.0
-offset_bottom = 66.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 3.14159
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↶"
-metadata/_edit_use_anchors_ = true
-
-[node name="Pivot" type="Node2D" parent="UserInterface/ControlsGroup/SampleMixer1"]
-position = Vector2(0, 20)
-
-[node name="Icon0" type="Label" parent="UserInterface/ControlsGroup/SampleMixer1/Pivot"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -26.0
-offset_top = -42.5
-offset_right = 18.0
-offset_bottom = 2.5
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "👏"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon1" type="Label" parent="UserInterface/ControlsGroup/SampleMixer1/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.7035
-offset_top = -3.76556
-offset_right = 10.2965
-offset_bottom = 41.2344
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.19662
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "🥊"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon2" type="Label" parent="UserInterface/ControlsGroup/SampleMixer1/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 2.02332
-offset_top = -10.9222
-offset_right = 46.0233
-offset_bottom = 34.0778
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 2.07937
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "🎤"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SampleMixer2" type="Node2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-453, 281)
-
-[node name="IncreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer2"]
-self_modulate = Color(1, 1, 0.3, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -65.0
-offset_right = 16.0
-offset_bottom = -33.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↷"
-metadata/_edit_use_anchors_ = true
-
-[node name="DecreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer2"]
-self_modulate = Color(1, 1, 0.3, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = 34.0
-offset_right = 16.0
-offset_bottom = 66.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 3.14159
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↶"
-metadata/_edit_use_anchors_ = true
-
-[node name="Pivot" type="Node2D" parent="UserInterface/ControlsGroup/SampleMixer2"]
-position = Vector2(0, 20)
-
-[node name="Icon0" type="Label" parent="UserInterface/ControlsGroup/SampleMixer2/Pivot"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -21.0
-offset_top = -42.5
-offset_right = 23.0
-offset_bottom = 2.5
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "📣"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon1" type="Label" parent="UserInterface/ControlsGroup/SampleMixer2/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -29.7035
-offset_top = -2.76556
-offset_right = 14.2965
-offset_bottom = 42.2344
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.38407
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "📢"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon2" type="Label" parent="UserInterface/ControlsGroup/SampleMixer2/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 2.02332
-offset_top = -10.9222
-offset_right = 46.0233
-offset_bottom = 34.0778
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 2.07937
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "🎤"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SampleMixer3" type="Node2D" parent="UserInterface/ControlsGroup"]
-position = Vector2(-378, 281)
-
-[node name="IncreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer3"]
-self_modulate = Color(0.2, 0.56, 1, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = -65.0
-offset_right = 16.0
-offset_bottom = -33.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↷"
-metadata/_edit_use_anchors_ = true
-
-[node name="DecreaseButton" type="Button" parent="UserInterface/ControlsGroup/SampleMixer3"]
-self_modulate = Color(0.2, 0.56, 1, 1)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -16.0
-offset_top = 34.0
-offset_right = 16.0
-offset_bottom = 66.0
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 3.14159
-scale = Vector2(1.225, 1.225)
-pivot_offset = Vector2(16, 16)
-focus_mode = 0
-text = "↶"
-metadata/_edit_use_anchors_ = true
-
-[node name="Pivot" type="Node2D" parent="UserInterface/ControlsGroup/SampleMixer3"]
-position = Vector2(0, 20)
-
-[node name="Icon0" type="Label" parent="UserInterface/ControlsGroup/SampleMixer3/Pivot"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -22.0
-offset_top = -41.5
-offset_right = 22.0
-offset_bottom = 3.5
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "⌚"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon1" type="Label" parent="UserInterface/ControlsGroup/SampleMixer3/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.7035
-offset_top = -1.76556
-offset_right = 8.29651
-offset_bottom = 43.2344
-grow_horizontal = 2
-grow_vertical = 2
-rotation = -2.08741
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "⏰"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Icon2" type="Label" parent="UserInterface/ControlsGroup/SampleMixer3/Pivot"]
-modulate = Color(1, 1, 1, 0)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 2.02332
-offset_top = -10.9222
-offset_right = 46.0233
-offset_bottom = 34.0778
-grow_horizontal = 2
-grow_vertical = 2
-rotation = 2.07937
-pivot_offset = Vector2(18, 18)
-theme_override_font_sizes/font_size = 32
-text = "🎤"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+self_modulate = Color(0.516666, 0, 1, 1)
+z_index = -4
+position = Vector2(-97.5834, 327.474)
+scale = Vector2(2, 2)
+texture = ExtResource("28_r33sp")
+script = ExtResource("33_aqgau")
+id = 1
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
-position = Vector2(-558.467, 108.743)
-scale = Vector2(1.8, 1.8)
+position = Vector2(-41.3418, 399.644)
+scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
 
@@ -1219,17 +883,17 @@ offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
@@ -1253,28 +917,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="HSlider" type="HSlider" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
-offset_left = -22.3673
-offset_top = -30.8866
-offset_right = 35.1877
-offset_bottom = -14.8866
-scale = Vector2(0.8, 0.8)
-max_value = 1.0
-step = 0.1
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton0/HSlider"]
-self_modulate = Color(1, 1, 0, 1)
-position = Vector2(57.162, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
-
-[node name="Sprite2D2" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton0/HSlider"]
-self_modulate = Color(0, 0.823529, 0, 1)
-position = Vector2(-1.02768, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
-
 [node name="SmallLine0" type="Line2D" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
 closed = true
 width = 1.0
@@ -1283,10 +925,11 @@ antialiased = true
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
-position = Vector2(-416.537, 108.743)
-scale = Vector2(1.8, 1.8)
+position = Vector2(21.3804, 399.644)
+scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
+id = 1
 
 [node name="Button1" type="Button" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
 anchors_preset = 8
@@ -1299,17 +942,17 @@ offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
@@ -1332,28 +975,6 @@ text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="HSlider" type="HSlider" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
-offset_left = -22.3673
-offset_top = -30.8866
-offset_right = 35.1877
-offset_bottom = -14.8866
-scale = Vector2(0.8, 0.8)
-max_value = 1.0
-step = 0.1
-metadata/_edit_use_anchors_ = true
-
-[node name="Sprite2D2" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton1/HSlider"]
-self_modulate = Color(1, 1, 0, 1)
-position = Vector2(57.162, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
-
-[node name="Sprite2D3" type="Sprite2D" parent="UserInterface/ControlsGroup/RecordBeatButton1/HSlider"]
-self_modulate = Color(0.516666, 0, 1, 1)
-position = Vector2(-1.02768, 8.125)
-scale = Vector2(0.42, 0.42)
-texture = ExtResource("28_r33sp")
 
 [node name="SmallLine1" type="Line2D" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
 closed = true
@@ -1380,17 +1001,17 @@ offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/RecordSongButton"]
@@ -1424,10 +1045,10 @@ offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🌱"
 metadata/_edit_use_anchors_ = true
 
@@ -1439,10 +1060,10 @@ offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1454,10 +1075,10 @@ offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1469,10 +1090,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -1484,10 +1105,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -1499,10 +1120,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1514,10 +1135,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1529,10 +1150,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -1544,10 +1165,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "😃"
 metadata/_edit_use_anchors_ = true
 
@@ -1559,10 +1180,10 @@ offset_bottom = -259.092
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 text = "🏁"
 metadata/_edit_use_anchors_ = true
 
@@ -1573,39 +1194,43 @@ position = Vector2(-320, -291)
 scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
 
-[node name="ClearLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -66.0
-offset_top = 43.0
-offset_right = -26.0
-offset_bottom = 83.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🗑️
-"
-
 [node name="SaveLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = 43.0
-offset_right = 20.0
-offset_bottom = 83.0
+offset_left = -30.0
+offset_top = 45.0
+offset_right = 30.0
+offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
 text = "💾
 "
+metadata/_edit_use_anchors_ = true
+
+[node name="ClearLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = 45.0
+offset_right = -36.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+text = "🗑️
+"
+metadata/_edit_use_anchors_ = true
 
 [node name="LoadLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
 anchors_preset = 8
@@ -1613,16 +1238,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 27.0
-offset_top = 43.0
-offset_right = 67.0
-offset_bottom = 83.0
+offset_left = 36.0
+offset_top = 45.0
+offset_right = 96.0
+offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
 text = "♻️
 "
+metadata/_edit_use_anchors_ = true
 
 [node name="SongModeBackPanel" type="Panel" parent="UserInterface/SwitchLayerButtons"]
 visible = false
@@ -1644,6 +1271,7 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/LayerLoopToggle"]
 layout_mode = 0
@@ -1658,6 +1286,7 @@ text = "🔁"
 label_settings = SubResource("LabelSettings_fbqyi")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BpmLabel" type="Label" parent="UserInterface"]
 layout_mode = 0
@@ -1669,6 +1298,7 @@ theme = ExtResource("22_hpc6h")
 text = "bpm"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="draganddropthing" type="Sprite2D" parent="UserInterface"]
 modulate = Color(1, 1, 1, 0)
@@ -1724,6 +1354,7 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 34
 text = "⏯️
 "
+metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="UserInterface/PlayPauseButtonHolder/PlayPauseButton"]
 show_behind_parent = true
@@ -1741,6 +1372,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
+metadata/_edit_use_anchors_ = true
 
 [node name="Pointer" type="Sprite2D" parent="UserInterface"]
 modulate = Color(0.78, 0.78, 0.78, 1)
@@ -1784,6 +1416,7 @@ offset_right = 140.5
 offset_bottom = -120.5
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="UserInterface/Robot/AchievementsPanel"]
 layout_mode = 0
@@ -1795,6 +1428,7 @@ theme_override_font_sizes/font_size = 20
 text = "Huidig Doel:"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="InstructionLabel" type="Label" parent="UserInterface/Robot/AchievementsPanel"]
 layout_mode = 0
@@ -1808,6 +1442,7 @@ text = "hier komt een instructie. hier komt een instructie. hier komt een instru
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="SkipTutorialButton" type="Button" parent="UserInterface/Robot/AchievementsPanel"]
 layout_mode = 1
@@ -1825,6 +1460,7 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "🚫 Stop"
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UserInterface/Robot"]
 anchors_preset = 8
@@ -1841,6 +1477,7 @@ grow_vertical = 2
 scale = Vector2(1.2, 1.2)
 mouse_filter = 2
 stretch = true
+metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="UserInterface/Robot/SubViewportContainer"]
 transparent_bg = true
@@ -1869,32 +1506,27 @@ transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 
 current = true
 
 [node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.6069233, 0.0004699242, -0.00033869312, 0.79476035)
-bones/1/position = Vector3(0.01116451, 0.003105818, 0.011245504)
-bones/1/rotation = Quaternion(-0.35754696, -0.44765493, -0.72642505, 0.3795681)
-bones/2/position = Vector3(5.6829363e-10, 0.0052244696, -1.0098355e-09)
-bones/2/rotation = Quaternion(0.16030055, 0.008637932, -0.46690828, 0.8696124)
-bones/4/rotation = Quaternion(0.66694957, 0.0002449317, 0.00052543916, 0.74510264)
-bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/9/position = Vector3(0.0052915383, -0.0022284095, 0.0044968836)
-bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
-bones/10/position = Vector3(1.8759401e-10, 0.004205249, -2.699062e-10)
-bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
-bones/11/rotation = Quaternion(-0.004680261, -0.0028718105, -0.82185924, 0.5696642)
-bones/13/position = Vector3(-0.010967905, 0.00308128, 0.011238096)
-bones/13/rotation = Quaternion(-0.35828653, 0.44713038, 0.7267256, 0.3789131)
-bones/14/position = Vector3(-6.6629036e-10, 0.0052244705, 8.1507545e-10)
-bones/14/rotation = Quaternion(0.16030078, -0.008637754, 0.46690804, 0.8696126)
+bones/0/rotation = Quaternion(0.606923, 0.000469924, -0.000338693, 0.79476)
+bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
+bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
+bones/2/position = Vector3(5.68294e-10, 0.00522447, -1.00984e-09)
+bones/2/rotation = Quaternion(0.160301, 0.00863793, -0.466908, 0.869612)
+bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.000525439, 0.745103)
+bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
+bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
+bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
+bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
+bones/10/position = Vector3(1.87594e-10, 0.00420525, -2.69906e-10)
+bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
+bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
+bones/13/position = Vector3(-0.0109679, 0.00308128, 0.0112381)
+bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
+bones/14/position = Vector3(-6.6629e-10, 0.00522447, 8.15075e-10)
+bones/14/rotation = Quaternion(0.160301, -0.00863775, 0.466908, 0.869613)
 bones/16/position = Vector3(-0.00507851, -0.00216698, 0.00402349)
-bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
-bones/17/position = Vector3(1.7832602e-10, 0.00420524, -1.5350102e-10)
-bones/18/rotation = Quaternion(-0.0010216201, 0.000626926, 0.8216951, 0.5699261)
-
-[node name="AnimationTree" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model" index="2"]
-libraries = {
-&"animations": ExtResource("35_k2e45")
-}
+bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
+bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
+bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
 
 [node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)
@@ -1933,6 +1565,7 @@ theme_override_font_sizes/font_size = 40
 text = "Instellingen"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Back" type="Button" parent="UserInterface/SettingsPanel"]
 layout_mode = 0
@@ -2050,13 +1683,14 @@ scale = Vector2(2.52787, 2.52787)
 
 [node name="MetronomeToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
-offset_top = -9.405968
+offset_top = -18.1089
 offset_right = 75.0
-offset_bottom = 14.594032
+offset_bottom = 5.89106
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 2
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
 layout_mode = 0
@@ -2068,6 +1702,7 @@ theme_override_font_sizes/font_size = 15
 text = "🫀"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
 layout_mode = 0
@@ -2077,46 +1712,18 @@ theme = ExtResource("22_hpc6h")
 text = "metronoom"
 label_settings = SubResource("LabelSettings_5dpcw")
 vertical_alignment = 1
-
-[node name="AddBeatsToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
-offset_left = -75.0
-offset_top = 35.0
-offset_right = 75.0
-offset_bottom = 59.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 15
-text = "👂🏼"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-theme = ExtResource("22_hpc6h")
-text = "voeg beat toe"
-label_settings = SubResource("LabelSettings_x8qo7")
-vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ButtonIsClap" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
-offset_top = 12.846947
+offset_top = 3.35274
 offset_right = 75.0
-offset_bottom = 36.846947
+offset_bottom = 27.3527
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
 layout_mode = 0
@@ -2128,25 +1735,98 @@ theme_override_font_sizes/font_size = 15
 text = "👏"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.0659313
+anchor_bottom = -0.0659313
 offset_right = 87.0
 offset_bottom = 23.0
 theme = ExtResource("22_hpc6h")
 text = "knop is klap"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
-offset_top = 59.0
+offset_top = 21.1543
 offset_right = 75.0
-offset_bottom = 83.0
+offset_bottom = 45.1543
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+button_pressed = true
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 4.0
+offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 15
+text = "🔘"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 0
+offset_right = 87.0
+offset_bottom = 23.0
+theme = ExtResource("22_hpc6h")
+text = "knop adds beat"
+label_settings = SubResource("LabelSettings_x8qo7")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="AddBeatsToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+offset_left = -75.0
+offset_top = 41.3294
+offset_right = 75.0
+offset_bottom = 65.3294
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 4.0
+offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 15
+text = "👂🏼"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle"]
+layout_mode = 0
+offset_right = 87.0
+offset_bottom = 23.0
+theme = ExtResource("22_hpc6h")
+text = "klap adds beat"
+label_settings = SubResource("LabelSettings_x8qo7")
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+offset_left = -75.0
+offset_top = 61.3735
+offset_right = 75.0
+offset_bottom = 85.3735
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/MuteSpeachToggle"]
 layout_mode = 0
@@ -2159,6 +1839,7 @@ theme_override_font_sizes/font_size = 15
 text = "🔇"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MuteSpeachToggle"]
 layout_mode = 0
@@ -2168,6 +1849,7 @@ theme = ExtResource("22_hpc6h")
 text = "mute klappy"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="VolumeTreshold" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -2178,6 +1860,7 @@ focus_mode = 0
 max_value = 1.0
 step = 0.001
 value = 0.1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold"]
 layout_mode = 0
@@ -2189,6 +1872,7 @@ theme_override_font_sizes/font_size = 15
 text = "🔊"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ClapStompBias" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -2202,6 +1886,7 @@ min_value = 100.0
 max_value = 1400.0
 step = 50.0
 value = 800.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ClapStompBias"]
 layout_mode = 0
@@ -2213,6 +1898,7 @@ theme_override_font_sizes/font_size = 15
 text = "👞"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ClapStompBias"]
 layout_mode = 0
@@ -2224,6 +1910,7 @@ theme_override_font_sizes/font_size = 15
 text = "🖐🏼"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="SwingSlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -2232,6 +1919,7 @@ offset_right = 75.0
 offset_bottom = 148.0
 max_value = 0.4
 step = 0.01
+metadata/_edit_use_anchors_ = true
 
 [node name="SwingLabel" type="Label" parent="UserInterface/SettingsPanel/Sliders/SwingSlider"]
 layout_mode = 0
@@ -2243,6 +1931,7 @@ theme_override_font_sizes/font_size = 15
 text = "🌀"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="ReverbSlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -2251,6 +1940,7 @@ offset_right = 75.0
 offset_bottom = 168.0
 max_value = 0.5
 step = 0.01
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ReverbSlider"]
 layout_mode = 0
@@ -2262,6 +1952,7 @@ theme_override_font_sizes/font_size = 15
 text = "🏛️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DelaySlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders"]
 offset_left = -75.0
@@ -2270,6 +1961,7 @@ offset_right = 75.0
 offset_bottom = 188.0
 max_value = 0.5
 step = 0.01
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/DelaySlider"]
 layout_mode = 0
@@ -2281,6 +1973,7 @@ theme_override_font_sizes/font_size = 15
 text = "⛰️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="MicMeter" type="ProgressBar" parent="UserInterface/SettingsPanel"]
 layout_mode = 1
@@ -2298,6 +1991,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_3brpt")
 max_value = 1.0
 value = 0.1
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/MicMeter"]
 layout_mode = 0
@@ -2308,6 +2002,7 @@ text = "🎙️"
 label_settings = SubResource("LabelSettings_5adyu")
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
@@ -2451,8 +2146,6 @@ text = "Doorgaan"
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/VoiceRecorder" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/VoiceRecorder" method="stop_recording"]
-[connection signal="value_changed" from="UserInterface/ControlsGroup/RecordBeatButton0/HSlider" to="Managers/LayerVoiceOver0/VoiceRecorder" method="_on_volume_slider_changed"]
-[connection signal="value_changed" from="UserInterface/ControlsGroup/RecordBeatButton1/HSlider" to="Managers/LayerVoiceOver1/VoiceRecorder" method="_on_volume_slider_changed"]
 
 [editable path="Managers/LayerVoiceOver0/VoiceRecorder"]
 [editable path="Managers/LayerVoiceOver1/VoiceRecorder"]

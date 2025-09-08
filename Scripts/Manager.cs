@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using NAudio.Wave;
 using NAudio.Lame;
 using NAudio.Wave.SampleProviders;
+using System.Diagnostics.CodeAnalysis;
 
 public partial class Manager : Node
 {
@@ -24,10 +25,10 @@ public partial class Manager : Node
         BpmManager.instance.OnBeatEvent += OnBeat;
         ReadJsonFromPreviousSceneAndSetValues();
         InitAllAudioPlayers();
-        SetupAllMixers();
         InitButtonActions();
         SpritePlacement();
         SetupTutorial();
+        OnReadyMixing();
     }
     
     #endregion
@@ -37,8 +38,6 @@ public partial class Manager : Node
     public override void _Process(double delta)
     {
         time += (float)delta;
-
-        UpdateAllMixerVolumes();
 
         if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
 
@@ -61,6 +60,8 @@ public partial class Manager : Node
         SavingLabel.Visible = savingLabelActive;
 
         UpdateLayerSwitchButtonsColors();
+
+        PlayPauseButton.Text = BpmManager.instance.playing ? "⏸️" : "▶️";
 
         var lightvalue = MicrophoneCapture.instance.volume * 8;
         if (lightvalue > 1) lightvalue = 1;
@@ -129,6 +130,8 @@ public partial class Manager : Node
         bpmLabel.Text = BpmManager.instance.bpm.ToString();
 
         songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
+
+        OnUpdateMixing((float)delta);
     }
 
     #endregion
@@ -340,6 +343,7 @@ public partial class Manager : Node
     [Export] ProgressBar micmeter;
     [Export] CheckButton add_beats;
     [Export] public CheckButton button_is_clap;
+    [Export] public CheckButton button_add_beats;
     [Export] Slider volume_treshold;
     [Export] Panel settingsPanel;
     [Export] Button settingsButton;
@@ -656,7 +660,7 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerToUse)
     {
-        RememberAllPivotRotationsForCurrentLayer();
+        SamplesMixing_RememberKnobsForLayer();
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
@@ -666,7 +670,7 @@ public partial class Manager : Node
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
-        ReApplyAllPivotRotationsForCurrentLayer();
+        SamplesMixing_ReApplyKnobsForLayer();
     }
 
     public void UpdateSongVoiceOverPlayBackPosition()
@@ -1310,185 +1314,129 @@ public partial class Manager : Node
 
     #region Mixing
 
-    LayerPivotRotations[] rememberedPivotRotationsPerLayer = new LayerPivotRotations[10];
-
-    LayerPivotRotations clipboardPivotRotations = new LayerPivotRotations();
-
-    struct LayerPivotRotations
+    public enum ChaosPadMode
     {
-        public float[] rotations = [0f, 0f, 0f, 0f];
+        SampleMixing,
+        SynthMixing
+    }
 
-        public LayerPivotRotations(float[] rotations)
+    // chaos pad
+    [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
+    [Export] public Node2D knob;
+    [Export] public Sprite2D triangleSprite;
+    [Export] public Label iconMain;
+    [Export] public Label iconAlt;
+    public Vector3 weights;
+    public float outerTriangleSize = 40;
+    public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
+    [Export] public Node2D micButtonLocation;
+
+    #region SamplesMixing
+
+    // sample mixing specifics
+    private Vector2[] SamplesMixing_knobPositions = new Vector2[40];
+    private Vector2[] SamplesMixing_knobPositionsClipboard = new Vector2[4];
+    public int SamplesMixing_activeRing = 0;
+
+    public void SamplesMixing_RememberKnobsForLayer()
+    {
+        // remember knob of active ring
+        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
+    }
+
+    public void SamplesMixing_ReApplyKnobsForLayer()
+    {
+        // reapply knob of active ring
+        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
+    }
+
+    public void SamplesMixing_CopyKnobsForLayer(){}
+    public void SamplesMixing_PasteKnobsLayer(){}
+    public void SamplesMixing_ClearKnobsForLayer(){}
+
+    public void SamplesMixing_ChangeRing(int newring)
+    {
+        // save knob position
+        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
+
+        // switch ring
+        SamplesMixing_activeRing = newring;
+
+        // remember knob position
+        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
+
+        // set chaos pad color to active ring
+        SamplesMixing_StartTriangleColorChange(0.2f);
+
+        // update icons
+        if (SamplesMixing_activeRing == 0)
         {
-            this.rotations = rotations;
+            iconMain.Text = "👞";
+            iconAlt.Text = "👟";
         }
-    }
-
-    // call before layer change
-    public void RememberAllPivotRotationsForCurrentLayer()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather current rotations
-        float[] current_rotations = new float[4];
-        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
-
-        // save rotations for current layer
-        rememberedPivotRotationsPerLayer[currentLayerIndex] = new LayerPivotRotations(current_rotations);
-    }
-
-    // call after layer change
-    public void ReApplyAllPivotRotationsForCurrentLayer()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather remembered rotations
-        float[] remembered_rotations = rememberedPivotRotationsPerLayer[currentLayerIndex].rotations;
-        remembered_rotations ??= [0, 0, 0, 0];
-
-        // set remembered pivot rotations
-        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(remembered_rotations[i], pivots[i], i);
-    }
-
-    public void CopyPivotRotationsForCurrentLayerToClipboard()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather current rotations
-        float[] current_rotations = new float[4];
-        for (int i = 0; i < 4; i++) current_rotations[i] = pivots[i].RotationDegrees;
-
-        // save rotations for current layer to clipboard
-        clipboardPivotRotations = new LayerPivotRotations(current_rotations);
-    }
-
-    public void PastePivotRotationsForCurrentLayerFromClipboard()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // gather remembered rotations
-        float[] copied_rotations = clipboardPivotRotations.rotations;
-        copied_rotations ??= [0, 0, 0, 0];
-
-        // set remembered pivot rotations
-        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(copied_rotations[i], pivots[i], i);
-    }
-
-    public void ClearPivotRotationsForCurrentLayer()
-    {
-        // gather pivots
-        Node2D[] pivots = new Node2D[4];
-        for (int i = 0; i < 4; i++) pivots[i] = GetPivotForRing(i);
-
-        // reset rotations
-        for (int i = 0; i < 4; i++) SetPivotRotationAbsolute(0, pivots[i], i);
-    }
-
-    public void SetPivotRotationOffset(float rotation, Node2D pivot, int ring)
-    {
-        pivot.RotationDegrees += rotation;
-        var volumes = UpdateMixerVolumes(ring);
-        UpdateMixerIcons(pivot, volumes);
-    }
-
-    public void SetPivotRotationAbsolute(float rotation, Node2D pivot, int ring)
-    {
-        pivot.RotationDegrees = rotation;
-        var volumes = UpdateMixerVolumes(ring);
-        UpdateMixerIcons(pivot, volumes);
-    }
-
-    private static void UpdateMixerIcons(Node2D pivot, (float main, float alt, float rec) volumes)
-    {
-        var icon0 = pivot.GetChild(0) as Label;
-        var icon1 = pivot.GetChild(1) as Label;
-        var icon2 = pivot.GetChild(2) as Label;
-        icon0.Modulate = new Color(1, 1, 1, volumes.main);
-        icon1.Modulate = new Color(1, 1, 1, volumes.alt);
-        icon2.Modulate = new Color(1, 1, 1, volumes.rec);
-    }
-
-    [Export] public Node2D sampleMixer0;
-    [Export] public Node2D sampleMixer1;
-    [Export] public Node2D sampleMixer2;
-    [Export] public Node2D sampleMixer3;
-
-    public bool[] isMixerLocked = [false, false, false, false];
-    
-    public bool IsAnyMixerLocked()
-    {
-        foreach (bool locked in isMixerLocked) if (locked) return true;
-        return false;
-    }
-
-    public void SetAllMixerVolumesOnly(float volume)
-    {
-        firstAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        firstAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        firstAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        secondAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        thirdAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayer.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(volume);
-        fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(volume);
-    }
-
-    private void UpdateAllMixerVolumes(bool log = false)
-    {
-        // temporarily lower mixer volumes during voice record
-        bool anyrecord = layerVoiceOver0.recording || layerVoiceOver1.recording;
-        bool anyfake = layerVoiceOver0.shouldUpdateProgressBar || layerVoiceOver1.shouldUpdateProgressBar;
-        if (anyrecord || anyfake)
+        if (SamplesMixing_activeRing == 1)
         {
-            SetAllMixerVolumesOnly(0.1f);
-            return;
+            iconMain.Text = "👏";
+            iconAlt.Text = "🥊";
+        }
+        if (SamplesMixing_activeRing == 2)
+        {
+            iconMain.Text = "📣";
+            iconAlt.Text = "📢";
+        }
+        if (SamplesMixing_activeRing == 3)
+        {
+            iconMain.Text = "⌚";
+            iconAlt.Text = "⏰";
         }
 
-        var v0 = UpdateMixerVolumes(0);
-        var v1 = UpdateMixerVolumes(1);
-        var v2 = UpdateMixerVolumes(2);
-        var v3 = UpdateMixerVolumes(3);
+        // set mic button location
+        Node2D[] micButtons = 
+        [
+            recordSampleButton0, 
+            recordSampleButton1, 
+            recordSampleButton2, 
+            recordSampleButton3, 
+            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(), 
+            (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
+        ];
+        for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
+        micButtons[SamplesMixing_activeRing].GlobalPosition = micButtonLocation.GlobalPosition;
 
-        if (log)
-        {
-            GD.Print("");
-            GD.Print("---------- changing mix volumes ---------");
-            GD.Print("0: " + v0.main.ToString("0.0") + "/" + v0.alt.ToString("0.0") + "/" + v0.rec.ToString("0.0"));
-            GD.Print("1: " + v1.main.ToString("0.0") + "/" + v1.alt.ToString("0.0") + "/" + v1.rec.ToString("0.0"));
-            GD.Print("2: " + v2.main.ToString("0.0") + "/" + v2.alt.ToString("0.0") + "/" + v2.rec.ToString("0.0"));
-            GD.Print("3: " + v3.main.ToString("0.0") + "/" + v3.alt.ToString("0.0") + "/" + v3.rec.ToString("0.0"));
-            GD.Print("-----------------------------------------");
-            GD.Print("");
-        }
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SampleMixing;
     }
 
-    private (float main, float alt, float rec) UpdateMixerVolumes(int ring)
+    async private void SamplesMixing_StartTriangleColorChange(float duration)
     {
-        float fullrotation = Mathf.PosMod(GetPivotForRing(ring).RotationDegrees, 360f) / 360f;
+        var old_color = triangleSprite.SelfModulate;
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+        var new_color = colors[SamplesMixing_activeRing];
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
-        float GetCrossfadeVolume(float sectionCenter)
+        float elapsed = 0f;
+
+        while (elapsed < duration)
         {
-            float distance = Mathf.Abs(fullrotation - sectionCenter);
-            if (distance > 0.5f) distance = 1f - distance;
-            float maxDistance = 1f / 3f;
-            return distance <= maxDistance ? 1f - (distance / maxDistance) : 0f;
+            float t = elapsed / duration;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+
+            elapsed += (float)GetProcessDeltaTime();
         }
 
-        float mainvolume = GetCrossfadeVolume(0f);      // peak at 0°
-        float altvolume = GetCrossfadeVolume(1f / 3f);  // peak at 120°
-        float recvolume = GetCrossfadeVolume(2f / 3f);  // peak at 240°
+        // ensure final color is set
+        triangleSprite.SelfModulate = new_color;
+    }
+
+    private void SamplesMixing_UpdateMixingVolumesForRing(int ring, float mastervolume)
+    {
+        float mainvolume = weights.X * mastervolume;
+        float recvolume  = weights.Y * mastervolume;
+        float altvolume  = weights.Z * mastervolume;
 
         if (ring == 0)
         {
@@ -1514,66 +1462,207 @@ public partial class Manager : Node
             fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
             fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
         }
-
-        return (mainvolume, altvolume, recvolume);
     }
 
-    private void SetupAllMixers()
+    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
     {
-        SetupMixer(sampleMixer0, 0);
-        SetupMixer(sampleMixer1, 1);
-        SetupMixer(sampleMixer2, 2);
-        SetupMixer(sampleMixer3, 3);
-    }
-
-    private Node2D GetMixerForRing(int ring)
-    {
-        if (ring == 0) return sampleMixer0;
-        else if (ring == 1) return sampleMixer1;
-        else if (ring == 2) return sampleMixer2;
-        else if (ring == 3) return sampleMixer3;
-        else return null;
-    }
-
-    private Node2D GetPivotForRing(int ring)
-    {
-        var mixer = GetMixerForRing(ring);
-        return (Node2D)mixer.FindChild("Pivot");
-    }
-
-    void SetupMixer(Node2D mixer, int ring)
-    {
-        var increase = mixer.FindChild("IncreaseButton") as Button;
-        var decrease = mixer.FindChild("DecreaseButton") as Button;
-        var pivot = mixer.FindChild("Pivot") as Node2D;
-
-        var timerInc = new Timer
+        var ClosestPointOnTriangle = (Vector2 p, Vector2 a, Vector2 b, Vector2 c) =>
         {
-            WaitTime = 0.05,
-            OneShot = false,
-            Autostart = false
+            var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
+            {
+                Vector2 ab = b - a;
+                float t = (p - a).Dot(ab) / ab.LengthSquared();
+                t = Mathf.Clamp(t, 0f, 1f);
+                return a + ab * t;
+            };
+
+            Vector2 p0 = ClosestPointOnSegment(p, a, b);
+            Vector2 p1 = ClosestPointOnSegment(p, b, c);
+            Vector2 p2 = ClosestPointOnSegment(p, c, a);
+
+            float d0 = p.DistanceSquaredTo(p0);
+            float d1 = p.DistanceSquaredTo(p1);
+            float d2 = p.DistanceSquaredTo(p2);
+
+            float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
+            if (minDist == d0) return p0;
+            if (minDist == d1) return p1;
+            return p2;
         };
-        AddChild(timerInc);
 
-        var timerDec = new Timer
-        {
-            WaitTime = 0.05,
-            OneShot = false,
-            Autostart = false
-        };
-        AddChild(timerDec);
-
-        timerInc.Timeout += () => SetPivotRotationOffset(5, pivot, ring);
-        timerDec.Timeout += () => SetPivotRotationOffset(-5, pivot, ring);
-
-        increase.ButtonDown += () => timerInc.Start();
-        increase.ButtonUp += () => timerInc.Stop();
-
-        decrease.ButtonDown += () => timerDec.Start();
-        decrease.ButtonUp += () => timerDec.Stop();
-        
-        SetPivotRotationOffset(0, pivot, ring);
+        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
+        float distance = knobPos.DistanceTo(closest);
+        float master = Mathf.Clamp(1f - (distance / outerTriangleSize), 0f, 1f);
+        return master;
     }
+
+    #endregion
+
+    #region SynthMixing
+
+    private Vector2[] SynthMixing_knobPositions = new Vector2[2];
+    public int SynthMixing_activeSynth = 0;
+
+    public void SynthMixing_ChangeSynth(int synth)
+    {
+        // save knob position
+        SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+
+        // switch synth
+        SynthMixing_activeSynth = synth;
+
+        // remember knob position
+        knob.GlobalPosition = SynthMixing_knobPositions[SynthMixing_activeSynth];
+
+        // set chaos pad color to active ring
+        SynthMixing_StartTriangleColorChange(0.2f);
+
+        // update icons
+        if (SynthMixing_activeSynth == 0)
+        {
+            iconMain.Text = "🟢";
+            iconAlt.Text = "🎹";
+        }
+        if (SynthMixing_activeSynth == 1)
+        {
+            iconMain.Text = "🟣";
+            iconAlt.Text = "🎹";
+        }
+
+        // set mic button location
+        Node2D[] micButtons = 
+        [
+            recordSampleButton0, 
+            recordSampleButton1, 
+            recordSampleButton2, 
+            recordSampleButton3, 
+            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(), 
+            (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
+        ];
+        for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
+        micButtons[4 + SynthMixing_activeSynth].GlobalPosition = micButtonLocation.GlobalPosition;
+
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SynthMixing;
+    }
+
+    async private void SynthMixing_StartTriangleColorChange(float duration)
+    {
+        var old_color = triangleSprite.SelfModulate;
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+
+        var new_color = new Color();
+        if (SynthMixing_activeSynth == 0) new_color = Color.FromHtml("#25cc00");
+        if (SynthMixing_activeSynth == 1) new_color = Color.FromHtml("#aa00ff");
+
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        triangleSprite.SelfModulate = new_color;
+    }
+
+    private void SynthMixing_UpdateMixingVolumesForSynth(int synth, float mastervolume)
+    {
+        if (synth == 0)
+        {
+            layerVoiceOver0.audioPlayer.VolumeLinear = weights.X * mastervolume * 1.5f;
+            GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", weights.Y * mastervolume);
+        }
+        if (synth == 1)
+        {
+            layerVoiceOver1.audioPlayer.VolumeLinear = weights.X * mastervolume * 1.5f;
+            GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", weights.Y * mastervolume);
+        }
+    }
+
+    #endregion
+
+    private void OnReadyMixing()
+    {
+        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = triangleSprite.GlobalPosition;
+
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+    }
+
+    private void OnUpdateMixing(float delta)
+    {
+        // inner triangle blending
+        weights = GetBarycentricWeights
+        (
+            knob.GlobalPosition,
+            corners[0].GlobalPosition,
+            corners[1].GlobalPosition,
+            corners[2].GlobalPosition
+        );
+
+        // clamp weights
+        weights = new Vector3
+        (
+            Mathf.Clamp(weights.X, 0f, 1f),
+            Mathf.Clamp(weights.Y, 0f, 1f),
+            Mathf.Clamp(weights.Z, 0f, 1f)
+        );
+
+        // debug weights
+        if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
+
+        // outer triangle effects master volume
+        float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+
+        // update volumes of active ring
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
+        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
+    }
+
+    public Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+    {
+        // compute vectors
+        Vector2 v0 = b - a;
+        Vector2 v1 = c - a;
+        Vector2 v2 = p - a;
+
+        // compute dot products
+        float d00 = v0.Dot(v0);
+        float d01 = v0.Dot(v1);
+        float d11 = v1.Dot(v1);
+        float d20 = v2.Dot(v0);
+        float d21 = v2.Dot(v1);
+
+        // ompute denominator
+        float denom = d00 * d11 - d01 * d01;
+
+        // compute barycentric coordinates
+        float v = (d11 * d20 - d01 * d21) / denom;
+        float w = (d00 * d21 - d01 * d20) / denom;
+        float u = 1.0f - v - w;
+
+        Vector3 nonclamped = new Vector3(u, v, w);
+
+        return nonclamped;
+    }
+
+    public bool IsInsideTriangle(Vector3 weights)
+    {
+        return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
+    }
+
     #endregion
 
     #region Tutorial
@@ -1739,7 +1828,7 @@ public partial class Manager : Node
             () => SetRingVisibility(3, true), // zet blauw
             null, // druk play
             null, // geef energie
-            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); SetSampleMixersVisibility(true); },
+            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); },
             null,
             null,
             () =>
@@ -1871,7 +1960,7 @@ public partial class Manager : Node
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
 
-        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ActivateBeat();
+        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ButtonBehaviour();
     }
 
     public void OnStomp()
@@ -1890,7 +1979,7 @@ public partial class Manager : Node
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
 
-        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ActivateBeat();
+        if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ButtonBehaviour();
 
     }
 
@@ -1924,11 +2013,15 @@ public partial class Manager : Node
 
         if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
-        if (BpmManager.instance.currentBeat == 0 && currentLayerIndex == 0)
+        if (BpmManager.instance.currentBeat == 0)
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
-            SongVoiceOver.instance.OnTop();
+            
+            if (currentLayerIndex == 0)
+            {
+                SongVoiceOver.instance.OnTop();
+            }
         }
 
         int nextbeat = BpmManager.instance.currentBeat + 1;
@@ -1956,7 +2049,6 @@ public partial class Manager : Node
         SetRingVisibility(1, visible);
         SetRingVisibility(2, visible);
         SetRingVisibility(3, visible);
-        SetSampleMixersVisibility(visible);
         progressBar.Visible = visible;
         PlayPauseButton.Visible = visible;
         SetMainButtonsVisibility(visible);
@@ -2053,14 +2145,6 @@ public partial class Manager : Node
         layerButton10.Disabled = !enabled;
     }
 
-    public void SetSampleMixersVisibility(bool visible)
-    {
-        sampleMixer0.Visible = visible;
-        sampleMixer1.Visible = visible;
-        sampleMixer2.Visible = visible;
-        sampleMixer3.Visible = visible;
-    }
-
     private void UpdateAchievementsVisibility()
     {
         for (int i = 0; i < 6; i++)
@@ -2118,21 +2202,21 @@ public partial class Manager : Node
     public void CopyLayer()
     {
         CopyBeatLayoutToClipboard();
-        CopyPivotRotationsForCurrentLayerToClipboard();
+        SamplesMixing_CopyKnobsForLayer();
         CopyLayerVoiceToClipBoard();
     }
 
     public void PasteLayer()
     {
         PasteBeatLayoutFromClipboard();
-        PastePivotRotationsForCurrentLayerFromClipboard();
+        SamplesMixing_PasteKnobsLayer();
         PasteLayerVoiceFromClipBoard();
     }
 
     public void ClearLayer()
     {
         ClearLayout();
-        ClearPivotRotationsForCurrentLayer();
+        SamplesMixing_ClearKnobsForLayer();
         ClearLayerVoiceOver();
     }
 

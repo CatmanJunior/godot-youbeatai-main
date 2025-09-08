@@ -89,16 +89,15 @@ public partial class DragAndDropButton : Sprite2D
 		{
 			if (ring == 0) Manager.instance.OnStomp();
 			else if (ring == 1) Manager.instance.OnClap();
-			else ActivateBeat();
+			else ButtonBehaviour();
 		}
-		else ActivateBeat();
+		else ButtonBehaviour();
+
+		Manager.instance.SamplesMixing_ChangeRing(ring);
 	}
 
-	public void ActivateBeat()
+	public void ButtonBehaviour()
 	{
-		GD.Print("add");
-		Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
-
 		if (ring == 0) Manager.instance.firstAudioPlayer.Play();
 		if (ring == 1) Manager.instance.secondAudioPlayer.Play();
 		if (ring == 2) Manager.instance.thirdAudioPlayer.Play();
@@ -114,7 +113,11 @@ public partial class DragAndDropButton : Sprite2D
 		if (ring == 2) Manager.instance.thirdAudioPlayerRec.Play();
 		if (ring == 3) Manager.instance.fourthAudioPlayerRec.Play();
 
-		var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
-		Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
+		if (Manager.instance.button_add_beats.ButtonPressed)
+		{
+			Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
+			var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
+			Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
+		}
 	}
 }

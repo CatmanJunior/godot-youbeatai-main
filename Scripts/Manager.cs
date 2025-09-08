@@ -37,8 +37,6 @@ public partial class Manager : Node
     {
         time += (float)delta;
 
-        if (emailPromptOpen && Input.IsKeyPressed(Key.Enter)) AllLayersToMp3();
-
         HandleCopyPasting();
 
         UpdateAchievementsVisibility();

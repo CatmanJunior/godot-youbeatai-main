@@ -1441,38 +1441,6 @@ public partial class Manager : Node
         }
     }
 
-    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
-    {
-        var ClosestPointOnTriangle = (Vector2 p, Vector2 a, Vector2 b, Vector2 c) =>
-        {
-            var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
-            {
-                Vector2 ab = b - a;
-                float t = (p - a).Dot(ab) / ab.LengthSquared();
-                t = Mathf.Clamp(t, 0f, 1f);
-                return a + ab * t;
-            };
-
-            Vector2 p0 = ClosestPointOnSegment(p, a, b);
-            Vector2 p1 = ClosestPointOnSegment(p, b, c);
-            Vector2 p2 = ClosestPointOnSegment(p, c, a);
-
-            float d0 = p.DistanceSquaredTo(p0);
-            float d1 = p.DistanceSquaredTo(p1);
-            float d2 = p.DistanceSquaredTo(p2);
-
-            float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
-            if (minDist == d0) return p0;
-            if (minDist == d1) return p1;
-            return p2;
-        };
-
-        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
-        float distance = knobPos.DistanceTo(closest);
-        float master = Mathf.Clamp(1f - (distance / outerTriangleSize), 0f, 1f);
-        return master;
-    }
-
     #endregion
 
     #region SynthMixing
@@ -1556,13 +1524,13 @@ public partial class Manager : Node
     {
         if (synth == 0)
         {
-            layerVoiceOver0.audioPlayer.VolumeLinear = weights.X * mastervolume * 1.5f;
-            GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", weights.Y * mastervolume);
+            layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
+            GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", weights.Z * mastervolume);
         }
         if (synth == 1)
         {
-            layerVoiceOver1.audioPlayer.VolumeLinear = weights.X * mastervolume * 1.5f;
-            GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", weights.Y * mastervolume);
+            layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
+            GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", weights.Z * mastervolume);
         }
     }
 
@@ -1589,6 +1557,9 @@ public partial class Manager : Node
             corners[2].GlobalPosition
         );
 
+        // outer triangle effects master volume
+        float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+
         // clamp weights
         weights = new Vector3
         (
@@ -1597,11 +1568,9 @@ public partial class Manager : Node
             Mathf.Clamp(weights.Z, 0f, 1f)
         );
 
-        // debug weights
+        // debug
         if (Input.IsKeyPressed(Key.P)) GD.Print($"weights: {weights.X:F2}, {weights.Y:F2}, {weights.Z:F2}");
-
-        // outer triangle effects master volume
-        float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+        if (Input.IsKeyPressed(Key.O)) GD.Print(mastervolume);
 
         // update volumes of active ring
         bool anyrec = 
@@ -1616,6 +1585,38 @@ public partial class Manager : Node
             if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
             if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
         }
+    }
+
+    private float MasterVolumeFromDistance(Vector2 knobPos, Vector2 a, Vector2 b, Vector2 c)
+    {
+        var ClosestPointOnTriangle = (Vector2 p, Vector2 a, Vector2 b, Vector2 c) =>
+        {
+            var ClosestPointOnSegment = (Vector2 p, Vector2 a, Vector2 b) =>
+            {
+                Vector2 ab = b - a;
+                float t = (p - a).Dot(ab) / ab.LengthSquared();
+                t = Mathf.Clamp(t, 0f, 1f);
+                return a + ab * t;
+            };
+
+            Vector2 p0 = ClosestPointOnSegment(p, a, b);
+            Vector2 p1 = ClosestPointOnSegment(p, b, c);
+            Vector2 p2 = ClosestPointOnSegment(p, c, a);
+
+            float d0 = p.DistanceSquaredTo(p0);
+            float d1 = p.DistanceSquaredTo(p1);
+            float d2 = p.DistanceSquaredTo(p2);
+
+            float minDist = Mathf.Min(d0, Mathf.Min(d1, d2));
+            if (minDist == d0) return p0;
+            if (minDist == d1) return p1;
+            return p2;
+        };
+
+        Vector2 closest = ClosestPointOnTriangle(knobPos, a, b, c);
+        float distance = knobPos.DistanceTo(closest);
+        float master = Mathf.Clamp(1f - (distance / outerTriangleSize), 0f, 1f);
+        return master;
     }
 
     public Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)

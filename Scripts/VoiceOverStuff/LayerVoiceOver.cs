@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class LayerVoiceOver : Node
 {
@@ -14,7 +15,7 @@ public partial class LayerVoiceOver : Node
 	public AudioStream[] voiceOvers = new AudioStream[10];
 	AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
-	bool shouldRecord = false;
+	public bool shouldRecord = false;
 
 	public bool recording = false;
 	public bool shouldUpdateProgressBar = false;
@@ -184,7 +185,12 @@ public partial class LayerVoiceOver : Node
 			EmitSignal(SignalName.OnStartedRecording);
 		};
 
-		SetVolume(0.1f);
+		SetVolumeBeats(0.1f); // beats
+		SongVoiceOver.instance.SetVolumeSongVoice(0.1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
     }
 
     private void StopRecording()
@@ -213,39 +219,69 @@ public partial class LayerVoiceOver : Node
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
 
-		SetVolume(1f);
+		SetVolumeBeats(1f); // beats
+		SongVoiceOver.instance.SetVolumeSongVoice(1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
     }
 
-	void SetVolume(float value)
+	public void SetVolumeBeats(float value)
     {
-        float db = Mathf.LinearToDb(value);
-        Manager.instance.firstAudioPlayer.VolumeDb = db;
-        Manager.instance.secondAudioPlayer.VolumeDb = db;
-        Manager.instance.thirdAudioPlayer.VolumeDb = db;
-        Manager.instance.fourthAudioPlayer.VolumeDb = db;
-		audioPlayer.VolumeDb = db;
+		// red
+		Manager.instance.firstAudioPlayer.VolumeLinear = value;
+		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.firstAudioPlayerRec.VolumeLinear = value;
+
+		// orange
+		Manager.instance.secondAudioPlayer.VolumeLinear = value;
+		Manager.instance.secondAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.secondAudioPlayerRec.VolumeLinear = value;
+
+		// yellow
+		Manager.instance.thirdAudioPlayer.VolumeLinear = value;
+		Manager.instance.thirdAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.thirdAudioPlayerRec.VolumeLinear = value;
+
+		// blue
+		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
+		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
     }
 
-	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
+	public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
 	{
-		line.ClearPoints();
-		for (int i = 0; i < points; i++)
+		var lambda = () =>
 		{
-			float volumeoffset = 0;
-			if (voiceOvers[currentLayer] != null)
+			var offsets = new Vector2[points];
+
+			for (int i = 0; i < points; i++)
 			{
-				float length = (float)voiceOvers[currentLayer].GetLength();
-				float percentage = (float)i / (float)points;
-				float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
-				volumeoffset = volume * volumeDist;
+				float volumeoffset = 0;
+				if (voiceOvers[currentLayer] != null)
+				{
+					float length = (float)voiceOvers[currentLayer].GetLength();
+					float percentage = (float)i / points;
+					float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
+					volumeoffset = volume * volumeDist;
+				}
+
+				float angle = -Mathf.Pi / 2 + Mathf.Tau * i / points;
+				float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
+
+				offsets[i] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
 			}
 
-			float angle = -Mathf.Pi / 2 + Mathf.Tau * i / (float)points;
-			
-			float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
-			Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
-			line.AddPoint(offset);
-		}
+			return offsets;
+		};
+		
+		// async de zwaare volume offset calculaties doen
+		var offsets = await Task.Run(lambda);
+
+		// nu op de main thread de godot functies roepen
+		line.ClearPoints();
+		foreach (var offset in offsets) line.AddPoint(offset);
 	}
 
 	public void SetSmallVolumeline()

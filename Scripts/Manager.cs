@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using NAudio.Wave;
-using NAudio.Lame;
 using NAudio.Wave.SampleProviders;
-using System.Diagnostics.CodeAnalysis;
 
 public partial class Manager : Node
 {
@@ -381,6 +379,8 @@ public partial class Manager : Node
     Sprite2D[,] templateSprites;
     [Export] public Color[] colors;
     [Export] PointLight2D robotlight;
+    [Export] Sprite2D activateGreenChaosButton;
+    [Export] Sprite2D activatePurpleChaosButton;
 
     private void InitButtonActions()
     {
@@ -835,16 +835,6 @@ public partial class Manager : Node
         CloseEmailPrompt();
     }
 
-    private void ConvertWavToMp3(string filename)
-    {
-        var reader = new AudioFileReader(filename + ".wav");
-        var writer = new LameMP3FileWriter(filename + ".mp3", reader.WaveFormat, LAMEPreset.STANDARD);
-        reader.CopyTo(writer);
-        reader.Close();
-        writer.Close();
-        File.Delete(filename + ".wav");
-    }
-
     public static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
     {
         // get original audio data
@@ -1046,8 +1036,7 @@ public partial class Manager : Node
 
         ChangePitch(filename + ".wav", 2f);
 
-        // convert and finish
-        ConvertWavToMp3(filename);
+        // finish
         ShowSavingLabel(filename);
         hassavedtofile = true;
     }
@@ -1250,20 +1239,8 @@ public partial class Manager : Node
 
         ShowSavingLabel(final_name);
         hassavedtofile = true;
-        
-        if (OS.GetName() == "Windows") // convert to mp3 with naudio
-        {
-            // convert
-            ConvertWavToMp3(final_name);
 
-            // send to email
-            if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
-        }
-        if (OS.GetName() == "Android") // avoid naudio, send plain wav file
-        {
-            // send to email
-            if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
-        }
+        if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
     }
 
     async void SendToEmail(string final_name, string to)
@@ -1323,7 +1300,7 @@ public partial class Manager : Node
     // chaos pad
     [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
     [Export] public Node2D knob;
-    [Export] public Sprite2D triangleSprite;
+    [Export] public Sprite2D chaosPadTriangleSprite;
     [Export] public Label iconMain;
     [Export] public Label iconAlt;
     public Vector3 weights;
@@ -1409,7 +1386,7 @@ public partial class Manager : Node
 
     async private void SamplesMixing_StartTriangleColorChange(float duration)
     {
-        var old_color = triangleSprite.SelfModulate;
+        var old_color = chaosPadTriangleSprite.SelfModulate;
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
         var new_color = colors[SamplesMixing_activeRing];
         var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
@@ -1420,7 +1397,7 @@ public partial class Manager : Node
         {
             float t = elapsed / duration;
             Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
-            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+            chaosPadTriangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame
             await ToSignal(GetTree(), "process_frame");
@@ -1429,7 +1406,7 @@ public partial class Manager : Node
         }
 
         // ensure final color is set
-        triangleSprite.SelfModulate = new_color;
+        chaosPadTriangleSprite.SelfModulate = new_color;
     }
 
     private void SamplesMixing_UpdateMixingVolumesForRing(int ring, float mastervolume)
@@ -1548,7 +1525,7 @@ public partial class Manager : Node
 
     async private void SynthMixing_StartTriangleColorChange(float duration)
     {
-        var old_color = triangleSprite.SelfModulate;
+        var old_color = chaosPadTriangleSprite.SelfModulate;
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
         var new_color = new Color();
@@ -1563,7 +1540,7 @@ public partial class Manager : Node
         {
             float t = elapsed / duration;
             Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
-            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+            chaosPadTriangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame
             await ToSignal(GetTree(), "process_frame");
@@ -1572,7 +1549,7 @@ public partial class Manager : Node
         }
 
         // ensure final color is set
-        triangleSprite.SelfModulate = new_color;
+        chaosPadTriangleSprite.SelfModulate = new_color;
     }
 
     private void SynthMixing_UpdateMixingVolumesForSynth(int synth, float mastervolume)
@@ -1593,9 +1570,9 @@ public partial class Manager : Node
 
     private void OnReadyMixing()
     {
-        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = triangleSprite.GlobalPosition;
-        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = triangleSprite.GlobalPosition;
-        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
+        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = chaosPadTriangleSprite.GlobalPosition;
+        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
 
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
         else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
@@ -1627,8 +1604,18 @@ public partial class Manager : Node
         float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
 
         // update volumes of active ring
-        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
-        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
+        bool anyrec = 
+            SongVoiceOver.instance.recording || 
+            layerVoiceOver0.recording || 
+            layerVoiceOver0.shouldRecord || 
+            layerVoiceOver1.recording || 
+            layerVoiceOver1.shouldRecord;
+
+        if (!anyrec)
+        {
+            if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
+            if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
+        }
     }
 
     public Vector3 GetBarycentricWeights(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
@@ -2071,6 +2058,9 @@ public partial class Manager : Node
         ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
         layerVoiceOver0.textureProgressBar.Visible = visible;
         layerVoiceOver1.textureProgressBar.Visible = visible;
+        chaosPadTriangleSprite.Visible = visible;
+        activateGreenChaosButton.Visible = visible;
+        activatePurpleChaosButton.Visible = visible;
     }
 
     void SetRingVisibility(int ring, bool visible)

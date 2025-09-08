@@ -584,7 +584,7 @@ alignment = 0
 position = Vector2(-435, 141)
 
 [node name="MicButtonLocation" type="Node2D" parent="UserInterface/ChaosPad"]
-position = Vector2(0, -260.72)
+position = Vector2(0, -216.72)
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
 scale = Vector2(0.3, 0.3)

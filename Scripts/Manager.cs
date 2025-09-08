@@ -379,6 +379,8 @@ public partial class Manager : Node
     Sprite2D[,] templateSprites;
     [Export] public Color[] colors;
     [Export] PointLight2D robotlight;
+    [Export] Sprite2D activateGreenChaosButton;
+    [Export] Sprite2D activatePurpleChaosButton;
 
     private void InitButtonActions()
     {
@@ -1298,7 +1300,7 @@ public partial class Manager : Node
     // chaos pad
     [Export] public Node2D[] corners = new Node2D[3]; // left, top, right
     [Export] public Node2D knob;
-    [Export] public Sprite2D triangleSprite;
+    [Export] public Sprite2D chaosPadTriangleSprite;
     [Export] public Label iconMain;
     [Export] public Label iconAlt;
     public Vector3 weights;
@@ -1384,7 +1386,7 @@ public partial class Manager : Node
 
     async private void SamplesMixing_StartTriangleColorChange(float duration)
     {
-        var old_color = triangleSprite.SelfModulate;
+        var old_color = chaosPadTriangleSprite.SelfModulate;
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
         var new_color = colors[SamplesMixing_activeRing];
         var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
@@ -1395,7 +1397,7 @@ public partial class Manager : Node
         {
             float t = elapsed / duration;
             Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
-            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+            chaosPadTriangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame
             await ToSignal(GetTree(), "process_frame");
@@ -1404,7 +1406,7 @@ public partial class Manager : Node
         }
 
         // ensure final color is set
-        triangleSprite.SelfModulate = new_color;
+        chaosPadTriangleSprite.SelfModulate = new_color;
     }
 
     private void SamplesMixing_UpdateMixingVolumesForRing(int ring, float mastervolume)
@@ -1523,7 +1525,7 @@ public partial class Manager : Node
 
     async private void SynthMixing_StartTriangleColorChange(float duration)
     {
-        var old_color = triangleSprite.SelfModulate;
+        var old_color = chaosPadTriangleSprite.SelfModulate;
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
         var new_color = new Color();
@@ -1538,7 +1540,7 @@ public partial class Manager : Node
         {
             float t = elapsed / duration;
             Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
-            triangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+            chaosPadTriangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame
             await ToSignal(GetTree(), "process_frame");
@@ -1547,7 +1549,7 @@ public partial class Manager : Node
         }
 
         // ensure final color is set
-        triangleSprite.SelfModulate = new_color;
+        chaosPadTriangleSprite.SelfModulate = new_color;
     }
 
     private void SynthMixing_UpdateMixingVolumesForSynth(int synth, float mastervolume)
@@ -1568,9 +1570,9 @@ public partial class Manager : Node
 
     private void OnReadyMixing()
     {
-        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = triangleSprite.GlobalPosition;
-        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = triangleSprite.GlobalPosition;
-        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = triangleSprite.GlobalPosition;
+        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
+        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = chaosPadTriangleSprite.GlobalPosition;
+        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
 
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
         else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
@@ -2056,6 +2058,9 @@ public partial class Manager : Node
         ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
         layerVoiceOver0.textureProgressBar.Visible = visible;
         layerVoiceOver1.textureProgressBar.Visible = visible;
+        chaosPadTriangleSprite.Visible = visible;
+        activateGreenChaosButton.Visible = visible;
+        activatePurpleChaosButton.Visible = visible;
     }
 
     void SetRingVisibility(int ring, bool visible)

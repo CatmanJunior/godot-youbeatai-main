@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 
 using NAudio.Wave;
-using NAudio.Lame;
 using NAudio.Wave.SampleProviders;
-using System.Diagnostics.CodeAnalysis;
 
 public partial class Manager : Node
 {
@@ -835,16 +833,6 @@ public partial class Manager : Node
         CloseEmailPrompt();
     }
 
-    private void ConvertWavToMp3(string filename)
-    {
-        var reader = new AudioFileReader(filename + ".wav");
-        var writer = new LameMP3FileWriter(filename + ".mp3", reader.WaveFormat, LAMEPreset.STANDARD);
-        reader.CopyTo(writer);
-        reader.Close();
-        writer.Close();
-        File.Delete(filename + ".wav");
-    }
-
     public static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
     {
         // get original audio data
@@ -1046,8 +1034,7 @@ public partial class Manager : Node
 
         ChangePitch(filename + ".wav", 2f);
 
-        // convert and finish
-        ConvertWavToMp3(filename);
+        // finish
         ShowSavingLabel(filename);
         hassavedtofile = true;
     }
@@ -1250,20 +1237,8 @@ public partial class Manager : Node
 
         ShowSavingLabel(final_name);
         hassavedtofile = true;
-        
-        if (OS.GetName() == "Windows") // convert to mp3 with naudio
-        {
-            // convert
-            ConvertWavToMp3(final_name);
 
-            // send to email
-            if (emailInput.Text != "") SendToEmail(final_name + ".mp3", emailInput.Text);
-        }
-        if (OS.GetName() == "Android") // avoid naudio, send plain wav file
-        {
-            // send to email
-            if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
-        }
+        if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
     }
 
     async void SendToEmail(string final_name, string to)

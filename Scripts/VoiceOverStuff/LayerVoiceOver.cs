@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
 
 public partial class LayerVoiceOver : Node
 {
@@ -226,26 +227,38 @@ public partial class LayerVoiceOver : Node
 		audioPlayer.VolumeDb = db;
     }
 
-	public void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
+	public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
 	{
-		line.ClearPoints();
-		for (int i = 0; i < points; i++)
+		var lambda = () =>
 		{
-			float volumeoffset = 0;
-			if (voiceOvers[currentLayer] != null)
+			var offsets = new Vector2[points];
+
+			for (int i = 0; i < points; i++)
 			{
-				float length = (float)voiceOvers[currentLayer].GetLength();
-				float percentage = (float)i / (float)points;
-				float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
-				volumeoffset = volume * volumeDist;
+				float volumeoffset = 0;
+				if (voiceOvers[currentLayer] != null)
+				{
+					float length = (float)voiceOvers[currentLayer].GetLength();
+					float percentage = (float)i / points;
+					float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
+					volumeoffset = volume * volumeDist;
+				}
+
+				float angle = -Mathf.Pi / 2 + Mathf.Tau * i / points;
+				float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
+
+				offsets[i] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
 			}
 
-			float angle = -Mathf.Pi / 2 + Mathf.Tau * i / (float)points;
-			
-			float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
-			Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
-			line.AddPoint(offset);
-		}
+			return offsets;
+		};
+		
+		// async de zwaare volume offset calculaties doen
+		var offsets = await Task.Run(lambda);
+
+		// nu op de main thread de godot functies roepen
+		line.ClearPoints();
+		foreach (var offset in offsets) line.AddPoint(offset);
 	}
 
 	public void SetSmallVolumeline()

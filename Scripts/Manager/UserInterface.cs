@@ -47,11 +47,11 @@ public partial class Manager : Node
     [Export] public CheckButton button_is_clap;
     [Export] public CheckButton button_add_beats;
     [Export] Slider volume_treshold;
-    [Export] Panel settingsPanel;
-    [Export] Button settingsButton;
+    [Export] public Panel settingsPanel;
+    [Export] public Button settingsButton;
     [Export] Button settingsBackButton;
     [Export] Button skiptutorialbutton;
-    [Export] ProgressBar progressBar;
+    [Export] public ProgressBar progressBar;
     float progressBarValue = 0;
     [Export] Sprite2D pointer;
     [Export] public Sprite2D metronome;
@@ -63,12 +63,12 @@ public partial class Manager : Node
     [Export] Slider swingslider;
     [Export] Label swinglabel;
     [Export] Slider ClapBiasSlider;
-    [Export] Panel achievementspanel;
+    [Export] public Panel achievementspanel;
     [Export] public CheckButton layerLoopToggle;
     [Export] Label SavingLabel;
     bool savingLabelActive = false;
     float savingLabelTimer = 0;
-    [Export] Label InstructionLabel;
+    [Export] public Label InstructionLabel;
     [Export] Button allLayersToMp3;
     [Export] Sprite2D layerOutline;
     [Export] Node2D layerOutlineHolder;
@@ -119,7 +119,7 @@ public partial class Manager : Node
         saveToWavButton.Pressed += () => AudioSaving.SaveBeatAsFile(beatActives);
         skiptutorialbutton.Pressed += () =>
         {
-            tutorial_level = -1;
+            Tutorial.tutorial_level = -1;
             SetEntireInterfaceVisibility(true);
             achievementspanel.Visible = false;
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();

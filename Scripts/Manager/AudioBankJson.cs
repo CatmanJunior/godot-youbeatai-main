@@ -83,7 +83,7 @@ public partial class Manager : Node
         swingslider.Value = chosenswing;
 
         // set bpm offset
-        if (!useTutorial)
+        if (!Tutorial.useTutorial)
         {
             int offset = 0;
             string path = "res://Resources/SoundBankMatrix/bpmoffset.json";

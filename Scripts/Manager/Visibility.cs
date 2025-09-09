@@ -35,14 +35,14 @@ public partial class Manager : Node
         activatePurpleChaosButton.Visible = visible;
     }
 
-    void SetRingVisibility(int ring, bool visible)
+    public void SetRingVisibility(int ring, bool visible)
     {
         for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatSprites[ring, beat].Visible = visible;
         for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatOutlines[ring, beat].Visible = visible;
         for (int beat = 0; beat < BpmManager.beatsAmount; beat++) templateSprites[ring, beat].Visible = visible;
     }
 
-    void SetMainButtonsVisibility(bool visible)
+    public void SetMainButtonsVisibility(bool visible)
     {
         SaveLayoutButton.Visible = visible;
         LoadLayoutButton.Visible = visible;
@@ -62,7 +62,7 @@ public partial class Manager : Node
         ReverbDelayManager.instance.delaySlider.Visible = visible;
     }
 
-    void SetRecordingButtonsVisibility(bool visible)
+    public void SetRecordingButtonsVisibility(bool visible)
     {
         recordSampleButton0.Visible = visible;
         recordSampleButton1.Visible = visible;
@@ -70,7 +70,7 @@ public partial class Manager : Node
         recordSampleButton3.Visible = visible;
     }
 
-    void SetDragAndDropButtonsVisibility(bool visible)
+    public void SetDragAndDropButtonsVisibility(bool visible)
     {
         draganddropButton0.Visible = visible;
         draganddropButton1.Visible = visible;

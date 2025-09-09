@@ -5,33 +5,35 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-public partial class Manager : Node
+public static class Tutorial
 {
-    int tutorial_level = 0;
-    bool tutorialActivated = false;
+    public static int tutorial_level = 0;
+    public static bool tutorialActivated = false;
 
-    string[] instructions = null;
-    Func<bool>[] conditions = null;
-    Action[] outcomes = null;
+    static string[] instructions = null;
+    static Func<bool>[] conditions = null;
+    static Action[] outcomes = null;
 
-    void TryActivateTutorial()
+    static Manager manager => Manager.instance;
+
+    public static void TryActivateTutorial()
     {
         if (useTutorial) // enable tutorial
         {
-            SetEntireInterfaceVisibility(false);
-            achievementspanel.Visible = true;
+            manager.SetEntireInterfaceVisibility(false);
+            manager.achievementspanel.Visible = true;
         }
         else // disable tutorial
         {
             tutorial_level = -1;
-            SetEntireInterfaceVisibility(true);
-            achievementspanel.Visible = false;
+            manager.SetEntireInterfaceVisibility(true);
+            manager.achievementspanel.Visible = false;
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         }
     }
 
     // flag if tutorial mode should be enabled
-    public bool useTutorial = ReadUseTutorial();
+    public static bool useTutorial = ReadUseTutorial();
     private static bool ReadUseTutorial()
     {
         bool use;
@@ -51,12 +53,13 @@ public partial class Manager : Node
         
         return use;
     }
-    private void SetupTutorial()
+
+    public static void SetupTutorial()
     {
         var actives = (int ring) =>
         {
             int amount = 0;
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (instance.beatActives[ring, beat]) amount++;
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (manager.beatActives[ring, beat]) amount++;
             return amount;
         };
 
@@ -111,18 +114,18 @@ public partial class Manager : Node
         conditions =
         [
             // intro
-            () => clapped, // t key is debug only
+            () => manager.clapped, // t key is debug only
 
             // rode ring
             () => actives(0) >= 4, // temp
             () => actives(0) >= 6, // temp
             () => BpmManager.instance.playing == true, // temp
-            () => stompedAmount > 4, // temp
+            () => manager.stompedAmount > 4, // temp
 
             // oranje ring
             () => actives(1) >= 4, // temp
             () => BpmManager.instance.playing == true, // temp
-            () => clappedAmount > 4, // temp
+            () => manager.clappedAmount > 4, // temp
 
             // gele ring
             () => actives(2) >= 2, // temp
@@ -134,52 +137,52 @@ public partial class Manager : Node
             () => BpmManager.instance.playing == true, // temp
 
             // progressie bar
-            () => progressBar.Value > 50,
+            () => manager.progressBar.Value > 50,
 
             // custom sample
-            () => recordSampleButton0.recordedAudio != null,
+            () => manager.recordSampleButton0.recordedAudio != null,
             () => true, // skip for now
             () => BpmManager.instance.playing == true, // temp
 
             // effects
 
             // layer voice over
-            () => layerVoiceOver0.finished || layerVoiceOver1.finished,
-            () => layerLoopToggle.ButtonPressed,
+            () => manager.layerVoiceOver0.finished || manager.layerVoiceOver1.finished,
+            () => manager.layerLoopToggle.ButtonPressed,
             () => BpmManager.instance.playing == true,
-            () => savedToLaout == true && loadedtemplate == true,
+            () => manager.savedToLaout == true && manager.loadedtemplate == true,
 
             // song voice over
             () => SongVoiceOver.instance.finished,
-            () => hassavedtofile == true,
+            () => manager.hassavedtofile == true,
             () => false
         ];
 
         outcomes =
         [
-            () => { SetRingVisibility(0, true); cross.Visible = true; },
+            () => { manager.SetRingVisibility(0, true); manager.cross.Visible = true; },
             null,
-            () => PlayPauseButton.Visible = true,
-            () => progressBar.Visible = true,
-            () => SetRingVisibility(1, true),
+            () => manager.PlayPauseButton.Visible = true,
+            () => manager.progressBar.Visible = true,
+            () => manager.SetRingVisibility(1, true),
             null,
             null,
-            () => SetRingVisibility(2, true), // zet geel
-            () => SetRingVisibility(3, true), // zet blauw
+            () => manager.SetRingVisibility(2, true), // zet geel
+            () => manager.SetRingVisibility(3, true), // zet blauw
             null, // druk play
             null, // geef energie
-            () => { SetRecordingButtonsVisibility(true); SetDragAndDropButtonsVisibility(true); },
+            () => { manager.SetRecordingButtonsVisibility(true); manager.SetDragAndDropButtonsVisibility(true); },
             null,
             null,
             () =>
             {
-                ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = true;
-                layerVoiceOver0.textureProgressBar.Visible = true;
+                ((Sprite2D)manager.layerVoiceOver0.recordLayerButton.GetParent()).Visible = true;
+                manager.layerVoiceOver0.textureProgressBar.Visible = true;
             },
 
             // layer voice over
-            () => { SetLayerSwitchButtonsVisibility(true); layerLoopToggle.Visible = true;}, // before doing liedje modus
-            () => SetMainButtonsVisibility(true), // before pressing play
+            () => { manager.SetLayerSwitchButtonsVisibility(true); manager.layerLoopToggle.Visible = true;}, // before doing liedje modus
+            () => manager.SetMainButtonsVisibility(true), // before pressing play
             null, // before saving to layout
             () =>
             {
@@ -189,17 +192,17 @@ public partial class Manager : Node
             },
 
             // song voice over
-            () => { settingsButton.Visible = true; settingsPanel.Visible = true; }, // before saving to file
-            () => SetEntireInterfaceVisibility(true), // enable all
+            () => { manager.settingsButton.Visible = true; manager.settingsPanel.Visible = true; }, // before saving to file
+            () => manager.SetEntireInterfaceVisibility(true), // enable all
             null
         ];
     }
 
-    private void UpdateTutorial()
+    public static void UpdateTutorial()
     {
         void SpeakTutorialInstruction(int instruction)
         {
-            if (muteSpeach.ButtonPressed) return;
+            if (manager.muteSpeach.ButtonPressed) return;
 
             var without_emoticons = (string input) =>
             {
@@ -219,10 +222,10 @@ public partial class Manager : Node
             DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
         }
 
-        if (!first_tts_done && useTutorial)
+        if (!manager.first_tts_done && useTutorial)
         {
             SpeakTutorialInstruction(0);
-            first_tts_done = true;
+            manager.first_tts_done = true;
         }
 
         if (tutorial_level != -1 && useTutorial)
@@ -230,18 +233,18 @@ public partial class Manager : Node
             string instruction = instructions[tutorial_level];
             Func<bool> condition = conditions[tutorial_level];
             Action outcome = outcomes[tutorial_level];
-            InstructionLabel.Text = instruction;
+            manager.InstructionLabel.Text = instruction;
 
-            f7_pressed_lastframe = f7_pressed;
-            f7_pressed = Input.IsKeyPressed(Key.F7);
-            bool skip = f7_pressed && f7_pressed != f7_pressed_lastframe;
+            manager.f7_pressed_lastframe = manager.f7_pressed;
+            manager.f7_pressed = Input.IsKeyPressed(Key.F7);
+            bool skip = manager.f7_pressed && manager.f7_pressed != manager.f7_pressed_lastframe;
 
             if (condition() || skip)
             {
                 if (outcome != null) outcome();
                 tutorial_level++;
-                EmitAchievementParticles();
-                PlayExtraSFX(achievement_sfx);
+                manager.EmitAchievementParticles();
+                manager.PlayExtraSFX(manager.achievement_sfx);
                 SpeakTutorialInstruction(tutorial_level);
             }
         }

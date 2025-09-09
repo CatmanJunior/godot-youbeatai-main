@@ -2,7 +2,7 @@ using Godot;
 
 public partial class Manager : Node
 {
-    bool loadedtemplate = false;
+    public bool loadedtemplate = false;
     public bool hassavedtofile = false;
     bool metronome_sfx_enabled = false;
     bool up_pressed = false;
@@ -13,11 +13,11 @@ public partial class Manager : Node
 	bool lf_pressed_lastframe = false;
     bool rt_pressed = false;
 	bool rt_pressed_lastframe = false;
-    bool f7_pressed = false;
-	bool f7_pressed_lastframe = false;
+    public bool f7_pressed = false;
+	public bool f7_pressed_lastframe = false;
     float time = 0;
     float slowBeatTimer = 0;
-    bool first_tts_done = false;
+    public bool first_tts_done = false;
     private bool ctrlc_pressed = false;
     private bool ctrl_v_pressed = false;
     bool[,] beatClipboard = new bool[4, BpmManager.beatsAmount];
@@ -28,7 +28,7 @@ public partial class Manager : Node
     private bool spacedownlastframe = false;
     private bool enterdownlastframe = false;
     float timeafterplay = 0;
-    bool savedToLaout = false;
+    public bool savedToLaout = false;
     private float startswing;
 
     AudioStream clipboardLayerVoice0;

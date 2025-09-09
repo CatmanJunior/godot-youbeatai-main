@@ -3,7 +3,7 @@ using Godot;
 public partial class Manager : Node
 {
     bool loadedtemplate = false;
-    bool hassavedtofile = false;
+    public bool hassavedtofile = false;
     bool metronome_sfx_enabled = false;
     bool up_pressed = false;
 	bool up_pressed_lastframe = false;

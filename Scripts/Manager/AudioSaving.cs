@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 
-public partial class Manager : Node
+public static class AudioSaving
 {
-    public void AllLayersToMp3()
+    public static void AllLayersToMp3()
     {
-        SetCurrentLayer(beatActives);
-        SaveSongAsFile(layers);
-        CloseEmailPrompt();
+        Manager.instance.SetCurrentLayer(Manager.instance.beatActives);
+        SaveSongAsFile(Manager.instance.layers);
+        Manager.instance.CloseEmailPrompt();
     }
 
     public static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
@@ -76,7 +76,7 @@ public partial class Manager : Node
         return newAudioStream;
     }
 
-    public void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
+    public static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
     {
         if (audioStreamWav.Stereo) audioStreamWav = ConvertStereoToMono(audioStreamWav);
         byte[] pcmData = audioStreamWav.Data;
@@ -84,7 +84,7 @@ public partial class Manager : Node
         GD.Print($"WAV file successfully created at: {filePath}");
     }
 
-    public AudioStreamWav ConvertStereoToMono(AudioStreamWav stereoStream)
+    public static AudioStreamWav ConvertStereoToMono(AudioStreamWav stereoStream)
     {
         AudioStreamWav monoStream = (AudioStreamWav)stereoStream.Duplicate();
         var audioData = stereoStream.Data;
@@ -126,7 +126,7 @@ public partial class Manager : Node
         return monoStream;
     }
 
-    public void MixAudioFiles(string file1, string file2, string outputFile)
+    public static void MixAudioFiles(string file1, string file2, string outputFile)
     {
         using (var reader1 = new AudioFileReader(file1))
         {
@@ -164,7 +164,7 @@ public partial class Manager : Node
         }
     }
 
-    public void SaveBeatAsFile(bool[,] loop)
+    public static void SaveBeatAsFile(bool[,] loop)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
         string filename = "beat_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime;
@@ -187,7 +187,7 @@ public partial class Manager : Node
                 if (currentLoop[ring, beat])
                 {
                     // get audio sample of beat
-                    AudioStreamWav audioStreamWav = (AudioStreamWav)mainAudioFiles[ring];
+                    AudioStreamWav audioStreamWav = (AudioStreamWav)Manager.instance.mainAudioFiles[ring];
                     var audioBytes = audioStreamWav.GetData();
 
                     // Convert byte[] to float[] (each pcm sample is a 16 bit integer also known as a short)
@@ -219,11 +219,11 @@ public partial class Manager : Node
         ChangePitch(filename + ".wav", 2f);
 
         // finish
-        ShowSavingLabel(filename);
-        hassavedtofile = true;
+        Manager.instance.ShowSavingLabel(filename);
+        Manager.instance.hassavedtofile = true;
     }
 
-    public void SaveSongAsFile(List<bool[,]> loops)
+    public static void SaveSongAsFile(List<bool[,]> loops)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
 
@@ -259,7 +259,7 @@ public partial class Manager : Node
                     if (currentLoop[ring, beat])
                     {
                         // get audio sample of beat
-                        AudioStreamWav audioStreamWav = (AudioStreamWav)mainAudioFiles[ring];
+                        AudioStreamWav audioStreamWav = (AudioStreamWav)Manager.instance.mainAudioFiles[ring];
                         var audioBytes = audioStreamWav.GetData();
 
                         // Convert byte[] to float[] (each pcm sample is a 16 bit integer also known as a short)
@@ -292,7 +292,7 @@ public partial class Manager : Node
         ChangePitch(beats_name + ".wav", 2f);
 
         // export layersvoiceovers0 as single wav
-        AudioStream[] voiceovers0 = layerVoiceOver0.voiceOvers;
+        AudioStream[] voiceovers0 = Manager.instance.layerVoiceOver0.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
             string name = user("layer" + i.ToString() + "a.wav");
@@ -345,7 +345,7 @@ public partial class Manager : Node
         for (int i = 0; i < layer0_inputs.Count; i++) File.Delete(layer0_inputs[i]);
 
         // export layersvoiceovers1 as single wav
-        AudioStream[] voiceovers1 = layerVoiceOver1.voiceOvers;
+        AudioStream[] voiceovers1 = Manager.instance.layerVoiceOver1.voiceOvers;
         for (int i = 0; i < 10; i++)
         {
             string name = user("layer" + i.ToString() + "b.wav");
@@ -419,19 +419,19 @@ public partial class Manager : Node
         if (song != null) File.Delete(song_name + ".wav");
         File.Delete(beats_with_song_name + ".wav");
 
-        ShowSavingLabel(final_name);
-        hassavedtofile = true;
+        Manager.instance.ShowSavingLabel(final_name);
+        Manager.instance.hassavedtofile = true;
 
-        if (emailInput.Text != "") SendToEmail(final_name + ".wav", emailInput.Text);
+        if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
     }
 
-    async void SendToEmail(string final_name, string to)
+    async static void SendToEmail(string final_name, string to)
     {
         Action task = () => EmailSender.SendWav(ProjectSettings.GlobalizePath(final_name), to);
         await Task.Run(task);
     }
 
-    public void ChangePitch(string filePath, float pitchFactor)
+    public static void ChangePitch(string filePath, float pitchFactor)
     {
         List<float> outputBuffer = new List<float>();
         WaveFormat waveFormat;

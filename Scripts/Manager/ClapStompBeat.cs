@@ -4,10 +4,10 @@ using System;
 
 public partial class Manager : Node
 {
-    bool stomped = false;
-    bool clapped = false;
-    int clappedAmount = 0;
-    int stompedAmount = 0;
+    public bool stomped = false;
+    public bool clapped = false;
+    public int clappedAmount = 0;
+    public int stompedAmount = 0;
 
     private void CheckIfClappingOrStomping()
     {

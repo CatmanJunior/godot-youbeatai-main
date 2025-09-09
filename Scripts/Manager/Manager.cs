@@ -12,7 +12,7 @@ public partial class Manager : Node
         InitAllAudioPlayers();
         InitButtonActions();
         SpritePlacement();
-        SetupTutorial();
+        Tutorial.SetupTutorial();
         OnReadyMixing();
     }
 
@@ -28,10 +28,10 @@ public partial class Manager : Node
 
         if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
 
-        if (!tutorialActivated)
+        if (!Tutorial.tutorialActivated)
         {
-            TryActivateTutorial();
-            tutorialActivated = true;
+            Tutorial.TryActivateTutorial();
+            Tutorial.tutorialActivated = true;
         }
 
         if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
@@ -51,7 +51,7 @@ public partial class Manager : Node
 
         metronome_sfx_enabled = metronome_toggle.ButtonPressed;
 
-        UpdateTutorial();
+        Tutorial.UpdateTutorial();
 
         HandleParticles(delta);
 

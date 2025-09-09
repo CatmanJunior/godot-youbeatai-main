@@ -1,7 +1,7 @@
 [gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
-[ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="1_rfd7i"]
+[ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
 [ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="2_1eep1"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="2_1ig4u"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="2_c85ny"]
@@ -322,15 +322,22 @@ metadata/_edit_use_anchors_ = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("layerVoiceOver0", "layerVoiceOver1", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "activateGreenChaosButton", "activatePurpleChaosButton", "emailPrompt", "emailInput", "emailEnter", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "activateGreenChaosButton", "activatePurpleChaosButton", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
-layerVoiceOver0 = NodePath("../LayerVoiceOver0")
-layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
 metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
+emailPrompt = NodePath("../../EmailPrompt")
+emailInput = NodePath("../../EmailPrompt/Input")
+emailEnter = NodePath("../../EmailPrompt/Enter")
+corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
+knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
+chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
+iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
+iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
+micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
@@ -380,7 +387,7 @@ progressBar = NodePath("../ProgressBar")
 pointer = NodePath("../../UserInterface/Pointer")
 metronome = NodePath("../../UserInterface/metronome/metronome_point")
 metronomebg = NodePath("../../UserInterface/metronome")
-bpmLabel = NodePath("../../UserInterface/BpmLabel")
+bpmLabel = NodePath("../../UserInterface/SettingsPanel/BpmLabel")
 draganddropthing = NodePath("../../UserInterface/draganddropthing")
 swingslider = NodePath("../../UserInterface/SettingsPanel/Sliders/SwingSlider")
 swinglabel = NodePath("../../UserInterface/SettingsPanel/Sliders/SwingSlider/SwingLabel")
@@ -399,15 +406,8 @@ colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3,
 robotlight = NodePath("../../UserInterface/Robot/SubViewportContainer/RobotLight")
 activateGreenChaosButton = NodePath("../../UserInterface/ControlsGroup/GreenSelectButton")
 activatePurpleChaosButton = NodePath("../../UserInterface/ControlsGroup/PurpleSelectButton")
-emailPrompt = NodePath("../../EmailPrompt")
-emailInput = NodePath("../../EmailPrompt/Input")
-emailEnter = NodePath("../../EmailPrompt/Enter")
-corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
-knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
-chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
-iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
-iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
-micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
+layerVoiceOver0 = NodePath("../LayerVoiceOver0")
+layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
@@ -457,6 +457,7 @@ theme_override_styles/fill = ExtResource("10_t1q83")
 max_value = 1.0
 fill_mode = 3
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
@@ -579,6 +580,7 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
 text = "⚙️ Instellingen"
 alignment = 0
+metadata/_edit_use_anchors_ = true
 
 [node name="ChaosPad" type="Node2D" parent="UserInterface"]
 position = Vector2(-435, 141)
@@ -609,6 +611,7 @@ theme_override_font_sizes/font_size = 48
 text = "🍎"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
 offset_left = -163.334
@@ -620,6 +623,7 @@ theme_override_font_sizes/font_size = 48
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
 offset_left = 213.333
@@ -631,6 +635,7 @@ theme_override_font_sizes/font_size = 48
 text = "🍏"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
 z_index = 2
@@ -1290,18 +1295,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BpmLabel" type="Label" parent="UserInterface"]
-layout_mode = 0
-offset_left = 498.89
-offset_top = 299.0
-offset_right = 543.89
-offset_bottom = 366.0
-theme = ExtResource("22_hpc6h")
-text = "bpm"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
 [node name="draganddropthing" type="Sprite2D" parent="UserInterface"]
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("2_1ig4u")
@@ -1392,7 +1385,7 @@ offset = Vector2(0, -150)
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 visible = false
 z_index = -1
-position = Vector2(507, 196)
+position = Vector2(1419, 196)
 scale = Vector2(4, 62)
 texture = SubResource("CanvasTexture_6dn85")
 
@@ -2002,6 +1995,24 @@ offset_bottom = 40.0
 theme = ExtResource("22_hpc6h")
 text = "🎙️"
 label_settings = SubResource("LabelSettings_5adyu")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BpmLabel" type="Label" parent="UserInterface/SettingsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.528039
+anchor_top = -0.725
+anchor_right = -0.480383
+anchor_bottom = -0.694444
+offset_left = 1138.89
+offset_top = 659.0
+offset_right = 1183.89
+offset_bottom = 726.0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 32
+text = "bpm"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true

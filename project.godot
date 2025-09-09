@@ -12,7 +12,7 @@ config_version=5
 
 config/name="youbeatai-godot"
 run/main_scene="uid://88rxelg1bo3"
-config/features=PackedStringArray("4.5", "C#", "Mobile")
+config/features=PackedStringArray("4.4", "C#", "Mobile")
 
 [audio]
 

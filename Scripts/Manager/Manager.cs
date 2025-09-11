@@ -34,6 +34,9 @@ public partial class Manager : Node
             Tutorial.tutorialActivated = true;
         }
 
+        if (copyPaseClearButtonHolderTimeSinceActivation >= 3.5f) SetCopyPasteClearButtonsActive(false);
+        else copyPaseClearButtonHolderTimeSinceActivation += (float)delta;
+
         if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
         else savingLabelActive = false;
         SavingLabel.Visible = savingLabelActive;

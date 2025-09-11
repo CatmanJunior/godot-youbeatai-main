@@ -120,11 +120,24 @@ public partial class Manager : Node
         chaosPadTriangleSprite.SelfModulate = new_color;
     }
 
-    private void SamplesMixing_UpdateMixingVolumesForRing(int ring, float mastervolume)
+    private void SamplesMixing_UpdateMixingVolumesForRing(int ring, float mastervolume, Vector3? givenWeights = null)
     {
-        float mainvolume = weights.X * mastervolume;
-        float recvolume  = weights.Y * mastervolume;
-        float altvolume  = weights.Z * mastervolume;
+        float mainvolume;
+        float recvolume;
+        float altvolume;
+
+        if (givenWeights == null)
+        {
+            mainvolume = weights.X * mastervolume;
+            recvolume  = weights.Y * mastervolume;
+            altvolume  = weights.Z * mastervolume;
+        }
+        else
+        {
+            mainvolume = givenWeights.Value.X * mastervolume;
+            recvolume  = givenWeights.Value.Y * mastervolume;
+            altvolume  = givenWeights.Value.Z * mastervolume;
+        }
 
         if (ring == 0)
         {
@@ -150,6 +163,46 @@ public partial class Manager : Node
             fourthAudioPlayerAlt.VolumeDb = Mathf.LinearToDb(altvolume);
             fourthAudioPlayerRec.VolumeDb = Mathf.LinearToDb(recvolume);
         }
+    }
+
+    public void SamplesMixing_ReApplyRememberedMixingVolumesForAllRings()
+    {
+        var result0 = SampleMixing_GetRememberedWeightsForRing(0);
+        SamplesMixing_UpdateMixingVolumesForRing(0, result0.mastervolume, result0.weights);
+        var result1 = SampleMixing_GetRememberedWeightsForRing(1);
+        SamplesMixing_UpdateMixingVolumesForRing(1, result1.mastervolume, result1.weights);
+        var result2 = SampleMixing_GetRememberedWeightsForRing(2);
+        SamplesMixing_UpdateMixingVolumesForRing(2, result2.mastervolume, result2.weights);
+        var result3 = SampleMixing_GetRememberedWeightsForRing(3);
+        SamplesMixing_UpdateMixingVolumesForRing(3, result3.mastervolume, result3.weights);
+    }
+
+    private (Vector3 weights, float mastervolume) SampleMixing_GetRememberedWeightsForRing(int ring)
+    {
+        // get knob
+        var rememberedKnobPositionForRing = SamplesMixing_knobPositions[(currentLayerIndex * 4) + ring];
+
+        // inner triangle blending
+        var tempWeights = GetBarycentricWeights
+        (
+            rememberedKnobPositionForRing,
+            corners[0].GlobalPosition,
+            corners[1].GlobalPosition,
+            corners[2].GlobalPosition
+        );
+
+        // outer triangle effects master volume
+        float tempMasterVolume = IsInsideTriangle(tempWeights) ? 1f : MasterVolumeFromDistance(rememberedKnobPositionForRing, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+
+        // clamp weights
+        tempWeights = new Vector3
+        (
+            Mathf.Clamp(tempWeights.X, 0f, 1f),
+            Mathf.Clamp(tempWeights.Y, 0f, 1f),
+            Mathf.Clamp(tempWeights.Z, 0f, 1f)
+        );
+
+        return (tempWeights, tempMasterVolume);
     }
 
     #endregion

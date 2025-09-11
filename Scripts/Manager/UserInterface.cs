@@ -85,18 +85,27 @@ public partial class Manager : Node
     [Export] PointLight2D robotlight;
     [Export] Sprite2D activateGreenChaosButton;
     [Export] Sprite2D activatePurpleChaosButton;
+    [Export] Node2D copyPasteClearButtonsHolder;
+    float copyPaseClearButtonHolderTimeSinceActivation = 0;
+
+    private void SetCopyPasteClearButtonsActive(bool active)
+    {
+        copyPasteClearButtonsHolder.Visible = active;
+        copyPasteClearButtonsHolder.Position = active ? Vector2.Zero : copyPasteClearButtonsHolder.Position + new Vector2(0, 20000);
+        copyPaseClearButtonHolderTimeSinceActivation = 0;
+    }
 
     private void InitButtonActions()
     {
-        layerButton1.Pressed += () => { SwitchLayer(1); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton2.Pressed += () => { SwitchLayer(2); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton3.Pressed += () => { SwitchLayer(3); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton4.Pressed += () => { SwitchLayer(4); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton5.Pressed += () => { SwitchLayer(5); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton6.Pressed += () => { SwitchLayer(6); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton7.Pressed += () => { SwitchLayer(7); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); };
-        layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); };
+        layerButton1.Pressed += () => { SwitchLayer(1); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton2.Pressed += () => { SwitchLayer(2); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton3.Pressed += () => { SwitchLayer(3); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton4.Pressed += () => { SwitchLayer(4); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton5.Pressed += () => { SwitchLayer(5); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton6.Pressed += () => { SwitchLayer(6); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton7.Pressed += () => { SwitchLayer(7); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
+        layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
         layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
         allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AudioSaving.AllLayersToMp3;

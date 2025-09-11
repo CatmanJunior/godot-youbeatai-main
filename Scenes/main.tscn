@@ -1950,7 +1950,7 @@ offset_bottom = 108.0
 focus_mode = 0
 max_value = 1.0
 step = 0.001
-value = 0.1
+value = 0.25
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold"]

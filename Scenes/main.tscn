@@ -1344,6 +1344,7 @@ offset_left = -360.0
 offset_top = -329.0
 offset_right = 360.0
 offset_bottom = -253.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_o1aky")
 
 [node name="LayerLoopToggle" type="CheckButton" parent="UserInterface"]

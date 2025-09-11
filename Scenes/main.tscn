@@ -562,25 +562,6 @@ layout_mode = 3
 anchors_preset = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="SettingsButton" type="Button" parent="UserInterface"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -623.0
-offset_top = -343.0
-offset_right = -563.0
-offset_bottom = -283.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 25
-text = "⚙"
-metadata/_edit_use_anchors_ = true
-
 [node name="ChaosPad" type="Node2D" parent="UserInterface"]
 position = Vector2(-435, 141)
 
@@ -1633,6 +1614,25 @@ scale = Vector2(26.7019, 41.8954)
 texture = ExtResource("22_wax6p")
 metadata/_edit_lock_ = true
 
+[node name="SettingsButton" type="Button" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -623.0
+offset_top = -343.0
+offset_right = -563.0
+offset_bottom = -283.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 25
+text = "⚙"
+metadata/_edit_use_anchors_ = true
+
 [node name="SettingsPanel" type="Panel" parent="UserInterface"]
 visible = false
 top_level = true
@@ -1673,7 +1673,7 @@ position = Vector2(328, 136)
 scale = Vector2(1.8903, 1.8903)
 
 [node name="BpmUpButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
-offset_left = 2.0
+offset_left = 34.0
 offset_top = 3.0
 offset_right = 75.0
 offset_bottom = 43.0
@@ -1684,7 +1684,7 @@ text = "🐇"
 [node name="BpmDownButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
 offset_left = -75.0
 offset_top = 3.0
-offset_right = -2.0
+offset_right = -32.0
 offset_bottom = 43.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
@@ -2097,9 +2097,9 @@ metadata/_edit_use_anchors_ = true
 [node name="BpmLabel" type="Label" parent="UserInterface/SettingsPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.528039
+anchor_left = -0.674133
 anchor_top = -0.725
-anchor_right = -0.480383
+anchor_right = -0.626477
 anchor_bottom = -0.694444
 offset_left = 1138.89
 offset_top = 659.0

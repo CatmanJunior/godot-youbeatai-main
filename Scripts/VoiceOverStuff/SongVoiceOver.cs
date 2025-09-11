@@ -135,7 +135,7 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
 
-		SetVolumeBeats(1f); // beats
+		Manager.instance.SamplesMixing_ReApplyRememberedMixingVolumesForAllRings(); // beats
 		SetVolumeSongVoice(1f); // song
 		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
 		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple

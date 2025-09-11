@@ -93,6 +93,18 @@ public partial class Manager : Node
 
         CheckIfClappingOrStomping();
 
+        // make fullscreen if f11 is pressed
+        f11_pressed_lastframe = f11_pressed;
+        f11_pressed = Input.IsKeyPressed(Key.F11);
+        bool toggle = f11_pressed && f11_pressed != f11_pressed_lastframe;
+        if (toggle)
+        {
+            GD.Print("Toggle Fullscreen");
+            var window = GetWindow();
+            if (window.Mode == Window.ModeEnum.Fullscreen) window.Mode = Window.ModeEnum.Windowed;
+            else window.Mode = Window.ModeEnum.Fullscreen;
+        }
+
         if (BpmManager.instance.playing)
         {
             timeafterplay += ((float)delta);

@@ -15,6 +15,8 @@ public partial class Manager : Node
 	bool rt_pressed_lastframe = false;
     public bool f7_pressed = false;
 	public bool f7_pressed_lastframe = false;
+    public bool f11_pressed = false;
+	public bool f11_pressed_lastframe = false;
     float time = 0;
     float slowBeatTimer = 0;
     public bool first_tts_done = false;

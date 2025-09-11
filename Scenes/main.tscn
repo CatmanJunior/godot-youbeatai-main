@@ -831,6 +831,22 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 
+[node name="Icon" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton0"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -32.5
+offset_right = 7.5
+offset_bottom = 7.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "👞"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
 position = Vector2(-513.887, 325.906)
@@ -838,6 +854,22 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 1
+
+[node name="Icon2" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton1"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.284
+offset_top = -30.5399
+offset_right = 6.71596
+offset_bottom = 9.46008
+grow_horizontal = 2
+grow_vertical = 2
+text = "👏"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
@@ -847,6 +879,22 @@ texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 2
 
+[node name="Icon3" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton2"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.892
+offset_top = -30.1479
+offset_right = 7.10797
+offset_bottom = 9.8521
+grow_horizontal = 2
+grow_vertical = 2
+text = "📣"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
 position = Vector2(-363.887, 325.906)
@@ -854,6 +902,22 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 3
+
+[node name="Icon4" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton3"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.892
+offset_top = -30.1479
+offset_right = 7.10797
+offset_bottom = 9.8521
+grow_horizontal = 2
+grow_vertical = 2
+text = "⌚"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
@@ -863,6 +927,22 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("33_aqgau")
 
+[node name="Icon5" type="Label" parent="UserInterface/ControlsGroup/GreenSelectButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.108
+offset_top = -22.0399
+offset_right = -1.10798
+offset_bottom = 0.960068
+grow_horizontal = 2
+grow_vertical = 2
+text = "🐻"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
 z_index = -4
@@ -871,6 +951,22 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("33_aqgau")
 id = 1
+
+[node name="Icon6" type="Label" parent="UserInterface/ControlsGroup/PurpleSelectButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.108
+offset_top = -22.0399
+offset_right = -1.10798
+offset_bottom = 0.960068
+grow_horizontal = 2
+grow_vertical = 2
+text = "🐦‍⬛"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)

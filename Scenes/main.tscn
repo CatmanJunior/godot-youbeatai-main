@@ -488,7 +488,6 @@ resonance = 0.2
 audio_bus = &"Green"
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
-visible = false
 closed = true
 width = 3.0
 default_color = Color(0.146667, 0.8, 0, 1)
@@ -537,7 +536,6 @@ release_time = 0.031
 audio_bus = &"Purple"
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
-visible = false
 closed = true
 width = 3.0
 default_color = Color(0.516666, 0, 1, 1)

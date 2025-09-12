@@ -33,6 +33,8 @@ public partial class Manager : Node
         chaosPadTriangleSprite.Visible = visible;
         activateGreenChaosButton.Visible = visible;
         activatePurpleChaosButton.Visible = visible;
+        layerVoiceOver0.bigLine.Visible = visible;
+        layerVoiceOver1.bigLine.Visible = visible;
     }
 
     public void SetRingVisibility(int ring, bool visible)

@@ -37,7 +37,7 @@
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
-[ext_resource type="Texture2D" uid="uid://b40ygwqkjloik" path="res://Resources/Textures/driehoeh_met_fade5.png" id="29_aqgau"]
+[ext_resource type="Texture2D" uid="uid://cel32nk13mowt" path="res://Resources/Textures/driehoeh_met_fade6vector.png" id="29_aqgau"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 
@@ -598,7 +598,7 @@ position = Vector2(376.667, 233.333)
 offset_left = -540.0
 offset_top = 76.667
 offset_right = -440.0
-offset_bottom = 176.667
+offset_bottom = 176.66702
 scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🍎"
@@ -609,7 +609,7 @@ metadata/_edit_use_anchors_ = true
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
 offset_left = -163.334
 offset_top = -600.0
-offset_right = -63.3333
+offset_right = -63.333298
 offset_bottom = -500.0
 scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
@@ -622,7 +622,7 @@ metadata/_edit_use_anchors_ = true
 offset_left = 213.333
 offset_top = 73.334
 offset_right = 313.333
-offset_bottom = 173.334
+offset_bottom = 173.33401
 scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🍏"

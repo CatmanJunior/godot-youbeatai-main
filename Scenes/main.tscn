@@ -35,9 +35,9 @@
 [ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="26_jwpg7"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
-[ext_resource type="Texture2D" uid="uid://mx66dr2ct711" path="res://Resources/Textures/triangle_fade.png" id="28_536cc"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
+[ext_resource type="Texture2D" uid="uid://b40ygwqkjloik" path="res://Resources/Textures/driehoeh_met_fade5.png" id="29_aqgau"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 
@@ -577,7 +577,7 @@ texture_scale = 1.71
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("28_536cc")
+texture = ExtResource("29_aqgau")
 
 [node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
 position = Vector2(-383.333, 240)

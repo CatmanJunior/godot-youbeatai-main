@@ -123,7 +123,7 @@ public partial class Manager : Node
                 GetTree().Quit();
             }
         };
-        PlayPauseButton.Pressed += OnPlayPauseButton;
+        PlayPauseButton.ButtonUp += OnPlayPauseButton;
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
         saveToWavButton.Pressed += () => AudioSaving.SaveBeatAsFile(beatActives);

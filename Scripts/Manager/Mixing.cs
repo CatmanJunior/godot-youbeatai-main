@@ -267,7 +267,7 @@ public partial class Manager : Node
         if (SynthMixing_activeSynth == 1) old_color = Color.FromHtml("#aa00ff");
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
-        var new_color = old_color.Lightened(0.5f);
+        var new_color = old_color.Lightened(1f);
         var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
         // brighten

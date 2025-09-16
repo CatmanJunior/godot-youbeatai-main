@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=63 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -43,6 +43,10 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
+
+[sub_resource type="Curve" id="Curve_aqgau"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -338,6 +342,8 @@ chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
 iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
+SynthMixing_LineScaleCurve = SubResource("Curve_aqgau")
+SynthMixing_LineColorCurve = SubResource("Curve_aqgau")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")

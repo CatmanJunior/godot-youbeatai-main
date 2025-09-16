@@ -213,6 +213,9 @@ public partial class Manager : Node
     private Vector2[] SynthMixing_knobPositions = new Vector2[2];
     public int SynthMixing_activeSynth = 0;
 
+    [Export] private Curve SynthMixing_LineScaleCurve;
+    [Export] private Curve SynthMixing_LineColorCurve;
+
     public void SynthMixing_ChangeSynth(int synth)
     {
         // save knob position
@@ -272,7 +275,8 @@ public partial class Manager : Node
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            float lerped = Mathf.Lerp(old_scale, new_scale, t);
+            float ct = SynthMixing_LineScaleCurve?.Sample(t) ?? t;
+            float lerped = Mathf.Lerp(old_scale, new_scale, ct);
             layerVoiceOver.bigLine.Scale = Vector2.One * lerped;
 
             // yield one frame
@@ -288,7 +292,8 @@ public partial class Manager : Node
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            float lerped = Mathf.Lerp(new_scale, old_scale, t);
+            float ct = SynthMixing_LineScaleCurve?.Sample(t) ?? t;
+            float lerped = Mathf.Lerp(new_scale, old_scale, ct);
             layerVoiceOver.bigLine.Scale = Vector2.One * lerped;
 
             // yield one frame
@@ -317,7 +322,8 @@ public partial class Manager : Node
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            float ct = SynthMixing_LineColorCurve?.Sample(t) ?? t;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, ct);
             layerVoiceOver.bigLine.DefaultColor = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame
@@ -333,7 +339,8 @@ public partial class Manager : Node
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            Vector3 lerped = new_color_v3.Lerp(old_color_v3, t);
+            float ct = SynthMixing_LineColorCurve?.Sample(t) ?? t;
+            Vector3 lerped = new_color_v3.Lerp(old_color_v3, ct);
             layerVoiceOver.bigLine.DefaultColor = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame

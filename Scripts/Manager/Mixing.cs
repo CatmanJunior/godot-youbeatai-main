@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Manager : Node
@@ -255,7 +256,48 @@ public partial class Manager : Node
         chaosPadMode = ChaosPadMode.SynthMixing;
 
         // ring color brightness change
-        SynthMixing_StartLineColorChange(0.4f);
+        SynthMixing_StartLineColorChange(0.3f);
+        SynthMixing_StartLineSizeChange(0.3f);
+    }
+
+    async private void SynthMixing_StartLineSizeChange(float duration)
+    {
+        LayerVoiceOver layerVoiceOver = SynthMixing_activeSynth == 0 ? layerVoiceOver0 : layerVoiceOver1;
+
+        float old_scale = layerVoiceOver.bigLine.Scale.X;
+        float new_scale = old_scale * 1.05f;
+
+        // brighten
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float lerped = Mathf.Lerp(old_scale, new_scale, t);
+            layerVoiceOver.bigLine.Scale = Vector2.One * lerped;
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        layerVoiceOver.bigLine.Scale = Vector2.One * new_scale;
+
+        // darken
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float lerped = Mathf.Lerp(new_scale, old_scale, t);
+            layerVoiceOver.bigLine.Scale = Vector2.One * lerped;
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        layerVoiceOver.bigLine.Scale = Vector2.One * old_scale;
     }
 
     async private void SynthMixing_StartLineColorChange(float duration)

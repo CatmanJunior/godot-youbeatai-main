@@ -45,10 +45,15 @@ public partial class Manager : Node
 
         PlayPauseButton.Text = BpmManager.instance.playing ? "⏸️" : "▶️";
 
-        var lightvalue = MicrophoneCapture.instance.volume * 8;
-        if (lightvalue > 1) lightvalue = 1;
-        if (lightvalue < 0.05f) lightvalue = 0;
-        robotlight.Energy = lightvalue;
+        var miclightvalue = MicrophoneCapture.instance.volume * 8;
+        if (miclightvalue > 1) miclightvalue = 1;
+        if (miclightvalue < 0.05f) miclightvalue = 0;
+        micVolumeLight.Energy = miclightvalue;
+
+        float klappylightvalue = ((float)progressBar.Value) / 100f * 2f;
+        if (klappylightvalue > 1) klappylightvalue = 1;
+        if (klappylightvalue < 0.05f) klappylightvalue = 0;
+        klappyLight.Energy = klappylightvalue;
 
         micmeter.Value = MicrophoneCapture.instance.volume;
 

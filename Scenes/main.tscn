@@ -47,15 +47,8 @@ font_size = 80
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
-bg_color = Color(0.14, 0.14, 0.14, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r33sp"]
-bg_color = Color(0.27, 0.27, 0.27, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
@@ -68,8 +61,15 @@ corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r33sp"]
+bg_color = Color(0.27, 0.27, 0.27, 1)
+corner_radius_top_left = 800
+corner_radius_top_right = 800
+corner_radius_bottom_right = 800
+corner_radius_bottom_left = 800
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
+bg_color = Color(0.14, 0.14, 0.14, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
@@ -322,7 +322,7 @@ metadata/_edit_use_anchors_ = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "robotlight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "layerVoiceOver0", "layerVoiceOver1")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
@@ -403,7 +403,8 @@ spritePrefab = ExtResource("2_1eep1")
 texture = ExtResource("2_1ig4u")
 outline = ExtResource("8_llrl4")
 colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
-robotlight = NodePath("../../UserInterface/Robot/SubViewportContainer/RobotLight")
+micVolumeLight = NodePath("../../UserInterface/ChaosPad/MicButtonLocation/MicLight")
+klappyLight = NodePath("../../UserInterface/Robot/SubViewportContainer/KlappyLight")
 activateGreenChaosButton = NodePath("../../UserInterface/ControlsGroup/GreenSelectButton")
 activatePurpleChaosButton = NodePath("../../UserInterface/ControlsGroup/PurpleSelectButton")
 copyPasteClearButtonsHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons")
@@ -566,6 +567,13 @@ position = Vector2(-435, 141)
 
 [node name="MicButtonLocation" type="Node2D" parent="UserInterface/ChaosPad"]
 position = Vector2(0, -216.72)
+
+[node name="MicLight" type="PointLight2D" parent="UserInterface/ChaosPad/MicButtonLocation"]
+scale = Vector2(0.833333, 0.833333)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
 scale = Vector2(0.3, 0.3)
@@ -965,17 +973,17 @@ offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/ControlsGroup/RecordBeatButton0"]
@@ -1024,17 +1032,17 @@ offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/ControlsGroup/RecordBeatButton1"]
@@ -1083,17 +1091,17 @@ offset_top = -25.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
 theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/RecordSongButton"]
@@ -1127,10 +1135,10 @@ offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "🌱"
 metadata/_edit_use_anchors_ = true
 
@@ -1142,10 +1150,10 @@ offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1157,10 +1165,10 @@ offset_bottom = -259.09
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1172,10 +1180,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -1187,10 +1195,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -1202,10 +1210,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1217,10 +1225,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -1232,10 +1240,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -1247,10 +1255,10 @@ offset_bottom = -259.091
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "😃"
 metadata/_edit_use_anchors_ = true
 
@@ -1262,10 +1270,10 @@ offset_bottom = -259.092
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 text = "🏁"
 metadata/_edit_use_anchors_ = true
 
@@ -1579,29 +1587,29 @@ transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 
 current = true
 
 [node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.606923, 0.000469924, -0.000338693, 0.79476)
-bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
-bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
-bones/2/position = Vector3(5.68294e-10, 0.00522447, -1.00984e-09)
-bones/2/rotation = Quaternion(0.160301, 0.00863793, -0.466908, 0.869612)
-bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.000525439, 0.745103)
-bones/5/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
-bones/7/position = Vector3(3.41705e-05, 0.0162051, 0.00671337)
-bones/9/position = Vector3(0.00529154, -0.00222841, 0.00449688)
-bones/9/rotation = Quaternion(0.706781, 0.0171058, 0.707037, 0.0163275)
-bones/10/position = Vector3(1.87594e-10, 0.00420525, -2.69906e-10)
-bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
-bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
-bones/13/position = Vector3(-0.0109679, 0.00308128, 0.0112381)
-bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
-bones/14/position = Vector3(-6.6629e-10, 0.00522447, 8.15075e-10)
-bones/14/rotation = Quaternion(0.160301, -0.00863775, 0.466908, 0.869613)
+bones/0/rotation = Quaternion(0.6069233, 0.0004699242, -0.00033869312, 0.79476035)
+bones/1/position = Vector3(0.01116451, 0.003105818, 0.011245504)
+bones/1/rotation = Quaternion(-0.35754696, -0.44765493, -0.72642505, 0.3795681)
+bones/2/position = Vector3(5.6829363e-10, 0.0052244696, -1.0098355e-09)
+bones/2/rotation = Quaternion(0.16030055, 0.008637932, -0.46690828, 0.8696124)
+bones/4/rotation = Quaternion(0.66694957, 0.0002449317, 0.00052543916, 0.74510264)
+bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
+bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
+bones/9/position = Vector3(0.0052915383, -0.0022284095, 0.0044968836)
+bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
+bones/10/position = Vector3(1.8759401e-10, 0.004205249, -2.699062e-10)
+bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
+bones/11/rotation = Quaternion(-0.004680261, -0.0028718105, -0.82185924, 0.5696642)
+bones/13/position = Vector3(-0.010967905, 0.00308128, 0.011238096)
+bones/13/rotation = Quaternion(-0.35828653, 0.44713038, 0.7267256, 0.3789131)
+bones/14/position = Vector3(-6.6629036e-10, 0.0052244705, 8.1507545e-10)
+bones/14/rotation = Quaternion(0.16030078, -0.008637754, 0.46690804, 0.8696126)
 bones/16/position = Vector3(-0.00507851, -0.00216698, 0.00402349)
-bones/16/rotation = Quaternion(0.707037, -0.0163275, -0.706781, 0.0171058)
-bones/17/position = Vector3(1.78326e-10, 0.00420524, -1.53501e-10)
-bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
+bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
+bones/17/position = Vector3(1.7832602e-10, 0.00420524, -1.5350102e-10)
+bones/18/rotation = Quaternion(-0.0010216201, 0.000626926, 0.8216951, 0.5699261)
 
-[node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
+[node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)

@@ -82,7 +82,8 @@ public partial class Manager : Node
     public Sprite2D[,] beatSprites;
     Sprite2D[,] templateSprites;
     [Export] public Color[] colors;
-    [Export] PointLight2D robotlight;
+    [Export] PointLight2D micVolumeLight;
+    [Export] PointLight2D klappyLight;
     [Export] Sprite2D activateGreenChaosButton;
     [Export] Sprite2D activatePurpleChaosButton;
     [Export] Node2D copyPasteClearButtonsHolder;

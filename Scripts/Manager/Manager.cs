@@ -45,10 +45,15 @@ public partial class Manager : Node
 
         PlayPauseButton.Text = BpmManager.instance.playing ? "⏸️" : "▶️";
 
-        var lightvalue = MicrophoneCapture.instance.volume * 8;
-        if (lightvalue > 1) lightvalue = 1;
-        if (lightvalue < 0.05f) lightvalue = 0;
-        robotlight.Energy = lightvalue;
+        var miclightvalue = MicrophoneCapture.instance.volume * 8;
+        if (miclightvalue > 1) miclightvalue = 1;
+        if (miclightvalue < 0.05f) miclightvalue = 0;
+        micVolumeLight.Energy = miclightvalue;
+
+        float klappylightvalue = ((float)progressBar.Value) / 100f * 2f;
+        if (klappylightvalue > 1) klappylightvalue = 1;
+        if (klappylightvalue < 0.05f) klappylightvalue = 0;
+        klappyLight.Energy = klappylightvalue;
 
         micmeter.Value = MicrophoneCapture.instance.volume;
 
@@ -92,6 +97,18 @@ public partial class Manager : Node
         pointer.RotationDegrees = intergerFactor * 360f - 7f;
 
         CheckIfClappingOrStomping();
+
+        // make fullscreen if f11 is pressed
+        f11_pressed_lastframe = f11_pressed;
+        f11_pressed = Input.IsKeyPressed(Key.F11);
+        bool toggle = f11_pressed && f11_pressed != f11_pressed_lastframe;
+        if (toggle)
+        {
+            GD.Print("Toggle Fullscreen");
+            var window = GetWindow();
+            if (window.Mode == Window.ModeEnum.Fullscreen) window.Mode = Window.ModeEnum.Windowed;
+            else window.Mode = Window.ModeEnum.Fullscreen;
+        }
 
         if (BpmManager.instance.playing)
         {

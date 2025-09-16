@@ -9,13 +9,13 @@ public partial class Manager : Node
     public void OpenEmailPrompt()
     {
         // show email prompt
-        emailPrompt.Position = new Vector2(-128, emailPrompt.Position.Y);
+        emailPrompt.Position = new Vector2(-636, -356);
         emailPromptOpen = true;
     }
     public void CloseEmailPrompt()
     {
         // set aside email prompt
-        emailPrompt.Position = new Vector2(-2000, emailPrompt.Position.Y);
+        emailPrompt.Position = new Vector2(-636, -2000);
         emailPromptOpen = false;
     }
 }

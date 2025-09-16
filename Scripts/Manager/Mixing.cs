@@ -253,6 +253,54 @@ public partial class Manager : Node
 
         // set chaospad mode
         chaosPadMode = ChaosPadMode.SynthMixing;
+
+        // ring color brightness change
+        SynthMixing_StartLineColorChange(0.4f);
+    }
+
+    async private void SynthMixing_StartLineColorChange(float duration)
+    {
+        LayerVoiceOver layerVoiceOver = SynthMixing_activeSynth == 0 ? layerVoiceOver0 : layerVoiceOver1;
+
+        Color old_color = new();
+        if (SynthMixing_activeSynth == 0) old_color = Color.FromHtml("#25cc00");
+        if (SynthMixing_activeSynth == 1) old_color = Color.FromHtml("#aa00ff");
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+
+        var new_color = old_color.Lightened(0.5f);
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
+
+        // brighten
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            layerVoiceOver.bigLine.DefaultColor = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        layerVoiceOver.bigLine.DefaultColor = new_color;
+
+        // darken
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            Vector3 lerped = new_color_v3.Lerp(old_color_v3, t);
+            layerVoiceOver.bigLine.DefaultColor = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        layerVoiceOver.bigLine.DefaultColor = old_color;
     }
 
     async private void SynthMixing_StartTriangleColorChange(float duration)

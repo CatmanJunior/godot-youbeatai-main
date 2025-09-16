@@ -81,7 +81,7 @@ public partial class Manager : Node
 
         // enter as reset player
         var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false && !emailPromptOpen) { /* do something with enter */ }
+        if (enterdown && enterdownlastframe == false && emailPromptOpen) { AudioSaving.AllLayersToMp3(); }
         enterdownlastframe = enterdown;
 
         // drag&drop

@@ -3,7 +3,7 @@ using Godot;
 public partial class Manager : Node
 {
     [Export] public Panel emailPrompt;
-    [Export] public TextEdit emailInput;
+    [Export] public LineEdit emailInput;
     [Export] public Button emailEnter;
     public bool emailPromptOpen = false;
     public void OpenEmailPrompt()

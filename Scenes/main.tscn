@@ -330,7 +330,7 @@ metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
 emailPrompt = NodePath("../../EmailPrompt")
-emailInput = NodePath("../../EmailPrompt/Input")
+emailInput = NodePath("../../EmailPrompt/LineEdit")
 emailEnter = NodePath("../../EmailPrompt/Enter")
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
@@ -2238,14 +2238,15 @@ text = "Jouw Email Adress:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Input" type="TextEdit" parent="EmailPrompt"]
+[node name="LineEdit" type="LineEdit" parent="EmailPrompt"]
 layout_mode = 0
 offset_left = 390.0
 offset_top = 64.0
-offset_right = 882.0
-offset_bottom = 118.0
-theme_override_font_sizes/font_size = 24
+offset_right = 890.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 28
 placeholder_text = "jouwemailadress@gmail.com"
+alignment = 1
 emoji_menu_enabled = false
 
 [node name="Enter" type="Button" parent="EmailPrompt"]

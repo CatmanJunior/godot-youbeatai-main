@@ -2254,6 +2254,7 @@ offset_left = 517.0
 offset_top = 129.0
 offset_right = 756.0
 offset_bottom = 178.0
+focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "Doorgaan"
 

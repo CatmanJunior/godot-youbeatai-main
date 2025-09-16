@@ -108,7 +108,7 @@ public partial class Manager : Node
         layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
         layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
         layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
-        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
+        allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
         emailEnter.Pressed += AudioSaving.AllLayersToMp3;
         muteSpeach.Pressed += DisplayServer.TtsStop;
         SaveLayoutButton.Pressed += CopyLayer;

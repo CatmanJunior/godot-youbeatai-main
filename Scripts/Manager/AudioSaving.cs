@@ -10,220 +10,14 @@ using NAudio.Wave.SampleProviders;
 
 public static class AudioSaving
 {
-    public static void AllLayersToMp3()
+    public static void CloseEmailPromptAndSaveAndSendSongFile()
     {
         Manager.instance.SetCurrentLayer(Manager.instance.beatActives);
-        SaveSongAsFile(Manager.instance.layers);
+        SaveSongAsFileAndSendToEmail(Manager.instance.layers);
         Manager.instance.CloseEmailPrompt();
     }
 
-    public static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
-    {
-        // get original audio data
-        var originalData = audioStream.Data;
-        var originalSampleRate = audioStream.MixRate;
-        var stereo = audioStream.Stereo;
-        var originalFormat = audioStream.Format;
-
-        // no resampling or conversion needed
-        if (originalSampleRate == newSampleRate && !stereo) return audioStream; 
-
-        // convert data to float for processing
-        var sampleCount = originalData.Length / sizeof(float);
-        var originalSamples = new float[sampleCount];
-        Buffer.BlockCopy(originalData, 0, originalSamples, 0, originalData.Length);
-
-        // if stereo convert to mono
-        float[] monoSamples;
-        if (stereo)
-        {
-            monoSamples = new float[sampleCount / 2];
-            for (int i = 0; i < monoSamples.Length; i++) monoSamples[i] = (originalSamples[i * 2] + originalSamples[i * 2 + 1]) / 2.0f;
-        }
-        else monoSamples = originalSamples;
-
-        // calc ratio
-        float ratio = (float)newSampleRate / originalSampleRate;
-
-        // create buffer
-        int newSampleCount = (int)(monoSamples.Length * ratio);
-        var resampledSamples = new float[newSampleCount];
-
-        // linear interpolation to resample
-        for (int i = 0; i < newSampleCount; i++)
-        {
-            float originalPosition = i / ratio;
-            int originalIndex = (int)Math.Floor(originalPosition);
-            float frac = originalPosition - originalIndex;
-
-            if (originalIndex < monoSamples.Length - 1) resampledSamples[i] = monoSamples[originalIndex] * (1 - frac) + monoSamples[originalIndex + 1] * frac;
-            else resampledSamples[i] = monoSamples[originalIndex];
-        }
-
-        // resampled data back to byte array
-        var newData = new byte[resampledSamples.Length * sizeof(float)];
-        Buffer.BlockCopy(resampledSamples, 0, newData, 0, newData.Length);
-
-        // create new audiostreamwav with updated sample rate
-        var newAudioStream = new AudioStreamWav
-        {
-            Data = newData,
-            MixRate = newSampleRate,
-            Format = originalFormat,
-            Stereo = false
-        };
-
-        return newAudioStream;
-    }
-
-    public static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
-    {
-        if (audioStreamWav.Stereo) audioStreamWav = ConvertStereoToMono(audioStreamWav);
-        byte[] pcmData = audioStreamWav.Data;
-        using (var waveFile = new WaveFileWriter(filePath, new WaveFormat(audioStreamWav.MixRate, 16, audioStreamWav.Stereo ? 2 : 1))) waveFile.Write(pcmData, 0, pcmData.Length);
-        GD.Print($"WAV file successfully created at: {filePath}");
-    }
-
-    public static AudioStreamWav ConvertStereoToMono(AudioStreamWav stereoStream)
-    {
-        AudioStreamWav monoStream = (AudioStreamWav)stereoStream.Duplicate();
-        var audioData = stereoStream.Data;
-        int bytesPerSample = stereoStream.Format == AudioStreamWav.FormatEnum.Format8Bits ? 1 : 2;
-        byte[] monoData = new byte[audioData.Length / 2];
-
-        for (int i = 0; i < audioData.Length; i += bytesPerSample * (stereoStream.Stereo ? 2 : 1))
-        {
-            // get left and right samples
-            float leftSample = 0, rightSample = 0;
-            if (stereoStream.Format == AudioStreamWav.FormatEnum.Format16Bits)
-            {
-                leftSample = BitConverter.ToInt16(audioData, i) / 32768f;
-                rightSample = BitConverter.ToInt16(audioData, i + bytesPerSample) / 32768f;
-            }
-            else if (stereoStream.Format == AudioStreamWav.FormatEnum.Format8Bits)
-            {
-                leftSample = (audioData[i] - 128) / 128f;
-                rightSample = (audioData[i + bytesPerSample] - 128) / 128f;
-            }
-
-            // write to averages mono sample
-            float monoSample = (leftSample + rightSample) / 2.0f;
-            if (stereoStream.Format == AudioStreamWav.FormatEnum.Format16Bits)
-            {
-                short monoShort = (short)(monoSample * 32768);
-                byte[] monoBytes = BitConverter.GetBytes(monoShort);
-                Array.Copy(monoBytes, 0, monoData, (i / 2), bytesPerSample);
-            }
-            else if (stereoStream.Format == AudioStreamWav.FormatEnum.Format8Bits)
-            {
-                byte monoByte = (byte)((monoSample * 128) + 128);
-                monoData[i / 2] = monoByte;
-            }
-        }
-
-        monoStream.Data = monoData;
-        monoStream.Stereo = false;
-        return monoStream;
-    }
-
-    public static void MixAudioFiles(string file1, string file2, string outputFile)
-    {
-        using (var reader1 = new AudioFileReader(file1))
-        {
-            using (var reader2 = new AudioFileReader(file2))
-            {
-                // Use the format of the input files
-                var outputFormat = reader1.WaveFormat;
-
-                // Create a MixingSampleProvider for the two input files
-                var mixer = new MixingSampleProvider([reader1.ToSampleProvider(), reader2.ToSampleProvider()]);
-
-                // Write the mixed audio to the output file in chunks
-                using (var writer = new WaveFileWriter(outputFile, outputFormat))
-                {
-                    const int bufferSize = 4096; // Process audio in chunks
-                    float[] buffer = new float[bufferSize];
-
-                    while (true)
-                    {
-                        // Read samples from the mixer
-                        int samplesRead = mixer.Read(buffer, 0, bufferSize);
-
-                        // Exit the loop if no more samples are available
-                        if (samplesRead == 0) break;
-
-                        // Write the samples to the output file
-                        writer.WriteSamples(buffer, 0, samplesRead);
-                    }
-
-                    writer.Close();
-                }
-                reader2.Close();
-            }
-            reader1.Close();
-        }
-    }
-
-    public static void SaveBeatAsFile(bool[,] loop)
-    {
-        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
-        string filename = "beat_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime;
-
-        int sampleRate = 48000;
-        float secondsPerBeat = BpmManager.instance.baseTimePerBeat * 2;
-        int beatsPerLoop = BpmManager.beatsAmount;
-        int totalBeats = beatsPerLoop;
-        int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
-        float[] audioData = new float[totalSamples];
-        bool[,] currentLoop = loop;
-
-        // for each ring
-        for (int ring = 0; ring < currentLoop.GetLength(0); ring++)
-        {
-            // for each beat
-            for (int beat = 0; beat < currentLoop.GetLength(1); beat++)
-            {
-                // if beat active
-                if (currentLoop[ring, beat])
-                {
-                    // get audio sample of beat
-                    AudioStreamWav audioStreamWav = (AudioStreamWav)Manager.instance.mainAudioFiles[ring];
-                    var audioBytes = audioStreamWav.GetData();
-
-                    // Convert byte[] to float[] (each pcm sample is a 16 bit integer also known as a short)
-                    float[] samples = new float[audioBytes.Length / 2];
-                    for (int i = 0; i < samples.Length; i++) samples[i] = BitConverter.ToInt16(audioBytes, i * 2) / 32768f;
-
-                    // write audiodata at position
-                    for (int i = 0; i < samples.Length; i++)
-                    {
-                        int position = (int)((beat) * secondsPerBeat * sampleRate) + i;
-                        if (position < totalSamples) audioData[position] += samples[i];
-                    }
-                }
-            }
-        }
-
-        // normalize
-        float max = 0;
-        foreach (var sample in audioData) if (Math.Abs(sample) > max) max = Math.Abs(sample);
-        if (max > 1.0f) for (int i = 0; i < audioData.Length; i++) audioData[i] /= max;
-
-        // write file
-        using (var writer = new WaveFileWriter(filename + ".wav", new WaveFormat(sampleRate, 1)))
-        {
-            foreach (var sample in audioData) writer.WriteSample(sample);
-            writer.Close();
-        }
-
-        ChangePitch(filename + ".wav", 2f);
-
-        // finish
-        Manager.instance.ShowSavingLabel(filename);
-        Manager.instance.hassavedtofile = true;
-    }
-
-    public static void SaveSongAsFile(List<bool[,]> loops)
+    private static void SaveSongAsFileAndSendToEmail(List<bool[,]> loops)
     {
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
 
@@ -425,13 +219,101 @@ public static class AudioSaving
         if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
     }
 
-    async static void SendToEmail(string final_name, string to)
+    private async static void SendToEmail(string final_name, string to)
     {
         Action task = () => EmailSender.SendWav(ProjectSettings.GlobalizePath(final_name), to);
         await Task.Run(task);
     }
 
-    public static void ChangePitch(string filePath, float pitchFactor)
+    private static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
+    {
+        if (audioStreamWav.Stereo) audioStreamWav = ConvertStereoToMono(audioStreamWav);
+        byte[] pcmData = audioStreamWav.Data;
+        using (var waveFile = new WaveFileWriter(filePath, new WaveFormat(audioStreamWav.MixRate, 16, audioStreamWav.Stereo ? 2 : 1))) waveFile.Write(pcmData, 0, pcmData.Length);
+        GD.Print($"WAV file successfully created at: {filePath}");
+    }
+
+    private static AudioStreamWav ConvertStereoToMono(AudioStreamWav stereoStream)
+    {
+        AudioStreamWav monoStream = (AudioStreamWav)stereoStream.Duplicate();
+        var audioData = stereoStream.Data;
+        int bytesPerSample = stereoStream.Format == AudioStreamWav.FormatEnum.Format8Bits ? 1 : 2;
+        byte[] monoData = new byte[audioData.Length / 2];
+
+        for (int i = 0; i < audioData.Length; i += bytesPerSample * (stereoStream.Stereo ? 2 : 1))
+        {
+            // get left and right samples
+            float leftSample = 0, rightSample = 0;
+            if (stereoStream.Format == AudioStreamWav.FormatEnum.Format16Bits)
+            {
+                leftSample = BitConverter.ToInt16(audioData, i) / 32768f;
+                rightSample = BitConverter.ToInt16(audioData, i + bytesPerSample) / 32768f;
+            }
+            else if (stereoStream.Format == AudioStreamWav.FormatEnum.Format8Bits)
+            {
+                leftSample = (audioData[i] - 128) / 128f;
+                rightSample = (audioData[i + bytesPerSample] - 128) / 128f;
+            }
+
+            // write to averages mono sample
+            float monoSample = (leftSample + rightSample) / 2.0f;
+            if (stereoStream.Format == AudioStreamWav.FormatEnum.Format16Bits)
+            {
+                short monoShort = (short)(monoSample * 32768);
+                byte[] monoBytes = BitConverter.GetBytes(monoShort);
+                Array.Copy(monoBytes, 0, monoData, (i / 2), bytesPerSample);
+            }
+            else if (stereoStream.Format == AudioStreamWav.FormatEnum.Format8Bits)
+            {
+                byte monoByte = (byte)((monoSample * 128) + 128);
+                monoData[i / 2] = monoByte;
+            }
+        }
+
+        monoStream.Data = monoData;
+        monoStream.Stereo = false;
+        return monoStream;
+    }
+
+    private static void MixAudioFiles(string file1, string file2, string outputFile)
+    {
+        using (var reader1 = new AudioFileReader(file1))
+        {
+            using (var reader2 = new AudioFileReader(file2))
+            {
+                // Use the format of the input files
+                var outputFormat = reader1.WaveFormat;
+
+                // Create a MixingSampleProvider for the two input files
+                var mixer = new MixingSampleProvider([reader1.ToSampleProvider(), reader2.ToSampleProvider()]);
+
+                // Write the mixed audio to the output file in chunks
+                using (var writer = new WaveFileWriter(outputFile, outputFormat))
+                {
+                    const int bufferSize = 4096; // Process audio in chunks
+                    float[] buffer = new float[bufferSize];
+
+                    while (true)
+                    {
+                        // Read samples from the mixer
+                        int samplesRead = mixer.Read(buffer, 0, bufferSize);
+
+                        // Exit the loop if no more samples are available
+                        if (samplesRead == 0) break;
+
+                        // Write the samples to the output file
+                        writer.WriteSamples(buffer, 0, samplesRead);
+                    }
+
+                    writer.Close();
+                }
+                reader2.Close();
+            }
+            reader1.Close();
+        }
+    }
+
+    private static void ChangePitch(string filePath, float pitchFactor)
     {
         List<float> outputBuffer = new List<float>();
         WaveFormat waveFormat;
@@ -468,4 +350,126 @@ public static class AudioSaving
         // overwrite
         using (var writer = new WaveFileWriter(filePath, waveFormat)) writer.WriteSamples(outputBuffer.ToArray(), 0, outputBuffer.Count);
     }
+
+    /*
+    private static AudioStreamWav ChangeSampleRate(AudioStreamWav audioStream, int newSampleRate)
+    {
+        // get original audio data
+        var originalData = audioStream.Data;
+        var originalSampleRate = audioStream.MixRate;
+        var stereo = audioStream.Stereo;
+        var originalFormat = audioStream.Format;
+
+        // no resampling or conversion needed
+        if (originalSampleRate == newSampleRate && !stereo) return audioStream; 
+
+        // convert data to float for processing
+        var sampleCount = originalData.Length / sizeof(float);
+        var originalSamples = new float[sampleCount];
+        Buffer.BlockCopy(originalData, 0, originalSamples, 0, originalData.Length);
+
+        // if stereo convert to mono
+        float[] monoSamples;
+        if (stereo)
+        {
+            monoSamples = new float[sampleCount / 2];
+            for (int i = 0; i < monoSamples.Length; i++) monoSamples[i] = (originalSamples[i * 2] + originalSamples[i * 2 + 1]) / 2.0f;
+        }
+        else monoSamples = originalSamples;
+
+        // calc ratio
+        float ratio = (float)newSampleRate / originalSampleRate;
+
+        // create buffer
+        int newSampleCount = (int)(monoSamples.Length * ratio);
+        var resampledSamples = new float[newSampleCount];
+
+        // linear interpolation to resample
+        for (int i = 0; i < newSampleCount; i++)
+        {
+            float originalPosition = i / ratio;
+            int originalIndex = (int)Math.Floor(originalPosition);
+            float frac = originalPosition - originalIndex;
+
+            if (originalIndex < monoSamples.Length - 1) resampledSamples[i] = monoSamples[originalIndex] * (1 - frac) + monoSamples[originalIndex + 1] * frac;
+            else resampledSamples[i] = monoSamples[originalIndex];
+        }
+
+        // resampled data back to byte array
+        var newData = new byte[resampledSamples.Length * sizeof(float)];
+        Buffer.BlockCopy(resampledSamples, 0, newData, 0, newData.Length);
+
+        // create new audiostreamwav with updated sample rate
+        var newAudioStream = new AudioStreamWav
+        {
+            Data = newData,
+            MixRate = newSampleRate,
+            Format = originalFormat,
+            Stereo = false
+        };
+
+        return newAudioStream;
+    }
+    */
+
+    /*
+    public static void SaveBeatAsFile(bool[,] loop)
+    {
+        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
+        string filename = "beat_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime;
+
+        int sampleRate = 48000;
+        float secondsPerBeat = BpmManager.instance.baseTimePerBeat * 2;
+        int beatsPerLoop = BpmManager.beatsAmount;
+        int totalBeats = beatsPerLoop;
+        int totalSamples = (int)(totalBeats * secondsPerBeat * sampleRate);
+        float[] audioData = new float[totalSamples];
+        bool[,] currentLoop = loop;
+
+        // for each ring
+        for (int ring = 0; ring < currentLoop.GetLength(0); ring++)
+        {
+            // for each beat
+            for (int beat = 0; beat < currentLoop.GetLength(1); beat++)
+            {
+                // if beat active
+                if (currentLoop[ring, beat])
+                {
+                    // get audio sample of beat
+                    AudioStreamWav audioStreamWav = (AudioStreamWav)Manager.instance.mainAudioFiles[ring];
+                    var audioBytes = audioStreamWav.GetData();
+
+                    // Convert byte[] to float[] (each pcm sample is a 16 bit integer also known as a short)
+                    float[] samples = new float[audioBytes.Length / 2];
+                    for (int i = 0; i < samples.Length; i++) samples[i] = BitConverter.ToInt16(audioBytes, i * 2) / 32768f;
+
+                    // write audiodata at position
+                    for (int i = 0; i < samples.Length; i++)
+                    {
+                        int position = (int)((beat) * secondsPerBeat * sampleRate) + i;
+                        if (position < totalSamples) audioData[position] += samples[i];
+                    }
+                }
+            }
+        }
+
+        // normalize
+        float max = 0;
+        foreach (var sample in audioData) if (Math.Abs(sample) > max) max = Math.Abs(sample);
+        if (max > 1.0f) for (int i = 0; i < audioData.Length; i++) audioData[i] /= max;
+
+        // write file
+        using (var writer = new WaveFileWriter(filename + ".wav", new WaveFormat(sampleRate, 1)))
+        {
+            foreach (var sample in audioData) writer.WriteSample(sample);
+            writer.Close();
+        }
+
+        ChangePitch(filename + ".wav", 2f);
+
+        // finish
+        Manager.instance.ShowSavingLabel(filename);
+        Manager.instance.hassavedtofile = true;
+    }
+    */
 }

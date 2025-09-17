@@ -109,7 +109,7 @@ public partial class Manager : Node
         layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
         layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
         allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
-        emailEnter.Pressed += AudioSaving.AllLayersToMp3;
+        emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;
         muteSpeach.Pressed += DisplayServer.TtsStop;
         SaveLayoutButton.Pressed += CopyLayer;
         LoadLayoutButton.Pressed += PasteLayer;
@@ -126,7 +126,7 @@ public partial class Manager : Node
         PlayPauseButton.ButtonUp += OnPlayPauseButton;
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
-        saveToWavButton.Pressed += () => AudioSaving.SaveBeatAsFile(beatActives);
+        saveToWavButton.Pressed += () => { /*AudioSaving.SaveBeatAsFile(beatActives)*/ };
         skiptutorialbutton.Pressed += () =>
         {
             Tutorial.tutorial_level = -1;

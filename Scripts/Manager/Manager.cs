@@ -14,6 +14,7 @@ public partial class Manager : Node
         SpritePlacement();
         Tutorial.SetupTutorial();
         OnReadyMixing();
+        RealTimeAudioRecording.Initialize();
     }
 
     public override void _Process(double delta)
@@ -131,5 +132,7 @@ public partial class Manager : Node
         songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
 
         OnUpdateMixing((float)delta);
+
+        RealTimeAudioRecording.Update((float)delta);
     }
 }

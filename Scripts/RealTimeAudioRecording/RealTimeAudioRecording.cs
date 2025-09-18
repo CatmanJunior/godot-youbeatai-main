@@ -10,7 +10,7 @@ using NAudio.Wave.SampleProviders;
 
 public static class RealTimeAudioRecording
 {
-    public static AudioStream recording_result = null;
+    public static AudioStreamWav recording_result = null;
     public static AudioEffectRecord audioEffectRecord;
 
     public static bool recording = false;
@@ -26,23 +26,33 @@ public static class RealTimeAudioRecording
     {
         if (recording) recordingTimer += (float)delta;
         else recordingTimer = 0;
+
+        if (recording) GD.Print("Recording Master: " + recordingTimer.ToString("0.0") + " seconds");
+
+        if (Input.IsActionJustPressed("f1"))
+        {
+            if (!recording) StartRecordingMaster();
+            else StopRecordingMaster();
+        }
     }
 
     public static void StartRecordingMaster()
     {
+        GD.Print("Starting Recording");
         recording = true;
         audioEffectRecord.SetRecordingActive(true);
     }
 
     public static void StopRecordingMaster()
     {
-        audioEffectRecord.SetRecordingActive(false);
+        GD.Print("Stopping Recording");
         recording = false;
+        audioEffectRecord.SetRecordingActive(false);
         recording_result = audioEffectRecord.GetRecording();
 
         // output recording as wav file
         var time = Time.GetDatetimeStringFromSystem();
-        ConvertAudioStreamWavToWav((AudioStreamWav)recording_result, $"master_recording_{time}.wav");
+        ConvertAudioStreamWavToWav(recording_result, $"master_recording_{time}.wav");
     }
 
     private static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)

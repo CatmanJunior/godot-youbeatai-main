@@ -10,11 +10,11 @@ using NAudio.Wave.SampleProviders;
 
 public static class RealTimeAudioRecording
 {
-    static AudioStream recording_result = null;
-    static AudioEffectRecord audioEffectRecord;
+    public static AudioStream recording_result = null;
+    public static AudioEffectRecord audioEffectRecord;
 
-    static bool recording = false;
-    static float recordingTimer = 0;
+    public static bool recording = false;
+    public static float recordingTimer = 0;
 
     public static void Initialize()
     {

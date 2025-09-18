@@ -27,8 +27,6 @@ public static class RealTimeAudioRecording
         if (recording) recordingTimer += (float)delta;
         else recordingTimer = 0;
 
-        if (recording) GD.Print("Recording Master: " + recordingTimer.ToString("0.0") + " seconds");
-
         if (Input.IsActionJustPressed("f1"))
         {
             if (!recording) StartRecordingMaster();
@@ -41,6 +39,15 @@ public static class RealTimeAudioRecording
         GD.Print("Starting Recording");
         recording = true;
         audioEffectRecord.SetRecordingActive(true);
+
+        // disable buttons during recording
+		SongVoiceOver.instance.snellerButton.Disabled = true;
+		SongVoiceOver.instance.langzamerButton.Disabled = true;
+		Manager.instance.SetLayerSwitchButtonsEnabled(false);
+		Manager.instance.PlayPauseButton.Disabled = true;
+		SongVoiceOver.instance.recordSongButton.Disabled = true;
+		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
+		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
     }
 
     public static void StopRecordingMaster()
@@ -49,10 +56,19 @@ public static class RealTimeAudioRecording
         recording = false;
         audioEffectRecord.SetRecordingActive(false);
         recording_result = audioEffectRecord.GetRecording();
-
+            
         // output recording as wav file
         var time = Time.GetDatetimeStringFromSystem();
-        ConvertAudioStreamWavToWav(recording_result, $"master_recording_{time}.wav");
+        if (recording_result != null) ConvertAudioStreamWavToWav(recording_result, $"master_recording_{time}.wav");
+
+        // re-enable buttons during recording
+		SongVoiceOver.instance.snellerButton.Disabled = false;
+		SongVoiceOver.instance.langzamerButton.Disabled = false;
+		Manager.instance.SetLayerSwitchButtonsEnabled(true);
+		Manager.instance.PlayPauseButton.Disabled = false;
+		SongVoiceOver.instance.recordSongButton.Disabled = false;
+		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
+		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
     }
 
     private static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)

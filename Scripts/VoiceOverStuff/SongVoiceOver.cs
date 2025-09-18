@@ -24,8 +24,8 @@ public partial class SongVoiceOver : Node
 
 
 	// other
-	[Export] Button snellerButton;
-	[Export] Button langzamerButton;
+	[Export] public Button snellerButton;
+	[Export] public Button langzamerButton;
 
 	public override void _Ready()
     {

@@ -177,7 +177,7 @@ public partial class LayerVoiceOver : Node
 		shouldUpdateProgressBar = true;
 		bigLine.Visible = false;
 
-		GetTree().CreateTimer(0.39).Timeout += () =>
+		GetTree().CreateTimer(0.6).Timeout += () =>
 		{
 			recording = true;
 			audioEffectRecord.SetRecordingActive(true);
@@ -198,7 +198,7 @@ public partial class LayerVoiceOver : Node
 		shouldUpdateProgressBar = false;
 		bigLine.Visible = true;
 
-		GetTree().CreateTimer(0.39).Timeout += () =>
+		GetTree().CreateTimer(0.6).Timeout += () =>
 		{
 			audioEffectRecord.SetRecordingActive(false);
 			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());

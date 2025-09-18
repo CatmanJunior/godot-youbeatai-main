@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=63 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -35,14 +35,18 @@
 [ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="26_jwpg7"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
-[ext_resource type="Texture2D" uid="uid://mx66dr2ct711" path="res://Resources/Textures/triangle_fade.png" id="28_536cc"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
+[ext_resource type="Texture2D" uid="uid://cel32nk13mowt" path="res://Resources/Textures/driehoeh_met_fade6vector.png" id="29_aqgau"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
+
+[sub_resource type="Curve" id="Curve_aqgau"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -330,7 +334,7 @@ metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
 emailPrompt = NodePath("../../EmailPrompt")
-emailInput = NodePath("../../EmailPrompt/Input")
+emailInput = NodePath("../../EmailPrompt/LineEdit")
 emailEnter = NodePath("../../EmailPrompt/Enter")
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
@@ -338,6 +342,8 @@ chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
 iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
+SynthMixing_LineScaleCurve = SubResource("Curve_aqgau")
+SynthMixing_LineColorCurve = SubResource("Curve_aqgau")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
@@ -577,7 +583,7 @@ texture_scale = 1.71
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
 scale = Vector2(0.3, 0.3)
-texture = ExtResource("28_536cc")
+texture = ExtResource("29_aqgau")
 
 [node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
 position = Vector2(-383.333, 240)
@@ -592,7 +598,7 @@ position = Vector2(376.667, 233.333)
 offset_left = -540.0
 offset_top = 76.667
 offset_right = -440.0
-offset_bottom = 176.667
+offset_bottom = 176.66702
 scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🍎"
@@ -603,7 +609,7 @@ metadata/_edit_use_anchors_ = true
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
 offset_left = -163.334
 offset_top = -600.0
-offset_right = -63.3333
+offset_right = -63.333298
 offset_bottom = -500.0
 scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
@@ -616,7 +622,7 @@ metadata/_edit_use_anchors_ = true
 offset_left = 213.333
 offset_top = 73.334
 offset_right = 313.333
-offset_bottom = 173.334
+offset_bottom = 173.33401
 scale = Vector2(3.2, 3.2)
 theme_override_font_sizes/font_size = 48
 text = "🍏"
@@ -1587,27 +1593,26 @@ transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 
 current = true
 
 [node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.6069233, 0.0004699242, -0.00033869312, 0.79476035)
-bones/1/position = Vector3(0.01116451, 0.003105818, 0.011245504)
-bones/1/rotation = Quaternion(-0.35754696, -0.44765493, -0.72642505, 0.3795681)
-bones/2/position = Vector3(5.6829363e-10, 0.0052244696, -1.0098355e-09)
-bones/2/rotation = Quaternion(0.16030055, 0.008637932, -0.46690828, 0.8696124)
-bones/4/rotation = Quaternion(0.66694957, 0.0002449317, 0.00052543916, 0.74510264)
+bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869257, 0.7947603)
+bones/1/rotation = Quaternion(-0.3575469, -0.44765505, -0.72642505, 0.37956807)
+bones/2/position = Vector3(5.6829363e-10, 0.00522447, -1.0098351e-09)
+bones/2/rotation = Quaternion(0.16030091, 0.008637974, -0.46690783, 0.86961263)
+bones/4/rotation = Quaternion(0.6669496, 0.00024493184, 0.0005254397, 0.7451026)
 bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
 bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/9/position = Vector3(0.0052915383, -0.0022284095, 0.0044968836)
+bones/9/position = Vector3(0.00529154, -0.0022284095, 0.0044968794)
 bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
 bones/10/position = Vector3(1.8759401e-10, 0.004205249, -2.699062e-10)
 bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
-bones/11/rotation = Quaternion(-0.004680261, -0.0028718105, -0.82185924, 0.5696642)
-bones/13/position = Vector3(-0.010967905, 0.00308128, 0.011238096)
-bones/13/rotation = Quaternion(-0.35828653, 0.44713038, 0.7267256, 0.3789131)
-bones/14/position = Vector3(-6.6629036e-10, 0.0052244705, 8.1507545e-10)
-bones/14/rotation = Quaternion(0.16030078, -0.008637754, 0.46690804, 0.8696126)
-bones/16/position = Vector3(-0.00507851, -0.00216698, 0.00402349)
+bones/11/rotation = Quaternion(-0.004680262, -0.0028718056, -0.82185936, 0.569664)
+bones/13/position = Vector3(-0.0109679, 0.0030812805, 0.0112381)
+bones/13/rotation = Quaternion(-0.35828686, 0.44712996, 0.7267258, 0.3789129)
+bones/14/position = Vector3(-6.6628947e-10, 0.00522447, 8.150752e-10)
+bones/14/rotation = Quaternion(0.16030091, -0.008637771, 0.46690783, 0.8696127)
+bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
 bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
-bones/17/position = Vector3(1.7832602e-10, 0.00420524, -1.5350102e-10)
-bones/18/rotation = Quaternion(-0.0010216201, 0.000626926, 0.8216951, 0.5699261)
+bones/17/position = Vector3(1.7832646e-10, 0.0042052404, -1.5350124e-10)
+bones/18/rotation = Quaternion(-0.0010216191, 0.0006269256, 0.82169485, 0.56992644)
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)
@@ -2238,14 +2243,15 @@ text = "Jouw Email Adress:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Input" type="TextEdit" parent="EmailPrompt"]
+[node name="LineEdit" type="LineEdit" parent="EmailPrompt"]
 layout_mode = 0
 offset_left = 390.0
 offset_top = 64.0
-offset_right = 882.0
-offset_bottom = 118.0
-theme_override_font_sizes/font_size = 24
+offset_right = 890.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 28
 placeholder_text = "jouwemailadress@gmail.com"
+alignment = 1
 emoji_menu_enabled = false
 
 [node name="Enter" type="Button" parent="EmailPrompt"]
@@ -2254,6 +2260,7 @@ offset_left = 517.0
 offset_top = 129.0
 offset_right = 756.0
 offset_bottom = 178.0
+focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "Doorgaan"
 

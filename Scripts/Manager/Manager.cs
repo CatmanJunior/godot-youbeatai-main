@@ -14,6 +14,7 @@ public partial class Manager : Node
         SpritePlacement();
         Tutorial.SetupTutorial();
         OnReadyMixing();
+        RealTimeAudioRecording.Initialize();
     }
 
     public override void _Process(double delta)
@@ -81,7 +82,7 @@ public partial class Manager : Node
 
         // enter as reset player
         var enterdown = Input.IsKeyPressed(Key.Enter);
-        if (enterdown && enterdownlastframe == false && !emailPromptOpen) { /* do something with enter */ }
+        if (enterdown && enterdownlastframe == false && emailPromptOpen) { AudioSaving.CloseEmailPromptAndSaveAndSendSongFile(); }
         enterdownlastframe = enterdown;
 
         // drag&drop
@@ -131,5 +132,7 @@ public partial class Manager : Node
         songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
 
         OnUpdateMixing((float)delta);
+
+        RealTimeAudioRecording.Update((float)delta);
     }
 }

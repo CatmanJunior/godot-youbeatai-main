@@ -108,8 +108,8 @@ public partial class Manager : Node
         layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
         layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
         layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
-        allLayersToMp3.Pressed += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
-        emailEnter.Pressed += AudioSaving.AllLayersToMp3;
+        allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
+        emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;
         muteSpeach.Pressed += DisplayServer.TtsStop;
         SaveLayoutButton.Pressed += CopyLayer;
         LoadLayoutButton.Pressed += PasteLayer;
@@ -123,10 +123,10 @@ public partial class Manager : Node
                 GetTree().Quit();
             }
         };
-        PlayPauseButton.Pressed += OnPlayPauseButton;
+        PlayPauseButton.ButtonUp += OnPlayPauseButton;
         BpmUpButton.Pressed += OnBpmUpButton;
         BpmDownButton.Pressed += OnBpmDownButton;
-        saveToWavButton.Pressed += () => AudioSaving.SaveBeatAsFile(beatActives);
+        saveToWavButton.Pressed += () => { /*AudioSaving.SaveBeatAsFile(beatActives)*/ };
         skiptutorialbutton.Pressed += () =>
         {
             Tutorial.tutorial_level = -1;

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bfmuqec5juv4o"
-path="res://.godot/imported/loading-export3.png-88cec9c04d10efe3d4466d940156fa74.ctex"
+uid="uid://cel32nk13mowt"
+path="res://.godot/imported/driehoeh_met_fade6vector.png-d6aebd0e90cc9d6dfd17fdd79ad99bc0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/loadanim/loading-export3.png"
-dest_files=["res://.godot/imported/loading-export3.png-88cec9c04d10efe3d4466d940156fa74.ctex"]
+source_file="res://Resources/Textures/driehoeh_met_fade6vector.png"
+dest_files=["res://.godot/imported/driehoeh_met_fade6vector.png-d6aebd0e90cc9d6dfd17fdd79ad99bc0.ctex"]
 
 [params]
 

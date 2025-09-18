@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Manager : Node
@@ -212,6 +213,9 @@ public partial class Manager : Node
     private Vector2[] SynthMixing_knobPositions = new Vector2[2];
     public int SynthMixing_activeSynth = 0;
 
+    [Export] private Curve SynthMixing_LineScaleCurve;
+    [Export] private Curve SynthMixing_LineColorCurve;
+
     public void SynthMixing_ChangeSynth(int synth)
     {
         // save knob position
@@ -255,7 +259,50 @@ public partial class Manager : Node
         chaosPadMode = ChaosPadMode.SynthMixing;
 
         // ring color brightness change
-        SynthMixing_StartLineColorChange(0.4f);
+        SynthMixing_StartLineColorChange(0.3f);
+        SynthMixing_StartLineSizeChange(0.3f);
+    }
+
+    async private void SynthMixing_StartLineSizeChange(float duration)
+    {
+        LayerVoiceOver layerVoiceOver = SynthMixing_activeSynth == 0 ? layerVoiceOver0 : layerVoiceOver1;
+
+        float old_scale = layerVoiceOver.bigLine.Scale.X;
+        float new_scale = old_scale * 1.05f;
+
+        // brighten
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float ct = SynthMixing_LineScaleCurve?.Sample(t) ?? t;
+            float lerped = Mathf.Lerp(old_scale, new_scale, ct);
+            layerVoiceOver.bigLine.Scale = Vector2.One * lerped;
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        layerVoiceOver.bigLine.Scale = Vector2.One * new_scale;
+
+        // darken
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float ct = SynthMixing_LineScaleCurve?.Sample(t) ?? t;
+            float lerped = Mathf.Lerp(new_scale, old_scale, ct);
+            layerVoiceOver.bigLine.Scale = Vector2.One * lerped;
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        layerVoiceOver.bigLine.Scale = Vector2.One * old_scale;
     }
 
     async private void SynthMixing_StartLineColorChange(float duration)
@@ -267,7 +314,7 @@ public partial class Manager : Node
         if (SynthMixing_activeSynth == 1) old_color = Color.FromHtml("#aa00ff");
         var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
-        var new_color = old_color.Lightened(0.5f);
+        var new_color = old_color.Lightened(1f);
         var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
         // brighten
@@ -275,7 +322,8 @@ public partial class Manager : Node
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            float ct = SynthMixing_LineColorCurve?.Sample(t) ?? t;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, ct);
             layerVoiceOver.bigLine.DefaultColor = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame
@@ -291,7 +339,8 @@ public partial class Manager : Node
         while (elapsed < duration)
         {
             float t = elapsed / duration;
-            Vector3 lerped = new_color_v3.Lerp(old_color_v3, t);
+            float ct = SynthMixing_LineColorCurve?.Sample(t) ?? t;
+            Vector3 lerped = new_color_v3.Lerp(old_color_v3, ct);
             layerVoiceOver.bigLine.DefaultColor = new Color(lerped.X, lerped.Y, lerped.Z, 1);
 
             // yield one frame

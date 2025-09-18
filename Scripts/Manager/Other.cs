@@ -97,24 +97,10 @@ public partial class Manager : Node
     {
         BpmManager.instance.playing = !BpmManager.instance.playing;
 
-        // pause layer voice over
-        if (layerVoiceOver0.voiceOvers[layerVoiceOver0.currentLayer] != null)
-        {
-            if (layerVoiceOver0.audioPlayer.Playing) layerVoiceOver0.audioPlayer.StreamPaused = true;
-            else layerVoiceOver0.audioPlayer.StreamPaused = false;
-        }
-        if (layerVoiceOver1.voiceOvers[layerVoiceOver1.currentLayer] != null)
-        {
-            if (layerVoiceOver1.audioPlayer.Playing) layerVoiceOver1.audioPlayer.StreamPaused = true;
-            else layerVoiceOver1.audioPlayer.StreamPaused = false;
-        }
+        layerVoiceOver0.audioPlayer.StreamPaused = !BpmManager.instance.playing;
+        layerVoiceOver1.audioPlayer.StreamPaused = !BpmManager.instance.playing;
 
-        // pause song voice over
-        if (SongVoiceOver.instance.voiceOver != null)
-        {
-            if (SongVoiceOver.instance.audioPlayer.Playing) SongVoiceOver.instance.audioPlayer.StreamPaused = true;
-            else SongVoiceOver.instance.audioPlayer.StreamPaused = false;
-        }
+        SongVoiceOver.instance.audioPlayer.StreamPaused = !BpmManager.instance.playing;
     }
 
     public void OnBpmUpButton()

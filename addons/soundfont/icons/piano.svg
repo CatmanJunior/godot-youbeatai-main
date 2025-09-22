@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="16"
+   height="16"
+   viewBox="0 0 4.2333332 4.2333332"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="icon.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="false"
+     inkscape:zoom="22.292705"
+     inkscape:cx="10.025701"
+     inkscape:cy="9.8462704"
+     inkscape:window-width="1850"
+     inkscape:window-height="1016"
+     inkscape:window-x="70"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1"
+     units="px"
+     width="16px" />
+  <defs
+     id="defs2">
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath1452">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect1454"
+         width="87.39003"
+         height="38.157566"
+         x="27.417965"
+         y="65.694214"
+         ry="10.871643" />
+    </clipPath>
+    <clipPath
+       clipPathUnits="userSpaceOnUse"
+       id="clipPath860">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect862"
+         width="52.923611"
+         height="38.96323"
+         x="27.417959"
+         y="65.694214"
+         ry="10.871643" />
+    </clipPath>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-26.367959,-64.644214)">
+    <g
+       id="g837"
+       transform="matrix(0.07162619,0,0,0.07162619,24.621746,60.643031)">
+      <rect
+         style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect846"
+         width="52.923611"
+         height="38.96323"
+         x="27.417959"
+         y="65.694214"
+         ry="10.871643" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect1134"
+         width="52.513016"
+         height="21.432812"
+         x="27.417965"
+         y="65.694214"
+         ry="0"
+         rx="0"
+         clip-path="url(#clipPath860)" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect1560"
+         width="5.4162269"
+         height="19.576256"
+         x="69.444702"
+         y="78.818306"
+         ry="2.7081134" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect1562"
+         width="5.4162269"
+         height="19.576256"
+         x="57.148262"
+         y="78.818306"
+         ry="2.7081134" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect1564"
+         width="5.4162269"
+         height="19.576256"
+         x="44.851822"
+         y="78.818306"
+         ry="2.7081134" />
+      <rect
+         style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         id="rect1566"
+         width="5.4162269"
+         height="19.576256"
+         x="32.555378"
+         y="78.818306"
+         ry="2.7081134" />
+    </g>
+  </g>
+</svg>

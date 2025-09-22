@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://drkyib86jxdtn"
+path="res://.godot/imported/florestan-subset.sfo-261fcde8c576f41f9b0ceaccdd53559c.res"
+
+[deps]
+
+source_file="res://Experimental/soundfont/florestan-subset.sfo"
+dest_files=["res://.godot/imported/florestan-subset.sfo-261fcde8c576f41f9b0ceaccdd53559c.res"]
+
+[params]
+

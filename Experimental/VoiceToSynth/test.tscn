@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=20 format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
@@ -8,6 +8,12 @@
 [ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="8_71jf6"]
+[ext_resource type="SoundFont" uid="uid://b6o6djweyrncj" path="res://Experimental/soundfont/RubberBandBass.sf2" id="9_th0k7"]
+[ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="10_n602o"]
+[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="11_u1rjn"]
+[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="12_n602o"]
+[ext_resource type="Script" uid="uid://vmqb3hufwjk" path="res://Experimental/soundfont/voice_recorder.gd" id="13_u1rjn"]
+[ext_resource type="Script" uid="uid://dp10dlnr4fp07" path="res://Experimental/soundfont/voice_processor.gd" id="14_fw2ei"]
 
 [sub_resource type="Gradient" id="Gradient_f7m3q"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -16,6 +22,16 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
 gradient = SubResource("Gradient_f7m3q")
 
 [sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_0nud8"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fw2ei"]
+buffer_length = 0.1
+
+[sub_resource type="Resource" id="Resource_u1rjn"]
+script = ExtResource("12_n602o")
+name = "c4"
+id = 60
+frequency = 261.63
+metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [node name="Control" type="Control" node_paths=PackedStringArray("bpm", "audio")]
 layout_mode = 3
@@ -120,16 +136,41 @@ bus = &"Microphone"
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_71jf6")
 
-[connection signal="OnBeatEvent" from="BPMManager" to="." method="play"]
+[node name="notePlayer" type="SoundFontPlayer" parent="." node_paths=PackedStringArray("bpmManager")]
+soundfont = ExtResource("9_th0k7")
+stream = SubResource("AudioStreamGenerator_fw2ei")
+script = ExtResource("10_n602o")
+bpmManager = NodePath("../BPMManager")
+notes = ExtResource("11_u1rjn")
+base_note = SubResource("Resource_u1rjn")
+metadata/_custom_type_script = "uid://bvcmfyc0eqv7e"
+
+[node name="VoiceRecorder2" type="Node" parent="."]
+script = ExtResource("13_u1rjn")
+metadata/_custom_type_script = "uid://vmqb3hufwjk"
+
+[node name="VoiceProcessor" type="Node" parent="VoiceRecorder2" node_paths=PackedStringArray("bpmManager")]
+script = ExtResource("14_fw2ei")
+bpmManager = NodePath("../../BPMManager")
+notes = ExtResource("11_u1rjn")
+octaveRange = Vector2i(3, 4)
+metadata/_custom_type_script = "uid://dp10dlnr4fp07"
+
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
+[connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]
 [connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="VoiceRecorder" method="on_microphone_input"]
+[connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="VoiceRecorder2" method="on_microphone_input"]
 [connection signal="level_changed" from="VoiceRecorder/Envelope" to="HSplitContainer/Actions/Label" method="_on_level_changed"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="." method="start"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="start_recording"]
+[connection signal="button_down" from="HSplitContainer/Actions/Record" to="VoiceRecorder2" method="start_recording"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="." method="stop"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="VoiceRecorder" method="stop_recording"]
+[connection signal="button_up" from="HSplitContainer/Actions/Record" to="VoiceRecorder2" method="stop_recording"]
 [connection signal="pressed" from="HSplitContainer/Actions/Play" to="." method="start_playing"]
 [connection signal="pressed" from="HSplitContainer/Actions/Stop" to="." method="stop_playing"]
 [connection signal="timeout" from="HSplitContainer/Actions/ColorRect/Timer" to="HSplitContainer/Actions/ColorRect" method="_on_reset"]
+[connection signal="done_recording" from="VoiceRecorder2" to="VoiceRecorder2/VoiceProcessor" method="start_processing"]
+[connection signal="on_processed" from="VoiceRecorder2/VoiceProcessor" to="notePlayer" method="set_song"]
 
 [editable path="VoiceRecorder"]

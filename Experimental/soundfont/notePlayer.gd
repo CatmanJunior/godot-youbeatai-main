@@ -3,7 +3,10 @@ class_name notePlayer
 
 @export var bpmManager: Node
 @export var notes: Notes
-@export var instrument: int
+@export var instrument: int :
+	set(v):
+		instrument = v
+		channel_set_presetindex(0, 0, v)
 @export var base_note : Note
 
 @export var song: PackedVector3Array = []
@@ -35,7 +38,10 @@ func _process_key_input(event: InputEventKey):
 		KEY_L:14,
 	}
 	
-	if event.is_pressed():
+	if event.keycode not in map:
+		return
+	
+	if event.is_pressed() and not event.is_echo() :
 		channel_note_on(0, 0, base_note.id + map[event.keycode], 1.0)
 	if event.is_released():
 		channel_note_off(0, 0, base_note.id + map[event.keycode])
@@ -47,15 +53,17 @@ func _process_midi_input(event: InputEventMIDI):
 func on_bpm():
 	if len(song) == 0:
 		return
-	
-	var rms_value = song[bpmManager.currentBeat].y
+	var length = len(song)
+	var rms_value = song[bpmManager.currentBeat % length].y
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-	channel_note_on(0, 0, song[bpmManager.currentBeat].x, log_value)
-
-func on_playing_changed(state: bool):
-	pass
+	log_value = remap(log_value, -80, 10, 0, 1)
+	print(log_value)
+	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat % length].x), log_value)
+	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
+	channel_note_off(get_time() + beatDuration * 1.1, 0, round(song[bpmManager.currentBeat % length].x))
 	
-func set_song(data: Array[Note]):
+	
+func set_song(data: PackedVector3Array):
 	song = data
 	
 func play_note(note: Note, duration: float):

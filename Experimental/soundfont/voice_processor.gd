@@ -14,9 +14,6 @@ func start_processing(data: PackedVector3Array):
 	# TODO: reduce array size with needed kernel
 	# kernel size should maybe be depend on reduction amount?
 	for sample in data:
-		if sample == null:
-			sample = Vector3.ZERO
-		
 		if sample.z > len(result) * beatDuration:
 			# clamp frequency to octave range closests note
 			var closest_diff: float = 9999

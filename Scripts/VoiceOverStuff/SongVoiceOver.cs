@@ -52,6 +52,7 @@ public partial class SongVoiceOver : Node
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
 		AddChild(audioPlayer);
+		audioPlayer.Bus = "Voice";
 
 		// setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);

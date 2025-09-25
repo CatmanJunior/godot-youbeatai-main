@@ -13,8 +13,24 @@ public static class AudioSaving
     public static void CloseEmailPromptAndSaveAndSendSongFile()
     {
         Manager.instance.SetCurrentLayer(Manager.instance.beatActives);
-        SaveSongAsFileAndSendToEmail(Manager.instance.layers);
+        SaveRealTimeRecordedSongAsFileAndSendToEmail();
         Manager.instance.CloseEmailPrompt();
+    }
+
+    private static void SaveRealTimeRecordedSongAsFileAndSendToEmail()
+    {
+        if (RealTimeAudioRecording.recording_result == null) return;
+
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
+        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
+        string final_name = user("export_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
+
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.recording_result, final_name + ".wav");
+
+        if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
+
+        Manager.instance.ShowSavingLabel(final_name);
+        Manager.instance.hassavedtofile = true;
     }
 
     private static void SaveSongAsFileAndSendToEmail(List<bool[,]> loops)

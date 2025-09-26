@@ -15,6 +15,8 @@ class_name notePlayer
 func _ready():
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
+	
+	volume_linear
 
 func _input(event):
 	if event is InputEventMIDI:
@@ -52,19 +54,23 @@ func _process_midi_input(event: InputEventMIDI):
 
 func on_bpm():
 	if len(song) == 0:
-		print("no song present")
 		return
 		
-	var length = len(song)
-	var rms_value = song[bpmManager.currentBeat % length].y
+	#var length = len(song)
+	var rms_value = song[bpmManager.currentBeat].y
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-	log_value = pow(10, log_value / 10) # convert to power
-	if log_value <= 0.3: # gate volume
-		return
 	
-	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat % length].x), log_value)
+	# convert to value around 0-1
+	# capped becasue soundfont does not play well with higher values
+	log_value = min(1, pow(10, log_value / 10))
+	
+	# gate quiet notes
+	if log_value <= 0.3:
+		return
+		
+	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat].x), log_value)
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
-	channel_note_off(get_time() + beatDuration * 1, 0, round(song[bpmManager.currentBeat % length].x))
+	channel_note_off(get_time() + beatDuration * 1, 0, round(song[bpmManager.currentBeat].x))
 	
 	
 func set_song(data: PackedVector3Array):

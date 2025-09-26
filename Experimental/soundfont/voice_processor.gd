@@ -13,13 +13,19 @@ func filter_time(data: Vector3):
 
 func reduce_to_average(group: Array): 
 	# filter low volume samples
+	var base = group[0]
 	group = group.filter(func(e): return e.y > 0.000505)
-	
+	if len(group) == 0:
+		return base
 	var reduced_group = group.reduce(func(accum, e): return accum + e)
 	
 	return reduced_group  / float(len(group))
 
 func start_processing(data: PackedVector3Array):
+	if len(data) == 0:
+		printerr("no data received")
+		return
+		
 	var result: PackedVector3Array = []
 	var groups: Array[Array] = []
 	
@@ -27,6 +33,10 @@ func start_processing(data: PackedVector3Array):
 	data_array = data_array.filter(filter_time)
 	
 	var group_size = (len(data_array) / bpmManager.amount_of_beats) 
+	if group_size == 0:
+		printerr("not enought data received got: %d" % len(data_array))
+		return
+	
 	for i in range(len(data_array) / group_size):
 		groups.append(data_array.slice( i * group_size, (i+1) * group_size ) )
 

@@ -6,6 +6,7 @@ signal done_recording(data: PackedVector3Array)
 var data: PackedVector3Array = []
 var recording_start = 0
 var recorder
+var recording: bool = false
 
 func _ready():
 	# We get the index of the "Record" bus.
@@ -15,7 +16,7 @@ func _ready():
 	recorder = AudioServer.get_bus_effect(idx, 1) 
 
 func on_microphone_input(volume: float, frequency: float):
-	if not recorder.is_recording_active():
+	if not recording:
 		return
 
 	var time = Time.get_unix_time_from_system() - recording_start
@@ -25,7 +26,9 @@ func start_recording():
 	print("start generic voice recorder")
 	data.clear()
 	recording_start = Time.get_unix_time_from_system()
+	recording = true
 
 func stop_recording():
 	print("stop generic voice recorder")
+	recording = false
 	done_recording.emit(data)

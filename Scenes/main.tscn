@@ -34,8 +34,8 @@
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
-[ext_resource type="SoundFont" uid="uid://c0ncqrlqb7blj" path="res://Experimental/soundfont/Jvbass.sf2" id="27_kwxat"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
 [ext_resource type="Texture2D" uid="uid://cel32nk13mowt" path="res://Resources/Textures/driehoeh_met_fade6vector.png" id="29_aqgau"]
@@ -482,7 +482,8 @@ bigLineBaseDist = 265
 bigLineVolumeDist = 110
 
 [node name="bass_line" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
-soundfont = ExtResource("27_kwxat")
+soundfont = ExtResource("27_o1aky")
+bus = &"Green"
 bpmManager = NodePath("../../BPM")
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
@@ -521,6 +522,7 @@ bigLineVolumeDist = 20
 bigLineReversed = true
 
 [node name="synth_line" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
+bus = &"Purple"
 bpmManager = NodePath("../../BPM")
 instrument = 6
 
@@ -2260,16 +2262,14 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "Doorgaan"
 
-[connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
+[connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_bpm_changed"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_clap"]
 [connection signal="OnShouldStompEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_stamp"]
-[connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="on_microphone_input"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="on_microphone_input"]
-[connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0" method="StartRecording"]
+[connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="on_microphone_input"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="start_recording"]
-[connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0" method="StopRecording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="stop_recording"]

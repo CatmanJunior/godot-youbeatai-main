@@ -52,7 +52,7 @@ public partial class LayerVoiceOver : Node
 	}
 
 	public override void _Ready()
-    {
+	{
 		BpmManager.instance.OnPlayingChanged += (playing) =>
 		{
 			// OnTop();
@@ -98,14 +98,14 @@ public partial class LayerVoiceOver : Node
 		// line
 		SetSmallVolumeline();
 		SetBigVolumeline();
-    }
+	}
 
 	bool shouldMeasureAudioDelay = false;
 	ulong audioDelayBeginMs;
 	ulong audioDelayEndMs;
 	float audioDelayTotalSeconds;
 
-    public override void _Process(double delta)
+	public override void _Process(double delta)
 	{
 		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 0)
 		{
@@ -189,12 +189,12 @@ public partial class LayerVoiceOver : Node
 		SongVoiceOver.instance.SetVolumeSongVoice(0.1f); // song
 		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
 		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
-    }
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/bass_line").Set("volume_linear", 0.1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/synth_line").Set("volume_linear", 0.1f); // purple synth
+	}
 
-    private void StopRecording()
-    {
+	private void StopRecording()
+	{
 		shouldUpdateProgressBar = false;
 		bigLine.Visible = true;
 
@@ -223,12 +223,12 @@ public partial class LayerVoiceOver : Node
 		SongVoiceOver.instance.SetVolumeSongVoice(1f); // song
 		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
 		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
-    }
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/bass_line").Set("volume_linear", 1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/synth_line").Set("volume_linear", 1f); // purple synth
+	}
 
 	public void SetVolumeBeats(float value)
-    {
+	{
 		// red
 		Manager.instance.firstAudioPlayer.VolumeLinear = value;
 		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
@@ -248,7 +248,7 @@ public partial class LayerVoiceOver : Node
 		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
 		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
 		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
-    }
+	}
 
 	public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
 	{
@@ -295,36 +295,36 @@ public partial class LayerVoiceOver : Node
 	}
 
 	public float GetVolumeAtTime(AudioStreamWav audio, float time)
-    {
-        if (audio == null || audio.Data.Length == 0)
-        {
-            GD.PrintErr("Invalid sample.");
-            return 0f;
-        }
+	{
+		if (audio == null || audio.Data.Length == 0)
+		{
+			GD.PrintErr("Invalid sample.");
+			return 0f;
+		}
 
-        int sampleRate = audio.MixRate;
-        int channels = audio.Stereo ? 2 : 1;
-        int formatSize = audio.Format == AudioStreamWav.FormatEnum.Format16Bits ? 2 : 1;
+		int sampleRate = audio.MixRate;
+		int channels = audio.Stereo ? 2 : 1;
+		int formatSize = audio.Format == AudioStreamWav.FormatEnum.Format16Bits ? 2 : 1;
 
-        int sampleIndex = (int)(time * sampleRate) * channels;
-        int byteIndex = sampleIndex * formatSize;
+		int sampleIndex = (int)(time * sampleRate) * channels;
+		int byteIndex = sampleIndex * formatSize;
 
-        if (byteIndex >= audio.Data.Length - formatSize)
-        {
-            GD.PrintErr("Time exceeds sample length.");
-            return 0f;
-        }
+		if (byteIndex >= audio.Data.Length - formatSize)
+		{
+			GD.PrintErr("Time exceeds sample length.");
+			return 0f;
+		}
 
-        // Read sample depending on format
-        if (audio.Format == AudioStreamWav.FormatEnum.Format16Bits)
-        {
-            short value = BitConverter.ToInt16(audio.Data, byteIndex);
-            return Mathf.Abs(value / 32768f);
-        }
-        else // 8-bit
-        {
-            sbyte value = (sbyte)audio.Data[byteIndex];
-            return Mathf.Abs(value / 128f);
-        }
-    }
+		// Read sample depending on format
+		if (audio.Format == AudioStreamWav.FormatEnum.Format16Bits)
+		{
+			short value = BitConverter.ToInt16(audio.Data, byteIndex);
+			return Mathf.Abs(value / 32768f);
+		}
+		else // 8-bit
+		{
+			sbyte value = (sbyte)audio.Data[byteIndex];
+			return Mathf.Abs(value / 128f);
+		}
+	}
 }

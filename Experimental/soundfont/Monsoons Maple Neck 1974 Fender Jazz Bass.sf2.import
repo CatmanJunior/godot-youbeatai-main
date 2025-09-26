@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://cb3syla6j1101"
+path="res://.godot/imported/Monsoons Maple Neck 1974 Fender Jazz Bass.sf2-612a5f490c7e9d514872c1b10d4ee043.res"
+
+[deps]
+
+source_file="res://Experimental/soundfont/Monsoons Maple Neck 1974 Fender Jazz Bass.sf2"
+dest_files=["res://.godot/imported/Monsoons Maple Neck 1974 Fender Jazz Bass.sf2-612a5f490c7e9d514872c1b10d4ee043.res"]
+
+[params]
+

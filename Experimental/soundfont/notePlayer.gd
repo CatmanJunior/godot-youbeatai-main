@@ -52,15 +52,19 @@ func _process_midi_input(event: InputEventMIDI):
 
 func on_bpm():
 	if len(song) == 0:
+		print("no song present")
 		return
+		
 	var length = len(song)
 	var rms_value = song[bpmManager.currentBeat % length].y
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-	log_value = remap(log_value, -80, 10, 0, 1)
+	log_value = pow(10, log_value / 10) # convert to power
+	if log_value <= 0.3: # gate volume
+		return
 	
 	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat % length].x), log_value)
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
-	channel_note_off(get_time() + beatDuration * 1.1, 0, round(song[bpmManager.currentBeat % length].x))
+	channel_note_off(get_time() + beatDuration * 1, 0, round(song[bpmManager.currentBeat % length].x))
 	
 	
 func set_song(data: PackedVector3Array):

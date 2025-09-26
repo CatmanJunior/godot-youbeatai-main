@@ -12,7 +12,12 @@ func filter_time(data: Vector3):
 	return data.z <= bpmManager.amount_of_beats * beatDuration
 
 func reduce_to_average(group: Array): 
-	return group.reduce(func(accum, e): return accum + e) / float(len(group))
+	# filter low volume samples
+	group = group.filter(func(e): return e.y > 0.000505)
+	
+	var reduced_group = group.reduce(func(accum, e): return accum + e)
+	
+	return reduced_group  / float(len(group))
 
 func start_processing(data: PackedVector3Array):
 	var result: PackedVector3Array = []

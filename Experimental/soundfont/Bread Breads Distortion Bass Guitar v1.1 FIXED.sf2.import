@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://c47lxfx1slxdn"
+path="res://.godot/imported/Bread Breads Distortion Bass Guitar v1.1 FIXED.sf2-7b9b49061211bffa4f1545fb6c9bebd4.res"
+
+[deps]
+
+source_file="res://Experimental/soundfont/Bread Breads Distortion Bass Guitar v1.1 FIXED.sf2"
+dest_files=["res://.godot/imported/Bread Breads Distortion Bass Guitar v1.1 FIXED.sf2-7b9b49061211bffa4f1545fb6c9bebd4.res"]
+
+[params]
+

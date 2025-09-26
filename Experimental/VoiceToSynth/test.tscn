@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=19 format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
@@ -7,8 +7,7 @@
 [ext_resource type="Script" uid="uid://ciuedwyx4vnlp" path="res://Experimental/VoiceToSynth/levelLabel.gd" id="3_m3rh1"]
 [ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
-[ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="8_71jf6"]
-[ext_resource type="SoundFont" uid="uid://b6o6djweyrncj" path="res://Experimental/soundfont/RubberBandBass.sf2" id="9_th0k7"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="9_fw2ei"]
 [ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="10_n602o"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="11_u1rjn"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="12_n602o"]
@@ -33,7 +32,7 @@ id = 60
 frequency = 261.63
 metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
-[node name="Control" type="Control" node_paths=PackedStringArray("bpm", "audio")]
+[node name="Control" type="Control" node_paths=PackedStringArray("bpm")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -42,7 +41,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_a0dxq")
 bpm = NodePath("BPMManager")
-audio = NodePath("AudioStreamPlayer2D")
 
 [node name="BPMManager" type="Node" parent="."]
 script = ExtResource("6_k0mxu")
@@ -130,21 +128,17 @@ texture = SubResource("GradientTexture1D_0nud8")
 
 [node name="Microphone" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamMicrophone_0nud8")
+volume_db = -8.456
 autoplay = true
 bus = &"Microphone"
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("8_71jf6")
-
 [node name="notePlayer" type="SoundFontPlayer" parent="." node_paths=PackedStringArray("bpmManager")]
-soundfont = ExtResource("9_th0k7")
-gain = -3.5
+soundfont = ExtResource("9_fw2ei")
 stream = SubResource("AudioStreamGenerator_fw2ei")
 bus = &"Synth"
 script = ExtResource("10_n602o")
 bpmManager = NodePath("../BPMManager")
 notes = ExtResource("11_u1rjn")
-instrument = 7
 base_note = SubResource("Resource_u1rjn")
 metadata/_custom_type_script = "uid://bvcmfyc0eqv7e"
 

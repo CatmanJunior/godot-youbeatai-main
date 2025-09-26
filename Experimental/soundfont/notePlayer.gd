@@ -57,7 +57,7 @@ func on_bpm():
 	var rms_value = song[bpmManager.currentBeat % length].y
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
 	log_value = remap(log_value, -80, 10, 0, 1)
-	print(log_value)
+	
 	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat % length].x), log_value)
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
 	channel_note_off(get_time() + beatDuration * 1.1, 0, round(song[bpmManager.currentBeat % length].x))
@@ -71,7 +71,7 @@ func play_note(note: Note, duration: float):
 	channel_note_on(t, 0, note.id, 1.0)
 	channel_note_off(t + duration, 0, note.id)
 	
-func play_chord(base_note: int, intervals):
+func play_chord(intervals):
 	var duration : float = 0.5
 	var t = get_time()
 	for i in intervals:
@@ -79,19 +79,19 @@ func play_chord(base_note: int, intervals):
 		channel_note_off(t + duration, 0, base_note + i)
 
 func on_chord_major():
-	play_chord(base_note.id, [0, 4, 7])
+	play_chord([0, 4, 7])
 
 func on_chord_minor():
-	play_chord(base_note.id, [0, 3, 7])
+	play_chord([0, 3, 7])
 
 func on_chord_7():
-	play_chord(base_note.id, [0, 4, 7, 10])
+	play_chord([0, 4, 7, 10])
 
 func on_chord_major_7():
-	play_chord(base_note.id, [0, 4, 7, 11])
+	play_chord([0, 4, 7, 11])
 
 func on_chord_minor_7():
-	play_chord(base_note.id, [0, 3, 7, 10])
+	play_chord([0, 3, 7, 10])
 
 func on_chord_diminished_7():
-	play_chord(base_note.id, [0, 3, 6, 9])
+	play_chord([0, 3, 6, 9])

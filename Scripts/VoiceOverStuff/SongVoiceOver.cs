@@ -24,8 +24,8 @@ public partial class SongVoiceOver : Node
 
 
 	// other
-	[Export] Button snellerButton;
-	[Export] Button langzamerButton;
+	[Export] public Button snellerButton;
+	[Export] public Button langzamerButton;
 
 	public override void _Ready()
     {
@@ -52,6 +52,7 @@ public partial class SongVoiceOver : Node
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
 		AddChild(audioPlayer);
+		audioPlayer.Bus = "Voice";
 
 		// setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
@@ -75,7 +76,7 @@ public partial class SongVoiceOver : Node
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
 
-	public void OnBeginning()
+	public void OnTop()
 	{
 		if (recording)
 		{
@@ -84,10 +85,7 @@ public partial class SongVoiceOver : Node
 		}
 		else
 		{
-			if (shouldRecord)
-			{
-				StartRecording();
-			}
+			if (shouldRecord) StartRecording();
 			else if (voiceOver != null) audioPlayer.Play();
 		}
 	}
@@ -108,7 +106,12 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
-		SetVolume(0.1f);
+		SetVolumeBeats(0.1f); // beats
+		SetVolumeSongVoice(0.1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
@@ -123,7 +126,6 @@ public partial class SongVoiceOver : Node
 		voiceOver = audioEffectRecord.GetRecording();
 		audioPlayer.Stream = voiceOver;
 
-
 		// buttons during recording
 		snellerButton.Disabled = false;
 		langzamerButton.Disabled= false;
@@ -134,17 +136,41 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
 
-		SetVolume(1f);
+		Manager.instance.SamplesMixing_ReApplyRememberedMixingVolumesForAllRings(); // beats
+		SetVolumeSongVoice(1f); // song
+		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
+		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
+		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
 
 		finished = true;
     }
 
-	void SetVolume(float value)
+	public void SetVolumeBeats(float value)
     {
-        float db = Mathf.LinearToDb(value);
-        Manager.instance.firstAudioPlayer.VolumeDb = db;
-        Manager.instance.secondAudioPlayer.VolumeDb = db;
-        Manager.instance.thirdAudioPlayer.VolumeDb = db;
-        Manager.instance.fourthAudioPlayer.VolumeDb = db;
+		// red
+		Manager.instance.firstAudioPlayer.VolumeLinear = value;
+		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.firstAudioPlayerRec.VolumeLinear = value;
+
+		// orange
+		Manager.instance.secondAudioPlayer.VolumeLinear = value;
+		Manager.instance.secondAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.secondAudioPlayerRec.VolumeLinear = value;
+
+		// yellow
+		Manager.instance.thirdAudioPlayer.VolumeLinear = value;
+		Manager.instance.thirdAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.thirdAudioPlayerRec.VolumeLinear = value;
+
+		// blue
+		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
+		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
+		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
+    }
+
+	public void SetVolumeSongVoice(float value)
+    {
+		audioPlayer.VolumeDb = value;
     }
 }

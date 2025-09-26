@@ -1,7 +1,7 @@
 [gd_scene load_steps=49 format=3 uid="uid://bpnc43bcfo8yt"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_0klt1"]
-[ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager.cs" id="2_2aw6o"]
+[ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="2_2aw6o"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="3_ge1om"]
 [ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="4_o3nkl"]
 [ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="5_khqwu"]

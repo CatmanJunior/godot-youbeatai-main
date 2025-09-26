@@ -2,6 +2,8 @@ using Godot;
 
 public partial class RecordButton : Sprite2D
 {
+    [Export] int id;
+
 	bool inside => IsPixelOpaque(GetLocalMousePosition());
 
     Color original_c;

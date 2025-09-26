@@ -1,4 +1,7 @@
-[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=11 format=3 uid="uid://cbsvq6wm8s4ny"]
+
+[sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
+resource_name = "Record"
 
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_04ot4"]
 resource_name = "Capture"
@@ -7,21 +10,98 @@ buffer_length = 0.2
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vcuto"]
 resource_name = "Record"
 
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_6n6ik"]
+resource_name = "Phaser"
+feedback = 0.2
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_6n6ik"]
+resource_name = "Delay"
+tap1_delay_ms = 91.0
+tap1_level_db = -39.03
+tap2_active = false
+tap2_delay_ms = 250.0
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_6n6ik"]
+resource_name = "LowPassFilter"
+cutoff_hz = 400.0
+
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_6n6ik"]
+resource_name = "Chorus"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_xic54"]
+resource_name = "Reverb"
+room_size = 0.1
+spread = 0.4
+wet = 0.1
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_6n6ik"]
+resource_name = "Reverb"
+room_size = 0.03
+damping = 0.2
+spread = 0.05
+hipass = 0.04
+dry = 0.07
+wet = 0.02
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_6n6ik"]
+resource_name = "Amplify"
+volume_db = 15.0
+
 [resource]
 bus/0/volume_db = -4.25003
-bus/1/name = &"Microphone"
+bus/1/name = &"SubMaster"
 bus/1/solo = false
-bus/1/mute = true
+bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
-bus/1/effect/0/effect = SubResource("AudioEffectCapture_04ot4")
+bus/1/effect/0/effect = SubResource("AudioEffectRecord_6n6ik")
 bus/1/effect/0/enabled = true
-bus/1/effect/1/effect = SubResource("AudioEffectRecord_vcuto")
-bus/1/effect/1/enabled = true
-bus/2/name = &"Synth"
+bus/2/name = &"Microphone"
 bus/2/solo = false
-bus/2/mute = false
+bus/2/mute = true
 bus/2/bypass_fx = false
-bus/2/volume_db = -19.6683
-bus/2/send = &"Master"
+bus/2/volume_db = 0.0
+bus/2/send = &"SubMaster"
+bus/2/effect/0/effect = SubResource("AudioEffectCapture_04ot4")
+bus/2/effect/0/enabled = true
+bus/2/effect/1/effect = SubResource("AudioEffectRecord_vcuto")
+bus/2/effect/1/enabled = true
+bus/3/name = &"Synth"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = -14.0622
+bus/3/send = &"SubMaster"
+bus/4/name = &"Purple"
+bus/4/solo = false
+bus/4/mute = false
+bus/4/bypass_fx = false
+bus/4/volume_db = -13.8765
+bus/4/send = &"Synth"
+bus/4/effect/0/effect = SubResource("AudioEffectPhaser_6n6ik")
+bus/4/effect/0/enabled = true
+bus/4/effect/1/effect = SubResource("AudioEffectDelay_6n6ik")
+bus/4/effect/1/enabled = true
+bus/5/name = &"Green"
+bus/5/solo = false
+bus/5/mute = false
+bus/5/bypass_fx = false
+bus/5/volume_db = 0.860514
+bus/5/send = &"Synth"
+bus/5/effect/0/effect = SubResource("AudioEffectLowPassFilter_6n6ik")
+bus/5/effect/0/enabled = true
+bus/5/effect/1/effect = SubResource("AudioEffectChorus_6n6ik")
+bus/5/effect/1/enabled = true
+bus/5/effect/2/effect = SubResource("AudioEffectReverb_xic54")
+bus/5/effect/2/enabled = true
+bus/6/name = &"Voice"
+bus/6/solo = false
+bus/6/mute = false
+bus/6/bypass_fx = false
+bus/6/volume_db = 0.0
+bus/6/send = &"SubMaster"
+bus/6/effect/0/effect = SubResource("AudioEffectReverb_6n6ik")
+bus/6/effect/0/enabled = true
+bus/6/effect/1/effect = SubResource("AudioEffectAmplify_6n6ik")
+bus/6/effect/1/enabled = true

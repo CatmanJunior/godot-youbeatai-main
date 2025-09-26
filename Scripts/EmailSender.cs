@@ -9,7 +9,7 @@ public class EmailSender
         string pass = "plkqkbpemvqierqw";
         
         string subject = "Hier is je liedje!";
-        string body = "Het liedje is als bestand bijgevoegt";
+        string body = "Het liedje is als bestand bijgevoegd";
 
         var message = new MailMessage(from, to, subject, body);
         var attachment = new Attachment(globalWavPath);

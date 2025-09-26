@@ -5,7 +5,9 @@ extends Node
 @export var _synth: Synth
 @export var notes: Notes
 @export var volume: float = 0.5
+@export var outputGate: float = -25
 @export var octaveRange: Vector2i
+@export var beats_per_bar = 4
 
 var recorder: AudioEffectRecord
 var data: PackedVector3Array
@@ -20,7 +22,8 @@ func _ready():
 	# as an "AudioEffectRecord" resource.
 	recorder = AudioServer.get_bus_effect(idx, 1) 
 	samples.resize(10)
-	samples.fill(PackedVector3Array())
+	for index in range(len(samples)):
+		samples[index] = PackedVector3Array([])
 	
 	bpmManager.OnBeatEvent.connect(_on_timer_timeout)
 	bpmManager.OnPlayingChanged.connect(_on_playing_changed)
@@ -30,6 +33,10 @@ func _on_timer_timeout():
 		_synth.start()
 
 	if bpmManager.currentBeat >= len(get_sample()):
+		_synth.volume = 0
+		return
+		
+	if fmod(bpmManager.currentBeat, (4.0/beats_per_bar)) != 0:
 		return
 	
 	var current = get_sample()[bpmManager.currentBeat]
@@ -49,16 +56,20 @@ func _on_playing_changed(playing: bool):
 func _on_envelope_level_changed(level: float):
 	if bpmManager.currentBeat >= len(get_sample()):
 		return
+	
 	var rms_value = get_sample()[bpmManager.currentBeat][1]
-	if rms_value == 0:
+	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
+	
+	# gate for low volume input
+	if log_value <= outputGate:
 		_synth.volume = 0
 		return
 	
-	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-	_synth.volume = volume * level * remap(log_value, -80, 10, 0, 1)
+	_synth.volume = volume * level * db_to_linear(log_value)#remap(log_value, -80, 10, 0, 1)
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
+	print(layer)
 
 func on_microphone_input(volume: float, frequency: float):
 	if not recorder.is_recording_active():
@@ -82,7 +93,8 @@ func stop_recording():
 	print("recording data length %d" % [len(data)])
 
 	get_sample().clear()
-	var beatDuration = 60.0/bpmManager.bpm /4.0
+	var beats_per_bar = 4.0
+	var beatDuration = 60.0 / bpmManager.bpm / beats_per_bar
 	
 	# TODO: reduce array size with needed kernel
 	# kernel size should maybe be depend on reduction amount?
@@ -103,7 +115,7 @@ func stop_recording():
 			sample.x = closest.frequency
 			get_sample().push_back(sample)
 	
-	get_sample().resize(bpmManager.amount_of_beats)	
+	get_sample().resize(bpmManager.amount_of_beats / (4.0 / beats_per_bar))	
 	print("samples(%d) \n %s" % [len(get_sample()), get_sample()])
 
 func play_recording():

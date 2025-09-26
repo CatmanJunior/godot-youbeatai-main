@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Threading.Tasks;
 
 public partial class RecordSampleButton : Sprite2D
 {
@@ -20,7 +19,7 @@ public partial class RecordSampleButton : Sprite2D
     private float actualSoundLength = 0;
 
     private float recordingVolume => MicrophoneCapture.instance.volume;
-    private float recordingTreshold = 0.01f;
+    private float recordingTreshold = 0.25f;
 
     private Node2D mixerToMove;
     private Node2D pivotToMove => (Node2D)mixerToMove.FindChild("Pivot");
@@ -46,8 +45,9 @@ public partial class RecordSampleButton : Sprite2D
                 actualSoundLength += (float)delta;
 
                 var baseTimePerBeat = BpmManager.instance.baseTimePerBeat;
-                var percentage = actualSoundLength / (baseTimePerBeat * 2);
+                if (baseTimePerBeat == 0) baseTimePerBeat = 0.2f;
 
+                var percentage = actualSoundLength / (baseTimePerBeat * 2);
                 var fill = GetChild(0) as TextureProgressBar;
 
                 if (percentage > 1f)
@@ -168,65 +168,24 @@ public partial class RecordSampleButton : Sprite2D
         {
             manager.firstAudioPlayerRec.Stop();
             manager.firstAudioPlayerRec.Stream = manager.recordSampleButton0.recordedAudio;
-            mixerToMove = manager.sampleMixer0;
             
         }
         if (ring == 1)
         {
             manager.secondAudioPlayerRec.Stop();
             manager.secondAudioPlayerRec.Stream = manager.recordSampleButton1.recordedAudio;
-            mixerToMove = manager.sampleMixer1;
 
         }
         if (ring == 2)
         {
             manager.thirdAudioPlayerRec.Stop();
             manager.thirdAudioPlayerRec.Stream = manager.recordSampleButton2.recordedAudio;
-            mixerToMove = manager.sampleMixer2;
 
         }
         if (ring == 3)
         {
             manager.fourthAudioPlayerRec.Stop();
             manager.fourthAudioPlayerRec.Stream = manager.recordSampleButton3.recordedAudio;
-            mixerToMove = manager.sampleMixer3;
         }
-
-        if (pivotToMove.RotationDegrees > -360 / 3) _ = RotateMixerLeft();  // fire-and-forget coroutine
-        else if (pivotToMove.RotationDegrees < -360 / 3) _ = RotateMixerRight();  // fire-and-forget coroutine
-    }
-
-    async Task RotateMixerRight()
-    {
-        var increase = mixerToMove.FindChild("IncreaseButton") as Button;
-        var pressedStyle = increase.GetThemeStylebox("pressed") as StyleBoxFlat;
-        var normalStyle = increase.GetThemeStylebox("normal") as StyleBoxFlat;
-        var originalStyle = (StyleBoxFlat)normalStyle.Duplicate();
-        var tempStyle = (StyleBoxFlat)pressedStyle.Duplicate();
-
-        increase.AddThemeStyleboxOverride("normal", tempStyle);
-        while (pivotToMove.RotationDegrees < -360 / 3)
-        {
-            Manager.instance.RotatePivot(5, pivotToMove, ring);
-            await Task.Delay(50);
-        }
-        increase.AddThemeStyleboxOverride("normal", originalStyle);
-    }
-
-    async Task RotateMixerLeft()
-    {
-        var decrease = mixerToMove.FindChild("DecreaseButton") as Button;
-        var pressedStyle = decrease.GetThemeStylebox("pressed") as StyleBoxFlat;
-        var normalStyle = decrease.GetThemeStylebox("normal") as StyleBoxFlat;
-        var originalStyle = (StyleBoxFlat)normalStyle.Duplicate();
-        var tempStyle = (StyleBoxFlat)pressedStyle.Duplicate();
-
-        decrease.AddThemeStyleboxOverride("normal", tempStyle);
-        while (pivotToMove.RotationDegrees > -360 / 3)
-        {
-            Manager.instance.RotatePivot(-5, pivotToMove, ring);
-            await Task.Delay(50);
-        }
-        decrease.AddThemeStyleboxOverride("normal", originalStyle);
     }
 }

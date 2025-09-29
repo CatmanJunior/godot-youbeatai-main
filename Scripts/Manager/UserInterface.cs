@@ -1,3 +1,4 @@
+using System.IO;
 using Godot;
 
 public partial class Manager : Node
@@ -116,12 +117,19 @@ public partial class Manager : Node
 		ClearLayoutButton.Pressed += ClearLayer;
 		restartButton.Pressed += () =>
 		{
-			if (Engine.IsEditorHint()) GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
-			else
-			{
-				OS.Execute(OS.GetExecutablePath(), []);
-				GetTree().Quit();
-			}
+			GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
+			
+			string[] filesToReset = 
+			[
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt")
+			];
+
+			foreach (var path in filesToReset) File.Delete(path);
+
+			Tutorial.Reset();
 		};
 		PlayPauseButton.ButtonUp += OnPlayPauseButton;
 		BpmUpButton.Pressed += OnBpmUpButton;

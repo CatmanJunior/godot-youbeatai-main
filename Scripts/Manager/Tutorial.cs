@@ -16,6 +16,12 @@ public static class Tutorial
 
     static Manager manager => Manager.instance;
 
+    public static void Reset()
+    {
+        tutorial_level = 0;
+        tutorialActivated = false;
+    }
+
     public static void TryActivateTutorial()
     {
         if (useTutorial) // enable tutorial

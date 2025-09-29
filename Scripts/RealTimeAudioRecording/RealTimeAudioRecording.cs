@@ -93,6 +93,9 @@ public partial class RealTimeAudioRecording : Node
         
         // playing true
         BpmManager.instance.playing = true;
+
+        // also play metronome sound on first beat
+        Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
     }
 
     public void StopRecordingMaster()

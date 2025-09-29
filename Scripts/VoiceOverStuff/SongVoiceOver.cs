@@ -14,7 +14,7 @@ public partial class SongVoiceOver : Node
 	public AudioStream voiceOver = null;
     AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
-	bool shouldRecord = false;
+	public bool shouldRecord = false;
 	public bool recording = false;
 	float recordingTimer = 0;
 
@@ -76,6 +76,9 @@ public partial class SongVoiceOver : Node
 
         // playing true
         BpmManager.instance.playing = true;
+
+		// also play metronome sound on first beat
+		Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
     }
 
 	public void OnTop()

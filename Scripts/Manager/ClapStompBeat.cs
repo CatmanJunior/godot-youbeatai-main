@@ -1,6 +1,7 @@
 using Godot;
 
 using System;
+using System.Data.Common;
 
 public partial class Manager : Node
 {
@@ -85,7 +86,29 @@ public partial class Manager : Node
         if (metronome_sfx_enabled)
         {
             int beatsPerQuarter = BpmManager.beatsAmount / 4;
-            if (BpmManager.instance.currentBeat % beatsPerQuarter == 0) PlayExtraSFX(metronome_sfx);
+            if (BpmManager.instance.currentBeat % beatsPerQuarter == 0)
+            {
+                bool reatime_rec = RealTimeAudioRecording.instance.shouldRecord || RealTimeAudioRecording.instance.shouldRecord;
+                bool layer_rec0 = layerVoiceOver0.shouldRecord || layerVoiceOver0.shouldRecord;
+                bool layer_rec1 = layerVoiceOver1.shouldRecord || layerVoiceOver1.shouldRecord;
+                bool song_rec = SongVoiceOver.instance.shouldRecord || RealTimeAudioRecording.instance.shouldRecord;
+
+                if (reatime_rec || layer_rec0 || layer_rec1 || song_rec)
+                {
+                    if (BpmManager.instance.currentBeat != 0)
+                    {
+                        PlayExtraSFX(metronome_sfx);
+                    }
+                    else
+                    {
+                        GD.Print("skip top tic");
+                    }
+                }
+                else // normal
+                {
+                    PlayExtraSFX(metronome_sfx);
+                }
+            }
         }
 
         if (beatActives[0, BpmManager.instance.currentBeat]) firstAudioPlayer.Play();

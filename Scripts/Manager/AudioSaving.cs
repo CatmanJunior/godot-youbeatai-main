@@ -19,13 +19,13 @@ public static class AudioSaving
 
     private static void SaveRealTimeRecordedSongAsFileAndSendToEmail()
     {
-        if (RealTimeAudioRecording.recording_result == null) return;
+        if (RealTimeAudioRecording.instance.recording_result == null) return;
 
         var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
         string final_name = user("export_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
 
-        ConvertAudioStreamWavToWav(RealTimeAudioRecording.recording_result, final_name + ".wav");
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, final_name + ".wav");
 
         if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
 

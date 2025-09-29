@@ -70,7 +70,6 @@ public partial class Manager : Node
 	float savingLabelTimer = 0;
 	[Export] public Label InstructionLabel;
 	[Export] Button allLayersToMp3;
-	[Export] Button OpnemenEnExporteren;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
 	float beatScale32 = 1;
@@ -145,7 +144,6 @@ public partial class Manager : Node
 				layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
 			}
 		};
-		OpnemenEnExporteren.ButtonUp += RealTimeAudioRecording.OnButton;
 	}
 
 	private void UpdateLayerOutlineSpriteRotation()

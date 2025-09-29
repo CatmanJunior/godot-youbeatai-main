@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=65 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -31,6 +31,7 @@
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="22_wax6p"]
+[ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="24_o1aky"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="PackedScene" uid="uid://bfroto1jhb10b" path="res://Experimental/VoiceToSynth/voice_recorder.tscn" id="26_jwpg7"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
@@ -327,7 +328,7 @@ metadata/_edit_use_anchors_ = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "OpnemenEnExporteren", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "layerVoiceOver0", "layerVoiceOver1")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
@@ -404,7 +405,6 @@ layerLoopToggle = NodePath("../../UserInterface/LayerLoopToggle")
 SavingLabel = NodePath("../../SavingLabel")
 InstructionLabel = NodePath("../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
 allLayersToMp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersToMp3")
-OpnemenEnExporteren = NodePath("../../UserInterface/Record & Export")
 layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
 layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder")
 spritePrefab = ExtResource("2_1eep1")
@@ -438,6 +438,35 @@ delaySlider = NodePath("../../UserInterface/SettingsPanel/Sliders/DelaySlider")
 [node name="MidiManager" type="Node" parent="Managers"]
 script = ExtResource("11_iqwjw")
 
+[node name="RealTimeAudioRecording" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "recordSongSprite")]
+script = ExtResource("24_o1aky")
+progressbar = NodePath("RealTimeAudioRecordingProgressBar")
+recordSongButton = NodePath("../../UserInterface/RecordMasterButton/Button0")
+recordSongSprite = NodePath("../../UserInterface/RecordMasterButton")
+
+[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="Managers/RealTimeAudioRecording"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -290.0
+offset_top = -711.0
+offset_right = -272.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.57079
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = ExtResource("9_nnqde")
+theme_override_styles/fill = ExtResource("10_t1q83")
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
 [node name="SongVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "recordSongSprite", "snellerButton", "langzamerButton")]
 script = ExtResource("15_5s5qe")
 progressbar = NodePath("SongVoiceOverProgressBar")
@@ -453,9 +482,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -290.0
-offset_top = -711.0
+offset_top = -833.0
 offset_right = -272.0
-offset_bottom = -4.0
+offset_bottom = -126.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 1.57079
@@ -841,6 +870,7 @@ grow_vertical = 2
 text = "👞"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
@@ -865,6 +895,7 @@ grow_vertical = 2
 text = "👏"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
@@ -889,6 +920,7 @@ grow_vertical = 2
 text = "📣"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
@@ -913,6 +945,7 @@ grow_vertical = 2
 text = "⌚"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
@@ -937,6 +970,7 @@ grow_vertical = 2
 text = "🐻"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
@@ -962,6 +996,7 @@ grow_vertical = 2
 text = "🐦‍⬛"
 horizontal_alignment = 1
 vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
@@ -1083,7 +1118,7 @@ antialiased = true
 [node name="RecordSongButton" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.8, 0.8, 0.8, 1)
 z_index = -4
-position = Vector2(395, -291)
+position = Vector2(395, -467.00003)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -1113,6 +1148,59 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/RecordSongButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.5
+offset_top = -32.5
+offset_right = 9.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(22, 22)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "🎙️"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RecordMasterButton" type="Sprite2D" parent="UserInterface"]
+self_modulate = Color(0.8, 0.8, 0.8, 1)
+z_index = -4
+position = Vector2(395, -291.00003)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("28_r33sp")
+script = ExtResource("27_jwpg7")
+
+[node name="Button0" type="Button" parent="UserInterface/RecordMasterButton"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="Label" parent="UserInterface/RecordMasterButton"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -2128,16 +2216,6 @@ text = "bpm"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="Record & Export" type="Button" parent="UserInterface"]
-layout_mode = 0
-offset_left = -552.0
-offset_top = -343.0
-offset_right = -398.0
-offset_bottom = -284.0
-focus_mode = 0
-theme_override_font_sizes/font_size = 22
-text = "Opnemen"
 
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2

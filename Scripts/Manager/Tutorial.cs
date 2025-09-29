@@ -187,7 +187,9 @@ public static class Tutorial
             () =>
             {
                 SongVoiceOver.instance.recordSongButton.Visible = true;
+                RealTimeAudioRecording.instance.recordSongButton.Visible = true;
                 SongVoiceOver.instance.recordSongSprite.Visible = true;
+                RealTimeAudioRecording.instance.recordSongSprite.Visible = true;
                 SongVoiceOver.instance.progressbar.Visible = true;
             },
 

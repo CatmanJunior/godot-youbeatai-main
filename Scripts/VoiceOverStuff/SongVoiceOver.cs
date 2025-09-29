@@ -33,21 +33,7 @@ public partial class SongVoiceOver : Node
         instance ??= this;
 
 		// init record button
-		recordSongButton.Pressed += () =>
-		{
-			Manager.instance.layerLoopToggle.ButtonPressed = true;
-			shouldRecord = !shouldRecord;
-
-			// metronoom aan
-			Manager.instance.metronome_toggle.ButtonPressed = true;
-
-			// 4 beats voor de eerste noot op eerste laag
-			Manager.instance.SwitchLayer(10);
-			BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
-
-			// playing true
-			BpmManager.instance.playing = true;
-		};
+		recordSongButton.Pressed += OnButton;
 
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
@@ -75,6 +61,22 @@ public partial class SongVoiceOver : Node
 
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
+
+    public void OnButton()
+    {
+        Manager.instance.layerLoopToggle.ButtonPressed = true;
+        shouldRecord = !shouldRecord;
+
+        // metronoom aan
+        Manager.instance.metronome_toggle.ButtonPressed = true;
+
+        // 4 beats voor de eerste noot op eerste laag
+        Manager.instance.SwitchLayer(10);
+        BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
+
+        // playing true
+        BpmManager.instance.playing = true;
+    }
 
 	public void OnTop()
 	{

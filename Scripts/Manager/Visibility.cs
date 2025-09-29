@@ -24,8 +24,11 @@ public partial class Manager : Node
         chosen_emoticons_label.Visible = visible;
         achievementspanel.Visible = visible;
         SongVoiceOver.instance.recordSongButton.Visible = visible;
+        RealTimeAudioRecording.instance.recordSongButton.Visible = visible;
         SongVoiceOver.instance.recordSongSprite.Visible = visible;
+        RealTimeAudioRecording.instance.recordSongSprite.Visible = visible;
         SongVoiceOver.instance.progressbar.Visible = visible;
+        RealTimeAudioRecording.instance.progressbar.Visible = visible;
         ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
         ((Sprite2D)layerVoiceOver1.recordLayerButton.GetParent()).Visible = visible;
         layerVoiceOver0.textureProgressBar.Visible = visible;
@@ -35,7 +38,6 @@ public partial class Manager : Node
         activatePurpleChaosButton.Visible = visible;
         layerVoiceOver0.bigLine.Visible = visible;
         layerVoiceOver1.bigLine.Visible = visible;
-        OpnemenEnExporteren.Visible = visible;
     }
 
     public void SetRingVisibility(int ring, bool visible)

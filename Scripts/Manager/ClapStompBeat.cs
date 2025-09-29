@@ -114,7 +114,7 @@ public partial class Manager : Node
             if (currentLayerIndex == 0)
             {
                 SongVoiceOver.instance.OnTop();
-                RealTimeAudioRecording.OnTop();
+                RealTimeAudioRecording.instance.OnTop();
             }
         }
 

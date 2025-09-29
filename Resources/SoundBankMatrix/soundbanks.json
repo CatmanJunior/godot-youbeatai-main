@@ -1,6 +1,6 @@
 [
     {
-        "name": "kampvuur",
+        "name": "1_kampvuur",
         "themes": [
             "💔",
             "🌴",
@@ -17,7 +17,7 @@
         "electronic": 0
     },
     {
-        "name": "lo-fi",
+        "name": "1_lo-fi",
         "themes": [
             "🪦",
             "🎮",
@@ -32,7 +32,7 @@
         "electronic": 1
     },
     {
-        "name": "new-age",
+        "name": "1_new-age",
         "themes": [
             "💔",
             "🌴",
@@ -48,7 +48,7 @@
         "electronic": 2
     },
     {
-        "name": "acoustisch",
+        "name": "2_acoustisch",
         "themes": [
             "💔",
             "🎂",
@@ -66,7 +66,7 @@
         "electronic": 0
     },
     {
-        "name": "keuken",
+        "name": "2_keuken",
         "themes": [
             "🌴",
             "🫶",
@@ -81,7 +81,7 @@
         "electronic": 1
     },
     {
-        "name": "tango",
+        "name": "2_tango",
         "themes": [
             "💔",
             "🪦",
@@ -98,7 +98,7 @@
         "electronic": 2
     },
     {
-        "name": "aziatisch",
+        "name": "3_aziatisch",
         "themes": [
             "💔",
             "🪦",
@@ -115,7 +115,7 @@
         "electronic": 2
     },
     {
-        "name": "opera",
+        "name": "3_opera",
         "themes": [
             "💔",
             "🪦",
@@ -130,7 +130,7 @@
         "electronic": 1
     },
     {
-        "name": "raggae",
+        "name": "3_raggae",
         "themes": [
             "💔",
             "🌴",
@@ -147,7 +147,7 @@
         "electronic": 0
     },
     {
-        "name": "soul",
+        "name": "3_soul",
         "themes": [
             "🎂",
             "🫶",
@@ -162,7 +162,7 @@
         "electronic": 1
     },
     {
-        "name": "balkisch",
+        "name": "4_balkisch",
         "themes": [
             "🎂",
             "🦄",
@@ -178,7 +178,7 @@
         "electronic": 0
     },
     {
-        "name": "k-pop",
+        "name": "4_k-pop",
         "themes": [
             "💔",
             "🦄",
@@ -194,7 +194,7 @@
         "electronic": 2
     },
     {
-        "name": "pop",
+        "name": "4_pop",
         "themes": [
             "🎂",
             "🦄",
@@ -210,7 +210,7 @@
         "electronic": 1
     },
     {
-        "name": "afrikaans",
+        "name": "5_afrikaans",
         "themes": [
             "🌴",
             "🎂",
@@ -227,7 +227,7 @@
         "electronic": 0
     },
     {
-        "name": "dance",
+        "name": "5_dance",
         "themes": [
             "🫶",
             "🏆",
@@ -242,7 +242,7 @@
         "electronic": 2
     },
     {
-        "name": "zuid-ame",
+        "name": "5_zuid-ame",
         "themes": [
             "💔",
             "🫶",
@@ -259,7 +259,7 @@
         "electronic": 0
     },
     {
-        "name": "funk",
+        "name": "6_funk",
         "themes": [
             "🌴",
             "🏆",
@@ -274,7 +274,7 @@
         "electronic": 1
     },
     {
-        "name": "hiphop",
+        "name": "6_hiphop",
         "themes": [
             "🌴",
             "🪦",
@@ -288,7 +288,7 @@
         "electronic": 2
     },
     {
-        "name": "rock",
+        "name": "6_rock",
         "themes": [
             "🎂",
             "🏆",
@@ -303,7 +303,7 @@
         "electronic": 0
     },
     {
-        "name": "hardcore",
+        "name": "7_hardcore",
         "themes": [
             "💔",
             "🪦",
@@ -319,7 +319,7 @@
         "electronic": 1
     },
     {
-        "name": "metal",
+        "name": "7_metal",
         "themes": [
             "🌴",
             "🦄",
@@ -337,7 +337,7 @@
         "electronic": 2
     },
     {
-        "name": "techno",
+        "name": "7_techno",
         "themes": [
             "🎂",
             "🦄",

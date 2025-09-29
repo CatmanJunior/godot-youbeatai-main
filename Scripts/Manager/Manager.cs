@@ -1,5 +1,6 @@
 using Godot;
 
+[GlobalClass]
 public partial class Manager : Node
 {
 	public static Manager instance = null;

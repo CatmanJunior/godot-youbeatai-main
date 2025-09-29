@@ -1,17 +1,25 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 partial class MidiManager : Node
 {
-    public override void _Ready()
-    {
-		OS.OpenMidiInputs();
-    	GD.Print(OS.GetConnectedMidiInputs());
-    }
+	public override void _Ready()
+	{
+        try
+        {
+			OS.OpenMidiInputs();
+			GD.Print(OS.GetConnectedMidiInputs());
+		}
+		catch (Exception)
+        { 
+			
+		}
+	}
 
 	public override void _Process(double delta)
-    {
-    }
+	{
+	}
 
 	public override void _Input(InputEvent inputEvent)
 	{
@@ -53,7 +61,7 @@ partial class MidiManager : Node
 	}
 
 	private string GetNoteName(int pitch)
-    {
+	{
 		var NoteNames = new Dictionary<int, string>
 		{
 			{ 0, "C" },
@@ -70,9 +78,9 @@ partial class MidiManager : Node
 			{ 11, "B" }
 		};
 
-        int octave = (pitch / 12) - 1;
-        int noteIndex = pitch % 12;
-        string note = NoteNames.ContainsKey(noteIndex) ? NoteNames[noteIndex] : "Unknown";
-        return $"{note}{octave}";
-    }
+		int octave = (pitch / 12) - 1;
+		int noteIndex = pitch % 12;
+		string note = NoteNames.ContainsKey(noteIndex) ? NoteNames[noteIndex] : "Unknown";
+		return $"{note}{octave}";
+	}
 }

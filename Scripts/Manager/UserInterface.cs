@@ -46,7 +46,7 @@ public partial class Manager : Node
 	[Export] CheckButton add_beats;
 	[Export] public CheckButton button_is_clap;
 	[Export] public CheckButton button_add_beats;
-	[Export] Slider volume_treshold;
+	[Export] public Slider volume_treshold;
 	[Export] public Panel settingsPanel;
 	[Export] public Button settingsButton;
 	[Export] Button settingsBackButton;

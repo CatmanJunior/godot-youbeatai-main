@@ -19,11 +19,9 @@ public partial class RecordSampleButton : Sprite2D
     private float actualSoundLength = 0;
 
     private float recordingVolume => MicrophoneCapture.instance.volume;
-    private float recordingTreshold = 0.25f;
 
     private Node2D mixerToMove;
     private Node2D pivotToMove => (Node2D)mixerToMove.FindChild("Pivot");
-
 
     public override void _Ready()
     {
@@ -37,7 +35,7 @@ public partial class RecordSampleButton : Sprite2D
         if (recording)
         {
             recordingLength += (float)delta;
-            if (recordingVolume > recordingTreshold) hasDetectedSound = true;
+            if (recordingVolume > Manager.instance.volume_treshold.Value) hasDetectedSound = true;
             if (!hasDetectedSound) silenceLength += (float)delta;
 
             if (hasDetectedSound)

@@ -5,6 +5,11 @@ public partial class BpmManager : Node
 {
     public static BpmManager instance = null;
 
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
     // bpm
     private int _bpm = 120;
     [Export]

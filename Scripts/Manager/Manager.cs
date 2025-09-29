@@ -4,6 +4,11 @@ public partial class Manager : Node
 {
 	public static Manager instance = null;
 
+	public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
 	public override void _Ready()
 	{
 		instance ??= this;

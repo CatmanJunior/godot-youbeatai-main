@@ -5,6 +5,11 @@ public partial class SongVoiceOver : Node
 	// singleton
     public static SongVoiceOver instance = null;
 
+	public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
 	// user interface
 	[Export] public ProgressBar progressbar;
 	[Export] public Button recordSongButton;

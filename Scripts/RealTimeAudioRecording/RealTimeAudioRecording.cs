@@ -12,6 +12,11 @@ public partial class RealTimeAudioRecording : Node
 {
     public static RealTimeAudioRecording instance = null;
 
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
     public AudioStreamWav recording_result = null;
     public AudioEffectRecord audioEffectRecord;
 

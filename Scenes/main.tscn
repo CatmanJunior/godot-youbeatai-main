@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=66 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]

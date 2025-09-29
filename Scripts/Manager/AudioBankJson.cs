@@ -11,6 +11,9 @@ public partial class Manager : Node
 
     private void ReadJsonFromPreviousSceneAndSetValues()
     {
+        if (SoundBankSelectionMenu.chosenSoundBank == null)
+            return;
+            
         chosenSoundBank = SoundBankSelectionMenu.chosenSoundBank;
         foreach (var emoticon in SoundBankSelectionMenu.chosenEmotions) chosen_emoticons_label.Text += emoticon;
         foreach (var emoticon in SoundBankSelectionMenu.chosenThemes) chosen_emoticons_label.Text += emoticon;

@@ -38,9 +38,9 @@
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="29_536cc"]
-[ext_resource type="Texture2D" uid="uid://cel32nk13mowt" path="res://Resources/Textures/driehoeh_met_fade6vector.png" id="29_aqgau"]
 [ext_resource type="Texture2D" uid="uid://dmpmrey7e0ttx" path="res://Resources/Textures/fingerprintdik.png" id="30_8cuat"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
+[ext_resource type="Texture2D" uid="uid://lmpsycd0viao" path="res://Resources/Textures/kaosalfa.png" id="30_o1aky"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
@@ -613,49 +613,49 @@ texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("29_aqgau")
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("30_o1aky")
 
 [node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
-position = Vector2(-383.333, 240)
+position = Vector2(-145.09805, 98.039215)
 
 [node name="PointTop" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
-position = Vector2(-10, -460)
+position = Vector2(-1.9607735, -152.94118)
 
 [node name="PointRight" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
-position = Vector2(376.667, 233.333)
+position = Vector2(145.09804, 96.078445)
 
 [node name="PointLeftIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -580.0
-offset_top = 92.66699
-offset_right = -480.0
-offset_bottom = 192.66702
+offset_left = -303.9216
+offset_top = -58.823517
+offset_right = -203.9216
+offset_bottom = 41.176514
 scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 24
 text = "🍎"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -159.33398
-offset_top = -616.00006
-offset_right = -59.333282
-offset_bottom = -516.00006
+offset_left = -161.35742
+offset_top = -317.64706
+offset_right = -61.35672
+offset_bottom = -217.64706
 scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 24
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = 237.33301
-offset_top = 97.333984
-offset_right = 337.333
-offset_bottom = 197.334
+offset_left = -13.725463
+offset_top = -60.784313
+offset_right = 86.274536
+offset_bottom = 39.215702
 scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 64
+theme_override_font_sizes/font_size = 24
 text = "🍏"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -663,7 +663,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="KnobSprite" type="Sprite2D" parent="UserInterface/ChaosPad/Triangle"]
 z_index = 2
-scale = Vector2(0.6, 0.6)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("30_8cuat")
 script = ExtResource("29_536cc")
 
@@ -1953,7 +1953,6 @@ offset_bottom = 45.1543
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
-button_pressed = true
 alignment = 1
 metadata/_edit_use_anchors_ = true
 

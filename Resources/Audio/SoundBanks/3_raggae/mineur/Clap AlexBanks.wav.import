@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://der0kb6d2ynoo"
-path="res://.godot/imported/Clap AlexBanks.wav-b634ae82c2744f42967dcac8e7f2e203.sample"
+path="res://.godot/imported/Clap AlexBanks.wav-58d789da2ec4b09fc79fd9f5f7ce511b.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/mineur/Clap AlexBanks.wav"
-dest_files=["res://.godot/imported/Clap AlexBanks.wav-b634ae82c2744f42967dcac8e7f2e203.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/mineur/Clap AlexBanks.wav"
+dest_files=["res://.godot/imported/Clap AlexBanks.wav-58d789da2ec4b09fc79fd9f5f7ce511b.sample"]
 
 [params]
 

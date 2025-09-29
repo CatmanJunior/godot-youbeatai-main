@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bhg6yg7hs1a8o"
-path="res://.godot/imported/ClosedHH Fit 1.wav-b51bdd60c917d57b2cfc6466837c2596.sample"
+path="res://.godot/imported/ClosedHH Fit 1.wav-6cf263099860ae77fdb6ad349b3bb36e.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/mineur/ClosedHH Fit 1.wav"
-dest_files=["res://.godot/imported/ClosedHH Fit 1.wav-b51bdd60c917d57b2cfc6466837c2596.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/mineur/ClosedHH Fit 1.wav"
+dest_files=["res://.godot/imported/ClosedHH Fit 1.wav-6cf263099860ae77fdb6ad349b3bb36e.sample"]
 
 [params]
 

@@ -2267,6 +2267,8 @@ text = "Doorgaan"
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_bpm_changed"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_clap"]
 [connection signal="OnShouldStompEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_stamp"]
+[connection signal="SetGreenSynth" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="set_font"]
+[connection signal="SetPurpleSynth" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="set_font"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="on_microphone_input"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="on_microphone_input"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="start_recording"]

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://be37oruasvm8u"
-path="res://.godot/imported/Kick Bandits.wav-d4d3b2beb3f733181514b1463cc08594.sample"
+path="res://.godot/imported/Kick Bandits.wav-54821b8de8faf02960225a8aecf287d4.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/Kick Bandits.wav"
-dest_files=["res://.godot/imported/Kick Bandits.wav-d4d3b2beb3f733181514b1463cc08594.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/Kick Bandits.wav"
+dest_files=["res://.godot/imported/Kick Bandits.wav-54821b8de8faf02960225a8aecf287d4.sample"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dq2137h5khh8b"
-path="res://.godot/imported/Snare Andromeda 5.wav-abd99e97a26082c6b8e525ea11e87372.sample"
+path="res://.godot/imported/Snare Andromeda 5.wav-6a21abfa79472f8672cad949d22af8cb.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/mineur/Snare Andromeda 5.wav"
-dest_files=["res://.godot/imported/Snare Andromeda 5.wav-abd99e97a26082c6b8e525ea11e87372.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/mineur/Snare Andromeda 5.wav"
+dest_files=["res://.godot/imported/Snare Andromeda 5.wav-6a21abfa79472f8672cad949d22af8cb.sample"]
 
 [params]
 

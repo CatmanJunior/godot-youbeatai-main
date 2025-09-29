@@ -613,7 +613,7 @@ texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="Triangle" type="Sprite2D" parent="UserInterface/ChaosPad"]
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.25, 0.25)
 texture = ExtResource("29_aqgau")
 
 [node name="PointLeft" type="Node2D" parent="UserInterface/ChaosPad/Triangle"]
@@ -626,36 +626,36 @@ position = Vector2(-10, -460)
 position = Vector2(376.667, 233.333)
 
 [node name="PointLeftIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -540.0
-offset_top = 76.667
-offset_right = -440.0
-offset_bottom = 176.66702
+offset_left = -580.0
+offset_top = 92.66699
+offset_right = -480.0
+offset_bottom = 192.66702
 scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 64
 text = "🍎"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PointTopIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = -163.334
-offset_top = -600.0
-offset_right = -63.333298
-offset_bottom = -500.0
+offset_left = -159.33398
+offset_top = -616.00006
+offset_right = -59.333282
+offset_bottom = -516.00006
 scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 64
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PointRightIcon" type="Label" parent="UserInterface/ChaosPad/Triangle"]
-offset_left = 213.333
-offset_top = 73.334
-offset_right = 313.333
-offset_bottom = 173.33401
+offset_left = 237.33301
+offset_top = 97.333984
+offset_right = 337.333
+offset_bottom = 197.334
 scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 48
+theme_override_font_sizes/font_size = 64
 text = "🍏"
 horizontal_alignment = 1
 vertical_alignment = 1

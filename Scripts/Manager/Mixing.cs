@@ -16,7 +16,7 @@ public partial class Manager : Node
     [Export] public Label iconMain;
     [Export] public Label iconAlt;
     public Vector3 weights;
-    public float outerTriangleSize = 40;
+    public float outerTriangleSize = 60;
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
     [Export] public Node2D micButtonLocation;
 

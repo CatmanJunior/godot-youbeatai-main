@@ -55,6 +55,7 @@ public partial class Manager : Node
         ClearLayout();
         SamplesMixing_ClearKnobsForLayer();
         ClearLayerVoiceOver();
+        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
     }
 
     public void CopyLayerVoiceToClipBoard()

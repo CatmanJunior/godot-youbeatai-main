@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=11 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=10 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -20,10 +20,6 @@ tap1_delay_ms = 91.0
 tap1_level_db = -39.03
 tap2_active = false
 tap2_delay_ms = 250.0
-
-[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_6n6ik"]
-resource_name = "LowPassFilter"
-cutoff_hz = 400.0
 
 [sub_resource type="AudioEffectChorus" id="AudioEffectChorus_6n6ik"]
 resource_name = "Chorus"
@@ -89,12 +85,10 @@ bus/5/mute = false
 bus/5/bypass_fx = false
 bus/5/volume_db = 0.860514
 bus/5/send = &"Synth"
-bus/5/effect/0/effect = SubResource("AudioEffectLowPassFilter_6n6ik")
+bus/5/effect/0/effect = SubResource("AudioEffectChorus_6n6ik")
 bus/5/effect/0/enabled = true
-bus/5/effect/1/effect = SubResource("AudioEffectChorus_6n6ik")
+bus/5/effect/1/effect = SubResource("AudioEffectReverb_xic54")
 bus/5/effect/1/enabled = true
-bus/5/effect/2/effect = SubResource("AudioEffectReverb_xic54")
-bus/5/effect/2/enabled = true
 bus/6/name = &"Voice"
 bus/6/solo = false
 bus/6/mute = false

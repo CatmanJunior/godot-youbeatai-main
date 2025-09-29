@@ -46,12 +46,14 @@ public partial class Manager : Node
         if (active)
         {
             sprite.Scale += Vector2.One;
+            if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
+        if (draganddropButton1.Scale.X > 4) draganddropButton1.Scale = Vector2.One * 4;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ButtonBehaviour();
     }
@@ -65,12 +67,14 @@ public partial class Manager : Node
         if (active)
         {
             sprite.Scale += Vector2.One;
+            if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
+        if (draganddropButton0.Scale.X > 4) draganddropButton0.Scale = Vector2.One * 4;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ButtonBehaviour();
 

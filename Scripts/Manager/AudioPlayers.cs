@@ -53,17 +53,17 @@ public partial class Manager : Node
         secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
         thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
         fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
-        firstAudioPlayer.Bus = "SubMaster";
-        secondAudioPlayer.Bus = "SubMaster";
-        thirdAudioPlayer.Bus = "SubMaster";
-        fourthAudioPlayer.Bus = "SubMaster";
-        firstAudioPlayerAlt.Bus = "SubMaster";
-        secondAudioPlayerAlt.Bus = "SubMaster";
-        thirdAudioPlayerAlt.Bus = "SubMaster";
-        fourthAudioPlayerAlt.Bus = "SubMaster";
-        firstAudioPlayerRec.Bus = "SubMaster";
-        secondAudioPlayerRec.Bus = "SubMaster";
-        thirdAudioPlayerRec.Bus = "SubMaster";
-        fourthAudioPlayerRec.Bus = "SubMaster";
+        firstAudioPlayer.Bus = "Beats";
+        secondAudioPlayer.Bus = "Beats";
+        thirdAudioPlayer.Bus = "Beats";
+        fourthAudioPlayer.Bus = "Beats";
+        firstAudioPlayerAlt.Bus = "Beats";
+        secondAudioPlayerAlt.Bus = "Beats";
+        thirdAudioPlayerAlt.Bus = "Beats";
+        fourthAudioPlayerAlt.Bus = "Beats";
+        firstAudioPlayerRec.Bus = "Beats";
+        secondAudioPlayerRec.Bus = "Beats";
+        thirdAudioPlayerRec.Bus = "Beats";
+        fourthAudioPlayerRec.Bus = "Beats";
     }
 }

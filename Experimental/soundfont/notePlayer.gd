@@ -1,22 +1,30 @@
 extends SoundFontPlayer
 class_name notePlayer
 
-@export var bpmManager: Node
+@export var bpmManager: BpmManager
 @export var notes: Notes
 @export var instrument: int :
 	set(v):
 		instrument = v
 		channel_set_presetindex(0, 0, v)
 @export var base_note : Note
+@export var allow_key_input: bool = false
 
-@export var song: PackedVector3Array = []
-@export var progress: int = 0
+@export var songs: Array[PackedVector3Array] = []
+
+var current_layer: int = 0
+
+var bank: AudioBank
+
+#var current_beat_i : int = int(current_beat)
+#var current_beat_frac : int = int((current_beat - current_beat_i) * beat_subdivision)
+#$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
 
 func _ready():
+	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
+	
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
-	
-	volume_linear
 
 func _input(event):
 	if event is InputEventMIDI:
@@ -28,6 +36,9 @@ func _input(event):
 		return
 
 func _process_key_input(event: InputEventKey):
+	if not allow_key_input:
+		return
+	
 	var map = {
 		KEY_A:0,
 		KEY_S:2,
@@ -53,28 +64,38 @@ func _process_midi_input(event: InputEventMIDI):
 	channel_note_on(0, event.channel, event.pitch, event.velocity)
 
 func on_bpm():
-	if len(song) == 0:
+	var song: PackedVector3Array = get_song()
+	if len(song) == 0 or bpmManager.currentBeat >= len(song):
 		return
-		
+
 	#var length = len(song)
 	var rms_value = song[bpmManager.currentBeat].y
 	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-	
+
 	# convert to value around 0-1
 	# capped becasue soundfont does not play well with higher values
 	log_value = min(1, pow(10, log_value / 10))
-	
+
 	# gate quiet notes
 	if log_value <= 0.3:
 		return
-		
+	
 	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat].x), log_value)
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
-	channel_note_off(get_time() + beatDuration * 1, 0, round(song[bpmManager.currentBeat].x))
+	channel_note_off(get_time() + beatDuration, 0, round(song[bpmManager.currentBeat].x))
 	
+func _on_current_layer_changed(layer: int):
+	current_layer = layer
+	print(layer)
 	
 func set_song(data: PackedVector3Array):
-	song = data
+	songs[current_layer] = data
+
+func get_song() -> PackedVector3Array:
+	if current_layer >= len(songs):
+		return []
+	
+	return songs[current_layer]
 	
 func play_note(note: Note, duration: float):
 	var t = get_time()

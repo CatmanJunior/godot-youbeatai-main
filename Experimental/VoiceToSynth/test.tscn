@@ -1,13 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=11 format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
-[ext_resource type="PackedScene" uid="uid://t4jyo3xi7apn" path="res://addons/synth/demo/ui/waveform_visualizer.tscn" id="2_3d6la"]
 [ext_resource type="Script" uid="uid://ciuedwyx4vnlp" path="res://Experimental/VoiceToSynth/levelLabel.gd" id="3_m3rh1"]
 [ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
+[ext_resource type="SoundFont" uid="uid://cb3syla6j1101" path="res://Experimental/soundfont/Monsoons Maple Neck 1974 Fender Jazz Bass.sf2" id="7_a0dxq"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="8_71jf6"]
-[ext_resource type="SoundFont" uid="uid://c0ncqrlqb7blj" path="res://Experimental/soundfont/Jvbass.sf2" id="9_pe3c3"]
 
 [sub_resource type="Gradient" id="Gradient_f7m3q"]
 colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
@@ -89,9 +88,6 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="Waveform" parent="HSplitContainer/MarginContainer" instance=ExtResource("2_3d6la")]
-position = Vector2(93, 250)
-
 [node name="TextureRect" type="TextureRect" parent="HSplitContainer/MarginContainer"]
 visible = false
 layout_mode = 2
@@ -104,7 +100,7 @@ autoplay = true
 bus = &"Microphone"
 
 [node name="notePlayer" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("8_71jf6")]
-soundfont = ExtResource("9_pe3c3")
+soundfont = ExtResource("7_a0dxq")
 bus = &"Master"
 bpmManager = NodePath("../BPMManager")
 

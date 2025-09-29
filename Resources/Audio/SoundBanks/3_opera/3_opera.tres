@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://bxpfkfkt30afd"]
+
+[ext_resource type="AudioStream" uid="uid://cdumen0pc2a7g" path="res://Resources/Audio/SoundBanks/3_aziatisch/Clap VibeOffering.wav" id="1_0asfo"]
+[ext_resource type="AudioStream" uid="uid://1k6o6vnas7f5" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Clap Bandits.wav" id="2_0asfo"]
+[ext_resource type="AudioStream" uid="uid://dc073sgwy2u4u" path="res://Resources/Audio/SoundBanks/3_aziatisch/ClosedHH Glow.wav" id="3_bdgxj"]
+[ext_resource type="AudioStream" uid="uid://bgxfhl52btsk3" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Closed_Clave A.wav" id="4_bdgxj"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="5_1hinm"]
+[ext_resource type="AudioStream" uid="uid://e33tqgukvqje" path="res://Resources/Audio/SoundBanks/3_aziatisch/Kick Omg 2.wav" id="6_0qa84"]
+[ext_resource type="AudioStream" uid="uid://lslyglmsdtsj" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Kick Orion 2.wav" id="7_0qa84"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_g2grn"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_p52u0"]
+[ext_resource type="AudioStream" uid="uid://d31iun8fy2345" path="res://Resources/Audio/SoundBanks/3_aziatisch/Snare Starlight 2.wav" id="10_amqpo"]
+[ext_resource type="AudioStream" uid="uid://cqh8q6i3xg6s4" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Snare_Tamb Gl.wav" id="11_amqpo"]
+
+[resource]
+script = ExtResource("9_p52u0")
+kick = ExtResource("6_0qa84")
+kick_alt = ExtResource("7_0qa84")
+snare = ExtResource("10_amqpo")
+snare_alt = ExtResource("11_amqpo")
+clap = ExtResource("1_0asfo")
+clap_alt = ExtResource("2_0asfo")
+closed = ExtResource("3_bdgxj")
+closed_alt = ExtResource("4_bdgxj")
+green_soundfont = ExtResource("5_1hinm")
+purple_soundfont = ExtResource("8_g2grn")
+purple_instrument_id = 6
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

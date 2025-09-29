@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://ckqnfrm43g84d"]
+
+[ext_resource type="AudioStream" uid="uid://b2ucgyavyitm0" path="res://Resources/Audio/SoundBanks/3_soul/Clap War.wav" id="1_e5i4u"]
+[ext_resource type="AudioStream" uid="uid://btp8vcdrsan0u" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Clap Discaux.wav" id="2_b8dx6"]
+[ext_resource type="AudioStream" uid="uid://c7wniun1kc6k4" path="res://Resources/Audio/SoundBanks/3_soul/ClosedHH Gnarly 2.wav" id="2_xwq8a"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="3_u2cvi"]
+[ext_resource type="AudioStream" uid="uid://c2dwgs0hy2csf" path="res://Resources/Audio/SoundBanks/3_soul/Kick Body2Body 2.wav" id="4_3pco3"]
+[ext_resource type="AudioStream" uid="uid://b5rpk86xknwjs" path="res://Resources/Audio/SoundBanks/3_soul/mineur/ClosedHH Hoba 2.wav" id="4_qgh1d"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_b8dx6"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_qgh1d"]
+[ext_resource type="AudioStream" uid="uid://bgkgd7isxdqq8" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Kick Flowdown 2.wav" id="7_ald5y"]
+[ext_resource type="AudioStream" uid="uid://ck0ivmwkcp6lp" path="res://Resources/Audio/SoundBanks/3_soul/Snare TwoTone.wav" id="7_hfg1u"]
+[ext_resource type="AudioStream" uid="uid://ccfr5pef3o6bk" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Snare_Perc Pueblo.wav" id="11_ns1ub"]
+
+[resource]
+script = ExtResource("6_qgh1d")
+kick = ExtResource("4_3pco3")
+kick_alt = ExtResource("7_ald5y")
+snare = ExtResource("7_hfg1u")
+snare_alt = ExtResource("11_ns1ub")
+clap = ExtResource("1_e5i4u")
+clap_alt = ExtResource("2_b8dx6")
+closed = ExtResource("2_xwq8a")
+closed_alt = ExtResource("4_qgh1d")
+green_soundfont = ExtResource("3_u2cvi")
+purple_soundfont = ExtResource("5_b8dx6")
+purple_instrument_id = 6
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

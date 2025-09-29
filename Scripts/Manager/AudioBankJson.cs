@@ -2,6 +2,7 @@ using Godot;
 using System.IO;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class Manager : Node
 {
@@ -10,71 +11,24 @@ public partial class Manager : Node
 
     private void ReadJsonFromPreviousSceneAndSetValues()
     {
-        // deserialize chosen soundbank
-        string chosen_soundbank_path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json");
-        string chosen_soundbank_json = File.ReadAllText(chosen_soundbank_path);
-        chosenSoundBank = JsonSerializer.Deserialize<SoundBank>(chosen_soundbank_json);
+        chosenSoundBank = SoundBankSelectionMenu.chosenSoundBank;
+        foreach (var emoticon in SoundBankSelectionMenu.chosenEmotions) chosen_emoticons_label.Text += emoticon;
+        foreach (var emoticon in SoundBankSelectionMenu.chosenThemes) chosen_emoticons_label.Text += emoticon;
 
-        // deserialize chosen emoticons
-        string chosen_emoticons_path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json");
-        string chosen_emoticons_json = File.ReadAllText(chosen_emoticons_path);
-        chosenEmoticons = JsonSerializer.Deserialize<List<string>>(chosen_emoticons_json);
-        foreach (var emoticon in chosenEmoticons) chosen_emoticons_label.Text += emoticon;
+        GD.Print(chosen_emoticons_label.Text);
 
         // grab audio files -> res://Resources/Audio/SoundBanks/
-        string soundbankname = chosenSoundBank.name;
-        string baseDirPath = "res://Resources/Audio/SoundBanks/"; // should be a subfolder of "res://Resources/Audio/SoundBanks/" with the soundbankname in its name.
-        DirAccess baseDir = DirAccess.Open(baseDirPath);
-        baseDir.ListDirBegin();
-        string folderName;
-        while ((folderName = baseDir.GetNext()) != "")
-        {
-            if (baseDir.CurrentIsDir() && folderName.ToLower().Contains(soundbankname.ToLower()))
-            {
-                // main audio files
-                {
-                    string major_dir = baseDirPath + folderName + "/";
-                    string[] major_files = ResourceLoader.ListDirectory(major_dir);
-                    string file;
-                    for (int i = 0; i < major_files.Length; ++i)
-                    {
-                        file = major_files[i];
-                        if (file.EndsWith(".wav"))
-                        {
-                            string lower = file.ToLower();
-                            string fullPath = major_dir + file;
-                            if (lower.Contains("kick")) mainAudioFiles[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFiles[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFiles[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFiles[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
-                    }
-                }
+        string baseDirPath = "res://Resources/Audio/SoundBanks/" + chosenSoundBank.name;
+        AudioBank bank = ResourceLoader.Load<AudioBank>(baseDirPath + "/" + chosenSoundBank.name + ".tres");
+        mainAudioFiles[0] = bank.kick;
+        mainAudioFiles[1] = bank.clap;
+        mainAudioFiles[2] = bank.snare;
+        mainAudioFiles[3] = bank.closed;
 
-                // alt audio files
-                {
-                    string minor_dir = baseDirPath + folderName + "/mineur/";
-                    string[] major_files = ResourceLoader.ListDirectory(minor_dir);
-                    string file;
-                    for (int i = 0; i < major_files.Length; ++i)
-                    {
-                        file = major_files[i];
-                        if (file.EndsWith(".wav"))
-                        {
-                            string lower = file.ToLower();
-                            string fullPath = minor_dir + file;
-                            if (lower.Contains("kick")) mainAudioFilesAlt[0] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("clap")) mainAudioFilesAlt[1] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("snare")) mainAudioFilesAlt[2] = ResourceLoader.Load<AudioStream>(fullPath);
-                            else if (lower.Contains("closed")) mainAudioFilesAlt[3] = ResourceLoader.Load<AudioStream>(fullPath);
-                        }
-                    }
-                }
-
-                break;
-            }
-        }
-        baseDir.ListDirEnd();
+        mainAudioFilesAlt[0] = bank.kick_alt;
+        mainAudioFilesAlt[1] = bank.clap_alt;
+        mainAudioFilesAlt[2] = bank.snare_alt;
+        mainAudioFilesAlt[3] = bank.closed_alt;
 
         // set swing
         float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
@@ -100,9 +54,5 @@ public partial class Manager : Node
         {
             BpmManager.instance.bpm = chosenSoundBank.bpm;
         }
-
-        // delete tmep json files
-        File.Delete(chosen_emoticons_path);
-        File.Delete(chosen_soundbank_path);
     }
 }

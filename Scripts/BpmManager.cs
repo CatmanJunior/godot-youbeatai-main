@@ -1,6 +1,7 @@
 using Godot;
 using System.IO;
 
+[GlobalClass]
 public partial class BpmManager : Node
 {
     public static BpmManager instance = null;
@@ -39,7 +40,7 @@ public partial class BpmManager : Node
         return amount;
     }
 
-    
+
     private bool _playing;
     [Export]
     public bool playing
@@ -53,10 +54,10 @@ public partial class BpmManager : Node
         get => _playing;
     }
 
-    [Export ]public int currentBeat = beatsAmount - 1;
+    [Export] public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
     [Export] public float swing = 0.5f;
-    
+
     public float baseTimePerBeat;
     public float timePerBeat;
 
@@ -83,7 +84,7 @@ public partial class BpmManager : Node
             baseTimePerBeat = 60f / bpm / beats_per_bar;
             timePerBeat =
                 (currentBeat % 2 == 1) ?
-                    baseTimePerBeat + (baseTimePerBeat * swing) 
+                    baseTimePerBeat + (baseTimePerBeat * swing)
                     : baseTimePerBeat - (baseTimePerBeat * swing);
 
             if (beatTimer > timePerBeat)

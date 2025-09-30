@@ -17,6 +17,7 @@ public partial class Manager : Node
 
     public void AddLayer()
     {
+        if (layersAmount == layersAmountMax) return;
         layersAmount++;
         NewLayerButton();
         layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);

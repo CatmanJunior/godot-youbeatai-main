@@ -8,6 +8,7 @@ public partial class Manager : Node
 	List<Button> LayerButtons = new List<Button>();
 	[Export] PackedScene layerButtonPrefab;
 	[Export] HBoxContainer layerButtonsContainer;
+	[Export] Button addLayerButton;
 
 	// left buttons
 	[Export] Button SaveLayoutButton;
@@ -93,6 +94,7 @@ public partial class Manager : Node
 
 	private void InitButtonActions()
 	{
+		addLayerButton.ButtonUp += AddLayer;
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
 		emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;
 		muteSpeach.Pressed += DisplayServer.TtsStop;

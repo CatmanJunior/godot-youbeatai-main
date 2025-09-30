@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public partial class Manager : Node
 {
     public int layersAmount = 0;
-    public const int layersAmountMax = 12;
+    public const int layersAmountMax = 10;
     public const int layersAmountInitial = 3;
     public int currentLayerIndex = 0;
 
@@ -21,6 +21,7 @@ public partial class Manager : Node
         layersAmount++;
         NewLayerButton();
         layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
+        layerButtonsContainer.Size = new Vector2(layerButtonsContainer.GetChildCount() * 64, 64);
     }
 
     public Button NewLayerButton()

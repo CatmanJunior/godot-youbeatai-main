@@ -1219,6 +1219,7 @@ alignment = 1
 
 [node name="addLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 60

@@ -146,21 +146,25 @@ public partial class LayerVoiceOver : Node
 
 	bool shouldUpdateLines = false;
 
-	public void OnTop() // tested: gets called on time
+	public void OnTop()
 	{
-		if (audioPlayer.Playing) audioPlayer.Stop();
-
 		if (shouldRecord && !recording) StartRecording();
 		else if (recording) StopRecording();
 
 		if (!recording)
 		{
-			audioPlayer.Stream = GetCurrentLayerVoiceOver();  // tested: gets called on time
-			audioPlayer.Play(); // tested: gets called on time
-
+			audioPlayer.Stream = GetCurrentLayerVoiceOver();
 			shouldMeasureAudioDelay = true;
 			audioDelayBeginMs = Time.GetTicksMsec();
 		}
+
+		GetTree().CreateTimer(0.4).Timeout += OnTopDelayed;
+	}
+
+	private void OnTopDelayed()
+	{
+		if (audioPlayer.Playing) audioPlayer.Stop();
+		if (!recording) audioPlayer.Play();
 	}
 
 	private void StartRecording()
@@ -177,7 +181,7 @@ public partial class LayerVoiceOver : Node
 		shouldUpdateProgressBar = true;
 		bigLine.Visible = false;
 
-		GetTree().CreateTimer(0.6).Timeout += () =>
+		GetTree().CreateTimer(0.4).Timeout += () =>
 		{
 			recording = true;
 			audioEffectRecord.SetRecordingActive(true);
@@ -193,7 +197,7 @@ public partial class LayerVoiceOver : Node
 		shouldUpdateProgressBar = false;
 		bigLine.Visible = true;
 
-		GetTree().CreateTimer(0.6).Timeout += () =>
+		GetTree().CreateTimer(0.4).Timeout += () =>
 		{
 			audioEffectRecord.SetRecordingActive(false);
 			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());

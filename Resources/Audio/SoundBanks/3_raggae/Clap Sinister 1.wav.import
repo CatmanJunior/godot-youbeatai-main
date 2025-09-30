@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cy75ewe553ug5"
-path="res://.godot/imported/Clap Sinister 1.wav-bda0d3d8c3b90d9a580e89ebba511e59.sample"
+path="res://.godot/imported/Clap Sinister 1.wav-deb8afb620b7e2317372835ef97cce34.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/Clap Sinister 1.wav"
-dest_files=["res://.godot/imported/Clap Sinister 1.wav-bda0d3d8c3b90d9a580e89ebba511e59.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/Clap Sinister 1.wav"
+dest_files=["res://.godot/imported/Clap Sinister 1.wav-deb8afb620b7e2317372835ef97cce34.sample"]
 
 [params]
 

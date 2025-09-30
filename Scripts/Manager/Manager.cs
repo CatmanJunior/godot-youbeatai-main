@@ -13,6 +13,7 @@ public partial class Manager : Node
 	public override void _Ready()
 	{
 		instance ??= this;
+		SpawnInitialLayerButtons();
 		BpmManager.instance.OnBeatEvent += OnBeat;
 		Tutorial.CheckIfTutorialWasChosen();
 		ReadJsonFromPreviousSceneAndSetValues();

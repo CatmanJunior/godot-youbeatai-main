@@ -12,7 +12,7 @@ public partial class LayerVoiceOver : Node
 	[Export] public Button recordLayerButton;
 
 	// recording
-	public AudioStream[] voiceOvers = new AudioStream[10];
+	public AudioStream[] voiceOvers = new AudioStream[Manager.layersAmountMax];
 	AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
 	public bool shouldRecord = false;

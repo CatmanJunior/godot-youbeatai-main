@@ -62,7 +62,7 @@ public partial class SongVoiceOver : Node
 		}
 
 		// set progress bar value
-		if (recording) progressbar.Value = recordingTimer / (10f * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
+		if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
 
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
@@ -76,7 +76,7 @@ public partial class SongVoiceOver : Node
         Manager.instance.metronome_toggle.ButtonPressed = true;
 
         // 4 beats voor de eerste noot op eerste laag
-        Manager.instance.SwitchLayer(10);
+        Manager.instance.SwitchLayer(Manager.instance.layersAmount);
         BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
 
         // playing true

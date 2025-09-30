@@ -85,31 +85,20 @@ public partial class Manager : Node
 
     public void SetLayerSwitchButtonsVisibility(bool visible)
     {
-        layerButton1.Visible = visible;
-        layerButton2.Visible = visible;
-        layerButton3.Visible = visible;
-        layerButton4.Visible = visible;
-        layerButton5.Visible = visible;
-        layerButton6.Visible = visible;
-        layerButton7.Visible = visible;
-        layerButton8.Visible = visible;
-        layerButton9.Visible = visible;
-        layerButton10.Visible = visible;
+        for (int i = 0; i < LayerButtons.Count; i++)
+		{
+			LayerButtons[i].Visible = visible;
+        }
+        
         layerOutline.Visible = visible;
     }
 
     public void SetLayerSwitchButtonsEnabled(bool enabled)
     {
-        layerButton1.Disabled = !enabled;
-        layerButton2.Disabled = !enabled;
-        layerButton3.Disabled = !enabled;
-        layerButton4.Disabled = !enabled;
-        layerButton5.Disabled = !enabled;
-        layerButton6.Disabled = !enabled;
-        layerButton7.Disabled = !enabled;
-        layerButton8.Disabled = !enabled;
-        layerButton9.Disabled = !enabled;
-        layerButton10.Disabled = !enabled;
+        for (int i = 0; i < LayerButtons.Count; i++)
+		{
+			LayerButtons[i].Disabled = !enabled;
+        }
     }
 
     private void UpdateAchievementsVisibility()
@@ -117,7 +106,7 @@ public partial class Manager : Node
         for (int i = 0; i < 6; i++)
         {
             float tresh = ((float)i + 1f) / 6f * 100f;
-            if (progressBarValue > tresh - 10)
+            if (progressBarValue > tresh - layersAmountMax)
             {
                 Unlockables[i].Visible = true;
                 UnlockablesQuestion[i].Visible = false;

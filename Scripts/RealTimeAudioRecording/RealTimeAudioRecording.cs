@@ -56,7 +56,7 @@ public partial class RealTimeAudioRecording : Node
         else recordingTimer = 0;
 
         // set progress bar value
-        if (recording) progressbar.Value = recordingTimer / (10f * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
+        if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
         
         // debug
         if (Input.IsActionJustPressed("f1"))
@@ -93,7 +93,7 @@ public partial class RealTimeAudioRecording : Node
         Manager.instance.metronome_toggle.ButtonPressed = true;
 
         // 4 beats voor de eerste noot op eerste laag
-        Manager.instance.SwitchLayer(10);
+        Manager.instance.SwitchLayer(Manager.instance.layersAmount);
         BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
         
         // playing true

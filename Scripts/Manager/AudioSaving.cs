@@ -103,7 +103,7 @@ public static class AudioSaving
 
         // export layersvoiceovers0 as single wav
         AudioStream[] voiceovers0 = Manager.instance.layerVoiceOver0.voiceOvers;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Manager.instance.layersAmount; i++)
         {
             string name = user("layer" + i.ToString() + "a.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers0[i];
@@ -156,7 +156,7 @@ public static class AudioSaving
 
         // export layersvoiceovers1 as single wav
         AudioStream[] voiceovers1 = Manager.instance.layerVoiceOver1.voiceOvers;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Manager.instance.layersAmount; i++)
         {
             string name = user("layer" + i.ToString() + "b.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers1[i];

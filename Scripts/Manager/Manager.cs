@@ -14,6 +14,7 @@ public partial class Manager : Node
 	{
 		instance ??= this;
 		BpmManager.instance.OnBeatEvent += OnBeat;
+		Tutorial.CheckIfTutorialWasChosen();
 		ReadJsonFromPreviousSceneAndSetValues();
 		InitAllAudioPlayers();
 		InitButtonActions();

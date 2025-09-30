@@ -20,6 +20,12 @@ public static class Tutorial
     {
         tutorial_level = 0;
         tutorialActivated = false;
+        useTutorial = ReadUseTutorial();
+    }
+
+    public static void CheckIfTutorialWasChosen()
+    {
+        useTutorial = ReadUseTutorial();
     }
 
     public static void TryActivateTutorial()
@@ -39,7 +45,7 @@ public static class Tutorial
     }
 
     // flag if tutorial mode should be enabled
-    public static bool useTutorial = ReadUseTutorial();
+    public static bool useTutorial;
     private static bool ReadUseTutorial()
     {
         bool use;

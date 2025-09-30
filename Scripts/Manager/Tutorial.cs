@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Range = Godot.Range;
 
 public static class Tutorial
 {
@@ -20,6 +21,8 @@ public static class Tutorial
     private static int _ringTop = 0;
     private static int _ringBottom = 8;
     private static int _ringLeft = 4;
+    private static int _greenLayerMicIndex = 0;
+    private static Vector2 _knobPos;
 
     static Manager manager => Manager.instance;
 
@@ -100,16 +103,30 @@ public static class Tutorial
             "Ik heb zelf net 2 er in gezet, luister er maar eens naar!",
             "Leuk toch!",
             "Probeer het zelf maar eens door er 2 neer te zetten",
+            "Ik ben beniewed laat mij eens horen!",
             "Super goed gedaan, het gaat zo goed ik denk dat we er nog iets bij kunnen doen!",
 
             //groene laag
             "Zie je die groene ring om de beats heen? Die vul je in door met je eigen microphone iets op te nemen!",
+            "Dat kun je doen door eerst op het knopje met de beer te duwen, heb ik nu voor jouw al gedaan :D",
             "Probeer het maar eens door op het microphone icoontje te clicken",
+            "grappig he",
             "Laat eens horen!",
             "Super gedaan, het klinkt enorm leuk",
-
+            
+            // chaos pad
+            //Todo Need to add the context to and  the chaos pad Link synth boven stem rechts stem met reverb
+            "Ik denk dat we het nog leuker kunnen maken met de chaos pad!",
+            "Wat is de chaos pad? Zie je die driehoek links?  Dat is de choas pad!",
+            "Hiermee kun je jouw net opgenomen sample veranderen",
+            "Je kunt het geluid veranderen naar Boven Jouw stem  Links onder een synth geluid en Rechts onder jouw stem met een revervb",
+            "probeer het maar eens door die witte button te bewegen",
+            "Moet je nu maar eens luisteren",
+            "Leuk toch, brengt een heel nieuwe kijk op het liedje",
+            "Het beste is nog als je hem ergens in het midden tussen twee zet wordt het gemixed!",
+            "Zo kun je een synth geluid en reverb met stem krijgen",
             //End of tutorial
-            "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!",
+            "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
 
 
 
@@ -123,25 +140,50 @@ public static class Tutorial
             // rode ring
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
-            () => BpmManager.instance.playing == true, // This checks whether the song is playing
+            () => BpmManager.instance.playing, // This checks whether the song is playing
             () => !BpmManager.instance.playing, // This checks whether the song is not playing 
             () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
-            () => BpmManager.instance.playing == true, // This checks whether the song is playing
-            () =>!BpmManager.instance.playing, 
+            () => BpmManager.instance.playing , // This checks whether the song is playing
+            () => BpmManager.instance.playing ==false, 
 
             // oranje ring
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
-            () => BpmManager.instance.playing == true, // This checks whether the song is playing
-            () => !BpmManager.instance.playing, 
+            () => BpmManager.instance.playing, // This checks whether the song is playing
+            () => BpmManager.instance.playing== false, 
             () => activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing, // Again what is the 4, I assume checks if the 2 rings are active
-            () => BpmManager.instance.playing == true, // This checks whether the song is playing
-            () => !BpmManager.instance.playing,  
+            () => BpmManager.instance.playing, // This checks whether the song is playing
+            () => BpmManager.instance.playing ==false,  
 
             // layer voice over
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction"),
             () => manager.layerVoiceOver0.finished,
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
-            () => BpmManager.instance.playing == true
+            () => BpmManager.instance.playing,
+            () => BpmManager.instance.playing == false,
+            
+            // chaos pad
+            ()=>
+            {
+                _knobPos = manager.knob.GlobalPosition;
+                return Input.IsActionJustPressed("Interaction");
+            }, // need to make a check for button press or screen tap,
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            () =>
+            {
+                bool moved = _knobPos != manager.knob.GlobalPosition;
+                return   moved;
+            },
+            ()=> BpmManager.instance.playing,
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            
+            // end of tutorial
+            () => Input.IsActionJustPressed("Interaction") // need to make a check for button press or screen tap
+            
         ];
 
         outcomes =
@@ -163,7 +205,6 @@ public static class Tutorial
             null,
             null,
             null,
-            
             null,
             //Todo setting 2 orange beats active
             () => manager.SetRingVisibility(_indexOrangeRing, true),
@@ -175,13 +216,33 @@ public static class Tutorial
             null,
             null, // druk play
             null, // geef energie
+            null,
+            () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
+                
+            } ,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            //chaos pad
+            //todo add the 8 levels of the chaos pad
             () =>
             {
-              //todo Green layer 
+                manager.chaosPadTriangleSprite.Visible = true;
             },
-
             null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            
             null
+            
         ];
     }
 
@@ -189,6 +250,7 @@ public static class Tutorial
         {
             void SpeakTutorialInstruction(int instruction)
             {
+                
                 if (manager.muteSpeach.ButtonPressed) return;
 
                 var without_emoticons = (string input) =>
@@ -216,8 +278,9 @@ public static class Tutorial
                 manager.first_tts_done = true;
             }
 
-            if (tutorial_level != -1 && useTutorial)
+            if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
             {
+                
                 string instruction = instructions[tutorial_level];
                 Func<bool> condition = conditions[tutorial_level];
                 Action outcome = outcomes[tutorial_level];
@@ -235,6 +298,7 @@ public static class Tutorial
                     manager.PlayExtraSFX(manager.achievement_sfx);
                     SpeakTutorialInstruction(tutorial_level);
                 }
+                
             }
         }
 }

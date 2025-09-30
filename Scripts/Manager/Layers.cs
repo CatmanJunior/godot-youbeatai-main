@@ -13,6 +13,7 @@ public partial class Manager : Node
     public void SpawnInitialLayerButtons()
     {
         for (int i = 0; i < layersAmountInitial; i++) AddLayer();
+        layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + LayerButtons[currentLayerIndex].Size / 2 + new Vector2(1, 0);
     }
 
     public void AddLayer()
@@ -55,8 +56,7 @@ public partial class Manager : Node
         SetCurrentLayer(beatActives);
         currentLayerIndex = layerToUse - 1;
         beatActives = GetCurrentLayer();
-        //layerOutlineHolder.Position = (layerButton1.Position + layerButton1.Size / 2 + new Vector2(1, 0)) + new Vector2(1, 0) * (71f * currentLayerIndex);
-        layerOutlineHolder.Position = LayerButtons[currentLayerIndex].Position + LayerButtons[currentLayerIndex].Size / 2 + new Vector2(1, 0);
+        layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + LayerButtons[currentLayerIndex].Size / 2 + new Vector2(1, 0);
         EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
         layerVoiceOver0.SetSmallVolumeline();
         layerVoiceOver1.SetSmallVolumeline();

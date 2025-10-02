@@ -43,7 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://lmpsycd0viao" path="res://Resources/Textures/kaosalfa.png" id="30_o1aky"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
-[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
+[ext_resource type="PackedScene" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -353,7 +353,7 @@ pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
 layerButtonPrefab = ExtResource("39_aa8k8")
 layerButtonsContainer = NodePath("../../UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer")
-addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer/addLayerButton")
+addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/addLayerButton")
 SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayoutButton")
 LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayoutButton")
 ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayoutButton")
@@ -476,10 +476,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -290.0
-offset_top = -833.0
-offset_right = -272.0
-offset_bottom = -126.0
+offset_left = -348.0
+offset_top = -1298.75
+offset_right = -330.0
+offset_bottom = -591.75
 grow_horizontal = 2
 grow_vertical = 2
 rotation = 1.57079
@@ -1098,7 +1098,7 @@ antialiased = true
 [node name="RecordSongButton" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.8, 0.8, 0.8, 1)
 z_index = -4
-position = Vector2(395, -467.00003)
+position = Vector2(337, -932.75)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -1209,16 +1209,19 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1000.0
+offset_left = -672.0
 offset_top = -688.0
-offset_right = -280.0
-offset_bottom = -612.0
+offset_right = -608.0
+offset_bottom = -624.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="addLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer"]
-layout_mode = 2
+[node name="addLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = 51.0
+offset_top = -1058.0
+offset_right = 115.0
+offset_bottom = -994.0
 size_flags_horizontal = 3
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
@@ -1231,7 +1234,7 @@ text = "+"
 metadata/_edit_use_anchors_ = true
 
 [node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
-position = Vector2(-320, -291)
+position = Vector2(-130, -1074)
 
 [node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
 scale = Vector2(0.135, 0.135)

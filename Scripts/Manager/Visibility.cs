@@ -38,6 +38,8 @@ public partial class Manager : Node
         activatePurpleChaosButton.Visible = visible;
         layerVoiceOver0.bigLine.Visible = visible;
         layerVoiceOver1.bigLine.Visible = visible;
+        layerButtonsContainer.Visible = visible;
+        addLayerButton.Visible = visible;
     }
 
     public void SetRingVisibility(int ring, bool visible)

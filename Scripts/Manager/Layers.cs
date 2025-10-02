@@ -6,6 +6,7 @@ public partial class Manager : Node
     public int layersAmount = 0;
     public const int layersAmountMax = 10;
     public const int layersAmountInitial = 3;
+    public const int layersButtonsSize = 72;
     public int currentLayerIndex = 0;
 
     public List<bool[,]> layersBeatActives = [];
@@ -22,7 +23,18 @@ public partial class Manager : Node
         layersAmount++;
         NewLayerButton();
         layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
-        layerButtonsContainer.Size = new Vector2(layerButtonsContainer.GetChildCount() * 64, 64);
+
+        // transform container
+        layerButtonsContainer.Size = new Vector2(layerButtonsContainer.GetChildCount() * layersButtonsSize, layersButtonsSize);
+        layerButtonsContainer.GlobalPosition = new Vector2(-layerButtonsContainer.Size.X / 2, layerButtonsContainer.GlobalPosition.Y);
+
+        // transform addlayerbutton
+        addLayerButton.Size = layersButtonsSize * Vector2.One;
+        if (layersAmount < layersAmountMax) addLayerButton.GlobalPosition = new (layerButtonsContainer.Size.X / 2 + 4, layerButtonsContainer.GlobalPosition.Y);
+        else addLayerButton.GlobalPosition = new Vector2(9999, 9999);
+
+        // transform outlineholder
+        layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + LayerButtons[currentLayerIndex].Size / 2 + new Vector2(1, 0);
     }
 
     public Button NewLayerButton()

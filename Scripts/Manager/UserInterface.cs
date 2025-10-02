@@ -5,7 +5,7 @@ using Godot;
 public partial class Manager : Node
 {
 	// switch layer buttons
-	List<Button> LayerButtons = new List<Button>();
+	List<Button> LayerButtons = [];
 	[Export] PackedScene layerButtonPrefab;
 	[Export] HBoxContainer layerButtonsContainer;
 	[Export] Button addLayerButton;

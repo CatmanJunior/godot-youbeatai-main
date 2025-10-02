@@ -66,7 +66,10 @@ public partial class Manager : Node
         thirdAudioPlayerRec.Bus = "Beats";
         fourthAudioPlayerRec.Bus = "Beats";
 
-        EmitSignal(SignalName.SetGreenSynth, bank.green_soundfont, bank.green_instrument_id);
-		EmitSignal(SignalName.SetPurpleSynth, bank.purple_soundfont, bank.purple_instrument_id);
+        if (bank != null)
+        {
+            EmitSignal(SignalName.SetGreenSynth, bank.green_soundfont, bank.green_instrument_id);
+		    EmitSignal(SignalName.SetPurpleSynth, bank.purple_soundfont, bank.purple_instrument_id);
+        }
     }
 }

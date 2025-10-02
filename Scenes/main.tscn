@@ -576,6 +576,7 @@ anchors_preset = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_aqgau")]
+position = Vector2(-435, 141)
 
 [node name="ControlsGroup" type="Node2D" parent="UserInterface"]
 position = Vector2(172, -101)

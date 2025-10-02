@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://cspimw2qdw5xo" path="res://Scripts/DragableSprite.cs" id="4_asl8d"]
 
 [node name="ChaosPad" type="Node2D"]
-position = Vector2(-435, 141)
 
 [node name="MicButtonLocation" type="Node2D" parent="."]
 position = Vector2(0, -216.72)
@@ -72,3 +71,11 @@ z_index = 2
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("3_rq0eu")
 script = ExtResource("4_asl8d")
+
+[node name="Tutorial_interactpoints" type="Node2D" parent="."]
+
+[node name="Piano" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(74, 51)
+
+[node name="in_between" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(46, -25)

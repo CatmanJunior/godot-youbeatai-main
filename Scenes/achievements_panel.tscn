@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3 uid="uid://cfh02va7cdmw5"]
+
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_rgnfl"]
+
+[node name="AchievementsPanel" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -140.5
+offset_top = -308.5
+offset_right = 140.5
+offset_bottom = -120.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="."]
+layout_mode = 0
+offset_top = 11.0
+offset_right = 250.0
+offset_bottom = 36.0
+theme = ExtResource("1_rgnfl")
+theme_override_font_sizes/font_size = 20
+text = "Huidig Doel:"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="InstructionLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 44.0
+offset_right = 276.0
+offset_bottom = 178.0
+theme = ExtResource("1_rgnfl")
+theme_override_font_sizes/font_size = 18
+text = "hier komt een instructie. hier komt een instructie. hier komt een instructie. hier komt een instructie."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SkipTutorialButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 61.5
+offset_top = -88.5
+offset_right = 135.5
+offset_bottom = -56.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("1_rgnfl")
+text = "🚫 Stop"
+metadata/_edit_use_anchors_ = true

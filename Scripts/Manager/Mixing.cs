@@ -386,12 +386,12 @@ public partial class Manager : Node
         if (synth == 0)
         {
             layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
-            GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/bass_line").Set("linear_volume", weights.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green"), weights.Z * mastervolume);
         }
         if (synth == 1)
         {
             layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
-            GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/synth_line").Set("linear_volume", weights.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple"), weights.Z * mastervolume);
         }
     }
 

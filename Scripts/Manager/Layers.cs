@@ -1,4 +1,5 @@
 using Godot;
+using System;
 using System.Collections.Generic;
 
 public partial class Manager : Node
@@ -17,12 +18,12 @@ public partial class Manager : Node
         for (int i = 0; i < layersAmountInitial; i++) AddLayer();
     }
 
-    public void AddLayer() // adds a layer at the end of the list of layers
+    public void AddLayer(string emoji = null) // adds a layer at the end of the list of layers
     {
         if (layersAmount == layersAmountMax) return;
 
         layersAmount++;
-        NewLayerButton();
+        NewLayerButton(emoji);
         layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
 
         UpdateLayerButtonsUserInterface();
@@ -42,11 +43,20 @@ public partial class Manager : Node
         if (layer == currentLayerIndex) SwitchLayer(0);
     }
 
-    public Button NewLayerButton()
+    public Button NewLayerButton(string emoji = null)
     {
         var layerButton = (Button)layerButtonPrefab.Instantiate();
         LayerButtons.Add(layerButton);
         layerButtonsContainer.AddChild(layerButton);
+
+        if (emoji != null) layerButton.Text = emoji;
+        else
+        {
+            var random = new Random();
+            var index = random.Next(0, 4);
+            string[] options = ["🌱", "📜", "🤩", "😀", "🏁"];
+            layerButton.Text = options[index];
+        }
 
         layerButton.Pressed += () =>
         {
@@ -86,9 +96,6 @@ public partial class Manager : Node
         var backPanelOverSize = new Vector2(16, 8);
         songModeBackPanel.Size = layerButtonsContainer.Size + backPanelOverSize;
         songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
-
-        // debug set button text to button index
-        for (int i = 0; i < LayerButtons.Count; i++) LayerButtons[i].Text = i.ToString();
     }
 
     public void SwitchLayer(int layerIndex)

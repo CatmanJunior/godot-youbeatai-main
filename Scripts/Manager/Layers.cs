@@ -35,6 +35,11 @@ public partial class Manager : Node
 
         // transform outlineholder
         layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + LayerButtons[currentLayerIndex].Size / 2 + new Vector2(1, 0);
+    
+        // transform songmode backpanel
+        var backPanelOverSize = new Vector2(16, 8);
+        songModeBackPanel.Size = layerButtonsContainer.Size + backPanelOverSize;
+        songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
     }
 
     public Button NewLayerButton()

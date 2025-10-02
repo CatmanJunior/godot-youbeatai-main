@@ -16,7 +16,7 @@ public partial class SongVoiceOver : Node
 	[Export] public Sprite2D recordSongSprite;
 
 	// recording
-	public AudioStream voiceOver = null;
+	public AudioStreamWav voiceOver = null;
     AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
 	public bool shouldRecord = false;

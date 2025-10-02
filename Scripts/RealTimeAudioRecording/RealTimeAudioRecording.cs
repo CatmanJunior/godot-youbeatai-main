@@ -72,6 +72,9 @@ public partial class RealTimeAudioRecording : Node
         recording = true;
         audioEffectRecord.SetRecordingActive(true);
 
+        // also record voice over
+        SongVoiceOver.instance.shouldRecord = true;
+
         // disable buttons during recording
         DisableButtons(true);
 

@@ -25,7 +25,12 @@ public static class AudioSaving
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
         string final_name = user("export_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
 
-        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, final_name + ".wav");
+        // (temporary solution) combine songvoiceover with submaster recording because voice isnt in submaster recording
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, final_name + "_a_" + ".wav");
+        ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, final_name + "_b_" + ".wav");
+        MixAudioFiles(final_name + "_a_" + ".wav", final_name + "_b_" + ".wav", final_name + ".wav");
+        File.Delete(final_name + "_a_" + ".wav");
+        File.Delete(final_name + "_b_" + ".wav");
 
         if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
 

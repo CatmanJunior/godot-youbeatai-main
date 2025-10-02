@@ -86,56 +86,55 @@ public static class Tutorial
         // setup achievements
         instructions =
         [
-            //Todo 
-            
             // intro
             "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap in je handen.",
 
             // kick ring
             "Zie je de rode circles, dat is de kick ring",
             "Via deze ring kun je een kick geluid toevoegen aan het liedje kijk maar!",
-            "Ik heb er net drie op gezet, druk nu op '⏯ Start' om de beat te horen",
+            "Ik heb er net drie opgezet, druk nu op '⏯ Start' om de beat te horen",
             "Super nu kunnen wij het lied horen",
             "Probeer het zelf maar eens door er 2 op te zetten door op de stippen te duwen",
             "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt!",
-            //todo add text that you need to stomp with the beat to continue the tutorial
             "Stamp eens mee op jouw beat!",
             "Wow super gedaan!, nou ik denk dat we wel een stapje verder kunnen gaan",
 
             // klap ring
             "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
             "Ik heb zelf net 2 er in gezet, luister er maar eens naar!",
-            "Super gedaan",//todo Change the text to not be a question but a statement
-            //todo add text that you not only need to add x but also remove x
+            "Super gedaan!",//todo 
+            //todo change text that you not only need to add x but also remove x into two steps instead of one
             "Probeer nu eens zelf 2 klap stippen er bij te zetten en een kick weg te halen door er weer op te clicken",
-            //todo add text that you need to clap with the beat to continue the tutorial
-            "Ik ben beniewed laat mij eens horen!",
+            "Ik ben benieuwd laat mij eens horen!",
             "Probeer mee te klappen op de beat!",
             "Super goed gedaan, het gaat zo goed ik denk dat we er nog iets bij kunnen doen!",
 
             //groene laag
             "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
             
-            "Probeer het maar eens door op het microphone icoontje te clicken",
-            "Goed gedaan",//todo Change the text to not be a question but a statement
+            "Probeer het maar eens door op het microphone icoontje te klikken",
+            "Goed gedaan",
             "Laat eens horen!",
             "Super gedaan, het klinkt enorm leuk",
             
             // chaos pad
-            //Todo Change reverb into galm and change chaos pad into mixer 
             "Ik denk dat we het nog leuker kunnen maken met de mixer!",
-            "Wat is de mixer? Zie je die driehoek links?  Dat is de mixer!",
+            "De driehoek links dat is de mixer!",
             "Hiermee kun je jouw net opgenomen sample veranderen",
-            "Je kunt het geluid veranderen naar Boven Jouw stem Links onder een electronisch geluid en Rechts onder jouw stem met een galm",
+            "Je kunt het geluid veranderen naar Boven Jouw stem Links onder een elektronisch geluid en Rechts onder jouw stem met een galm",
             //todo add spefic location to where you need to put the fingerprint button in this case the piano
-            "probeer het maar eens door die knop met vinger afdruk te bewegen",
+            "probeer het maar eens door die knop met vingerafdruk te bewegen",
             "Moet je nu maar eens luisteren",
             "Leuk dit brengt een heel nieuwe kijk op het liedje",
             //todo add specfic location to where you need to put the fingerprint button
-            "Het beste is nog als je hem ergens in het midden tussen twee zet wordt het gemixed!",
+            "Het beste is nog als je hem ergens in het midden tussen twee zet wordt het gemixt!",
             "Zo kun je een synth geluid en reverb met stem krijgen",
+            
             //End of tutorial
             "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
+
+            
+            
 
 
 
@@ -146,7 +145,6 @@ public static class Tutorial
             
             // intro
             
-            //todo Add the clap to continue back into the start of the tutorial
             () => manager.clapped, 
 
             // rode ring
@@ -155,8 +153,12 @@ public static class Tutorial
             () => BpmManager.instance.playing, // This checks whether the song is playing
             ()=> Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap,
             () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
-            //Todo add that you need to stomp with the beat to continue the tutorial
-            () => BpmManager.instance.playing , // This checks whether the song is playing
+            
+            () =>
+            {
+                _beatsActiveRedRing = activeBeatsPerRing(_indexRedRing);
+                return BpmManager.instance.playing;
+            }, // This checks whether the song is playing
             ()=>
             {
                 GD.Print(manager.stompedAmount);
@@ -166,20 +168,23 @@ public static class Tutorial
 
             // oranje ring
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
-            () => BpmManager.instance.playing, // This checks whether the song is playing
+            () => BpmManager.instance.playing
+            , // This checks whether the song is playing
+            () => Input.IsActionJustPressed("Interaction"),
+            
             () =>
             {
-                _amountRedRing = activeBeatsPerRing(_indexRedRing);
-               return Input.IsActionJustPressed("Interaction");
-            },
-            //Todo Add that you need to not only add x also remove x
-            () =>
-            {
-                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing && activeBeatsPerRing(_indexRedRing) < _amountRedRing ;
+                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing && activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing; 
             }, 
-            //Todo add that you need to clap with the beat to continue the tutorial
-            () => BpmManager.instance.playing, // This checks whether the song is playing
-            ()=> manager.clappedAmount >= _beatsActiveRedRing, // This checks whether the song is playing
+            
+            () =>
+            {   _beatsActiveOrangeRing = activeBeatsPerRing(_indexOrangeRing);
+                return BpmManager.instance.playing;
+            }, // This checks whether the song is playing
+            ()=>
+            {   GD.Print("clap "+ manager.clappedAmount);
+                return manager.clappedAmount >= _beatsActiveOrangeRing;
+            }, // This checks whether the song is playing
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap,   
 
             // layer voice over
@@ -187,7 +192,7 @@ public static class Tutorial
             () => manager.layerVoiceOver0.finished,
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => BpmManager.instance.playing,
-            () => BpmManager.instance.playing == false,
+            () =>Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap 
             
             // chaos pad
             ()=>
@@ -243,8 +248,9 @@ public static class Tutorial
             manager.beatActives[_indexOrangeRing, _ringBottom] = true;
 
             }, 
+            null,
             ()=> BpmManager.instance.playing = false,
-            null, 
+             
             null,
             null,
             ()=> BpmManager.instance.playing = false,
@@ -255,7 +261,7 @@ public static class Tutorial
             null,
             null,
             null,
-            null,
+            ()=> BpmManager.instance.playing = false,
             //chaos pad
             //todo add particles effects for the specific location of the fingerprint button
             () =>
@@ -270,7 +276,7 @@ public static class Tutorial
             null,
             null,
             null,
-            // todo Add autostop for tutorial 
+            // auto stop for tutorial
             () =>
             {
                 tutorial_level = -2;

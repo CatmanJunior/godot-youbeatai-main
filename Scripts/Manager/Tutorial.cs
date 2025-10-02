@@ -122,7 +122,7 @@ public static class Tutorial
 
             //groene laag
             "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
-            
+
             "Probeer het maar eens door op het microphone icoontje te klikken",
             "Goed gedaan",
             "Laat eens horen!",
@@ -144,8 +144,8 @@ public static class Tutorial
             //End of tutorial
             "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
 
-            
-            
+
+
 
 
 
@@ -182,12 +182,12 @@ public static class Tutorial
             () => BpmManager.instance.playing
             , // This checks whether the song is playing
             () => Input.IsActionJustPressed("Interaction"),
-            
+
             () =>
             {
-                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing && activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing; 
-            }, 
-            
+                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing && activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing;
+            },
+
             () =>
             {   _beatsActiveOrangeRing = activeBeatsPerRing(_indexOrangeRing);
                 return BpmManager.instance.playing;
@@ -233,7 +233,7 @@ public static class Tutorial
         ];
 
         outcomes =
-        [ 
+        [
             () =>
             {
                 manager.SetRingVisibility(_indexRedRing, true);
@@ -258,15 +258,15 @@ public static class Tutorial
             manager.beatActives[_indexOrangeRing, _ringTop] = true;
             manager.beatActives[_indexOrangeRing, _ringBottom] = true;
 
-            }, 
+            },
             null,
             ()=> BpmManager.instance.playing = false,
-             
+
             null,
             null,
             ()=> BpmManager.instance.playing = false,
             () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
-                
+
             } ,
             null,
             null,
@@ -300,62 +300,62 @@ public static class Tutorial
                 manager.achievementspanel.Visible = false;
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }
-            
+
         ];
     }
 
     public static void UpdateTutorial()
+    {
+        void SpeakTutorialInstruction(int instruction)
         {
-            void SpeakTutorialInstruction(int instruction)
-            {
-                
-                if (manager.muteSpeach.ButtonPressed) return;
 
-                var without_emoticons = (string input) =>
+            if (manager.muteSpeach.ButtonPressed) return;
+
+            var without_emoticons = (string input) =>
+            {
+                var output = "";
+                var stringInfo = new StringInfo(input);
+                for (int i = 0; i < stringInfo.LengthInTextElements; i++)
                 {
-                    var output = "";
-                    var stringInfo = new StringInfo(input);
-                    for (int i = 0; i < stringInfo.LengthInTextElements; i++)
-                    {
-                        string element = stringInfo.SubstringByTextElements(i, 1);
-                        if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
-                    }
-
-                    return output;
-                };
-
-                var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
-                if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
-                if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-                DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
-            }
-
-            if (!manager.first_tts_done && useTutorial)
-            {
-                SpeakTutorialInstruction(0);
-                manager.first_tts_done = true;
-            }
-
-            if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
-            {
-                
-                string instruction = instructions[tutorial_level];
-                Func<bool> condition = conditions[tutorial_level];
-                Action outcome = outcomes[tutorial_level];
-                manager.InstructionLabel.Text = instruction;
-
-                manager.f7_pressed_lastframe = manager.f7_pressed;
-                manager.f7_pressed = Input.IsKeyPressed(Key.F7);
-                bool skip = manager.f7_pressed && manager.f7_pressed != manager.f7_pressed_lastframe;
-
-                if (condition() || skip)
-                {
-                    if (outcome != null) outcome();
-                    tutorial_level++;
-                    manager.PlayExtraSFX(manager.achievement_sfx);
-                    SpeakTutorialInstruction(tutorial_level);
+                    string element = stringInfo.SubstringByTextElements(i, 1);
+                    if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
                 }
-                
-            }
+
+                return output;
+            };
+
+            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+            DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
         }
+
+        if (!manager.first_tts_done && useTutorial)
+        {
+            SpeakTutorialInstruction(0);
+            manager.first_tts_done = true;
+        }
+
+        if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
+        {
+
+            string instruction = instructions[tutorial_level];
+            Func<bool> condition = conditions[tutorial_level];
+            Action outcome = outcomes[tutorial_level];
+            manager.InstructionLabel.Text = instruction;
+
+            manager.f7_pressed_lastframe = manager.f7_pressed;
+            manager.f7_pressed = Input.IsKeyPressed(Key.F7);
+            bool skip = manager.f7_pressed && manager.f7_pressed != manager.f7_pressed_lastframe;
+
+            if (condition() || skip)
+            {
+                if (outcome != null) outcome();
+                tutorial_level++;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SpeakTutorialInstruction(tutorial_level);
+            }
+
+        }
+    }
 }

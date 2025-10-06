@@ -12,7 +12,6 @@ public static class AudioSaving
 {
     public static void CloseEmailPromptAndSaveAndSendSongFile()
     {
-        Manager.instance.SetCurrentLayer(Manager.instance.beatActives);
         SaveRealTimeRecordedSongAsFileAndSendToEmail();
         Manager.instance.CloseEmailPrompt();
     }

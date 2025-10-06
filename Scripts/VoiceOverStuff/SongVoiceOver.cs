@@ -76,7 +76,7 @@ public partial class SongVoiceOver : Node
         Manager.instance.metronome_toggle.ButtonPressed = true;
 
         // 4 beats voor de eerste noot op eerste laag
-        Manager.instance.SwitchLayer(Manager.instance.layersAmount);
+        Manager.instance.SwitchLayer(Manager.instance.layersAmount - 1);
         BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
 
         // playing true

@@ -5,7 +5,6 @@ using Godot;
 public partial class Manager : Node
 {
 	// switch layer buttons
-	List<Button> LayerButtons = [];
 	[Export] PackedScene layerButtonPrefab;
 	[Export] HBoxContainer layerButtonsContainer;
 	[Export] Button addLayerButton;
@@ -94,7 +93,9 @@ public partial class Manager : Node
 
 	private void InitButtonActions()
 	{
-		addLayerButton.ButtonUp += AddLayer;
+		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(button.Text); CloseEmojiPrompt(); };
+
+		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
 		emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;
 		muteSpeach.Pressed += DisplayServer.TtsStop;

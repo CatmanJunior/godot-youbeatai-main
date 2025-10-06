@@ -40,7 +40,7 @@ public partial class Manager : Node
         layersAmount--;
 
         // if the layer being deleted was the current active layer then go to first layer
-        if (layer == currentLayerIndex) SwitchLayer(0);
+        if (layer == currentLayerIndex) SwitchLayer(0, false);
     }
 
     public Button NewLayerButton(string emoji = null)
@@ -98,12 +98,13 @@ public partial class Manager : Node
         songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
     }
 
-    public void SwitchLayer(int layerIndex)
+    public void SwitchLayer(int layerIndex, bool saveLayerFirst = true)
     {
         // do stuff with old layer
         SamplesMixing_RememberKnobsForLayer();
 
         // change layer
+        if (saveLayerFirst) SetCurrentLayer(beatActives);
         currentLayerIndex = layerIndex;
         beatActives = GetCurrentLayer();
         

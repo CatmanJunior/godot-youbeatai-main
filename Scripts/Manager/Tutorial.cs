@@ -188,7 +188,7 @@ public static class Tutorial
             },
             () =>
             {
-                return activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing;
+                return activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || activeBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing;
             },
 
             () =>
@@ -264,7 +264,7 @@ public static class Tutorial
             },
             null,
             ()=> BpmManager.instance.playing = false,
-
+            null,
             null,
             null,
             ()=> BpmManager.instance.playing = false,

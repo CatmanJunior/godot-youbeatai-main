@@ -83,6 +83,7 @@ public partial class Manager : Node
 	[Export] Sprite2D activateGreenChaosButton;
 	[Export] Sprite2D activatePurpleChaosButton;
 	[Export] Node2D copyPasteClearButtonsHolder;
+	[Export] public Button ContinueButton;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	private void SetCopyPasteClearButtonsActive(bool active)

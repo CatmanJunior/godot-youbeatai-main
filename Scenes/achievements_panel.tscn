@@ -60,10 +60,11 @@ theme = ExtResource("1_rgnfl")
 text = "🚫 Stop"
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="."]
+[node name="Continue" type="Button" parent="."]
 layout_mode = 0
 offset_left = 100.5
 offset_top = 157.5
 offset_right = 179.5
 offset_bottom = 181.5
+action_mode = 0
 text = "Doorgaan"

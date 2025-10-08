@@ -159,8 +159,8 @@ public static class Tutorial
             () => manager.clapped, 
 
             // rode ring
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => BpmManager.instance.playing, // This checks whether the song is playing
             () => !BpmManager.instance.playing,
             () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
@@ -174,13 +174,13 @@ public static class Tutorial
                 GD.Print(manager.stompedAmount);
                 return manager.stompedAmount >= _beatsActiveRedRing;
             }, // makes sure the amount you stomped is equal to the amount of beats active
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap, 
+            () =>  Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap, 
 
             // oranje ring
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => BpmManager.instance.playing
             , // This checks whether the song is playing
-            () => manager.ContinueButton.IsPressed(),
+            () => Input.IsActionJustPressed("Interaction"),
 
             () =>
             {
@@ -199,25 +199,25 @@ public static class Tutorial
             {   GD.Print("clap "+ manager.clappedAmount);
                 return manager.clappedAmount >= _beatsActiveOrangeRing;
             }, // This checks whether the song is playing
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap,   
+            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap,   
 
             // layer voice over
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => manager.layerVoiceOver0.finished,
-            () => manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => BpmManager.instance.playing,
-            () =>manager.ContinueButton.IsPressed(), // need to make a check for button press or screen tap 
+            () =>Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap 
             
             // chaos pad
             ()=>
             {
                 //todo make it so that you need to put it on spefic location instead of any
                 _knobPos = manager.knob.GlobalPosition;
-                return manager.ContinueButton.IsPressed();
+                return Input.IsActionJustPressed("Interaction");
             }, // need to make a check for button press or screen tap,
-            ()=> manager.ContinueButton.IsPressed(),
-            ()=> manager.ContinueButton.IsPressed(),
-            ()=> manager.ContinueButton.IsPressed(),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
             () =>
             {
                 bool moved = _knobPos != manager.knob.GlobalPosition;
@@ -225,13 +225,13 @@ public static class Tutorial
             },
             ()=> BpmManager.instance.playing,
             //todo Add that you need to put it on spefic location with particle effects
-            ()=> manager.ContinueButton.IsPressed(),
-            ()=> manager.ContinueButton.IsPressed(),
-            ()=> manager.ContinueButton.IsPressed(),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> Input.IsActionJustPressed("Interaction"),
             
             // end of tutorial
            
-            () => manager.ContinueButton.IsPressed() // need to make a check for button press or screen tap
+            () => Input.IsActionJustPressed("Interaction") // need to make a check for button press or screen tap
             
         ];
 

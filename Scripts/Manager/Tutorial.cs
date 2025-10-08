@@ -24,6 +24,11 @@ public static class Tutorial
     private static int _greenLayerMicIndex = 0;
     private static Vector2 _knobPos;
     private static int _amountRedRing;
+    private static bool _continued = false;
+    private static string instruction = "";
+    private static Func<bool> condition = null;
+    private static Action outcome = null;
+    private static bool _active = false;
 
     static Manager manager => Manager.instance;
 
@@ -32,6 +37,10 @@ public static class Tutorial
         tutorial_level = 0;
         tutorialActivated = false;
         useTutorial = ReadUseTutorial();
+        instructions = null;
+        conditions = null;
+        outcomes = null;
+        
     }
 
     public static void CheckIfTutorialWasChosen()
@@ -45,6 +54,8 @@ public static class Tutorial
         {
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
+            manager.ContinueButton.Pressed += _nextLine;
+
         }
         else // disable tutorial
         {
@@ -159,8 +170,8 @@ public static class Tutorial
             () => manager.clapped, 
 
             // rode ring
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
             () => BpmManager.instance.playing, // This checks whether the song is playing
             () => !BpmManager.instance.playing,
             () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
@@ -174,13 +185,13 @@ public static class Tutorial
                 GD.Print(manager.stompedAmount);
                 return manager.stompedAmount >= _beatsActiveRedRing;
             }, // makes sure the amount you stomped is equal to the amount of beats active
-            () =>  Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap, 
+            () =>  false, // need to make a check for button press or screen tap, 
 
             // oranje ring
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
             () => BpmManager.instance.playing
             , // This checks whether the song is playing
-            () => Input.IsActionJustPressed("Interaction"),
+            () => false,
 
             () =>
             {
@@ -242,6 +253,7 @@ public static class Tutorial
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
                 manager.PlayPauseButton.Visible = true;
+                _active = true;
             },
             null,
             () =>
@@ -307,58 +319,81 @@ public static class Tutorial
         ];
     }
 
+    private static void _nextLine()
+    {
+        if (_active)
+        {
+            if (outcome != null) outcome();
+            tutorial_level++;
+            manager.PlayExtraSFX(manager.achievement_sfx);
+            SpeakTutorialInstruction(tutorial_level);
+            updateLists();
+        }
+    }
+
     public static void UpdateTutorial()
     {
-        void SpeakTutorialInstruction(int instruction)
-        {
-
-            if (manager.muteSpeach.ButtonPressed) return;
-
-            var without_emoticons = (string input) =>
-            {
-                var output = "";
-                var stringInfo = new StringInfo(input);
-                for (int i = 0; i < stringInfo.LengthInTextElements; i++)
-                {
-                    string element = stringInfo.SubstringByTextElements(i, 1);
-                    if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
-                }
-
-                return output;
-            };
-
-            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
-            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-            DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
-        }
-
         if (!manager.first_tts_done && useTutorial)
         {
-            SpeakTutorialInstruction(0);
+            SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-
-        if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
+        void work(){  SpeakTutorialInstruction(tutorial_level);}
+        
+        if (tutorial_level != -1 && useTutorial)
         {
-
-            string instruction = instructions[tutorial_level];
-            Func<bool> condition = conditions[tutorial_level];
-            Action outcome = outcomes[tutorial_level];
-            manager.InstructionLabel.Text = instruction;
+            updateLists();
 
             manager.f7_pressed_lastframe = manager.f7_pressed;
             manager.f7_pressed = Input.IsKeyPressed(Key.F7);
             bool skip = manager.f7_pressed && manager.f7_pressed != manager.f7_pressed_lastframe;
 
-            if (condition() || skip)
+            if (condition())
+            {
+                _nextLine();
+            }
+
+            if (skip)
             {
                 if (outcome != null) outcome();
                 tutorial_level++;
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 SpeakTutorialInstruction(tutorial_level);
+                updateLists();
             }
 
         }
+    }
+    
+    private static void SpeakTutorialInstruction(int instruction)
+    {
+        if (manager.muteSpeach.ButtonPressed) return;
+        
+        var without_emoticons = (string input) =>
+        {
+            var output = "";
+            var stringInfo = new StringInfo(input);
+            for (int i = 0; i < stringInfo.LengthInTextElements; i++)
+            {
+                string element = stringInfo.SubstringByTextElements(i, 1);
+                if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
+            }
+
+            return output;
+        };
+
+        var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+        if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+        if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
+    }
+
+    private static void updateLists()
+    {
+        instruction = instructions[tutorial_level];
+        condition = conditions[tutorial_level];
+        outcome = outcomes[tutorial_level];
+        manager.InstructionLabel.Text = instruction;
+   
     }
 }

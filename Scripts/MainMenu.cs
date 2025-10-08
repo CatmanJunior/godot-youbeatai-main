@@ -10,11 +10,17 @@ public partial class MainMenu : Node
 
 	public override void _Ready()
 	{
-
 		freeButton.Pressed += () =>
 		{
 			// load sound bank selection scene
 			GetTree().ChangeSceneToFile("res://Scenes/soundbank.tscn");
+
+			// remember if tutorial should be enabled or not
+			{
+				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_achievements.txt");
+				if (File.Exists(path)) File.Delete(path);
+				File.WriteAllText(path, true.ToString());
+			}
 		};
 
 		tutorialButton.Pressed += () =>

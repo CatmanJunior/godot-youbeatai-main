@@ -35,13 +35,6 @@ public static class Tutorial
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
         }
-        else // disable tutorial
-        {
-            tutorial_level = -1;
-            manager.SetEntireInterfaceVisibility(true);
-            manager.achievementspanel.Visible = false;
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        }
     }
 
     // flag if tutorial mode should be enabled

@@ -2,6 +2,8 @@ using Godot;
 
 public partial class Manager : Node
 {
+    private bool interfaceSetToDefaultState = false;
+
     public void SetEntireInterfaceVisibility(bool visible)
     {
         SetRingVisibility(0, visible);

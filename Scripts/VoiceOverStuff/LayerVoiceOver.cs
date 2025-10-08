@@ -12,7 +12,7 @@ public partial class LayerVoiceOver : Node
 	[Export] public Button recordLayerButton;
 
 	// recording
-	public AudioStream[] voiceOvers = new AudioStream[10];
+	public AudioStream[] voiceOvers = new AudioStream[Manager.layersAmountMax];
 	AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
 	public bool shouldRecord = false;
@@ -146,21 +146,25 @@ public partial class LayerVoiceOver : Node
 
 	bool shouldUpdateLines = false;
 
-	public void OnTop() // tested: gets called on time
+	public void OnTop()
 	{
-		if (audioPlayer.Playing) audioPlayer.Stop();
-
 		if (shouldRecord && !recording) StartRecording();
 		else if (recording) StopRecording();
 
 		if (!recording)
 		{
-			audioPlayer.Stream = GetCurrentLayerVoiceOver();  // tested: gets called on time
-			audioPlayer.Play(); // tested: gets called on time
-
+			audioPlayer.Stream = GetCurrentLayerVoiceOver();
 			shouldMeasureAudioDelay = true;
 			audioDelayBeginMs = Time.GetTicksMsec();
 		}
+
+		GetTree().CreateTimer(0.4).Timeout += OnTopDelayed;
+	}
+
+	private void OnTopDelayed()
+	{
+		if (audioPlayer.Playing) audioPlayer.Stop();
+		if (!recording) audioPlayer.Play();
 	}
 
 	private void StartRecording()
@@ -177,7 +181,7 @@ public partial class LayerVoiceOver : Node
 		shouldUpdateProgressBar = true;
 		bigLine.Visible = false;
 
-		GetTree().CreateTimer(0.39).Timeout += () =>
+		GetTree().CreateTimer(0.4).Timeout += () =>
 		{
 			recording = true;
 			audioEffectRecord.SetRecordingActive(true);
@@ -185,12 +189,7 @@ public partial class LayerVoiceOver : Node
 			EmitSignal(SignalName.OnStartedRecording);
 		};
 
-		SetVolumeBeats(0.1f); // beats
-		SongVoiceOver.instance.SetVolumeSongVoice(0.1f); // song
-		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
-		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
+		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
     }
 
     private void StopRecording()
@@ -198,7 +197,7 @@ public partial class LayerVoiceOver : Node
 		shouldUpdateProgressBar = false;
 		bigLine.Visible = true;
 
-		GetTree().CreateTimer(0.39).Timeout += () =>
+		GetTree().CreateTimer(0.4).Timeout += () =>
 		{
 			audioEffectRecord.SetRecordingActive(false);
 			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
@@ -219,35 +218,7 @@ public partial class LayerVoiceOver : Node
 		recordLayerButton.Disabled = false;
 		SongVoiceOver.instance.recordSongButton.Disabled = false;
 
-		Manager.instance.SamplesMixing_ReApplyRememberedMixingVolumesForAllRings(); // beats
-		SongVoiceOver.instance.SetVolumeSongVoice(1f); // song
-		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
-		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
-    }
-
-	public void SetVolumeBeats(float value)
-    {
-		// red
-		Manager.instance.firstAudioPlayer.VolumeLinear = value;
-		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.firstAudioPlayerRec.VolumeLinear = value;
-
-		// orange
-		Manager.instance.secondAudioPlayer.VolumeLinear = value;
-		Manager.instance.secondAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.secondAudioPlayerRec.VolumeLinear = value;
-
-		// yellow
-		Manager.instance.thirdAudioPlayer.VolumeLinear = value;
-		Manager.instance.thirdAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.thirdAudioPlayerRec.VolumeLinear = value;
-
-		// blue
-		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
-		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
+		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
     }
 
 	public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)

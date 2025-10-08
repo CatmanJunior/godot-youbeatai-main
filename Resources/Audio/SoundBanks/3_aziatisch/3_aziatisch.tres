@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://idfcpb8lol15"]
+
+[ext_resource type="AudioStream" uid="uid://cahpjypmhsvgv" path="res://Resources/Audio/SoundBanks/3_opera/Clap LowLife.wav" id="1_smoqj"]
+[ext_resource type="AudioStream" uid="uid://qpr6y32nnmg2" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Clap Sinister 1.wav" id="2_dx13v"]
+[ext_resource type="AudioStream" uid="uid://cd2ar2pvb3vbd" path="res://Resources/Audio/SoundBanks/3_opera/ClosedHH Anorac 1.wav" id="3_2fei6"]
+[ext_resource type="AudioStream" uid="uid://vyrojnhtfwo2" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Closed_Perc Aur.wav" id="4_e56mx"]
+[ext_resource type="AudioStream" uid="uid://bn46av1vpq0py" path="res://Resources/Audio/SoundBanks/3_opera/Kick Beautiful 1.wav" id="6_1yl6k"]
+[ext_resource type="AudioStream" uid="uid://bhf463yx53ksw" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Kick C War.wav" id="7_oyr8o"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_hrxel"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_chmay"]
+[ext_resource type="AudioStream" uid="uid://b3t1g447vrkhu" path="res://Resources/Audio/SoundBanks/3_opera/Snare_Perc Bac.wav" id="10_h8os2"]
+[ext_resource type="AudioStream" uid="uid://cpu1f3gq1kmqj" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Snare Thoughts.wav" id="11_wowjv"]
+
+[resource]
+script = ExtResource("9_chmay")
+kick = ExtResource("6_1yl6k")
+kick_alt = ExtResource("7_oyr8o")
+snare = ExtResource("10_h8os2")
+snare_alt = ExtResource("11_wowjv")
+clap = ExtResource("1_smoqj")
+clap_alt = ExtResource("2_dx13v")
+closed = ExtResource("3_2fei6")
+closed_alt = ExtResource("4_e56mx")
+green_soundfont = ExtResource("8_hrxel")
+green_instrument_id = 14
+purple_soundfont = ExtResource("8_hrxel")
+purple_instrument_id = 11
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

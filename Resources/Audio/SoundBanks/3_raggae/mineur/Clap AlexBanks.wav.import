@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://der0kb6d2ynoo"
+path="res://.godot/imported/Clap AlexBanks.wav-58d789da2ec4b09fc79fd9f5f7ce511b.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_raggae/mineur/Clap AlexBanks.wav"
+dest_files=["res://.godot/imported/Clap AlexBanks.wav-58d789da2ec4b09fc79fd9f5f7ce511b.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

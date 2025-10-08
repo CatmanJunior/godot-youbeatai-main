@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://bg0wxntk7lvv1"]
+
+[ext_resource type="AudioStream" uid="uid://dg23rhypshw0l" path="res://Resources/Audio/SoundBanks/6_rock/Clap Smoky.wav" id="1_5ewh3"]
+[ext_resource type="AudioStream" uid="uid://dinxghfhfe4k" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Clap Overflow 1.wav" id="2_oryav"]
+[ext_resource type="AudioStream" uid="uid://b0xt5kcus3tcw" path="res://Resources/Audio/SoundBanks/6_rock/ClosedHH AlphaCentauri.wav" id="2_s8q6a"]
+[ext_resource type="AudioStream" uid="uid://c3cxgarxkyyr2" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Closed_Perc Phon_o 5.wav" id="4_5dk7e"]
+[ext_resource type="AudioStream" uid="uid://d2n4huplighmj" path="res://Resources/Audio/SoundBanks/6_rock/Kick TwoTone.wav" id="4_e16c4"]
+[ext_resource type="AudioStream" uid="uid://bqvgokl472bmq" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Kick Fit 2.wav" id="4_x7f7w"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_oryav"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_5dk7e"]
+[ext_resource type="AudioStream" uid="uid://c6recttco4teo" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Snare Butter 2.wav" id="7_4uiet"]
+[ext_resource type="AudioStream" uid="uid://qffta4dethj5" path="res://Resources/Audio/SoundBanks/6_rock/Snare Crystal 1.wav" id="7_x7f7w"]
+
+[resource]
+script = ExtResource("6_5dk7e")
+kick = ExtResource("4_e16c4")
+kick_alt = ExtResource("4_x7f7w")
+snare = ExtResource("7_x7f7w")
+snare_alt = ExtResource("7_4uiet")
+clap = ExtResource("1_5ewh3")
+clap_alt = ExtResource("2_oryav")
+closed = ExtResource("2_s8q6a")
+closed_alt = ExtResource("4_5dk7e")
+green_soundfont = ExtResource("5_oryav")
+green_instrument_id = 8
+purple_soundfont = ExtResource("5_oryav")
+purple_instrument_id = 15
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

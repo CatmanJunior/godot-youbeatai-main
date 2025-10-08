@@ -1,6 +1,7 @@
 using Godot;
 
 using System;
+using System.Data.Common;
 
 public partial class Manager : Node
 {
@@ -46,12 +47,14 @@ public partial class Manager : Node
         if (active)
         {
             sprite.Scale += Vector2.One;
+            if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
+        if (draganddropButton1.Scale.X > 4) draganddropButton1.Scale = Vector2.One * 4;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ButtonBehaviour();
     }
@@ -65,12 +68,14 @@ public partial class Manager : Node
         if (active)
         {
             sprite.Scale += Vector2.One;
+            if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;
+        if (draganddropButton0.Scale.X > 4) draganddropButton0.Scale = Vector2.One * 4;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ButtonBehaviour();
 
@@ -81,7 +86,29 @@ public partial class Manager : Node
         if (metronome_sfx_enabled)
         {
             int beatsPerQuarter = BpmManager.beatsAmount / 4;
-            if (BpmManager.instance.currentBeat % beatsPerQuarter == 0) PlayExtraSFX(metronome_sfx);
+            if (BpmManager.instance.currentBeat % beatsPerQuarter == 0)
+            {
+                bool reatime_rec = RealTimeAudioRecording.instance.shouldRecord || RealTimeAudioRecording.instance.shouldRecord;
+                bool layer_rec0 = layerVoiceOver0.shouldRecord || layerVoiceOver0.shouldRecord;
+                bool layer_rec1 = layerVoiceOver1.shouldRecord || layerVoiceOver1.shouldRecord;
+                bool song_rec = SongVoiceOver.instance.shouldRecord || RealTimeAudioRecording.instance.shouldRecord;
+
+                if (reatime_rec || layer_rec0 || layer_rec1 || song_rec)
+                {
+                    if (BpmManager.instance.currentBeat != 0)
+                    {
+                        PlayExtraSFX(metronome_sfx);
+                    }
+                    else
+                    {
+                        GD.Print("skip top tic");
+                    }
+                }
+                else // normal
+                {
+                    PlayExtraSFX(metronome_sfx);
+                }
+            }
         }
 
         if (beatActives[0, BpmManager.instance.currentBeat]) firstAudioPlayer.Play();
@@ -113,6 +140,7 @@ public partial class Manager : Node
             
             if (currentLayerIndex == 0)
             {
+                RealTimeAudioRecording.instance.OnTop();
                 SongVoiceOver.instance.OnTop();
             }
         }

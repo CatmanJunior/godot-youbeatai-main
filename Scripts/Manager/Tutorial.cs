@@ -16,6 +16,18 @@ public static class Tutorial
 
     static Manager manager => Manager.instance;
 
+    public static void Reset()
+    {
+        tutorial_level = 0;
+        tutorialActivated = false;
+        useTutorial = ReadUseTutorial();
+    }
+
+    public static void CheckIfTutorialWasChosen()
+    {
+        useTutorial = ReadUseTutorial();
+    }
+
     public static void TryActivateTutorial()
     {
         if (useTutorial) // enable tutorial
@@ -33,7 +45,7 @@ public static class Tutorial
     }
 
     // flag if tutorial mode should be enabled
-    public static bool useTutorial = ReadUseTutorial();
+    public static bool useTutorial;
     private static bool ReadUseTutorial()
     {
         bool use;
@@ -187,7 +199,9 @@ public static class Tutorial
             () =>
             {
                 SongVoiceOver.instance.recordSongButton.Visible = true;
+                RealTimeAudioRecording.instance.recordSongButton.Visible = true;
                 SongVoiceOver.instance.recordSongSprite.Visible = true;
+                RealTimeAudioRecording.instance.recordSongSprite.Visible = true;
                 SongVoiceOver.instance.progressbar.Visible = true;
             },
 

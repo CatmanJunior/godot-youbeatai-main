@@ -13,7 +13,9 @@ public partial class DragableSprite : Sprite2D
             {
                 if (mouseButtonEvent.Pressed)
                 {
-                    if (IsPixelOpaque(GetLocalMousePosition()))
+                    var chaospad_opaque = Manager.instance.chaosPadTriangleSprite.IsPixelOpaque(Manager.instance.chaosPadTriangleSprite.GetLocalMousePosition());
+                    var knob_opaque = IsPixelOpaque(GetLocalMousePosition());
+                    if (knob_opaque || chaospad_opaque)
                     {
                         dragging = true;
                         dragOffset = GlobalPosition - mouseButtonEvent.Position;

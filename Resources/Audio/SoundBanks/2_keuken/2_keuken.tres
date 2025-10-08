@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://dg05d7ae82051"]
+
+[ext_resource type="AudioStream" uid="uid://cwu11sgcrukxf" path="res://Resources/Audio/SoundBanks/2_keuken/Clap Hoba.wav" id="1_i756p"]
+[ext_resource type="AudioStream" uid="uid://bjbxwnh1of5f2" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Clap_Denim.wav" id="2_i756p"]
+[ext_resource type="AudioStream" uid="uid://dy4ueh523rpqx" path="res://Resources/Audio/SoundBanks/2_keuken/ClosedHH Butter 1.wav" id="3_bwyu4"]
+[ext_resource type="AudioStream" uid="uid://dj82d8v1i10vv" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/ClosedHH Denim.wav" id="4_bwyu4"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="5_tc6nb"]
+[ext_resource type="AudioStream" uid="uid://odobipxdwoem" path="res://Resources/Audio/SoundBanks/2_keuken/Kick Glory 1.wav" id="6_5bui3"]
+[ext_resource type="AudioStream" uid="uid://b2wvvwru36ift" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Kick Gnarly 2.wav" id="7_5bui3"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_th3op"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_n8rp0"]
+[ext_resource type="AudioStream" uid="uid://bkq6n8xf50qja" path="res://Resources/Audio/SoundBanks/2_keuken/Snare Phon_o 1.wav" id="10_fibcx"]
+[ext_resource type="AudioStream" uid="uid://cx1wjo8ba3h3v" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Snare Phon_o 2.wav" id="11_fibcx"]
+
+[resource]
+script = ExtResource("9_n8rp0")
+kick = ExtResource("6_5bui3")
+kick_alt = ExtResource("7_5bui3")
+snare = ExtResource("10_fibcx")
+snare_alt = ExtResource("11_fibcx")
+clap = ExtResource("1_i756p")
+clap_alt = ExtResource("2_i756p")
+closed = ExtResource("3_bwyu4")
+closed_alt = ExtResource("4_bwyu4")
+green_soundfont = ExtResource("5_tc6nb")
+purple_soundfont = ExtResource("8_th3op")
+purple_instrument_id = 4
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

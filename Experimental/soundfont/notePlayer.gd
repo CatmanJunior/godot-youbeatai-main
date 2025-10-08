@@ -1,0 +1,132 @@
+extends SoundFontPlayer
+class_name notePlayer
+
+@export var bpmManager: BpmManager
+@export var notes: Notes
+@export var instrument: int :
+	set(v):
+		instrument = v
+		channel_set_presetindex(0, 0, v)
+@export var base_note : Note
+@export var allow_key_input: bool = false
+
+@export var songs: Array[PackedVector3Array] = []
+var current_layer: int = 0
+
+#var current_beat_i : int = int(current_beat)
+#var current_beat_frac : int = int((current_beat - current_beat_i) * beat_subdivision)
+#$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
+
+func _ready():
+	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
+	# select instrument
+	channel_set_presetindex(0, 0, instrument)
+
+func set_font(font: SoundFont, instr: int):
+	soundfont = font
+	instrument = instr
+
+func _input(event):
+	if event is InputEventMIDI:
+		_process_midi_input(event)
+		return
+	
+	if event is InputEventKey:
+		_process_key_input(event)
+		return
+
+func _process_key_input(event: InputEventKey):
+	if not allow_key_input:
+		return
+	
+	var map = {
+		KEY_A:0,
+		KEY_S:2,
+		KEY_D:4,
+		KEY_F:5,
+		KEY_G:7,
+		KEY_H:9,
+		KEY_J:11,
+		KEY_K:12,
+		KEY_L:14,
+	}
+	
+	if event.keycode not in map:
+		return
+	
+	if event.is_pressed() and not event.is_echo() :
+		channel_note_on(0, 0, base_note.id + map[event.keycode], 1.0)
+	if event.is_released():
+		channel_note_off(0, 0, base_note.id + map[event.keycode])
+
+func _process_midi_input(event: InputEventMIDI):
+	channel_set_presetindex(0, event.channel, event.instrument)
+	channel_note_on(0, event.channel, event.pitch, event.velocity)
+
+
+func on_bpm():
+	var song: PackedVector3Array = get_song()
+	if len(song) == 0 or bpmManager.currentBeat >= len(song):
+		return
+
+	#var length = len(song)
+	var rms_value = song[bpmManager.currentBeat].y
+	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
+
+	# convert to value around 0-1
+	# capped becasue soundfont does not play well with higher values
+	log_value = min(1, pow(10, log_value / 10))
+
+	# gate quiet notes
+	if log_value <= 0.3:
+		return
+	
+	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat].x), log_value)
+	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
+	channel_note_off(get_time() + beatDuration, 0, round(song[bpmManager.currentBeat].x))
+
+func _on_current_layer_changed(layer: int):
+	current_layer = layer
+	print(layer)
+
+
+func set_song(data: PackedVector3Array):
+	songs[current_layer] = data
+
+func get_song() -> PackedVector3Array:
+	if current_layer >= len(songs):
+		return []
+	
+	return songs[current_layer]
+
+
+
+func play_note(note: Note, duration: float):
+	var t = get_time()
+	channel_note_on(t, 0, note.id, 1.0)
+	channel_note_off(t + duration, 0, note.id)
+
+func play_chord(intervals):
+	var duration : float = 0.5
+	var t = get_time()
+	for i in intervals:
+		channel_note_on(t, 0, base_note + i, 1.0)
+		channel_note_off(t + duration, 0, base_note + i)
+
+func on_chord_major():
+	play_chord([0, 4, 7])
+
+func on_chord_minor():
+	play_chord([0, 3, 7])
+
+func on_chord_7():
+	play_chord([0, 4, 7, 10])
+
+func on_chord_major_7():
+	play_chord([0, 4, 7, 11])
+
+func on_chord_minor_7():
+	play_chord([0, 3, 7, 10])
+
+func on_chord_diminished_7():
+	play_chord([0, 3, 6, 9])

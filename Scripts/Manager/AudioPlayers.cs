@@ -53,5 +53,23 @@ public partial class Manager : Node
         secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
         thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
         fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
+        firstAudioPlayer.Bus = "Beats";
+        secondAudioPlayer.Bus = "Beats";
+        thirdAudioPlayer.Bus = "Beats";
+        fourthAudioPlayer.Bus = "Beats";
+        firstAudioPlayerAlt.Bus = "Beats";
+        secondAudioPlayerAlt.Bus = "Beats";
+        thirdAudioPlayerAlt.Bus = "Beats";
+        fourthAudioPlayerAlt.Bus = "Beats";
+        firstAudioPlayerRec.Bus = "Beats";
+        secondAudioPlayerRec.Bus = "Beats";
+        thirdAudioPlayerRec.Bus = "Beats";
+        fourthAudioPlayerRec.Bus = "Beats";
+
+        if (bank != null)
+        {
+            EmitSignal(SignalName.SetGreenSynth, bank.green_soundfont, bank.green_instrument_id);
+		    EmitSignal(SignalName.SetPurpleSynth, bank.purple_soundfont, bank.purple_instrument_id);
+        }
     }
 }

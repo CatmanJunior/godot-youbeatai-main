@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bhg6yg7hs1a8o"
+path="res://.godot/imported/ClosedHH Fit 1.wav-6cf263099860ae77fdb6ad349b3bb36e.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_raggae/mineur/ClosedHH Fit 1.wav"
+dest_files=["res://.godot/imported/ClosedHH Fit 1.wav-6cf263099860ae77fdb6ad349b3bb36e.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

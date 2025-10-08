@@ -52,9 +52,11 @@ public partial class Manager : Node
 
     public void ClearLayer()
     {
-        ClearLayout();
+        RemoveLayer(currentLayerIndex);
         SamplesMixing_ClearKnobsForLayer();
         ClearLayerVoiceOver();
+        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
+        hasclearedlayout = true;
     }
 
     public void CopyLayerVoiceToClipBoard()

@@ -12,9 +12,29 @@ public static class AudioSaving
 {
     public static void CloseEmailPromptAndSaveAndSendSongFile()
     {
-        Manager.instance.SetCurrentLayer(Manager.instance.beatActives);
-        SaveSongAsFileAndSendToEmail(Manager.instance.layers);
+        SaveRealTimeRecordedSongAsFileAndSendToEmail();
         Manager.instance.CloseEmailPrompt();
+    }
+
+    private static void SaveRealTimeRecordedSongAsFileAndSendToEmail()
+    {
+        if (RealTimeAudioRecording.instance.recording_result == null) return;
+
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
+        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
+        string final_name = user("export_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
+
+        // (temporary solution) combine songvoiceover with submaster recording because voice isnt in submaster recording
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, final_name + "_a_" + ".wav");
+        ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, final_name + "_b_" + ".wav");
+        MixAudioFiles(final_name + "_a_" + ".wav", final_name + "_b_" + ".wav", final_name + ".wav");
+        File.Delete(final_name + "_a_" + ".wav");
+        File.Delete(final_name + "_b_" + ".wav");
+
+        if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
+
+        Manager.instance.ShowSavingLabel(final_name);
+        Manager.instance.hassavedtofile = true;
     }
 
     private static void SaveSongAsFileAndSendToEmail(List<bool[,]> loops)
@@ -87,7 +107,7 @@ public static class AudioSaving
 
         // export layersvoiceovers0 as single wav
         AudioStream[] voiceovers0 = Manager.instance.layerVoiceOver0.voiceOvers;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Manager.instance.layersAmount; i++)
         {
             string name = user("layer" + i.ToString() + "a.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers0[i];
@@ -140,7 +160,7 @@ public static class AudioSaving
 
         // export layersvoiceovers1 as single wav
         AudioStream[] voiceovers1 = Manager.instance.layerVoiceOver1.voiceOvers;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < Manager.instance.layersAmount; i++)
         {
             string name = user("layer" + i.ToString() + "b.wav");
             AudioStreamWav audioStreamWav = (AudioStreamWav)voiceovers1[i];

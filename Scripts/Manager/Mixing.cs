@@ -16,7 +16,7 @@ public partial class Manager : Node
     [Export] public Label iconMain;
     [Export] public Label iconAlt;
     public Vector3 weights;
-    public float outerTriangleSize = 40;
+    public float outerTriangleSize = 60;
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
     [Export] public Node2D micButtonLocation;
 
@@ -386,12 +386,12 @@ public partial class Manager : Node
         if (synth == 0)
         {
             layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
-            GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", weights.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green"), weights.Z * mastervolume);
         }
         if (synth == 1)
         {
             layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
-            GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", weights.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple"), weights.Z * mastervolume);
         }
     }
 

@@ -4,6 +4,11 @@ public partial class ReverbDelayManager : Node
 {
     public static ReverbDelayManager instance = null;
 
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
 	[Export] public Slider reverbSlider;
 	[Export] public Slider delaySlider;
 

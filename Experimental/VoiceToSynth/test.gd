@@ -25,6 +25,5 @@ func stop_playing():
 func play():
 	audio.play()
 
-
 func start_playing():
 	bpm.playing = true

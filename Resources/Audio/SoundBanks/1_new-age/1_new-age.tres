@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://ermj4ks1wpe2"]
+
+[ext_resource type="AudioStream" uid="uid://bb71pdrfwvw25" path="res://Resources/Audio/SoundBanks/1_new-age/Clap Fit.wav" id="1_n0abr"]
+[ext_resource type="AudioStream" uid="uid://ct2rppkxbhr04" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/Clap FunkHause.wav" id="2_n0abr"]
+[ext_resource type="AudioStream" uid="uid://dwadswxfwulyk" path="res://Resources/Audio/SoundBanks/1_new-age/ClosedHH Andromeda 1.wav" id="3_6rnhg"]
+[ext_resource type="AudioStream" uid="uid://dna32y08gey1l" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/ClosedHH Elegance.wav" id="4_6rnhg"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="5_kvqfu"]
+[ext_resource type="AudioStream" uid="uid://bsrugmpssatfv" path="res://Resources/Audio/SoundBanks/1_new-age/Kick Elegance 2.wav" id="6_iog55"]
+[ext_resource type="AudioStream" uid="uid://daxypt2kfn2i4" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/Kick Cosmos 1.wav" id="7_iog55"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_paa6u"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_jp6wy"]
+[ext_resource type="AudioStream" uid="uid://b0uof5pu1qvvs" path="res://Resources/Audio/SoundBanks/1_new-age/Snare Gnarly.wav" id="10_a4u4m"]
+[ext_resource type="AudioStream" uid="uid://b3wsokmo1n77" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/Snare_Perc Oka.wav" id="11_a4u4m"]
+
+[resource]
+script = ExtResource("9_jp6wy")
+kick = ExtResource("6_iog55")
+kick_alt = ExtResource("7_iog55")
+snare = ExtResource("10_a4u4m")
+snare_alt = ExtResource("11_a4u4m")
+clap = ExtResource("1_n0abr")
+clap_alt = ExtResource("2_n0abr")
+closed = ExtResource("3_6rnhg")
+closed_alt = ExtResource("4_6rnhg")
+green_soundfont = ExtResource("5_kvqfu")
+purple_soundfont = ExtResource("8_paa6u")
+purple_instrument_id = 12
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

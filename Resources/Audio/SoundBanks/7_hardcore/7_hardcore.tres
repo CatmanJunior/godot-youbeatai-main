@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://dyy8617ukyptm"]
+
+[ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="1_qlc07"]
+[ext_resource type="AudioStream" uid="uid://b70b3353jtpvd" path="res://Resources/Audio/SoundBanks/7_hardcore/ClosedHH Bandits 1.wav" id="2_120gr"]
+[ext_resource type="AudioStream" uid="uid://cna7wbhdje4fl" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Clap Denim.wav" id="2_ytapi"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="3_nomca"]
+[ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]
+[ext_resource type="AudioStream" uid="uid://d2t6q8lum30iv" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Kick Fm LowLife.wav" id="4_nomca"]
+[ext_resource type="AudioStream" uid="uid://8rxdspna22wi" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/ClosedHH Acidy.wav" id="4_tm1gk"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_ytapi"]
+[ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
+[ext_resource type="AudioStream" uid="uid://b7ycvuoy7t3tc" path="res://Resources/Audio/SoundBanks/7_hardcore/Snare Fakesch.wav" id="7_tm1gk"]
+
+[resource]
+script = ExtResource("1_qlc07")
+kick = ExtResource("4_kd4x3")
+kick_alt = ExtResource("4_nomca")
+snare = ExtResource("7_tm1gk")
+snare_alt = ExtResource("7_kd4x3")
+clap = ExtResource("1_7jbdn")
+clap_alt = ExtResource("2_ytapi")
+closed = ExtResource("2_120gr")
+closed_alt = ExtResource("4_tm1gk")
+green_soundfont = ExtResource("3_nomca")
+purple_soundfont = ExtResource("5_ytapi")
+purple_instrument_id = 6
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://duu4xfosamul2"]
+
+[ext_resource type="AudioStream" uid="uid://dhhjbk72kgmfo" path="res://Resources/Audio/SoundBanks/4_pop/Clap Modern.wav" id="1_p18ot"]
+[ext_resource type="AudioStream" uid="uid://bjbinjdadad4r" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Clap DoubleDutch 3.wav" id="2_rv86u"]
+[ext_resource type="AudioStream" uid="uid://bv2qaff10jto7" path="res://Resources/Audio/SoundBanks/4_pop/ClosedHH Modern 2.wav" id="2_wywju"]
+[ext_resource type="AudioStream" uid="uid://csoufanqc2frv" path="res://Resources/Audio/SoundBanks/4_pop/mineur/ClosedHH Omg 2.wav" id="3_wywju"]
+[ext_resource type="AudioStream" uid="uid://ctntur8hp4j4n" path="res://Resources/Audio/SoundBanks/4_pop/Kick Rooftop.wav" id="4_3h66m"]
+[ext_resource type="AudioStream" uid="uid://c0ab64ar4pabh" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Kick TwoTone.wav" id="4_aqegv"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_rv86u"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_527mg"]
+[ext_resource type="AudioStream" uid="uid://tg3pcb8g1l68" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Snare_Rim Ask.wav" id="7_3h66m"]
+[ext_resource type="AudioStream" uid="uid://cpkr5gf62qq5c" path="res://Resources/Audio/SoundBanks/4_pop/Snare_Rim Ask.wav" id="7_5r2ij"]
+
+[resource]
+script = ExtResource("6_527mg")
+kick = ExtResource("4_3h66m")
+kick_alt = ExtResource("4_aqegv")
+snare = ExtResource("7_5r2ij")
+snare_alt = ExtResource("7_3h66m")
+clap = ExtResource("1_p18ot")
+clap_alt = ExtResource("2_rv86u")
+closed = ExtResource("2_wywju")
+closed_alt = ExtResource("3_wywju")
+green_soundfont = ExtResource("5_rv86u")
+green_instrument_id = 5
+purple_soundfont = ExtResource("5_rv86u")
+purple_instrument_id = 5
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

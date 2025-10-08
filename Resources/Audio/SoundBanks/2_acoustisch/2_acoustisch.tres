@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://yqlugev118t2"]
+
+[ext_resource type="AudioStream" uid="uid://deffdhswfkqr8" path="res://Resources/Audio/SoundBanks/2_acoustisch/Clap AlphaCentauri 2.wav" id="1_l8cde"]
+[ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="2_l8cde"]
+[ext_resource type="AudioStream" uid="uid://bbhrn06te3p5l" path="res://Resources/Audio/SoundBanks/2_acoustisch/ClosedHH Formula 1.wav" id="3_sfolf"]
+[ext_resource type="AudioStream" uid="uid://dftnqqs3hjppb" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Closed_Tam.wav" id="4_sfolf"]
+[ext_resource type="AudioStream" uid="uid://co7i5xf384x1j" path="res://Resources/Audio/SoundBanks/2_acoustisch/Kick Forest 1.wav" id="6_hey0b"]
+[ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="7_hey0b"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_h0r5k"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_nx8i2"]
+[ext_resource type="AudioStream" uid="uid://doay675bckxms" path="res://Resources/Audio/SoundBanks/2_acoustisch/Snare Lusine 1.wav" id="10_2nf2g"]
+[ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="11_2nf2g"]
+
+[resource]
+script = ExtResource("9_nx8i2")
+kick = ExtResource("6_hey0b")
+kick_alt = ExtResource("7_hey0b")
+snare = ExtResource("10_2nf2g")
+snare_alt = ExtResource("11_2nf2g")
+clap = ExtResource("1_l8cde")
+clap_alt = ExtResource("2_l8cde")
+closed = ExtResource("3_sfolf")
+closed_alt = ExtResource("4_sfolf")
+green_soundfont = ExtResource("8_h0r5k")
+green_instrument_id = 5
+purple_soundfont = ExtResource("8_h0r5k")
+purple_instrument_id = 2
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

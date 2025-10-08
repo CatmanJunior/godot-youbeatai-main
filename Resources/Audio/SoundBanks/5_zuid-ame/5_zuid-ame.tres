@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://bgisjm38j67en"]
+
+[ext_resource type="AudioStream" uid="uid://bs1dce42fqla5" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Clap Lusine 1.wav" id="1_lyvmd"]
+[ext_resource type="AudioStream" uid="uid://2mli5as68hek" path="res://Resources/Audio/SoundBanks/5_zuid-ame/ClosedHH Sinister 2.wav" id="2_4yojl"]
+[ext_resource type="AudioStream" uid="uid://bdmpyuqaniusf" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Clap Phon_o.wav" id="2_xcqui"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="3_872mg"]
+[ext_resource type="AudioStream" uid="uid://c4ef4rtejwsy0" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/ClosedHH Rooftop.wav" id="4_1d0q0"]
+[ext_resource type="AudioStream" uid="uid://teg462nl7r6b" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Kick Aurora.wav" id="4_872mg"]
+[ext_resource type="AudioStream" uid="uid://cm5io7pphghwk" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Kick Elegance 2.wav" id="4_ph0eh"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_xcqui"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_1d0q0"]
+[ext_resource type="AudioStream" uid="uid://7cda032xv3gf" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Snare Crystal 1.wav" id="7_d27c3"]
+[ext_resource type="AudioStream" uid="uid://bumn8a50plb2w" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Snare Crystal 2.wav" id="7_ph0eh"]
+
+[resource]
+script = ExtResource("6_1d0q0")
+kick = ExtResource("4_ph0eh")
+kick_alt = ExtResource("4_872mg")
+snare = ExtResource("7_d27c3")
+snare_alt = ExtResource("7_ph0eh")
+clap = ExtResource("1_lyvmd")
+clap_alt = ExtResource("2_xcqui")
+closed = ExtResource("2_4yojl")
+closed_alt = ExtResource("4_1d0q0")
+green_soundfont = ExtResource("3_872mg")
+purple_soundfont = ExtResource("5_xcqui")
+purple_instrument_id = 2
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

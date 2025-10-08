@@ -1,9 +1,20 @@
 using Godot;
 using System.IO;
 
+[GlobalClass]
 public partial class BpmManager : Node
 {
     public static BpmManager instance = null;
+
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
+    public BpmManager()
+    {
+        beatsAmount = ReadBeatsAmount();
+    }
 
     // bpm
     private int _bpm = 120;
@@ -19,7 +30,7 @@ public partial class BpmManager : Node
     }
 
     // timing
-    public static int beatsAmount = ReadBeatsAmount();
+    public static int beatsAmount;
     public int amount_of_beats => beatsAmount;
     private static int ReadBeatsAmount()
     {
@@ -30,16 +41,18 @@ public partial class BpmManager : Node
             string content = File.ReadAllText(path);
             amount = int.Parse(content);
             if (File.Exists(path)) File.Delete(path);
+            GD.Print("beats_amount.txt found: " + amount + " beats");
         }
         catch
         {
             amount = 16;
+            throw new System.Exception("beats_amount.txt not found in user folder");
         }
 
         return amount;
     }
 
-    
+
     private bool _playing;
     [Export]
     public bool playing
@@ -53,10 +66,10 @@ public partial class BpmManager : Node
         get => _playing;
     }
 
-    [Export ]public int currentBeat = beatsAmount - 1;
+    [Export] public int currentBeat = beatsAmount - 1;
     public float beatTimer = 0;
     [Export] public float swing = 0.5f;
-    
+
     public float baseTimePerBeat;
     public float timePerBeat;
 
@@ -83,7 +96,7 @@ public partial class BpmManager : Node
             baseTimePerBeat = 60f / bpm / beats_per_bar;
             timePerBeat =
                 (currentBeat % 2 == 1) ?
-                    baseTimePerBeat + (baseTimePerBeat * swing) 
+                    baseTimePerBeat + (baseTimePerBeat * swing)
                     : baseTimePerBeat - (baseTimePerBeat * swing);
 
             if (beatTimer > timePerBeat)

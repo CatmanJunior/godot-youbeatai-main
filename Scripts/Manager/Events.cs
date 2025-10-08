@@ -5,4 +5,7 @@ public partial class Manager : Node
     [Signal] public delegate void OnSwitchLayerEventHandler(int layer);
     [Signal] public delegate void OnShouldClapEventEventHandler();
     [Signal] public delegate void OnShouldStompEventEventHandler();
+    [Signal] public delegate void OnClearLayerEventEventHandler();
+    [Signal] public delegate void SetGreenSynthEventHandler(Resource font, int instr);
+    [Signal] public delegate void SetPurpleSynthEventHandler(Resource font, int instr);
 }

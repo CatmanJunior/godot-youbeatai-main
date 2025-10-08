@@ -98,48 +98,48 @@ public static class Tutorial
         instructions =
         [
             // intro
-            "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap in je handen.",
+            "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen.",
 
             // kick ring
             "Zie je de rode circles, dat is de kick ring",
             "Via deze ring kun je een kick geluid toevoegen aan het liedje kijk maar!",
-            "Ik heb er net drie opgezet, druk nu op '⏯ Start' om de beat te horen",
-            "Super nu kunnen wij het lied horen",
-            "Probeer het zelf maar eens door er 2 op te zetten door op de stippen te duwen",
-            "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt!",
-            "Stamp eens mee op jouw beat!",
-            "Wow super gedaan!, nou ik denk dat we wel een stapje verder kunnen gaan",
+            "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
+            " Druk op ⏸️ om het op pauze te zetten ",
+            "Nu jij, vul nog 2 circles door op de stippen te drukken",
+            "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt! ▶️",
+            "Stamp👞 eens mee op jouw beat!",
+            "Wow super gedaan! tijd voor level 2!",
 
             // klap ring
             "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
-            "Ik heb zelf net 2 er in gezet, luister er maar eens naar!",
+            "Ik heb zelf net 2 erin gezet, luister er maar eens naar▶️!",
             "Super gedaan!",//todo 
             //todo change text that you not only need to add x but also remove x into two steps instead of one
-            "Probeer nu eens zelf 2 klap stippen er bij te zetten en een kick weg te halen door er weer op te clicken",
-            "Ik ben benieuwd laat mij eens horen!",
+            "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
+            "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
+            "Ik ben benieuwd laat mij eens horen! ▶️",
             "Probeer mee te klappen op de beat!",
-            "Super goed gedaan, het gaat zo goed ik denk dat we er nog iets bij kunnen doen!",
+            "Super goed gedaan, nu wordt het echt leuk.",
 
             //groene laag
             "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
-
-            "Probeer het maar eens door op het microphone icoontje te klikken",
+            "Probeer het maar eens door op het microphone 🎙️icoontje te klikken",
             "Goed gedaan",
-            "Laat eens horen!",
-            "Super gedaan, het klinkt enorm leuk",
+            "Laat eens horen!▶️",
+            "Super gedaan, het klinkt heel leuk",
             
             // chaos pad
             "Ik denk dat we het nog leuker kunnen maken met de mixer!",
-            "De driehoek links dat is de mixer!",
-            "Hiermee kun je jouw net opgenomen sample veranderen",
-            "Je kunt het geluid veranderen naar Boven Jouw stem Links onder een elektronisch geluid en Rechts onder jouw stem met een galm",
-            //todo add spefic location to where you need to put the fingerprint button in this case the piano
-            "probeer het maar eens door die knop met vingerafdruk te bewegen",
+            "Deze driehoek dat is de mixer!",
+            "Hiermee kun je jouw net opgenomen geluid veranderen",
+            "Je kunt het geluid veranderen van Jouw stem 🎙️ en een Instrument geluid 🎹  en jouw stem met een effect 🤖",
+            //todo add specific location to where you need to put the fingerprint button in this case the piano
+            "probeer het maar eens door die witte knop te bewegen",
             "Moet je nu maar eens luisteren",
-            "Leuk dit brengt een heel nieuwe kijk op het liedje",
-            //todo add specfic location to where you need to put the fingerprint button
-            "Het beste is nog als je hem ergens in het midden tussen twee zet wordt het gemixt!",
-            "Zo kun je een synth geluid en reverb met stem krijgen",
+            "Dit geeft een hele andere sfeer aan je beat",
+            //todo add specific location to where you need to put the fingerprint button
+            "Zet hem maar  tussen twee zodat ze worden gemixt!",
+            "Zo kun je stem met een beetje effect krijgen",
             
             //End of tutorial
             "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
@@ -162,9 +162,8 @@ public static class Tutorial
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
             () => BpmManager.instance.playing, // This checks whether the song is playing
-            ()=> Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap,
+            () => !BpmManager.instance.playing,
             () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
-            
             () =>
             {
                 _beatsActiveRedRing = activeBeatsPerRing(_indexRedRing);
@@ -185,7 +184,11 @@ public static class Tutorial
 
             () =>
             {
-                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing && activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing;
+                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing;
+            },
+            () =>
+            {
+                return activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing;
             },
 
             () =>

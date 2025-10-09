@@ -54,7 +54,7 @@ public static class Tutorial
         {
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
-            manager.ContinueButton.Pressed += _nextLine;
+            manager.ContinueButton.Pressed += _tutorialContinue;
 
         }
         else // disable tutorial
@@ -210,25 +210,25 @@ public static class Tutorial
             {   GD.Print("clap "+ manager.clappedAmount);
                 return manager.clappedAmount >= _beatsActiveOrangeRing;
             }, // This checks whether the song is playing
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap,   
+            () =>false, // need to make a check for button press or screen tap,   
 
             // layer voice over
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
             () => manager.layerVoiceOver0.finished,
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
             () => BpmManager.instance.playing,
-            () =>Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap 
+            () => false, // need to make a check for button press or screen tap 
             
             // chaos pad
             ()=>
             {
                 //todo make it so that you need to put it on spefic location instead of any
                 _knobPos = manager.knob.GlobalPosition;
-                return Input.IsActionJustPressed("Interaction");
+                return false;
             }, // need to make a check for button press or screen tap,
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> false,
+            ()=> false,
+            ()=> false,
             () =>
             {
                 bool moved = _knobPos != manager.knob.GlobalPosition;
@@ -236,9 +236,9 @@ public static class Tutorial
             },
             ()=> BpmManager.instance.playing,
             //todo Add that you need to put it on spefic location with particle effects
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> false,
+            ()=> false,
+            ()=> false,
             
             // end of tutorial
            
@@ -319,16 +319,19 @@ public static class Tutorial
         ];
     }
 
+    private static void _tutorialContinue()
+    {
+        if(!_active) return;
+        _nextLine();
+    }
+
     private static void _nextLine()
     {
-        if (_active)
-        {
-            if (outcome != null) outcome();
-            tutorial_level++;
-            manager.PlayExtraSFX(manager.achievement_sfx);
-            SpeakTutorialInstruction(tutorial_level);
-            updateLists();
-        }
+        if (outcome != null) outcome();
+        tutorial_level++;
+        manager.PlayExtraSFX(manager.achievement_sfx);
+        SpeakTutorialInstruction(tutorial_level);
+        updateLists();
     }
 
     public static void UpdateTutorial()

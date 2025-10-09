@@ -41,6 +41,7 @@ public partial class Manager : Node
         CopyBeatLayoutToClipboard();
         SamplesMixing_CopyKnobsForLayer();
         CopyLayerVoiceToClipBoard();
+        EmitSignal(SignalName.OnCopyLayerEvent, currentLayerIndex);
     }
 
     public void PasteLayer()
@@ -48,6 +49,7 @@ public partial class Manager : Node
         PasteBeatLayoutFromClipboard();
         SamplesMixing_PasteKnobsLayer();
         PasteLayerVoiceFromClipBoard();
+        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
     }
 
     public void ClearLayer()

@@ -341,7 +341,7 @@ public static class Tutorial
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-        void work(){  SpeakTutorialInstruction(tutorial_level);}
+        void Speaking(){  SpeakTutorialInstruction(tutorial_level);}
         
         if (tutorial_level != -1 && useTutorial)
         {

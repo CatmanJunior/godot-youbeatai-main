@@ -32,6 +32,8 @@ public partial class Manager : Node
     float timeafterplay = 0;
     public bool savedToLaout = false;
     private float startswing;
+    [Export] public Node2D PianoLocation;
+    [Export] public Node2D InBetweenLocation;
 
     AudioStream clipboardLayerVoice0;
     AudioStream clipboardLayerVoice1;

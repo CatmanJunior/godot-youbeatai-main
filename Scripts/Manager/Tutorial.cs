@@ -29,6 +29,9 @@ public static class Tutorial
     private static Func<bool> condition = null;
     private static Action outcome = null;
     private static bool _active = false;
+    private static Area2D _pianoArea = null;
+    private static Area2D _inBetweenArea = null;
+    private static MeshInstance2D _pianoMesh = null;
 
     static Manager manager => Manager.instance;
 
@@ -55,6 +58,8 @@ public static class Tutorial
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
             manager.ContinueButton.Pressed += _tutorialContinue;
+            manager.PianoArea.BodyEntered += _bodyContinue;
+            manager.InBetweenArea.BodyEntered += _bodyContinue;
 
         }
         else // disable tutorial
@@ -301,9 +306,18 @@ public static class Tutorial
             },
             null,
             null,
+            () =>
+            {
+                manager.PianoArea.Monitoring = true; 
+                manager.PianoMesh.Visible = true;
+            },
             null,
-            null,
-            null,
+            () =>
+            {
+                manager.PianoArea.Monitoring = false; 
+                manager.PianoMesh.Visible = false;
+                
+            },
             null,
             null,
             null,
@@ -323,6 +337,15 @@ public static class Tutorial
     {
         if(!_active) return;
         _nextLine();
+    }
+
+    private static void _bodyContinue(Node2D body)
+    {
+        if (body == manager.knob)
+        {
+            _nextLine();
+        }
+        
     }
 
     private static void _nextLine()

@@ -70,8 +70,11 @@ action_mode = 0
 text = "Doorgaan"
 
 [node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 65.5
 offset_top = 292.5
 offset_right = 193.5
 offset_bottom = 456.5
+action_mode = 0

@@ -58,8 +58,9 @@ public static class Tutorial
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
             manager.ContinueButton.Pressed += _tutorialContinue;
-            manager.PianoArea.BodyEntered += _bodyContinue;
-            manager.InBetweenArea.BodyEntered += _bodyContinue;
+            manager.PianoArea.AreaEntered += _bodyContinue;
+            manager.InBetweenArea.AreaEntered += _bodyContinue;
+            manager.KlappyContinue.Pressed += KlappyContinue;
 
         }
         else // disable tutorial
@@ -236,8 +237,9 @@ public static class Tutorial
             ()=> false,
             () =>
             {
+              
                 bool moved = _knobPos != manager.knob.GlobalPosition;
-                return   moved;
+                return   false;
             },
             ()=> BpmManager.instance.playing,
             //todo Add that you need to put it on spefic location with particle effects
@@ -259,6 +261,7 @@ public static class Tutorial
                 manager.cross.Visible = true;
                 manager.PlayPauseButton.Visible = true;
                 _active = true;
+                manager.KlappyContinue.Visible = false;
             },
             null,
             () =>
@@ -318,8 +321,16 @@ public static class Tutorial
                 manager.PianoMesh.Visible = false;
                 
             },
-            null,
-            null,
+            ()=>
+            {
+                manager.InBetweenArea.Monitoring = true;
+                manager.InBetweenMesh.Visible = true;
+            },  
+            ()=>
+            {
+                manager.InBetweenArea.Monitoring = false;
+                manager.InBetweenMesh.Visible = false;
+            },
             null,
             // auto stop for tutorial
             () =>
@@ -333,15 +344,23 @@ public static class Tutorial
         ];
     }
 
+    private static void KlappyContinue()
+    {
+        manager.Klappy.Call("on_clap");
+        _nextLine();
+       
+    }
+
     private static void _tutorialContinue()
     {
         if(!_active) return;
         _nextLine();
     }
 
-    private static void _bodyContinue(Node2D body)
+    private static void _bodyContinue(Area2D body)
     {
-        if (body == manager.knob)
+        GD.Print("body continue" + body);
+        if (body == manager.KnobArea)
         {
             _nextLine();
         }

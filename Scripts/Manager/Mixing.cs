@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 public partial class Manager : Node
@@ -23,20 +24,20 @@ public partial class Manager : Node
     #region SamplesMixing
 
     // sample mixing specifics
-    private Vector2[] SamplesMixing_knobPositions = new Vector2[40];
-    private Vector2[] SamplesMixing_knobPositionsClipboard = new Vector2[4];
+    public List<List<Vector2>> SamplesMixing_knobPositions = [];
+    private List<Vector2> SamplesMixing_knobPositionsClipboard = [];
     public int SamplesMixing_activeRing = 0;
 
     public void SamplesMixing_RememberKnobsForLayer()
     {
         // remember knob of active ring
-        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
+        SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;
     }
 
     public void SamplesMixing_ReApplyKnobsForLayer()
     {
         // reapply knob of active ring
-        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
+        knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
     }
 
     public void SamplesMixing_CopyKnobsForLayer(){}
@@ -46,13 +47,13 @@ public partial class Manager : Node
     public void SamplesMixing_ChangeRing(int newring)
     {
         // save knob position
-        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
+        SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;
 
         // switch ring
         SamplesMixing_activeRing = newring;
 
         // remember knob position
-        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
+        knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
 
         // set chaos pad color to active ring
         SamplesMixing_StartTriangleColorChange(0.2f);
@@ -181,7 +182,7 @@ public partial class Manager : Node
     private (Vector3 weights, float mastervolume) SampleMixing_GetRememberedWeightsForRing(int ring)
     {
         // get knob
-        var rememberedKnobPositionForRing = SamplesMixing_knobPositions[(currentLayerIndex * 4) + ring];
+        var rememberedKnobPositionForRing = SamplesMixing_knobPositions[currentLayerIndex][ring];
 
         // inner triangle blending
         var tempWeights = GetBarycentricWeights
@@ -399,12 +400,23 @@ public partial class Manager : Node
 
     private void OnReadyMixing()
     {
-        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
-        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = chaosPadTriangleSprite.GlobalPosition;
+        for (int i = 0; i < layersAmountMax; i++) SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
+        SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
         for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
 
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
         else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+    }
+
+    public List<Vector2> GetStandardKnobPositions()
+    {
+        List<Vector2> centered = [
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition
+        ];
+        return centered;
     }
 
     private void OnUpdateMixing(float delta)

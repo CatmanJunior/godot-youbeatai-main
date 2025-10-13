@@ -21,6 +21,16 @@ public partial class Manager : Node
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
     [Export] public Node2D micButtonLocation;
 
+    private void OnReadyMixing()
+    {
+        for (int i = 0; i < layersAmountMax; i++) SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
+        SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
+        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
+
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+    }
+
     #region SamplesMixing
 
     // sample mixing specifics
@@ -353,16 +363,6 @@ public partial class Manager : Node
     }
 
     #endregion
-
-    private void OnReadyMixing()
-    {
-        for (int i = 0; i < layersAmountMax; i++) SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
-        SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
-        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
-
-        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
-        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
-    }
 
     public List<Vector2> GetStandardKnobPositions()
     {

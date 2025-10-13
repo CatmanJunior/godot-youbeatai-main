@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=10 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=11 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -20,6 +20,10 @@ tap1_delay_ms = 91.0
 tap1_level_db = -39.03
 tap2_active = false
 tap2_delay_ms = 250.0
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_6n6ik"]
+resource_name = "LowPassFilter"
+cutoff_hz = 400.0
 
 [sub_resource type="AudioEffectChorus" id="AudioEffectChorus_6n6ik"]
 resource_name = "Chorus"

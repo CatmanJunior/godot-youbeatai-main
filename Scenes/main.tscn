@@ -329,7 +329,7 @@ metadata/_edit_use_anchors_ = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "PianoLocation", "InBetweenLocation", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "layerVoiceOver0", "layerVoiceOver1")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
@@ -349,8 +349,11 @@ iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 SynthMixing_LineScaleCurve = SubResource("Curve_aqgau")
 SynthMixing_LineColorCurve = SubResource("Curve_aqgau")
-PianoLocation = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/Piano")
-InBetweenLocation = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/in_between")
+PianoArea = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/Piano/Area2D")
+PianoMesh = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/Piano/MeshInstance2D")
+InBetweenArea = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/in_between/Area2D")
+InBetweenMesh = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/in_between/MeshInstance2D")
+Klappy = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/Klappy")
 beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
@@ -415,6 +418,8 @@ activateGreenChaosButton = NodePath("../../UserInterface/ControlsGroup/GreenSele
 activatePurpleChaosButton = NodePath("../../UserInterface/ControlsGroup/PurpleSelectButton")
 copyPasteClearButtonsHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons")
 ContinueButton = NodePath("../../UserInterface/Robot/AchievementsPanel/Continue")
+KlappyContinue = NodePath("../../UserInterface/Robot/AchievementsPanel/Button")
+KnobArea = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite/Area2D")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 

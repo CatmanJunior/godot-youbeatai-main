@@ -20,7 +20,8 @@ public static class Tutorial
     private static int _indexOrangeRing = 1;
     private static int _ringTop = 0;
     private static int _ringBottom = 8;
-    private static int _ringLeft = 4;
+    private static int _ringRight = 4;
+    private static int _ringLeft = 12;
     private static int _greenLayerMicIndex = 0;
     private static Vector2 _knobPos;
     private static int _amountRedRing;
@@ -29,6 +30,10 @@ public static class Tutorial
     private static Func<bool> condition = null;
     private static Action outcome = null;
     private static bool _active = false;
+    private static Area2D _pianoArea = null;
+    private static Area2D _inBetweenArea = null;
+    private static MeshInstance2D _pianoMesh = null;
+    private static Node2D _top = null;
 
     static Manager manager => Manager.instance;
 
@@ -52,9 +57,14 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
+         
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
-            manager.ContinueButton.Pressed += _nextLine;
+            manager.ContinueButton.Pressed += _tutorialContinue;
+            manager.PianoArea.AreaEntered += _bodyContinue;
+            manager.InBetweenArea.AreaEntered += _bodyContinue;
+            manager.KlappyContinue.Pressed += KlappyContinue;
+            _top = manager.corners[1];
 
         }
         else // disable tutorial
@@ -112,7 +122,7 @@ public static class Tutorial
             "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen.",
 
             // kick ring
-            "Zie je de rode circles, dat is de kick ring",
+            "deze rode circles vormen een beat ring",
             "Via deze ring kun je een kick geluid toevoegen aan het liedje kijk maar!",
             "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
             " Druk op ⏸️ om het op pauze te zetten ",
@@ -124,7 +134,7 @@ public static class Tutorial
             // klap ring
             "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
             "Ik heb zelf net 2 erin gezet, luister er maar eens naar▶️!",
-            "Super gedaan!",//todo 
+            "Klinkt al leuk!",//todo 
             //todo change text that you not only need to add x but also remove x into two steps instead of one
             "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
             "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
@@ -210,39 +220,40 @@ public static class Tutorial
             {   GD.Print("clap "+ manager.clappedAmount);
                 return manager.clappedAmount >= _beatsActiveOrangeRing;
             }, // This checks whether the song is playing
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap,   
+            () =>false, // need to make a check for button press or screen tap,   
 
             // layer voice over
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
             () => manager.layerVoiceOver0.finished,
-            () => Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
             () => BpmManager.instance.playing,
-            () =>Input.IsActionJustPressed("Interaction"), // need to make a check for button press or screen tap 
+            () => false, // need to make a check for button press or screen tap 
             
             // chaos pad
             ()=>
             {
                 //todo make it so that you need to put it on spefic location instead of any
                 _knobPos = manager.knob.GlobalPosition;
-                return Input.IsActionJustPressed("Interaction");
+                return false;
             }, // need to make a check for button press or screen tap,
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> false,
+            ()=> false,
+            ()=> false,
             () =>
             {
+              
                 bool moved = _knobPos != manager.knob.GlobalPosition;
-                return   moved;
+                return   false;
             },
             ()=> BpmManager.instance.playing,
             //todo Add that you need to put it on spefic location with particle effects
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
-            ()=> Input.IsActionJustPressed("Interaction"),
+            ()=> false,
+            ()=> false,
+            ()=> false,
             
             // end of tutorial
            
-            () => Input.IsActionJustPressed("Interaction") // need to make a check for button press or screen tap
+            () =>false // need to make a check for button press or screen tap
             
         ];
 
@@ -254,39 +265,57 @@ public static class Tutorial
                 manager.cross.Visible = true;
                 manager.PlayPauseButton.Visible = true;
                 _active = true;
+                manager.KlappyContinue.Visible = false;
             },
             null,
             () =>
             {
                 manager.beatActives[_indexRedRing, _ringTop] = true;
-                manager.beatActives[_indexRedRing, _ringLeft] = true;
+                manager.beatActives[_indexRedRing, _ringRight] = true;
                 manager.beatActives[_indexRedRing, _ringBottom] = true;
+                _active =false;
 
             },
             null,
-            ()=> BpmManager.instance.playing = false,
             null,
             null,
-            ()=> BpmManager.instance.playing = false,
+            null,
+            ()=>
+            {
+                _active =true;
+                BpmManager.instance.playing = false;
+            },
             () => manager.SetRingVisibility(_indexOrangeRing, true),
             ()=>{
-            manager.beatActives[_indexOrangeRing, _ringTop] = true;
-            manager.beatActives[_indexOrangeRing, _ringBottom] = true;
-
+            manager.beatActives[_indexOrangeRing, _ringRight] = true;
+            manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+            _active = false;
+            },
+            ()=> { _active =true;},
+            ()=>
+            {
+                _active =false;
+                BpmManager.instance.playing = false;
             },
             null,
-            ()=> BpmManager.instance.playing = false,
             null,
             null,
-            null,
-            ()=> BpmManager.instance.playing = false,
+            ()=>
+            {
+                _active = true;
+                BpmManager.instance.playing = false;
+            },
             () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
 
             } ,
-            null,
-            null,
-            null,
-            null,
+            () =>
+            {
+                _active =false;
+                manager.knob.GlobalPosition = _top.GlobalPosition;
+            },
+            ()=> {_active =true;},
+            () => { _active =false;},
+            () => { _active = true;},
             ()=> BpmManager.instance.playing = false,
             //chaos pad
             //todo add particles effects for the specific location of the fingerprint button
@@ -301,11 +330,31 @@ public static class Tutorial
             },
             null,
             null,
+            () =>
+            {
+                _active = false;
+                manager.PianoArea.Monitoring = true; 
+                manager.PianoMesh.Visible = true;
+            },
             null,
-            null,
-            null,
-            null,
-            null,
+            () =>
+            {
+                manager.PianoArea.Monitoring = false; 
+                manager.PianoMesh.Visible = false;
+                _active = true;
+            },
+            ()=>
+            {
+                _active = false;
+                manager.InBetweenArea.Monitoring = true;
+                manager.InBetweenMesh.Visible = true;
+            },  
+            ()=>
+            {
+                _active = true;
+                manager.InBetweenArea.Monitoring = false;
+                manager.InBetweenMesh.Visible = false;
+            },
             null,
             // auto stop for tutorial
             () =>
@@ -319,28 +368,49 @@ public static class Tutorial
         ];
     }
 
+    private static void KlappyContinue()
+    {
+        manager.Klappy.Call("on_clap");
+        _nextLine();
+       
+    }
+
+    private static void _tutorialContinue()
+    {
+        if(!_active) return;
+        _nextLine();
+    }
+
+    private static void _bodyContinue(Area2D body)
+    {
+        GD.Print("body continue" + body);
+        if (body == manager.KnobArea)
+        {
+            _nextLine();
+        }
+        
+    }
+
     private static void _nextLine()
     {
-        if (_active)
-        {
-            if (outcome != null) outcome();
-            tutorial_level++;
-            manager.PlayExtraSFX(manager.achievement_sfx);
-            SpeakTutorialInstruction(tutorial_level);
-            updateLists();
-        }
+        if (outcome != null) outcome();
+        tutorial_level++;
+        manager.PlayExtraSFX(manager.achievement_sfx);
+        SpeakTutorialInstruction(tutorial_level);
+        updateLists();
     }
 
     public static void UpdateTutorial()
     {
+      
         if (!manager.first_tts_done && useTutorial)
         {
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-        void work(){  SpeakTutorialInstruction(tutorial_level);}
+        void Speaking(){  SpeakTutorialInstruction(tutorial_level);}
         
-        if (tutorial_level != -1 && useTutorial)
+        if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
         {
             updateLists();
 

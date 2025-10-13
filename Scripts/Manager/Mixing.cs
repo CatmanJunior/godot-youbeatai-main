@@ -37,6 +37,17 @@ public partial class Manager : Node
     private List<Vector2> SamplesMixing_knobPositionsClipboard = [];
     public int SamplesMixing_activeRing = 0;
 
+    public void SamplesMixing_CopyKnobsForLayer()
+    {
+        SamplesMixing_knobPositionsClipboard = CloneFrom(SamplesMixing_knobPositions[currentLayerIndex]);
+    }
+
+    public void SamplesMixing_PasteKnobsForLayer()
+    {
+        SamplesMixing_knobPositions[currentLayerIndex] = CloneFrom(SamplesMixing_knobPositionsClipboard);
+        knob.GlobalPosition = SamplesMixing_knobPositionsClipboard[SamplesMixing_activeRing];
+    }
+
     public void SamplesMixing_StoreActiveKnob()
     {
         SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;
@@ -45,6 +56,13 @@ public partial class Manager : Node
     public void SamplesMixing_RetrieveActiveKnob()
     {
         knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
+    }
+
+    public List<Vector2> CloneFrom(List<Vector2> original)
+    {
+        List<Vector2> clone = [];
+        foreach (var item in original) clone.Add(new Vector2(item.X, item.Y));
+        return clone;
     }
 
     public void SamplesMixing_ChangeRing(int newring)

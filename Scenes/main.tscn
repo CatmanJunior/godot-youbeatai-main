@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -53,34 +53,6 @@ point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
-bg_color = Color(0.44, 0.44, 0.44, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r33sp"]
-bg_color = Color(0.27, 0.27, 0.27, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
-bg_color = Color(0.14, 0.14, 0.14, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1aky"]
 bg_color = Color(0, 0.65098, 0.929412, 1)
@@ -359,7 +331,7 @@ pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
 layerButtonPrefab = ExtResource("39_aa8k8")
 layerButtonsContainer = NodePath("../../UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer")
-addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/addLayerButton")
+addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton")
 SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayoutButton")
 LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayoutButton")
 ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayoutButton")
@@ -1163,22 +1135,6 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="addLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = 51.0
-offset_top = -1058.0
-offset_right = 115.0
-offset_bottom = -994.0
-size_flags_horizontal = 3
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 60
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-text = "+"
-metadata/_edit_use_anchors_ = true
-
 [node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
 position = Vector2(-130, -1074)
 
@@ -1194,9 +1150,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -30.0
+offset_left = -63.0
 offset_top = 45.0
-offset_right = 30.0
+offset_right = -3.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1213,9 +1169,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -96.0
+offset_left = -129.0
 offset_top = 45.0
-offset_right = -36.0
+offset_right = -69.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1232,9 +1188,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 36.0
+offset_left = 3.0
 offset_top = 45.0
-offset_right = 96.0
+offset_right = 63.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1243,6 +1199,24 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
 text = "♻️
 "
+metadata/_edit_use_anchors_ = true
+
+[node name="AddLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = 45.0
+offset_right = 129.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+text = "+"
 metadata/_edit_use_anchors_ = true
 
 [node name="SongModeBackPanel" type="Panel" parent="UserInterface/SwitchLayerButtons"]

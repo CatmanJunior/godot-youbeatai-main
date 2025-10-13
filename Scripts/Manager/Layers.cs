@@ -97,11 +97,6 @@ public partial class Manager : Node
         layerButtonsContainer.Size = new Vector2(layerButtonsContainer.GetChildCount() * layersButtonsSize, layersButtonsSize);
         layerButtonsContainer.GlobalPosition = new Vector2(-layerButtonsContainer.Size.X / 2, layerButtonsContainer.GlobalPosition.Y);
 
-        // transform addlayerbutton
-        addLayerButton.Size = layersButtonsSize * Vector2.One;
-        if (layersAmount < layersAmountMax) addLayerButton.GlobalPosition = new (layerButtonsContainer.Size.X / 2 + 4, layerButtonsContainer.GlobalPosition.Y);
-        else addLayerButton.GlobalPosition = new Vector2(9999, 9999);
-
         // transform outlineholder
         layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + new Vector2(layersButtonsSize, layersButtonsSize) / 2;
 

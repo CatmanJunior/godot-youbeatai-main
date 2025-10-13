@@ -37,25 +37,6 @@ public partial class Manager : Node
     private List<Vector2> SamplesMixing_knobPositionsClipboard = [];
     public int SamplesMixing_activeRing = 0;
 
-    public void SamplesMixing_CopyKnobsForLayer()
-    {
-        // copy knob
-        SamplesMixing_knobPositionsClipboard = SamplesMixing_knobPositions[currentLayerIndex];
-
-        GD.Print("copy knobs for layer");
-    }
-
-    public void SamplesMixing_PasteKnobsForLayer()
-    {
-        // paste knob
-        SamplesMixing_knobPositions[currentLayerIndex] = SamplesMixing_knobPositionsClipboard;
-
-        // update knob
-        knob.GlobalPosition = SamplesMixing_knobPositionsClipboard[SamplesMixing_activeRing];
-
-        GD.Print("paste knobs for layer");
-    }
-
     public void SamplesMixing_StoreActiveKnob()
     {
         SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;

@@ -42,6 +42,14 @@ public partial class Manager : Node
         addLayerButton.Visible = visible;
     }
 
+    public void SetGreenLayerVisibility(bool visible)
+    {
+        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
+        layerVoiceOver0.textureProgressBar.Visible = visible;
+        activateGreenChaosButton.Visible = visible;
+        layerVoiceOver0.bigLine.Visible = visible;
+    }
+
     public void SetRingVisibility(int ring, bool visible)
     {
         for (int beat = 0; beat < BpmManager.beatsAmount; beat++) beatSprites[ring, beat].Visible = visible;

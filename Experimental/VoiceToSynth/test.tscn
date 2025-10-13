@@ -99,13 +99,12 @@ autoplay = true
 bus = &"Microphone"
 
 [node name="notePlayer" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("8_71jf6")]
-bus = &"Master"
 bpmManager = NodePath("../BPMManager")
+instrument = 6
 allow_key_input = true
 
 [node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../BPMManager")
-octaveRange = Vector2i(0, 4)
 
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]

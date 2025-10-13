@@ -33,8 +33,11 @@ func on_stamp():
 
 # adjust animation speed to match bpm
 func on_bpm_changed(bpm:float):
+	# catch for when bpm change is called before onready
 	if not animation_tree:
 		init()
-	# catch for when bpm change is called before onready
-	beat_time = bpm / 60.0
+	
+	# beat duration for 2 beats (/4.0) for 1 beat
+	# animation duration is made for 2 beats
+	beat_time = (60.0 / bpm / 2.0)
 	animation_tree.set("parameters/TimeScale/scale", 1.0 / beat_time )

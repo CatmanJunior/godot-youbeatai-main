@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using Range = Godot.Range;
 
 public static class Tutorial
 {
@@ -13,6 +14,26 @@ public static class Tutorial
     static string[] instructions = null;
     static Func<bool>[] conditions = null;
     static Action[] outcomes = null;
+    private static int _beatsActiveRedRing = 5;
+    private static int _beatsActiveOrangeRing = 4;
+    private static int _indexRedRing = 0;
+    private static int _indexOrangeRing = 1;
+    private static int _ringTop = 0;
+    private static int _ringBottom = 8;
+    private static int _ringRight = 4;
+    private static int _ringLeft = 12;
+    private static int _greenLayerMicIndex = 0;
+    private static Vector2 _knobPos;
+    private static int _amountRedRing;
+    private static bool _continued = false;
+    private static string instruction = "";
+    private static Func<bool> condition = null;
+    private static Action outcome = null;
+    private static bool _active = false;
+    private static Area2D _pianoArea = null;
+    private static Area2D _inBetweenArea = null;
+    private static MeshInstance2D _pianoMesh = null;
+    private static Node2D _top = null;
 
     static Manager manager => Manager.instance;
 
@@ -21,6 +42,10 @@ public static class Tutorial
         tutorial_level = 0;
         tutorialActivated = false;
         useTutorial = ReadUseTutorial();
+        instructions = null;
+        conditions = null;
+        outcomes = null;
+        
     }
 
     public static void CheckIfTutorialWasChosen()
@@ -32,8 +57,15 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
+         
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
+            manager.ContinueButton.Pressed += _tutorialContinue;
+            manager.PianoArea.AreaEntered += _bodyContinue;
+            manager.InBetweenArea.AreaEntered += _bodyContinue;
+            manager.KlappyContinue.Pressed += KlappyContinue;
+            _top = manager.corners[1];
+
         }
         else // disable tutorial
         {
@@ -62,16 +94,24 @@ public static class Tutorial
         }
 
         GD.Print("use tutorial: " + use.ToString());
-        
+
         return use;
+    }
+
+    private static bool _interactionDone()
+    {
+        return Input.IsActionJustPressed("Interaction");
+
     }
 
     public static void SetupTutorial()
     {
-        var actives = (int ring) =>
+        var activeBeatsPerRing = (int indexRing) =>
         {
             int amount = 0;
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++) if (manager.beatActives[ring, beat]) amount++;
+            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+                if (manager.beatActives[indexRing, beat])
+                    amount++;
             return amount;
         };
 
@@ -79,123 +119,206 @@ public static class Tutorial
         instructions =
         [
             // intro
-			"Hoi ik ben Klappy!, we gaan een beat maken en ik ga je daarbij helpen. klap 👏 in je handen om verder te gaan",
-			
-			// rode ring
-			"Dit is een 🔴 beat ring, plaats nu 4 beats op de witte streepjes",
-            "Helemaal goed! zet nog 2 🔴 beats op een plek die jij wil",
-            "Druk nu op '⏯ Start' om je beat te horen",
-            "Als je stompt 👞 met je voet op de grond precies wanneer er een rode beat is krijg ik energie ⚡",
+            "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen.",
 
-			// oranje ring
-			"Dit is nog een 🟠 beat ring, plaats nu 4 beats in het midden van de rode beats",
-            "Druk nu op '⏯ Start' om je beat te horen",
-            "Als je klapt 👏 met je handen wanneer er een oranje 🟠 beat klinkt krijgen ik energie ⚡",
+            // kick ring
+            "deze rode circles vormen een beat ring",
+            "Via deze ring kun je een kick geluid toevoegen aan het liedje kijk maar!",
+            "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
+            " Druk op ⏸️ om het op pauze te zetten ",
+            "Nu jij, vul nog 2 circles door op de stippen te drukken",
+            "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt! ▶️",
+            "Stamp👞 eens mee op jouw beat!",
+            "Wow super gedaan! tijd voor level 2!",
 
-			// gele ring
-			"Dit is nog een 🟡 beat ring, plaats nu 2 harde beats waar je wilt op deze ring",
+            // klap ring
+            "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
+            "Ik heb zelf net 2 erin gezet, luister er maar eens naar▶️!",
+            "Klinkt al leuk!",//todo 
+            //todo change text that you not only need to add x but also remove x into two steps instead of one
+            "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
+            "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
+            "Ik ben benieuwd laat mij eens horen! ▶️",
+            "Probeer mee te klappen op de beat!",
+            "Super goed gedaan, nu wordt het echt leuk.",
 
-			// blauwe ring
-			"Dit is nog een 🔵 beat ring, plaats nu 2 beats waar je wilt op deze ring",
+            //groene laag
+            "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
+            "Probeer het maar eens door op het microphone 🎙️icoontje te klikken",
+            "Goed gedaan",
+            "Laat eens horen!▶️",
+            "Super gedaan, het klinkt heel leuk",
+            
+            // chaos pad
+            "Ik denk dat we het nog leuker kunnen maken met de mixer!",
+            "Deze driehoek dat is de mixer!",
+            "Hiermee kun je jouw net opgenomen geluid veranderen",
+            "Je kunt het geluid veranderen van Jouw stem 🎙️ en een Instrument geluid 🎹  en jouw stem met een effect 🤖",
+            //todo add specific location to where you need to put the fingerprint button in this case the piano
+            "probeer het maar eens door die witte knop te bewegen",
+            "Moet je nu maar eens luisteren",
+            "Dit geeft een hele andere sfeer aan je beat",
+            //todo add specific location to where you need to put the fingerprint button
+            "Zet hem maar  tussen twee zodat ze worden gemixt!",
+            "Zo kun je stem met een beetje effect krijgen",
+            
+            //End of tutorial
+            "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
 
-			// alle ringen
-			"Druk nog een keer op '⏯ Start', luister naar alle beats bij elkaar!",
-			
-			// progressiebar
-			"Klap 👏 en stamp 👞 op het goede moment! Geef me 50% energie ⚡ om naar de volgende stap te gaan!",
-			
-			// custom sample
-			"Je hebt het ritme te pakken! Nu gaan we onze eigen geluid maken, druk op het het microfoon 🎤 icoontje, en spreek iets in je microfoon",
-            "Draai nu de schijf van geluidjes naar de microfoon 🎤 icoontje om het opgenomen geluid te activeren",
-            "Druk op '⏯ Start' om te horen hoe je eigen geluidje klinkt",
 
-			// effects
 
-            // layer voice over
-            "door op de groene microfoon '🎙️' knop te drukken, kan je jou stem over de beat opnemen. hij begint met opnemen als die beat ovenaan is.",
-            "Links boven in het scherm kan je '🔁 Liedje Modus' aanzetten zodat de Beats achter elkaar afgespeeld worden",
-            "Druk op '⏯ Start' om te horen hoe je eigen beats achter elkaar klinken",
-            "Druk '💾 Kopieer Beat' en dan daarna '♻️ Plak Beat' op een andere laag",
 
-            // song voice over
-            "Laten we nu het hele liedje opnemen door op de '🎙️ Liedje Opnemen' links bovenin het scherm te drukken. Dan begin hij met opnemen als hij bij de eerste beat op de eerst laag is",
-            "Als je tevreden bent dan kan je ook echt je '🎼 Liedje naar mp3'",
-            "Druk op de '🚫 Stop' knop om de tutorial te eindigen",
+
+
         ];
 
         conditions =
         [
+            
             // intro
-            () => manager.clapped, // t key is debug only
+            
+            () => manager.clapped, 
 
             // rode ring
-            () => actives(0) >= 4, // temp
-            () => actives(0) >= 6, // temp
-            () => BpmManager.instance.playing == true, // temp
-            () => manager.stompedAmount > 4, // temp
+            () => false, // need to make a check for button press or screen tap
+            () => false, // need to make a check for button press or screen tap
+            () => BpmManager.instance.playing, // This checks whether the song is playing
+            () => !BpmManager.instance.playing,
+            () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
+            () =>
+            {
+                _beatsActiveRedRing = activeBeatsPerRing(_indexRedRing);
+                return BpmManager.instance.playing;
+            }, // This checks whether the song is playing
+            ()=>
+            {
+                GD.Print(manager.stompedAmount);
+                return manager.stompedAmount >= _beatsActiveRedRing;
+            }, // makes sure the amount you stomped is equal to the amount of beats active
+            () =>  false, // need to make a check for button press or screen tap, 
 
             // oranje ring
-            () => actives(1) >= 4, // temp
-            () => BpmManager.instance.playing == true, // temp
-            () => manager.clappedAmount > 4, // temp
+            () => false, // need to make a check for button press or screen tap
+            () => BpmManager.instance.playing
+            , // This checks whether the song is playing
+            () => false,
 
-            // gele ring
-            () => actives(2) >= 2, // temp
+            () =>
+            {
+                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing;
+            },
+            () =>
+            {
+                return activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || activeBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing;
+            },
 
-            // blauwe ring
-            () => actives(3) >= 2, // temp
-
-            // alle ringen
-            () => BpmManager.instance.playing == true, // temp
-
-            // progressie bar
-            () => manager.progressBar.Value > 50,
-
-            // custom sample
-            () => manager.recordSampleButton0.recordedAudio != null,
-            () => true, // skip for now
-            () => BpmManager.instance.playing == true, // temp
-
-            // effects
+            () =>
+            {   _beatsActiveOrangeRing = activeBeatsPerRing(_indexOrangeRing);
+                return BpmManager.instance.playing;
+            }, // This checks whether the song is playing
+            ()=>
+            {   GD.Print("clap "+ manager.clappedAmount);
+                return manager.clappedAmount >= _beatsActiveOrangeRing;
+            }, // This checks whether the song is playing
+            () =>false, // need to make a check for button press or screen tap,   
 
             // layer voice over
-            () => manager.layerVoiceOver0.finished || manager.layerVoiceOver1.finished,
-            () => manager.layerLoopToggle.ButtonPressed,
-            () => BpmManager.instance.playing == true,
-            () => manager.savedToLaout == true && manager.loadedtemplate == true,
-
-            // song voice over
-            () => SongVoiceOver.instance.finished,
-            () => manager.hassavedtofile == true,
-            () => false
+            () => false, // need to make a check for button press or screen tap
+            () => manager.layerVoiceOver0.finished,
+            () => false, // need to make a check for button press or screen tap
+            () => BpmManager.instance.playing,
+            () => false, // need to make a check for button press or screen tap 
+            
+            // chaos pad
+            ()=>
+            {
+                //todo make it so that you need to put it on spefic location instead of any
+                _knobPos = manager.knob.GlobalPosition;
+                return false;
+            }, // need to make a check for button press or screen tap,
+            ()=> false,
+            ()=> false,
+            ()=> false,
+            () =>
+            {
+              
+                bool moved = _knobPos != manager.knob.GlobalPosition;
+                return   false;
+            },
+            ()=> BpmManager.instance.playing,
+            //todo Add that you need to put it on spefic location with particle effects
+            ()=> false,
+            ()=> false,
+            ()=> false,
+            
+            // end of tutorial
+           
+            () =>false // need to make a check for button press or screen tap
+            
         ];
 
         outcomes =
         [
-            () => { manager.SetRingVisibility(0, true); manager.cross.Visible = true; },
-            null,
-            () => manager.PlayPauseButton.Visible = true,
-            () => manager.progressBar.Visible = true,
-            () => manager.SetRingVisibility(1, true),
-            null,
-            null,
-            () => manager.SetRingVisibility(2, true), // zet geel
-            () => manager.SetRingVisibility(3, true), // zet blauw
-            null, // druk play
-            null, // geef energie
-            () => { manager.SetRecordingButtonsVisibility(true); manager.SetDragAndDropButtonsVisibility(true); },
-            null,
+            () =>
+            {
+                manager.SetRingVisibility(_indexRedRing, true);
+                manager.cross.Visible = true;
+                manager.PlayPauseButton.Visible = true;
+                _active = true;
+                manager.KlappyContinue.Visible = false;
+            },
             null,
             () =>
             {
-                ((Sprite2D)manager.layerVoiceOver0.recordLayerButton.GetParent()).Visible = true;
-                manager.layerVoiceOver0.textureProgressBar.Visible = true;
-            },
+                manager.beatActives[_indexRedRing, _ringTop] = true;
+                manager.beatActives[_indexRedRing, _ringRight] = true;
+                manager.beatActives[_indexRedRing, _ringBottom] = true;
+                _active =false;
 
-            // layer voice over
-            () => { manager.SetLayerSwitchButtonsVisibility(true); manager.layerLoopToggle.Visible = true;}, // before doing liedje modus
-            () => manager.SetMainButtonsVisibility(true), // before pressing play
-            null, // before saving to layout
+            },
+            null,
+            null,
+            null,
+            null,
+            ()=>
+            {
+                _active =true;
+                BpmManager.instance.playing = false;
+            },
+            () => manager.SetRingVisibility(_indexOrangeRing, true),
+            ()=>{
+            manager.beatActives[_indexOrangeRing, _ringRight] = true;
+            manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+            _active = false;
+            },
+            ()=> { _active =true;},
+            ()=>
+            {
+                _active =false;
+                BpmManager.instance.playing = false;
+            },
+            null,
+            null,
+            null,
+            ()=>
+            {
+                _active = true;
+                BpmManager.instance.playing = false;
+            },
+            () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
+
+            } ,
+            () =>
+            {
+                _active =false;
+                manager.knob.GlobalPosition = _top.GlobalPosition;
+            },
+            ()=> {_active =true;},
+            () => { _active =false;},
+            () => { _active = true;},
+            ()=> BpmManager.instance.playing = false,
+            //chaos pad
+            //todo add particles effects for the specific location of the fingerprint button
             () =>
             {
                 SongVoiceOver.instance.recordSongButton.Visible = true;
@@ -203,64 +326,144 @@ public static class Tutorial
                 SongVoiceOver.instance.recordSongSprite.Visible = true;
                 RealTimeAudioRecording.instance.recordSongSprite.Visible = true;
                 SongVoiceOver.instance.progressbar.Visible = true;
+                manager.chaosPadTriangleSprite.Visible = true;
             },
+            null,
+            null,
+            () =>
+            {
+                _active = false;
+                manager.PianoArea.Monitoring = true; 
+                manager.PianoMesh.Visible = true;
+            },
+            null,
+            () =>
+            {
+                manager.PianoArea.Monitoring = false; 
+                manager.PianoMesh.Visible = false;
+                _active = true;
+            },
+            ()=>
+            {
+                _active = false;
+                manager.InBetweenArea.Monitoring = true;
+                manager.InBetweenMesh.Visible = true;
+            },  
+            ()=>
+            {
+                _active = true;
+                manager.InBetweenArea.Monitoring = false;
+                manager.InBetweenMesh.Visible = false;
+            },
+            null,
+            // auto stop for tutorial
+            () =>
+            {
+                tutorial_level = -2;
+                manager.SetEntireInterfaceVisibility(true);
+                manager.achievementspanel.Visible = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
 
-            // song voice over
-            () => { manager.settingsButton.Visible = true; manager.settingsPanel.Visible = true; }, // before saving to file
-            () => manager.SetEntireInterfaceVisibility(true), // enable all
-            null
         ];
+    }
+
+    private static void KlappyContinue()
+    {
+        manager.Klappy.Call("on_clap");
+        _nextLine();
+       
+    }
+
+    private static void _tutorialContinue()
+    {
+        if(!_active) return;
+        _nextLine();
+    }
+
+    private static void _bodyContinue(Area2D body)
+    {
+        GD.Print("body continue" + body);
+        if (body == manager.KnobArea)
+        {
+            _nextLine();
+        }
+        
+    }
+
+    private static void _nextLine()
+    {
+        if (outcome != null) outcome();
+        tutorial_level++;
+        manager.PlayExtraSFX(manager.achievement_sfx);
+        SpeakTutorialInstruction(tutorial_level);
+        updateLists();
     }
 
     public static void UpdateTutorial()
     {
-        void SpeakTutorialInstruction(int instruction)
-        {
-            if (manager.muteSpeach.ButtonPressed) return;
-
-            var without_emoticons = (string input) =>
-            {
-                var output = "";
-                var stringInfo = new StringInfo(input);
-                for (int i = 0; i < stringInfo.LengthInTextElements; i++)
-                {
-                    string element = stringInfo.SubstringByTextElements(i, 1);
-                    if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
-                }
-                return output;
-            };
-
-            var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
-            if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-            DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
-        }
-
+      
         if (!manager.first_tts_done && useTutorial)
         {
-            SpeakTutorialInstruction(0);
+            SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-
-        if (tutorial_level != -1 && useTutorial)
+        void Speaking(){  SpeakTutorialInstruction(tutorial_level);}
+        
+        if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
         {
-            string instruction = instructions[tutorial_level];
-            Func<bool> condition = conditions[tutorial_level];
-            Action outcome = outcomes[tutorial_level];
-            manager.InstructionLabel.Text = instruction;
+            updateLists();
 
             manager.f7_pressed_lastframe = manager.f7_pressed;
             manager.f7_pressed = Input.IsKeyPressed(Key.F7);
             bool skip = manager.f7_pressed && manager.f7_pressed != manager.f7_pressed_lastframe;
 
-            if (condition() || skip)
+            if (condition())
+            {
+                _nextLine();
+            }
+
+            if (skip)
             {
                 if (outcome != null) outcome();
                 tutorial_level++;
-                manager.EmitAchievementParticles();
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 SpeakTutorialInstruction(tutorial_level);
+                updateLists();
             }
+
         }
+    }
+    
+    private static void SpeakTutorialInstruction(int instruction)
+    {
+        if (manager.muteSpeach.ButtonPressed) return;
+        
+        var without_emoticons = (string input) =>
+        {
+            var output = "";
+            var stringInfo = new StringInfo(input);
+            for (int i = 0; i < stringInfo.LengthInTextElements; i++)
+            {
+                string element = stringInfo.SubstringByTextElements(i, 1);
+                if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
+            }
+
+            return output;
+        };
+
+        var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+        if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+        if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
+    }
+
+    private static void updateLists()
+    {
+        instruction = instructions[tutorial_level];
+        condition = conditions[tutorial_level];
+        outcome = outcomes[tutorial_level];
+        manager.InstructionLabel.Text = instruction;
+   
     }
 }

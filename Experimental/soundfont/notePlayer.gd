@@ -11,8 +11,10 @@ class_name notePlayer
 @export var allow_key_input: bool = false
 
 @export var songs: Array[PackedVector3Array] = []
+var cached_song: PackedVector3Array = []
 var current_layer: int = 0
 
+# demo code for sub bpm detection (8th,16th notes) 
 #var current_beat_i : int = int(current_beat)
 #var current_beat_frac : int = int((current_beat - current_beat_i) * beat_subdivision)
 #$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
@@ -78,19 +80,36 @@ func on_bpm():
 	log_value = min(1, pow(10, log_value / 10))
 
 	# gate quiet notes
-	if log_value <= 0.3:
+	if log_value <= 0.3 or song[bpmManager.currentBeat].y == 0:
 		return
 	
-	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat].x), log_value)
+	var current_note: Vector3 = song[bpmManager.currentBeat]
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
-	channel_note_off(get_time() + beatDuration, 0, round(song[bpmManager.currentBeat].x))
+	
+	channel_note_on( get_time(), 0, round(current_note.x), log_value)
+	channel_note_off(get_time() + beatDuration * current_note.z, 0, round(current_note.x))
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
 	print(layer)
 
+func on_layer_remove_at(layer: int) -> void:
+	songs.remove_at(layer)
+	
+func on_add_layer_at(layer: int) -> void:
+	songs.insert(layer, PackedVector3Array())
 
-func set_song(data: PackedVector3Array):
+#save [copy_song] into cache
+func on_song_copy(copy_song: int) -> void:
+	cached_song = songs[copy_song]
+
+func on_paste_song(_layer: int) -> void:
+	set_song(cached_song)
+
+func on_song_clear() -> void:
+	songs[current_layer].clear()
+
+func set_song(data: PackedVector3Array) -> void:
 	songs[current_layer] = data
 
 func get_song() -> PackedVector3Array:
@@ -99,34 +118,32 @@ func get_song() -> PackedVector3Array:
 	
 	return songs[current_layer]
 
-
-
-func play_note(note: Note, duration: float):
+func play_note(note: Note, duration: float) -> void:
 	var t = get_time()
 	channel_note_on(t, 0, note.id, 1.0)
 	channel_note_off(t + duration, 0, note.id)
 
-func play_chord(intervals):
+func play_chord(intervals) -> void:
 	var duration : float = 0.5
 	var t = get_time()
 	for i in intervals:
 		channel_note_on(t, 0, base_note + i, 1.0)
 		channel_note_off(t + duration, 0, base_note + i)
 
-func on_chord_major():
+func on_chord_major() -> void:
 	play_chord([0, 4, 7])
 
-func on_chord_minor():
+func on_chord_minor() -> void:
 	play_chord([0, 3, 7])
 
-func on_chord_7():
+func on_chord_7() -> void:
 	play_chord([0, 4, 7, 10])
 
-func on_chord_major_7():
+func on_chord_major_7() -> void:
 	play_chord([0, 4, 7, 11])
 
-func on_chord_minor_7():
+func on_chord_minor_7() -> void:
 	play_chord([0, 3, 7, 10])
 
-func on_chord_diminished_7():
+func on_chord_diminished_7() -> void:
 	play_chord([0, 3, 6, 9])

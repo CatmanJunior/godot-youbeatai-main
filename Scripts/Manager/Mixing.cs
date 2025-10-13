@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 public partial class Manager : Node
@@ -20,39 +21,43 @@ public partial class Manager : Node
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
     [Export] public Node2D micButtonLocation;
 
+    private void OnReadyMixing()
+    {
+        SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
+        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
+
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+    }
+
     #region SamplesMixing
 
     // sample mixing specifics
-    private Vector2[] SamplesMixing_knobPositions = new Vector2[40];
-    private Vector2[] SamplesMixing_knobPositionsClipboard = new Vector2[4];
+    public List<List<Vector2>> SamplesMixing_knobPositions = [];
+    private List<Vector2> SamplesMixing_knobPositionsClipboard = [];
     public int SamplesMixing_activeRing = 0;
 
-    public void SamplesMixing_RememberKnobsForLayer()
+    public void SamplesMixing_StoreActiveKnob()
     {
-        // remember knob of active ring
-        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
+        SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;
     }
 
-    public void SamplesMixing_ReApplyKnobsForLayer()
+    public void SamplesMixing_RetrieveActiveKnob()
     {
-        // reapply knob of active ring
-        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
+        knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
     }
-
-    public void SamplesMixing_CopyKnobsForLayer(){}
-    public void SamplesMixing_PasteKnobsLayer(){}
-    public void SamplesMixing_ClearKnobsForLayer(){}
 
     public void SamplesMixing_ChangeRing(int newring)
     {
         // save knob position
-        SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing] = knob.GlobalPosition;
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_StoreActiveKnob();
+        else SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
 
         // switch ring
         SamplesMixing_activeRing = newring;
 
         // remember knob position
-        knob.GlobalPosition = SamplesMixing_knobPositions[(currentLayerIndex * 4) + SamplesMixing_activeRing];
+        SamplesMixing_RetrieveActiveKnob();
 
         // set chaos pad color to active ring
         SamplesMixing_StartTriangleColorChange(0.2f);
@@ -166,46 +171,6 @@ public partial class Manager : Node
         }
     }
 
-    public void SamplesMixing_ReApplyRememberedMixingVolumesForAllRings()
-    {
-        var result0 = SampleMixing_GetRememberedWeightsForRing(0);
-        SamplesMixing_UpdateMixingVolumesForRing(0, result0.mastervolume, result0.weights);
-        var result1 = SampleMixing_GetRememberedWeightsForRing(1);
-        SamplesMixing_UpdateMixingVolumesForRing(1, result1.mastervolume, result1.weights);
-        var result2 = SampleMixing_GetRememberedWeightsForRing(2);
-        SamplesMixing_UpdateMixingVolumesForRing(2, result2.mastervolume, result2.weights);
-        var result3 = SampleMixing_GetRememberedWeightsForRing(3);
-        SamplesMixing_UpdateMixingVolumesForRing(3, result3.mastervolume, result3.weights);
-    }
-
-    private (Vector3 weights, float mastervolume) SampleMixing_GetRememberedWeightsForRing(int ring)
-    {
-        // get knob
-        var rememberedKnobPositionForRing = SamplesMixing_knobPositions[(currentLayerIndex * 4) + ring];
-
-        // inner triangle blending
-        var tempWeights = GetBarycentricWeights
-        (
-            rememberedKnobPositionForRing,
-            corners[0].GlobalPosition,
-            corners[1].GlobalPosition,
-            corners[2].GlobalPosition
-        );
-
-        // outer triangle effects master volume
-        float tempMasterVolume = IsInsideTriangle(tempWeights) ? 1f : MasterVolumeFromDistance(rememberedKnobPositionForRing, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
-
-        // clamp weights
-        tempWeights = new Vector3
-        (
-            Mathf.Clamp(tempWeights.X, 0f, 1f),
-            Mathf.Clamp(tempWeights.Y, 0f, 1f),
-            Mathf.Clamp(tempWeights.Z, 0f, 1f)
-        );
-
-        return (tempWeights, tempMasterVolume);
-    }
-
     #endregion
 
     #region SynthMixing
@@ -219,7 +184,8 @@ public partial class Manager : Node
     public void SynthMixing_ChangeSynth(int synth)
     {
         // save knob position
-        SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+        else SamplesMixing_StoreActiveKnob();
 
         // switch synth
         SynthMixing_activeSynth = synth;
@@ -233,12 +199,12 @@ public partial class Manager : Node
         // update icons
         if (SynthMixing_activeSynth == 0)
         {
-            iconMain.Text = "🟢";
+            iconMain.Text = "🤖";
             iconAlt.Text = "🎹";
         }
         if (SynthMixing_activeSynth == 1)
         {
-            iconMain.Text = "🟣";
+            iconMain.Text = "🤖";
             iconAlt.Text = "🎹";
         }
 
@@ -397,14 +363,15 @@ public partial class Manager : Node
 
     #endregion
 
-    private void OnReadyMixing()
+    public List<Vector2> GetStandardKnobPositions()
     {
-        for (int i = 0; i < SamplesMixing_knobPositions.Length; i++) SamplesMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
-        for (int i = 0; i < SamplesMixing_knobPositionsClipboard.Length; i++) SamplesMixing_knobPositionsClipboard[i] = chaosPadTriangleSprite.GlobalPosition;
-        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
-
-        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
-        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+        List<Vector2> centered = [
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition
+        ];
+        return centered;
     }
 
     private void OnUpdateMixing(float delta)

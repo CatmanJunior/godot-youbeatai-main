@@ -32,6 +32,7 @@ public partial class Manager : Node
         layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
         layersVoiceOvers0.Add(null);
         layersVoiceOvers1.Add(null);
+        SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
         EmitSignal(SignalName.OnAddLayerEvent, layersBeatActives.IndexOf(layersBeatActives.Last()));
 
         UpdateLayerButtonsUserInterface();
@@ -47,6 +48,7 @@ public partial class Manager : Node
         layersBeatActives.RemoveAt(layer); // destroy the internal layer data
         layersVoiceOvers0.RemoveAt(layer);
         layersVoiceOvers1.RemoveAt(layer);
+        SamplesMixing_knobPositions.RemoveAt(layer);
         EmitSignal(SignalName.OnRemoveLayerEvent, layer);
         layersAmount--;
 
@@ -111,13 +113,15 @@ public partial class Manager : Node
 
     public void SwitchLayer(int layerIndex, bool saveLayerFirst = true)
     {
-        // do stuff with old layer
-        SamplesMixing_RememberKnobsForLayer();
-
         // change layer
-        if (saveLayerFirst) SetCurrentLayer(beatActives);
+        if (saveLayerFirst)
+        {
+            SetCurrentLayer(beatActives);
+            SamplesMixing_StoreActiveKnob();
+        }
         currentLayerIndex = layerIndex;
         beatActives = GetCurrentLayer();
+        SamplesMixing_RetrieveActiveKnob();
         
         // do stuff with new layer
         EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
@@ -125,7 +129,6 @@ public partial class Manager : Node
         layerVoiceOver1.SetSmallVolumeline();
         layerVoiceOver0.SetBigVolumeline();
         layerVoiceOver1.SetBigVolumeline();
-        SamplesMixing_ReApplyKnobsForLayer();
         UpdateSongVoiceOverPlayBackPosition();
         UpdateLayerButtonsUserInterface();
     }

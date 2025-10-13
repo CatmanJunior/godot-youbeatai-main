@@ -23,7 +23,6 @@ public partial class Manager : Node
 
     private void OnReadyMixing()
     {
-        for (int i = 0; i < layersAmountMax; i++) SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
         SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
         for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
 
@@ -38,28 +37,26 @@ public partial class Manager : Node
     private List<Vector2> SamplesMixing_knobPositionsClipboard = [];
     public int SamplesMixing_activeRing = 0;
 
-    public void SamplesMixing_RememberKnobsForLayer()
+    public void SamplesMixing_StoreActiveKnob()
     {
-        // remember knob of active ring
         SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;
     }
 
-    public void SamplesMixing_ReApplyKnobsForLayer()
+    public void SamplesMixing_RetrieveActiveKnob()
     {
-        // reapply knob of active ring
         knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
     }
 
     public void SamplesMixing_ChangeRing(int newring)
     {
         // save knob position
-        SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing] = knob.GlobalPosition;
+        SamplesMixing_StoreActiveKnob();
 
         // switch ring
         SamplesMixing_activeRing = newring;
 
         // remember knob position
-        knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
+        SamplesMixing_RetrieveActiveKnob();
 
         // set chaos pad color to active ring
         SamplesMixing_StartTriangleColorChange(0.2f);

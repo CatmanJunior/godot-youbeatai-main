@@ -78,12 +78,14 @@ func on_bpm():
 	log_value = min(1, pow(10, log_value / 10))
 
 	# gate quiet notes
-	if log_value <= 0.3:
+	if log_value <= 0.3 or song[bpmManager.currentBeat].y == 0:
 		return
 	
-	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat].x), log_value)
+	var current_note: Vector3 = song[bpmManager.currentBeat]
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
-	channel_note_off(get_time() + beatDuration, 0, round(song[bpmManager.currentBeat].x))
+	
+	channel_note_on( get_time(), 0, round(current_note.x), log_value)
+	channel_note_off(get_time() + beatDuration * current_note.z, 0, round(current_note.x))
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer

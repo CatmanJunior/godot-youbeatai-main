@@ -97,7 +97,7 @@ func on_layer_remove_at(layer: int) -> void:
 	songs.remove_at(layer)
 	
 func on_add_layer_at(layer: int) -> void:
-	songs.insert(layer, [])
+	songs.insert(layer, PackedVector3Array())
 
 #save [copy_song] into cache
 func on_song_copy(copy_song: int) -> void:

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dqbqtyunere7y"
-path="res://.godot/imported/Snare_Perc Gl.wav-c45c361b6accff3c2ad0d9a935c8203a.sample"
+path="res://.godot/imported/Snare_Perc Gl.wav-45957632e2dfb3cbb54b78ea06399351.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/Snare_Perc Gl.wav"
-dest_files=["res://.godot/imported/Snare_Perc Gl.wav-c45c361b6accff3c2ad0d9a935c8203a.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/Snare_Perc Gl.wav"
+dest_files=["res://.godot/imported/Snare_Perc Gl.wav-45957632e2dfb3cbb54b78ea06399351.sample"]
 
 [params]
 

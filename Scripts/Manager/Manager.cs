@@ -5,17 +5,23 @@ public partial class Manager : Node
 {
 	public static Manager instance = null;
 
+	public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
 	public override void _Ready()
 	{
 		instance ??= this;
+		SpawnInitialLayerButtons();
 		BpmManager.instance.OnBeatEvent += OnBeat;
+		Tutorial.CheckIfTutorialWasChosen();
 		ReadJsonFromPreviousSceneAndSetValues();
 		InitAllAudioPlayers();
 		InitButtonActions();
 		SpritePlacement();
 		Tutorial.SetupTutorial();
 		OnReadyMixing();
-		RealTimeAudioRecording.Initialize();
 	}
 
 	public override void _Process(double delta)
@@ -133,7 +139,5 @@ public partial class Manager : Node
 		songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
 
 		OnUpdateMixing((float)delta);
-
-		RealTimeAudioRecording.Update((float)delta);
 	}
 }

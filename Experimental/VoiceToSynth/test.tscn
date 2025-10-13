@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene load_steps=10 format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
 [ext_resource type="Script" uid="uid://ciuedwyx4vnlp" path="res://Experimental/VoiceToSynth/levelLabel.gd" id="3_m3rh1"]
 [ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
-[ext_resource type="SoundFont" uid="uid://cb3syla6j1101" path="res://Experimental/soundfont/Monsoons Maple Neck 1974 Fender Jazz Bass.sf2" id="7_a0dxq"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="8_71jf6"]
 
 [sub_resource type="Gradient" id="Gradient_f7m3q"]
@@ -100,13 +99,12 @@ autoplay = true
 bus = &"Microphone"
 
 [node name="notePlayer" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("8_71jf6")]
-soundfont = ExtResource("7_a0dxq")
-bus = &"Master"
 bpmManager = NodePath("../BPMManager")
+instrument = 6
+allow_key_input = true
 
 [node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../BPMManager")
-octaveRange = Vector2i(0, 4)
 
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]

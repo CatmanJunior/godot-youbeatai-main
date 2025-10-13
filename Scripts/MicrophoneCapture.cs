@@ -6,6 +6,11 @@ public partial class MicrophoneCapture : Node
 {
     public static MicrophoneCapture instance = null;
 
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
 	[Export] string busName = "Microphone";
 	
     private AudioEffectCapture audioEffectCapture;

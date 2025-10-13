@@ -5,16 +5,21 @@ public partial class SongVoiceOver : Node
 	// singleton
     public static SongVoiceOver instance = null;
 
+	public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
 	// user interface
 	[Export] public ProgressBar progressbar;
 	[Export] public Button recordSongButton;
 	[Export] public Sprite2D recordSongSprite;
 
 	// recording
-	public AudioStream voiceOver = null;
+	public AudioStreamWav voiceOver = null;
     AudioEffectRecord audioEffectRecord;
 	public AudioStreamPlayer2D audioPlayer;
-	bool shouldRecord = false;
+	public bool shouldRecord = false;
 	public bool recording = false;
 	float recordingTimer = 0;
 
@@ -33,21 +38,7 @@ public partial class SongVoiceOver : Node
         instance ??= this;
 
 		// init record button
-		recordSongButton.Pressed += () =>
-		{
-			Manager.instance.layerLoopToggle.ButtonPressed = true;
-			shouldRecord = !shouldRecord;
-
-			// metronoom aan
-			Manager.instance.metronome_toggle.ButtonPressed = true;
-
-			// 4 beats voor de eerste noot op eerste laag
-			Manager.instance.SwitchLayer(10);
-			BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
-
-			// playing true
-			BpmManager.instance.playing = true;
-		};
+		recordSongButton.Pressed += OnButton;
 
 		// create audioplayer
 		audioPlayer = new AudioStreamPlayer2D();
@@ -71,10 +62,29 @@ public partial class SongVoiceOver : Node
 		}
 
 		// set progress bar value
-		if (recording) progressbar.Value = recordingTimer / (10f * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
+		if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
 
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 	}
+
+    public void OnButton()
+    {
+        Manager.instance.layerLoopToggle.ButtonPressed = true;
+        shouldRecord = !shouldRecord;
+
+        // metronoom aan
+        Manager.instance.metronome_toggle.ButtonPressed = true;
+
+        // 4 beats voor de eerste noot op eerste laag
+        Manager.instance.SwitchLayer(Manager.instance.layersAmount - 1);
+        BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
+
+        // playing true
+        BpmManager.instance.playing = true;
+
+		// also play metronome sound on first beat
+		Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+    }
 
 	public void OnTop()
 	{
@@ -106,12 +116,7 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
-		SetVolumeBeats(0.1f); // beats
-		SetVolumeSongVoice(0.1f); // song
-		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
-		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 0.1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 0.1f); // purple synth
+		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
     }
@@ -136,41 +141,8 @@ public partial class SongVoiceOver : Node
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
 
-		Manager.instance.SamplesMixing_ReApplyRememberedMixingVolumesForAllRings(); // beats
-		SetVolumeSongVoice(1f); // song
-		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
-		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/VoiceRecorder").Set("volume", 1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/VoiceRecorder").Set("volume", 1f); // purple synth
+		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
 
 		finished = true;
-    }
-
-	public void SetVolumeBeats(float value)
-    {
-		// red
-		Manager.instance.firstAudioPlayer.VolumeLinear = value;
-		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.firstAudioPlayerRec.VolumeLinear = value;
-
-		// orange
-		Manager.instance.secondAudioPlayer.VolumeLinear = value;
-		Manager.instance.secondAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.secondAudioPlayerRec.VolumeLinear = value;
-
-		// yellow
-		Manager.instance.thirdAudioPlayer.VolumeLinear = value;
-		Manager.instance.thirdAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.thirdAudioPlayerRec.VolumeLinear = value;
-
-		// blue
-		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
-		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
-    }
-
-	public void SetVolumeSongVoice(float value)
-    {
-		audioPlayer.VolumeDb = value;
     }
 }

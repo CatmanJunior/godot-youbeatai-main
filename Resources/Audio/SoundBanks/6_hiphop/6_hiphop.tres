@@ -1,9 +1,8 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://c5wyakgxhrbo1"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://c5wyakgxhrbo1"]
 
 [ext_resource type="AudioStream" uid="uid://bq2vnpgu8f5wx" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Clap Overflow 1.wav" id="1_xyvau"]
 [ext_resource type="AudioStream" uid="uid://drykqrtsdnryh" path="res://Resources/Audio/SoundBanks/6_hiphop/Clap Hacker.wav" id="2_gnqcb"]
 [ext_resource type="AudioStream" uid="uid://dyn67xm0psaih" path="res://Resources/Audio/SoundBanks/6_hiphop/ClosedHH Amnesia.wav" id="2_ptr84"]
-[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="3_fg5wx"]
 [ext_resource type="AudioStream" uid="uid://buaeyje7h2xjv" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Closed_Perc My.wav" id="4_aj41f"]
 [ext_resource type="AudioStream" uid="uid://b55ui1xkr4v5i" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Kick AB 2.wav" id="4_fg5wx"]
 [ext_resource type="AudioStream" uid="uid://c075vuhpv2t4w" path="res://Resources/Audio/SoundBanks/6_hiphop/Kick Rainbow 2.wav" id="4_rphxq"]
@@ -22,7 +21,8 @@ clap = ExtResource("1_xyvau")
 clap_alt = ExtResource("2_gnqcb")
 closed = ExtResource("2_ptr84")
 closed_alt = ExtResource("4_aj41f")
-green_soundfont = ExtResource("3_fg5wx")
+green_soundfont = ExtResource("5_gnqcb")
+green_instrument_id = 12
 purple_soundfont = ExtResource("5_gnqcb")
-purple_instrument_id = 6
+purple_instrument_id = 14
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

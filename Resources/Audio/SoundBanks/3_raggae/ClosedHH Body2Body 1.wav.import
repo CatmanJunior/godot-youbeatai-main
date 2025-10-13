@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bnboakej1u3gl"
-path="res://.godot/imported/ClosedHH Body2Body 1.wav-cdc28dbc58890843bce465ed80819bc9.sample"
+path="res://.godot/imported/ClosedHH Body2Body 1.wav-ad8f24500fa8f50d1879e158b6397d74.sample"
 
 [deps]
 
-source_file="res://Resources/Audio/SoundBanks/3_reggae/ClosedHH Body2Body 1.wav"
-dest_files=["res://.godot/imported/ClosedHH Body2Body 1.wav-cdc28dbc58890843bce465ed80819bc9.sample"]
+source_file="res://Resources/Audio/SoundBanks/3_raggae/ClosedHH Body2Body 1.wav"
+dest_files=["res://.godot/imported/ClosedHH Body2Body 1.wav-ad8f24500fa8f50d1879e158b6397d74.sample"]
 
 [params]
 

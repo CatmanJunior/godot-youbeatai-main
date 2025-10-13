@@ -9,8 +9,13 @@ public partial class Manager : Node
     SoundBank chosenSoundBank = null;
     List<string> chosenEmoticons = null;
 
+    public static AudioBank bank;
+
     private void ReadJsonFromPreviousSceneAndSetValues()
     {
+        if (SoundBankSelectionMenu.chosenSoundBank == null)
+            return;
+            
         chosenSoundBank = SoundBankSelectionMenu.chosenSoundBank;
         foreach (var emoticon in SoundBankSelectionMenu.chosenEmotions) chosen_emoticons_label.Text += emoticon;
         foreach (var emoticon in SoundBankSelectionMenu.chosenThemes) chosen_emoticons_label.Text += emoticon;
@@ -19,7 +24,7 @@ public partial class Manager : Node
 
         // grab audio files -> res://Resources/Audio/SoundBanks/
         string baseDirPath = "res://Resources/Audio/SoundBanks/" + chosenSoundBank.name;
-        AudioBank bank = ResourceLoader.Load<AudioBank>(baseDirPath + "/" + chosenSoundBank.name + ".tres");
+        bank = ResourceLoader.Load<AudioBank>(baseDirPath + "/" + chosenSoundBank.name + ".tres");
         mainAudioFiles[0] = bank.kick;
         mainAudioFiles[1] = bank.clap;
         mainAudioFiles[2] = bank.snare;

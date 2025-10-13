@@ -1,18 +1,13 @@
+using System.Collections.Generic;
+using System.IO;
 using Godot;
 
 public partial class Manager : Node
 {
 	// switch layer buttons
-	[Export] Button layerButton1;
-	[Export] Button layerButton2;
-	[Export] Button layerButton3;
-	[Export] Button layerButton4;
-	[Export] Button layerButton5;
-	[Export] Button layerButton6;
-	[Export] Button layerButton7;
-	[Export] Button layerButton8;
-	[Export] Button layerButton9;
-	[Export] Button layerButton10;
+	[Export] PackedScene layerButtonPrefab;
+	[Export] HBoxContainer layerButtonsContainer;
+	[Export] Button addLayerButton;
 
 	// left buttons
 	[Export] Button SaveLayoutButton;
@@ -46,7 +41,7 @@ public partial class Manager : Node
 	[Export] CheckButton add_beats;
 	[Export] public CheckButton button_is_clap;
 	[Export] public CheckButton button_add_beats;
-	[Export] Slider volume_treshold;
+	[Export] public Slider volume_treshold;
 	[Export] public Panel settingsPanel;
 	[Export] public Button settingsButton;
 	[Export] Button settingsBackButton;
@@ -70,7 +65,6 @@ public partial class Manager : Node
 	float savingLabelTimer = 0;
 	[Export] public Label InstructionLabel;
 	[Export] Button allLayersToMp3;
-	[Export] Button OpnemenEnExporteren;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
 	float beatScale32 = 1;
@@ -88,6 +82,7 @@ public partial class Manager : Node
 	[Export] Sprite2D activateGreenChaosButton;
 	[Export] Sprite2D activatePurpleChaosButton;
 	[Export] Node2D copyPasteClearButtonsHolder;
+	[Export] public Button ContinueButton;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	private void SetCopyPasteClearButtonsActive(bool active)
@@ -99,16 +94,9 @@ public partial class Manager : Node
 
 	private void InitButtonActions()
 	{
-		layerButton1.Pressed += () => { SwitchLayer(1); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton2.Pressed += () => { SwitchLayer(2); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton3.Pressed += () => { SwitchLayer(3); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton4.Pressed += () => { SwitchLayer(4); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton5.Pressed += () => { SwitchLayer(5); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton6.Pressed += () => { SwitchLayer(6); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton7.Pressed += () => { SwitchLayer(7); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton8.Pressed += () => { SwitchLayer(8); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton9.Pressed += () => { SwitchLayer(9); UpdateSongVoiceOverPlayBackPosition(); SetCopyPasteClearButtonsActive(true);};
-		layerButton10.Pressed += () => { SwitchLayer(10); UpdateSongVoiceOverPlayBackPosition(); };
+		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(button.Text); CloseEmojiPrompt(); };
+
+		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
 		emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;
 		muteSpeach.Pressed += DisplayServer.TtsStop;
@@ -117,12 +105,19 @@ public partial class Manager : Node
 		ClearLayoutButton.Pressed += ClearLayer;
 		restartButton.Pressed += () =>
 		{
-			if (Engine.IsEditorHint()) GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
-			else
-			{
-				OS.Execute(OS.GetExecutablePath(), []);
-				GetTree().Quit();
-			}
+			GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
+			
+			string[] filesToReset = 
+			[
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt")
+			];
+
+			foreach (var path in filesToReset) File.Delete(path);
+
+			Tutorial.Reset();
 		};
 		PlayPauseButton.ButtonUp += OnPlayPauseButton;
 		BpmUpButton.Pressed += OnBpmUpButton;
@@ -145,7 +140,6 @@ public partial class Manager : Node
 				layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
 			}
 		};
-		OpnemenEnExporteren.ButtonUp += RealTimeAudioRecording.OnButton;
 	}
 
 	private void UpdateLayerOutlineSpriteRotation()
@@ -319,25 +313,10 @@ public partial class Manager : Node
 
 	private void UpdateLayerSwitchButtonsColors()
 	{
-		layerButton1.Modulate = new Color(1, 1, 1, 1);
-		layerButton2.Modulate = new Color(1, 1, 1, 1);
-		layerButton3.Modulate = new Color(1, 1, 1, 1);
-		layerButton4.Modulate = new Color(1, 1, 1, 1);
-		layerButton5.Modulate = new Color(1, 1, 1, 1);
-		layerButton6.Modulate = new Color(1, 1, 1, 1);
-		layerButton7.Modulate = new Color(1, 1, 1, 1);
-		layerButton8.Modulate = new Color(1, 1, 1, 1);
-		layerButton9.Modulate = new Color(1, 1, 1, 1);
-		layerButton10.Modulate = new Color(1, 1, 1, 1);
-		if (!LayerHasBeats(layers[0])) layerButton1.Modulate = layerButton1.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[1])) layerButton2.Modulate = layerButton2.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[2])) layerButton3.Modulate = layerButton3.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[3])) layerButton4.Modulate = layerButton4.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[4])) layerButton5.Modulate = layerButton5.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[5])) layerButton6.Modulate = layerButton6.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[6])) layerButton7.Modulate = layerButton7.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[7])) layerButton8.Modulate = layerButton8.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[8])) layerButton9.Modulate = layerButton9.Modulate.Darkened(0.5f);
-		if (!LayerHasBeats(layers[9])) layerButton10.Modulate = layerButton10.Modulate.Darkened(0.5f);
+		for (int i = 0; i < LayerButtons.Count; i++)
+		{
+			LayerButtons[i].Modulate = new Color(1, 1, 1, 1);
+			if (!LayerHasBeats(layersBeatActives[i])) LayerButtons[i].Modulate = LayerButtons[i].Modulate.Darkened(0.5f);
+		}
 	}
 }

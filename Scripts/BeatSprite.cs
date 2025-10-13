@@ -21,6 +21,16 @@ public partial class BeatSprite : Sprite2D
 						if (ring == 1) Manager.instance.secondAudioPlayer.Play();
 						if (ring == 2) Manager.instance.thirdAudioPlayer.Play();
 						if (ring == 3) Manager.instance.fourthAudioPlayer.Play();
+
+						if (ring == 0) Manager.instance.firstAudioPlayerAlt.Play();
+						if (ring == 1) Manager.instance.secondAudioPlayerAlt.Play();
+						if (ring == 2) Manager.instance.thirdAudioPlayerAlt.Play();
+						if (ring == 3) Manager.instance.fourthAudioPlayerAlt.Play();
+
+						if (ring == 0) Manager.instance.firstAudioPlayerRec.Play();
+						if (ring == 1) Manager.instance.secondAudioPlayerRec.Play();
+						if (ring == 2) Manager.instance.thirdAudioPlayerRec.Play();
+						if (ring == 3) Manager.instance.fourthAudioPlayerRec.Play();
 					}
 
 					var position = Manager.instance.beatSprites[ring, spriteIndex].Position;

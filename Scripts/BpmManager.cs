@@ -6,6 +6,16 @@ public partial class BpmManager : Node
 {
     public static BpmManager instance = null;
 
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
+    public BpmManager()
+    {
+        beatsAmount = ReadBeatsAmount();
+    }
+
     // bpm
     private int _bpm = 120;
     [Export]
@@ -20,7 +30,7 @@ public partial class BpmManager : Node
     }
 
     // timing
-    public static int beatsAmount = ReadBeatsAmount();
+    public static int beatsAmount;
     public int amount_of_beats => beatsAmount;
     private static int ReadBeatsAmount()
     {
@@ -31,10 +41,12 @@ public partial class BpmManager : Node
             string content = File.ReadAllText(path);
             amount = int.Parse(content);
             if (File.Exists(path)) File.Delete(path);
+            GD.Print("beats_amount.txt found: " + amount + " beats");
         }
         catch
         {
             amount = 16;
+            throw new System.Exception("beats_amount.txt not found in user folder");
         }
 
         return amount;

@@ -1,10 +1,9 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://upar0xbf2mum"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://upar0xbf2mum"]
 
 [ext_resource type="AudioStream" uid="uid://b1jsljkc70xu8" path="res://Resources/Audio/SoundBanks/1_kampvuur/Clap Lusine 1.wav" id="1_atnbr"]
 [ext_resource type="AudioStream" uid="uid://dw3nywljmpm1v" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Clap_Snap VibeO.wav" id="2_4tubm"]
 [ext_resource type="AudioStream" uid="uid://cv1usun3tbiiy" path="res://Resources/Audio/SoundBanks/1_kampvuur/ClosedHH Cosmos.wav" id="3_cgpue"]
 [ext_resource type="AudioStream" uid="uid://coi6rfsowxm1a" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Closed_Snare G.wav" id="4_cn8us"]
-[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="5_qmlu4"]
 [ext_resource type="AudioStream" uid="uid://dcxqgbn1rm7n0" path="res://Resources/Audio/SoundBanks/1_kampvuur/Kick Discaux 2.wav" id="6_5fy3c"]
 [ext_resource type="AudioStream" uid="uid://d3g22c6fs6tte" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Kick TwoTone.wav" id="7_133fl"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_pi2h2"]
@@ -22,7 +21,8 @@ clap = ExtResource("1_atnbr")
 clap_alt = ExtResource("2_4tubm")
 closed = ExtResource("3_cgpue")
 closed_alt = ExtResource("4_cn8us")
-green_soundfont = ExtResource("5_qmlu4")
+green_soundfont = ExtResource("8_pi2h2")
+green_instrument_id = 5
 purple_soundfont = ExtResource("8_pi2h2")
-purple_instrument_id = 6
+purple_instrument_id = 8
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

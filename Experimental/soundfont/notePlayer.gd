@@ -11,10 +11,7 @@ class_name notePlayer
 @export var allow_key_input: bool = false
 
 @export var songs: Array[PackedVector3Array] = []
-
 var current_layer: int = 0
-
-var bank: AudioBank
 
 #var current_beat_i : int = int(current_beat)
 #var current_beat_frac : int = int((current_beat - current_beat_i) * beat_subdivision)
@@ -22,9 +19,12 @@ var bank: AudioBank
 
 func _ready():
 	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
-	
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
+
+func set_font(font: SoundFont, instr: int):
+	soundfont = font
+	instrument = instr
 
 func _input(event):
 	if event is InputEventMIDI:
@@ -63,6 +63,7 @@ func _process_midi_input(event: InputEventMIDI):
 	channel_set_presetindex(0, event.channel, event.instrument)
 	channel_note_on(0, event.channel, event.pitch, event.velocity)
 
+
 func on_bpm():
 	var song: PackedVector3Array = get_song()
 	if len(song) == 0 or bpmManager.currentBeat >= len(song):
@@ -77,17 +78,20 @@ func on_bpm():
 	log_value = min(1, pow(10, log_value / 10))
 
 	# gate quiet notes
-	if log_value <= 0.3:
+	if log_value <= 0.3 or song[bpmManager.currentBeat].y == 0:
 		return
 	
-	channel_note_on(get_time(), 0, round(song[bpmManager.currentBeat].x), log_value)
+	var current_note: Vector3 = song[bpmManager.currentBeat]
 	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
-	channel_note_off(get_time() + beatDuration, 0, round(song[bpmManager.currentBeat].x))
 	
+	channel_note_on( get_time(), 0, round(current_note.x), log_value)
+	channel_note_off(get_time() + beatDuration * current_note.z, 0, round(current_note.x))
+
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
 	print(layer)
-	
+
+
 func set_song(data: PackedVector3Array):
 	songs[current_layer] = data
 
@@ -96,12 +100,14 @@ func get_song() -> PackedVector3Array:
 		return []
 	
 	return songs[current_layer]
-	
+
+
+
 func play_note(note: Note, duration: float):
 	var t = get_time()
 	channel_note_on(t, 0, note.id, 1.0)
 	channel_note_off(t + duration, 0, note.id)
-	
+
 func play_chord(intervals):
 	var duration : float = 0.5
 	var t = get_time()

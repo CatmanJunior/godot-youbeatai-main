@@ -1,330 +1,294 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 public partial class LayerVoiceOver : Node
 {
-	[Signal] public delegate void OnStartedRecordingEventHandler();
-	[Signal] public delegate void OnStoppedRecordingEventHandler();
+    // events for stopping and starting recording
+    [Signal] public delegate void OnStartedRecordingEventHandler();
+    [Signal] public delegate void OnStoppedRecordingEventHandler();
 
-	// user interface
-	[Export] public TextureProgressBar textureProgressBar;
-	[Export] public Button recordLayerButton;
+    // the actual storage of all layer recordings (ground truth)
+    public List<AudioStream> layersVoiceOvers = [];
 
-	// recording
-	public AudioStream[] voiceOvers = new AudioStream[10];
-	AudioEffectRecord audioEffectRecord;
-	public AudioStreamPlayer2D audioPlayer;
-	public bool shouldRecord = false;
+    // reference to the current layer index
+    public int currentLayerIndex => Manager.instance.currentLayerIndex;
+    
+    // current layer recording and playback
+    AudioEffectRecord audioEffectRecord;
+    public AudioStreamPlayer2D audioPlayer;
+    public bool shouldRecord = false;
+    public bool recording = false;
+    public bool shouldUpdateProgressBar = false;
+    public bool finished = false;
+    public float recordingTimer = 0;
 
-	public bool recording = false;
-	public bool shouldUpdateProgressBar = false;
+    // user interface
+    [Export] public TextureProgressBar textureProgressBar;
+    [Export] public Button recordLayerButton;
+    [Export] Button snellerButton;
+    [Export] Button langzamerButton;
 
-	float recordingTimer = 0;
+    // lines
+    [Export] public Line2D smallLine;
+    [Export] public Line2D bigLine;
+    [Export] public int bigLineBaseDist = 280;
+    [Export] public int bigLineVolumeDist = 28;
+    [Export] public bool bigLineReversed = false;
 
-	public bool finished = false;
+    public void SetCurrentLayerVoiceOver(AudioStream voiceOver) // important
+    {
+        layersVoiceOvers[currentLayerIndex] = voiceOver;
 
-	// other
-	[Export] Button snellerButton;
-	[Export] Button langzamerButton;
+        audioPlayer.Stream = GetCurrentLayerVoiceOver();
+        audioPlayer.Stop();
+        audioPlayer.Play();
+        shouldUpdateLines = true;
+    }
 
-	[Export] public Line2D smallLine;
-	[Export] public Line2D bigLine;
+    public AudioStream GetCurrentLayerVoiceOver() => layersVoiceOvers[currentLayerIndex]; // important
 
-	[Export] public int bigLineBaseDist = 280;
-	[Export] public int bigLineVolumeDist = 28;
-	[Export] public bool bigLineReversed = false;
+    public override void _Ready()
+    {
+        // init record button
+        recordLayerButton.Pressed += () =>
+        {
+            Manager.instance.layerLoopToggle.ButtonPressed = false;
+            shouldRecord = !shouldRecord;
 
-	public int currentLayer => Manager.instance.currentLayerIndex;
+            // metronoom aan
+            Manager.instance.metronome_toggle.ButtonPressed = true;
 
-	public void SetCurrentLayerVoiceOver(AudioStream voiceOver)
-	{
-		voiceOvers[currentLayer] = voiceOver;
-		audioPlayer.Stream = GetCurrentLayerVoiceOver();
-		audioPlayer.Stop();
-		audioPlayer.Play();
-		shouldUpdateLines = true; 
-	}
+            // begin on top with the build up
+            BpmManager.instance.currentBeat = 0;
 
-	public AudioStream GetCurrentLayerVoiceOver()
-	{
-		return voiceOvers[currentLayer];
-	}
+            // playing true
+            BpmManager.instance.playing = true;
 
-	public override void _Ready()
-	{
-		BpmManager.instance.OnPlayingChanged += (playing) =>
-		{
-			// OnTop();
-		};
+            // also play metronome sound on first beat
+            Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+        };
 
-		// init record button
-		recordLayerButton.Pressed += () => 
-		{
-			Manager.instance.layerLoopToggle.ButtonPressed = false;
-			shouldRecord = !shouldRecord;
+        // create audioplayer
+        audioPlayer = new AudioStreamPlayer2D();
+        AddChild(audioPlayer);
+        audioPlayer.Bus = "Voice";
 
-			// metronoom aan
-			Manager.instance.metronome_toggle.ButtonPressed = true;
+        // setup record effect
+        audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
 
-			// begin on top with the build up
-			BpmManager.instance.currentBeat = 0;
+        // pause voiceover button
+        Manager.instance.PlayPauseButton.Pressed += () =>
+        {
+            if (layersVoiceOvers[currentLayerIndex] != null)
+            {
+                if (audioPlayer.Playing) audioPlayer.Stop();
+                else audioPlayer.Play();
+            }
+        };
 
-			// playing true
-			BpmManager.instance.playing = true;
+        // line
+        SetSmallVolumeline();
+        SetBigVolumeline();
+    }
 
-			// also play metronome sound on first beat
-			Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
-		};
+    bool shouldMeasureAudioDelay = false;
+    ulong audioDelayBeginMs;
+    ulong audioDelayEndMs;
+    float audioDelayTotalSeconds;
 
-		// create audioplayer
-		audioPlayer = new AudioStreamPlayer2D();
-		AddChild(audioPlayer);
-		audioPlayer.Bus = "Voice";
+    public override void _Process(double delta)
+    {
+        if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 0)
+        {
+            audioDelayEndMs = Time.GetTicksMsec();
+            audioDelayTotalSeconds = ((float)audioDelayEndMs - (float)audioDelayBeginMs) / 1000f;
+            GD.Print("⚠️ audio delay is: " + audioDelayTotalSeconds.ToString("0.000") + " seconds");
+            shouldMeasureAudioDelay = false;
+        }
 
-		// setup record effect
-		audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
+        // set color of fake button
+        ((RecordButton)recordLayerButton.GetParent()).pressed = shouldRecord;
 
-		// pause voiceover button
-		Manager.instance.PlayPauseButton.Pressed += () =>
-		{
-			if (voiceOvers[currentLayer] != null)
-			{
-				if (audioPlayer.Playing) audioPlayer.Stop();
-				else audioPlayer.Play();
-			}
-		};
+        // update recording timer
+        if (recording) recordingTimer += (float)delta;
+        else recordingTimer = 0;
 
-		// line
-		SetSmallVolumeline();
-		SetBigVolumeline();
-	}
+        // set progress bar value
+        int currentBeat = BpmManager.instance.currentBeat;
+        float beatTimer = BpmManager.instance.beatTimer;
+        float progress = ((float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat))) / BpmManager.beatsAmount);
 
-	bool shouldMeasureAudioDelay = false;
-	ulong audioDelayBeginMs;
-	ulong audioDelayEndMs;
-	float audioDelayTotalSeconds;
+        if (shouldUpdateProgressBar)
+        {
+            textureProgressBar.Value = progress;
+        }
+        else
+        {
+            textureProgressBar.Value = 0;
+        }
 
-	public override void _Process(double delta)
-	{
-		if (shouldMeasureAudioDelay && audioPlayer.GetPlaybackPosition() > 0)
-		{
-			audioDelayEndMs = Time.GetTicksMsec();
-			audioDelayTotalSeconds = ((float)audioDelayEndMs - (float)audioDelayBeginMs) / 1000f;
-			GD.Print("⚠️ audio delay is: " + audioDelayTotalSeconds.ToString("0.000") + " seconds");
-			shouldMeasureAudioDelay = false;
-		}
+        if (shouldUpdateLines)
+        {
+            SetSmallVolumeline();
+            SetBigVolumeline();
+            shouldUpdateLines = false;
+        }
+    }
 
-		// set color of fake button
-		((RecordButton)recordLayerButton.GetParent()).pressed = shouldRecord;
+    bool shouldUpdateLines = false;
 
-		// update recording timer
-		if (recording) recordingTimer += (float)delta;
-		else recordingTimer = 0;
+    public void OnTop()
+    {
+        if (shouldRecord && !recording) StartRecording();
+        else if (recording) StopRecording();
 
-		// set progress bar value
-		int currentBeat = BpmManager.instance.currentBeat;
-		float beatTimer = BpmManager.instance.beatTimer;
-		float progress = ((float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat))) / BpmManager.beatsAmount);
+        if (!recording)
+        {
+            audioPlayer.Stream = GetCurrentLayerVoiceOver();
+            shouldMeasureAudioDelay = true;
+            audioDelayBeginMs = Time.GetTicksMsec();
+        }
 
-		if (shouldUpdateProgressBar)
-		{
-			textureProgressBar.Value = progress;
-		}
-		else
-		{
-			textureProgressBar.Value = 0;
-		}
+        GetTree().CreateTimer(0.4).Timeout += OnTopDelayed;
+    }
 
-		if (shouldUpdateLines)
-		{
-			SetSmallVolumeline();
-			SetBigVolumeline();
-			shouldUpdateLines = false;
-		}
-	}
+    private void OnTopDelayed()
+    {
+        if (audioPlayer.Playing) audioPlayer.Stop();
+        if (!recording) audioPlayer.Play();
+    }
 
-	bool shouldUpdateLines = false;
+    private void StartRecording()
+    {
+        // buttons during recording
+        snellerButton.Disabled = true;
+        langzamerButton.Disabled = true;
+        Manager.instance.SetLayerSwitchButtonsEnabled(false);
+        Manager.instance.PlayPauseButton.Disabled = true;
+        recordLayerButton.Disabled = true;
+        SongVoiceOver.instance.recordSongButton.Disabled = true;
+        Manager.instance.metronome_toggle.ButtonPressed = false;
 
-	public void OnTop() // tested: gets called on time
-	{
-		if (audioPlayer.Playing) audioPlayer.Stop();
+        shouldUpdateProgressBar = true;
+        bigLine.Visible = false;
 
-		if (shouldRecord && !recording) StartRecording();
-		else if (recording) StopRecording();
+        GetTree().CreateTimer(0.4).Timeout += () =>
+        {
+            recording = true;
+            audioEffectRecord.SetRecordingActive(true);
+            GD.Print("recording started");
+            EmitSignal(SignalName.OnStartedRecording);
+        };
 
-		if (!recording)
-		{
-			audioPlayer.Stream = GetCurrentLayerVoiceOver();  // tested: gets called on time
-			audioPlayer.Play(); // tested: gets called on time
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
+    }
 
-			shouldMeasureAudioDelay = true;
-			audioDelayBeginMs = Time.GetTicksMsec();
-		}
-	}
+    private void StopRecording()
+    {
+        shouldUpdateProgressBar = false;
+        bigLine.Visible = true;
 
-	private void StartRecording()
-	{
-		// buttons during recording
-		snellerButton.Disabled = true;
-		langzamerButton.Disabled = true;
-		Manager.instance.SetLayerSwitchButtonsEnabled(false);
-		Manager.instance.PlayPauseButton.Disabled = true;
-		recordLayerButton.Disabled = true;
-		SongVoiceOver.instance.recordSongButton.Disabled = true;
-		Manager.instance.metronome_toggle.ButtonPressed = false;
+        GetTree().CreateTimer(0.4).Timeout += () =>
+        {
+            audioEffectRecord.SetRecordingActive(false);
+            SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
+            GD.Print("recording stopped");
+            recording = false;
+            shouldRecord = false;
+            finished = true;
+            shouldUpdateLines = true;
 
-		shouldUpdateProgressBar = true;
-		bigLine.Visible = false;
+            EmitSignal(SignalName.OnStoppedRecording);
+        };
 
-		GetTree().CreateTimer(0.6).Timeout += () =>
-		{
-			recording = true;
-			audioEffectRecord.SetRecordingActive(true);
-			GD.Print("recording started");
-			EmitSignal(SignalName.OnStartedRecording);
-		};
+        // buttons after recording
+        snellerButton.Disabled = false;
+        langzamerButton.Disabled = false;
+        Manager.instance.SetLayerSwitchButtonsEnabled(true);
+        Manager.instance.PlayPauseButton.Disabled = false;
+        recordLayerButton.Disabled = false;
+        SongVoiceOver.instance.recordSongButton.Disabled = false;
 
-		SetVolumeBeats(0.1f); // beats
-		SongVoiceOver.instance.SetVolumeSongVoice(0.1f); // song
-		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 0.1f; // green
-		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 0.1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/bass_line").Set("volume_linear", 0.1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/synth_line").Set("volume_linear", 0.1f); // purple synth
-	}
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
+    }
 
-	private void StopRecording()
-	{
-		shouldUpdateProgressBar = false;
-		bigLine.Visible = true;
+    public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
+    {
+        var lambda = () =>
+        {
+            var offsets = new Vector2[points];
 
-		GetTree().CreateTimer(0.6).Timeout += () =>
-		{
-			audioEffectRecord.SetRecordingActive(false);
-			SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
-			GD.Print("recording stopped");
-			recording = false;
-			shouldRecord = false;
-			finished = true;
-			shouldUpdateLines = true;
+            for (int i = 0; i < points; i++)
+            {
+                float volumeoffset = 0;
+                if (layersVoiceOvers[currentLayerIndex] != null)
+                {
+                    float length = (float)layersVoiceOvers[currentLayerIndex].GetLength();
+                    float percentage = (float)i / points;
+                    float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
+                    volumeoffset = volume * volumeDist;
+                }
 
-			EmitSignal(SignalName.OnStoppedRecording);
-		};
+                float angle = -Mathf.Pi / 2 + Mathf.Tau * i / points;
+                float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
 
-		// buttons after recording
-		snellerButton.Disabled = false;
-		langzamerButton.Disabled = false;
-		Manager.instance.SetLayerSwitchButtonsEnabled(true);
-		Manager.instance.PlayPauseButton.Disabled = false;
-		recordLayerButton.Disabled = false;
-		SongVoiceOver.instance.recordSongButton.Disabled = false;
+                offsets[i] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
+            }
 
-		Manager.instance.SamplesMixing_ReApplyRememberedMixingVolumesForAllRings(); // beats
-		SongVoiceOver.instance.SetVolumeSongVoice(1f); // song
-		Manager.instance.layerVoiceOver0.audioPlayer.VolumeLinear = 1f; // green
-		Manager.instance.layerVoiceOver1.audioPlayer.VolumeLinear = 1f; // purple
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver0/bass_line").Set("volume_linear", 1f); // green synth
-		GetNode<Node>("/root/scene/Managers/LayerVoiceOver1/synth_line").Set("volume_linear", 1f); // purple synth
-	}
+            return offsets;
+        };
 
-	public void SetVolumeBeats(float value)
-	{
-		// red
-		Manager.instance.firstAudioPlayer.VolumeLinear = value;
-		Manager.instance.firstAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.firstAudioPlayerRec.VolumeLinear = value;
+        // async de zwaare volume offset calculaties doen
+        var offsets = await Task.Run(lambda);
 
-		// orange
-		Manager.instance.secondAudioPlayer.VolumeLinear = value;
-		Manager.instance.secondAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.secondAudioPlayerRec.VolumeLinear = value;
+        // nu op de main thread de godot functies roepen
+        line.ClearPoints();
+        foreach (var offset in offsets) line.AddPoint(offset);
+    }
 
-		// yellow
-		Manager.instance.thirdAudioPlayer.VolumeLinear = value;
-		Manager.instance.thirdAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.thirdAudioPlayerRec.VolumeLinear = value;
+    public void SetSmallVolumeline()
+    {
+        SetVolumeLine(smallLine, layersVoiceOvers[currentLayerIndex], 40, 15, 15);
+    }
 
-		// blue
-		Manager.instance.fourthAudioPlayer.VolumeLinear = value;
-		Manager.instance.fourthAudioPlayerAlt.VolumeLinear = value;
-		Manager.instance.fourthAudioPlayerRec.VolumeLinear = value;
-	}
+    public void SetBigVolumeline()
+    {
+        SetVolumeLine(bigLine, layersVoiceOvers[currentLayerIndex], 100, bigLineBaseDist, bigLineVolumeDist, bigLineReversed);
+    }
 
-	public async void SetVolumeLine(Line2D line, AudioStream audio, int points, int baseDist, int volumeDist, bool reversed = false)
-	{
-		var lambda = () =>
-		{
-			var offsets = new Vector2[points];
+    public float GetVolumeAtTime(AudioStreamWav audio, float time)
+    {
+        if (audio == null || audio.Data.Length == 0)
+        {
+            GD.PrintErr("Invalid sample.");
+            return 0f;
+        }
 
-			for (int i = 0; i < points; i++)
-			{
-				float volumeoffset = 0;
-				if (voiceOvers[currentLayer] != null)
-				{
-					float length = (float)voiceOvers[currentLayer].GetLength();
-					float percentage = (float)i / points;
-					float volume = GetVolumeAtTime((AudioStreamWav)audio, percentage * length);
-					volumeoffset = volume * volumeDist;
-				}
+        int sampleRate = audio.MixRate;
+        int channels = audio.Stereo ? 2 : 1;
+        int formatSize = audio.Format == AudioStreamWav.FormatEnum.Format16Bits ? 2 : 1;
 
-				float angle = -Mathf.Pi / 2 + Mathf.Tau * i / points;
-				float finaldist = reversed ? baseDist - volumeoffset : baseDist + volumeoffset;
+        int sampleIndex = (int)(time * sampleRate) * channels;
+        int byteIndex = sampleIndex * formatSize;
 
-				offsets[i] = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * finaldist;
-			}
+        if (byteIndex >= audio.Data.Length - formatSize)
+        {
+            GD.PrintErr("Time exceeds sample length.");
+            return 0f;
+        }
 
-			return offsets;
-		};
-		
-		// async de zwaare volume offset calculaties doen
-		var offsets = await Task.Run(lambda);
-
-		// nu op de main thread de godot functies roepen
-		line.ClearPoints();
-		foreach (var offset in offsets) line.AddPoint(offset);
-	}
-
-	public void SetSmallVolumeline()
-	{
-		SetVolumeLine(smallLine, voiceOvers[currentLayer], 40, 15, 15);
-	}
-
-	public void SetBigVolumeline()
-	{
-		SetVolumeLine(bigLine, voiceOvers[currentLayer], 100, bigLineBaseDist, bigLineVolumeDist, bigLineReversed);
-	}
-
-	public float GetVolumeAtTime(AudioStreamWav audio, float time)
-	{
-		if (audio == null || audio.Data.Length == 0)
-		{
-			GD.PrintErr("Invalid sample.");
-			return 0f;
-		}
-
-		int sampleRate = audio.MixRate;
-		int channels = audio.Stereo ? 2 : 1;
-		int formatSize = audio.Format == AudioStreamWav.FormatEnum.Format16Bits ? 2 : 1;
-
-		int sampleIndex = (int)(time * sampleRate) * channels;
-		int byteIndex = sampleIndex * formatSize;
-
-		if (byteIndex >= audio.Data.Length - formatSize)
-		{
-			GD.PrintErr("Time exceeds sample length.");
-			return 0f;
-		}
-
-		// Read sample depending on format
-		if (audio.Format == AudioStreamWav.FormatEnum.Format16Bits)
-		{
-			short value = BitConverter.ToInt16(audio.Data, byteIndex);
-			return Mathf.Abs(value / 32768f);
-		}
-		else // 8-bit
-		{
-			sbyte value = (sbyte)audio.Data[byteIndex];
-			return Mathf.Abs(value / 128f);
-		}
-	}
+        // Read sample depending on format
+        if (audio.Format == AudioStreamWav.FormatEnum.Format16Bits)
+        {
+            short value = BitConverter.ToInt16(audio.Data, byteIndex);
+            return Mathf.Abs(value / 32768f);
+        }
+        else // 8-bit
+        {
+            sbyte value = (sbyte)audio.Data[byteIndex];
+            return Mathf.Abs(value / 128f);
+        }
+    }
 }

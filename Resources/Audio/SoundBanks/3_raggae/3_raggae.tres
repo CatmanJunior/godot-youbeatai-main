@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://bb347u5txp04v"]
+
+[ext_resource type="AudioStream" uid="uid://cy75ewe553ug5" path="res://Resources/Audio/SoundBanks/3_raggae/Clap Sinister 1.wav" id="1_7cefr"]
+[ext_resource type="AudioStream" uid="uid://der0kb6d2ynoo" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Clap AlexBanks.wav" id="2_1al31"]
+[ext_resource type="AudioStream" uid="uid://bnboakej1u3gl" path="res://Resources/Audio/SoundBanks/3_raggae/ClosedHH Body2Body 1.wav" id="3_7qwu2"]
+[ext_resource type="AudioStream" uid="uid://bhg6yg7hs1a8o" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/ClosedHH Fit 1.wav" id="4_a5cut"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_5i1t3"]
+[ext_resource type="AudioStream" uid="uid://be37oruasvm8u" path="res://Resources/Audio/SoundBanks/3_raggae/Kick Bandits.wav" id="6_ftxhs"]
+[ext_resource type="AudioStream" uid="uid://bspcfiukoeorw" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Kick Shapednoise 1.wav" id="7_f2swm"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="8_cp1vu"]
+[ext_resource type="AudioStream" uid="uid://dqbqtyunere7y" path="res://Resources/Audio/SoundBanks/3_raggae/Snare_Perc Gl.wav" id="9_bv348"]
+[ext_resource type="AudioStream" uid="uid://dq2137h5khh8b" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Snare Andromeda 5.wav" id="10_onkgs"]
+
+[resource]
+script = ExtResource("8_cp1vu")
+kick = ExtResource("6_ftxhs")
+kick_alt = ExtResource("7_f2swm")
+snare = ExtResource("9_bv348")
+snare_alt = ExtResource("10_onkgs")
+clap = ExtResource("1_7cefr")
+clap_alt = ExtResource("2_1al31")
+closed = ExtResource("3_7qwu2")
+closed_alt = ExtResource("4_a5cut")
+green_soundfont = ExtResource("5_5i1t3")
+green_instrument_id = 5
+purple_soundfont = ExtResource("5_5i1t3")
+purple_instrument_id = 2
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

@@ -32,6 +32,8 @@ public partial class Manager : Node
     float timeafterplay = 0;
     public bool savedToLaout = false;
     private float startswing;
+    [Export] public Node2D PianoLocation;
+    [Export] public Node2D InBetweenLocation;
 
     AudioStream clipboardLayerVoice0;
     AudioStream clipboardLayerVoice1;
@@ -41,6 +43,7 @@ public partial class Manager : Node
         CopyBeatLayoutToClipboard();
         SamplesMixing_CopyKnobsForLayer();
         CopyLayerVoiceToClipBoard();
+        EmitSignal(SignalName.OnCopyLayerEvent, currentLayerIndex);
     }
 
     public void PasteLayer()
@@ -48,13 +51,16 @@ public partial class Manager : Node
         PasteBeatLayoutFromClipboard();
         SamplesMixing_PasteKnobsLayer();
         PasteLayerVoiceFromClipBoard();
+        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
     }
 
     public void ClearLayer()
     {
-        ClearLayout();
+        RemoveLayer(currentLayerIndex);
         SamplesMixing_ClearKnobsForLayer();
         ClearLayerVoiceOver();
+        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
+        hasclearedlayout = true;
     }
 
     public void CopyLayerVoiceToClipBoard()

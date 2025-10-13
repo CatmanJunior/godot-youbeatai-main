@@ -12,6 +12,11 @@ public partial class TemplateManager : Node
 
     public static TemplateManager instance = null;
 
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
     public List<string> names = new List<string>();
     public List<string> contents = new List<string>();
     public List<bool[,]> actives = new List<bool[,]>();

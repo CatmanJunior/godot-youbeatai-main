@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://c454guqg60bap"]
+
+[ext_resource type="AudioStream" uid="uid://7l06ded8vxoa" path="res://Resources/Audio/SoundBanks/1_lo-fi/Clap Amnesia.wav" id="1_81lb8"]
+[ext_resource type="AudioStream" uid="uid://bd7yiyir2m7x2" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Clap_Perc Si.wav" id="2_i41ue"]
+[ext_resource type="AudioStream" uid="uid://cuywkxu6j8o5s" path="res://Resources/Audio/SoundBanks/1_lo-fi/ClosedHH Forest.wav" id="3_fyb6c"]
+[ext_resource type="AudioStream" uid="uid://cqsib0y2evgjc" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/ClosedHH Elegance.wav" id="4_xd8ou"]
+[ext_resource type="AudioStream" uid="uid://n4ahyv3pyc4j" path="res://Resources/Audio/SoundBanks/1_lo-fi/Kick Blossom 1.wav" id="6_w75j6"]
+[ext_resource type="AudioStream" uid="uid://dsvwgyu3cdkb" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Kick Bazzazian 2.wav" id="7_qsyax"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_qyjr2"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_q1ehn"]
+[ext_resource type="AudioStream" uid="uid://duc4jv7w5emho" path="res://Resources/Audio/SoundBanks/1_lo-fi/Snare CandyClub.wav" id="10_7ulmg"]
+[ext_resource type="AudioStream" uid="uid://6phiwinlbqwv" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Snare Cosmos 1.wav" id="11_dr1sr"]
+
+[resource]
+script = ExtResource("9_q1ehn")
+kick = ExtResource("6_w75j6")
+kick_alt = ExtResource("7_qsyax")
+snare = ExtResource("10_7ulmg")
+snare_alt = ExtResource("11_dr1sr")
+clap = ExtResource("1_81lb8")
+clap_alt = ExtResource("2_i41ue")
+closed = ExtResource("3_fyb6c")
+closed_alt = ExtResource("4_xd8ou")
+green_soundfont = ExtResource("8_qyjr2")
+green_instrument_id = 12
+purple_soundfont = ExtResource("8_qyjr2")
+purple_instrument_id = 14
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

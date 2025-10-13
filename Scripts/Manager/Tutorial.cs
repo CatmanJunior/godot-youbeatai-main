@@ -33,6 +33,7 @@ public static class Tutorial
     private static Area2D _pianoArea = null;
     private static Area2D _inBetweenArea = null;
     private static MeshInstance2D _pianoMesh = null;
+    private static Node2D _top = null;
 
     static Manager manager => Manager.instance;
 
@@ -56,15 +57,14 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
-            GD.Print(instructions.Length);
-            GD.Print(outcomes.Length);
-            GD.Print(conditions.Length);
+         
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
             manager.ContinueButton.Pressed += _tutorialContinue;
             manager.PianoArea.AreaEntered += _bodyContinue;
             manager.InBetweenArea.AreaEntered += _bodyContinue;
             manager.KlappyContinue.Pressed += KlappyContinue;
+            _top = manager.corners[1];
 
         }
         else // disable tutorial
@@ -308,7 +308,11 @@ public static class Tutorial
             () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
 
             } ,
-            ()=> {_active =false;},
+            () =>
+            {
+                _active =false;
+                manager.knob.GlobalPosition = _top.GlobalPosition;
+            },
             ()=> {_active =true;},
             () => { _active =false;},
             () => { _active = true;},

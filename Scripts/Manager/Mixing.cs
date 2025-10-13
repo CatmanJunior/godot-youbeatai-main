@@ -199,12 +199,12 @@ public partial class Manager : Node
         // update icons
         if (SynthMixing_activeSynth == 0)
         {
-            iconMain.Text = "🟢";
+            iconMain.Text = "🤖";
             iconAlt.Text = "🎹";
         }
         if (SynthMixing_activeSynth == 1)
         {
-            iconMain.Text = "🟣";
+            iconMain.Text = "🤖";
             iconAlt.Text = "🎹";
         }
 

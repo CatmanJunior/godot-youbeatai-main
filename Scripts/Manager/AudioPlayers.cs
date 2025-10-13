@@ -53,18 +53,18 @@ public partial class Manager : Node
         secondAudioPlayerAlt.Stream = mainAudioFilesAlt[1];
         thirdAudioPlayerAlt.Stream = mainAudioFilesAlt[2];
         fourthAudioPlayerAlt.Stream = mainAudioFilesAlt[3];
-        firstAudioPlayer.Bus = "Beats";
-        secondAudioPlayer.Bus = "Beats";
-        thirdAudioPlayer.Bus = "Beats";
-        fourthAudioPlayer.Bus = "Beats";
-        firstAudioPlayerAlt.Bus = "Beats";
-        secondAudioPlayerAlt.Bus = "Beats";
-        thirdAudioPlayerAlt.Bus = "Beats";
-        fourthAudioPlayerAlt.Bus = "Beats";
-        firstAudioPlayerRec.Bus = "Beats";
-        secondAudioPlayerRec.Bus = "Beats";
-        thirdAudioPlayerRec.Bus = "Beats";
-        fourthAudioPlayerRec.Bus = "Beats";
+        firstAudioPlayer.Bus = "Ring0";
+        firstAudioPlayerAlt.Bus = "Ring0";
+        firstAudioPlayerRec.Bus = "Ring0";
+        secondAudioPlayer.Bus = "Ring1";
+        secondAudioPlayerAlt.Bus = "Ring1";
+        secondAudioPlayerRec.Bus = "Ring1";
+        thirdAudioPlayer.Bus = "Ring2";
+        thirdAudioPlayerAlt.Bus = "Ring2";
+        thirdAudioPlayerRec.Bus = "Ring2";
+        fourthAudioPlayer.Bus = "Ring3";
+        fourthAudioPlayerAlt.Bus = "Ring3";
+        fourthAudioPlayerRec.Bus = "Ring3";
 
         if (bank != null)
         {

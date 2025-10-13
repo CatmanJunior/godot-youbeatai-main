@@ -63,6 +63,16 @@ public partial class Manager : Node
 		if (klappylightvalue < 0.05f) klappylightvalue = 0;
 		klappyLight.Energy = klappylightvalue;
 
+		for (int i = 0; i < ringVolumeLights.Length; i++)
+		{
+			var ringLight = ringVolumeLights[i];
+			var busindex = AudioServer.GetBusIndex($"Ring{i}");
+			var analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(busindex, 0);
+			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
+			var volume = magnitude.Length() * 15f;
+			ringLight.Energy = volume;
+		}
+
 		micmeter.Value = MicrophoneCapture.instance.volume;
 
 		metronome_sfx_enabled = metronome_toggle.ButtonPressed;

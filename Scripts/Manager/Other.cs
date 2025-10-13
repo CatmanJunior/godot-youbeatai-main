@@ -41,7 +41,6 @@ public partial class Manager : Node
     public void CopyLayer()
     {
         CopyBeatLayoutToClipboard();
-        SamplesMixing_CopyKnobsForLayer();
         CopyLayerVoiceToClipBoard();
         EmitSignal(SignalName.OnCopyLayerEvent, currentLayerIndex);
     }
@@ -49,7 +48,6 @@ public partial class Manager : Node
     public void PasteLayer()
     {
         PasteBeatLayoutFromClipboard();
-        SamplesMixing_PasteKnobsLayer();
         PasteLayerVoiceFromClipBoard();
         EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
     }
@@ -57,7 +55,6 @@ public partial class Manager : Node
     public void ClearLayer()
     {
         RemoveLayer(currentLayerIndex);
-        SamplesMixing_ClearKnobsForLayer();
         ClearLayerVoiceOver();
         EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
         hasclearedlayout = true;

@@ -50,7 +50,8 @@ public partial class Manager : Node
     public void SamplesMixing_ChangeRing(int newring)
     {
         // save knob position
-        SamplesMixing_StoreActiveKnob();
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_StoreActiveKnob();
+        else SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
 
         // switch ring
         SamplesMixing_activeRing = newring;
@@ -183,7 +184,8 @@ public partial class Manager : Node
     public void SynthMixing_ChangeSynth(int synth)
     {
         // save knob position
-        SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+        else SamplesMixing_StoreActiveKnob();
 
         // switch synth
         SynthMixing_activeSynth = synth;

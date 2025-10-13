@@ -515,11 +515,12 @@ bigLineVolumeDist = 110
 
 [node name="bass_line" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
 soundfont = ExtResource("27_o1aky")
-bus = &"Green"
+bus = &"Master"
 bpmManager = NodePath("../../BPM")
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
+combineThreshold = 1.0
 octaveRange = Vector2i(0, 4)
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
@@ -554,12 +555,13 @@ bigLineVolumeDist = 20
 bigLineReversed = true
 
 [node name="synth_line" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
-bus = &"Purple"
+bus = &"Master"
 bpmManager = NodePath("../../BPM")
 instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
+combineThreshold = 1.0
 octaveRange = Vector2i(4, 6)
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
@@ -2229,6 +2231,16 @@ metadata/_edit_use_anchors_ = true
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_bpm_changed"]
+[connection signal="OnAddLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_add_layer_at"]
+[connection signal="OnAddLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="on_add_layer_at"]
+[connection signal="OnClearLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_song_clear"]
+[connection signal="OnClearLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="on_song_clear"]
+[connection signal="OnCopyLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_song_copy"]
+[connection signal="OnCopyLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="on_song_copy"]
+[connection signal="OnPasteLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_paste_song"]
+[connection signal="OnPasteLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="on_paste_song"]
+[connection signal="OnRemoveLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_layer_remove_at"]
+[connection signal="OnRemoveLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="on_layer_remove_at"]
 [connection signal="OnShouldClapEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_clap"]
 [connection signal="OnShouldStompEvent" from="Managers/Manager" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_stamp"]
 [connection signal="OnSwitchLayer" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="_on_current_layer_changed"]

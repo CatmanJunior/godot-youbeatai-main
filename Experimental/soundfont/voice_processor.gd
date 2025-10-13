@@ -3,6 +3,7 @@ class_name VoiceProcessor
 
 @export var bpmManager: Node
 @export var notes: Notes
+@export var combineThreshold: float = 5
 @export var octaveRange: Vector2i
 
 signal on_processed(data: PackedVector3Array)
@@ -55,9 +56,26 @@ func start_processing(data: PackedVector3Array):
 				if diff < closest_diff:
 					closest_diff = diff
 					closest = note
-					
+			
 		sample.x = closest.id
+		sample.z = 1
 		result.push_back(sample)
+	
+	for current in range(len(result)):
+		if result[current].z == 0:
+			continue
+		
+		var length = 0
+		for index in range(current + 1, len(result)):
+			if abs(result[current].x - result[index].x) < combineThreshold:
+				length += 1
+				result[index].y = 0
+				result[index].z = 0
+			else:
+				break;
+		
+		result[current].z = length
+	
 	
 	print("notes(%d) \n %s" % [len(result), result])
 	on_processed.emit(result)

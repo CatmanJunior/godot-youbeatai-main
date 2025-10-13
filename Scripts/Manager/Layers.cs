@@ -19,15 +19,15 @@ public partial class Manager : Node
 
     public void SpawnInitialLayerButtons()
     {
-        for (int i = 0; i < layersAmountInitial; i++) AddLayer();
+        for (int i = 0; i < layersAmountInitial; i++) AddLayer(i);
     }
 
-    public void AddLayer(string emoji = null) // adds a layer at the end of the list of layers
+    public void AddLayer(int layer, string emoji = null) // adds a layer at the end of the list of layers
     {
         if (layersAmount == layersAmountMax) return;
 
         layersAmount++;
-        NewLayerButton(emoji);
+        NewLayerButton(layer, emoji);
 
         layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
         layersVoiceOvers0.Add(null);
@@ -35,7 +35,21 @@ public partial class Manager : Node
         SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
         EmitSignal(SignalName.OnAddLayerEvent, layersBeatActives.IndexOf(layersBeatActives.Last()));
 
+        SortLayerButtonsInContainerBasedOnTheirIndex();
         UpdateLayerButtonsUserInterface();
+    }
+
+    public void SortLayerButtonsInContainerBasedOnTheirIndex()
+    {
+        var buttons = new List<Button>();
+        var children = layerButtonsContainer.GetChildren();
+        foreach (var child in children) if (child is Button button) buttons.Add(button);
+
+        // sort buttons based on their index
+        buttons.Sort((a, b) => LayerButtons.IndexOf(a).CompareTo(LayerButtons.IndexOf(b)));
+
+        // move the children to the correct order
+        for (int i = 0; i < buttons.Count; i++) layerButtonsContainer.MoveChild(buttons[i], i);
     }
 
     public async void RemoveLayer(int layer) // removes a layer by specific index (can be a layer in between other layers)
@@ -56,10 +70,10 @@ public partial class Manager : Node
         if (layer == currentLayerIndex) SwitchLayer(0, false);
     }
 
-    public Button NewLayerButton(string emoji = null)
+    public Button NewLayerButton(int layer, string emoji = null)
     {
         var layerButton = (Button)layerButtonPrefab.Instantiate();
-        LayerButtons.Add(layerButton);
+        LayerButtons.Insert(layer, layerButton);
         layerButtonsContainer.AddChild(layerButton);
 
         if (emoji != null) layerButton.Text = emoji;

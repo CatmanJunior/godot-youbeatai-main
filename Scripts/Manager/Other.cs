@@ -33,9 +33,9 @@ public partial class Manager : Node
     public bool savedToLaout = false;
     private float startswing;
     [Export] public Area2D PianoArea;
-    [Export] public MeshInstance2D PianoMesh;
+    [Export] public Label PianoMesh;
     [Export] public Area2D InBetweenArea;
-    [Export] public MeshInstance2D InBetweenMesh;
+    [Export] public Label InBetweenMesh;
     [Export] public Node3D Klappy;
 
     AudioStream clipboardLayerVoice0;

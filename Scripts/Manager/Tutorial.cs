@@ -34,6 +34,11 @@ public static class Tutorial
     private static Area2D _inBetweenArea = null;
     private static MeshInstance2D _pianoMesh = null;
     private static Node2D _top = null;
+    private static int _fixedAmount = 5;
+    private static int _previousclap = 0;
+    private static int _previousstomp = 0;
+    private static bool _stomping = false;
+    private static bool _clapping = false;
 
     static Manager manager => Manager.instance;
 
@@ -64,6 +69,7 @@ public static class Tutorial
             manager.PianoArea.AreaEntered += _bodyContinue;
             manager.InBetweenArea.AreaEntered += _bodyContinue;
             manager.KlappyContinue.Pressed += KlappyContinue;
+            
             _top = manager.corners[1];
 
         }
@@ -123,12 +129,12 @@ public static class Tutorial
 
             // kick ring
             "deze rode circles vormen een beat ring",
-            "Via deze ring kun je een kick geluid toevoegen aan het liedje kijk maar!",
+            "Met deze ring kun je een kick plaatsen op jouw beat. Kijk naar!",
             "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
             " Druk op ⏸️ om het op pauze te zetten ",
             "Nu jij, vul nog 2 circles door op de stippen te drukken",
             "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt! ▶️",
-            "Stamp👞 eens mee op jouw beat!",
+            "Stamp👞 eens 5 keer mee op jouw beat!",
             "Wow super gedaan! tijd voor level 2!",
 
             // klap ring
@@ -139,28 +145,28 @@ public static class Tutorial
             "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
             "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
             "Ik ben benieuwd laat mij eens horen! ▶️",
-            "Probeer mee te klappen op de beat!",
+            "Probeer 5 keer mee te klappen op de beat!",
             "Super goed gedaan, nu wordt het echt leuk.",
 
             //groene laag
             "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
-            "Probeer het maar eens door op het microphone 🎙️icoontje te klikken",
+            "Probeer het maar eens door op het microfoon 🎙️icoontje te klikken",
             "Goed gedaan",
             "Laat eens horen!▶️",
             "Super gedaan, het klinkt heel leuk",
             
             // chaos pad
             "Ik denk dat we het nog leuker kunnen maken met de mixer!",
-            "Deze driehoek dat is de mixer!",
+            "Deze driehoek is de mixer!",
             "Hiermee kun je jouw net opgenomen geluid veranderen",
-            "Je kunt het geluid veranderen van Jouw stem 🎙️ en een Instrument geluid 🎹  en jouw stem met een effect 🤖",
-            //todo add specific location to where you need to put the fingerprint button in this case the piano
-            "probeer het maar eens door die witte knop te bewegen",
-            "Moet je nu maar eens luisteren",
+            "Je kunt het geluid veranderen van Jouw stem 🎙️ veranderen in het geluid van een Instrument geluid 🎹  en jouw stem met een effect 🤖 er overheem",
+            //todo change '' to what the assest is later star Icon
+            "probeer het maar eens door de grijze rondje te bewegen naar het 'witte vierkantje' ",
+            "Luister maar eens!",
             "Dit geeft een hele andere sfeer aan je beat",
-            //todo add specific location to where you need to put the fingerprint button
-            "Zet hem maar  tussen twee zodat ze worden gemixt!",
-            "Zo kun je stem met een beetje effect krijgen",
+            "Door het grijze rondje nu tussen twee icoontjes te plaatsen maak je een mix!",
+            "Zo krijg je een mix tussen hou stem en het instrument!",
+            //todo going outside the the mixer goes quieter
             
             //End of tutorial
             "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
@@ -192,8 +198,8 @@ public static class Tutorial
             }, // This checks whether the song is playing
             ()=>
             {
-                GD.Print(manager.stompedAmount);
-                return manager.stompedAmount >= _beatsActiveRedRing;
+               
+                return manager.stompedAmount >= _fixedAmount;
             }, // makes sure the amount you stomped is equal to the amount of beats active
             () =>  false, // need to make a check for button press or screen tap, 
 
@@ -217,8 +223,8 @@ public static class Tutorial
                 return BpmManager.instance.playing;
             }, // This checks whether the song is playing
             ()=>
-            {   GD.Print("clap "+ manager.clappedAmount);
-                return manager.clappedAmount >= _beatsActiveOrangeRing;
+            {  
+                return manager.clappedAmount >= _fixedAmount;
             }, // This checks whether the song is playing
             () =>false, // need to make a check for button press or screen tap,   
 
@@ -267,6 +273,7 @@ public static class Tutorial
                 _active = true;
                 manager.KlappyContinue.Visible = false;
             },
+            //stomp ring
             null,
             () =>
             {
@@ -279,13 +286,21 @@ public static class Tutorial
             null,
             null,
             null,
-            null,
+            ()=>
+            {
+                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedAmount} / 5";
+                _stomping = true;
+            },
             ()=>
             {
                 _active =true;
+                _stomping = false;
+                manager.AmountLeft.Visible = false;
+                manager.AmountLeft.Text = "";
                 BpmManager.instance.playing = false;
             },
             () => manager.SetRingVisibility(_indexOrangeRing, true),
+            //klap ring
             ()=>{
             manager.beatActives[_indexOrangeRing, _ringRight] = true;
             manager.beatActives[_indexOrangeRing, _ringLeft] = true;
@@ -299,9 +314,16 @@ public static class Tutorial
             },
             null,
             null,
-            null,
             ()=>
             {
+                manager.AmountLeft.Visible = true;
+                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedAmount} / 5";
+                _clapping = true;
+            },
+            ()=>
+            {
+                _clapping = false;
+                manager.AmountLeft.Visible = false;
                 _active = true;
                 BpmManager.instance.playing = false;
             },
@@ -363,6 +385,10 @@ public static class Tutorial
                 manager.SetEntireInterfaceVisibility(true);
                 manager.achievementspanel.Visible = false;
                 manager.PlayExtraSFX(manager.achievement_sfx);
+                manager.ContinueButton.Pressed -= _tutorialContinue;
+                manager.PianoArea.AreaEntered -= _bodyContinue;
+                manager.InBetweenArea.AreaEntered -= _bodyContinue;
+                manager.KlappyContinue.Pressed -= KlappyContinue;
             }
 
         ];
@@ -373,6 +399,11 @@ public static class Tutorial
         manager.Klappy.Call("on_clap");
         _nextLine();
        
+    }
+
+    private static void ButtonState()
+    {
+        manager.ContinueButton.Visible = _active;
     }
 
     private static void _tutorialContinue()
@@ -400,15 +431,52 @@ public static class Tutorial
         updateLists();
     }
 
+    private static void _correctStompPlaySFX()
+    {
+        if(_stomping)
+        {
+            if (manager.stompedAmount > _previousstomp)
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _previousstomp = manager.stompedAmount;
+                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedAmount} / 5";
+            }
+        }
+    }
+    
+    private static void _correctClapPlaySFX()
+    {
+        if(_clapping)
+        {
+            if (manager.clappedAmount > _previousclap)
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _previousclap = manager.clappedAmount;
+                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedAmount} / 5";
+            }
+        }
+    }
+    
+
     public static void UpdateTutorial()
     {
+        ButtonState();
+        
       
         if (!manager.first_tts_done && useTutorial)
         {
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-        void Speaking(){  SpeakTutorialInstruction(tutorial_level);}
+
+        void Speaking()
+        {
+            SpeakTutorialInstruction(tutorial_level);
+          
+        }
+        _correctClapPlaySFX();
+        _correctStompPlaySFX();
+      
         
         if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
         {
@@ -431,6 +499,8 @@ public static class Tutorial
                 SpeakTutorialInstruction(tutorial_level);
                 updateLists();
             }
+
+         
 
         }
     }

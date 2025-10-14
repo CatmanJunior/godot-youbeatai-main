@@ -78,3 +78,12 @@ offset_top = 292.5
 offset_right = 193.5
 offset_bottom = 456.5
 action_mode = 0
+
+[node name="AmountLef" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.26900002
+anchor_right = 1.0
+offset_top = 0.072006226
+offset_right = 1.5
+offset_bottom = 0.5

@@ -29,10 +29,10 @@ public partial class Manager : Node
         layersAmount++;
         NewLayerButton(layer, emoji);
 
-        layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
-        layersVoiceOvers0.Add(null);
-        layersVoiceOvers1.Add(null);
-        SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
+        layersBeatActives.Insert(layer, new bool[4, BpmManager.beatsAmount]);
+        layersVoiceOvers0.Insert(layer, null);
+        layersVoiceOvers1.Insert(layer, null);
+        SamplesMixing_knobPositions.Insert(layer, GetStandardKnobPositions());
         EmitSignal(SignalName.OnAddLayerEvent, layersBeatActives.IndexOf(layersBeatActives.Last()));
 
         SortLayerButtonsInContainerBasedOnTheirIndex();

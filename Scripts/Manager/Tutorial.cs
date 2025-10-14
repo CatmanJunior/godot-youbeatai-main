@@ -103,12 +103,7 @@ public static class Tutorial
 
         return use;
     }
-
-    private static bool _interactionDone()
-    {
-        return Input.IsActionJustPressed("Interaction");
-
-    }
+    
 
     public static void SetupTutorial()
     {
@@ -361,20 +356,20 @@ public static class Tutorial
             null,
             () =>
             {
-                manager.PianoArea.Monitoring = false; 
+                manager.PianoArea.SetDeferred("monitoring",false);
                 manager.PianoMesh.Visible = false;
                 _active = true;
             },
             ()=>
             {
                 _active = false;
-                manager.InBetweenArea.Monitoring = true;
                 manager.InBetweenMesh.Visible = true;
+                manager.InBetweenArea.SetDeferred("monitoring",true);
             },  
             ()=>
             {
                 _active = true;
-                manager.InBetweenArea.Monitoring = false;
+                manager.InBetweenArea.SetDeferred("monitoring",false);
                 manager.InBetweenMesh.Visible = false;
             },
             null,
@@ -499,8 +494,7 @@ public static class Tutorial
                 SpeakTutorialInstruction(tutorial_level);
                 updateLists();
             }
-
-         
+            
 
         }
     }

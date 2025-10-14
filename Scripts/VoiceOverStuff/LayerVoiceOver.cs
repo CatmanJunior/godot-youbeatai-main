@@ -68,6 +68,8 @@ public partial class LayerVoiceOver : Node
 
             // also play metronome sound on first beat
             Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+
+            Manager.instance.ShowCountDown();
         };
 
         // create audioplayer
@@ -183,6 +185,8 @@ public partial class LayerVoiceOver : Node
         };
 
         AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
+
+        Manager.instance.CloseCountDown();
     }
 
     private void StopRecording()

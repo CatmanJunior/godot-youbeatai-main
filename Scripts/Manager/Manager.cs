@@ -31,6 +31,8 @@ public partial class Manager : Node
 
 		HandleCopyPasting();
 
+		if (isShowingCountDown) UpdateCountDownLabel();
+
 		UpdateAchievementsVisibility();
 
 		UpdateLayerOutlineSpriteRotation();

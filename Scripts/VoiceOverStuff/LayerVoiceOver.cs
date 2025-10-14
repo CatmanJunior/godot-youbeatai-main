@@ -75,7 +75,9 @@ public partial class LayerVoiceOver : Node
         // create audioplayer
         audioPlayer = new AudioStreamPlayer2D();
         AddChild(audioPlayer);
-        audioPlayer.Bus = "Voice";
+
+        if (this == Manager.instance.layerVoiceOver0) audioPlayer.Bus = "GreenVoice";
+        else if (this == Manager.instance.layerVoiceOver1) audioPlayer.Bus = "PurpleVoice";
 
         // setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);

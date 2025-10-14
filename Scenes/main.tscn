@@ -901,6 +901,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/GreenSelectButton"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
+
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
 z_index = -4
@@ -926,6 +933,13 @@ text = "🐦‍⬛"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/PurpleSelectButton"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)

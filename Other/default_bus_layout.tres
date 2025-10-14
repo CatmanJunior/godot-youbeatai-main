@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=15 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=16 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -29,17 +29,28 @@ wet = 0.02
 resource_name = "Amplify"
 volume_db = 15.0
 
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_5jwjk"]
+resource_name = "SpectrumAnalyzer"
+
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_6n6ik"]
 resource_name = "SpectrumAnalyzer"
+buffer_length = 0.5
+fft_size = 3
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_xic54"]
 resource_name = "SpectrumAnalyzer"
+buffer_length = 0.5
+fft_size = 3
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_4ydx6"]
 resource_name = "SpectrumAnalyzer"
+buffer_length = 0.5
+fft_size = 3
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_u8yxa"]
 resource_name = "SpectrumAnalyzer"
+buffer_length = 0.5
+fft_size = 3
 
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_04ot4"]
 resource_name = "Capture"
@@ -155,3 +166,19 @@ bus/11/effect/0/effect = SubResource("AudioEffectReverb_6n6ik")
 bus/11/effect/0/enabled = true
 bus/11/effect/1/effect = SubResource("AudioEffectAmplify_6n6ik")
 bus/11/effect/1/enabled = true
+bus/12/name = &"GreenVoice"
+bus/12/solo = false
+bus/12/mute = false
+bus/12/bypass_fx = false
+bus/12/volume_db = 0.0
+bus/12/send = &"Voice"
+bus/12/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_5jwjk")
+bus/12/effect/0/enabled = true
+bus/13/name = &"PurpleVoice"
+bus/13/solo = false
+bus/13/mute = false
+bus/13/bypass_fx = false
+bus/13/volume_db = 0.0
+bus/13/send = &"Voice"
+bus/13/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_5jwjk")
+bus/13/effect/0/enabled = true

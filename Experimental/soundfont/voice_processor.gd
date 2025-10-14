@@ -61,20 +61,20 @@ func start_processing(data: PackedVector3Array):
 		sample.z = 1
 		result.push_back(sample)
 	
-	for current in range(len(result)):
-		if result[current].z == 0:
-			continue
-		
-		var length = 0
-		for index in range(current + 1, len(result)):
-			if abs(result[current].x - result[index].x) < combineThreshold:
-				length += 1
-				result[index].y = 0
-				result[index].z = 0
-			else:
-				break;
-		
-		result[current].z = length
+	#for current in range(len(result)):
+		#if result[current].z == 0:
+			#continue
+		#
+		#var length = 0
+		#for index in range(current + 1, len(result)):
+			#if abs(result[current].x - result[index].x) < combineThreshold:
+				#length += 1
+				#result[index].y = 0
+				#result[index].z = 0
+			#else:
+				#break;
+		#
+		#result[current].z = length
 	
 	
 	print("notes(%d) \n %s" % [len(result), result])

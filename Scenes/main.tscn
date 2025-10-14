@@ -490,7 +490,7 @@ bigLineVolumeDist = 110
 
 [node name="bass_line" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
 soundfont = ExtResource("27_o1aky")
-bus = &"Master"
+bus = &"Green"
 bpmManager = NodePath("../../BPM")
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
@@ -530,7 +530,7 @@ bigLineVolumeDist = 20
 bigLineReversed = true
 
 [node name="synth_line" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
-bus = &"Master"
+bus = &"Purple"
 bpmManager = NodePath("../../BPM")
 instrument = 6
 

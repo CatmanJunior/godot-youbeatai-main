@@ -73,7 +73,8 @@ public partial class Manager : Node
 			var analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(busindex, 0);
 			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
 			var volume = magnitude.Length() * 10f;
-			if (volume > 0.05f) ringLight.Energy = volume;
+			if (volume > 0.10f) ringLight.Energy = volume;
+			else ringLight.Energy = 0f;
 		}
 
 		micmeter.Value = MicrophoneCapture.instance.volume;

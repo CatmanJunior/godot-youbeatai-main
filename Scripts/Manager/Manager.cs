@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -69,8 +70,8 @@ public partial class Manager : Node
 			var busindex = AudioServer.GetBusIndex($"Ring{i}");
 			var analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(busindex, 0);
 			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
-			var volume = magnitude.Length() * 15f;
-			ringLight.Energy = volume;
+			var volume = magnitude.Length() * 10f;
+			if (volume > 0.05f) ringLight.Energy = volume;
 		}
 
 		micmeter.Value = MicrophoneCapture.instance.volume;

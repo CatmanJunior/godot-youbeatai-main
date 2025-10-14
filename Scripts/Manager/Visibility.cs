@@ -44,10 +44,15 @@ public partial class Manager : Node
 
     public void SetGreenLayerVisibility(bool visible)
     {
-        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
+        
         layerVoiceOver0.textureProgressBar.Visible = visible;
         activateGreenChaosButton.Visible = visible;
         layerVoiceOver0.bigLine.Visible = visible;
+    }
+
+    public void SetMicRecorderVisibility(bool visible)
+    {
+        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
     }
 
     public void SetRingVisibility(int ring, bool visible)

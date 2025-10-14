@@ -39,7 +39,8 @@ public static class Tutorial
     private static int _previousstomp = 0;
     private static bool _stomping = false;
     private static bool _clapping = false;
-
+    private static Timer timer;
+  
     static Manager manager => Manager.instance;
 
     public static void Reset()
@@ -62,7 +63,7 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
-         
+            BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
             manager.ContinueButton.Pressed += _tutorialContinue;
@@ -80,6 +81,19 @@ public static class Tutorial
             manager.achievementspanel.Visible = false;
             if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         }
+    }
+
+    private static void timerSetUp()
+    {
+        if (timer is null)
+        {
+            timer = new Timer();
+            timer.WaitTime = 3;
+            timer.OneShot = true;
+            manager.achievementspanel.AddChild(timer);
+            
+        }
+
     }
 
     // flag if tutorial mode should be enabled
@@ -107,6 +121,7 @@ public static class Tutorial
 
     public static void SetupTutorial()
     {
+        timerSetUp();
         var activeBeatsPerRing = (int indexRing) =>
         {
             int amount = 0;
@@ -124,7 +139,7 @@ public static class Tutorial
 
             // kick ring
             "deze rode circles vormen een beat ring",
-            "Met deze ring kun je een kick plaatsen op jouw beat. Kijk naar!",
+            "Met deze ring kun je een kick plaatsen op jouw beat. Kijk maar!",
             "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
             " Druk op ⏸️ om het op pauze te zetten ",
             "Nu jij, vul nog 2 circles door op de stippen te drukken",
@@ -134,14 +149,15 @@ public static class Tutorial
 
             // klap ring
             "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
-            "Ik heb zelf net 2 erin gezet, luister er maar eens naar▶️!",
+            "Ik heb er zelf net 2 erin gezet, luister er maar eens naar▶️!",
+            "",
             "Klinkt al leuk!",//todo 
             //todo change text that you not only need to add x but also remove x into two steps instead of one
             "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
             "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
             "Ik ben benieuwd laat mij eens horen! ▶️",
             "Probeer 5 keer mee te klappen op de beat!",
-            "Super goed gedaan, nu wordt het echt leuk.",
+            "Super goed gedaan, je hebt talent!.",
 
             //groene laag
             "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
@@ -154,13 +170,13 @@ public static class Tutorial
             "Ik denk dat we het nog leuker kunnen maken met de mixer!",
             "Deze driehoek is de mixer!",
             "Hiermee kun je jouw net opgenomen geluid veranderen",
-            "Je kunt het geluid veranderen van Jouw stem 🎙️ veranderen in het geluid van een Instrument geluid 🎹  en jouw stem met een effect 🤖 er overheem",
+            "Je kunt  Jouw stem 🎙️ veranderen in het geluid van een Instrument 🎹  en jouw stem met een effect 🤖",
             //todo change '' to what the assest is later star Icon
-            "probeer het maar eens door de grijze rondje te bewegen naar het 'witte vierkantje' ",
+            "probeer het maar eens door het grijze rondje te bewegen naar het 🌟 ",
             "Luister maar eens!",
             "Dit geeft een hele andere sfeer aan je beat",
             "Door het grijze rondje nu tussen twee icoontjes te plaatsen maak je een mix!",
-            "Zo krijg je een mix tussen hou stem en het instrument!",
+            "Zo krijg je een mix tussen jou stem en het instrument!",
             //todo going outside the the mixer goes quieter
             
             //End of tutorial
@@ -202,7 +218,8 @@ public static class Tutorial
             () => false, // need to make a check for button press or screen tap
             () => BpmManager.instance.playing
             , // This checks whether the song is playing
-            () => false,
+            () => timer.TimeLeft == 0,
+            ()=> false,
 
             () =>
             {
@@ -267,6 +284,7 @@ public static class Tutorial
                 manager.PlayPauseButton.Visible = true;
                 _active = true;
                 manager.KlappyContinue.Visible = false;
+                manager.settingsButton.Visible = true;
             },
             //stomp ring
             null,
@@ -301,6 +319,7 @@ public static class Tutorial
             manager.beatActives[_indexOrangeRing, _ringLeft] = true;
             _active = false;
             },
+            ()=>  timer.Start(timer.WaitTime),
             ()=> { _active =true;},
             ()=>
             {
@@ -327,8 +346,10 @@ public static class Tutorial
             } ,
             () =>
             {
+                manager.SetMicRecorderVisibility(true);
                 _active =false;
                 manager.knob.GlobalPosition = _top.GlobalPosition;
+              ;
             },
             ()=> {_active =true;},
             () => { _active =false;},
@@ -463,16 +484,17 @@ public static class Tutorial
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
+       
 
         void Speaking()
         {
             SpeakTutorialInstruction(tutorial_level);
           
         }
-        _correctClapPlaySFX();
-        _correctStompPlaySFX();
-      
-        
+            _correctClapPlaySFX();
+            _correctStompPlaySFX();
+
+
         if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
         {
             updateLists();

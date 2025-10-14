@@ -19,23 +19,37 @@ public partial class Manager : Node
 
     public void SpawnInitialLayerButtons()
     {
-        for (int i = 0; i < layersAmountInitial; i++) AddLayer();
+        for (int i = 0; i < layersAmountInitial; i++) AddLayer(i);
     }
 
-    public void AddLayer(string emoji = null) // adds a layer at the end of the list of layers
+    public void AddLayer(int layer, string emoji = null) // adds a layer at the end of the list of layers
     {
         if (layersAmount == layersAmountMax) return;
 
         layersAmount++;
-        NewLayerButton(emoji);
+        NewLayerButton(layer, emoji);
 
-        layersBeatActives.Add(new bool[4, BpmManager.beatsAmount]);
-        layersVoiceOvers0.Add(null);
-        layersVoiceOvers1.Add(null);
-        SamplesMixing_knobPositions.Add(GetStandardKnobPositions());
+        layersBeatActives.Insert(layer, new bool[4, BpmManager.beatsAmount]);
+        layersVoiceOvers0.Insert(layer, null);
+        layersVoiceOvers1.Insert(layer, null);
+        SamplesMixing_knobPositions.Insert(layer, GetStandardKnobPositions());
         EmitSignal(SignalName.OnAddLayerEvent, layersBeatActives.IndexOf(layersBeatActives.Last()));
 
+        SortLayerButtonsInContainerBasedOnTheirIndex();
         UpdateLayerButtonsUserInterface();
+    }
+
+    public void SortLayerButtonsInContainerBasedOnTheirIndex()
+    {
+        var buttons = new List<Button>();
+        var children = layerButtonsContainer.GetChildren();
+        foreach (var child in children) if (child is Button button) buttons.Add(button);
+
+        // sort buttons based on their index
+        buttons.Sort((a, b) => LayerButtons.IndexOf(a).CompareTo(LayerButtons.IndexOf(b)));
+
+        // move the children to the correct order
+        for (int i = 0; i < buttons.Count; i++) layerButtonsContainer.MoveChild(buttons[i], i);
     }
 
     public async void RemoveLayer(int layer) // removes a layer by specific index (can be a layer in between other layers)
@@ -56,10 +70,10 @@ public partial class Manager : Node
         if (layer == currentLayerIndex) SwitchLayer(0, false);
     }
 
-    public Button NewLayerButton(string emoji = null)
+    public Button NewLayerButton(int layer, string emoji = null)
     {
         var layerButton = (Button)layerButtonPrefab.Instantiate();
-        LayerButtons.Add(layerButton);
+        LayerButtons.Insert(layer, layerButton);
         layerButtonsContainer.AddChild(layerButton);
 
         if (emoji != null) layerButton.Text = emoji;
@@ -96,11 +110,6 @@ public partial class Manager : Node
         // transform container
         layerButtonsContainer.Size = new Vector2(layerButtonsContainer.GetChildCount() * layersButtonsSize, layersButtonsSize);
         layerButtonsContainer.GlobalPosition = new Vector2(-layerButtonsContainer.Size.X / 2, layerButtonsContainer.GlobalPosition.Y);
-
-        // transform addlayerbutton
-        addLayerButton.Size = layersButtonsSize * Vector2.One;
-        if (layersAmount < layersAmountMax) addLayerButton.GlobalPosition = new (layerButtonsContainer.Size.X / 2 + 4, layerButtonsContainer.GlobalPosition.Y);
-        else addLayerButton.GlobalPosition = new Vector2(9999, 9999);
 
         // transform outlineholder
         layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + new Vector2(layersButtonsSize, layersButtonsSize) / 2;

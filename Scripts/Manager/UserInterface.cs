@@ -77,6 +77,7 @@ public partial class Manager : Node
 	public Sprite2D[,] beatSprites;
 	Sprite2D[,] templateSprites;
 	[Export] public Color[] colors;
+	[Export] public Light2D[] ringVolumeLights;
 	[Export] PointLight2D micVolumeLight;
 	[Export] PointLight2D klappyLight;
 	[Export] Sprite2D activateGreenChaosButton;
@@ -96,7 +97,7 @@ public partial class Manager : Node
 
 	private void InitButtonActions()
 	{
-		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(button.Text); CloseEmojiPrompt(); };
+		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); };
 
 		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };

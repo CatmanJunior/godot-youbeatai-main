@@ -84,6 +84,8 @@ public partial class SongVoiceOver : Node
 
 		// also play metronome sound on first beat
 		Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+
+		Manager.instance.ShowCountDown();
     }
 
 	public void OnTop()
@@ -119,6 +121,8 @@ public partial class SongVoiceOver : Node
 		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
 
 		Manager.instance.metronome_toggle.ButtonPressed = false;
+
+		Manager.instance.CloseCountDown();
     }
 
     private void StopRecording()

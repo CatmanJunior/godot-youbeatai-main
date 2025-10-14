@@ -79,6 +79,8 @@ public partial class RealTimeAudioRecording : Node
         DisableButtons(true);
 
         Manager.instance.metronome_toggle.ButtonPressed = false;
+
+        Manager.instance.CloseCountDown();
     }
 
     public void OnTop()
@@ -104,6 +106,8 @@ public partial class RealTimeAudioRecording : Node
 
         // also play metronome sound on first beat
         Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+
+        Manager.instance.ShowCountDown();
     }
 
     public void StopRecordingMaster()

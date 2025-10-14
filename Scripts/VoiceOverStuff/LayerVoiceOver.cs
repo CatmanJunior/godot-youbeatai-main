@@ -68,12 +68,16 @@ public partial class LayerVoiceOver : Node
 
             // also play metronome sound on first beat
             Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+
+            Manager.instance.ShowCountDown();
         };
 
         // create audioplayer
         audioPlayer = new AudioStreamPlayer2D();
         AddChild(audioPlayer);
-        audioPlayer.Bus = "Voice";
+
+        if (this == Manager.instance.layerVoiceOver0) audioPlayer.Bus = "GreenVoice";
+        else if (this == Manager.instance.layerVoiceOver1) audioPlayer.Bus = "PurpleVoice";
 
         // setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
@@ -183,6 +187,8 @@ public partial class LayerVoiceOver : Node
         };
 
         AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
+
+        Manager.instance.CloseCountDown();
     }
 
     private void StopRecording()

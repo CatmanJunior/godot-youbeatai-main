@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 [GlobalClass]
@@ -29,6 +30,8 @@ public partial class Manager : Node
 		time += (float)delta;
 
 		HandleCopyPasting();
+
+		if (isShowingCountDown) UpdateCountDownLabel();
 
 		UpdateAchievementsVisibility();
 
@@ -62,6 +65,46 @@ public partial class Manager : Node
 		if (klappylightvalue > 1) klappylightvalue = 1;
 		if (klappylightvalue < 0.05f) klappylightvalue = 0;
 		klappyLight.Energy = klappylightvalue;
+
+		for (int i = 0; i < ringVolumeLights.Length; i++)
+		{
+			var ringLight = ringVolumeLights[i];
+			var busindex = AudioServer.GetBusIndex($"Ring{i}");
+			var analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(busindex, 0);
+			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
+			var volume = magnitude.Length() * 10f;
+			if (volume > 0.10f) ringLight.Energy = volume;
+			else ringLight.Energy = 0f;
+		}
+
+		AudioEffectInstance GetBusEffectInstanceByName(int busIndex, string effectName)
+		{
+			int effectCount = AudioServer.GetBusEffectCount(busIndex);
+			for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffectInstance(busIndex, i);
+			GD.PushWarning($"Effect '{effectName}' not found.");
+			return null;
+		}
+
+        {
+			var greenLight = activateGreenChaosButton.GetChild<Light2D>(1);
+			var busindex = AudioServer.GetBusIndex($"GreenVoice");
+			var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
+			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
+			var volume = magnitude.Length() * 30f;
+			if (volume > 0.1f && BpmManager.instance.playing && layerVoiceOver0.GetCurrentLayerVoiceOver() != null) greenLight.Energy = volume;
+			else greenLight.Energy = 0f;
+        }
+
+		{
+			var purpleLight = activatePurpleChaosButton.GetChild<Light2D>(1);
+			var busindex = AudioServer.GetBusIndex($"PurpleVoice");
+			var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
+			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
+			var volume = magnitude.Length() * 30f;
+			if (volume > 0.1f && BpmManager.instance.playing && layerVoiceOver1.GetCurrentLayerVoiceOver() != null) purpleLight.Energy = volume;
+			else purpleLight.Energy = 0f;
+        }
+		
 
 		micmeter.Value = MicrophoneCapture.instance.volume;
 

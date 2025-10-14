@@ -1,4 +1,4 @@
-[gd_scene load_steps=66 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -53,34 +53,6 @@ point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
-bg_color = Color(0.44, 0.44, 0.44, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r33sp"]
-bg_color = Color(0.27, 0.27, 0.27, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
-bg_color = Color(0.14, 0.14, 0.14, 1)
-corner_radius_top_left = 800
-corner_radius_top_right = 800
-corner_radius_bottom_right = 800
-corner_radius_bottom_left = 800
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o1aky"]
 bg_color = Color(0, 0.65098, 0.929412, 1)
@@ -329,13 +301,15 @@ metadata/_edit_use_anchors_ = true
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "layerVoiceOver0", "layerVoiceOver1")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("coundDownPanel", "coundDownLabel", "emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "Unlockables", "UnlockablesQuestion", "restartButton", "songModeBackPanel", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "ringVolumeLights", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
 metronome_sfx = ExtResource("2_c85ny")
 metronomealt_sfx = ExtResource("3_4uj1d")
 achievement_sfx = ExtResource("3_p4kny")
+coundDownPanel = NodePath("../../CountDown")
+coundDownLabel = NodePath("../../CountDown/Label")
 emailPrompt = NodePath("../../EmailPrompt")
 emailInput = NodePath("../../EmailPrompt/LineEdit")
 emailEnter = NodePath("../../EmailPrompt/Enter")
@@ -359,7 +333,7 @@ pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
 layerButtonPrefab = ExtResource("39_aa8k8")
 layerButtonsContainer = NodePath("../../UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer")
-addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/addLayerButton")
+addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton")
 SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayoutButton")
 LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayoutButton")
 ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayoutButton")
@@ -412,6 +386,7 @@ spritePrefab = ExtResource("2_1eep1")
 texture = ExtResource("2_1ig4u")
 outline = ExtResource("8_llrl4")
 colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
+ringVolumeLights = [NodePath("../../UserInterface/ControlsGroup/DragAndDropButton0/RingVolumeLight"), NodePath("../../UserInterface/ControlsGroup/DragAndDropButton1/RingVolumeLight"), NodePath("../../UserInterface/ControlsGroup/DragAndDropButton2/RingVolumeLight"), NodePath("../../UserInterface/ControlsGroup/DragAndDropButton3/RingVolumeLight")]
 micVolumeLight = NodePath("../../UserInterface/ChaosPad/MicButtonLocation/MicLight")
 klappyLight = NodePath("../../UserInterface/Robot/SubViewportContainer/KlappyLight")
 activateGreenChaosButton = NodePath("../../UserInterface/ControlsGroup/GreenSelectButton")
@@ -798,6 +773,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/DragAndDropButton0"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
+
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
 position = Vector2(-513.887, 325.906)
@@ -822,6 +804,13 @@ text = "👏"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/DragAndDropButton1"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
@@ -848,6 +837,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/DragAndDropButton2"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
+
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 z_index = -4
 position = Vector2(-363.887, 325.906)
@@ -872,6 +868,13 @@ text = "⌚"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/DragAndDropButton3"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
 
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
@@ -898,6 +901,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/GreenSelectButton"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
+
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.516666, 0, 1, 1)
 z_index = -4
@@ -923,6 +933,13 @@ text = "🐦‍⬛"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/ControlsGroup/PurpleSelectButton"]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("22_sb4d6")
+texture_scale = 1.71
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
@@ -1163,22 +1180,6 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="addLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons"]
-offset_left = 51.0
-offset_top = -1058.0
-offset_right = 115.0
-offset_bottom = -994.0
-size_flags_horizontal = 3
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 60
-theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
-text = "+"
-metadata/_edit_use_anchors_ = true
-
 [node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
 position = Vector2(-130, -1074)
 
@@ -1194,9 +1195,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -30.0
+offset_left = -63.0
 offset_top = 45.0
-offset_right = 30.0
+offset_right = -3.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1213,9 +1214,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -96.0
+offset_left = -129.0
 offset_top = 45.0
-offset_right = -36.0
+offset_right = -69.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1232,9 +1233,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 36.0
+offset_left = 3.0
 offset_top = 45.0
-offset_right = 96.0
+offset_right = 63.0
 offset_bottom = 105.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -1243,6 +1244,24 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
 text = "♻️
 "
+metadata/_edit_use_anchors_ = true
+
+[node name="AddLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = 45.0
+offset_right = 129.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+text = "+"
 metadata/_edit_use_anchors_ = true
 
 [node name="SongModeBackPanel" type="Panel" parent="UserInterface/SwitchLayerButtons"]
@@ -2227,6 +2246,35 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "🏁"
 metadata/_edit_use_anchors_ = true
+
+[node name="CountDown" type="Panel" parent="."]
+top_level = true
+z_index = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -680.0
+offset_top = 640.0
+offset_right = -600.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Label" type="Label" parent="CountDown"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]

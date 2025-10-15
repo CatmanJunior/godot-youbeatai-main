@@ -61,6 +61,8 @@ public partial class Manager : Node
 		if (miclightvalue < 0.05f) miclightvalue = 0;
 		micVolumeLight.Energy = miclightvalue;
 
+		micVolumeLight.Visible = chaosPadTriangleSprite.Visible;
+
 		float klappylightvalue = ((float)progressBar.Value) / 100f * 2f;
 		if (klappylightvalue > 1) klappylightvalue = 1;
 		if (klappylightvalue < 0.05f) klappylightvalue = 0;

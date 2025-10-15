@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b0bl4lm384p2n"]
+[gd_scene load_steps=8 format=3 uid="uid://b0bl4lm384p2n"]
 
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_sstgy"]
 [ext_resource type="Texture2D" uid="uid://lmpsycd0viao" path="res://Resources/Textures/kaosalfa.png" id="2_kj5vy"]
@@ -11,12 +11,8 @@ radius = 192.3508
 [sub_resource type="CircleShape2D" id="CircleShape2D_sstgy"]
 radius = 16.0
 
-[sub_resource type="BoxMesh" id="BoxMesh_sstgy"]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_kj5vy"]
 radius = 15.297058
-
-[sub_resource type="BoxMesh" id="BoxMesh_kj5vy"]
 
 [node name="ChaosPad" type="Node2D"]
 
@@ -96,31 +92,37 @@ shape = SubResource("CircleShape2D_rq0eu")
 [node name="Piano" type="Node2D" parent="Tutorial_interactpoints"]
 position = Vector2(74, 51)
 
-[node name="Area2D" type="Area2D" parent="Tutorial_interactpoints/Piano"]
+[node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano"]
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Piano"]
 shape = SubResource("CircleShape2D_sstgy")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="Tutorial_interactpoints/Piano"]
+[node name="Piano_Star" type="Label" parent="Tutorial_interactpoints/Piano"]
 visible = false
-position = Vector2(-0.5, -2.7418137e-06)
-scale = Vector2(29, 25.999998)
-mesh = SubResource("BoxMesh_sstgy")
+offset_left = -21.0
+offset_top = -12.0
+offset_right = 1.0
+offset_bottom = 4.0
+scale = Vector2(2, 2)
+text = "🌟"
 
 [node name="in_between" type="Node2D" parent="Tutorial_interactpoints"]
 position = Vector2(46, -25)
 
-[node name="Area2D" type="Area2D" parent="Tutorial_interactpoints/in_between"]
+[node name="in_between" type="Area2D" parent="Tutorial_interactpoints/in_between"]
 monitoring = false
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/in_between"]
 shape = SubResource("CircleShape2D_kj5vy")
 
-[node name="MeshInstance2D" type="MeshInstance2D" parent="Tutorial_interactpoints/in_between"]
+[node name="in_between_star" type="Label" parent="Tutorial_interactpoints/in_between"]
 visible = false
-position = Vector2(-9.536743e-07, 0)
-scale = Vector2(27.000002, 24)
-mesh = SubResource("BoxMesh_kj5vy")
+offset_left = -20.0
+offset_top = -12.0
+offset_right = 2.0
+offset_bottom = 4.0
+scale = Vector2(2, 2)
+text = "🌟"

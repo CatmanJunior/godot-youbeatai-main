@@ -43,10 +43,15 @@ public partial class Manager : Node
 
     public void SetGreenLayerVisibility(bool visible)
     {
-        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
+        
         layerVoiceOver0.textureProgressBar.Visible = visible;
         activateGreenChaosButton.Visible = visible;
         layerVoiceOver0.bigLine.Visible = visible;
+    }
+
+    public void SetMicRecorderVisibility(bool visible)
+    {
+        ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
     }
 
     public void SetRingVisibility(int ring, bool visible)
@@ -90,6 +95,16 @@ public partial class Manager : Node
         draganddropButton1.Visible = visible;
         draganddropButton2.Visible = visible;
         draganddropButton3.Visible = visible;
+    }
+
+    public void SetStompVisibility(bool visible)
+    {
+        draganddropButton0.Visible = visible;
+    }
+
+    public void SetClapVisibility(bool visible)
+    {
+        draganddropButton1.Visible = visible;
     }
 
     public void SetLayerSwitchButtonsVisibility(bool visible)

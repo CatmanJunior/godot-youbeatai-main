@@ -41,7 +41,7 @@ public static class Tutorial
     private static bool _clapping = false;
     private static Timer timer;
     private static bool allowed = false;
-  
+    private static bool _textAllowed = true;
     static Manager manager => Manager.instance;
 
     public static void Reset()
@@ -52,7 +52,8 @@ public static class Tutorial
         instructions = null;
         conditions = null;
         outcomes = null;
-        
+        timer.QueueFree();
+        timer = null;
     }
 
     public static void CheckIfTutorialWasChosen()
@@ -207,14 +208,7 @@ public static class Tutorial
             () =>
             {
                 _beatsActiveRedRing = activeBeatsPerRing(_indexRedRing);
-                if (SkipPlay())
-                {
-                    return SkipPlay();
-                }
-                else
-                {
-                    return BpmManager.instance.playing;
-                }
+                return BpmManager.instance.playing;
             }, // This checks whether the song is playing
             ()=>
             {
@@ -241,7 +235,7 @@ public static class Tutorial
 
             () =>
             {   _beatsActiveOrangeRing = activeBeatsPerRing(_indexOrangeRing);
-                return BpmManager.instance.playing;
+               return BpmManager.instance.playing;
             }, // This checks whether the song is playing
             ()=>
             {  
@@ -253,7 +247,10 @@ public static class Tutorial
             () => false, // need to make a check for button press or screen tap
             () => manager.layerVoiceOver0.finished,
             () => false, // need to make a check for button press or screen tap
-            () => BpmManager.instance.playing,
+            () =>
+            {
+                return BpmManager.instance.playing;
+            },
             () => false, // need to make a check for button press or screen tap 
             
             // chaos pad
@@ -272,7 +269,10 @@ public static class Tutorial
                 bool moved = _knobPos != manager.knob.GlobalPosition;
                 return   false;
             },
-            ()=> BpmManager.instance.playing,
+            () =>
+            {
+               return BpmManager.instance.playing;
+            },
             //todo Add that you need to put it on spefic location with particle effects
             ()=> false,
             ()=> false,
@@ -291,7 +291,6 @@ public static class Tutorial
             {
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
-                
                 _active = true;
                 manager.KlappyContinue.Visible = false;
                 manager.settingsButton.Visible = true;
@@ -309,12 +308,14 @@ public static class Tutorial
 
             },
             null,
-            null,
+            null, 
             null,
             ()=>
             {
+                
                 manager.AmountLeft.Text = $"Goed gestamped {manager.stompedAmount} / 5";
                 _stomping = true;
+                
             },
             ()=>
             {
@@ -343,9 +344,11 @@ public static class Tutorial
             null,
             ()=>
             {
+                
                 manager.AmountLeft.Visible = true;
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedAmount} / 5";
                 _clapping = true;
+               
             },
             ()=>
             {
@@ -364,9 +367,11 @@ public static class Tutorial
                 manager.knob.GlobalPosition = _top.GlobalPosition;
               ;
             },
-            ()=> {_active =true;},
-            () => { _active =false;},
-            () => { _active = true;},
+            ()=> {_active =true; allowed = true;},
+            () => { _active =false; },
+            () => { _active = true;
+               ;
+            },
             ()=> BpmManager.instance.playing = false,
             //chaos pad
             () =>
@@ -381,8 +386,7 @@ public static class Tutorial
                 _active = false;
                 manager.PianoArea.Monitoring = true; 
                 manager.PianoMesh.Visible = true;
-            },
-            null,
+            },()=> _textAllowed = true ,
             () =>
             {
                 manager.PianoArea.SetDeferred("monitoring",false);
@@ -408,11 +412,16 @@ public static class Tutorial
                 manager.OutSideMesh.Visible = true;
                
             },
+           ()=>
+            { 
+                manager.OutSideArea.SetDeferred("monitoring",false);
+                manager.OutSideMesh.Visible = false;
+                _active = true;
+            },
             // auto stop for tutorial
             () =>
             {
-                manager.OutSideArea.SetDeferred("monitoring",false);
-                manager.OutSideMesh.Visible = false;
+              
                 tutorial_level = -2;
                 manager.SetEntireInterfaceVisibility(true);
                 manager.achievementspanel.Visible = false;
@@ -539,6 +548,7 @@ public static class Tutorial
     
     private static void SpeakTutorialInstruction(int instruction)
     {
+        if (!_textAllowed) return;
         if (manager.muteSpeach.ButtonPressed) return;
         
         var without_emoticons = (string input) =>
@@ -562,22 +572,16 @@ public static class Tutorial
 
     private static bool SkipPlay()
     {//Todo Check the playing and skip 2 instead of 1 when true
-        if (allowed)
-        {
+      
             if (BpmManager.instance.playing)
             {
-                tutorial_level += 2;
-                manager.PlayExtraSFX(manager.achievement_sfx);
-                SpeakTutorialInstruction(tutorial_level);
-                updateLists();
+                _textAllowed = false;
                 return true;
             }
             else
             {
                 return false;
             }
-        }
-        else return false;
 
 
     }

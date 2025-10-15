@@ -397,19 +397,22 @@ public static class Tutorial
             },  
             ()=>
             {
-                manager.OutSideArea.SetDeferred("monitoring",true);
-                manager.OutSideMesh.Visible = true;
+                _active = true;
                 manager.InBetweenArea.SetDeferred("monitoring",false);
                 manager.InBetweenMesh.Visible = false;
             },
             () =>
-            {
-                manager.OutSideArea.SetDeferred("monitoring",false);
-                manager.OutSideMesh.Visible = false;
+            { 
+                _active = false;
+                manager.OutSideArea.SetDeferred("monitoring",true);
+                manager.OutSideMesh.Visible = true;
+               
             },
             // auto stop for tutorial
             () =>
             {
+                manager.OutSideArea.SetDeferred("monitoring",false);
+                manager.OutSideMesh.Visible = false;
                 tutorial_level = -2;
                 manager.SetEntireInterfaceVisibility(true);
                 manager.achievementspanel.Visible = false;

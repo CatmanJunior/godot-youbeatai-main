@@ -409,12 +409,12 @@ public partial class Manager : Node
     {
         if (synth == 0)
         {
-            layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 3f;
+            layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 6f;
             AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green"), weights.Z * mastervolume);
         }
         if (synth == 1)
         {
-            layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 3f;
+            layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 6f;
             AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple"), weights.Z * mastervolume);
         }
     }

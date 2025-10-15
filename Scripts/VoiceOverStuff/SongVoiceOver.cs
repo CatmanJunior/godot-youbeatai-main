@@ -65,6 +65,8 @@ public partial class SongVoiceOver : Node
 		if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
 
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
+
+		audioPlayer.VolumeLinear = 6f;
 	}
 
     public void OnButton()

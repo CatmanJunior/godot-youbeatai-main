@@ -69,6 +69,7 @@ public partial class Manager : Node
 
     public void EmitProgressBarParticles()
     {
+        return; // temp fix
         pbar_particles_curtime = 0;
         pbar_particles_time = 0.4f;
         pbar_particles_emitting = true;
@@ -76,6 +77,7 @@ public partial class Manager : Node
 
     public void EmitAchievementParticles()
     {
+        return; // temp fix
         achievement_particles_curtime = 0;
         achievement_particles_time = 0.5f;
         achievement_particles_emitting = true;

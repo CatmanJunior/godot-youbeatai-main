@@ -8,7 +8,7 @@ public partial class Manager : Node
         SetRingVisibility(1, visible);
         SetRingVisibility(2, visible);
         SetRingVisibility(3, visible);
-        progressBar.Visible = visible;
+        progressBar.Visible = false; // temp fix
         PlayPauseButton.Visible = visible;
         SetMainButtonsVisibility(visible);
         SetRecordingButtonsVisibility(visible);

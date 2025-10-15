@@ -98,6 +98,16 @@ public partial class Manager : Node
         draganddropButton3.Visible = visible;
     }
 
+    public void SetStompVisibility(bool visible)
+    {
+        draganddropButton0.Visible = visible;
+    }
+
+    public void SetClapVisibility(bool visible)
+    {
+        draganddropButton1.Visible = visible;
+    }
+
     public void SetLayerSwitchButtonsVisibility(bool visible)
     {
         for (int i = 0; i < LayerButtons.Count; i++)

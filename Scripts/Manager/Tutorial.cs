@@ -138,11 +138,11 @@ public static class Tutorial
             "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen.",
 
             // kick ring
-            "deze rode circles vormen een beat ring",
+            "deze rode cirkels vormen een beat ring",
             "Met deze ring kun je een kick plaatsen op jouw beat. Kijk maar!",
             "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
             " Druk op ⏸️ om het op pauze te zetten ",
-            "Nu jij, vul nog 2 circles door op de stippen te drukken",
+            "Nu jij, vul nog 2 cirkels door op de stippen te drukken",
             "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt! ▶️",
             "Stamp👞 eens 5 keer mee op jouw beat!",
             "Wow super gedaan! tijd voor level 2!",
@@ -281,7 +281,7 @@ public static class Tutorial
             {
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
-                manager.PlayPauseButton.Visible = true;
+                
                 _active = true;
                 manager.KlappyContinue.Visible = false;
                 manager.settingsButton.Visible = true;
@@ -294,6 +294,8 @@ public static class Tutorial
                 manager.beatActives[_indexRedRing, _ringRight] = true;
                 manager.beatActives[_indexRedRing, _ringBottom] = true;
                 _active =false;
+                manager.PlayPauseButton.Visible = true;
+                manager.SetStompVisibility(true);
 
             },
             null,
@@ -317,6 +319,7 @@ public static class Tutorial
             ()=>{
             manager.beatActives[_indexOrangeRing, _ringRight] = true;
             manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+            manager.SetClapVisibility(true);
             _active = false;
             },
             ()=>  timer.Start(timer.WaitTime),

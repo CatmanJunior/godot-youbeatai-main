@@ -40,6 +40,7 @@ public static class Tutorial
     private static bool _stomping = false;
     private static bool _clapping = false;
     private static Timer timer;
+    private static bool allowed = false;
   
     static Manager manager => Manager.instance;
 
@@ -70,6 +71,7 @@ public static class Tutorial
             manager.PianoArea.AreaEntered += _bodyContinue;
             manager.InBetweenArea.AreaEntered += _bodyContinue;
             manager.KlappyContinue.Pressed += KlappyContinue;
+            manager.OutSideArea.AreaEntered += _bodyContinue;
             
             _top = manager.corners[1];
 
@@ -135,7 +137,7 @@ public static class Tutorial
         instructions =
         [
             // intro
-            "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen.",
+            "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen",
 
             // kick ring
             "deze rode cirkels vormen een beat ring",
@@ -157,7 +159,7 @@ public static class Tutorial
             "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
             "Ik ben benieuwd laat mij eens horen! ▶️",
             "Probeer 5 keer mee te klappen op de beat!",
-            "Super goed gedaan, je hebt talent!.",
+            "Super goed gedaan, je hebt talent!",
 
             //groene laag
             "Zie je die groene ring om de stippen heen? Die vul je in door met je eigen microfoon iets op te nemen!",
@@ -170,7 +172,7 @@ public static class Tutorial
             "Ik denk dat we het nog leuker kunnen maken met de mixer!",
             "Deze driehoek is de mixer!",
             "Hiermee kun je jouw net opgenomen geluid veranderen",
-            "Je kunt  Jouw stem 🎙️ veranderen in het geluid van een Instrument 🎹  en jouw stem met een effect 🤖",
+            "Je kunt jouw stem 🎙️ veranderen in het geluid van een Instrument 🎹  en jouw stem met een effect 🤖",
             //todo change '' to what the assest is later star Icon
             "probeer het maar eens door het grijze rondje te bewegen naar het 🌟 ",
             "Luister maar eens!",
@@ -178,7 +180,7 @@ public static class Tutorial
             "Door het grijze rondje nu tussen twee icoontjes te plaatsen maak je een mix!",
             "Zo krijg je een mix tussen jou stem en het instrument!",
             //todo going outside the the mixer goes quieter
-            
+            "Laten we het geluid iets zachter maken door de grijze stip een beetje buiten de driehoek te plaatsen",
             //End of tutorial
             "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
 
@@ -205,7 +207,14 @@ public static class Tutorial
             () =>
             {
                 _beatsActiveRedRing = activeBeatsPerRing(_indexRedRing);
-                return BpmManager.instance.playing;
+                if (SkipPlay())
+                {
+                    return SkipPlay();
+                }
+                else
+                {
+                    return BpmManager.instance.playing;
+                }
             }, // This checks whether the song is playing
             ()=>
             {
@@ -265,6 +274,7 @@ public static class Tutorial
             },
             ()=> BpmManager.instance.playing,
             //todo Add that you need to put it on spefic location with particle effects
+            ()=> false,
             ()=> false,
             ()=> false,
             ()=> false,
@@ -359,14 +369,9 @@ public static class Tutorial
             () => { _active = true;},
             ()=> BpmManager.instance.playing = false,
             //chaos pad
-            //todo add particles effects for the specific location of the fingerprint button
             () =>
             {
-                SongVoiceOver.instance.recordSongButton.Visible = true;
-                RealTimeAudioRecording.instance.recordSongButton.Visible = true;
-                SongVoiceOver.instance.recordSongSprite.Visible = true;
-                RealTimeAudioRecording.instance.recordSongSprite.Visible = true;
-                SongVoiceOver.instance.progressbar.Visible = true;
+            
                 manager.chaosPadTriangleSprite.Visible = true;
             },
             null,
@@ -392,11 +397,16 @@ public static class Tutorial
             },  
             ()=>
             {
-                _active = true;
+                manager.OutSideArea.SetDeferred("monitoring",true);
+                manager.OutSideMesh.Visible = true;
                 manager.InBetweenArea.SetDeferred("monitoring",false);
                 manager.InBetweenMesh.Visible = false;
             },
-            null,
+            () =>
+            {
+                manager.OutSideArea.SetDeferred("monitoring",false);
+                manager.OutSideMesh.Visible = false;
+            },
             // auto stop for tutorial
             () =>
             {
@@ -545,6 +555,28 @@ public static class Tutorial
         if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
+    }
+
+    private static bool SkipPlay()
+    {//Todo Check the playing and skip 2 instead of 1 when true
+        if (allowed)
+        {
+            if (BpmManager.instance.playing)
+            {
+                tutorial_level += 2;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SpeakTutorialInstruction(tutorial_level);
+                updateLists();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else return false;
+
+
     }
 
     private static void updateLists()

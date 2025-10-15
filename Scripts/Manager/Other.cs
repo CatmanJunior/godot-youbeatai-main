@@ -36,6 +36,8 @@ public partial class Manager : Node
     [Export] public Label PianoMesh;
     [Export] public Area2D InBetweenArea;
     [Export] public Label InBetweenMesh;
+    [Export] public Area2D OutSideArea;
+    [Export] public Label OutSideMesh;
     [Export] public Node3D Klappy;
 
     AudioStream clipboardLayerVoice0;

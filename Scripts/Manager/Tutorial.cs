@@ -307,9 +307,13 @@ public static class Tutorial
                 manager.SetStompVisibility(true);
 
             },
-            null,
-            null, 
-            null,
+            ()=> allowed=true,
+            ()=> SkipPlay(),
+            ()=>
+            {
+                _textAllowed = true;
+                allowed=true;
+            },
             ()=>
             {
                 
@@ -332,8 +336,13 @@ public static class Tutorial
             manager.beatActives[_indexOrangeRing, _ringLeft] = true;
             manager.SetClapVisibility(true);
             _active = false;
+            SkipPlay();
             },
-            ()=>  timer.Start(timer.WaitTime),
+            ()=>
+            {
+                _textAllowed = true;
+                timer.Start(timer.WaitTime);
+            },
             ()=> { _active =true;},
             ()=>
             {
@@ -341,10 +350,10 @@ public static class Tutorial
                 BpmManager.instance.playing = false;
             },
             null,
-            null,
+            ()=>  SkipPlay(),
             ()=>
             {
-                
+                _textAllowed = true;
                 manager.AmountLeft.Visible = true;
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedAmount} / 5";
                 _clapping = true;
@@ -368,9 +377,12 @@ public static class Tutorial
               ;
             },
             ()=> {_active =true; allowed = true;},
-            () => { _active =false; },
-            () => { _active = true;
-               ;
+            () => { _active =false;  SkipPlay();
+            },
+            () =>
+            {
+                _active = true; _textAllowed = true;
+               
             },
             ()=> BpmManager.instance.playing = false,
             //chaos pad
@@ -386,9 +398,10 @@ public static class Tutorial
                 _active = false;
                 manager.PianoArea.Monitoring = true; 
                 manager.PianoMesh.Visible = true;
-            },()=> _textAllowed = true ,
+            },()=>  SkipPlay() ,
             () =>
             {
+                _textAllowed = true;
                 manager.PianoArea.SetDeferred("monitoring",false);
                 manager.PianoMesh.Visible = false;
                 _active = true;
@@ -572,7 +585,7 @@ public static class Tutorial
 
     private static bool SkipPlay()
     {//Todo Check the playing and skip 2 instead of 1 when true
-      
+      GD.Print("Skipped");
             if (BpmManager.instance.playing)
             {
                 _textAllowed = false;
@@ -580,7 +593,7 @@ public static class Tutorial
             }
             else
             {
-                return false;
+                return BpmManager.instance.playing;
             }
 
 

@@ -65,6 +65,46 @@ public partial class Manager : Node
         return clone;
     }
 
+    public void SamplesMixing_ReApplyRememberedMixingVolumesForAllRings()
+    {
+        var result0 = SampleMixing_GetRememberedWeightsForRing(0);
+        SamplesMixing_UpdateMixingVolumesForRing(0, result0.mastervolume, result0.weights);
+        var result1 = SampleMixing_GetRememberedWeightsForRing(1);
+        SamplesMixing_UpdateMixingVolumesForRing(1, result1.mastervolume, result1.weights);
+        var result2 = SampleMixing_GetRememberedWeightsForRing(2);
+        SamplesMixing_UpdateMixingVolumesForRing(2, result2.mastervolume, result2.weights);
+        var result3 = SampleMixing_GetRememberedWeightsForRing(3);
+        SamplesMixing_UpdateMixingVolumesForRing(3, result3.mastervolume, result3.weights);
+    }
+
+    private (Vector3 weights, float mastervolume) SampleMixing_GetRememberedWeightsForRing(int ring)
+    {
+        // get knob
+        var rememberedKnobPositionForRing = SamplesMixing_knobPositions[currentLayerIndex][ring];
+
+        // inner triangle blending
+        var tempWeights = GetBarycentricWeights
+        (
+            rememberedKnobPositionForRing,
+            corners[0].GlobalPosition,
+            corners[1].GlobalPosition,
+            corners[2].GlobalPosition
+        );
+
+        // outer triangle effects master volume
+        float tempMasterVolume = IsInsideTriangle(tempWeights) ? 1f : MasterVolumeFromDistance(rememberedKnobPositionForRing, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+
+        // clamp weights
+        tempWeights = new Vector3
+        (
+            Mathf.Clamp(tempWeights.X, 0f, 1f),
+            Mathf.Clamp(tempWeights.Y, 0f, 1f),
+            Mathf.Clamp(tempWeights.Z, 0f, 1f)
+        );
+
+        return (tempWeights, tempMasterVolume);
+    }
+
     public void SamplesMixing_ChangeRing(int newring)
     {
         // save knob position

@@ -22,6 +22,7 @@ public partial class Manager : Node
 		InitButtonActions();
 		SpritePlacement();
 		Tutorial.SetupTutorial();
+		SamplesMixing_ReApplyRememberedMixingVolumesForAllRings();
 		OnReadyMixing();
 	}
 

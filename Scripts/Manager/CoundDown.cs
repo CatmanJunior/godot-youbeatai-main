@@ -21,14 +21,15 @@ public partial class Manager
 
     public void UpdateCountDownLabel()
     {
-        coundDownLabel.Text = CalculateTimeUntilTop().ToString("0.0");
+        coundDownLabel.Text = CalculateTimeUntilTop().ToString("0");
     }
 
     public float CalculateTimeUntilTop()
     {
         int curbeat = BpmManager.instance.currentBeat;
-        int beatsUntilTop = BpmManager.beatsAmount - curbeat;
+        int beatsUntilTop = BpmManager.beatsAmount - curbeat - 1;
+        int fourBeatsUntilTop = beatsUntilTop / 4;
         float timeUntilTop = beatsUntilTop * BpmManager.instance.baseTimePerBeat;
-        return timeUntilTop;
+        return fourBeatsUntilTop + 1;
     }
 }

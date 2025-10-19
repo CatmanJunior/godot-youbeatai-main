@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=63 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -107,6 +107,13 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwxat"]
+bg_color = Color(0.12941177, 0.12941177, 0.12941177, 1)
+corner_radius_top_left = 1000
+corner_radius_top_right = 1000
+corner_radius_bottom_right = 1000
+corner_radius_bottom_left = 1000
 
 [node name="scene" type="Node2D"]
 
@@ -2175,6 +2182,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
 text = "🌱"
 metadata/_edit_use_anchors_ = true
 
@@ -2193,6 +2201,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
 text = "📜"
 metadata/_edit_use_anchors_ = true
 
@@ -2211,6 +2220,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
 text = "🤩"
 metadata/_edit_use_anchors_ = true
 
@@ -2229,6 +2239,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
 text = "😀"
 metadata/_edit_use_anchors_ = true
 
@@ -2247,6 +2258,7 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
 text = "🏁"
 metadata/_edit_use_anchors_ = true
 

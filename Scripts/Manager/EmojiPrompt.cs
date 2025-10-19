@@ -4,6 +4,7 @@ public partial class Manager : Node
 {
     [Export] public Panel emojiPrompt;
     [Export] public Button[] emojiButtons;
+	[Export] public Button emojiPromptCancelButton;
     
     public void OpenEmojiPrompt()
     {

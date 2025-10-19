@@ -99,7 +99,8 @@ public partial class Manager : Node
 	private void InitButtonActions()
 	{
 		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); };
-
+		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
+		
 		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
 		emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;

@@ -16,15 +16,13 @@ public static class Achievements
     // nodes with blockers
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
 
-    // conditions for each node
-    private static bool[] conditions =>
+    // achievements connected to each node
+    private static (bool condition, string tooltip)[] achievements =>
     [
-        BpmManager.instance.currentBeat == BpmManager.beatsAmount - 4,
-    ];
-
-    private static string[] tooltips =>
-    [
-        "do a for b"
+        (
+            condition: BpmManager.instance.currentBeat == BpmManager.beatsAmount - 4, 
+            tooltip: "go through a circle to unlock"
+        ),
     ];
 
     public static void OnReady()
@@ -43,7 +41,7 @@ public static class Achievements
         for (int i = 0; i < nodes.Length; i++)
         {
             var node = nodes[i];
-            var condition = conditions[i];
+            var condition = achievements[i].condition;
             var blocker = FindBlocker(node);
             if (blocker.Visible && condition) blocker.Visible = false;
         }
@@ -72,7 +70,7 @@ public static class Achievements
     public static void OpenTooltip(int index)
     {
         manager.achievementspanel.Visible = true;
-        manager.InstructionLabel.Text = tooltips[index];
+        manager.InstructionLabel.Text = achievements[index].tooltip;
         SpeakTooltip(index);
     }
 
@@ -89,7 +87,7 @@ public static class Achievements
         var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
         if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        DisplayServer.TtsSpeak(ExtractEmoticons(tooltips[index]), voices[0], 100);
+        DisplayServer.TtsSpeak(ExtractEmoticons(achievements[index].tooltip), voices[0], 100);
     }
 
     private static string ExtractEmoticons(string input)

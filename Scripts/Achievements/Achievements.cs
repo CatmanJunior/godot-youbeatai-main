@@ -3,29 +3,26 @@ using Godot;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public static class Achievements
 {
     static Manager manager => Manager.instance;
-
+    public static bool useAchievements;
     public static bool achievementsModeIsActivated = false;
 
-    // nodes that are locked by default but can be unlocked
-    private static List<Node2D> nodes = manager.NodesThatCanBeUnlocked.ToList();
+    // nodes with blockers
+    private static List<Node2D> nodes => manager.NodesThatCanBeUnlocked.ToList();
 
-    private static List<bool> states;
-
-    public static void Reset()
-    {
-        achievementsModeIsActivated = false;
-        useAchievements = ReadUseAchievements();
-    }
+    // conditions for each node
+    private static List<bool> conditions =>
+    [
+        BpmManager.instance.currentBeat == BpmManager.beatsAmount - 4,
+    ];
 
     public static void OnReady()
     {
-        // init state to not unlocked
-        states = new List<bool>(nodes.Count);
-        for (int i = 0; i < states.Count; i++) states[i] = false;
+        // not used right now
     }
 
     public static void OnUpdate()
@@ -34,35 +31,18 @@ public static class Achievements
         for (int i = 0; i < nodes.Count; i++)
         {
             var node = nodes[i];
-            var state = states[i];
+            var condition = conditions[i];
             var blocker = FindBlocker(node);
-
-            if (state == false) blocker.Visible = false;
-            else blocker.Visible = true;
+            if (blocker.Visible && condition) blocker.Visible = false;
         }
     }
 
-    public static Node2D FindBlocker(Node2D node)
+    public static Blocker FindBlocker(Node2D node)
     {
-        var blocker = (Node2D)node.FindChild("Blocker", true);
-        if (blocker != null) return blocker;
-        else return null;
+        var blocker = (Blocker)node.FindChild("Blocker", true);
+        return blocker ?? null;
     }
 
-    public static void UnlockNode(Node2D node)
-    {
-        // unlock node
-        int index = nodes.IndexOf(node);
-        states[index] = true;
-    }
-
-    public static void UnlockNode(int index)
-    {
-        // unlock node
-        states[index] = true;
-    }
-
-    public static bool useAchievements;
     private static bool ReadUseAchievements()
     {
         bool use;
@@ -85,6 +65,12 @@ public static class Achievements
 
     public static void CheckIfAchievementsModeShouldBeActive()
     {
+        useAchievements = ReadUseAchievements();
+    }
+
+    public static void Reset()
+    {
+        achievementsModeIsActivated = false;
         useAchievements = ReadUseAchievements();
     }
 }

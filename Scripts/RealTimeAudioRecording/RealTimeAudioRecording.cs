@@ -75,9 +75,6 @@ public partial class RealTimeAudioRecording : Node
         // also record voice over
         SongVoiceOver.instance.shouldRecord = true;
 
-        // disable buttons during recording
-        DisableButtons(true);
-
         Manager.instance.metronome_toggle.ButtonPressed = false;
 
         Manager.instance.CloseCountDown();
@@ -93,6 +90,9 @@ public partial class RealTimeAudioRecording : Node
     {
         Manager.instance.layerLoopToggle.ButtonPressed = true;
         shouldRecord = !shouldRecord;
+
+        // disable buttons during recording
+        DisableButtons(true);
 
         // metronoom aan
         Manager.instance.metronome_toggle.ButtonPressed = true;

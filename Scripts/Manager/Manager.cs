@@ -141,7 +141,7 @@ public partial class Manager : Node
 
 		// space as play/pause
 		var spacedown = Input.IsKeyPressed(Key.Space);
-		if (spacedown && spacedownlastframe == false && !emailPromptOpen) OnPlayPauseButton();
+		if (spacedown && spacedownlastframe == false && !emailPromptOpen && !PlayPauseButton.Disabled) OnPlayPauseButton();
 		spacedownlastframe = spacedown;
 
 		// enter as reset player

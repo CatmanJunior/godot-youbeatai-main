@@ -74,6 +74,13 @@ public partial class SongVoiceOver : Node
         Manager.instance.layerLoopToggle.ButtonPressed = true;
         shouldRecord = !shouldRecord;
 
+		// buttons during recording
+		snellerButton.Disabled = true;
+		langzamerButton.Disabled= true;
+		Manager.instance.SetLayerSwitchButtonsEnabled(false);
+		Manager.instance.PlayPauseButton.Disabled = true;
+		recordSongButton.Disabled = true;
+
         // metronoom aan
         Manager.instance.metronome_toggle.ButtonPressed = true;
 
@@ -109,13 +116,6 @@ public partial class SongVoiceOver : Node
 		recording = true;
         audioEffectRecord.SetRecordingActive(true);
 		GD.Print("recording started");
-
-		// buttons during recording
-		snellerButton.Disabled = true;
-		langzamerButton.Disabled= true;
-		Manager.instance.SetLayerSwitchButtonsEnabled(false);
-		Manager.instance.PlayPauseButton.Disabled = true;
-		recordSongButton.Disabled = true;
 
 		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
 		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;

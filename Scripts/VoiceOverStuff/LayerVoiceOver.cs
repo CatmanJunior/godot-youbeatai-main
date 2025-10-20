@@ -57,6 +57,15 @@ public partial class LayerVoiceOver : Node
             Manager.instance.layerLoopToggle.ButtonPressed = false;
             shouldRecord = !shouldRecord;
 
+            // buttons during recording
+            snellerButton.Disabled = true;
+            langzamerButton.Disabled = true;
+            Manager.instance.SetLayerSwitchButtonsEnabled(false);
+            Manager.instance.PlayPauseButton.Disabled = true;
+            recordLayerButton.Disabled = true;
+            SongVoiceOver.instance.recordSongButton.Disabled = true;
+            Manager.instance.metronome_toggle.ButtonPressed = false;
+
             // metronoom aan
             Manager.instance.metronome_toggle.ButtonPressed = true;
 
@@ -166,15 +175,6 @@ public partial class LayerVoiceOver : Node
 
     private void StartRecording()
     {
-        // buttons during recording
-        snellerButton.Disabled = true;
-        langzamerButton.Disabled = true;
-        Manager.instance.SetLayerSwitchButtonsEnabled(false);
-        Manager.instance.PlayPauseButton.Disabled = true;
-        recordLayerButton.Disabled = true;
-        SongVoiceOver.instance.recordSongButton.Disabled = true;
-        Manager.instance.metronome_toggle.ButtonPressed = false;
-
         shouldUpdateProgressBar = true;
         bigLine.Visible = false;
 

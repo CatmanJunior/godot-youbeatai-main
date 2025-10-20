@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EffectProfile" load_steps=2 format=3 uid="uid://dxq08e1mga327"]
+
+[ext_resource type="Script" uid="uid://b1ymetkpj7tbs" path="res://Scripts/AudioBanks/EffectProfile.cs" id="1_84bm2"]
+
+[resource]
+script = ExtResource("1_84bm2")
+distortion_db = 5.9
+phaser = 3.0
+reverb = 0.4
+metadata/_custom_type_script = "uid://b1ymetkpj7tbs"

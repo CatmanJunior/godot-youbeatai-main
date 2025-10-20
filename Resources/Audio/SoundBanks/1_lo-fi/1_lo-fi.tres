@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://c454guqg60bap"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://c454guqg60bap"]
 
 [ext_resource type="AudioStream" uid="uid://7l06ded8vxoa" path="res://Resources/Audio/SoundBanks/1_lo-fi/Clap Amnesia.wav" id="1_81lb8"]
 [ext_resource type="AudioStream" uid="uid://bd7yiyir2m7x2" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Clap_Perc Si.wav" id="2_i41ue"]
 [ext_resource type="AudioStream" uid="uid://cuywkxu6j8o5s" path="res://Resources/Audio/SoundBanks/1_lo-fi/ClosedHH Forest.wav" id="3_fyb6c"]
 [ext_resource type="AudioStream" uid="uid://cqsib0y2evgjc" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/ClosedHH Elegance.wav" id="4_xd8ou"]
+[ext_resource type="Resource" uid="uid://dxq08e1mga327" path="res://Resources/Audio/SoundBanks/1_lo-fi/EffectProfile.tres" id="5_81lb8"]
 [ext_resource type="AudioStream" uid="uid://n4ahyv3pyc4j" path="res://Resources/Audio/SoundBanks/1_lo-fi/Kick Blossom 1.wav" id="6_w75j6"]
 [ext_resource type="AudioStream" uid="uid://dsvwgyu3cdkb" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Kick Bazzazian 2.wav" id="7_qsyax"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_qyjr2"]
@@ -25,4 +26,5 @@ green_soundfont = ExtResource("8_qyjr2")
 green_instrument_id = 12
 purple_soundfont = ExtResource("8_qyjr2")
 purple_instrument_id = 14
+effectProfile = ExtResource("5_81lb8")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

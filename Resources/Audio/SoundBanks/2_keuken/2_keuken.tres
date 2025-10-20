@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://dg05d7ae82051"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://dg05d7ae82051"]
 
 [ext_resource type="AudioStream" uid="uid://cwu11sgcrukxf" path="res://Resources/Audio/SoundBanks/2_keuken/Clap Hoba.wav" id="1_i756p"]
 [ext_resource type="AudioStream" uid="uid://bjbxwnh1of5f2" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Clap_Denim.wav" id="2_i756p"]
 [ext_resource type="AudioStream" uid="uid://dy4ueh523rpqx" path="res://Resources/Audio/SoundBanks/2_keuken/ClosedHH Butter 1.wav" id="3_bwyu4"]
 [ext_resource type="AudioStream" uid="uid://dj82d8v1i10vv" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/ClosedHH Denim.wav" id="4_bwyu4"]
+[ext_resource type="Resource" uid="uid://cghnjaymt16h1" path="res://Resources/Audio/SoundBanks/2_keuken/EffectProfile.tres" id="5_bwyu4"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="5_tc6nb"]
 [ext_resource type="AudioStream" uid="uid://odobipxdwoem" path="res://Resources/Audio/SoundBanks/2_keuken/Kick Glory 1.wav" id="6_5bui3"]
 [ext_resource type="AudioStream" uid="uid://b2wvvwru36ift" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Kick Gnarly 2.wav" id="7_5bui3"]
@@ -25,4 +26,5 @@ closed_alt = ExtResource("4_bwyu4")
 green_soundfont = ExtResource("5_tc6nb")
 purple_soundfont = ExtResource("8_th3op")
 purple_instrument_id = 4
+effectProfile = ExtResource("5_bwyu4")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

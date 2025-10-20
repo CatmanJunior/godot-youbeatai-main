@@ -80,7 +80,7 @@ func on_bpm():
 	log_value = min(1, pow(10, log_value / 10))
 
 	# gate quiet notes
-	if log_value <= 0.3 or song[bpmManager.currentBeat].y == 0:
+	if log_value <= 0.5 or song[bpmManager.currentBeat].y == 0:
 		return
 	
 	var current_note: Vector3 = song[bpmManager.currentBeat]

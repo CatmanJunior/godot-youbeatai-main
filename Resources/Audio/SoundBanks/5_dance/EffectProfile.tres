@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectProfile" load_steps=2 format=3 uid="uid://d3p00p13ehkir"]
+
+[ext_resource type="Script" uid="uid://b1ymetkpj7tbs" path="res://Scripts/AudioBanks/EffectProfile.cs" id="1_jer2q"]
+
+[resource]
+script = ExtResource("1_jer2q")
+pitch_shift = 1.06
+reverb = 0.4
+metadata/_custom_type_script = "uid://b1ymetkpj7tbs"

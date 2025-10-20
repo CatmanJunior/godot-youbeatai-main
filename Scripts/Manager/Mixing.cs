@@ -371,11 +371,13 @@ public partial class Manager : Node
         {
             layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
             AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green"), weights.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green_alt"), weights.X * mastervolume);
         }
         if (synth == 1)
         {
             layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 1.5f;
             AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple"), weights.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple_alt"), weights.X * mastervolume);
         }
     }
 

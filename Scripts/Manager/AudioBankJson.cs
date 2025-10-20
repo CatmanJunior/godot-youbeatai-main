@@ -35,6 +35,18 @@ public partial class Manager : Node
         mainAudioFilesAlt[2] = bank.snare_alt;
         mainAudioFilesAlt[3] = bank.closed_alt;
 
+        // var green_alt = AudioServer.GetBusIndex("Green_alt");
+        // bank.effectProfile.Apply(green_alt);
+        
+        var green = AudioServer.GetBusIndex("Green");
+        bank.effectProfile.Apply(green);
+        
+        var purple = AudioServer.GetBusIndex("Purple");
+        bank.effectProfile.Apply(purple);
+        
+        // var purple_alt = AudioServer.GetBusIndex("Purple_alt");
+        // bank.effectProfile.Apply(purple_alt);
+
         // set swing
         float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
         BpmManager.instance.swing = chosenswing;

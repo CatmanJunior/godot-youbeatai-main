@@ -143,13 +143,13 @@ public partial class Manager : Node
         }
 
         // set mic button location
-        Node2D[] micButtons = 
+        Node2D[] micButtons =
         [
-            recordSampleButton0, 
-            recordSampleButton1, 
-            recordSampleButton2, 
-            recordSampleButton3, 
-            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(), 
+            recordSampleButton0,
+            recordSampleButton1,
+            recordSampleButton2,
+            recordSampleButton3,
+            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(),
             (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
         ];
         for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -193,14 +193,14 @@ public partial class Manager : Node
         if (givenWeights == null)
         {
             mainvolume = weights.X * mastervolume;
-            recvolume  = weights.Y * mastervolume;
-            altvolume  = weights.Z * mastervolume;
+            recvolume = weights.Y * mastervolume;
+            altvolume = weights.Z * mastervolume;
         }
         else
         {
             mainvolume = givenWeights.Value.X * mastervolume;
-            recvolume  = givenWeights.Value.Y * mastervolume;
-            altvolume  = givenWeights.Value.Z * mastervolume;
+            recvolume = givenWeights.Value.Y * mastervolume;
+            altvolume = givenWeights.Value.Z * mastervolume;
         }
 
         if (ring == 0)
@@ -267,13 +267,13 @@ public partial class Manager : Node
         }
 
         // set mic button location
-        Node2D[] micButtons = 
+        Node2D[] micButtons =
         [
-            recordSampleButton0, 
-            recordSampleButton1, 
-            recordSampleButton2, 
-            recordSampleButton3, 
-            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(), 
+            recordSampleButton0,
+            recordSampleButton1,
+            recordSampleButton2,
+            recordSampleButton3,
+            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(),
             (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
         ];
         for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -459,11 +459,11 @@ public partial class Manager : Node
         if (Input.IsKeyPressed(Key.O)) GD.Print(mastervolume);
 
         // update volumes of active ring
-        bool anyrec = 
-            SongVoiceOver.instance.recording || 
-            layerVoiceOver0.recording || 
-            layerVoiceOver0.shouldRecord || 
-            layerVoiceOver1.recording || 
+        bool anyrec =
+            SongVoiceOver.instance.recording ||
+            layerVoiceOver0.recording ||
+            layerVoiceOver0.shouldRecord ||
+            layerVoiceOver1.recording ||
             layerVoiceOver1.shouldRecord;
 
         if (!anyrec)

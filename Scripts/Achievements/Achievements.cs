@@ -31,7 +31,7 @@ public static class Achievements
         foreach (var node in nodes)
         {
             var blocker = FindBlocker(node);
-            blocker.Visible = useAchievements;
+            SetBlockerState(blocker, useAchievements);
         }
     }
 
@@ -43,7 +43,7 @@ public static class Achievements
             var node = nodes[i];
             var condition = achievements[i].condition;
             var blocker = FindBlocker(node);
-            if (blocker.Visible && condition) blocker.Visible = false;
+            if (blocker.Visible && condition) SetBlockerState(blocker, false);
         }
 
         if (!doneLateReady)
@@ -59,6 +59,12 @@ public static class Achievements
 
             doneLateReady = true;
         }
+    }
+
+    public static void SetBlockerState(Blocker blocker, bool enabled)
+    {
+        blocker.Visible = enabled;
+        blocker.MouseFilter = enabled ? Control.MouseFilterEnum.Stop : Control.MouseFilterEnum.Ignore;
     }
 
     public static Blocker FindBlocker(Node2D node)

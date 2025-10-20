@@ -29,6 +29,7 @@ public partial class Manager : Node
 
 	// other interface
 	[Export] public Label[] Unlockables;
+	[Export] public Node2D[] NodesThatCanBeUnlocked;
 	[Export] public Label[] UnlockablesQuestion;
 	[Export] public Button restartButton;
 	[Export] public Panel songModeBackPanel;
@@ -80,8 +81,8 @@ public partial class Manager : Node
 	[Export] public Light2D[] ringVolumeLights;
 	[Export] PointLight2D micVolumeLight;
 	[Export] PointLight2D klappyLight;
-	[Export] Sprite2D activateGreenChaosButton;
-	[Export] Sprite2D activatePurpleChaosButton;
+	[Export] public Sprite2D activateGreenChaosButton;
+	[Export] public Sprite2D activatePurpleChaosButton;
 	[Export] Node2D copyPasteClearButtonsHolder;
 	[Export] public Button ContinueButton;
 	[Export] public Button KlappyContinue;
@@ -117,12 +118,14 @@ public partial class Manager : Node
 				Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_emoticons.json"),
 				Path.Combine(ProjectSettings.GlobalizePath("user://"), "chosen_soundbank.json"),
 				Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt"),
-				Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt")
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt"),
+				Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_achievements.txt")
 			];
 
 			foreach (var path in filesToReset) File.Delete(path);
 
 			Tutorial.Reset();
+			Achievements.Reset();
 		};
 		PlayPauseButton.ButtonUp += OnPlayPauseButton;
 		BpmUpButton.Pressed += OnBpmUpButton;

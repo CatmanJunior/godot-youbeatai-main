@@ -77,13 +77,6 @@ public static class Tutorial
             _top = manager.corners[1];
 
         }
-        else // disable tutorial
-        {
-            tutorial_level = -1;
-            manager.SetEntireInterfaceVisibility(true);
-            manager.achievementspanel.Visible = false;
-            if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        }
     }
 
     private static void timerSetUp()

@@ -17,12 +17,14 @@ public partial class Manager : Node
 		SpawnInitialLayerButtons();
 		BpmManager.instance.OnBeatEvent += OnBeat;
 		Tutorial.CheckIfTutorialWasChosen();
+		Achievements.CheckIfAchievementsModeShouldBeActive();
 		ReadJsonFromPreviousSceneAndSetValues();
 		InitAllAudioPlayers();
 		InitButtonActions();
 		SpritePlacement();
 		Tutorial.SetupTutorial();
 		SamplesMixing_ReApplyRememberedMixingVolumesForAllRings();
+		Achievements.OnReady();
 		OnReadyMixing();
 	}
 
@@ -40,11 +42,20 @@ public partial class Manager : Node
 
 		if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
 
+		if (!interfaceSetToDefaultState)
+		{
+			SetEntireInterfaceVisibility(true);
+        	achievementspanel.Visible = false;
+			interfaceSetToDefaultState = true;
+		}
+
 		if (!Tutorial.tutorialActivated)
 		{
 			Tutorial.TryActivateTutorial();
 			Tutorial.tutorialActivated = true;
 		}
+
+		Achievements.OnUpdate();
 
 		if (copyPaseClearButtonHolderTimeSinceActivation >= 3.5f) SetCopyPasteClearButtonsActive(false);
 		else copyPaseClearButtonHolderTimeSinceActivation += (float)delta;

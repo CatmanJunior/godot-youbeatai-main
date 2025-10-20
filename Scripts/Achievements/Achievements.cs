@@ -104,6 +104,8 @@ public static class Achievements
 
     private static bool ReadUseAchievements()
     {
+        return false; // temp skip achievements
+
         bool use;
         try
         {

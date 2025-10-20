@@ -22,7 +22,12 @@ public static class Achievements
 
     public static void OnReady()
     {
-        // not used right now
+        // hide blockers if tutorial, show if achievements
+        foreach (var node in nodes)
+        {
+            var blocker = FindBlocker(node);
+            blocker.Visible = useAchievements;
+        }
     }
 
     public static void OnUpdate()

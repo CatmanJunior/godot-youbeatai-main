@@ -54,31 +54,52 @@ public partial class LayerVoiceOver : Node
         // init record button
         recordLayerButton.Pressed += () =>
         {
-            Manager.instance.layerLoopToggle.ButtonPressed = false;
-            shouldRecord = !shouldRecord;
+            if (!recording && !shouldRecord)
+            {
+                Manager.instance.layerLoopToggle.ButtonPressed = false;
+                shouldRecord = !shouldRecord;
 
-            // buttons during recording
-            snellerButton.Disabled = true;
-            langzamerButton.Disabled = true;
-            Manager.instance.SetLayerSwitchButtonsEnabled(false);
-            Manager.instance.PlayPauseButton.Disabled = true;
-            recordLayerButton.Disabled = true;
-            SongVoiceOver.instance.recordSongButton.Disabled = true;
-            Manager.instance.metronome_toggle.ButtonPressed = false;
+                // buttons during recording
+                snellerButton.Disabled = true;
+                langzamerButton.Disabled = true;
+                Manager.instance.SetLayerSwitchButtonsEnabled(false);
+                Manager.instance.PlayPauseButton.Disabled = true;
+                SongVoiceOver.instance.recordSongButton.Disabled = true;
+                Manager.instance.metronome_toggle.ButtonPressed = false;
 
-            // metronoom aan
-            Manager.instance.metronome_toggle.ButtonPressed = true;
+                // metronoom aan
+                Manager.instance.metronome_toggle.ButtonPressed = true;
 
-            // begin on top with the build up
-            BpmManager.instance.currentBeat = 0;
+                // begin on top with the build up
+                BpmManager.instance.currentBeat = 0;
 
-            // playing true
-            BpmManager.instance.playing = true;
+                // playing true
+                BpmManager.instance.playing = true;
 
-            // also play metronome sound on first beat
-            Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+                // also play metronome sound on first beat
+                Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
 
-            Manager.instance.ShowCountDown();
+                Manager.instance.ShowCountDown();
+            }
+            else if (!recording && shouldRecord) // cancel should record
+            {
+                // cancel should record
+                shouldRecord = !shouldRecord;
+
+                // enable buttons
+                snellerButton.Disabled = false;
+                langzamerButton.Disabled = false;
+                Manager.instance.SetLayerSwitchButtonsEnabled(true);
+                Manager.instance.PlayPauseButton.Disabled = false;
+                SongVoiceOver.instance.recordSongButton.Disabled = false;
+                Manager.instance.metronome_toggle.ButtonPressed = true;
+
+                // stop tic sounds
+                Manager.instance.metronome_toggle.ButtonPressed = false;
+                
+                // close countdown
+                Manager.instance.CloseCountDown();
+            }
         };
 
         // create audioplayer
@@ -214,7 +235,6 @@ public partial class LayerVoiceOver : Node
         langzamerButton.Disabled = false;
         Manager.instance.SetLayerSwitchButtonsEnabled(true);
         Manager.instance.PlayPauseButton.Disabled = false;
-        recordLayerButton.Disabled = false;
         SongVoiceOver.instance.recordSongButton.Disabled = false;
 
         AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);

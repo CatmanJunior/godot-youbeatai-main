@@ -88,26 +88,46 @@ public partial class RealTimeAudioRecording : Node
 
     public void OnButton()
     {
-        Manager.instance.layerLoopToggle.ButtonPressed = true;
-        shouldRecord = !shouldRecord;
+        if (!recording && !shouldRecord)
+        {
+            Manager.instance.layerLoopToggle.ButtonPressed = true;
+            shouldRecord = !shouldRecord;
 
-        // disable buttons during recording
-        DisableButtons(true);
+            // disable buttons during recording
+            DisableButtons(true);
 
-        // metronoom aan
-        Manager.instance.metronome_toggle.ButtonPressed = true;
+            // metronoom aan
+            Manager.instance.metronome_toggle.ButtonPressed = true;
 
-        // 4 beats voor de eerste noot op eerste laag
-        Manager.instance.SwitchLayer(Manager.instance.layersAmount - 1);
-        BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
-        
-        // playing true
-        BpmManager.instance.playing = true;
+            // 4 beats voor de eerste noot op eerste laag
+            Manager.instance.SwitchLayer(Manager.instance.layersAmount - 1);
+            BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
+            
+            // playing true
+            BpmManager.instance.playing = true;
 
-        // also play metronome sound on first beat
-        Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+            // also play metronome sound on first beat
+            Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
 
-        Manager.instance.ShowCountDown();
+            Manager.instance.ShowCountDown();
+        }
+        else if (!recording && shouldRecord) // cancel should record
+        {
+            // cancel should record
+            shouldRecord = !shouldRecord;
+
+            // enable buttons
+            DisableButtons(false);
+
+            // stop tic sounds
+            Manager.instance.metronome_toggle.ButtonPressed = false;
+
+            // stop layer looping
+            Manager.instance.layerLoopToggle.ButtonPressed = false;
+            
+            // close countdown
+            Manager.instance.CloseCountDown();
+        }
     }
 
     public void StopRecordingMaster()
@@ -135,6 +155,5 @@ public partial class RealTimeAudioRecording : Node
         Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = Disabled;
         Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = Disabled;
         Manager.instance.layerLoopToggle.Disabled = Disabled;
-        recordSongButton.Disabled = Disabled;
     }
 }

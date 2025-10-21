@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=11 format=3 uid="uid://dfenhkycs5sl2"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://dfenhkycs5sl2"]
 
 [ext_resource type="AudioStream" uid="uid://dg7td0d8d8ya6" path="res://Resources/Audio/SoundBanks/2_tango/Clap DoubleDutch 4.wav" id="1_70ug5"]
 [ext_resource type="AudioStream" uid="uid://pq1btyyp1krv" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Clap Aurora.wav" id="2_70ug5"]
 [ext_resource type="AudioStream" uid="uid://b6fwcswa2okoi" path="res://Resources/Audio/SoundBanks/2_tango/ClosedHH Aluminium.wav" id="3_numgs"]
 [ext_resource type="AudioStream" uid="uid://bumvtvdmtp6n4" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Closed_Perc Sini.wav" id="4_numgs"]
+[ext_resource type="Resource" uid="uid://c6gqhf86kj0cj" path="res://Resources/Audio/SoundBanks/2_tango/EffectProfile.tres" id="5_70ug5"]
 [ext_resource type="AudioStream" uid="uid://dsf1y2droce3o" path="res://Resources/Audio/SoundBanks/2_tango/Kick BB 2.wav" id="6_i3r8b"]
 [ext_resource type="AudioStream" uid="uid://bqfufsfbjqp5f" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Kick Hoba.wav" id="7_i3r8b"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_iytk1"]
@@ -25,4 +26,5 @@ green_soundfont = ExtResource("8_iytk1")
 green_instrument_id = 5
 purple_soundfont = ExtResource("8_iytk1")
 purple_instrument_id = 7
+effectProfile = ExtResource("5_70ug5")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

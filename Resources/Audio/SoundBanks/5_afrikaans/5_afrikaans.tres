@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://c2bs0uksyhrls"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://c2bs0uksyhrls"]
 
 [ext_resource type="AudioStream" uid="uid://37so583ddl6y" path="res://Resources/Audio/SoundBanks/5_afrikaans/Clap Floating.wav" id="1_pktws"]
 [ext_resource type="AudioStream" uid="uid://bk4k6m401s56h" path="res://Resources/Audio/SoundBanks/5_afrikaans/ClosedHH Orion 1.wav" id="2_f2pa0"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://cd8r8t31oxjpi" path="res://Resources/Audio/SoundBanks/5_afrikaans/mineur/Kick Fakesch 1.wav" id="4_0tynt"]
 [ext_resource type="AudioStream" uid="uid://credw28gt7y1" path="res://Resources/Audio/SoundBanks/5_afrikaans/mineur/Closed_Perc Oko.wav" id="4_a4xo8"]
 [ext_resource type="AudioStream" uid="uid://insrngoq1f13" path="res://Resources/Audio/SoundBanks/5_afrikaans/Kick Daydreaming 1.wav" id="4_xbbyl"]
+[ext_resource type="Resource" uid="uid://bmtl35xx2cb3o" path="res://Resources/Audio/SoundBanks/5_afrikaans/EffectProfile.tres" id="5_a4xo8"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_gk18y"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_a4xo8"]
 [ext_resource type="AudioStream" uid="uid://sg7hwbuvgnme" path="res://Resources/Audio/SoundBanks/5_afrikaans/Snare Askari.wav" id="7_gc85r"]
@@ -25,4 +26,5 @@ closed_alt = ExtResource("4_a4xo8")
 green_soundfont = ExtResource("3_0tynt")
 purple_soundfont = ExtResource("5_gk18y")
 purple_instrument_id = 2
+effectProfile = ExtResource("5_a4xo8")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

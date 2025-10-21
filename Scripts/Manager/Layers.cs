@@ -115,9 +115,12 @@ public partial class Manager : Node
         layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + new Vector2(layersButtonsSize, layersButtonsSize) / 2;
 
         // transform songmode backpanel
-        var backPanelOverSize = new Vector2(16, 8);
-        songModeBackPanel.Size = layerButtonsContainer.Size + backPanelOverSize;
-        songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
+        if (songModeBackPanel != null)
+        {
+            var backPanelOverSize = new Vector2(16, 8);
+            songModeBackPanel.Size = layerButtonsContainer.Size + backPanelOverSize;
+            songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
+        }
     }
 
     public void SwitchLayer(int layerIndex, bool saveLayerFirst = true)

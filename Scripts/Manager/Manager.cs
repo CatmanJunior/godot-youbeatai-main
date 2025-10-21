@@ -26,6 +26,7 @@ public partial class Manager : Node
 		SamplesMixing_ReApplyRememberedMixingVolumesForAllRings();
 		Achievements.OnReady();
 		OnReadyMixing();
+		UpdateLayerButtonsUserInterfaceDelayed();
 	}
 
 	public override void _Process(double delta)

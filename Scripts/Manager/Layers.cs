@@ -123,6 +123,8 @@ public partial class Manager : Node
         }
     }
 
+    public void UpdateLayerButtonsUserInterfaceDelayed() => GetTree().CreateTimer(0.2).Timeout += UpdateLayerButtonsUserInterface;
+
     public void SwitchLayer(int layerIndex, bool saveLayerFirst = true)
     {
         // change layer

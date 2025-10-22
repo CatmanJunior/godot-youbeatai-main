@@ -141,6 +141,9 @@ public partial class RealTimeAudioRecording : Node
         recordingLength = recordingTimer;
         finished = true;
 
+        // stop tic sounds
+        Manager.instance.metronome_toggle.ButtonPressed = false;
+
         // re-enable buttons during recording
         DisableButtons(false);
     }

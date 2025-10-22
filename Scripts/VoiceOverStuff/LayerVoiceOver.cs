@@ -65,7 +65,6 @@ public partial class LayerVoiceOver : Node
                 Manager.instance.SetLayerSwitchButtonsEnabled(false);
                 Manager.instance.PlayPauseButton.Disabled = true;
                 SongVoiceOver.instance.recordSongButton.Disabled = true;
-                Manager.instance.metronome_toggle.ButtonPressed = false;
 
                 // metronoom aan
                 Manager.instance.metronome_toggle.ButtonPressed = true;
@@ -92,7 +91,6 @@ public partial class LayerVoiceOver : Node
                 Manager.instance.SetLayerSwitchButtonsEnabled(true);
                 Manager.instance.PlayPauseButton.Disabled = false;
                 SongVoiceOver.instance.recordSongButton.Disabled = false;
-                Manager.instance.metronome_toggle.ButtonPressed = true;
 
                 // stop tic sounds
                 Manager.instance.metronome_toggle.ButtonPressed = false;
@@ -207,6 +205,9 @@ public partial class LayerVoiceOver : Node
             EmitSignal(SignalName.OnStartedRecording);
         };
 
+        // stop tic sounds
+        Manager.instance.metronome_toggle.ButtonPressed = false;
+
         AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
 
         Manager.instance.CloseCountDown();
@@ -236,6 +237,9 @@ public partial class LayerVoiceOver : Node
         Manager.instance.SetLayerSwitchButtonsEnabled(true);
         Manager.instance.PlayPauseButton.Disabled = false;
         SongVoiceOver.instance.recordSongButton.Disabled = false;
+
+        // stop tic sounds
+        Manager.instance.metronome_toggle.ButtonPressed = false;
 
         AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
     }

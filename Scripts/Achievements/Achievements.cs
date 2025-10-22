@@ -21,7 +21,7 @@ public static class Achievements
     [
         (
             condition: BpmManager.instance.currentBeat == BpmManager.beatsAmount - 4, 
-            tooltip: "go through a circle to unlock"
+            tooltip: "Deze achievement kan je unlocken door 1 keer de beatring af te luisteren. Dit is een test achievement. Veel succes."
         ),
     ];
 
@@ -53,12 +53,34 @@ public static class Achievements
             {
                 var node = nodes[i];
                 var blocker = FindBlocker(node);
-                blocker.MouseEntered += () => OpenTooltip(i-1);
-                blocker.MouseExited += () => CloseTooltip();
+
+                blocker.GuiInput += (inputEvent) =>
+                {
+                    if (inputEvent is InputEventMouseButton mouseEvent)
+                    {
+                        if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                        {
+                            if (!manager.achievementspanel.Visible)
+                            {
+                                OpenTooltip(i-1);
+                                StartLoopToCheckIfTooltipCanClose();
+                            }
+                        }
+                    }
+                };
             }
 
             doneLateReady = true;
         }
+    }
+
+    public static void StartLoopToCheckIfTooltipCanClose()
+    {
+        manager.GetTree().CreateTimer(0.4).Timeout += () =>
+        {
+            if (DisplayServer.TtsIsSpeaking()) StartLoopToCheckIfTooltipCanClose();
+            else CloseTooltip();
+        };
     }
 
     public static void SetBlockerState(Blocker blocker, bool enabled)
@@ -110,7 +132,7 @@ public static class Achievements
 
     private static bool ReadUseAchievements()
     {
-        return false; // temp skip achievements
+        // return false; // temp skip achievements
 
         bool use;
         try

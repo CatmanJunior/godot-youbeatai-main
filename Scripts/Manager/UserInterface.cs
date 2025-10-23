@@ -109,7 +109,7 @@ public partial class Manager : Node
 		muteSpeach.Pressed += DisplayServer.TtsStop;
 		SaveLayoutButton.Pressed += CopyLayer;
 		LoadLayoutButton.Pressed += PasteLayer;
-		ClearLayoutButton.Pressed += ClearLayer;
+		ClearLayoutButton.Pressed += () => ConfirmationPrompt.instance.Open(ClearLayer);
 		restartButton.Pressed += () =>
 		{
 			GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");

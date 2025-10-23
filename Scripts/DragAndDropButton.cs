@@ -3,6 +3,8 @@ using Godot;
 public partial class DragAndDropButton : Sprite2D
 {
 	[Export] int ring = 0;
+	[Signal]
+	public delegate void OnPressedEventHandler();
 
 	bool inside => IsPixelOpaque(GetLocalMousePosition());
 
@@ -94,6 +96,7 @@ public partial class DragAndDropButton : Sprite2D
 		else ButtonBehaviour();
 
 		Manager.instance.SamplesMixing_ChangeRing(ring);
+		EmitSignal(SignalName.OnPressed);
 	}
 
 	public void ButtonBehaviour()

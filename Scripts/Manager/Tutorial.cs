@@ -42,6 +42,8 @@ public static class Tutorial
     private static Timer timer;
     private static bool allowed = false;
     private static bool _textAllowed = true;
+    private static DragAndDropButton _clapButton;
+    private static DragAndDropButton _stompButton;
     static Manager manager => Manager.instance;
 
     public static void Reset()
@@ -75,6 +77,11 @@ public static class Tutorial
             manager.OutSideArea.AreaEntered += _bodyContinue;
             manager.button_add_beats.ToggleMode = true;
             _top = manager.corners[1];
+            _clapButton = (DragAndDropButton)manager.draganddropButton1;
+            _stompButton = (DragAndDropButton)manager.draganddropButton0;
+            _clapButton.OnPressed += manager.OnClap;
+            _stompButton.OnPressed += manager.OnStomp;
+
 
         }
         else // disable tutorial

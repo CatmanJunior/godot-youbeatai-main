@@ -45,7 +45,6 @@ public partial class Manager : Node
         if (timeafterplay < 0.2f) return;
         int ring = 1;
         bool active = beatActives[ring, BpmManager.instance.currentBeat];
-        GD.Print(active);
         var sprite = beatSprites[ring, BpmManager.instance.currentBeat];
         if (active)
         {

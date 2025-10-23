@@ -1511,6 +1511,7 @@ text = "⚙"
 metadata/_edit_use_anchors_ = true
 
 [node name="SettingsPanel" type="Panel" parent="UserInterface"]
+visible = false
 top_level = true
 z_index = 1000
 z_as_relative = false

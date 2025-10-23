@@ -1530,13 +1530,6 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="Grijs" type="Sprite2D" parent="UserInterface/Robot/SubViewportContainer"]
-z_index = -20
-position = Vector2(-1190.9, -283.484)
-scale = Vector2(26.7019, 41.8954)
-texture = ExtResource("22_wax6p")
-metadata/_edit_lock_ = true
-
 [node name="AchievementsPanel" parent="UserInterface/Robot" instance=ExtResource("44_kqrg6")]
 
 [node name="SettingsButton" type="Button" parent="UserInterface"]
@@ -2348,6 +2341,20 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ConfirmationPrompt" parent="." instance=ExtResource("45_kqrg6")]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.21568628)
+z_index = -20
+scale = Vector2(5.88, 5.88)
+texture = ExtResource("22_sb4d6")
+metadata/_edit_lock_ = true
+
+[node name="WorldBackPanel" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+scale = Vector2(12.747, 20)
+texture = ExtResource("22_wax6p")
+metadata/_edit_lock_ = true
 
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]

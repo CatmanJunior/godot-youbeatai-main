@@ -37,6 +37,8 @@ public partial class Manager : Node
 
         SortLayerButtonsInContainerBasedOnTheirIndex();
         UpdateLayerButtonsUserInterface();
+
+        SwitchLayerNextFrame(layer);
     }
 
     public void SortLayerButtonsInContainerBasedOnTheirIndex()
@@ -145,6 +147,15 @@ public partial class Manager : Node
         layerVoiceOver1.SetBigVolumeline();
         UpdateSongVoiceOverPlayBackPosition();
         UpdateLayerButtonsUserInterface();
+    }
+
+    public async void SwitchLayerNextFrame(int layerIndex, bool saveLayerFirst = true)
+    {
+        // wait one frame
+        await ToSignal(GetTree(), "process_frame");
+
+        // switch layer
+        SwitchLayer(layerIndex, saveLayerFirst);
     }
 
     public bool[,] GetCurrentLayer() => layersBeatActives[currentLayerIndex];

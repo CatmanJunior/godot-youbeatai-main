@@ -40,7 +40,7 @@ public partial class Manager : Node
 	[Export] Label chosen_emoticons_label;
 	[Export] public CheckButton metronome_toggle;
 	[Export] ProgressBar micmeter;
-	[Export] CheckButton add_beats;
+	[Export] public CheckButton add_beats;
 	[Export] public CheckButton button_is_clap;
 	[Export] public CheckButton button_add_beats;
 	[Export] public Slider volume_treshold;

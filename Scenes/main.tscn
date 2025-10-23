@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=64 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="31_kwxat"]
-[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
+[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/Blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
@@ -68,8 +68,6 @@ corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
-
-[sub_resource type="LabelSettings" id="LabelSettings_fbqyi"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
@@ -1116,7 +1114,7 @@ metadata/_edit_use_anchors_ = true
 [node name="RecordMasterButton" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.8, 0.8, 0.8, 1)
 z_index = -4
-position = Vector2(395, -313.00003)
+position = Vector2(377.00003, -303.9999)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("28_r33sp")
 script = ExtResource("27_jwpg7")
@@ -1270,7 +1268,7 @@ metadata/_edit_use_anchors_ = true
 z_index = -2
 anchors_preset = -1
 anchor_left = 0.48892045
-anchor_top = 0.48459598
+anchor_top = 0.3285358
 anchor_right = 0.49687538
 anchor_bottom = 0.3285358
 offset_left = -801.8182
@@ -1290,10 +1288,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="LayerLoopToggle" type="CheckButton" parent="UserInterface"]
 layout_mode = 0
-offset_left = 432.0
-offset_top = -297.0
-offset_right = 476.0
-offset_bottom = -272.0
+offset_left = 424.025
+offset_top = -277.555
+offset_right = 468.025
+offset_bottom = -252.555
 scale = Vector2(1.42518, 1.42518)
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
@@ -1301,17 +1299,54 @@ theme_override_font_sizes/font_size = 12
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="UserInterface/LayerLoopToggle"]
-layout_mode = 0
-offset_left = -3.0
-offset_top = -34.1933
-offset_right = 22.0
-offset_bottom = -9.19331
-scale = Vector2(2, 2)
-mouse_filter = 0
-theme = ExtResource("22_hpc6h")
-text = "🔁"
-label_settings = SubResource("LabelSettings_fbqyi")
+[node name="Sprite" type="Sprite2D" parent="UserInterface/LayerLoopToggle"]
+self_modulate = Color(0.92, 0.1748, 0.92, 1)
+z_index = -4
+position = Vector2(21.751633, -19.646637)
+scale = Vector2(1.71, 1.71)
+texture = ExtResource("28_r33sp")
+
+[node name="Button" type="Button" parent="UserInterface/LayerLoopToggle/Sprite"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
+metadata/_edit_use_anchors_ = true
+
+[node name="Icon" type="Label" parent="UserInterface/LayerLoopToggle/Sprite"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -34.499985
+offset_top = -34.962006
+offset_right = 9.500015
+offset_bottom = 9.037994
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.535, 0.535)
+pivot_offset = Vector2(22, 22)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 32
+text = "♪"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true

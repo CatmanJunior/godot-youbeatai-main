@@ -141,14 +141,11 @@ public partial class Manager : Node
 		};
 		settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 		settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-		var label1 = layerLoopToggle.GetChild(0) as Label;
-		label1.GuiInput += args =>
-		{
-			if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-			{
-				layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
-			}
-		};
+		var Button = layerLoopToggle.FindChild("Button", true) as Button;
+        Button.ButtonUp += () =>
+        {
+            layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+        };
 	}
 
 	private void UpdateLayerOutlineSpriteRotation()

@@ -8,7 +8,9 @@ public partial class Manager : Node
     public bool stomped = false;
     public bool clapped = false;
     public int clappedAmount = 0;
+    public int clappedOnBeatAmount = 0;
     public int stompedAmount = 0;
+    public int stompedOnBeatAmount = 0;
 
     private void CheckIfClappingOrStomping()
     {
@@ -43,6 +45,7 @@ public partial class Manager : Node
         if (timeafterplay < 0.2f) return;
         int ring = 1;
         bool active = beatActives[ring, BpmManager.instance.currentBeat];
+        GD.Print(active);
         var sprite = beatSprites[ring, BpmManager.instance.currentBeat];
         if (active)
         {
@@ -51,6 +54,7 @@ public partial class Manager : Node
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
+            clappedOnBeatAmount++;
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
@@ -72,6 +76,7 @@ public partial class Manager : Node
             progressBarValue += 1f / BpmManager.beatsAmount * 100f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
+            stompedOnBeatAmount++;
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;

@@ -35,8 +35,8 @@ public static class Tutorial
     private static MeshInstance2D _pianoMesh = null;
     private static Node2D _top = null;
     private static int _fixedAmount = 5;
-    private static int _previousclap = 0;
-    private static int _previousstomp = 0;
+    private static int _previousclap = -1;
+    private static int _previousstomp = -1;
     private static bool _stomping = false;
     private static bool _clapping = false;
     private static Timer timer;
@@ -178,7 +178,7 @@ public static class Tutorial
             // chaos pad
             "Laten wij dit geluid mixen!",
             "Deze driehoek is de mixer! Hiermee kun je jouw net opgenomen geluid veranderen", //todo add this
-            "", // todo and this to one singular line and index
+            
             "Je kunt jouw stem 🎙️ veranderen in het geluid van een Instrument 🎹  of jouw stem met een effect 🤖",
             "probeer het maar eens door het grijze rondje te bewegen naar het 🌟 sterretje ",
             "Luister maar eens!▶️",
@@ -217,7 +217,7 @@ public static class Tutorial
             ()=>
             {
                
-                return manager.stompedAmount >= _fixedAmount;
+                return manager.stompedOnBeatAmount >= _fixedAmount;
             }, // makes sure the amount you stomped is equal to the amount of beats active
             () =>  false, // need to make a check for button press or screen tap, 
 
@@ -243,7 +243,7 @@ public static class Tutorial
             }, // This checks whether the song is playing
             ()=>
             {  
-                return manager.clappedAmount >= _fixedAmount;
+                return manager.clappedOnBeatAmount >= _fixedAmount;
             }, // This checks whether the song is playing
             () =>false, // need to make a check for button press or screen tap,   
 
@@ -265,7 +265,7 @@ public static class Tutorial
                 return false;
             }, // need to make a check for button press or screen tap,
             ()=> false,
-            ()=> false,
+           
             ()=> false,
             () =>
             {
@@ -321,7 +321,7 @@ public static class Tutorial
             ()=>
             {
                 
-                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedAmount} / 5";
+                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
                 _stomping = true;
                 
             },
@@ -359,7 +359,7 @@ public static class Tutorial
             {
                 _textAllowed = true;
                 manager.AmountLeft.Visible = true;
-                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedAmount} / 5";
+                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
                 _clapping = true;
                
             },
@@ -399,7 +399,7 @@ public static class Tutorial
                 manager.chaosPadTriangleSprite.Visible = true;
             },
             null,
-            null,
+            
             () =>
             {
                 _active = false;
@@ -496,11 +496,11 @@ public static class Tutorial
     {
         if(_stomping)
         {
-            if (manager.stompedAmount > _previousstomp)
+            if (manager.stompedOnBeatAmount > _previousstomp)
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _previousstomp = manager.stompedAmount;
-                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedAmount} / 5";
+                _previousstomp = manager.stompedOnBeatAmount;
+                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
             }
         }
     }
@@ -509,11 +509,11 @@ public static class Tutorial
     {
         if(_clapping)
         {
-            if (manager.clappedAmount > _previousclap)
+            if (manager.clappedOnBeatAmount > _previousclap)
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _previousclap = manager.clappedAmount;
-                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedAmount} / 5";
+                _previousclap = manager.clappedOnBeatAmount;
+                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
             }
         }
     }

@@ -56,14 +56,14 @@ point_count = 2
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
-bg_color = Color(0, 0.65098, 0.929412, 1)
+bg_color = Color(0.56, 0.1064, 0.56, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqrg6"]
-bg_color = Color(0.5, 1, 0.5, 1)
+bg_color = Color(0.92, 0.1748, 0.92, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100

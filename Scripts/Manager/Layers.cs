@@ -8,7 +8,7 @@ public partial class Manager : Node
     public int currentLayerIndex = 0; // the currently active layer (the layer displayed on screen)
     public int layersAmount = 0; // the current amount of layers in the game
     public const int layersAmountMax = 10; // the maximum allowed amount of layers that can be created
-    public const int layersAmountInitial = 3; // the initial amount of layers the game starts with
+    public const int layersAmountInitial = 4; // the initial amount of layers the game starts with
     public const int layersButtonsSize = 72; // the size of each layer button
 
     public List<bool[,]> layersBeatActives = []; // the actual interal data structure of the layers (ground truth)
@@ -20,6 +20,7 @@ public partial class Manager : Node
     public void SpawnInitialLayerButtons()
     {
         for (int i = 0; i < layersAmountInitial; i++) AddLayer(i);
+        SwitchLayerNextFrame(0);
     }
 
     public void AddLayer(int layer, string emoji = null) // adds a layer at the end of the list of layers
@@ -81,10 +82,8 @@ public partial class Manager : Node
         if (emoji != null) layerButton.Text = emoji;
         else
         {
-            var random = new Random();
-            var index = random.Next(0, 4);
-            string[] options = ["🌱", "📜", "🤩", "😀", "🏁"];
-            layerButton.Text = options[index];
+            string[] options = ["🌱", "📜", "🤩", "🏁"];
+            layerButton.Text = options[layer];
         }
 
         layerButton.Pressed += () =>

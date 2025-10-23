@@ -1,4 +1,5 @@
 using Godot;
+using NAudio.Mixer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -132,11 +133,17 @@ public partial class Manager : Node
         if (saveLayerFirst)
         {
             SetCurrentLayer(beatActives);
-            SamplesMixing_StoreActiveKnob();
+
+            if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_StoreActiveKnob();
+            if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_StoreActiveKnob();
+            if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_StoreActiveKnob();
         }
         currentLayerIndex = layerIndex;
         beatActives = GetCurrentLayer();
-        SamplesMixing_RetrieveActiveKnob();
+
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_RetrieveActiveKnob();
+        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_RetrieveActiveKnob();
+        if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_RetrieveActiveKnob();
         
         // do stuff with new layer
         EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);

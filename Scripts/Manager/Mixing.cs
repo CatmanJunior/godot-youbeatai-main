@@ -7,7 +7,8 @@ public partial class Manager : Node
     public enum ChaosPadMode
     {
         SampleMixing,
-        SynthMixing
+        SynthMixing,
+        SongMixing
     }
 
     // chaos pad
@@ -21,13 +22,17 @@ public partial class Manager : Node
     public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
     [Export] public Node2D micButtonLocation;
 
+    [Export] Node2D[] micButtons;
+
     private void OnReadyMixing()
     {
         SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
         for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
+        SongMixing_knobPosition = chaosPadTriangleSprite.GlobalPosition;
 
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
         else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
+        else if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_ChangeToSongMixer();
     }
 
     #region SamplesMixing
@@ -109,7 +114,8 @@ public partial class Manager : Node
     {
         // save knob position
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_StoreActiveKnob();
-        else SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_StoreActiveKnob();
+        else if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_StoreActiveKnob();
 
         // switch ring
         SamplesMixing_activeRing = newring;
@@ -143,15 +149,6 @@ public partial class Manager : Node
         }
 
         // set mic button location
-        Node2D[] micButtons =
-        [
-            recordSampleButton0,
-            recordSampleButton1,
-            recordSampleButton2,
-            recordSampleButton3,
-            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(),
-            (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
-        ];
         for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
         micButtons[SamplesMixing_activeRing].GlobalPosition = micButtonLocation.GlobalPosition;
 
@@ -239,17 +236,28 @@ public partial class Manager : Node
     [Export] private Curve SynthMixing_LineScaleCurve;
     [Export] private Curve SynthMixing_LineColorCurve;
 
+    public void SynthMixing_StoreActiveKnob()
+    {
+        SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+    }
+
+    public void SynthMixing_RetrieveActiveKnob()
+    {
+        knob.GlobalPosition = SynthMixing_knobPositions[SynthMixing_activeSynth];
+    }
+
     public void SynthMixing_ChangeSynth(int synth)
     {
         // save knob position
-        if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
-        else SamplesMixing_StoreActiveKnob();
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_StoreActiveKnob();
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_StoreActiveKnob();
+        else if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_StoreActiveKnob();
 
         // switch synth
         SynthMixing_activeSynth = synth;
 
         // remember knob position
-        knob.GlobalPosition = SynthMixing_knobPositions[SynthMixing_activeSynth];
+        SynthMixing_RetrieveActiveKnob();
 
         // set chaos pad color to active ring
         SynthMixing_StartTriangleColorChange(0.2f);
@@ -267,15 +275,6 @@ public partial class Manager : Node
         }
 
         // set mic button location
-        Node2D[] micButtons =
-        [
-            recordSampleButton0,
-            recordSampleButton1,
-            recordSampleButton2,
-            recordSampleButton3,
-            (Node2D)layerVoiceOver0.recordLayerButton.GetParent(),
-            (Node2D)layerVoiceOver1.recordLayerButton.GetParent()
-        ];
         for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
         micButtons[4 + SynthMixing_activeSynth].GlobalPosition = micButtonLocation.GlobalPosition;
 
@@ -423,6 +422,78 @@ public partial class Manager : Node
 
     #endregion
 
+    #region SongMixing
+
+    private Vector2 SongMixing_knobPosition;
+
+    public void SongMixing_StoreActiveKnob()
+    {
+        SongMixing_knobPosition = knob.GlobalPosition;
+    }
+
+    public void SongMixing_RetrieveActiveKnob()
+    {
+        knob.GlobalPosition = SongMixing_knobPosition;
+    }
+
+    public void SongMixing_ChangeToSongMixer()
+    {
+        // save knob position
+        if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_StoreActiveKnob();
+        else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_StoreActiveKnob();
+        else if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_StoreActiveKnob();
+
+        // remember knob position
+        SongMixing_RetrieveActiveKnob();
+
+        // set chaos pad color to active ring
+        SongMixing_StartTriangleColorChange(0.2f);
+
+        // update icons
+        iconMain.Text = "X";
+        iconAlt.Text = "X";
+
+        // set mic button location
+        for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
+        micButtons[6].GlobalPosition = micButtonLocation.GlobalPosition;
+
+        // set chaospad mode
+        chaosPadMode = ChaosPadMode.SongMixing;
+    }
+
+    async private void SongMixing_StartTriangleColorChange(float duration)
+    {
+        var old_color = chaosPadTriangleSprite.SelfModulate;
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+
+        var new_color = Color.FromHtml("#cf12ccff");
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, t);
+            chaosPadTriangleSprite.SelfModulate = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        chaosPadTriangleSprite.SelfModulate = new_color;
+    }
+
+    private void SongMixing_UpdateMixingVolumesForSong(float mastervolume)
+    {
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SongVoice"), weights.Y * mastervolume);
+    }
+
+    #endregion
+
     public List<Vector2> GetStandardKnobPositions()
     {
         List<Vector2> centered = [
@@ -472,6 +543,7 @@ public partial class Manager : Node
         {
             if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_UpdateMixingVolumesForRing(SamplesMixing_activeRing, mastervolume);
             if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_UpdateMixingVolumesForSynth(SynthMixing_activeSynth, mastervolume);
+            if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_UpdateMixingVolumesForSong(mastervolume);
         }
     }
 

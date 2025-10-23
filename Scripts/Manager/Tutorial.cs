@@ -73,7 +73,7 @@ public static class Tutorial
             manager.InBetweenArea.AreaEntered += _bodyContinue;
             manager.KlappyContinue.Pressed += KlappyContinue;
             manager.OutSideArea.AreaEntered += _bodyContinue;
-            
+            manager.button_add_beats.ToggleMode = true;
             _top = manager.corners[1];
 
         }

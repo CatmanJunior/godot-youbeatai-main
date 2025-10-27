@@ -104,8 +104,8 @@ public partial class Manager : Node
 		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
 		
 		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
-		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(); settingsPanel.Visible = false; };
-		emailEnter.Pressed += AudioSaving.CloseEmailPromptAndSaveAndSendSongFile;
+		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedSongAsFileAndSendToEmail); settingsPanel.Visible = false; };
+		saveToWavButton.Pressed += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedBeatAsFileAndSendToEmail); settingsPanel.Visible = false; };
 		muteSpeach.Pressed += DisplayServer.TtsStop;
 		SaveLayoutButton.Pressed += CopyLayer;
 		LoadLayoutButton.Pressed += PasteLayer;
@@ -131,7 +131,6 @@ public partial class Manager : Node
 		PlayPauseButton.ButtonUp += OnPlayPauseButton;
 		BpmUpButton.Pressed += OnBpmUpButton;
 		BpmDownButton.Pressed += OnBpmDownButton;
-		saveToWavButton.Pressed += () => { /*AudioSaving.SaveBeatAsFile(beatActives)*/ };
 		skiptutorialbutton.Pressed += () =>
 		{
 			Tutorial.tutorial_level = -1;

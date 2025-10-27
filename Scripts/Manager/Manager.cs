@@ -147,7 +147,7 @@ public partial class Manager : Node
 
 		// enter as reset player
 		var enterdown = Input.IsKeyPressed(Key.Enter);
-		if (enterdown && enterdownlastframe == false && emailPromptOpen) { AudioSaving.CloseEmailPromptAndSaveAndSendSongFile(); }
+		if (enterdown && enterdownlastframe == false && emailPromptOpen) { cachedEmailPromptAction.Invoke(); CloseEmailPrompt(); }
 		enterdownlastframe = enterdown;
 
 		// drag&drop

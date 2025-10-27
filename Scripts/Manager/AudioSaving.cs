@@ -10,13 +10,7 @@ using NAudio.Wave.SampleProviders;
 
 public static class AudioSaving
 {
-    public static void CloseEmailPromptAndSaveAndSendSongFile()
-    {
-        SaveRealTimeRecordedSongAsFileAndSendToEmail();
-        Manager.instance.CloseEmailPrompt();
-    }
-
-    private static void SaveRealTimeRecordedSongAsFileAndSendToEmail()
+    public static void SaveRealTimeRecordedSongAsFileAndSendToEmail()
     {
         if (RealTimeAudioRecording.instance.recording_result == null) return;
 
@@ -35,6 +29,66 @@ public static class AudioSaving
 
         Manager.instance.ShowSavingLabel(final_name);
         Manager.instance.hassavedtofile = true;
+    }
+
+    public static void SaveRealTimeRecordedBeatAsFileAndSendToEmail()
+    {
+        if (RealTimeAudioRecording.instance.recording_result == null) return;
+
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
+        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
+        string song_name = user("song_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
+        string final_name = user("export_" + BpmManager.instance.bpm.ToString() + "bpm_" + sanitizedTime);
+
+        // (temporary solution) combine songvoiceover with submaster recording because voice isnt in submaster recording
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, song_name + "_a_" + ".wav");
+        ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, song_name + "_b_" + ".wav");
+        MixAudioFiles(song_name + "_a_" + ".wav", song_name + "_b_" + ".wav", song_name + ".wav");
+
+        // cut current layer out off song_name
+        float timespan = 0;
+        using (var reader = new AudioFileReader(song_name + ".wav")) timespan = (float)reader.TotalTime.TotalSeconds;
+        float timePerLayer = BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat;
+        float startTime = Manager.instance.currentLayerIndex * timePerLayer;
+        float endTime = startTime + timePerLayer;
+        TrimWavFile(song_name + ".wav", final_name + ".wav", startTime, endTime);
+
+        // delete temp wav files
+        File.Delete(song_name + "_a_" + ".wav");
+        File.Delete(song_name + "_b_" + ".wav");
+        File.Delete(song_name + ".wav");
+
+        if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
+
+        Manager.instance.ShowSavingLabel(final_name);
+        Manager.instance.hassavedtofile = true;
+    }
+
+    static void TrimWavFile(string inputPath, string outputPath, double startTime, double endTime)
+    {
+        using (var reader = new AudioFileReader(inputPath))
+        {
+            int bytesPerSample = reader.WaveFormat.BitsPerSample / 8 * reader.WaveFormat.Channels;
+            int startPos = (int)(startTime * reader.WaveFormat.SampleRate) * bytesPerSample;
+            int endPos = (int)(endTime * reader.WaveFormat.SampleRate) * bytesPerSample;
+
+            startPos = Math.Min(startPos, (int)reader.Length);
+            endPos = Math.Min(endPos, (int)reader.Length);
+
+            reader.Position = startPos;
+            using (var writer = new WaveFileWriter(outputPath, reader.WaveFormat))
+            {
+                byte[] buffer = new byte[1024];
+                while (reader.Position < endPos)
+                {
+                    int bytesRequired = (int)(endPos - reader.Position);
+                    int bytesToRead = Math.Min(bytesRequired, buffer.Length);
+                    int bytesRead = reader.Read(buffer, 0, bytesToRead);
+                    if (bytesRead == 0) break;
+                    writer.Write(buffer, 0, bytesRead);
+                }
+            }
+        }
     }
 
     private static void MixAudioFiles(string file1, string file2, string outputFile)

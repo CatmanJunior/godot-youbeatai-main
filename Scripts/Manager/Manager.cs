@@ -154,7 +154,7 @@ public partial class Manager : Node
 		if (dragginganddropping)
 		{
 			draganddropthing.Modulate = colors[holdingforring];
-			draganddropthing.Position = GetViewport().GetMousePosition() - (DisplayServer.WindowGetSize() / 2);
+			draganddropthing.Position = GetViewport().GetMousePosition() - new Vector2(1280, 720) / 2;
 		}
 		else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 

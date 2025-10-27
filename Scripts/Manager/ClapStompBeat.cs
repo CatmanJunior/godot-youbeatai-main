@@ -160,7 +160,7 @@ public partial class Manager : Node
         bool stomp_active = beatActives[0, nextbeat];
         if (stomp_active) EmitSignal(SignalName.OnShouldStompEvent);
 
-        float strength = 0.5f;
+        float strength = 0.2f;
         float scale = 1f + ((Random.Shared.NextSingle() - 0.5f) * strength);
         fourthAudioPlayer.PitchScale = scale;
         fourthAudioPlayerAlt.PitchScale = scale;

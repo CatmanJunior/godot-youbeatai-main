@@ -141,6 +141,8 @@ public partial class Manager : Node
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
+
+            UpdateSongVoiceOverPlayBackPosition();
             
             if (currentLayerIndex == 0)
             {

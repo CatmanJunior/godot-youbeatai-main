@@ -175,7 +175,6 @@ public partial class Manager : Node
     public void UpdateSongVoiceOverPlayBackPosition()
     {
         if (SongVoiceOver.instance.voiceOver == null) return;
-        if (SongVoiceOver.instance.audioPlayer.Playing == false) SongVoiceOver.instance.audioPlayer.Play();
         var timeperlayer = SongVoiceOver.instance.recordingLength / layersAmount;
         var fixedcurrentbeat = BpmManager.instance.currentBeat;
         if (fixedcurrentbeat >= BpmManager.beatsAmount - 1) fixedcurrentbeat = 0;

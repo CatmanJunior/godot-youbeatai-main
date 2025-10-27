@@ -64,7 +64,77 @@ public static class AudioSaving
         Manager.instance.hassavedtofile = true;
     }
 
-    static void TrimWavFile(string inputPath, string outputPath, double startTime, double endTime)
+    public static void CombineWavFiles(string file1, string file2, string outputFile)
+    {
+        using (var reader1 = new AudioFileReader(file1))
+        using (var reader2 = new AudioFileReader(file2))
+        {
+            if (!reader1.WaveFormat.Equals(reader2.WaveFormat))
+                throw new InvalidOperationException("WAV files must have the same format to concatenate.");
+
+            using (var writer = new WaveFileWriter(outputFile, reader1.WaveFormat))
+            {
+                // Copy first file
+                float[] buffer = new float[1024];
+                int read;
+                while ((read = reader1.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    writer.WriteSamples(buffer, 0, read);
+                }
+
+                // Copy second file
+                while ((read = reader2.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    writer.WriteSamples(buffer, 0, read);
+                }
+            }
+        }
+    }
+
+    public static void RemoveSegmentFromWavFile(string inputPath, string outputPath, double startTime, double endTime)
+    {
+        using (var reader = new AudioFileReader(inputPath))
+        {
+            int bytesPerSample = reader.WaveFormat.BitsPerSample / 8 * reader.WaveFormat.Channels;
+            int startPos = (int)(startTime * reader.WaveFormat.SampleRate) * bytesPerSample;
+            int endPos = (int)(endTime * reader.WaveFormat.SampleRate) * bytesPerSample;
+
+            startPos = Math.Min(startPos, (int)reader.Length);
+            endPos = Math.Min(endPos, (int)reader.Length);
+
+            using (var writer = new WaveFileWriter(outputPath, reader.WaveFormat))
+            {
+                byte[] buffer = new byte[1024];
+
+                // Copy everything before the segment
+                reader.Position = 0;
+                while (reader.Position < startPos)
+                {
+                    int bytesRequired = startPos - (int)reader.Position;
+                    int bytesToRead = Math.Min(bytesRequired, buffer.Length);
+                    int bytesRead = reader.Read(buffer, 0, bytesToRead);
+                    if (bytesRead == 0) break;
+                    writer.Write(buffer, 0, bytesRead);
+                }
+
+                // Skip the segment
+                reader.Position = endPos;
+
+                // Copy everything after the segment
+                while (reader.Position < reader.Length)
+                {
+                    int bytesRequired = (int)(reader.Length - reader.Position);
+                    int bytesToRead = Math.Min(bytesRequired, buffer.Length);
+                    int bytesRead = reader.Read(buffer, 0, bytesToRead);
+                    if (bytesRead == 0) break;
+                    writer.Write(buffer, 0, bytesRead);
+                }
+            }
+        }
+    }
+
+
+    public static void TrimWavFile(string inputPath, string outputPath, double startTime, double endTime)
     {
         using (var reader = new AudioFileReader(inputPath))
         {
@@ -91,7 +161,7 @@ public static class AudioSaving
         }
     }
 
-    private static void MixAudioFiles(string file1, string file2, string outputFile)
+    public static void MixAudioFiles(string file1, string file2, string outputFile)
     {
         using (var reader1 = new AudioFileReader(file1))
         {

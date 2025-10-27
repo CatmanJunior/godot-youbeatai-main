@@ -56,7 +56,7 @@ public partial class Manager : Node
         PasteBeatLayoutFromClipboard();
         PasteLayerVoiceFromClipBoard();
         SamplesMixing_PasteKnobsForLayer();
-        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
+        EmitSignal(SignalName.OnPasteLayerEvent, currentLayerIndex);
     }
 
     public void ClearLayer()
@@ -64,7 +64,7 @@ public partial class Manager : Node
         AudioSaving.RemoveLayerPartOfRecordings(currentLayerIndex);
         RemoveLayer(currentLayerIndex);
         ClearLayerVoiceOver();
-        EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);
+        EmitSignal(SignalName.OnClearLayerEvent);
         hasclearedlayout = true;
     }
 

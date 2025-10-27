@@ -1,6 +1,41 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfh02va7cdmw5"]
+[gd_scene load_steps=10 format=3 uid="uid://cfh02va7cdmw5"]
 
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_rgnfl"]
+[ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scenes/continue.gd" id="2_dcbcy"]
+[ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_hc54m"]
+
+[sub_resource type="Theme" id="Theme_rgnfl"]
+/styles/background = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcbcy"]
+bg_color = Color(3.281457, 3.281457, 3.281457, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgnfl"]
+bg_color = Color(0.8509804, 0.8509804, 0.8509804, 0.63529414)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hc54m"]
+bg_color = Color(0.70796615, 0.7079666, 0.7079665, 0.85490197)
+
+[sub_resource type="Animation" id="Animation_dcbcy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hc54m"]
+_data = {
+&"RESET": SubResource("Animation_dcbcy"),
+&"continue_button_pulse": ExtResource("3_hc54m")
+}
 
 [node name="AchievementsPanel" type="Panel"]
 anchors_preset = 8
@@ -61,14 +96,39 @@ disabled = true
 text = "🚫 Stop"
 metadata/_edit_use_anchors_ = true
 
-[node name="Continue" type="Button" parent="."]
-layout_mode = 0
-offset_left = 100.5
-offset_top = 157.5
-offset_right = 179.5
-offset_bottom = 181.5
+[node name="Continue" type="Button" parent="." node_paths=PackedStringArray("anim")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -31.5
+offset_right = 55.502502
+offset_bottom = -5.2462616
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(53, 13)
+theme = SubResource("Theme_rgnfl")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_dcbcy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rgnfl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hc54m")
 action_mode = 0
-text = "Doorgaan ➡️"
+text = " Doorgaan ✅ "
+script = ExtResource("2_dcbcy")
+anim = NodePath("AnimationPlayer")
+animation = ExtResource("3_hc54m")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Continue"]
+libraries = {
+&"": SubResource("AnimationLibrary_hc54m")
+}
 
 [node name="Button" type="Button" parent="."]
 modulate = Color(1, 1, 1, 0)

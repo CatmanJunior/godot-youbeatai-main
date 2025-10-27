@@ -162,10 +162,10 @@ public static class Tutorial
             "Ik heb er zelf net 2 erin gezet, luister er maar eens naar▶️!",
             "",
             "Klinkt al leuk!",
-            "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
+            "Probeer nu eens zelf, vul nog 2 oranje stippen in te vullen door op de stippen te drukken" ,
             "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
             "Ik ben benieuwd laat mij eens horen! ▶️",
-            "Probeer 5 keer mee te klappen op de beat!",
+            "Probeer 5 keer mee te klappen op de beat!", //todo klap icoon toevoegen
             "Super goed gedaan, je hebt talent!",
 
             //groene laag
@@ -298,6 +298,7 @@ public static class Tutorial
                 _active = true;
                 manager.KlappyContinue.Visible = false;
                 manager.settingsButton.Visible = true;
+                manager.ContinueButton.EmitSignal("animation_play");
             },
             //stomp ring
             null,
@@ -530,8 +531,9 @@ public static class Tutorial
             manager.first_tts_done = true;
         }
         
-            _correctClapPlaySFX();
-            _correctStompPlaySFX();
+        _correctClapPlaySFX();
+        _correctStompPlaySFX();
+        
 
 
         if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)

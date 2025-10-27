@@ -13,13 +13,13 @@ public static class Tutorial
 
     private static int _beatsActiveRedRing = 5;
     private static int _beatsActiveOrangeRing = 4;
-    private static int _indexRedRing = 0;
-    private static int _indexOrangeRing = 1;
-    private static int _ringTop = 0;
-    private static int _ringBottom = 8;
-    private static int _ringRight = 4;
-    private static int _ringLeft = 12;
-    private static int _greenLayerMicIndex = 0;
+    private static readonly int _indexRedRing = 0;
+    private static readonly int _indexOrangeRing = 1;
+    private static readonly int _ringTop = 0;
+    private static readonly int _ringBottom = 8;
+    private static readonly int _ringRight = 4;
+    private static readonly int _ringLeft = 12;
+    private static readonly int _greenLayerMicIndex = 0;
     private static Vector2 _knobPos;
     private static int _amountRedRing;
     private static bool _continued = false;
@@ -31,9 +31,9 @@ public static class Tutorial
     private static Area2D _inBetweenArea = null;
     private static MeshInstance2D _pianoMesh = null;
     private static Node2D _top = null;
-    private static int _fixedAmount = 5;
-    private static int _previousclap = -1;
-    private static int _previousstomp = -1;
+    private static readonly int _fixedAmount = 5;
+    private static int _previousClap = -1;
+    private static int _previousStomp = -1;
     private static bool _stomping = false;
     private static bool _clapping = false;
     private static Timer timer;
@@ -161,7 +161,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Probeer nu eens zelf, vul nog 2 oranje stippen in te vullen door op de stippen te drukken",
+            instruction: "Probeer nu eens zelf, vul nog 2 oranje stippen in door op de stippen te drukken",
             condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
             outcome: null
         ),
@@ -466,10 +466,10 @@ public static class Tutorial
     {
         if (_stomping)
         {
-            if (manager.stompedOnBeatAmount > _previousstomp)
+            if (manager.stompedOnBeatAmount > _previousStomp)
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _previousstomp = manager.stompedOnBeatAmount;
+                _previousStomp = manager.stompedOnBeatAmount;
                 manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
             }
         }
@@ -479,10 +479,10 @@ public static class Tutorial
     {
         if (_clapping)
         {
-            if (manager.clappedOnBeatAmount > _previousclap)
+            if (manager.clappedOnBeatAmount > _previousClap)
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _previousclap = manager.clappedOnBeatAmount;
+                _previousClap = manager.clappedOnBeatAmount;
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
             }
         }

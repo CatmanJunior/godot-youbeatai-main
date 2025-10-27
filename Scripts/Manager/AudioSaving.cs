@@ -90,6 +90,9 @@ public static class AudioSaving
         RealTimeAudioRecording.instance.recording_result = AudioStreamWav.LoadFromFile(realtime_new);
         SongVoiceOver.instance.voiceOver = AudioStreamWav.LoadFromFile(song_new);
 
+        // update voice audioplayer stream
+        SongVoiceOver.instance.audioPlayer.Stream = SongVoiceOver.instance.voiceOver;
+
         // change recording length
         RealTimeAudioRecording.instance.recordingLength = (float)RealTimeAudioRecording.instance.recording_result.GetLength();
         SongVoiceOver.instance.recordingLength = (float)SongVoiceOver.instance.voiceOver.GetLength();

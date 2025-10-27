@@ -10,7 +10,7 @@ func _enter_tree() -> void:
 
 func play():
 	anim_player.play(animation_resource.resource_name)
-	print(animation_resource.resource_name + " path " + animation_resource.resource_path)
+	
 
 func stop():
 	anim_player.stop()

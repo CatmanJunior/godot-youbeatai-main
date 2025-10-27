@@ -40,7 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="31_kwxat"]
-[ext_resource type="PackedScene" path="res://Scenes/Blocker.tscn" id="32_aa8k8"]
+[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/Blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]

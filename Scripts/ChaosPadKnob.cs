@@ -32,7 +32,10 @@ public partial class ChaosPadKnob : Sprite2D
                 else
                 {
                     dragging = false;
-                    cachedOnMouseUpAction?.Invoke();
+
+                    var chaospad_opaque = Manager.instance.chaosPadTriangleSprite.IsPixelOpaque(Manager.instance.chaosPadTriangleSprite.GetLocalMousePosition());
+                    var knob_opaque = IsPixelOpaque(GetLocalMousePosition());
+                    if (knob_opaque || chaospad_opaque) cachedOnMouseUpAction?.Invoke();
                 }
             }
         }

@@ -106,29 +106,18 @@ public static class AudioSaving
 
     public static void CombineWavFiles(string file1, string file2, string outputFile)
     {
-        using (var reader1 = new AudioFileReader(file1))
-        using (var reader2 = new AudioFileReader(file2))
-        {
-            if (!reader1.WaveFormat.Equals(reader2.WaveFormat))
-                throw new InvalidOperationException("WAV files must have the same format to concatenate.");
+        using var reader1 = new AudioFileReader(file1);
+        using var reader2 = new AudioFileReader(file2);
+        using var writer = new WaveFileWriter(outputFile, reader1.WaveFormat);
+        
+        float[] buffer = new float[1024];
+        int read;
 
-            using (var writer = new WaveFileWriter(outputFile, reader1.WaveFormat))
-            {
-                // Copy first file
-                float[] buffer = new float[1024];
-                int read;
-                while ((read = reader1.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    writer.WriteSamples(buffer, 0, read);
-                }
+        // copy first file contents
+        while ((read = reader1.Read(buffer, 0, buffer.Length)) > 0) writer.WriteSamples(buffer, 0, read);
 
-                // Copy second file
-                while ((read = reader2.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    writer.WriteSamples(buffer, 0, read);
-                }
-            }
-        }
+        // copy second file contents
+        while ((read = reader2.Read(buffer, 0, buffer.Length)) > 0) writer.WriteSamples(buffer, 0, read);
     }
 
     // removes a specific segment in the middle from a wav file. making the total wav length shorter

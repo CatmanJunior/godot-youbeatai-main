@@ -33,6 +33,22 @@ public partial class Manager : Node
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
         else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
         else if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_ChangeToSongMixer();
+
+        ((ChaosPadKnob)knob).SubToOnMouseUp(() =>
+        {
+            if (SamplesMixing_activeRing == 0) firstAudioPlayer.Play();
+            if (SamplesMixing_activeRing == 1) secondAudioPlayer.Play();
+            if (SamplesMixing_activeRing == 2) thirdAudioPlayer.Play();
+            if (SamplesMixing_activeRing == 3) fourthAudioPlayer.Play();
+            if (SamplesMixing_activeRing == 0) firstAudioPlayerAlt.Play();
+            if (SamplesMixing_activeRing == 1) secondAudioPlayerAlt.Play();
+            if (SamplesMixing_activeRing == 2) thirdAudioPlayerAlt.Play();
+            if (SamplesMixing_activeRing == 3) fourthAudioPlayerAlt.Play();
+            if (SamplesMixing_activeRing == 0) firstAudioPlayerRec.Play();
+            if (SamplesMixing_activeRing == 1) secondAudioPlayerRec.Play();
+            if (SamplesMixing_activeRing == 2) thirdAudioPlayerRec.Play();
+            if (SamplesMixing_activeRing == 3) fourthAudioPlayerRec.Play();
+        });
     }
 
     #region SamplesMixing

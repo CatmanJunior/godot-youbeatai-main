@@ -155,10 +155,10 @@ public static class Tutorial
             "Ik heb er zelf net 2 erin gezet, luister er maar eens naar▶️!",
             "",
             "Klinkt al leuk!",
-            "Probeer nu eens zelf 2 klap stippen er bij te zetten" ,
+            "Probeer nu eens zelf, vul nog 2 oranje stippen in te vullen door op de stippen te drukken" ,
             "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
             "Ik ben benieuwd laat mij eens horen! ▶️",
-            "Probeer 5 keer mee te klappen op de beat!",
+            "Probeer 5 keer mee te klappen op de beat!", //todo klap icoon toevoegen
             "Super goed gedaan, je hebt talent!",
 
             //groene laag
@@ -176,9 +176,9 @@ public static class Tutorial
             "probeer het maar eens door het grijze rondje te bewegen naar het 🌟 sterretje ",
             "Luister maar eens!▶️",
             "Dit geeft een hele andere sfeer aan je beat",
-            "Door het grijze rondje nu tussen twee icoontjes te plaatsen maak je een mix!",
+            "Door het grijze rondje nu tussen twee icoontjes bij het 🌟 sterretje te plaatsen maak je een mix!",
             "Zo krijg je een mix tussen jou stem en het instrument!",
-            "Laten we het geluid iets zachter maken door de grijze stip een beetje buiten de driehoek te plaatsen",
+            "Laten we het geluid iets zachter maken door de grijze stip een beetje buiten de driehoek bij het 🌟 sterretje` te plaatsen",
             //End of tutorial
             "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
 
@@ -197,8 +197,8 @@ public static class Tutorial
             () => manager.clapped, 
 
             // rode ring
-            () => false, 
-            () => false, 
+            () => !DisplayServer.TtsIsSpeaking(), 
+            () => !DisplayServer.TtsIsSpeaking(), 
             () => BpmManager.instance.playing, // This checks whether the song is playing
             () => !BpmManager.instance.playing,
             () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
@@ -212,14 +212,14 @@ public static class Tutorial
                
                 return manager.stompedOnBeatAmount >= _fixedAmount;
             }, // makes sure the amount you stomped is equal to the amount of beats active
-            () =>  false, // need to make a check for button press or screen tap, 
+            () =>  !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap, 
 
             // oranje ring
-            () => false, // need to make a check for button press or screen tap
+            () => !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap
             () => BpmManager.instance.playing
             , // This checks whether the song is playing
             () => timer.TimeLeft == 0,
-            ()=> false,
+            ()=> !DisplayServer.TtsIsSpeaking(),
 
             () =>
             {
@@ -238,32 +238,32 @@ public static class Tutorial
             {  
                 return manager.clappedOnBeatAmount >= _fixedAmount;
             }, // This checks whether the song is playing
-            () =>false, // need to make a check for button press or screen tap,   
+            () =>!DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap,   
 
             // layer voice over
-            () => false, // need to make a check for button press or screen tap
+            () => !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap
             () => manager.layerVoiceOver0.finished,
          
             () =>
             {
                 return BpmManager.instance.playing;
             },
-            () => false, // need to make a check for button press or screen tap 
+            () => !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap 
             
             // chaos pad
             ()=>
             {
                 
                 _knobPos = manager.knob.GlobalPosition;
-                return false;
+                return !DisplayServer.TtsIsSpeaking();
             }, // need to make a check for button press or screen tap,
-            ()=> false,
+            ()=> !DisplayServer.TtsIsSpeaking(),
            
             ()=> false,
             () =>
             {
               
-                bool moved = _knobPos != manager.knob.GlobalPosition;
+                
                 return   false;
             },
             () =>
@@ -288,9 +288,10 @@ public static class Tutorial
             {
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
-                _active = true;
+              //  _active = true;
                 manager.KlappyContinue.Visible = false;
                 manager.settingsButton.Visible = true;
+                manager.ContinueButton.EmitSignal("animation_play");
             },
             //stomp ring
             null,
@@ -299,7 +300,7 @@ public static class Tutorial
                 manager.beatActives[_indexRedRing, _ringTop] = true;
                 manager.beatActives[_indexRedRing, _ringRight] = true;
                 manager.beatActives[_indexRedRing, _ringBottom] = true;
-                _active =false;
+               // _active =false;
                 manager.PlayPauseButton.Visible = true;
                 manager.SetStompVisibility(true);
 
@@ -320,7 +321,7 @@ public static class Tutorial
             },
             ()=>
             {
-                _active =true;
+               // _active =true;
                 _stomping = false;
                 manager.AmountLeft.Visible = false;
                 manager.AmountLeft.Text = "";
@@ -332,7 +333,7 @@ public static class Tutorial
             manager.beatActives[_indexOrangeRing, _ringRight] = true;
             manager.beatActives[_indexOrangeRing, _ringLeft] = true;
             manager.SetClapVisibility(true);
-            _active = false;
+            //_active = false;
             SkipPlay();
             },
             ()=>
@@ -340,10 +341,11 @@ public static class Tutorial
                 _textAllowed = true;
                 timer.Start(timer.WaitTime);
             },
-            ()=> { _active =true;},
+            ()=> { //_active =true;
+                   },
             ()=>
             {
-                _active =false;
+               // _active =false;
                 BpmManager.instance.playing = false;
             },
             null,
@@ -360,7 +362,7 @@ public static class Tutorial
             {
                 _clapping = false;
                 manager.AmountLeft.Visible = false;
-                _active = true;
+                //_active = true;
                 BpmManager.instance.playing = false;
             },
             () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
@@ -369,7 +371,7 @@ public static class Tutorial
             () =>
             {
                 manager.SetMicRecorderVisibility(true);
-                _active =false;
+               // _active =false;
                 manager.knob.GlobalPosition = _top.GlobalPosition;
                
                allowed = true;
@@ -381,13 +383,18 @@ public static class Tutorial
             },
             () =>
             {
-                _active = true; _textAllowed = true;
+               // _active = true;
+                _textAllowed = true;
                
             },
-            ()=> BpmManager.instance.playing = false,
+            ()=>
+            {
+                BpmManager.instance.playing = false;
+            },
             //chaos pad
             () =>
             {
+                _active = true;
             
                 manager.chaosPadTriangleSprite.Visible = true;
             },
@@ -398,12 +405,14 @@ public static class Tutorial
                 _active = false;
                 manager.PianoArea.Monitoring = true; 
                 manager.PianoMesh.Visible = true;
+                manager.PianoArea.EmitSignal("animation_star_play");
             },()=>  SkipPlay() ,
             () =>
             {
                 _textAllowed = true;
                 manager.PianoArea.SetDeferred("monitoring",false);
                 manager.PianoMesh.Visible = false;
+                manager.PianoArea.EmitSignal("animation_star_stop");
                 _active = true;
             },
             ()=>
@@ -411,23 +420,28 @@ public static class Tutorial
                 _active = false;
                 manager.InBetweenMesh.Visible = true;
                 manager.InBetweenArea.SetDeferred("monitoring",true);
+                manager.InBetweenArea.EmitSignal("animation_star_play");
+                
             },  
             ()=>
             {
                 _active = true;
                 manager.InBetweenArea.SetDeferred("monitoring",false);
+                manager.InBetweenArea.EmitSignal("animation_star_stop");
                 manager.InBetweenMesh.Visible = false;
             },
             () =>
             { 
                 _active = false;
                 manager.OutSideArea.SetDeferred("monitoring",true);
+                manager.OutSideArea.EmitSignal("animation_star_play");
                 manager.OutSideMesh.Visible = true;
                
             },
            ()=>
             { 
                 manager.OutSideArea.SetDeferred("monitoring",false);
+                manager.OutSideArea.EmitSignal("animation_star_stop");
                 manager.OutSideMesh.Visible = false;
                 _active = true;
             },
@@ -471,6 +485,7 @@ public static class Tutorial
         GD.Print("body continue" + body);
         if (body == manager.KnobArea)
         {
+            
             _nextLine();
         }
         
@@ -478,7 +493,8 @@ public static class Tutorial
 
     private static void _nextLine()
     {
-        if (outcome != null) outcome();
+        outcome?.Invoke();
+        if (tutorial_level >=  instructions.Length) return;
         tutorial_level++;
         manager.PlayExtraSFX(manager.achievement_sfx);
         SpeakTutorialInstruction(tutorial_level);
@@ -523,8 +539,9 @@ public static class Tutorial
             manager.first_tts_done = true;
         }
         
-            _correctClapPlaySFX();
-            _correctStompPlaySFX();
+        _correctClapPlaySFX();
+        _correctStompPlaySFX();
+        
 
 
         if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
@@ -539,14 +556,9 @@ public static class Tutorial
             {
                 _nextLine();
             }
-
             if (skip)
             {
-                if (outcome != null) outcome();
-                tutorial_level++;
-                manager.PlayExtraSFX(manager.achievement_sfx);
-                SpeakTutorialInstruction(tutorial_level);
-                updateLists();
+               _nextLine();
             }
             
 
@@ -579,7 +591,6 @@ public static class Tutorial
 
     private static bool SkipPlay()
     {//Todo Check the playing and skip 2 instead of 1 when true
-      GD.Print("Skipped");
             if (BpmManager.instance.playing)
             {
                 _textAllowed = false;

@@ -406,12 +406,14 @@ public static class Tutorial
                 _active = false;
                 manager.PianoArea.Monitoring = true; 
                 manager.PianoMesh.Visible = true;
+                manager.PianoArea.EmitSignal("animation_star_play");
             },()=>  SkipPlay() ,
             () =>
             {
                 _textAllowed = true;
                 manager.PianoArea.SetDeferred("monitoring",false);
                 manager.PianoMesh.Visible = false;
+                manager.PianoArea.EmitSignal("animation_star_stop");
                 _active = true;
             },
             ()=>
@@ -419,23 +421,28 @@ public static class Tutorial
                 _active = false;
                 manager.InBetweenMesh.Visible = true;
                 manager.InBetweenArea.SetDeferred("monitoring",true);
+                manager.InBetweenArea.EmitSignal("animation_star_play");
+                
             },  
             ()=>
             {
                 _active = true;
                 manager.InBetweenArea.SetDeferred("monitoring",false);
+                manager.InBetweenArea.EmitSignal("animation_star_stop");
                 manager.InBetweenMesh.Visible = false;
             },
             () =>
             { 
                 _active = false;
                 manager.OutSideArea.SetDeferred("monitoring",true);
+                manager.OutSideArea.EmitSignal("animation_star_play");
                 manager.OutSideMesh.Visible = true;
                
             },
            ()=>
             { 
                 manager.OutSideArea.SetDeferred("monitoring",false);
+                manager.OutSideArea.EmitSignal("animation_star_stop");
                 manager.OutSideMesh.Visible = false;
                 _active = true;
             },

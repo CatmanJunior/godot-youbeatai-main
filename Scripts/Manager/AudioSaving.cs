@@ -46,8 +46,6 @@ public static class AudioSaving
         MixAudioFiles(song_name + "_a_" + ".wav", song_name + "_b_" + ".wav", song_name + ".wav");
 
         // cut current layer out off song_name
-        float timespan = 0;
-        using (var reader = new AudioFileReader(song_name + ".wav")) timespan = (float)reader.TotalTime.TotalSeconds;
         float timePerLayer = BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat;
         float startTime = Manager.instance.currentLayerIndex * timePerLayer;
         float endTime = startTime + timePerLayer;
@@ -62,6 +60,41 @@ public static class AudioSaving
 
         Manager.instance.ShowSavingLabel(final_name);
         Manager.instance.hassavedtofile = true;
+    }
+
+    public static void RemoveLayerPartOfRecordings(int layer)
+    {
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
+        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
+
+        // define wav file names and paths
+        string realtime_old = user($"realtime_{sanitizedTime}_temp_old.wav");
+        string song_old = user($"song_{sanitizedTime}_temp_old.wav");
+        string realtime_new = user($"realtime_{sanitizedTime}_temp_new.wav");
+        string song_new = user($"song_{sanitizedTime}_temp_new.wav");
+        
+        // audiostreams to wavs
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, realtime_old);
+        ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, song_old);
+
+        // calculate timing for part to cut out
+        float timePerLayer = BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat;
+        float startTime = layer * timePerLayer;
+        float endTime = startTime + timePerLayer;
+        
+        // remove segments from wav files
+        RemoveSegmentFromWavFile(realtime_old, realtime_new, startTime, endTime);
+        RemoveSegmentFromWavFile(song_old, song_new, startTime, endTime);
+
+        // wavs back to audiostreams
+        RealTimeAudioRecording.instance.recording_result = AudioStreamWav.LoadFromFile(realtime_new);
+        SongVoiceOver.instance.voiceOver = AudioStreamWav.LoadFromFile(song_new);
+
+        // delete wavs
+        File.Delete(realtime_old);
+        File.Delete(song_old);
+        File.Delete(realtime_new);
+        File.Delete(song_new);
     }
 
     public static void CombineWavFiles(string file1, string file2, string outputFile)
@@ -91,48 +124,42 @@ public static class AudioSaving
         }
     }
 
+    // removes a specific segment in the middle from a wav file. making the total wav length shorter
     public static void RemoveSegmentFromWavFile(string inputPath, string outputPath, double startTime, double endTime)
     {
-        using (var reader = new AudioFileReader(inputPath))
-        {
-            int bytesPerSample = reader.WaveFormat.BitsPerSample / 8 * reader.WaveFormat.Channels;
-            int startPos = (int)(startTime * reader.WaveFormat.SampleRate) * bytesPerSample;
-            int endPos = (int)(endTime * reader.WaveFormat.SampleRate) * bytesPerSample;
+        using var reader = new AudioFileReader(inputPath);
+        using var writer = new WaveFileWriter(outputPath, reader.WaveFormat);
 
-            startPos = Math.Min(startPos, (int)reader.Length);
-            endPos = Math.Min(endPos, (int)reader.Length);
+        int bytesPerSecond = reader.WaveFormat.AverageBytesPerSecond;
+        long startPos = (long)(startTime * bytesPerSecond);
+        long endPos = (long)(endTime * bytesPerSecond);
 
-            using (var writer = new WaveFileWriter(outputPath, reader.WaveFormat))
-            {
-                byte[] buffer = new byte[1024];
+        startPos = Math.Min(startPos, reader.Length);
+        endPos = Math.Min(endPos, reader.Length);
 
-                // Copy everything before the segment
-                reader.Position = 0;
-                while (reader.Position < startPos)
-                {
-                    int bytesRequired = startPos - (int)reader.Position;
-                    int bytesToRead = Math.Min(bytesRequired, buffer.Length);
-                    int bytesRead = reader.Read(buffer, 0, bytesToRead);
-                    if (bytesRead == 0) break;
-                    writer.Write(buffer, 0, bytesRead);
-                }
+        // copy everything before the segment
+        reader.Position = 0;
+        CopyBytes(reader, writer, startPos);
 
-                // Skip the segment
-                reader.Position = endPos;
+        // skip the unwanted segment
+        reader.Position = endPos;
 
-                // Copy everything after the segment
-                while (reader.Position < reader.Length)
-                {
-                    int bytesRequired = (int)(reader.Length - reader.Position);
-                    int bytesToRead = Math.Min(bytesRequired, buffer.Length);
-                    int bytesRead = reader.Read(buffer, 0, bytesToRead);
-                    if (bytesRead == 0) break;
-                    writer.Write(buffer, 0, bytesRead);
-                }
-            }
-        }
+        // copy everything after the segment
+        reader.CopyTo(writer);
     }
 
+    private static void CopyBytes(Stream input, Stream output, long bytesToCopy)
+    {
+        byte[] buffer = new byte[8192];
+        while (bytesToCopy > 0)
+        {
+            int toRead = (int)Math.Min(buffer.Length, bytesToCopy);
+            int read = input.Read(buffer, 0, toRead);
+            if (read == 0) break;
+            output.Write(buffer, 0, read);
+            bytesToCopy -= read;
+        }
+    }
 
     public static void TrimWavFile(string inputPath, string outputPath, double startTime, double endTime)
     {
@@ -205,11 +232,15 @@ public static class AudioSaving
         await Task.Run(task);
     }
 
-    private static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
+    public static void ConvertAudioStreamWavToWav(AudioStreamWav audioStreamWav, string filePath)
     {
         if (audioStreamWav.Stereo) audioStreamWav = ConvertStereoToMono(audioStreamWav);
         byte[] pcmData = audioStreamWav.Data;
-        using (var waveFile = new WaveFileWriter(filePath, new WaveFormat(audioStreamWav.MixRate, 16, audioStreamWav.Stereo ? 2 : 1))) waveFile.Write(pcmData, 0, pcmData.Length);
+        using (var waveFile = new WaveFileWriter(filePath, new WaveFormat(audioStreamWav.MixRate, 16, audioStreamWav.Stereo ? 2 : 1)))
+        {
+            waveFile.Write(pcmData, 0, pcmData.Length);
+            waveFile.Close();
+        }
         GD.Print($"WAV file successfully created at: {filePath}");
     }
 

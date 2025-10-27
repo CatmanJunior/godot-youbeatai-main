@@ -162,4 +162,35 @@ public partial class Manager : Node
         }
         else ctrl_v_pressed = false;
     }
+
+    AudioEffectInstance GetBusEffectInstanceByName(int busIndex, string effectName)
+	{
+		int effectCount = AudioServer.GetBusEffectCount(busIndex);
+		for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffectInstance(busIndex, i);
+		GD.PushWarning($"Effect '{effectName}' not found.");
+		return null;
+	}
+
+	float GetVolumeFromBus(string busName)
+	{
+		var busindex = AudioServer.GetBusIndex(busName);
+		var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
+		var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
+		var volume = magnitude.Length();
+		return volume * 30f;
+	}
+
+	void UpdateGreenPurpleButtonLights()
+    {
+        var greenLight = activateGreenChaosButton.GetChild<Light2D>(1);
+		var purpleLight = activatePurpleChaosButton.GetChild<Light2D>(1);
+		var green_volume_voice = GetVolumeFromBus("GreenVoice");
+		var purple_volume_voice = GetVolumeFromBus("PurpleVoice");
+
+		if (green_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver0.GetCurrentLayerVoiceOver() != null) greenLight.Energy = green_volume_voice;
+		else greenLight.Energy = 0f;
+
+		if (purple_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver1.GetCurrentLayerVoiceOver() != null) purpleLight.Energy = purple_volume_voice;
+		else purpleLight.Energy = 0f;
+    }
 }

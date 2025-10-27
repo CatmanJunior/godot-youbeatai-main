@@ -61,7 +61,7 @@ public partial class Manager : Node
 
     public void ClearLayer()
     {
-        AudioSaving.RemoveLayerPartOfRecordings(currentLayerIndex);
+        AudioSaving.RemoveLayerPartOfRecordings(currentLayerIndex + 1);
         RemoveLayer(currentLayerIndex);
         ClearLayerVoiceOver();
         EmitSignal(SignalName.OnClearLayerEvent, currentLayerIndex);

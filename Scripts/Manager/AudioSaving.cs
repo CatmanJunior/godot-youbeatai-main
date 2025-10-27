@@ -127,16 +127,27 @@ public static class AudioSaving
     // removes a specific segment in the middle from a wav file. making the total wav length shorter
     public static void RemoveSegmentFromWavFile(string inputPath, string outputPath, double startTime, double endTime)
     {
-        using var reader = new AudioFileReader(inputPath);
-        using var writer = new WaveFileWriter(outputPath, reader.WaveFormat);
+        using var reader = new WaveFileReader(inputPath);
+        
+        var format = reader.WaveFormat;
+        long length = reader.Length;
 
-        int bytesPerSecond = reader.WaveFormat.AverageBytesPerSecond;
-        long startPos = (long)(startTime * bytesPerSecond);
-        long endPos = (long)(endTime * bytesPerSecond);
+        // compute byte positions and align to block boundary
+        long blockAlign = format.BlockAlign; // bytes per sample frame
+        long startPos = (long)(startTime * format.AverageBytesPerSecond);
+        long endPos = (long)(endTime * format.AverageBytesPerSecond);
 
-        startPos = Math.Min(startPos, reader.Length);
-        endPos = Math.Min(endPos, reader.Length);
+        // align
+        startPos -= startPos % blockAlign;
+        endPos -= endPos % blockAlign;
 
+        // clamp
+        startPos = Math.Min(Math.Max(0, startPos), length);
+        endPos = Math.Min(Math.Max(0, endPos), length);
+        if (endPos < startPos) endPos = startPos;
+
+        using var writer = new WaveFileWriter(outputPath, format);
+        
         // copy everything before the segment
         reader.Position = 0;
         CopyBytes(reader, writer, startPos);
@@ -145,7 +156,8 @@ public static class AudioSaving
         reader.Position = endPos;
 
         // copy everything after the segment
-        reader.CopyTo(writer);
+        long remaining = length - endPos;
+        CopyBytes(reader, writer, remaining);
     }
 
     private static void CopyBytes(Stream input, Stream output, long bytesToCopy)

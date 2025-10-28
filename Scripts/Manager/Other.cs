@@ -172,6 +172,14 @@ public partial class Manager : Node
 		return null;
 	}
 
+    AudioEffect GetBusEffectByName(int busIndex, string effectName)
+	{
+		int effectCount = AudioServer.GetBusEffectCount(busIndex);
+		for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffect(busIndex, i);
+		GD.PushWarning($"Effect '{effectName}' not found.");
+		return null;
+	}
+
 	float GetVolumeFromBus(string busName)
 	{
 		var busindex = AudioServer.GetBusIndex(busName);

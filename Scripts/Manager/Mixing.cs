@@ -505,7 +505,10 @@ public partial class Manager : Node
 
     private void SongMixing_UpdateMixingVolumesForSong(float mastervolume)
     {
-        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SongVoice"), weights.Y * mastervolume);
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SongVoice"), (weights.Y + weights.X) * mastervolume);
+
+        var busindex = AudioServer.GetBusIndex("SongVoice");
+        ((AudioEffectReverb)GetBusEffectByName(busindex, "Reverb")).Wet = weights.X * mastervolume / 4f;
     }
 
     #endregion

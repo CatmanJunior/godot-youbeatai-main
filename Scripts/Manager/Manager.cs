@@ -134,8 +134,11 @@ public partial class Manager : Node
 		else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 
 		// update pointer
-		float intergerFactor = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
-		pointer.RotationDegrees = intergerFactor * 360f - 7f;
+		if (BpmManager.instance.playing)
+		{
+			float intergerFactor = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+			pointer.RotationDegrees = intergerFactor * 360f - 7f;
+		}
 
 		CheckIfClappingOrStomping();
 

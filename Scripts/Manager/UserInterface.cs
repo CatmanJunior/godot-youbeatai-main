@@ -50,7 +50,7 @@ public partial class Manager : Node
 	[Export] Button skiptutorialbutton;
 	[Export] public ProgressBar progressBar;
 	float progressBarValue = 0;
-	[Export] Sprite2D pointer;
+	[Export] public Sprite2D pointer;
 	[Export] public Sprite2D metronome;
 	[Export] public Sprite2D metronomebg;
 	[Export] Label bpmLabel;
@@ -90,6 +90,7 @@ public partial class Manager : Node
 	[Export] public Button KlappyContinue;
 	[Export] public Area2D KnobArea;
 	[Export] public Label AmountLeft;
+	[Export] public Button greenLayerRecordButton;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	private void SetCopyPasteClearButtonsActive(bool active)

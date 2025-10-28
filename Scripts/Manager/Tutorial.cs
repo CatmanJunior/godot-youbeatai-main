@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Reflection;
 using Range = Godot.Range;
 
 public static class Tutorial
@@ -11,18 +12,15 @@ public static class Tutorial
     public static int tutorial_level = 0;
     public static bool tutorialActivated = false;
 
-    static string[] instructions = null;
-    static Func<bool>[] conditions = null;
-    static Action[] outcomes = null;
     private static int _beatsActiveRedRing = 5;
     private static int _beatsActiveOrangeRing = 4;
-    private static int _indexRedRing = 0;
-    private static int _indexOrangeRing = 1;
-    private static int _ringTop = 0;
-    private static int _ringBottom = 8;
-    private static int _ringRight = 4;
-    private static int _ringLeft = 12;
-    private static int _greenLayerMicIndex = 0;
+    private static readonly int _indexRedRing = 0;
+    private static readonly int _indexOrangeRing = 1;
+    private static readonly int _ringTop = 0;
+    private static readonly int _ringBottom = 8;
+    private static readonly int _ringRight = 4;
+    private static readonly int _ringLeft = 12;
+    private static readonly int _greenLayerMicIndex = 0;
     private static Vector2 _knobPos;
     private static int _amountRedRing;
     private static bool _continued = false;
@@ -34,9 +32,9 @@ public static class Tutorial
     private static Area2D _inBetweenArea = null;
     private static MeshInstance2D _pianoMesh = null;
     private static Node2D _top = null;
-    private static int _fixedAmount = 5;
-    private static int _previousclap = -1;
-    private static int _previousstomp = -1;
+    private static readonly int _fixedAmount = 5;
+    private static int _previousClap = -1;
+    private static int _previousStomp = -1;
     private static bool _stomping = false;
     private static bool _clapping = false;
     private static Timer timer;
@@ -44,17 +42,393 @@ public static class Tutorial
     private static bool _textAllowed = true;
     private static DragAndDropButton _clapButton;
     private static DragAndDropButton _stompButton;
+    private static bool _increasedSpeed = false;
     static Manager manager => Manager.instance;
+
+    private static (string instruction, Func<bool> condition, Action outcome)[] tutorialSteps =>
+    [
+        // intro
+        (
+            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen",
+            condition: () => manager.clapped,
+            outcome: () =>
+            {
+                manager.pointer.Visible = true;
+                manager.SetRingVisibility(_indexRedRing, true);
+                manager.cross.Visible = true;
+                manager.KlappyContinue.Visible = false;
+                manager.settingsButton.Visible = true;
+                manager.ContinueButton.EmitSignal("animation_play");
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
+        ),
+
+        // kick ring
+        (
+            instruction:     "Deze rode cirkels vormen een kick-ring",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: null
+        ),
+        (
+            instruction: "Op deze ring kun je de kick plaatsen van je Beat",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                manager.beatActives[_indexRedRing, _ringTop] = true;
+                manager.beatActives[_indexRedRing, _ringRight] = true;
+                manager.beatActives[_indexRedRing, _ringBottom] = true;
+                manager.PlayPauseButton.Visible = true;
+                manager.SetStompVisibility(true);
+            }
+        ),
+        (
+            instruction: "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen",
+            condition: () => BpmManager.instance.playing,
+            outcome: () => allowed = true
+        ),
+        (
+            instruction: "Druk op ⏸️ om de Beat op pauze te zetten",
+            condition: () => !BpmManager.instance.playing,
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
+        (
+            instruction: "Nu jij!, vul nog 2 cirkels door er op te drukken",
+            condition: () => ActiveBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing,
+            outcome: () =>
+            {
+                _textAllowed = true;
+                allowed = true;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
+        ),
+        (
+            instruction: "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️",
+            condition: () =>
+            {
+                _beatsActiveRedRing = ActiveBeatsPerRing(_indexRedRing);
+                return BpmManager.instance.playing;
+                
+            },
+            outcome: () =>
+            {
+                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
+                _stomping = true;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
+        ),
+        (
+            instruction: "Stamp 👟 5 keer mee met de kick van je Beat!",
+            condition: () => manager.stompedOnBeatAmount >= _fixedAmount,
+            outcome: () =>
+            {
+                _stomping = false;
+                manager.AmountLeft.Visible = false;
+                manager.AmountLeft.Text = "";
+                BpmManager.instance.playing = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
+        ),
+        (
+            instruction: "Wow super gedaan! Op naar level 2!",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () => manager.SetRingVisibility(_indexOrangeRing, true)
+        ),
+
+        // klap ring
+        (
+            instruction: "Deze oranje ring is de clap-ring",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                manager.beatActives[_indexOrangeRing, _ringRight] = true;
+                manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+                manager.SetClapVisibility(true);
+                SkipPlay();
+            }
+        ),
+        (
+            instruction: "Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!",
+            condition: () => BpmManager.instance.playing,
+            outcome: () =>
+            {
+                _textAllowed = true;
+                timer.Start(timer.WaitTime);
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
+        ),
+        (
+            instruction: "",
+            condition: () => timer.TimeLeft == 0,
+            outcome: null
+        ),
+        (
+            instruction: "Klinkt al leuk!",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                BpmManager.instance.playing = false;
+            }
+        ),
+        (
+            instruction: "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
+            condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
+            outcome: ()=>  manager.PlayExtraSFX(manager.achievement_sfx)
+        ),
+        (
+            instruction: "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
+            condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
+        (
+            instruction: "Ik ben benieuwd laat mij eens horen! ▶️",
+            condition: () =>
+            {
+                _beatsActiveOrangeRing = ActiveBeatsPerRing(_indexOrangeRing);
+                return BpmManager.instance.playing;
+            },
+            outcome: () =>
+            {
+                _textAllowed = true;
+                manager.AmountLeft.Visible = true;
+                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _clapping = true;
+            }
+        ),
+        (
+            instruction: "Klap nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
+            condition: () => manager.clappedOnBeatAmount >= _fixedAmount,
+            outcome: () =>
+            {
+                _clapping = false;
+                manager.AmountLeft.Visible = false;
+                BpmManager.instance.playing = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }
+        ),
+        (
+            instruction: "Super goed gedaan, je hebt talent!",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                manager.SetGreenLayerVisibility(true);
+                Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
+            }
+        ),
+
+        // groene laag
+        (
+            instruction: "Dit is de groene bass-ring. De baslijn is de brommende melodie onder je Beat",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                
+                manager.knob.GlobalPosition = _top.GlobalPosition;
+                allowed = true;
+            }
+        ),
+        (
+            instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                manager.SetMicRecorderVisibility(true);
+            }
+        ),
+        (
+            instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
+            condition: () => manager.greenLayerRecordButton.ButtonPressed,
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _increasedSpeed = true;
+            }),
+        (
+            instruction: "4",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+               
+            }),
+        (
+            instruction: "3",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                
+            }),
+        (
+            instruction: "2",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+               
+            }
+            ),
+        (
+            instruction: "1",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                _increasedSpeed = false;
+                BpmManager.instance.playing = false;
+               
+            }),
+        (
+            instruction: "Laat eens horen!▶️",
+            condition: () => BpmManager.instance.playing,
+            outcome: () =>
+            { 
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                timer.Start(3);
+            }),
+        (
+            instruction:"",
+            condition: () => timer.IsStopped(),
+            outcome: null
+        ),
+        (
+            instruction: "Super gedaan, het klinkt heel leuk",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () => BpmManager.instance.playing = false
+        ),
+
+        // chaos pad
+        (
+            instruction: "Laten we je sample bewerken!",
+            condition: () =>
+            {
+                _knobPos = manager.knob.GlobalPosition;
+                return !DisplayServer.TtsIsSpeaking();
+            },
+            outcome: () =>
+            {
+                //_active = true;
+                manager.chaosPadTriangleSprite.Visible = true;
+            }
+        ),
+        (
+            instruction: "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: null
+        ),
+        (
+            instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven",
+            condition: () => false,
+            outcome: () =>
+            {
+                _active = false;
+                manager.PianoArea.Monitoring = true;
+                manager.PianoMesh.Visible = true;
+                manager.PianoArea.EmitSignal("animation_star_play");
+            }
+        ),
+        (
+            instruction: "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje ",
+            condition: () => false,
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
+        (
+            instruction: "Luister maar eens!▶️",
+            condition: () => BpmManager.instance.playing,
+            outcome: () =>
+            {
+                _textAllowed = true;
+                manager.PianoArea.SetDeferred("monitoring", false);
+                manager.PianoMesh.Visible = false;
+                manager.PianoArea.EmitSignal("animation_star_stop");
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _active = true;
+            }
+        ),
+        (
+            instruction: "Dit geeft een hele andere sfeer aan je beat",
+            condition: () => false,
+            outcome: () =>
+            {
+                _active = false;
+                manager.InBetweenMesh.Visible = true;
+                manager.InBetweenArea.SetDeferred("monitoring", true);
+                manager.InBetweenArea.EmitSignal("animation_star_play");
+            }
+        ),
+        (
+            instruction: "Beweeg het grijze rondje weer naar het 🌟 sterretje",
+            condition: () => false,
+            outcome: () =>
+            {
+                _active = true;
+                manager.InBetweenArea.SetDeferred("monitoring", false);
+                manager.InBetweenArea.EmitSignal("animation_star_stop");
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                manager.InBetweenMesh.Visible = false;
+            }
+        ),
+        (
+            instruction: "Zo krijg je een mix tussen jouw sample en het instrument!",
+            condition: () => false,
+            outcome: () =>
+            {
+                _active = false;
+                manager.OutSideArea.SetDeferred("monitoring", true);
+                manager.OutSideArea.EmitSignal("animation_star_play");
+                manager.OutSideMesh.Visible = true;
+            }
+        ),
+        (
+            instruction: "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje",
+            condition: () => false,
+            outcome: () =>
+            {
+                manager.OutSideArea.SetDeferred("monitoring", false);
+                manager.OutSideArea.EmitSignal("animation_star_stop");
+                manager.OutSideMesh.Visible = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _active = true;
+            }
+        ),
+        (
+            instruction: "Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer",
+            condition: () => false,
+            outcome: null
+        ),
+
+        // End of tutorial
+        (
+            instruction: "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!",
+            condition: () => false,
+            outcome: () =>
+            {
+                tutorial_level = -2;
+                manager.SetEntireInterfaceVisibility(true);
+                manager.achievementspanel.Visible = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                manager.ContinueButton.Pressed -= _tutorialContinue;
+                manager.PianoArea.AreaEntered -= _bodyContinue;
+                manager.InBetweenArea.AreaEntered -= _bodyContinue;
+                manager.KlappyContinue.Pressed -= KlappyContinue;
+            }
+        )
+    ];
+
+    // flag if tutorial mode should be enabled
+    public static bool useTutorial;
 
     public static void Reset()
     {
         tutorial_level = 0;
         tutorialActivated = false;
         useTutorial = ReadUseTutorial();
-        instructions = null;
-        conditions = null;
-        outcomes = null;
-        timer.QueueFree();
+        timer?.QueueFree();
         timer = null;
     }
 
@@ -67,6 +441,7 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
+            manager.pointer.Visible = false;
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
@@ -81,8 +456,6 @@ public static class Tutorial
             _stompButton = (DragAndDropButton)manager.draganddropButton0;
             _clapButton.OnPressed += manager.OnClap;
             _stompButton.OnPressed += manager.OnStomp;
-
-
         }
     }
 
@@ -94,13 +467,9 @@ public static class Tutorial
             timer.WaitTime = 3;
             timer.OneShot = true;
             manager.achievementspanel.AddChild(timer);
-            
         }
-
     }
 
-    // flag if tutorial mode should be enabled
-    public static bool useTutorial;
     private static bool ReadUseTutorial()
     {
         bool use;
@@ -117,356 +486,29 @@ public static class Tutorial
         }
 
         GD.Print("use tutorial: " + use.ToString());
-
         return use;
     }
-    
 
     public static void SetupTutorial()
     {
         timerSetUp();
-        var activeBeatsPerRing = (int indexRing) =>
-        {
-            int amount = 0;
-            for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-                if (manager.beatActives[indexRing, beat])
-                    amount++;
-            return amount;
-        };
+        // Tutorial steps are now defined as a property above
+        // No need to initialize separate arrays here
+    }
 
-        // setup achievements
-        instructions =
-        [
-            // intro
-            "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen",
-
-            // kick ring
-            "Deze rode cirkels vormen een beat ring",
-            "Met deze ring kun je een kick plaatsen op jouw beat. Kijk maar!",
-            "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
-            "Druk op ⏸️ om het op pauze te zetten ",
-            "Nu jij, vul nog 2 cirkels door op de stippen te drukken",
-            "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt! ▶️",
-            "Stamp👞 eens 5 keer mee op jouw beat!",
-            "Wow super gedaan! tijd voor level 2!",
-
-            // klap ring
-            "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
-            "Ik heb er zelf net 2 erin gezet, luister er maar eens naar▶️!",
-            "",
-            "Klinkt al leuk!",
-            "Probeer nu eens zelf, vul nog 2 oranje stippen in te vullen door op de stippen te drukken" ,
-            "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
-            "Ik ben benieuwd laat mij eens horen! ▶️",
-            "Probeer 5 keer mee te klappen op de beat!", //todo klap icoon toevoegen
-            "Super goed gedaan, je hebt talent!",
-
-            //groene laag
-            "Hier is de groene ring. Die vul je in door met je eigen microfoon iets op te nemen!",
-            "Probeer het maar eens door op het microfoon 🎙️icoontje te klikken",
-           
-            "Laat eens horen!▶️",
-            "Super gedaan, het klinkt heel leuk",
-            
-            // chaos pad
-            "Laten wij dit geluid mixen!",
-            "Deze driehoek is de mixer! Hiermee kun je jouw net opgenomen geluid veranderen", //todo add this
-            
-            "Je kunt jouw stem 🎙️ veranderen in het geluid van een Instrument 🎹  of jouw stem met een effect 🤖",
-            "probeer het maar eens door het grijze rondje te bewegen naar het 🌟 sterretje ",
-            "Luister maar eens!▶️",
-            "Dit geeft een hele andere sfeer aan je beat",
-            "Door het grijze rondje nu tussen twee icoontjes bij het 🌟 sterretje te plaatsen maak je een mix!",
-            "Zo krijg je een mix tussen jou stem en het instrument!",
-            "Laten we het geluid iets zachter maken door de grijze stip een beetje buiten de driehoek bij het 🌟 sterretje` te plaatsen",
-            //End of tutorial
-            "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!"
-
-
-
-
-
-
-        ];
-
-        conditions =
-        [
-            
-            // intro
-            
-            () => manager.clapped, 
-
-            // rode ring
-            () => !DisplayServer.TtsIsSpeaking(), 
-            () => !DisplayServer.TtsIsSpeaking(), 
-            () => BpmManager.instance.playing, // This checks whether the song is playing
-            () => !BpmManager.instance.playing,
-            () => activeBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing, // This checks whether the 5 beats are active
-            () =>
-            {
-                _beatsActiveRedRing = activeBeatsPerRing(_indexRedRing);
-                return BpmManager.instance.playing;
-            }, // This checks whether the song is playing
-            ()=>
-            {
-               
-                return manager.stompedOnBeatAmount >= _fixedAmount;
-            }, // makes sure the amount you stomped is equal to the amount of beats active
-            () =>  !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap, 
-
-            // oranje ring
-            () => !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap
-            () => BpmManager.instance.playing
-            , // This checks whether the song is playing
-            () => timer.TimeLeft == 0,
-            ()=> !DisplayServer.TtsIsSpeaking(),
-
-            () =>
-            {
-                return activeBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing;
-            },
-            () =>
-            {
-                return activeBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || activeBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing;
-            },
-
-            () =>
-            {   _beatsActiveOrangeRing = activeBeatsPerRing(_indexOrangeRing);
-               return BpmManager.instance.playing;
-            }, // This checks whether the song is playing
-            ()=>
-            {  
-                return manager.clappedOnBeatAmount >= _fixedAmount;
-            }, // This checks whether the song is playing
-            () =>!DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap,   
-
-            // layer voice over
-            () => !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap
-            () => manager.layerVoiceOver0.finished,
-         
-            () =>
-            {
-                return BpmManager.instance.playing;
-            },
-            () => !DisplayServer.TtsIsSpeaking(), // need to make a check for button press or screen tap 
-            
-            // chaos pad
-            ()=>
-            {
-                
-                _knobPos = manager.knob.GlobalPosition;
-                return !DisplayServer.TtsIsSpeaking();
-            }, // need to make a check for button press or screen tap,
-            ()=> !DisplayServer.TtsIsSpeaking(),
-           
-            ()=> false,
-            () =>
-            {
-              
-                
-                return   false;
-            },
-            () =>
-            {
-               return BpmManager.instance.playing;
-            },
-            
-            ()=> false,
-            ()=> false,
-            ()=> false,
-            ()=> false,
-            
-            // end of tutorial
-           
-            () =>false // need to make a check for button press or screen tap
-            
-        ];
-
-        outcomes =
-        [
-            () =>
-            {
-                manager.SetRingVisibility(_indexRedRing, true);
-                manager.cross.Visible = true;
-              //  _active = true;
-                manager.KlappyContinue.Visible = false;
-                manager.settingsButton.Visible = true;
-                manager.ContinueButton.EmitSignal("animation_play");
-            },
-            //stomp ring
-            null,
-            () =>
-            {
-                manager.beatActives[_indexRedRing, _ringTop] = true;
-                manager.beatActives[_indexRedRing, _ringRight] = true;
-                manager.beatActives[_indexRedRing, _ringBottom] = true;
-               // _active =false;
-                manager.PlayPauseButton.Visible = true;
-                manager.SetStompVisibility(true);
-
-            },
-            ()=> allowed=true,
-            ()=> SkipPlay(),
-            ()=>
-            {
-                _textAllowed = true;
-                allowed=true;
-            },
-            ()=>
-            {
-                
-                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
-                _stomping = true;
-                
-            },
-            ()=>
-            {
-               // _active =true;
-                _stomping = false;
-                manager.AmountLeft.Visible = false;
-                manager.AmountLeft.Text = "";
-                BpmManager.instance.playing = false;
-            },
-            () => manager.SetRingVisibility(_indexOrangeRing, true),
-            //klap ring
-            ()=>{
-            manager.beatActives[_indexOrangeRing, _ringRight] = true;
-            manager.beatActives[_indexOrangeRing, _ringLeft] = true;
-            manager.SetClapVisibility(true);
-            //_active = false;
-            SkipPlay();
-            },
-            ()=>
-            {
-                _textAllowed = true;
-                timer.Start(timer.WaitTime);
-            },
-            ()=> { //_active =true;
-                   },
-            ()=>
-            {
-               // _active =false;
-                BpmManager.instance.playing = false;
-            },
-            null,
-            ()=>  SkipPlay(),
-            ()=>
-            {
-                _textAllowed = true;
-                manager.AmountLeft.Visible = true;
-                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
-                _clapping = true;
-               
-            },
-            ()=>
-            {
-                _clapping = false;
-                manager.AmountLeft.Visible = false;
-                //_active = true;
-                BpmManager.instance.playing = false;
-            },
-            () => { manager.SetGreenLayerVisibility(true); Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
-
-            } ,
-            () =>
-            {
-                manager.SetMicRecorderVisibility(true);
-               // _active =false;
-                manager.knob.GlobalPosition = _top.GlobalPosition;
-               
-               allowed = true;
-              ;
-            },
-       
-            () => {  
-                SkipPlay();
-            },
-            () =>
-            {
-               // _active = true;
-                _textAllowed = true;
-               
-            },
-            ()=>
-            {
-                BpmManager.instance.playing = false;
-            },
-            //chaos pad
-            () =>
-            {
-                _active = true;
-            
-                manager.chaosPadTriangleSprite.Visible = true;
-            },
-            null,
-            
-            () =>
-            {
-                _active = false;
-                manager.PianoArea.Monitoring = true; 
-                manager.PianoMesh.Visible = true;
-                manager.PianoArea.EmitSignal("animation_star_play");
-            },()=>  SkipPlay() ,
-            () =>
-            {
-                _textAllowed = true;
-                manager.PianoArea.SetDeferred("monitoring",false);
-                manager.PianoMesh.Visible = false;
-                manager.PianoArea.EmitSignal("animation_star_stop");
-                _active = true;
-            },
-            ()=>
-            {
-                _active = false;
-                manager.InBetweenMesh.Visible = true;
-                manager.InBetweenArea.SetDeferred("monitoring",true);
-                manager.InBetweenArea.EmitSignal("animation_star_play");
-                
-            },  
-            ()=>
-            {
-                _active = true;
-                manager.InBetweenArea.SetDeferred("monitoring",false);
-                manager.InBetweenArea.EmitSignal("animation_star_stop");
-                manager.InBetweenMesh.Visible = false;
-            },
-            () =>
-            { 
-                _active = false;
-                manager.OutSideArea.SetDeferred("monitoring",true);
-                manager.OutSideArea.EmitSignal("animation_star_play");
-                manager.OutSideMesh.Visible = true;
-               
-            },
-           ()=>
-            { 
-                manager.OutSideArea.SetDeferred("monitoring",false);
-                manager.OutSideArea.EmitSignal("animation_star_stop");
-                manager.OutSideMesh.Visible = false;
-                _active = true;
-            },
-            // auto stop for tutorial
-            () =>
-            {
-              
-                tutorial_level = -2;
-                manager.SetEntireInterfaceVisibility(true);
-                manager.achievementspanel.Visible = false;
-                manager.PlayExtraSFX(manager.achievement_sfx);
-                manager.ContinueButton.Pressed -= _tutorialContinue;
-                manager.PianoArea.AreaEntered -= _bodyContinue;
-                manager.InBetweenArea.AreaEntered -= _bodyContinue;
-                manager.KlappyContinue.Pressed -= KlappyContinue;
-            }
-
-        ];
+    private static int ActiveBeatsPerRing(int indexRing)
+    {
+        int amount = 0;
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            if (manager.beatActives[indexRing, beat])
+                amount++;
+        return amount;
     }
 
     private static void KlappyContinue()
     {
         manager.Klappy.Call("on_clap");
         _nextLine();
-       
     }
 
     private static void ButtonState()
@@ -476,7 +518,7 @@ public static class Tutorial
 
     private static void _tutorialContinue()
     {
-        if(!_active) return;
+        if (!_active) return;
         _nextLine();
     }
 
@@ -485,68 +527,62 @@ public static class Tutorial
         GD.Print("body continue" + body);
         if (body == manager.KnobArea)
         {
-            
             _nextLine();
         }
-        
     }
 
     private static void _nextLine()
     {
         outcome?.Invoke();
-        if (tutorial_level >=  instructions.Length) return;
+        if (tutorial_level >= tutorialSteps.Length) return;
         tutorial_level++;
-        manager.PlayExtraSFX(manager.achievement_sfx);
+      
         SpeakTutorialInstruction(tutorial_level);
-        updateLists();
+        UpdateLists();
     }
 
     private static void _correctStompPlaySFX()
     {
-        if(_stomping)
+        if (_stomping)
         {
-            if (manager.stompedOnBeatAmount > _previousstomp)
+            if (manager.stompedOnBeatAmount > _previousStomp)
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _previousstomp = manager.stompedOnBeatAmount;
+                _previousStomp = manager.stompedOnBeatAmount;
                 manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
             }
         }
     }
-    
+
     private static void _correctClapPlaySFX()
     {
-        if(_clapping)
+        if (_clapping)
         {
-            if (manager.clappedOnBeatAmount > _previousclap)
+            if (manager.clappedOnBeatAmount > _previousClap)
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _previousclap = manager.clappedOnBeatAmount;
+                _previousClap = manager.clappedOnBeatAmount;
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
             }
         }
     }
-    
 
     public static void UpdateTutorial()
     {
         ButtonState();
-        
-      
+
         if (!manager.first_tts_done && useTutorial)
         {
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-        
+
         _correctClapPlaySFX();
         _correctStompPlaySFX();
-        
 
-
-        if (tutorial_level != -1 && useTutorial && tutorial_level < instructions.Length)
+        if (tutorial_level != -1 && useTutorial && tutorial_level < tutorialSteps.Length)
         {
-            updateLists();
+            UpdateLists();
 
             manager.f7_pressed_lastframe = manager.f7_pressed;
             manager.f7_pressed = Input.IsKeyPressed(Key.F7);
@@ -558,18 +594,18 @@ public static class Tutorial
             }
             if (skip)
             {
-               _nextLine();
+                _nextLine();
             }
-            
-
         }
     }
-    
-    private static void SpeakTutorialInstruction(int instruction)
+
+    private static void SpeakTutorialInstruction(int instructionIndex)
     {
         if (!_textAllowed) return;
         if (manager.muteSpeach.ButtonPressed) return;
-        
+
+        if (instructionIndex < 0 || instructionIndex >= tutorialSteps.Length) return;
+
         var without_emoticons = (string input) =>
         {
             var output = "";
@@ -579,37 +615,44 @@ public static class Tutorial
                 string element = stringInfo.SubstringByTextElements(i, 1);
                 if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
             }
-
             return output;
         };
 
         var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
         if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        DisplayServer.TtsSpeak(without_emoticons(instructions[instruction]), voices[0], 100);
+        if (_increasedSpeed)
+        {
+            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
+        }
+        else
+        {
+            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
+        }
     }
 
     private static bool SkipPlay()
-    {//Todo Check the playing and skip 2 instead of 1 when true
-            if (BpmManager.instance.playing)
-            {
-                _textAllowed = false;
-                return true;
-            }
-            else
-            {
-                return BpmManager.instance.playing;
-            }
-
-
+    {
+        if (BpmManager.instance.playing)
+        {
+            _textAllowed = false;
+            return true;
+        }
+        else
+        {
+            return BpmManager.instance.playing;
+        }
     }
 
-    private static void updateLists()
+    private static void UpdateLists()
     {
-        instruction = instructions[tutorial_level];
-        condition = conditions[tutorial_level];
-        outcome = outcomes[tutorial_level];
-        manager.InstructionLabel.Text = instruction;
-   
+        if (tutorial_level >= 0 && tutorial_level < tutorialSteps.Length)
+        {
+            var currentStep = tutorialSteps[tutorial_level];
+            instruction = currentStep.instruction;
+            condition = currentStep.condition;
+            outcome = currentStep.outcome;
+            manager.InstructionLabel.Text = instruction;
+        }
     }
 }

@@ -15,6 +15,8 @@ public partial class DragAndDropButton : Sprite2D
 	bool startedholdingthisringinside = false;
 	bool holdingforthis = false;
 
+	bool colorIsChanging = false;
+
     public override void _Input(InputEvent inputEvent)
     {
 		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
@@ -122,5 +124,54 @@ public partial class DragAndDropButton : Sprite2D
 			var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
 			Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
 		}
+
+		if (Manager.instance.SamplesMixing_activeRing != ring && !colorIsChanging) StartColorChange(ring, 0.3f);
 	}
+
+	async private void StartColorChange(int ring, float duration)
+    {
+		colorIsChanging = true;
+
+        Color old_color = Manager.instance.colors[ring];
+        var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
+
+        var new_color = old_color.Lightened(1f);
+        var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
+
+        // brighten
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float ct = Manager.instance.SynthMixing_LineColorCurve?.Sample(t) ?? t;
+            Vector3 lerped = old_color_v3.Lerp(new_color_v3, ct);
+            Manager.instance.colorsOverride[ring] = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        Manager.instance.colorsOverride[ring] = new_color;
+
+        // darken
+        elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float ct = Manager.instance.SynthMixing_LineColorCurve?.Sample(t) ?? t;
+            Vector3 lerped = new_color_v3.Lerp(old_color_v3, ct);
+            Manager.instance.colorsOverride[ring] = new Color(lerped.X, lerped.Y, lerped.Z, 1);
+
+            // yield one frame
+            await ToSignal(GetTree(), "process_frame");
+            elapsed += (float)GetProcessDeltaTime();
+        }
+
+        // ensure final color is set
+        Manager.instance.colorsOverride[ring] = old_color;
+
+		colorIsChanging = false;
+    }
 }

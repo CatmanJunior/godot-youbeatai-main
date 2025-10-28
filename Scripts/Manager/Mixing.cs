@@ -249,8 +249,8 @@ public partial class Manager : Node
     private Vector2[] SynthMixing_knobPositions = new Vector2[2];
     public int SynthMixing_activeSynth = 0;
 
-    [Export] private Curve SynthMixing_LineScaleCurve;
-    [Export] private Curve SynthMixing_LineColorCurve;
+    [Export] public Curve SynthMixing_LineScaleCurve;
+    [Export] public Curve SynthMixing_LineColorCurve;
 
     public void SynthMixing_StoreActiveKnob()
     {

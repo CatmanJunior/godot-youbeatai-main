@@ -79,6 +79,7 @@ public partial class Manager : Node
 	public Sprite2D[,] beatSprites;
 	Sprite2D[,] templateSprites;
 	[Export] public Color[] colors;
+	public Color[] colorsOverride;
 	[Export] public Light2D[] ringVolumeLights;
 	[Export] PointLight2D micVolumeLight;
 	[Export] PointLight2D klappyLight;
@@ -100,6 +101,8 @@ public partial class Manager : Node
 
 	private void InitButtonActions()
 	{
+		colorsOverride = colors;
+
 		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); };
 		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
 		
@@ -179,7 +182,7 @@ public partial class Manager : Node
 				var sprite = beatSprites[ring, beat];
 				var active = beatActives[ring, beat];
 
-				var color = colors[ring];
+				var color = (colors[ring] + colorsOverride[ring]) / 2;
 
 				if (beat == BpmManager.instance.currentBeat)
 				{
@@ -205,7 +208,7 @@ public partial class Manager : Node
 			for (int ring = 0; ring < 4; ring++)
 			{
 				var outline = beatOutlines[ring, beat];
-				outline.Modulate = colors[ring];
+				outline.Modulate = (colors[ring] + colorsOverride[ring]) / 2;
 			}
 		}
 

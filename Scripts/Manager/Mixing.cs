@@ -145,8 +145,8 @@ public partial class Manager : Node
         // update icons
         if (SamplesMixing_activeRing == 0)
         {
-            iconMain.Text = "👞";
-            iconAlt.Text = "👟";
+            iconMain.Text = "👟";
+            iconAlt.Text = "👞";
         }
         if (SamplesMixing_activeRing == 1)
         {

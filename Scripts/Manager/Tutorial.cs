@@ -243,7 +243,7 @@ public static class Tutorial
         ),
         (
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
-            condition: () => manager.greenLayerRecordButton.IsPressed(),
+            condition: () => manager.greenLayerRecordButton.ButtonPressed,
             outcome: () =>
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
@@ -276,16 +276,9 @@ public static class Tutorial
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
-               
-            }),
-        (
-            instruction: "0",
-            condition: () =>  !DisplayServer.TtsIsSpeaking(),
-            outcome: () =>
-            {
                 _increasedSpeed = false;
-                
+                BpmManager.instance.playing = false;
+               
             }),
         (
             instruction: "Laat eens horen!▶️",
@@ -293,7 +286,6 @@ public static class Tutorial
             outcome: () =>
             { 
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _textAllowed = true;
                 timer.Start(3);
             }),
         (

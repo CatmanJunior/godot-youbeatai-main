@@ -116,6 +116,8 @@ public partial class Manager : Node
         layerVoiceOver1.audioPlayer.StreamPaused = !BpmManager.instance.playing;
 
         SongVoiceOver.instance.audioPlayer.StreamPaused = !BpmManager.instance.playing;
+
+        UpdateSongVoiceOverPlayBackPosition();
     }
 
     public void OnBpmUpButton()

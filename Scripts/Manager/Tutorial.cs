@@ -273,7 +273,7 @@ public static class Tutorial
             ),
         (
             instruction: "1",
-            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            condition: () =>  manager.layerVoiceOver0.finished,
             outcome: () =>
             {
                 _increasedSpeed = false;
@@ -416,6 +416,7 @@ public static class Tutorial
                 manager.PianoArea.AreaEntered -= _bodyContinue;
                 manager.InBetweenArea.AreaEntered -= _bodyContinue;
                 manager.KlappyContinue.Pressed -= KlappyContinue;
+                DisplayServer.TtsStop();
             }
         )
     ];

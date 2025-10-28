@@ -105,14 +105,16 @@ public partial class Manager : Node
 
 		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); };
 		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
-		
-		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
+
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedSongAsFileAndSendToEmail); settingsPanel.Visible = false; };
 		saveToWavButton.Pressed += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedBeatAsFileAndSendToEmail); settingsPanel.Visible = false; };
 		muteSpeach.Pressed += DisplayServer.TtsStop;
-		SaveLayoutButton.Pressed += CopyLayer;
-		LoadLayoutButton.Pressed += PasteLayer;
-		ClearLayoutButton.Pressed += () => ConfirmationPrompt.instance.Open(ClearLayer);
+
+		SaveLayoutButton.Pressed += () => { CopyLayer(); PlayExtraSFX(metronomealt_sfx); };
+		LoadLayoutButton.Pressed += () => { PasteLayer(); PlayExtraSFX(metronomealt_sfx); };
+		ClearLayoutButton.Pressed += () => { ConfirmationPrompt.instance.Open(ClearLayer); PlayExtraSFX(metronomealt_sfx); };
+		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); PlayExtraSFX(metronomealt_sfx); };
+
 		restartButton.Pressed += () =>
 		{
 			GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");

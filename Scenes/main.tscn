@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=67 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -55,6 +55,26 @@ point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwwfm"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8vy0"]
+bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
 bg_color = Color(0.56, 0.1064, 0.56, 1)
@@ -1207,6 +1227,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "💾
 "
 metadata/_edit_use_anchors_ = true
@@ -1226,6 +1250,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "🗑️
 "
 metadata/_edit_use_anchors_ = true
@@ -1245,6 +1273,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "♻️
 "
 metadata/_edit_use_anchors_ = true
@@ -1264,6 +1296,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "+"
 metadata/_edit_use_anchors_ = true
 

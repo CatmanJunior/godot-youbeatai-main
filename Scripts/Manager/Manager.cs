@@ -46,6 +46,7 @@ public partial class Manager : Node
 		if (!interfaceSetToDefaultState)
 		{
 			SetEntireInterfaceVisibility(true);
+			SetCopyPasteClearButtonsActive(false);
         	achievementspanel.Visible = false;
 			interfaceSetToDefaultState = true;
 		}
@@ -59,7 +60,7 @@ public partial class Manager : Node
 		Achievements.OnUpdate();
 
 		if (copyPaseClearButtonHolderTimeSinceActivation >= 3.5f) SetCopyPasteClearButtonsActive(false);
-		else copyPaseClearButtonHolderTimeSinceActivation += (float)delta;
+		else if (anyLayerButtonHasBeenPressed) copyPaseClearButtonHolderTimeSinceActivation += (float)delta;
 
 		if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
 		else savingLabelActive = false;

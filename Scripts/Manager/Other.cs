@@ -32,6 +32,7 @@ public partial class Manager : Node
     float timeafterplay = 0;
     public bool savedToLaout = false;
     private float startswing;
+    bool anyLayerButtonHasBeenPressed = false;
     [Export] public Area2D PianoArea;
     [Export] public Label PianoMesh;
     [Export] public Area2D InBetweenArea;

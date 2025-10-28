@@ -89,6 +89,7 @@ public partial class Manager : Node
 
         layerButton.Pressed += () =>
         {
+            anyLayerButtonHasBeenPressed = true;
             int layerIndex = LayerButtons.IndexOf(layerButton);
             SwitchLayer(layerIndex);
             SetCopyPasteClearButtonsActive(true);

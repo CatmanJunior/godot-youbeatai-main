@@ -1,9 +1,17 @@
+using System;
 using Godot;
 
-public partial class DragableSprite : Sprite2D
+public partial class ChaosPadKnob : Sprite2D
 {
     private bool dragging = false;
     private Vector2 dragOffset = Vector2.Zero;
+
+    private Action cachedOnMouseUpAction = null;
+
+    public void SubToOnMouseUp(Action action)
+    {
+        cachedOnMouseUpAction = action;
+    }
 
     public override void _Input(InputEvent inputEvent)
     {
@@ -24,6 +32,10 @@ public partial class DragableSprite : Sprite2D
                 else
                 {
                     dragging = false;
+
+                    var chaospad_opaque = Manager.instance.chaosPadTriangleSprite.IsPixelOpaque(Manager.instance.chaosPadTriangleSprite.GetLocalMousePosition());
+                    var knob_opaque = IsPixelOpaque(GetLocalMousePosition());
+                    if (knob_opaque || chaospad_opaque) cachedOnMouseUpAction?.Invoke();
                 }
             }
         }

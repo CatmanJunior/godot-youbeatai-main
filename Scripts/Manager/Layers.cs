@@ -34,13 +34,17 @@ public partial class Manager : Node
         layersBeatActives.Insert(layer, new bool[4, BpmManager.beatsAmount]);
         layersVoiceOvers0.Insert(layer, null);
         layersVoiceOvers1.Insert(layer, null);
-        SamplesMixing_knobPositions.Insert(layer, GetStandardKnobPositions());
+        SamplesMixing_knobPositions.Insert(layer, GetStandardKnobPositionsSamples());
+        SynthMixing_knobPositions.Insert(layer, GetStandardKnobPositionsSynth());
         EmitSignal(SignalName.OnAddLayerEvent, layersBeatActives.IndexOf(layersBeatActives.Last()));
 
         SortLayerButtonsInContainerBasedOnTheirIndex();
         UpdateLayerButtonsUserInterface();
 
         SwitchLayerNextFrame(layer);
+
+        // inset silence into song covering the length of this new layer
+        if (SongVoiceOver.instance?.voiceOver != null) AudioSaving.InsertSilentLayerPartOfRecordings(currentLayerIndex + 1);
     }
 
     public void SortLayerButtonsInContainerBasedOnTheirIndex()
@@ -60,6 +64,9 @@ public partial class Manager : Node
     {
         if (layersAmount <= 1) return;
 
+        // remove part of song that is on this layer
+        if (SongVoiceOver.instance.voiceOver != null) AudioSaving.RemoveLayerPartOfRecordings(currentLayerIndex);
+
         RemoveLayerButton(layer); // destroy the layer button
         await ToSignal(GetTree(), "process_frame");
 
@@ -67,6 +74,7 @@ public partial class Manager : Node
         layersVoiceOvers0.RemoveAt(layer);
         layersVoiceOvers1.RemoveAt(layer);
         SamplesMixing_knobPositions.RemoveAt(layer);
+        SynthMixing_knobPositions.RemoveAt(layer);
         EmitSignal(SignalName.OnRemoveLayerEvent, layer);
         layersAmount--;
 
@@ -89,6 +97,7 @@ public partial class Manager : Node
 
         layerButton.Pressed += () =>
         {
+            anyLayerButtonHasBeenPressed = true;
             int layerIndex = LayerButtons.IndexOf(layerButton);
             SwitchLayer(layerIndex);
             SetCopyPasteClearButtonsActive(true);

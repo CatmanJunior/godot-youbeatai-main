@@ -35,7 +35,7 @@ public partial class Manager : Node
 	[Export] public Label[] UnlockablesQuestion;
 	[Export] public Button restartButton;
 	[Export] public CheckButton muteSpeach;
-	[Export] Button saveToWavButton;
+	[Export] public Button saveToWavButton;
 	[Export] public Node2D cross;
 	[Export] Label chosen_emoticons_label;
 	[Export] public CheckButton metronome_toggle;
@@ -46,7 +46,7 @@ public partial class Manager : Node
 	[Export] public Slider volume_treshold;
 	[Export] public Panel settingsPanel;
 	[Export] public Button settingsButton;
-	[Export] Button settingsBackButton;
+	[Export] public Button settingsBackButton;
 	[Export] Button skiptutorialbutton;
 	[Export] public ProgressBar progressBar;
 	float progressBarValue = 0;
@@ -66,7 +66,7 @@ public partial class Manager : Node
 	bool savingLabelActive = false;
 	float savingLabelTimer = 0;
 	[Export] public Label InstructionLabel;
-	[Export] Button allLayersToMp3;
+	[Export] public Button allLayersToMp3;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
 	float beatScale32 = 1;
@@ -79,6 +79,7 @@ public partial class Manager : Node
 	public Sprite2D[,] beatSprites;
 	Sprite2D[,] templateSprites;
 	[Export] public Color[] colors;
+	public Color[] colorsOverride;
 	[Export] public Light2D[] ringVolumeLights;
 	[Export] PointLight2D micVolumeLight;
 	[Export] PointLight2D klappyLight;
@@ -101,16 +102,20 @@ public partial class Manager : Node
 
 	private void InitButtonActions()
 	{
+		colorsOverride = colors;
+
 		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); };
 		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
-		
-		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); };
+
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedSongAsFileAndSendToEmail); settingsPanel.Visible = false; };
 		saveToWavButton.Pressed += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedBeatAsFileAndSendToEmail); settingsPanel.Visible = false; };
 		muteSpeach.Pressed += DisplayServer.TtsStop;
-		SaveLayoutButton.Pressed += CopyLayer;
-		LoadLayoutButton.Pressed += PasteLayer;
-		ClearLayoutButton.Pressed += () => ConfirmationPrompt.instance.Open(ClearLayer);
+
+		SaveLayoutButton.Pressed += () => { CopyLayer(); PlayExtraSFX(metronomealt_sfx); };
+		LoadLayoutButton.Pressed += () => { PasteLayer(); PlayExtraSFX(metronomealt_sfx); };
+		ClearLayoutButton.Pressed += () => { ConfirmationPrompt.instance.Open(ClearLayer); PlayExtraSFX(metronomealt_sfx); };
+		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); PlayExtraSFX(metronomealt_sfx); };
+
 		restartButton.Pressed += () =>
 		{
 			GetTree().ChangeSceneToFile("res://Scenes/main_menu.tscn");
@@ -180,7 +185,7 @@ public partial class Manager : Node
 				var sprite = beatSprites[ring, beat];
 				var active = beatActives[ring, beat];
 
-				var color = colors[ring];
+				var color = (colors[ring] + colorsOverride[ring]) / 2;
 
 				if (beat == BpmManager.instance.currentBeat)
 				{
@@ -206,7 +211,7 @@ public partial class Manager : Node
 			for (int ring = 0; ring < 4; ring++)
 			{
 				var outline = beatOutlines[ring, beat];
-				outline.Modulate = colors[ring];
+				outline.Modulate = (colors[ring] + colorsOverride[ring]) / 2;
 			}
 		}
 

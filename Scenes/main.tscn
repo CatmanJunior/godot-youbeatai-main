@@ -1,4 +1,4 @@
-[gd_scene load_steps=65 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=68 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -43,6 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
+[ext_resource type="Script" uid="uid://r5hk4ixij08i" path="res://Scripts/PreviewExports.cs" id="43_nwwfm"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
 
@@ -55,6 +56,26 @@ point_count = 2
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwwfm"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8vy0"]
+bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
 bg_color = Color(0.56, 0.1064, 0.56, 1)
@@ -565,6 +586,7 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(-435, 141)
 
 [node name="Blocker" parent="UserInterface/ChaosPad" instance=ExtResource("32_aa8k8")]
+visible = false
 offset_left = -591.0
 offset_top = -42.0
 offset_right = -491.0
@@ -766,12 +788,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -32.5
-offset_top = -32.5
+offset_top = -30.931938
 offset_right = 7.5
-offset_bottom = 7.5
+offset_bottom = 9.068062
 grow_horizontal = 2
 grow_vertical = 2
-text = "👞"
+text = "👟"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -1207,6 +1229,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "💾
 "
 metadata/_edit_use_anchors_ = true
@@ -1226,6 +1252,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "🗑️
 "
 metadata/_edit_use_anchors_ = true
@@ -1245,6 +1275,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "♻️
 "
 metadata/_edit_use_anchors_ = true
@@ -1264,6 +1298,10 @@ grow_vertical = 2
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
 text = "+"
 metadata/_edit_use_anchors_ = true
 
@@ -1676,6 +1714,24 @@ theme = ExtResource("22_hpc6h")
 text = "📥 Beat naar mp3"
 alignment = 0
 
+[node name="ListenSongExportButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
+offset_left = 78.29445
+offset_top = 134.8992
+offset_right = 118.29445
+offset_bottom = 174.8992
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "▶️"
+
+[node name="ListenBeatExportButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
+offset_left = 78.294
+offset_top = 179.0
+offset_right = 118.294
+offset_bottom = 219.0
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "▶️"
+
 [node name="RestartButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
 offset_left = -75.0
 offset_top = 223.0
@@ -1685,6 +1741,17 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "🔄 Herstart"
 alignment = 0
+
+[node name="PreviewExportsManager" type="Node2D" parent="UserInterface/SettingsPanel/Buttons" node_paths=PackedStringArray("ListenSongExportButton", "ListenBeatExportButton", "audioPlayerSong", "audioPlayerBeat")]
+script = ExtResource("43_nwwfm")
+ListenSongExportButton = NodePath("../ListenSongExportButton")
+ListenBeatExportButton = NodePath("../ListenBeatExportButton")
+audioPlayerSong = NodePath("AudioStreamPlayerSong")
+audioPlayerBeat = NodePath("AudioStreamPlayerBeat")
+
+[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="UserInterface/SettingsPanel/Buttons/PreviewExportsManager"]
+
+[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="UserInterface/SettingsPanel/Buttons/PreviewExportsManager"]
 
 [node name="Sliders" type="Node2D" parent="UserInterface/SettingsPanel"]
 position = Vector2(911, 144)
@@ -1903,7 +1970,7 @@ offset_right = 176.0
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 15
-text = "👞"
+text = "👟"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true

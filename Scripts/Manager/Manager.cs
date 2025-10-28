@@ -23,7 +23,8 @@ public partial class Manager : Node
 		InitButtonActions();
 		SpritePlacement();
 		Tutorial.SetupTutorial();
-		SamplesMixing_ReApplyRememberedMixingVolumesForAllRings();
+		ExecuteNextFrame(SamplesMixing_ReApplyRememberedMixingVolumesForAllRings);
+		ExecuteNextFrame(SynthMixing_ReApplyRememberedMixingVolumesForBothSynths);
 		Achievements.OnReady();
 		OnReadyMixing();
 		UpdateLayerButtonsUserInterfaceDelayed();
@@ -46,6 +47,7 @@ public partial class Manager : Node
 		if (!interfaceSetToDefaultState)
 		{
 			SetEntireInterfaceVisibility(true);
+			SetCopyPasteClearButtonsActive(false);
         	achievementspanel.Visible = false;
 			interfaceSetToDefaultState = true;
 		}
@@ -59,7 +61,7 @@ public partial class Manager : Node
 		Achievements.OnUpdate();
 
 		if (copyPaseClearButtonHolderTimeSinceActivation >= 3.5f) SetCopyPasteClearButtonsActive(false);
-		else copyPaseClearButtonHolderTimeSinceActivation += (float)delta;
+		else if (anyLayerButtonHasBeenPressed) copyPaseClearButtonHolderTimeSinceActivation += (float)delta;
 
 		if (savingLabelActive && savingLabelTimer < 4) savingLabelTimer += (float)delta;
 		else savingLabelActive = false;
@@ -92,34 +94,7 @@ public partial class Manager : Node
 			else ringLight.Energy = 0f;
 		}
 
-		AudioEffectInstance GetBusEffectInstanceByName(int busIndex, string effectName)
-		{
-			int effectCount = AudioServer.GetBusEffectCount(busIndex);
-			for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffectInstance(busIndex, i);
-			GD.PushWarning($"Effect '{effectName}' not found.");
-			return null;
-		}
-
-        {
-			var greenLight = activateGreenChaosButton.GetChild<Light2D>(1);
-			var busindex = AudioServer.GetBusIndex($"GreenVoice");
-			var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
-			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
-			var volume = magnitude.Length() * 30f;
-			if (volume > 0.1f && BpmManager.instance.playing && layerVoiceOver0.GetCurrentLayerVoiceOver() != null) greenLight.Energy = volume;
-			else greenLight.Energy = 0f;
-        }
-
-		{
-			var purpleLight = activatePurpleChaosButton.GetChild<Light2D>(1);
-			var busindex = AudioServer.GetBusIndex($"PurpleVoice");
-			var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
-			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
-			var volume = magnitude.Length() * 30f;
-			if (volume > 0.1f && BpmManager.instance.playing && layerVoiceOver1.GetCurrentLayerVoiceOver() != null) purpleLight.Energy = volume;
-			else purpleLight.Energy = 0f;
-        }
-		
+		UpdateGreenPurpleButtonLights();
 
 		micmeter.Value = MicrophoneCapture.instance.volume;
 
@@ -154,7 +129,7 @@ public partial class Manager : Node
 		if (dragginganddropping)
 		{
 			draganddropthing.Modulate = colors[holdingforring];
-			draganddropthing.Position = GetViewport().GetMousePosition() - (DisplayServer.WindowGetSize() / 2);
+			draganddropthing.Position = GetViewport().GetMousePosition() - new Vector2(1280, 720) / 2;
 		}
 		else draganddropthing.Modulate = new Color(1, 1, 1, 0);
 

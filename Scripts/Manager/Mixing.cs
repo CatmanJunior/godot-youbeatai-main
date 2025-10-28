@@ -26,13 +26,32 @@ public partial class Manager : Node
 
     private void OnReadyMixing()
     {
-        SamplesMixing_knobPositionsClipboard = GetStandardKnobPositions();
-        for (int i = 0; i < SynthMixing_knobPositions.Length; i++) SynthMixing_knobPositions[i] = chaosPadTriangleSprite.GlobalPosition;
+        SamplesMixing_knobPositionsClipboard = GetStandardKnobPositionsSamples();
+        SynthMixing_knobPositionsClipBoard = GetStandardKnobPositionsSynth();
         SongMixing_knobPosition = chaosPadTriangleSprite.GlobalPosition;
 
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_ChangeRing(0);
         else if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_ChangeSynth(0);
         else if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_ChangeToSongMixer();
+
+        ((ChaosPadKnob)knob).SubToOnMouseUp(() =>
+        {
+            if (chaosPadMode == ChaosPadMode.SampleMixing)
+            {
+                if (SamplesMixing_activeRing == 0) firstAudioPlayer.Play();
+                if (SamplesMixing_activeRing == 1) secondAudioPlayer.Play();
+                if (SamplesMixing_activeRing == 2) thirdAudioPlayer.Play();
+                if (SamplesMixing_activeRing == 3) fourthAudioPlayer.Play();
+                if (SamplesMixing_activeRing == 0) firstAudioPlayerAlt.Play();
+                if (SamplesMixing_activeRing == 1) secondAudioPlayerAlt.Play();
+                if (SamplesMixing_activeRing == 2) thirdAudioPlayerAlt.Play();
+                if (SamplesMixing_activeRing == 3) fourthAudioPlayerAlt.Play();
+                if (SamplesMixing_activeRing == 0) firstAudioPlayerRec.Play();
+                if (SamplesMixing_activeRing == 1) secondAudioPlayerRec.Play();
+                if (SamplesMixing_activeRing == 2) thirdAudioPlayerRec.Play();
+                if (SamplesMixing_activeRing == 3) fourthAudioPlayerRec.Play();
+            }
+        });
     }
 
     #region SamplesMixing
@@ -63,51 +82,16 @@ public partial class Manager : Node
         knob.GlobalPosition = SamplesMixing_knobPositions[currentLayerIndex][SamplesMixing_activeRing];
     }
 
-    public List<Vector2> CloneFrom(List<Vector2> original)
-    {
-        List<Vector2> clone = [];
-        foreach (var item in original) clone.Add(new Vector2(item.X, item.Y));
-        return clone;
-    }
-
     public void SamplesMixing_ReApplyRememberedMixingVolumesForAllRings()
     {
-        var result0 = SampleMixing_GetRememberedWeightsForRing(0);
+        var result0 = GetWeightsForPosition(SamplesMixing_knobPositions[currentLayerIndex][0]);
         SamplesMixing_UpdateMixingVolumesForRing(0, result0.mastervolume, result0.weights);
-        var result1 = SampleMixing_GetRememberedWeightsForRing(1);
+        var result1 = GetWeightsForPosition(SamplesMixing_knobPositions[currentLayerIndex][1]);
         SamplesMixing_UpdateMixingVolumesForRing(1, result1.mastervolume, result1.weights);
-        var result2 = SampleMixing_GetRememberedWeightsForRing(2);
+        var result2 = GetWeightsForPosition(SamplesMixing_knobPositions[currentLayerIndex][2]);
         SamplesMixing_UpdateMixingVolumesForRing(2, result2.mastervolume, result2.weights);
-        var result3 = SampleMixing_GetRememberedWeightsForRing(3);
+        var result3 = GetWeightsForPosition(SamplesMixing_knobPositions[currentLayerIndex][3]);
         SamplesMixing_UpdateMixingVolumesForRing(3, result3.mastervolume, result3.weights);
-    }
-
-    private (Vector3 weights, float mastervolume) SampleMixing_GetRememberedWeightsForRing(int ring)
-    {
-        // get knob
-        var rememberedKnobPositionForRing = SamplesMixing_knobPositions[currentLayerIndex][ring];
-
-        // inner triangle blending
-        var tempWeights = GetBarycentricWeights
-        (
-            rememberedKnobPositionForRing,
-            corners[0].GlobalPosition,
-            corners[1].GlobalPosition,
-            corners[2].GlobalPosition
-        );
-
-        // outer triangle effects master volume
-        float tempMasterVolume = IsInsideTriangle(tempWeights) ? 1f : MasterVolumeFromDistance(rememberedKnobPositionForRing, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
-
-        // clamp weights
-        tempWeights = new Vector3
-        (
-            Mathf.Clamp(tempWeights.X, 0f, 1f),
-            Mathf.Clamp(tempWeights.Y, 0f, 1f),
-            Mathf.Clamp(tempWeights.Z, 0f, 1f)
-        );
-
-        return (tempWeights, tempMasterVolume);
     }
 
     public void SamplesMixing_ChangeRing(int newring)
@@ -129,8 +113,8 @@ public partial class Manager : Node
         // update icons
         if (SamplesMixing_activeRing == 0)
         {
-            iconMain.Text = "👞";
-            iconAlt.Text = "👟";
+            iconMain.Text = "👟";
+            iconAlt.Text = "👞";
         }
         if (SamplesMixing_activeRing == 1)
         {
@@ -230,20 +214,41 @@ public partial class Manager : Node
 
     #region SynthMixing
 
-    private Vector2[] SynthMixing_knobPositions = new Vector2[2];
+    public List<List<Vector2>> SynthMixing_knobPositions = [];
+    private List<Vector2> SynthMixing_knobPositionsClipBoard = [];
+
     public int SynthMixing_activeSynth = 0;
 
-    [Export] private Curve SynthMixing_LineScaleCurve;
-    [Export] private Curve SynthMixing_LineColorCurve;
+    [Export] public Curve SynthMixing_LineScaleCurve;
+    [Export] public Curve SynthMixing_LineColorCurve;
+
+    public void SynthMixing_CopyKnobsForLayer()
+    {
+        SynthMixing_knobPositionsClipBoard = CloneFrom(SynthMixing_knobPositions[currentLayerIndex]);
+    }
+
+    public void SynthMixing_PasteKnobsForLayer()
+    {
+        SynthMixing_knobPositions[currentLayerIndex] = CloneFrom(SynthMixing_knobPositionsClipBoard);
+        knob.GlobalPosition = SynthMixing_knobPositionsClipBoard[SynthMixing_activeSynth];
+    }
 
     public void SynthMixing_StoreActiveKnob()
     {
-        SynthMixing_knobPositions[SynthMixing_activeSynth] = knob.GlobalPosition;
+        SynthMixing_knobPositions[currentLayerIndex][SynthMixing_activeSynth] = knob.GlobalPosition;
     }
 
     public void SynthMixing_RetrieveActiveKnob()
     {
-        knob.GlobalPosition = SynthMixing_knobPositions[SynthMixing_activeSynth];
+        knob.GlobalPosition = SynthMixing_knobPositions[currentLayerIndex][SynthMixing_activeSynth];
+    }
+
+    public void SynthMixing_ReApplyRememberedMixingVolumesForBothSynths()
+    {
+        var result0 = GetWeightsForPosition(SynthMixing_knobPositions[currentLayerIndex][0]);
+        SynthMixing_UpdateMixingVolumesForSynth(0, result0.mastervolume, result0.weights);
+        var result1 = GetWeightsForPosition(SynthMixing_knobPositions[currentLayerIndex][1]);
+        SynthMixing_UpdateMixingVolumesForSynth(1, result1.mastervolume, result1.weights);
     }
 
     public void SynthMixing_ChangeSynth(int synth)
@@ -404,19 +409,24 @@ public partial class Manager : Node
         chaosPadTriangleSprite.SelfModulate = new_color;
     }
 
-    private void SynthMixing_UpdateMixingVolumesForSynth(int synth, float mastervolume)
+    private void SynthMixing_UpdateMixingVolumesForSynth(int synth, float mastervolume, Vector3? givenWeights = null)
     {
+        Vector3 weightsToUseThisTime;
+
+        if (givenWeights != null) weightsToUseThisTime = givenWeights.Value;
+        else weightsToUseThisTime = weights;
+
         if (synth == 0)
         {
-            layerVoiceOver0.audioPlayer.VolumeLinear = weights.Y * mastervolume * 6f;
-            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green"), weights.Z * mastervolume);
-            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green_alt"), weights.X * mastervolume);
+            layerVoiceOver0.audioPlayer.VolumeLinear = weightsToUseThisTime.Y * mastervolume * 6f;
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green"), weightsToUseThisTime.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Green_alt"), weightsToUseThisTime.X * mastervolume);
         }
         if (synth == 1)
         {
-            layerVoiceOver1.audioPlayer.VolumeLinear = weights.Y * mastervolume * 6f;
-            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple"), weights.Z * mastervolume);
-            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple_alt"), weights.X * mastervolume);
+            layerVoiceOver1.audioPlayer.VolumeLinear = weightsToUseThisTime.Y * mastervolume * 6f;
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple"), weightsToUseThisTime.Z * mastervolume);
+            AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("Purple_alt"), weightsToUseThisTime.X * mastervolume);
         }
     }
 
@@ -450,8 +460,8 @@ public partial class Manager : Node
         SongMixing_StartTriangleColorChange(0.2f);
 
         // update icons
-        iconMain.Text = "X";
-        iconAlt.Text = "X";
+        iconMain.Text = "🤖";
+        iconAlt.Text = "🪗";
 
         // set mic button location
         for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -489,16 +499,28 @@ public partial class Manager : Node
 
     private void SongMixing_UpdateMixingVolumesForSong(float mastervolume)
     {
-        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SongVoice"), weights.Y * mastervolume);
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SongVoice"), (weights.Y + weights.X) * mastervolume);
+
+        var busindex = AudioServer.GetBusIndex("SongVoice");
+        ((AudioEffectReverb)GetBusEffectByName(busindex, "Reverb")).Wet = weights.X * mastervolume / 4f;
     }
 
     #endregion
 
-    public List<Vector2> GetStandardKnobPositions()
+    public List<Vector2> GetStandardKnobPositionsSamples()
     {
         List<Vector2> centered = [
             chaosPadTriangleSprite.GlobalPosition,
             chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition,
+            chaosPadTriangleSprite.GlobalPosition
+        ];
+        return centered;
+    }
+
+    public List<Vector2> GetStandardKnobPositionsSynth()
+    {
+        List<Vector2> centered = [
             chaosPadTriangleSprite.GlobalPosition,
             chaosPadTriangleSprite.GlobalPosition
         ];
@@ -606,8 +628,40 @@ public partial class Manager : Node
         return nonclamped;
     }
 
+    private (Vector3 weights, float mastervolume) GetWeightsForPosition(Vector2 position)
+    {
+        // inner triangle blending
+        var tempWeights = GetBarycentricWeights
+        (
+            position,
+            corners[0].GlobalPosition,
+            corners[1].GlobalPosition,
+            corners[2].GlobalPosition
+        );
+
+        // outer triangle effects master volume
+        float tempMasterVolume = IsInsideTriangle(tempWeights) ? 1f : MasterVolumeFromDistance(position, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
+
+        // clamp weights
+        tempWeights = new Vector3
+        (
+            Mathf.Clamp(tempWeights.X, 0f, 1f),
+            Mathf.Clamp(tempWeights.Y, 0f, 1f),
+            Mathf.Clamp(tempWeights.Z, 0f, 1f)
+        );
+
+        return (tempWeights, tempMasterVolume);
+    }
+
     public bool IsInsideTriangle(Vector3 weights)
     {
         return weights.X >= 0f && weights.Y >= 0f && weights.Z >= 0f;
+    }
+
+    public List<Vector2> CloneFrom(List<Vector2> original)
+    {
+        List<Vector2> clone = [];
+        foreach (var item in original) clone.Add(new Vector2(item.X, item.Y));
+        return clone;
     }
 }

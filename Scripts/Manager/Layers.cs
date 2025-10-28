@@ -42,6 +42,9 @@ public partial class Manager : Node
         UpdateLayerButtonsUserInterface();
 
         SwitchLayerNextFrame(layer);
+
+        // inset silence into song covering the length of this new layer
+        if (SongVoiceOver.instance?.voiceOver != null) AudioSaving.InsertSilentLayerPartOfRecordings(currentLayerIndex + 1);
     }
 
     public void SortLayerButtonsInContainerBasedOnTheirIndex()
@@ -60,6 +63,9 @@ public partial class Manager : Node
     public async void RemoveLayer(int layer) // removes a layer by specific index (can be a layer in between other layers)
     {
         if (layersAmount <= 1) return;
+
+        // remove part of song that is on this layer
+        if (SongVoiceOver.instance.voiceOver != null) AudioSaving.RemoveLayerPartOfRecordings(currentLayerIndex);
 
         RemoveLayerButton(layer); // destroy the layer button
         await ToSignal(GetTree(), "process_frame");

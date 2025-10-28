@@ -91,13 +91,58 @@ public static class AudioSaving
         SongVoiceOver.instance.voiceOver = AudioStreamWav.LoadFromFile(song_new);
 
         // update voice audioplayer stream
+        var wasplaying = SongVoiceOver.instance.audioPlayer.Playing;
         SongVoiceOver.instance.audioPlayer.Stream = SongVoiceOver.instance.voiceOver;
+        if (wasplaying) SongVoiceOver.instance.audioPlayer.Play();
 
         // change recording length
         RealTimeAudioRecording.instance.recordingLength = (float)RealTimeAudioRecording.instance.recording_result.GetLength();
         SongVoiceOver.instance.recordingLength = (float)SongVoiceOver.instance.voiceOver.GetLength();
 
         // delete wavs
+        File.Delete(realtime_old);
+        File.Delete(song_old);
+        File.Delete(realtime_new);
+        File.Delete(song_new);
+    }
+
+    public static void InsertSilentLayerPartOfRecordings(int layer)
+    {
+        var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
+        string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
+
+        // define wav file names and paths
+        string realtime_old = user($"realtime_{sanitizedTime}_temp_old.wav");
+        string song_old = user($"song_{sanitizedTime}_temp_old.wav");
+        string realtime_new = user($"realtime_{sanitizedTime}_temp_new.wav");
+        string song_new = user($"song_{sanitizedTime}_temp_new.wav");
+
+        // convert AudioStreamWav -> WAV
+        ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, realtime_old);
+        ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, song_old);
+
+        // calculate timing for insertion
+        float timePerLayer = BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat;
+        float insertTime = layer * timePerLayer;
+
+        // insert silence into both files
+        InsertSilenceIntoWavFile(realtime_old, realtime_new, insertTime, timePerLayer);
+        InsertSilenceIntoWavFile(song_old, song_new, insertTime, timePerLayer);
+
+        // wavs back to AudioStreamWav
+        RealTimeAudioRecording.instance.recording_result = AudioStreamWav.LoadFromFile(realtime_new);
+        SongVoiceOver.instance.voiceOver = AudioStreamWav.LoadFromFile(song_new);
+
+        // update voice audioplayer stream
+        var wasplaying = SongVoiceOver.instance.audioPlayer.Playing;
+        SongVoiceOver.instance.audioPlayer.Stream = SongVoiceOver.instance.voiceOver;
+        if (wasplaying) SongVoiceOver.instance.audioPlayer.Play();
+
+        // update lengths
+        RealTimeAudioRecording.instance.recordingLength = (float)RealTimeAudioRecording.instance.recording_result.GetLength();
+        SongVoiceOver.instance.recordingLength = (float)SongVoiceOver.instance.voiceOver.GetLength();
+
+        // delete temp wavs
         File.Delete(realtime_old);
         File.Delete(song_old);
         File.Delete(realtime_new);
@@ -141,6 +186,28 @@ public static class AudioSaving
         reader.Position = endPos;
 
         // copy everything after the segment
+        reader.CopyTo(writer);
+    }
+
+    public static void InsertSilenceIntoWavFile(string inputPath, string outputPath, double insertTime, double silenceDuration)
+    {
+        using var reader = new AudioFileReader(inputPath);
+        using var writer = new WaveFileWriter(outputPath, reader.WaveFormat);
+
+        int bytesPerSecond = reader.WaveFormat.AverageBytesPerSecond;
+        long insertPos = (long)(insertTime * bytesPerSecond);
+        insertPos = Math.Min(insertPos, reader.Length);
+
+        // copy everything before the insert position
+        reader.Position = 0;
+        CopyBytes(reader, writer, insertPos);
+
+        // generate silence buffer (all zeros)
+        int silenceBytes = (int)(silenceDuration * bytesPerSecond);
+        byte[] silenceBuffer = new byte[silenceBytes];
+        writer.Write(silenceBuffer, 0, silenceBuffer.Length);
+
+        // copy everything after the insert position
         reader.CopyTo(writer);
     }
 

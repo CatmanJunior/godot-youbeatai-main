@@ -12,7 +12,29 @@ public static class AudioSaving
 {
     public static void SaveRealTimeRecordedSongAsFileAndSendToEmail()
     {
-        if (RealTimeAudioRecording.instance.recording_result == null) return;
+        var path = SaveRealTimeRecordedSongAsFile();
+        if (path != null)
+        {
+            if (Manager.instance.emailInput.Text != "") SendToEmail(path, Manager.instance.emailInput.Text);
+            Manager.instance.ShowSavingLabel(path);
+            Manager.instance.hassavedtofile = true;
+        }
+    }
+
+    public static void SaveRealTimeRecordedBeatAsFileAndSendToEmail()
+    {
+        var path = SaveRealTimeRecordedBeatAsFile();
+        if (path != null)
+        {
+            if (Manager.instance.emailInput.Text != "") SendToEmail(path, Manager.instance.emailInput.Text);
+            Manager.instance.ShowSavingLabel(path);
+            Manager.instance.hassavedtofile = true;
+        }
+    }
+
+    public static string SaveRealTimeRecordedSongAsFile()
+    {
+        if (RealTimeAudioRecording.instance.recording_result == null) return null;
 
         var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
@@ -22,18 +44,17 @@ public static class AudioSaving
         ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, final_name + "_a_" + ".wav");
         ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, final_name + "_b_" + ".wav");
         MixAudioFiles(final_name + "_a_" + ".wav", final_name + "_b_" + ".wav", final_name + ".wav");
+
+        // delete temp wav files
         File.Delete(final_name + "_a_" + ".wav");
         File.Delete(final_name + "_b_" + ".wav");
 
-        if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
-
-        Manager.instance.ShowSavingLabel(final_name);
-        Manager.instance.hassavedtofile = true;
+        return final_name + ".wav";
     }
 
-    public static void SaveRealTimeRecordedBeatAsFileAndSendToEmail()
+    public static string SaveRealTimeRecordedBeatAsFile()
     {
-        if (RealTimeAudioRecording.instance.recording_result == null) return;
+        if (RealTimeAudioRecording.instance.recording_result == null) return null;
 
         var user = (string name) => Path.Combine(ProjectSettings.GlobalizePath("user://"), name);
         string sanitizedTime = Time.GetTimeStringFromSystem().Replace(":", "_");
@@ -56,10 +77,7 @@ public static class AudioSaving
         File.Delete(song_name + "_b_" + ".wav");
         File.Delete(song_name + ".wav");
 
-        if (Manager.instance.emailInput.Text != "") SendToEmail(final_name + ".wav", Manager.instance.emailInput.Text);
-
-        Manager.instance.ShowSavingLabel(final_name);
-        Manager.instance.hassavedtofile = true;
+        return final_name + ".wav";
     }
 
     public static void RemoveLayerPartOfRecordings(int layer)

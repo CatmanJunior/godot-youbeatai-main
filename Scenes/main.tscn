@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=68 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -43,6 +43,7 @@
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/Blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
+[ext_resource type="Script" uid="uid://r5hk4ixij08i" path="res://Scripts/PreviewExports.cs" id="43_nwwfm"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
 
@@ -1712,6 +1713,24 @@ theme = ExtResource("22_hpc6h")
 text = "📥 Beat naar mp3"
 alignment = 0
 
+[node name="ListenSongExportButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
+offset_left = 78.29445
+offset_top = 134.8992
+offset_right = 118.29445
+offset_bottom = 174.8992
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "▶️"
+
+[node name="ListenBeatExportButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
+offset_left = 78.294
+offset_top = 179.0
+offset_right = 118.294
+offset_bottom = 219.0
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+text = "▶️"
+
 [node name="RestartButton" type="Button" parent="UserInterface/SettingsPanel/Buttons"]
 offset_left = -75.0
 offset_top = 223.0
@@ -1721,6 +1740,17 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 text = "🔄 Herstart"
 alignment = 0
+
+[node name="PreviewExportsManager" type="Node2D" parent="UserInterface/SettingsPanel/Buttons" node_paths=PackedStringArray("ListenSongExportButton", "ListenBeatExportButton", "audioPlayerSong", "audioPlayerBeat")]
+script = ExtResource("43_nwwfm")
+ListenSongExportButton = NodePath("../ListenSongExportButton")
+ListenBeatExportButton = NodePath("../ListenBeatExportButton")
+audioPlayerSong = NodePath("AudioStreamPlayerSong")
+audioPlayerBeat = NodePath("AudioStreamPlayerBeat")
+
+[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="UserInterface/SettingsPanel/Buttons/PreviewExportsManager"]
+
+[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="UserInterface/SettingsPanel/Buttons/PreviewExportsManager"]
 
 [node name="Sliders" type="Node2D" parent="UserInterface/SettingsPanel"]
 position = Vector2(911, 144)

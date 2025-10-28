@@ -35,7 +35,7 @@ public partial class Manager : Node
 	[Export] public Label[] UnlockablesQuestion;
 	[Export] public Button restartButton;
 	[Export] public CheckButton muteSpeach;
-	[Export] Button saveToWavButton;
+	[Export] public Button saveToWavButton;
 	[Export] public Node2D cross;
 	[Export] Label chosen_emoticons_label;
 	[Export] public CheckButton metronome_toggle;
@@ -46,7 +46,7 @@ public partial class Manager : Node
 	[Export] public Slider volume_treshold;
 	[Export] public Panel settingsPanel;
 	[Export] public Button settingsButton;
-	[Export] Button settingsBackButton;
+	[Export] public Button settingsBackButton;
 	[Export] Button skiptutorialbutton;
 	[Export] public ProgressBar progressBar;
 	float progressBarValue = 0;
@@ -66,7 +66,7 @@ public partial class Manager : Node
 	bool savingLabelActive = false;
 	float savingLabelTimer = 0;
 	[Export] public Label InstructionLabel;
-	[Export] Button allLayersToMp3;
+	[Export] public Button allLayersToMp3;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
 	float beatScale32 = 1;

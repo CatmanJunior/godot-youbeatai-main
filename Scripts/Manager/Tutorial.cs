@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Globalization;
+using System.Reflection;
 using Range = Godot.Range;
 
 public static class Tutorial
@@ -51,6 +52,7 @@ public static class Tutorial
             condition: () => manager.clapped,
             outcome: () =>
             {
+                manager.pointer.Visible = true;
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
                 manager.KlappyContinue.Visible = false;
@@ -117,7 +119,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Stamp 👞 5 keer mee met de kick van je Beat!",
+            instruction: "Stamp 👟 5 keer mee met de kick van je Beat!",
             condition: () => manager.stompedOnBeatAmount >= _fixedAmount,
             outcome: () =>
             {
@@ -408,6 +410,7 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
+            manager.pointer.Visible = false;
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;

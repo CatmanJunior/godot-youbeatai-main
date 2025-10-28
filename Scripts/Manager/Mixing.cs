@@ -466,8 +466,8 @@ public partial class Manager : Node
         SongMixing_StartTriangleColorChange(0.2f);
 
         // update icons
-        iconMain.Text = "X";
-        iconAlt.Text = "X";
+        iconMain.Text = "🤖";
+        iconAlt.Text = "🪗";
 
         // set mic button location
         for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);

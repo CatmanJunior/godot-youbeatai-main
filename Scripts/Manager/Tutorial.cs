@@ -47,7 +47,7 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een beat maken! Om te beginnen klap 👏in je handen",
+            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen",
             condition: () => manager.clapped,
             outcome: () =>
             {
@@ -56,17 +56,18 @@ public static class Tutorial
                 manager.KlappyContinue.Visible = false;
                 manager.settingsButton.Visible = true;
                 manager.ContinueButton.EmitSignal("animation_play");
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
 
         // kick ring
         (
-            instruction: "Deze rode cirkels vormen een beat ring",
+            instruction:     "Deze rode cirkels vormen een kick-ring",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: null
         ),
         (
-            instruction: "Met deze ring kun je een kick plaatsen op jouw beat. Kijk maar!",
+            instruction: "Op deze ring kun je de kick plaatsen van je Beat",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
@@ -78,39 +79,45 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Ik heb er net drie ingevuld, druk nu op '▶️ Start' om de beat te horen",
+            instruction: "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen",
             condition: () => BpmManager.instance.playing,
             outcome: () => allowed = true
         ),
         (
-            instruction: "Druk op ⏸️ om het op pauze te zetten ",
+            instruction: "Druk op ⏸️ om de Beat op pauze te zetten",
             condition: () => !BpmManager.instance.playing,
-            outcome: () => SkipPlay()
-        ),
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
         (
-            instruction: "Nu jij, vul nog 2 cirkels door op de stippen te drukken",
+            instruction: "Nu jij!, vul nog 2 cirkels door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) >= _beatsActiveRedRing,
             outcome: () =>
             {
                 _textAllowed = true;
                 allowed = true;
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
         (
-            instruction: "Goed gedaan, nou wil ik wel eens horen wat je gedaan hebt! ▶️",
+            instruction: "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️",
             condition: () =>
             {
                 _beatsActiveRedRing = ActiveBeatsPerRing(_indexRedRing);
                 return BpmManager.instance.playing;
+                
             },
             outcome: () =>
             {
                 manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
                 _stomping = true;
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
         (
-            instruction: "Stamp👞 eens 5 keer mee op jouw beat!",
+            instruction: "Stamp 👞 5 keer mee met de kick van je Beat!",
             condition: () => manager.stompedOnBeatAmount >= _fixedAmount,
             outcome: () =>
             {
@@ -118,17 +125,18 @@ public static class Tutorial
                 manager.AmountLeft.Visible = false;
                 manager.AmountLeft.Text = "";
                 BpmManager.instance.playing = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
         (
-            instruction: "Wow super gedaan! tijd voor level 2!",
+            instruction: "Wow super gedaan! Op naar level 2!",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () => manager.SetRingVisibility(_indexOrangeRing, true)
         ),
 
         // klap ring
         (
-            instruction: "Dit is de klap ring! Hiermee kun je een klap geluid toevoegen",
+            instruction: "Deze oranje ring is de clap-ring",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
@@ -139,12 +147,13 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Ik heb er zelf net 2 erin gezet, luister er maar eens naar▶️!",
+            instruction: "Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!",
             condition: () => BpmManager.instance.playing,
             outcome: () =>
             {
                 _textAllowed = true;
                 timer.Start(timer.WaitTime);
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
         (
@@ -161,15 +170,18 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Probeer nu eens zelf, vul nog 2 oranje stippen in door op de stippen te drukken",
+            instruction: "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
-            outcome: null
+            outcome: ()=>  manager.PlayExtraSFX(manager.achievement_sfx)
         ),
         (
-            instruction: "Haal nu ook een gevulde stip weg door er nog een keer op te klikken",
+            instruction: "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
-            outcome: () => SkipPlay()
-        ),
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
         (
             instruction: "Ik ben benieuwd laat mij eens horen! ▶️",
             condition: () =>
@@ -182,17 +194,19 @@ public static class Tutorial
                 _textAllowed = true;
                 manager.AmountLeft.Visible = true;
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
+                manager.PlayExtraSFX(manager.achievement_sfx);
                 _clapping = true;
             }
         ),
         (
-            instruction: "Probeer 5 keer mee te klappen op de beat!",
+            instruction: "Klap nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
             condition: () => manager.clappedOnBeatAmount >= _fixedAmount,
             outcome: () =>
             {
                 _clapping = false;
                 manager.AmountLeft.Visible = false;
                 BpmManager.instance.playing = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
         (
@@ -207,24 +221,44 @@ public static class Tutorial
 
         // groene laag
         (
-            instruction: "Hier is de groene ring. Die vul je in door met je eigen microfoon iets op te nemen!",
+            instruction: "Dit is de groene bass-ring. De baslijn is de brommende melodie onder je Beat",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                manager.SetMicRecorderVisibility(true);
+                
                 manager.knob.GlobalPosition = _top.GlobalPosition;
                 allowed = true;
             }
         ),
         (
-            instruction: "Probeer het maar eens door op het microfoon 🎙️icoontje te klikken",
-            condition: () => manager.layerVoiceOver0.finished,
-            outcome: () => SkipPlay()
+            instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                manager.SetMicRecorderVisibility(true);
+            }
         ),
+        (
+            instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
+            condition: () => manager.layerVoiceOver0.finished,
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
         (
             instruction: "Laat eens horen!▶️",
             condition: () => BpmManager.instance.playing,
-            outcome: () => _textAllowed = true
+            outcome: () =>
+            { 
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                _textAllowed = true;
+                timer.Start(3);
+            }),
+        (
+            instruction:"",
+            condition: () => timer.IsStopped(),
+            outcome: null
         ),
         (
             instruction: "Super gedaan, het klinkt heel leuk",
@@ -234,7 +268,7 @@ public static class Tutorial
 
         // chaos pad
         (
-            instruction: "Laten wij dit geluid mixen!",
+            instruction: "Laten we je sample bewerken!",
             condition: () =>
             {
                 _knobPos = manager.knob.GlobalPosition;
@@ -242,17 +276,17 @@ public static class Tutorial
             },
             outcome: () =>
             {
-                _active = true;
+                //_active = true;
                 manager.chaosPadTriangleSprite.Visible = true;
             }
         ),
         (
-            instruction: "Deze driehoek is de mixer! Hiermee kun je jouw net opgenomen geluid veranderen",
+            instruction: "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: null
         ),
         (
-            instruction: "Je kunt jouw stem 🎙️ veranderen in het geluid van een Instrument 🎹  of jouw stem met een effect 🤖",
+            instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven",
             condition: () => false,
             outcome: () =>
             {
@@ -263,10 +297,13 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "probeer het maar eens door het grijze rondje te bewegen naar het 🌟 sterretje ",
+            instruction: "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje ",
             condition: () => false,
-            outcome: () => SkipPlay()
-        ),
+            outcome: () =>
+            {
+                manager.PlayExtraSFX(manager.achievement_sfx);
+                SkipPlay();
+            }),
         (
             instruction: "Luister maar eens!▶️",
             condition: () => BpmManager.instance.playing,
@@ -276,6 +313,7 @@ public static class Tutorial
                 manager.PianoArea.SetDeferred("monitoring", false);
                 manager.PianoMesh.Visible = false;
                 manager.PianoArea.EmitSignal("animation_star_stop");
+                manager.PlayExtraSFX(manager.achievement_sfx);
                 _active = true;
             }
         ),
@@ -291,18 +329,19 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Door het grijze rondje nu tussen twee icoontjes bij het 🌟 sterretje te plaatsen maak je een mix!",
+            instruction: "Beweeg het grijze rondje weer naar het 🌟 sterretje",
             condition: () => false,
             outcome: () =>
             {
                 _active = true;
                 manager.InBetweenArea.SetDeferred("monitoring", false);
                 manager.InBetweenArea.EmitSignal("animation_star_stop");
+                manager.PlayExtraSFX(manager.achievement_sfx);
                 manager.InBetweenMesh.Visible = false;
             }
         ),
         (
-            instruction: "Zo krijg je een mix tussen jou stem en het instrument!",
+            instruction: "Zo krijg je een mix tussen jouw sample en het instrument!",
             condition: () => false,
             outcome: () =>
             {
@@ -313,20 +352,26 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Laten we het geluid iets zachter maken door de grijze stip een beetje buiten de driehoek bij het 🌟 sterretje` te plaatsen",
+            instruction: "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje",
             condition: () => false,
             outcome: () =>
             {
                 manager.OutSideArea.SetDeferred("monitoring", false);
                 manager.OutSideArea.EmitSignal("animation_star_stop");
                 manager.OutSideMesh.Visible = false;
+                manager.PlayExtraSFX(manager.achievement_sfx);
                 _active = true;
             }
+        ),
+        (
+            instruction: "Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer",
+            condition: () => false,
+            outcome: null
         ),
 
         // End of tutorial
         (
-            instruction: "Het liedje is al goed op weg, je mag nu zelf volledig aan de slag! Veel plezier!",
+            instruction: "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!",
             condition: () => false,
             outcome: () =>
             {
@@ -457,7 +502,7 @@ public static class Tutorial
         outcome?.Invoke();
         if (tutorial_level >= tutorialSteps.Length) return;
         tutorial_level++;
-        manager.PlayExtraSFX(manager.achievement_sfx);
+      
         SpeakTutorialInstruction(tutorial_level);
         UpdateLists();
     }

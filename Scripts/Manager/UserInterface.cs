@@ -89,6 +89,7 @@ public partial class Manager : Node
 	[Export] public Button KlappyContinue;
 	[Export] public Area2D KnobArea;
 	[Export] public Label AmountLeft;
+	[Export] public Button greenLayerRecordButton;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	private void SetCopyPasteClearButtonsActive(bool active)

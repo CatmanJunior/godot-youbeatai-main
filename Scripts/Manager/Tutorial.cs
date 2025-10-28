@@ -42,6 +42,7 @@ public static class Tutorial
     private static bool _textAllowed = true;
     private static DragAndDropButton _clapButton;
     private static DragAndDropButton _stompButton;
+    private static bool _increasedSpeed = false;
     static Manager manager => Manager.instance;
 
     private static (string instruction, Func<bool> condition, Action outcome)[] tutorialSteps =>
@@ -242,11 +243,49 @@ public static class Tutorial
         ),
         (
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
-            condition: () => manager.layerVoiceOver0.finished,
+            condition: () => manager.greenLayerRecordButton.IsPressed(),
             outcome: () =>
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                SkipPlay();
+                _increasedSpeed = true;
+            }),
+        (
+            instruction: "4",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+               
+            }),
+        (
+            instruction: "3",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                
+            }),
+        (
+            instruction: "2",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+               
+            }
+            ),
+        (
+            instruction: "1",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                
+               
+            }),
+        (
+            instruction: "0",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                _increasedSpeed = false;
+                
             }),
         (
             instruction: "Laat eens horen!▶️",
@@ -590,7 +629,14 @@ public static class Tutorial
         var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
         if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
-        DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
+        if (_increasedSpeed)
+        {
+            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
+        }
+        else
+        {
+            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
+        }
     }
 
     private static bool SkipPlay()

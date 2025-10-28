@@ -23,7 +23,8 @@ public partial class Manager : Node
 		InitButtonActions();
 		SpritePlacement();
 		Tutorial.SetupTutorial();
-		SamplesMixing_ReApplyRememberedMixingVolumesForAllRings();
+		ExecuteNextFrame(SamplesMixing_ReApplyRememberedMixingVolumesForAllRings);
+		ExecuteNextFrame(SynthMixing_ReApplyRememberedMixingVolumesForBothSynths);
 		Achievements.OnReady();
 		OnReadyMixing();
 		UpdateLayerButtonsUserInterfaceDelayed();

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public partial class Manager : Node
@@ -49,6 +50,7 @@ public partial class Manager : Node
         CopyBeatLayoutToClipboard();
         CopyLayerVoiceToClipBoard();
         SamplesMixing_CopyKnobsForLayer();
+        SynthMixing_CopyKnobsForLayer();
         EmitSignal(SignalName.OnCopyLayerEvent, currentLayerIndex);
     }
 
@@ -57,6 +59,7 @@ public partial class Manager : Node
         PasteBeatLayoutFromClipboard();
         PasteLayerVoiceFromClipBoard();
         SamplesMixing_PasteKnobsForLayer();
+        SynthMixing_PasteKnobsForLayer();
         EmitSignal(SignalName.OnPasteLayerEvent, currentLayerIndex);
     }
 
@@ -201,5 +204,11 @@ public partial class Manager : Node
 
 		if (purple_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver1.GetCurrentLayerVoiceOver() != null) purpleLight.Energy = purple_volume_voice;
 		else purpleLight.Energy = 0f;
+    }
+
+    public async void ExecuteNextFrame(Action action)
+    {
+        await ToSignal(GetTree(), "process_frame");
+        action.Invoke();
     }
 }

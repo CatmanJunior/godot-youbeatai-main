@@ -34,7 +34,8 @@ public partial class Manager : Node
         layersBeatActives.Insert(layer, new bool[4, BpmManager.beatsAmount]);
         layersVoiceOvers0.Insert(layer, null);
         layersVoiceOvers1.Insert(layer, null);
-        SamplesMixing_knobPositions.Insert(layer, GetStandardKnobPositions());
+        SamplesMixing_knobPositions.Insert(layer, GetStandardKnobPositionsSamples());
+        SynthMixing_knobPositions.Insert(layer, GetStandardKnobPositionsSynth());
         EmitSignal(SignalName.OnAddLayerEvent, layersBeatActives.IndexOf(layersBeatActives.Last()));
 
         SortLayerButtonsInContainerBasedOnTheirIndex();
@@ -67,6 +68,7 @@ public partial class Manager : Node
         layersVoiceOvers0.RemoveAt(layer);
         layersVoiceOvers1.RemoveAt(layer);
         SamplesMixing_knobPositions.RemoveAt(layer);
+        SynthMixing_knobPositions.RemoveAt(layer);
         EmitSignal(SignalName.OnRemoveLayerEvent, layer);
         layersAmount--;
 

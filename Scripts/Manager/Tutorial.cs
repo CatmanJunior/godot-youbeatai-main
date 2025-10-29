@@ -218,19 +218,20 @@ public static class Tutorial
             outcome: () =>
             {
                 manager.SetGreenLayerVisibility(true);
-                Manager.instance.SynthMixing_ChangeSynth(_greenLayerMicIndex);
+               
             }
         ),
 
         // groene laag
         (
-            instruction: "Dit is de groene bass-ring. De baslijn is de brommende melodie onder je Beat",
-            condition: () => !DisplayServer.TtsIsSpeaking(),
+            instruction: "Dit is de groene bass-ring. Klik op de  beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
+            condition: () => manager.chaosPadMode == Manager.ChaosPadMode.SynthMixing, //todo check index of choas pad,
             outcome: () =>
             {
-                
+                manager.SetMicRecorderVisibility(true);
                 manager.knob.GlobalPosition = _top.GlobalPosition;
                 allowed = true;
+                manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
         (
@@ -238,7 +239,7 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                manager.SetMicRecorderVisibility(true);
+                
             }
         ),
         (
@@ -273,6 +274,14 @@ public static class Tutorial
             ),
         (
             instruction: "1",
+            condition: () =>  !DisplayServer.TtsIsSpeaking(),
+            outcome: () =>
+            {
+                
+               
+            }),
+        (
+            instruction: "",
             condition: () =>  manager.layerVoiceOver0.finished,
             outcome: () =>
             {
@@ -320,10 +329,10 @@ public static class Tutorial
         ),
         (
             instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven",
-            condition: () => false,
+            condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                _active = false;
+                
                 manager.PianoArea.Monitoring = true;
                 manager.PianoMesh.Visible = true;
                 manager.PianoArea.EmitSignal("animation_star_play");

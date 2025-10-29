@@ -265,7 +265,16 @@ public static class Tutorial
         ),
         (
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
-            condition: () => manager.greenLayerRecordButton.ButtonPressed,
+            condition: () =>
+            {
+                if (manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null)
+                {
+                    tutorial_level += 4;
+                    return true;
+                }
+
+                return manager.greenLayerRecordButton.ButtonPressed;
+            },
             outcome: () =>
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);

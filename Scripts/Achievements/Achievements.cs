@@ -20,8 +20,24 @@ public static class Achievements
     private static (bool condition, string tooltip)[] achievements =>
     [
         (
-            condition: BpmManager.instance.currentBeat == BpmManager.beatsAmount - 4, 
-            tooltip: "Deze achievement kan je unlocken door 1 keer de beatring af te luisteren. Dit is een test achievement. Veel succes."
+            condition: ActiveBeatsPerRing(0) >= 4, 
+            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de rode ring."
+        ),
+        (
+            condition: ActiveBeatsPerRing(1) >= 4, 
+            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de oranje ring."
+        ),
+        (
+            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
+            tooltip: "Deze achievement kan je unlocken door de groene ring op te nemen."
+        ),
+        (
+            condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
+            tooltip: "Deze achievement kan je unlocken door de paarse ring op te nemen."
+        ),
+        (
+            condition: manager.addedLayer, 
+            tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen."
         ),
     ];
 
@@ -35,8 +51,21 @@ public static class Achievements
         }
     }
 
+    public static Vector2 WorldToUI(Vector2 worldPos)
+    {
+        return manager.GetViewport().GetCamera2D().GetCanvasTransform() * worldPos - new Vector2(1280 / 2, 720 / 2);
+    }
+
+    public static Vector2 UIToWorld(Vector2 uiPos)
+    {
+        return manager.GetViewport().GetCamera2D().GetCanvasTransform().AffineInverse() * uiPos;
+    }
+
     public static void OnUpdate()
     {
+        // node positions deltas
+        for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
+
         // if node state is locked make node disabled and make node have a locked icon
         for (int i = 0; i < nodes.Length; i++)
         {
@@ -60,11 +89,10 @@ public static class Achievements
                     {
                         if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
                         {
-                            if (!manager.achievementspanel.Visible)
-                            {
-                                OpenTooltip(i-1);
-                                StartLoopToCheckIfTooltipCanClose();
-                            }
+                            if (manager.achievementspanel.Visible) CloseTooltip();
+
+                            OpenTooltip(i - 1);
+                            StartLoopToCheckIfTooltipCanClose();
                         }
                     }
                 };
@@ -89,7 +117,7 @@ public static class Achievements
         blocker.MouseFilter = enabled ? Control.MouseFilterEnum.Stop : Control.MouseFilterEnum.Ignore;
     }
 
-    public static Blocker FindBlocker(Node2D node)
+    public static Blocker FindBlocker(Node node)
     {
         var blocker = (Blocker)node.FindChild("Blocker", true);
         return blocker ?? null;
@@ -132,8 +160,6 @@ public static class Achievements
 
     private static bool ReadUseAchievements()
     {
-        return false; // temp skip achievements
-
         bool use;
         try
         {
@@ -160,5 +186,14 @@ public static class Achievements
     public static void Reset()
     {
         CheckIfAchievementsModeShouldBeActive();
+    }
+
+    private static int ActiveBeatsPerRing(int indexRing)
+    {
+        int amount = 0;
+        for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
+            if (manager.beatActives[indexRing, beat])
+                amount++;
+        return amount;
     }
 }

@@ -943,9 +943,9 @@ texture_scale = 1.71
 
 [node name="Blocker" parent="UserInterface/ControlsGroup/DragAndDropButton3" instance=ExtResource("32_aa8k8")]
 offset_left = -331.0
-offset_top = 264.0
+offset_top = 261.0
 offset_right = -231.0
-offset_bottom = 364.0
+offset_bottom = 361.0
 
 [node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton3"]
 self_modulate = Color(1, 1, 1, 0)
@@ -1040,9 +1040,9 @@ texture_scale = 1.71
 
 [node name="Blocker" parent="UserInterface/ControlsGroup/PurpleSelectButton" instance=ExtResource("32_aa8k8")]
 offset_left = -1.0
-offset_top = 277.0
+offset_top = 261.0
 offset_right = 99.0
-offset_bottom = 377.0
+offset_bottom = 361.0
 
 [node name="Button" type="Button" parent="UserInterface/ControlsGroup/PurpleSelectButton"]
 self_modulate = Color(1, 1, 1, 0)

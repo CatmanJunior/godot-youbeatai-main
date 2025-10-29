@@ -91,7 +91,7 @@ public static class Achievements
                         {
                             if (manager.achievementspanel.Visible) CloseTooltip();
 
-                            OpenTooltip(i - 1);
+                            OpenTooltip(node);
                             StartLoopToCheckIfTooltipCanClose();
                         }
                     }
@@ -123,8 +123,9 @@ public static class Achievements
         return blocker ?? null;
     }
 
-    public static void OpenTooltip(int index)
+    public static void OpenTooltip(Node2D node)
     {
+        var index = nodes.ToList().IndexOf(node);
         manager.achievementspanel.Visible = true;
         manager.InstructionLabel.Text = achievements[index].tooltip;
         SpeakTooltip(index);

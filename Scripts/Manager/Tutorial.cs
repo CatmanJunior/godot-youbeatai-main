@@ -114,11 +114,21 @@ public static class Tutorial
             },
             outcome: () =>
             {
+                timer.Start(2);
+            }
+        ),
+        (
+            instruction: "",
+            condition: () => timer.IsStopped()
+            ,
+            outcome: () =>
+            {
                 manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
                 _stomping = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
+        
         (
             instruction: "Stamp 👟 5 keer mee met de kick van je Beat!",
             condition: () => manager.stompedOnBeatAmount >= _fixedAmount,
@@ -132,7 +142,12 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Wow super gedaan! Op naar level 2!",
+            instruction: "Wow super gedaan!",
+            condition: () => !DisplayServer.TtsIsSpeaking(),
+            outcome: () => {}
+        ),
+        (
+            instruction: "Op naar level 2!",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () => manager.SetRingVisibility(_indexOrangeRing, true)
         ),
@@ -199,7 +214,13 @@ public static class Tutorial
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 _clapping = true;
+                timer.Start(2);
             }
+        ),
+        (
+            instruction: "",
+            condition: () => timer.TimeLeft == 0,
+            outcome: null
         ),
         (
             instruction: "Klap nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
@@ -224,7 +245,7 @@ public static class Tutorial
 
         // groene laag
         (
-            instruction: "Dit is de groene bass-ring. Klik op de  beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
+            instruction: "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
             condition: () => manager.chaosPadMode == Manager.ChaosPadMode.SynthMixing, //todo check index of choas pad,
             outcome: () =>
             {
@@ -286,17 +307,17 @@ public static class Tutorial
             outcome: () =>
             {
                 _increasedSpeed = false;
-                BpmManager.instance.playing = false;
+                timer.Start(3);
                
             }),
-        (
-            instruction: "Laat eens horen!▶️",
-            condition: () => BpmManager.instance.playing,
-            outcome: () =>
-            { 
-                manager.PlayExtraSFX(manager.achievement_sfx);
-                timer.Start(3);
-            }),
+      //  (
+         //   instruction: "Laat eens horen!▶️",
+        //    condition: () => BpmManager.instance.playing,
+          //  outcome: () =>
+          //  { 
+         //       manager.PlayExtraSFX(manager.achievement_sfx);
+        //       timer.Start(3);
+        //    }),
         (
             instruction:"",
             condition: () => timer.IsStopped(),

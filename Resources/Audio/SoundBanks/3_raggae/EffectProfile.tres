@@ -5,6 +5,5 @@
 [resource]
 script = ExtResource("1_tx14t")
 phaser = 3.0
-delay = 150.0
-reverb = 0.6
+reverb = 0.4
 metadata/_custom_type_script = "uid://b1ymetkpj7tbs"

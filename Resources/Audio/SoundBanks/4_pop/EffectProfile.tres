@@ -4,6 +4,5 @@
 
 [resource]
 script = ExtResource("1_s7rt5")
-delay = 100.0
 reverb = 0.4
 metadata/_custom_type_script = "uid://b1ymetkpj7tbs"

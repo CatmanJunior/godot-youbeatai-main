@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=31 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=30 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -17,15 +17,6 @@ resource_name = "Delay"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_xic54"]
 resource_name = "Reverb"
-
-[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_6n6ik"]
-resource_name = "Reverb"
-room_size = 0.03
-damping = 0.2
-spread = 0.05
-hipass = 0.04
-dry = 0.07
-wet = 0.02
 
 [sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_6n6ik"]
 resource_name = "Amplify"
@@ -208,10 +199,8 @@ bus/11/mute = false
 bus/11/bypass_fx = false
 bus/11/volume_db = -0.2638178
 bus/11/send = &"SubMaster"
-bus/11/effect/0/effect = SubResource("AudioEffectReverb_6n6ik")
+bus/11/effect/0/effect = SubResource("AudioEffectAmplify_6n6ik")
 bus/11/effect/0/enabled = true
-bus/11/effect/1/effect = SubResource("AudioEffectAmplify_6n6ik")
-bus/11/effect/1/enabled = true
 bus/12/name = &"GreenVoice"
 bus/12/solo = false
 bus/12/mute = false

@@ -17,15 +17,17 @@ public static class Achievements
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
     
     // achievements connected to each node
-    private static (bool condition, string tooltip, float worth)[] achievements =>
+    private static (bool condition, string tooltip, float worth, Action result)[] achievements =>
     [
         Achievement(
             condition: ActiveBeatsPerRing(0) >= 4, 
-            tooltip: "Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij."
+            tooltip: "Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij.",
+            result: () => { manager.SetRingVisibility(2, true); }
         ),
         Achievement(
             tooltip: "klap 👏 mee op de beat, verzamel 20 energie punten⚡voor een Hi-hat geluid.",
-            worth: 20
+            worth: 20,
+            result: () => { manager.SetRingVisibility(3, true); }
         ),
         Achievement(
             condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
@@ -45,8 +47,14 @@ public static class Achievements
         )
     ];
 
+    static void SetupDefaultUserInterfaceState()
+    {
+        manager.SetRingVisibility(2, false);
+        manager.SetRingVisibility(3, false);
+    }
+
     // helper for default tuple values
-    static (bool condition, string tooltip, float worth) Achievement(string tooltip, float worth = -1, bool condition = true) => (condition, tooltip, worth);
+    static (bool condition, string tooltip, float worth, Action result) Achievement(string tooltip, float worth = -1, bool condition = true, Action result = null) => (condition, tooltip, worth, result);
 
     public static void OnReady()
     {
@@ -70,6 +78,8 @@ public static class Achievements
 
     public static void OnUpdate()
     {
+        if (!useAchievements) return;
+
         // node positions deltas
         for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
 
@@ -79,6 +89,7 @@ public static class Achievements
             var node = nodes[i];
             var condition = achievements[i].condition;
             var worth = achievements[i].worth;
+            var result = achievements[i].result;
             var useworth = worth != -1 && worth > 0;
             var enoughworth = manager.progressBarValue > worth;
             var blocker = FindBlocker(node);
@@ -88,6 +99,7 @@ public static class Achievements
                 {
                     SetBlockerState(blocker, false);
                     manager.PlayExtraSFX(manager.achievement_sfx);
+                    result?.Invoke();
                 }
                 else
                 {
@@ -97,6 +109,7 @@ public static class Achievements
                         manager.progressBarValue -= worth;
                         if (manager.progressBarValue < 0) manager.progressBarValue = 0;
                         manager.PlayExtraSFX(manager.achievement_sfx);
+                        result?.Invoke();
                     }
                 }
             }
@@ -124,6 +137,9 @@ public static class Achievements
                     }
                 };
             }
+
+            // disable some uit elements by default
+            SetupDefaultUserInterfaceState();
 
             doneLateReady = true;
         }

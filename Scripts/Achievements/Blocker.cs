@@ -3,7 +3,8 @@ using System;
 
 public partial class Blocker : Panel
 {
-    private bool hovering = false;
+    public bool pressed = false;
+    public bool hovering = false;
 
     public override void _Ready()
     {
@@ -21,6 +22,7 @@ public partial class Blocker : Panel
     private void OnMouseExited()
     {
         hovering = false;
+        pressed = false;
         GD.Print("Blocker hover stopped.");
     }
 
@@ -28,9 +30,16 @@ public partial class Blocker : Panel
     {
         if (inputEvent is InputEventMouseButton mouseEvent)
         {
-            if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+            if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left && hovering)
             {
-                GD.Print("Blocker clicked.");
+                GD.Print("Blocker pressed.");
+                pressed = true;
+            }
+
+            if (!mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+            {
+                GD.Print("Blocker released.");
+                pressed = false;
             }
         }
     }

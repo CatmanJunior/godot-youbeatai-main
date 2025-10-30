@@ -84,7 +84,15 @@ public static class Tutorial
         (
             instruction: "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen",
             condition: () => BpmManager.instance.playing,
-            outcome: () => allowed = true
+            outcome: () =>
+            {
+                timer.Start(timer.WaitTime);
+                allowed = true;
+            }),
+        (
+            instruction: "",
+            condition: () => timer.TimeLeft == 0,
+            outcome: null
         ),
         (
             instruction: "Druk op ⏸️ om de Beat op pauze te zetten",
@@ -190,8 +198,12 @@ public static class Tutorial
         (
             instruction: "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
-            outcome: ()=>  manager.PlayExtraSFX(manager.achievement_sfx)
-        ),
+            outcome: ()=>
+            {
+                _beatsActiveOrangeRing = ActiveBeatsPerRing(_indexOrangeRing);
+                _beatsActiveRedRing = ActiveBeatsPerRing(_indexRedRing);
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }),
         (
             instruction: "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
@@ -257,7 +269,17 @@ public static class Tutorial
         ),
         (
             instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
-            condition: () => !DisplayServer.TtsIsSpeaking(),
+            condition: () =>
+            {
+                if (manager.greenLayerRecordButton.ButtonPressed)
+                {
+                    manager.PlayExtraSFX(manager.achievement_sfx);
+                    tutorial_level += 5;
+                    DisplayServer.TtsStop();
+                    return true;
+                }
+                return !DisplayServer.TtsIsSpeaking();
+            },
             outcome: () =>
             {
                 
@@ -265,11 +287,17 @@ public static class Tutorial
         ),
         (
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
-            condition: () => manager.greenLayerRecordButton.ButtonPressed,
+            condition: () =>
+            {
+
+                return manager.greenLayerRecordButton.ButtonPressed;
+            },
             outcome: () =>
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 _increasedSpeed = true;
+                DisplayServer.TtsStop();
+                
             }),
         (
             instruction: "4",
@@ -461,7 +489,7 @@ public static class Tutorial
         useTutorial = ReadUseTutorial();
         timer?.QueueFree();
         timer = null;
-
+        manager.ContinueButton.Visible = false;
         _beatsActiveRedRing = 5;
         _beatsActiveOrangeRing = 4;
         instruction = "";
@@ -473,7 +501,6 @@ public static class Tutorial
         _previousStomp = -1;
         _stomping = false;
         _clapping = false;
-        timer = null;
         _textAllowed = true;
         _clapButton = null;
         _stompButton = null;

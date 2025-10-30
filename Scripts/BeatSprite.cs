@@ -7,7 +7,7 @@ public partial class BeatSprite : Sprite2D
 
     public override void _Input(InputEvent inputEvent)
     {
-		if (inputEvent is InputEventMouseButton mouseEvent && Visible)
+		if (inputEvent is InputEventMouseButton mouseEvent && Visible && !Manager.instance.settingsPanel.Visible)
 		{
 			if (mouseEvent.IsReleased() && mouseEvent.ButtonIndex == MouseButton.Left)
 			{

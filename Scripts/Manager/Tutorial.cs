@@ -257,7 +257,18 @@ public static class Tutorial
         ),
         (
             instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
-            condition: () => !DisplayServer.TtsIsSpeaking(),
+            condition: () =>
+            {
+                if (manager.greenLayerRecordButton.ButtonPressed)
+                {
+                    manager.PlayExtraSFX(manager.achievement_sfx);
+                    tutorial_level += 5;
+                    
+                    DisplayServer.TtsStop();
+                    return true;
+                }
+                return !DisplayServer.TtsIsSpeaking();
+            },
             outcome: () =>
             {
                 
@@ -267,11 +278,6 @@ public static class Tutorial
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
             condition: () =>
             {
-                if (manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null)
-                {
-                    tutorial_level += 4;
-                    return true;
-                }
 
                 return manager.greenLayerRecordButton.ButtonPressed;
             },
@@ -279,6 +285,8 @@ public static class Tutorial
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 _increasedSpeed = true;
+                DisplayServer.TtsStop();
+                
             }),
         (
             instruction: "4",

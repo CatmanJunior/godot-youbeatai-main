@@ -8,6 +8,7 @@ public partial class Manager : Node
 
 	public override void _ExitTree()
     {
+		Achievements.Reset();
         if (instance == this) instance = null;
     }
 

@@ -31,7 +31,8 @@ public static class Achievements
         ),
         Achievement(
             condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij."
+            tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
+            result: () => { manager.layerVoiceOver1.bigLine.Visible = true; }
         ),
         Achievement(
             condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
@@ -51,6 +52,7 @@ public static class Achievements
     {
         manager.SetRingVisibility(2, false);
         manager.SetRingVisibility(3, false);
+        manager.layerVoiceOver1.bigLine.Visible = false;
     }
 
     // helper for default tuple values

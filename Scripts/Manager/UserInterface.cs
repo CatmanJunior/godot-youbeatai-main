@@ -30,9 +30,7 @@ public partial class Manager : Node
 	public ProgressBar songModeBackPanel => RealTimeAudioRecording.instance?.progressbar;
 
 	// other interface
-	[Export] public Label[] Unlockables;
 	[Export] public Node2D[] NodesThatCanBeUnlocked;
-	[Export] public Label[] UnlockablesQuestion;
 	[Export] public Button restartButton;
 	[Export] public CheckButton muteSpeach;
 	[Export] public Button saveToWavButton;

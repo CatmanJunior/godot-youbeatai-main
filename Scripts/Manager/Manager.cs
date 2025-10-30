@@ -38,8 +38,6 @@ public partial class Manager : Node
 
 		if (isShowingCountDown) UpdateCountDownLabel();
 
-		UpdateAchievementsVisibility();
-
 		UpdateLayerOutlineSpriteRotation();
 
 		if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;

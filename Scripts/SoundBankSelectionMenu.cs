@@ -93,13 +93,6 @@ public partial class SoundBankSelectionMenu : Panel
 				File.WriteAllText(path, false.ToString());
 			}
 
-			// remember if achievements should be enabled or not
-			{
-				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_achievements.txt");
-				if (File.Exists(path)) File.Delete(path);
-				File.WriteAllText(path, true.ToString());
-			}
-
 			// load main scene
 			GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
 		};

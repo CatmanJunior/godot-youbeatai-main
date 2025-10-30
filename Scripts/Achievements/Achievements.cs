@@ -104,6 +104,7 @@ public static class Achievements
 
     public static void StartLoopToCheckIfTooltipCanClose()
     {
+        if (manager == null) return;
         manager.GetTree().CreateTimer(0.4).Timeout += () =>
         {
             if (DisplayServer.TtsIsSpeaking()) StartLoopToCheckIfTooltipCanClose();
@@ -187,6 +188,7 @@ public static class Achievements
     public static void Reset()
     {
         CheckIfAchievementsModeShouldBeActive();
+        doneLateReady = false;
     }
 
     private static int ActiveBeatsPerRing(int indexRing)

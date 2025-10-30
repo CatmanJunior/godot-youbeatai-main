@@ -154,6 +154,8 @@ public partial class Manager : Node
 			else window.Mode = Window.ModeEnum.Fullscreen;
 		}
 
+		recordingDelayLabel.Text = recordingDelaySlider.Value.ToString("0.00") + "s";
+
 		if (BpmManager.instance.playing)
 		{
 			timeafterplay += ((float)delta);

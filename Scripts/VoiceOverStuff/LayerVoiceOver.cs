@@ -183,7 +183,7 @@ public partial class LayerVoiceOver : Node
             audioDelayBeginMs = Time.GetTicksMsec();
         }
 
-        GetTree().CreateTimer(0.4).Timeout += OnTopDelayed;
+        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += OnTopDelayed;
     }
 
     private void OnTopDelayed()
@@ -197,7 +197,7 @@ public partial class LayerVoiceOver : Node
         shouldUpdateProgressBar = true;
         bigLine.Visible = false;
 
-        GetTree().CreateTimer(0.4).Timeout += () =>
+        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () =>
         {
             recording = true;
             audioEffectRecord.SetRecordingActive(true);
@@ -218,7 +218,7 @@ public partial class LayerVoiceOver : Node
         shouldUpdateProgressBar = false;
         bigLine.Visible = true;
 
-        GetTree().CreateTimer(0.4).Timeout += () =>
+        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () =>
         {
             audioEffectRecord.SetRecordingActive(false);
             SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());

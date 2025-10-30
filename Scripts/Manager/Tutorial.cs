@@ -84,7 +84,15 @@ public static class Tutorial
         (
             instruction: "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen",
             condition: () => BpmManager.instance.playing,
-            outcome: () => allowed = true
+            outcome: () =>
+            {
+                timer.Start(timer.WaitTime);
+                allowed = true;
+            }),
+        (
+            instruction: "",
+            condition: () => timer.TimeLeft == 0,
+            outcome: null
         ),
         (
             instruction: "Druk op ⏸️ om de Beat op pauze te zetten",
@@ -267,7 +275,6 @@ public static class Tutorial
                 {
                     manager.PlayExtraSFX(manager.achievement_sfx);
                     tutorial_level += 5;
-                    
                     DisplayServer.TtsStop();
                     return true;
                 }

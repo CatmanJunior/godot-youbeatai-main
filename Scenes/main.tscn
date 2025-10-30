@@ -745,6 +745,7 @@ offset_right = -12.5
 offset_bottom = -12.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
@@ -791,6 +792,7 @@ offset_right = -12.5
 offset_bottom = -12.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
@@ -844,6 +846,7 @@ offset_right = -12.5
 offset_bottom = -12.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
@@ -897,6 +900,7 @@ offset_right = -12.5
 offset_bottom = -12.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
@@ -943,6 +947,7 @@ offset_right = -12.5
 offset_bottom = -12.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
@@ -997,6 +1002,7 @@ offset_right = -12.5
 offset_bottom = -12.5
 grow_horizontal = 2
 grow_vertical = 2
+focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]

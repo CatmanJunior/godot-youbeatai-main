@@ -17,27 +17,32 @@ public static class Achievements
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
 
     // achievements connected to each node
-    private static (bool condition, string tooltip)[] achievements =>
+    private static (bool condition, string tooltip, float worth)[] achievements =>
     [
         (
             condition: ActiveBeatsPerRing(0) >= 4, 
-            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de rode ring."
+            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de rode ring.",
+            worth: -1 // if worth is -1, the achievement doesnt cost energy points
         ),
         (
-            condition: ActiveBeatsPerRing(1) >= 4, 
-            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de oranje ring."
+            condition: true, // ignore condition, only check if enough energy exists
+            tooltip: "Deze achievement kan je unlocken voor 20 energy punten.",
+            worth: 20
         ),
         (
             condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Deze achievement kan je unlocken door de groene ring op te nemen."
+            tooltip: "Deze achievement kan je unlocken door de groene ring op te nemen.",
+            worth: -1
         ),
         (
             condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Deze achievement kan je unlocken door de paarse ring op te nemen."
+            tooltip: "Deze achievement kan je unlocken door de paarse ring op te nemen.",
+            worth: -1
         ),
         (
             condition: manager.addedLayer, 
-            tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen."
+            tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen.",
+            worth: -1
         ),
     ];
 
@@ -71,8 +76,30 @@ public static class Achievements
         {
             var node = nodes[i];
             var condition = achievements[i].condition;
+            var worth = achievements[i].worth;
+            var useworth = worth != -1 && worth > 0;
+            var enoughworth = manager.progressBarValue > worth;
             var blocker = FindBlocker(node);
-            if (blocker.Visible && condition) SetBlockerState(blocker, false);
+            if (blocker.Visible && condition)
+            {
+                if (!useworth)
+                {
+                    SetBlockerState(blocker, false);
+                }
+                else
+                {
+                    if (enoughworth)
+                    {
+                        SetBlockerState(blocker, false);
+
+                        if (worth != -1 && worth > 0)
+                        {
+                            manager.progressBarValue -= worth;
+                            if (manager.progressBarValue < 0) manager.progressBarValue = 0;
+                        }
+                    }
+                }
+            }
         }
 
         if (!doneLateReady)

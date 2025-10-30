@@ -222,20 +222,20 @@ public static class Tutorial
             outcome: () =>
             {
                 _textAllowed = true;
-                manager.AmountLeft.Visible = true;
-                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
+               
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                _clapping = true;
+                
                 timer.Start(2);
             }
         ),
         (
             instruction: "",
             condition: () => timer.TimeLeft == 0,
-            outcome: null
+            outcome: ()=>{ manager.AmountLeft.Visible = true;
+                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";_clapping = true;}
         ),
         (
-            instruction: "Klap nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
+            instruction: "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
             condition: () => manager.clappedOnBeatAmount >= _fixedAmount,
             outcome: () =>
             {
@@ -359,7 +359,7 @@ public static class Tutorial
 
         // chaos pad
         (
-            instruction: "Laten we je sample bewerken!",
+            instruction: "Laten we je sample veranderen!",
             condition: () =>
             {
                 _knobPos = manager.knob.GlobalPosition;
@@ -489,7 +489,6 @@ public static class Tutorial
         useTutorial = ReadUseTutorial();
         timer?.QueueFree();
         timer = null;
-        manager.ContinueButton.Visible = false;
         _beatsActiveRedRing = 5;
         _beatsActiveOrangeRing = 4;
         instruction = "";
@@ -505,6 +504,7 @@ public static class Tutorial
         _clapButton = null;
         _stompButton = null;
         _increasedSpeed = false;
+        
     }
 
     public static void CheckIfTutorialWasChosen()
@@ -718,6 +718,7 @@ public static class Tutorial
             return BpmManager.instance.playing;
         }
     }
+    
 
     private static void UpdateLists()
     {

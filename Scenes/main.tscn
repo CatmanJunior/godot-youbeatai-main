@@ -494,7 +494,7 @@ octaveRange = Vector2i(4, 6)
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 closed = true
-width = 3.0
+width = 5.0
 default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 

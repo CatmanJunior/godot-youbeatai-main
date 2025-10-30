@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=29 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=30 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -20,6 +20,9 @@ resource_name = "Reverb"
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_5jwjk"]
 resource_name = "SpectrumAnalyzer"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_6n6ik"]
+resource_name = "Reverb"
 
 [sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_u8yxa"]
 resource_name = "PitchShift"
@@ -217,6 +220,8 @@ bus/14/mute = false
 bus/14/bypass_fx = false
 bus/14/volume_db = 0.0
 bus/14/send = &"SubMaster"
+bus/14/effect/0/effect = SubResource("AudioEffectReverb_6n6ik")
+bus/14/effect/0/enabled = true
 bus/15/name = &"Green_alt"
 bus/15/solo = false
 bus/15/mute = false

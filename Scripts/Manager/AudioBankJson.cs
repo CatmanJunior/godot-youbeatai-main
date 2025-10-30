@@ -48,7 +48,7 @@ public partial class Manager : Node
         // bank.effectProfile.Apply(purple_alt);
 
         // set swing
-        float chosenswing = chosenSoundBank.swing / 100f * 0.4f;
+        float chosenswing = chosenSoundBank.swing / 100f * 0.2f;
         BpmManager.instance.swing = chosenswing;
         startswing = chosenswing;
         swingslider.Value = chosenswing;

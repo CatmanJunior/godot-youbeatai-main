@@ -15,36 +15,34 @@ public static class Achievements
 
     // nodes with blockers
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
-
+    
     // achievements connected to each node
     private static (bool condition, string tooltip, float worth)[] achievements =>
     [
-        (
+        Achievement(
             condition: ActiveBeatsPerRing(0) >= 4, 
-            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de rode ring.",
-            worth: -1 // if worth is -1, the achievement doesnt cost energy points
+            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de rode ring."
         ),
-        (
-            condition: true, // ignore condition, only check if enough energy points exists
+        Achievement(
             tooltip: "Deze achievement kan je unlocken voor 20 energy punten.",
             worth: 20
         ),
-        (
+        Achievement(
             condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Deze achievement kan je unlocken door de groene ring op te nemen.",
-            worth: -1
+            tooltip: "Deze achievement kan je unlocken door de groene ring op te nemen."
         ),
-        (
+        Achievement(
             condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Deze achievement kan je unlocken door de paarse ring op te nemen.",
-            worth: -1
+            tooltip: "Deze achievement kan je unlocken door de paarse ring op te nemen."
         ),
-        (
+        Achievement(
             condition: manager.addedLayer, 
-            tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen.",
-            worth: -1
+            tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen."
         ),
     ];
+
+    // helper for default tuple values
+    static (bool condition, string tooltip, float worth) Achievement(string tooltip, float worth = -1, bool condition = true) => (condition, tooltip, worth);
 
     public static void OnReady()
     {

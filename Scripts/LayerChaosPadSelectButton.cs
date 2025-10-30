@@ -3,18 +3,11 @@ using Godot;
 public partial class LayerChaosPadSelectButton : Sprite2D
 {
     [Export] int id;
+	[Export] public Button button;
 
-    bool inside => IsPixelOpaque(GetLocalMousePosition());
-
-    public override void _Input(InputEvent inputEvent)
+    public override void _Ready()
     {
-		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
-		{
-			if (mouseEvent.IsReleased())
-			{
-				if (inside) OnPress();
-			}
-		}
+        button.ButtonUp += OnPress;
     }
 
 	public void OnPress()

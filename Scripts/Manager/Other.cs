@@ -3,6 +3,7 @@ using Godot;
 
 public partial class Manager : Node
 {
+    public bool addedLayer = false;
     public bool loadedtemplate = false;
     public bool hassavedtofile = false;
     bool metronome_sfx_enabled = false;

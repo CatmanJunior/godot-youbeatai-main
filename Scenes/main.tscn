@@ -388,7 +388,7 @@ recordSampleButton1 = NodePath("../../UserInterface/ControlsGroup/SampleRecordin
 recordSampleButton2 = NodePath("../../UserInterface/ControlsGroup/SampleRecordingButton2")
 recordSampleButton3 = NodePath("../../UserInterface/ControlsGroup/SampleRecordingButton3")
 Unlockables = [NodePath("../ProgressBar/Unlockable_1"), NodePath("../ProgressBar/Unlockable_2"), NodePath("../ProgressBar/Unlockable_3"), NodePath("../ProgressBar/Unlockable_4"), NodePath("../ProgressBar/Unlockable_5"), NodePath("../ProgressBar/Unlockable_6")]
-NodesThatCanBeUnlocked = [NodePath("../../UserInterface/ChaosPad")]
+NodesThatCanBeUnlocked = [NodePath("../../UserInterface/ControlsGroup/DragAndDropButton2"), NodePath("../../UserInterface/ControlsGroup/DragAndDropButton3"), NodePath("../../UserInterface/ControlsGroup/PurpleSelectButton"), NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder"), NodePath("../../UserInterface/LayerLoopToggle/Sprite")]
 UnlockablesQuestion = [NodePath("../ProgressBar/Unlockable_Question_1"), NodePath("../ProgressBar/Unlockable_Question_2"), NodePath("../ProgressBar/Unlockable_Question_3"), NodePath("../ProgressBar/Unlockable_Question_4"), NodePath("../ProgressBar/Unlockable_Question_5"), NodePath("../ProgressBar/Unlockable_Question_6")]
 restartButton = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
 muteSpeach = NodePath("../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
@@ -587,14 +587,6 @@ metadata/_edit_use_anchors_ = true
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_kwxat")]
 position = Vector2(-435, 141)
 
-[node name="Blocker" parent="UserInterface/ChaosPad" instance=ExtResource("32_aa8k8")]
-visible = false
-offset_left = -591.0
-offset_top = -42.0
-offset_right = -491.0
-offset_bottom = 58.0
-scale = Vector2(3, 3)
-
 [node name="ControlsGroup" type="Node2D" parent="UserInterface"]
 position = Vector2(172, -101)
 scale = Vector2(1.27546, 1.27546)
@@ -776,12 +768,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-588.887, 324.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
+button = NodePath("Button")
 
 [node name="Icon" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton0"]
 anchors_preset = 8
@@ -807,13 +800,26 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+[node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton0"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -12.5
+offset_right = -12.5
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-513.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 1
+button = NodePath("Button")
 
 [node name="Icon2" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton1"]
 anchors_preset = 8
@@ -839,13 +845,26 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+[node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton1"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -12.5
+offset_right = -12.5
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-438.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 2
+button = NodePath("Button")
 
 [node name="Icon3" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton2"]
 anchors_preset = 8
@@ -871,13 +890,32 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+[node name="Blocker" parent="UserInterface/ControlsGroup/DragAndDropButton2" instance=ExtResource("32_aa8k8")]
+offset_left = -438.0
+offset_top = 261.0
+offset_right = -338.0
+offset_bottom = 361.0
+
+[node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton2"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -12.5
+offset_right = -12.5
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-363.887, 325.906)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("14_4mig3")
 ring = 3
+button = NodePath("Button")
 
 [node name="Icon4" type="Label" parent="UserInterface/ControlsGroup/DragAndDropButton3"]
 anchors_preset = 8
@@ -903,13 +941,32 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+[node name="Blocker" parent="UserInterface/ControlsGroup/DragAndDropButton3" instance=ExtResource("32_aa8k8")]
+offset_left = -331.0
+offset_top = 261.0
+offset_right = -231.0
+offset_bottom = 361.0
+
+[node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton3"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -12.5
+offset_right = -12.5
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
 self_modulate = Color(0.146667, 0.8, 0, 1)
 z_index = -4
 position = Vector2(-172.85, 327.474)
 scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("33_aqgau")
+button = NodePath("Button")
 
 [node name="Icon5" type="Label" parent="UserInterface/ControlsGroup/GreenSelectButton"]
 anchors_preset = 8
@@ -935,7 +992,19 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup"]
+[node name="Button" type="Button" parent="UserInterface/ControlsGroup/GreenSelectButton"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -12.5
+offset_right = -12.5
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/ControlsGroup" node_paths=PackedStringArray("button")]
 self_modulate = Color(0.516666, 0, 1, 1)
 z_index = -4
 position = Vector2(-97.5834, 327.474)
@@ -943,6 +1012,7 @@ scale = Vector2(2, 2)
 texture = ExtResource("28_r33sp")
 script = ExtResource("33_aqgau")
 id = 1
+button = NodePath("Button")
 
 [node name="Icon6" type="Label" parent="UserInterface/ControlsGroup/PurpleSelectButton"]
 anchors_preset = 8
@@ -967,6 +1037,24 @@ color = Color(1, 0.911449, 0.665059, 1)
 energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
+
+[node name="Blocker" parent="UserInterface/ControlsGroup/PurpleSelectButton" instance=ExtResource("32_aa8k8")]
+offset_left = -1.0
+offset_top = 261.0
+offset_right = 99.0
+offset_bottom = 361.0
+
+[node name="Button" type="Button" parent="UserInterface/ControlsGroup/PurpleSelectButton"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -12.5
+offset_right = -12.5
+offset_bottom = -12.5
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/ControlsGroup"]
 self_modulate = Color(0.146667, 0.8, 0, 1)
@@ -1307,6 +1395,16 @@ action_mode = 0
 text = "+"
 metadata/_edit_use_anchors_ = true
 
+[node name="BlockerHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton"]
+position = Vector2(35, 33)
+
+[node name="Blocker" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" instance=ExtResource("32_aa8k8")]
+offset_left = -61.99991
+offset_top = -1032.0001
+offset_right = 38.00009
+offset_bottom = -932.0001
+scale = Vector2(0.7174814, 0.7174814)
+
 [node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="UserInterface/SwitchLayerButtons"]
 z_index = -2
 anchors_preset = -1
@@ -1393,6 +1491,13 @@ text = "♪"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="Blocker" parent="UserInterface/LayerLoopToggle/Sprite" instance=ExtResource("32_aa8k8")]
+offset_left = 418.0
+offset_top = -348.0
+offset_right = 518.0
+offset_bottom = -248.0
+scale = Vector2(0.7815966, 0.7815966)
 
 [node name="draganddropthing" type="Sprite2D" parent="UserInterface"]
 modulate = Color(1, 1, 1, 0)

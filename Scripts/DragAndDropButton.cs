@@ -3,46 +3,15 @@ using Godot;
 public partial class DragAndDropButton : Sprite2D
 {
 	[Export] int ring = 0;
-	[Signal]
-	public delegate void OnPressedEventHandler();
+	[Export] public Button button;
 
-	bool inside => IsPixelOpaque(GetLocalMousePosition());
-
-	float timePressing = 0;
-
-	bool pressing = false;
-	bool holdingOutside = false;
-	bool startedholdingthisringinside = false;
-	bool holdingforthis = false;
+	[Signal] public delegate void OnPressedEventHandler();
 
 	bool colorIsChanging = false;
 
-    public override void _Input(InputEvent inputEvent)
+    public override void _Ready()
     {
-		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
-		{
-			// on press
-			if (mouseEvent.IsPressed())
-			{
-				pressing = true;
-
-				if (inside) holdingforthis = true;
-				else holdingforthis = false;
-
-				startedholdingthisringinside = inside;
-			} 
-
-			// on release
-			if (mouseEvent.IsReleased())
-			{
-				pressing = false;
-
-				if (inside) OnPress();
-
-				startedholdingthisringinside = false;
-				Manager.instance.dragginganddropping = false;
-			}
-		}
+		button.ButtonUp += OnPress;
     }
 
 	bool w_pressed = false;
@@ -72,18 +41,7 @@ public partial class DragAndDropButton : Sprite2D
 		d_pressed = Input.IsKeyPressed(Key.F);
 		if (d_pressed != d_pressed_lastframe && ring == 3 && d_pressed && !Manager.instance.emailPromptOpen) OnPress();
 
-
-		holdingOutside = pressing && !inside;
-		var holdingthisring = holdingOutside && holdingforthis;
-		if (holdingthisring) Manager.instance.holdingforring = ring;
-		if (holdingthisring) Manager.instance.dragginganddropping = holdingOutside && startedholdingthisringinside;
-
-		if (pressing) timePressing += (float)delta;
-		else timePressing = 0;
-
-		if (pressing && inside && timePressing > 0.5f && !Manager.instance.beatActives[ring, BpmManager.instance.currentBeat]) OnPress();
-
-		if (inside) SelfModulate = Manager.instance.colors[ring];
+		if (button.ButtonPressed) SelfModulate = Manager.instance.colors[ring];
 		else SelfModulate = Manager.instance.colors[ring] * 0.8f;
     }
 

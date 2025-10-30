@@ -104,7 +104,7 @@ public partial class Manager : Node
 	{
 		colorsOverride = colors;
 
-		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); };
+		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); addedLayer = true; };
 		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
 
 		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedSongAsFileAndSendToEmail); settingsPanel.Visible = false; };

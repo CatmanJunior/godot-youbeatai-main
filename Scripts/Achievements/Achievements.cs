@@ -41,7 +41,7 @@ public static class Achievements
         ),
         Achievement(
             condition: manager.clapped, 
-            tooltip: "Deze achievement kan je unlocken door een 1 keer in je handen te klappen."
+            tooltip: "Door een keer in je handen te klappen. kan je hier energie punten ⚡ verdienen."
         )
     ];
 

@@ -9,7 +9,7 @@ public partial class Manager
     
     public void ShowCountDown()
     {
-        coundDownPanel.Position = -coundDownPanel.Size / 2;
+        coundDownPanel.Position = micButtonLocation.GlobalPosition - coundDownPanel.Size / 2 * coundDownPanel.Scale;
         isShowingCountDown = true;
     }
 

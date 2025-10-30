@@ -83,6 +83,7 @@ public static class Achievements
                 if (!useworth)
                 {
                     SetBlockerState(blocker, false);
+                    manager.PlayExtraSFX(manager.achievement_sfx);
                 }
                 else
                 {
@@ -91,6 +92,7 @@ public static class Achievements
                         SetBlockerState(blocker, false);
                         manager.progressBarValue -= worth;
                         if (manager.progressBarValue < 0) manager.progressBarValue = 0;
+                        manager.PlayExtraSFX(manager.achievement_sfx);
                     }
                 }
             }

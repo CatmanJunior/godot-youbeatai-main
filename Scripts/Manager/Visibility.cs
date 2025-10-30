@@ -10,7 +10,6 @@ public partial class Manager : Node
         SetRingVisibility(1, visible);
         SetRingVisibility(2, visible);
         SetRingVisibility(3, visible);
-        progressBar.Visible = false; // temp fix
         PlayPauseButton.Visible = visible;
         SetMainButtonsVisibility(visible);
         SetRecordingButtonsVisibility(visible);
@@ -41,6 +40,7 @@ public partial class Manager : Node
         layerVoiceOver0.bigLine.Visible = visible;
         layerVoiceOver1.bigLine.Visible = visible;
         layerButtonsContainer.Visible = visible;
+        progressBar.Visible = visible;
     }
 
     public void SetGreenLayerVisibility(bool visible)
@@ -124,24 +124,6 @@ public partial class Manager : Node
         for (int i = 0; i < LayerButtons.Count; i++)
 		{
 			LayerButtons[i].Disabled = !enabled;
-        }
-    }
-
-    private void UpdateAchievementsVisibility()
-    {
-        for (int i = 0; i < 6; i++)
-        {
-            float tresh = ((float)i + 1f) / 6f * 100f;
-            if (progressBarValue > tresh - layersAmountMax)
-            {
-                Unlockables[i].Visible = true;
-                UnlockablesQuestion[i].Visible = false;
-            }
-            else
-            {
-                Unlockables[i].Visible = false;
-                UnlockablesQuestion[i].Visible = true;
-            }
         }
     }
 }

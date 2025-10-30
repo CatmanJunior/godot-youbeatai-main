@@ -133,8 +133,6 @@ public partial class Manager : Node
         clapped = false;
         stomped = false;
 
-        if (BpmManager.instance.currentBeat == 1) if (progressBarValue > 10) progressBarValue -= 5;
-
         if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
         if (BpmManager.instance.currentBeat == 0)

@@ -461,6 +461,23 @@ public static class Tutorial
         useTutorial = ReadUseTutorial();
         timer?.QueueFree();
         timer = null;
+
+        _beatsActiveRedRing = 5;
+        _beatsActiveOrangeRing = 4;
+        instruction = "";
+        condition = null;
+        outcome = null;
+        _active = false;
+        _top = null;
+        _previousClap = -1;
+        _previousStomp = -1;
+        _stomping = false;
+        _clapping = false;
+        timer = null;
+        _textAllowed = true;
+        _clapButton = null;
+        _stompButton = null;
+        _increasedSpeed = false;
     }
 
     public static void CheckIfTutorialWasChosen()

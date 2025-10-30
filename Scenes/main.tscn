@@ -267,6 +267,15 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="ProgressBarAchievementNode" type="Node2D" parent="Managers/ProgressBar"]
+position = Vector2(27, 344)
+
+[node name="Blocker" parent="Managers/ProgressBar/ProgressBarAchievementNode" instance=ExtResource("32_aa8k8")]
+offset_left = 564.0
+offset_top = -35.0
+offset_right = 631.0
+offset_bottom = 32.0
+
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
@@ -321,7 +330,7 @@ recordSampleButton0 = NodePath("../../UserInterface/ControlsGroup/SampleRecordin
 recordSampleButton1 = NodePath("../../UserInterface/ControlsGroup/SampleRecordingButton1")
 recordSampleButton2 = NodePath("../../UserInterface/ControlsGroup/SampleRecordingButton2")
 recordSampleButton3 = NodePath("../../UserInterface/ControlsGroup/SampleRecordingButton3")
-NodesThatCanBeUnlocked = [NodePath("../../UserInterface/ControlsGroup/DragAndDropButton2"), NodePath("../../UserInterface/ControlsGroup/DragAndDropButton3"), NodePath("../../UserInterface/ControlsGroup/PurpleSelectButton"), NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder"), NodePath("../../UserInterface/LayerLoopToggle/Sprite")]
+NodesThatCanBeUnlocked = [NodePath("../../UserInterface/ControlsGroup/DragAndDropButton2"), NodePath("../../UserInterface/ControlsGroup/DragAndDropButton3"), NodePath("../../UserInterface/ControlsGroup/PurpleSelectButton"), NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder"), NodePath("../../UserInterface/LayerLoopToggle/Sprite"), NodePath("../ProgressBar/ProgressBarAchievementNode")]
 restartButton = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
 muteSpeach = NodePath("../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 saveToWavButton = NodePath("../../UserInterface/SettingsPanel/Buttons/SaveToWavButton")

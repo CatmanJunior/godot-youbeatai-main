@@ -39,6 +39,10 @@ public static class Achievements
             condition: manager.addedLayer, 
             tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen."
         ),
+        Achievement(
+            condition: manager.clapped, 
+            tooltip: "Deze achievement kan je unlocken door een 1 keer in je handen te klappen."
+        )
     ];
 
     // helper for default tuple values

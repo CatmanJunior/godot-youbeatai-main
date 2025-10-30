@@ -190,8 +190,12 @@ public static class Tutorial
         (
             instruction: "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
-            outcome: ()=>  manager.PlayExtraSFX(manager.achievement_sfx)
-        ),
+            outcome: ()=>
+            {
+                _beatsActiveOrangeRing = ActiveBeatsPerRing(_indexOrangeRing);
+                _beatsActiveRedRing = ActiveBeatsPerRing(_indexRedRing);
+                manager.PlayExtraSFX(manager.achievement_sfx);
+            }),
         (
             instruction: "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
@@ -478,6 +482,8 @@ public static class Tutorial
         useTutorial = ReadUseTutorial();
         timer?.QueueFree();
         timer = null;
+        manager.ContinueButton.Visible = false;
+        _beatsActiveRedRing = 5;
     }
 
     public static void CheckIfTutorialWasChosen()

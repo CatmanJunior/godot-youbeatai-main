@@ -45,35 +45,27 @@ vertical_alignment = 1
 [node name="SpelenButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 113.0
+offset_top = 135.39288
 offset_right = 348.0
-offset_bottom = 152.0
+offset_bottom = 174.39288
 focus_mode = 0
 text = "▶️ Vrij Spelen"
 
 [node name="TutorialButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 164.0
+offset_top = 186.39285
 offset_right = 348.0
-offset_bottom = 203.0
+offset_bottom = 225.39285
 focus_mode = 0
 text = "❔Tutorial Spelen"
 
 [node name="PermissionButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
 offset_left = 50.0
-offset_top = 215.0
+offset_top = 610.60724
 offset_right = 348.0
-offset_bottom = 254.0
+offset_bottom = 649.60724
 focus_mode = 0
 text = "🎙️ Microfoon Toegang Verlenen"
 script = ExtResource("3_1ehe0")
-
-[node name="Label" type="Label" parent="."]
-offset_left = 356.0
-offset_top = 587.0
-offset_right = 698.0
-offset_bottom = 614.0
-scale = Vector2(1.66415, 1.66415)
-text = "⬆️ Kies \"Alleen deze keer toegang verlenen\" ⬆️"

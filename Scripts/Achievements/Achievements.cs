@@ -21,23 +21,23 @@ public static class Achievements
     [
         Achievement(
             condition: ActiveBeatsPerRing(0) >= 4, 
-            tooltip: "Deze achievement kan je unlocken door 4 beats te plaatsen op de rode ring."
+            tooltip: "Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij."
         ),
         Achievement(
-            tooltip: "Deze achievement kan je unlocken voor 20 energy punten.",
+            tooltip: "klap 👏 mee op de beat, verzamel 20 energie punten⚡voor een Hi-hat geluid.",
             worth: 20
         ),
         Achievement(
             condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Deze achievement kan je unlocken door de groene ring op te nemen."
+            tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij."
         ),
         Achievement(
             condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
-            tooltip: "Deze achievement kan je unlocken door de paarse ring op te nemen."
+            tooltip: "Als je de paarse ring 🐦 op neemt kan je daarna hier nieuwe lagen toevoegen."
         ),
         Achievement(
             condition: manager.addedLayer, 
-            tooltip: "Deze achievement kan je unlocken door een nieuwe laag toe te voegen."
+            tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
             condition: manager.clapped, 

@@ -9,6 +9,7 @@ class_name notePlayer
 		channel_set_presetindex(0, 0, v)
 @export var base_note : Note
 @export var allow_key_input: bool = false
+@export_range(0, 1, 0.05) var gate: float = 0.5
 
 @export var songs: Array[PackedVector3Array] = []
 var cached_song: PackedVector3Array = []
@@ -80,7 +81,7 @@ func on_bpm():
 	log_value = min(1, pow(10, log_value / 10))
 
 	# gate quiet notes
-	if log_value <= 0.5 or song[bpmManager.currentBeat].y == 0:
+	if log_value <= gate or song[bpmManager.currentBeat].y == 0:
 		return
 	
 	var current_note: Vector3 = song[bpmManager.currentBeat]

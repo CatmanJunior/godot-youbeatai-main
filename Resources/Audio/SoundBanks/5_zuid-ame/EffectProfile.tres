@@ -4,6 +4,4 @@
 
 [resource]
 script = ExtResource("1_1xysa")
-pitch_shift = 0.8
-reverb = 0.4
 metadata/_custom_type_script = "uid://b1ymetkpj7tbs"

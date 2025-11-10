@@ -24,6 +24,7 @@ clap_alt = ExtResource("2_gk18y")
 closed = ExtResource("2_f2pa0")
 closed_alt = ExtResource("4_a4xo8")
 green_soundfont = ExtResource("3_0tynt")
+green_effectProfile = ExtResource("5_a4xo8")
 purple_soundfont = ExtResource("5_gk18y")
 purple_instrument_id = 2
 effectProfile = ExtResource("5_a4xo8")

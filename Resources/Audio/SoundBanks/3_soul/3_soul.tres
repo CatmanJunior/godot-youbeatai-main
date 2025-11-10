@@ -24,6 +24,7 @@ closed = ExtResource("2_xwq8a")
 closed_alt = ExtResource("4_qgh1d")
 green_soundfont = ExtResource("5_b8dx6")
 green_instrument_id = 8
+green_effectProfile = ExtResource("5_qgh1d")
 purple_soundfont = ExtResource("5_b8dx6")
 effectProfile = ExtResource("5_qgh1d")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

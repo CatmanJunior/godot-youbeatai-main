@@ -39,7 +39,7 @@ public partial class Manager : Node
         // bank.effectProfile.Apply(green_alt);
         
         var green = AudioServer.GetBusIndex("Green");
-        bank.effectProfile.Apply(green);
+        bank.green_effectProfile?.Apply(green);
         
         var purple = AudioServer.GetBusIndex("Purple");
         bank.effectProfile.Apply(purple);

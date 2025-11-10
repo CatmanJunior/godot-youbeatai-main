@@ -3,10 +3,12 @@ class_name VoiceProcessor
 
 @export var bpmManager: Node
 @export var notes: Notes
-@export var combineThreshold: float = 5
+@export var combine_threshold: float = -1 # -1 is off
 @export var octaveRange: Vector2i
 
-signal on_processed(data: PackedVector3Array)
+@export var beats_amount_scaler: float = 1.0
+
+signal on_processed(data: Array[SequenceNote])
 
 func filter_time(data: Vector3):
 	var beatDuration = 60.0/bpmManager.bpm /4.0
@@ -33,7 +35,8 @@ func start_processing(data: PackedVector3Array):
 	var data_array: Array = Array(data)
 	data_array = data_array.filter(filter_time)
 	
-	var group_size = (len(data_array) / bpmManager.amount_of_beats) 
+	var length = bpmManager.amount_of_beats * beats_amount_scaler
+	var group_size = (len(data_array) / length)
 	if group_size == 0:
 		printerr("not enought data received got: %d" % len(data_array))
 		return
@@ -42,7 +45,7 @@ func start_processing(data: PackedVector3Array):
 		groups.append(data_array.slice( i * group_size, (i+1) * group_size ) )
 
 	var beats = groups.map(reduce_to_average)
-	beats.resize(bpmManager.amount_of_beats)
+	beats.resize(length)
 	
 	for sample in beats:	
 		# clamp frequency to octave range closests note
@@ -58,24 +61,29 @@ func start_processing(data: PackedVector3Array):
 					closest = note
 			
 		sample.x = closest.id
-		sample.z = 1
 		result.push_back(sample)
+		
+	var sequence_notes: Array[SequenceNote] = []
+	for i in range(len(result)):
+		var current = result[i]
+		var last: SequenceNote = null
+		
+		if len(sequence_notes) > 0:
+			last = sequence_notes.back()
+		
+		if last == null or abs(last.note - current.x) > combine_threshold:
+			last = SequenceNote.new()
+			last.beat = round(i / beats_amount_scaler)
+			last.note = current.x
+			last.duration = round(1.0 / beats_amount_scaler)
+			last.velocity = current.y
+			sequence_notes.append(last)
+		else:
+			last.duration += round(1.0 / beats_amount_scaler)
 	
-	#for current in range(len(result)):
-		#if result[current].z == 0:
-			#continue
-		#
-		#var length = 0
-		#for index in range(current + 1, len(result)):
-			#if abs(result[current].x - result[index].x) < combineThreshold:
-				#length += 1
-				#result[index].y = 0
-				#result[index].z = 0
-			#else:
-				#break;
-		#
-		#result[current].z = length
+	for index in range(len(sequence_notes)):
+		print("beat: %d, note: %d, duration: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration])	
 	
-	
-	print("notes(%d) \n %s" % [len(result), result])
-	on_processed.emit(result)
+	var sequence = Sequence.new()
+	sequence.sequence = sequence_notes
+	on_processed.emit(sequence)

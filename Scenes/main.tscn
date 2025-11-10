@@ -446,7 +446,9 @@ bpmManager = NodePath("../../BPM")
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
-octaveRange = Vector2i(0, 10)
+combine_threshold = 0.0
+octaveRange = Vector2i(2, 8)
+beats_amount_scaler = 0.5
 
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 closed = true
@@ -487,8 +489,8 @@ instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
-combineThreshold = 1.0
-octaveRange = Vector2i(4, 6)
+combine_threshold = 0.0
+octaveRange = Vector2i(3, 10)
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 closed = true

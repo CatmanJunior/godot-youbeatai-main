@@ -11,8 +11,8 @@ class_name notePlayer
 @export var allow_key_input: bool = false
 @export_range(0, 1, 0.05) var gate: float = 0.5
 
-@export var songs: Array[PackedVector3Array] = []
-var cached_song: PackedVector3Array = []
+@export var songs: Array[Sequence] = []
+var cached_song: Sequence = null
 var current_layer: int = 0
 
 # demo code for sub bpm detection (8th,16th notes) 
@@ -68,27 +68,15 @@ func _process_midi_input(event: InputEventMIDI):
 
 
 func on_bpm():
-	var song: PackedVector3Array = get_song()
-	if len(song) == 0 or bpmManager.currentBeat >= len(song):
-		return
-
-	#var length = len(song)
-	var rms_value = song[bpmManager.currentBeat].y
-	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
-
-	# convert to value around 0-1
-	# capped becasue soundfont does not play well with higher values
-	log_value = min(1, pow(10, log_value / 10))
-
-	# gate quiet notes
-	if log_value <= gate or song[bpmManager.currentBeat].y == 0:
+	var song: Sequence = get_song()
+	if song == null or len(song.sequence) == 0 or bpmManager.currentBeat >= len(song.sequence):
 		return
 	
-	var current_note: Vector3 = song[bpmManager.currentBeat]
-	var beatDuration = (60.0/bpmManager.bpm /4.0) * 0.95
+	if bpmManager.currentBeat != 0:
+		return
 	
-	channel_note_on( get_time(), 0, round(current_note.x), log_value)
-	channel_note_off(get_time() + beatDuration * current_note.z, 0, round(current_note.x))
+	# queue song
+	queue_song(bpmManager.currentBeat, song)
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
@@ -98,7 +86,7 @@ func on_layer_remove_at(layer: int) -> void:
 	songs.remove_at(layer)
 	
 func on_add_layer_at(layer: int) -> void:
-	songs.insert(layer, PackedVector3Array())
+	songs.insert(layer, Sequence.new())
 
 #save [copy_song] into cache
 func on_song_copy(copy_song: int) -> void:
@@ -111,14 +99,38 @@ func on_paste_song(_layer: int) -> void:
 func on_song_clear() -> void:
 	songs[current_layer].clear()
 
-func set_song(data: PackedVector3Array) -> void:
+func set_song(data: Sequence) -> void:
 	songs[current_layer] = data
+	queue_song(bpmManager.currentBeat, data)
 
-func get_song() -> PackedVector3Array:
+func get_song() -> Sequence:
 	if current_layer >= len(songs):
-		return []
+		return null
 	
 	return songs[current_layer]
+
+func queue_song(start: int, song: Sequence):
+	note_off_all(get_time()) # clear all current notes
+	# queue song
+	for i in range(start, len(song.sequence), 1):
+		var note: SequenceNote = song.sequence[i]
+		var rms_value = note.velocity
+		var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
+
+		# convert to value around 0-1
+		# capped becasue soundfont does not play well with higher values
+		log_value = min(1, pow(10, log_value / 10))
+
+		# gate quiet notes
+		if log_value <= gate:
+			return
+		
+		var beatDuration = (60.0/bpmManager.bpm /4.0)
+		var start_time: float = float(note.beat) * beatDuration
+		var stop_time: float = start_time + float(note.duration) * beatDuration
+		print("%f - %f, %f" % [start_time, stop_time, beatDuration])
+		channel_note_on( get_time() + start_time, 0, round(note.note), log_value)
+		channel_note_off(get_time() + stop_time, 0, round(note.note))
 
 func play_note(note: Note, duration: float) -> void:
 	var t = get_time()

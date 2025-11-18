@@ -82,8 +82,8 @@ public static class Achievements
     {
         if (!useAchievements) return;
 
-        // node positions deltas
-        for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
+        // node positions deltas why??
+       // for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
 
         // if node state is locked make node disabled and make node have a locked icon
         for (int i = 0; i < nodes.Length; i++)

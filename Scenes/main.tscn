@@ -827,10 +827,10 @@ texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="Blocker" parent="UserInterface/ControlsGroup/DragAndDropButton2" instance=ExtResource("32_aa8k8")]
-offset_left = -427.0
-offset_top = 282.00003
-offset_right = -297.0
-offset_bottom = 412.00003
+offset_left = -421.00003
+offset_top = 286.00003
+offset_right = -331.00003
+offset_bottom = 411.00003
 
 [node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton2"]
 self_modulate = Color(1, 1, 1, 0)
@@ -880,10 +880,10 @@ texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="Blocker" parent="UserInterface/ControlsGroup/DragAndDropButton3" instance=ExtResource("32_aa8k8")]
-offset_left = -323.00003
-offset_top = 284.0
-offset_right = -213.00003
-offset_bottom = 409.0
+offset_left = -323.0
+offset_top = 287.00003
+offset_right = -223.0
+offset_bottom = 412.00003
 
 [node name="Button" type="Button" parent="UserInterface/ControlsGroup/DragAndDropButton3"]
 self_modulate = Color(1, 1, 1, 0)
@@ -983,7 +983,7 @@ texture_scale = 1.71
 [node name="Blocker" parent="UserInterface/ControlsGroup/PurpleSelectButton" instance=ExtResource("32_aa8k8")]
 offset_left = 8.0
 offset_top = 282.00003
-offset_right = 123.0
+offset_right = 108.0
 offset_bottom = 407.00003
 pivot_offset = Vector2(50, 35)
 
@@ -1344,10 +1344,10 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(35, 33)
 
 [node name="Blocker" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" instance=ExtResource("32_aa8k8")]
-offset_left = -82.00003
-offset_top = -1035.0
-offset_right = 107.99997
-offset_bottom = -875.0
+offset_left = -74.00001
+offset_top = -1042.0
+offset_right = 35.999992
+offset_bottom = -882.0
 scale = Vector2(0.7174814, 0.7174814)
 
 [node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="UserInterface/SwitchLayerButtons"]
@@ -1438,10 +1438,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Blocker" parent="UserInterface/LayerLoopToggle/Sprite" instance=ExtResource("32_aa8k8")]
-offset_left = 420.0
-offset_top = -340.00003
-offset_right = 545.0
-offset_bottom = -215.00003
+offset_left = 419.00003
+offset_top = -343.00003
+offset_right = 519.0
+offset_bottom = -218.00003
 scale = Vector2(0.7815966, 0.7815966)
 
 [node name="draganddropthing" type="Sprite2D" parent="UserInterface"]

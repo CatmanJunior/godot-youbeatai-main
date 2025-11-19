@@ -128,6 +128,9 @@ public static class Achievements
             {
                 var node = nodes[i];
                 var blocker = FindBlocker(node);
+                var worth = achievements[i].worth;
+                var useworth = worth != -1 && worth > 0;
+                var enoughworth = manager.progressBarValue > worth;
 
                 blocker.GuiInput += (inputEvent) =>
                 {
@@ -135,6 +138,7 @@ public static class Achievements
                     {
                         if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
                         {
+                            if (useworth && enoughworth) return;
                             if (manager.achievementspanel.Visible) CloseTooltip();
 
                             OpenTooltip(node);
@@ -146,7 +150,7 @@ public static class Achievements
 
             // disable some uit elements by default
             SetupDefaultUserInterfaceState();
-
+            GD.Print("done late ready true");
             doneLateReady = true;
         }
     }

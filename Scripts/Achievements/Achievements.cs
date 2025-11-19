@@ -83,7 +83,7 @@ public static class Achievements
         if (!useAchievements) return;
 
         // node positions deltas why??
-       // for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
+        //for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
 
         // if node state is locked make node disabled and make node have a locked icon
         for (int i = 0; i < nodes.Length; i++)
@@ -101,7 +101,8 @@ public static class Achievements
                 {
                     SetBlockerState(blocker, false);
                     manager.PlayExtraSFX(manager.achievement_sfx);
-                    result?.Invoke();
+                    result?.Invoke(); 
+                    manager.EmitSignal("OnAchievementDone", i);
                 }
                 else
                 {
@@ -112,6 +113,7 @@ public static class Achievements
                         if (manager.progressBarValue < 0) manager.progressBarValue = 0;
                         manager.PlayExtraSFX(manager.achievement_sfx);
                         result?.Invoke();
+                        manager.EmitSignal("OnAchievementDone", i);
                     }
                 }
             }

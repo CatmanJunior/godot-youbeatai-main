@@ -16,14 +16,12 @@ public partial class Blocker : Panel
     private void OnMouseEntered()
     {
         hovering = true;
-        GD.Print("Blocker hover start.");
     }
 
     private void OnMouseExited()
     {
         hovering = false;
         pressed = false;
-        GD.Print("Blocker hover stopped.");
     }
 
     private void OnGuiInput(InputEvent inputEvent)
@@ -32,13 +30,13 @@ public partial class Blocker : Panel
         {
             if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left && hovering)
             {
-                GD.Print("Blocker pressed.");
+            
                 pressed = true;
             }
 
             if (!mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
             {
-                GD.Print("Blocker released.");
+            
                 pressed = false;
             }
         }

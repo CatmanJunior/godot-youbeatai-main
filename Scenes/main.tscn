@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=65 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -46,6 +46,7 @@
 [ext_resource type="Script" uid="uid://r5hk4ixij08i" path="res://Scripts/PreviewExports.cs" id="43_nwwfm"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
+[ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -1344,10 +1345,11 @@ metadata/_edit_use_anchors_ = true
 position = Vector2(35, 33)
 
 [node name="Blocker" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" instance=ExtResource("32_aa8k8")]
-offset_left = -74.00001
-offset_top = -1042.0
-offset_right = 35.999992
-offset_bottom = -882.0
+top_level = false
+offset_left = -51.000004
+offset_top = -45.0
+offset_right = 58.999996
+offset_bottom = 115.0
 scale = Vector2(0.7174814, 0.7174814)
 
 [node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="UserInterface/SwitchLayerButtons"]
@@ -1590,28 +1592,6 @@ vertical_alignment = 1
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
-
-[node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869257, 0.7947603)
-bones/1/rotation = Quaternion(-0.3575469, -0.44765505, -0.72642505, 0.37956807)
-bones/2/position = Vector3(5.6829363e-10, 0.00522447, -1.0098351e-09)
-bones/2/rotation = Quaternion(0.16030091, 0.008637974, -0.46690783, 0.86961263)
-bones/4/rotation = Quaternion(0.6669496, 0.00024493184, 0.0005254397, 0.7451026)
-bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/9/position = Vector3(0.00529154, -0.0022284095, 0.0044968794)
-bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
-bones/10/position = Vector3(1.8759401e-10, 0.004205249, -2.699062e-10)
-bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
-bones/11/rotation = Quaternion(-0.004680262, -0.0028718056, -0.82185936, 0.569664)
-bones/13/position = Vector3(-0.0109679, 0.0030812805, 0.0112381)
-bones/13/rotation = Quaternion(-0.35828686, 0.44712996, 0.7267258, 0.3789129)
-bones/14/position = Vector3(-6.6628947e-10, 0.00522447, 8.150752e-10)
-bones/14/rotation = Quaternion(0.16030091, -0.008637771, 0.46690783, 0.8696127)
-bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
-bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
-bones/17/position = Vector3(1.7832646e-10, 0.0042052404, -1.5350124e-10)
-bones/18/rotation = Quaternion(-0.0010216191, 0.0006269256, 0.82169485, 0.56992644)
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)
@@ -2506,6 +2486,10 @@ z_index = -30
 scale = Vector2(12.747, 20)
 texture = ExtResource("22_wax6p")
 metadata/_edit_lock_ = true
+
+[node name="KlappyReaction" parent="." node_paths=PackedStringArray("manager", "achievment_panel") instance=ExtResource("47_s8vy0")]
+manager = NodePath("../Managers/Manager")
+achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]

@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var animation_tree = $model/AnimationTree
+@onready var animation_tree:AnimationTree = $model/AnimationTree
 
 var talking = false
 var beat_time = 0.0
@@ -43,9 +43,14 @@ func on_talking():
 	animation_tree.set("parameters/talkingTrigger/seek_request",0)
 	talking = true
 	get_tree().create_timer(0.7).timeout.connect(_on_timeout)
+	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED,_on_utterance_end)
 
 func _on_timeout():
 	talking = false
+
+func _on_utterance_end(_utterance:int):
+	talking = false
+	animation_tree.advance(1)
 
 # adjust animation speed to match bpm
 func on_bpm_changed(bpm:float):

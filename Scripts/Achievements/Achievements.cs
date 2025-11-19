@@ -15,12 +15,12 @@ public static class Achievements
 
     // nodes with blockers
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
-    
+
     // achievements connected to each node
     private static (bool condition, string tooltip, float worth, Action result)[] achievements =>
     [
         Achievement(
-            condition: ActiveBeatsPerRing(0) >= 4, 
+            condition: ActiveBeatsPerRing(0) >= 4,
             tooltip: "Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij.",
             result: () => { manager.SetRingVisibility(2, true); }
         ),
@@ -30,20 +30,20 @@ public static class Achievements
             result: () => { manager.SetRingVisibility(3, true); }
         ),
         Achievement(
-            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
+            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null,
             tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
             result: () => { manager.layerVoiceOver1.bigLine.Visible = true; }
         ),
         Achievement(
-            condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
+            condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null,
             tooltip: "Als je de paarse ring 🐦 op neemt kan je daarna hier nieuwe lagen toevoegen."
         ),
         Achievement(
-            condition: manager.addedLayer, 
+            condition: manager.addedLayer,
             tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
-            condition: manager.clapped, 
+            condition: manager.clapped,
             tooltip: "Door een keer in je handen te klappen. kan je hier energie punten ⚡ verdienen."
         )
     ];
@@ -56,10 +56,12 @@ public static class Achievements
     }
 
     // helper for default tuple values
-    static (bool condition, string tooltip, float worth, Action result) Achievement(string tooltip, float worth = -1, bool condition = true, Action result = null) => (condition, tooltip, worth, result);
+    static (bool condition, string tooltip, float worth, Action result) Achievement(string tooltip, float worth = -1,
+        bool condition = true, Action result = null) => (condition, tooltip, worth, result);
 
     public static void OnReady()
     {
+        manager.OnAllAchievementUnlocked += () => unlockAchievement();
         // hide blockers if tutorial, show if achievements
         foreach (var node in nodes)
         {
@@ -101,7 +103,7 @@ public static class Achievements
                 {
                     SetBlockerState(blocker, false);
                     manager.PlayExtraSFX(manager.achievement_sfx);
-                    result?.Invoke(); 
+                    result?.Invoke();
                     manager.EmitSignal("OnAchievementDone", i);
                 }
                 else
@@ -159,7 +161,15 @@ public static class Achievements
         };
     }
 
-    public static void SetBlockerState(Blocker blocker, bool enabled)
+    public static void unlockAchievement()
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            SetBlockerState(FindBlocker(nodes[i]), false);
+        }
+    }
+
+public static void SetBlockerState(Blocker blocker, bool enabled)
     {
         blocker.Visible = enabled;
         blocker.MouseFilter = enabled ? Control.MouseFilterEnum.Stop : Control.MouseFilterEnum.Ignore;

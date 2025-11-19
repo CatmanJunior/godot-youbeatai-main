@@ -16,4 +16,5 @@ public partial class Manager : Node
     [Signal] public delegate void OnAudioBankLoadedEventHandler(AudioBank bank);
     
     [Signal] public delegate void OnAchievementDoneEventHandler(int achievement);
+    [Signal] public delegate void OnAllAchievementUnlockedEventHandler();
 }

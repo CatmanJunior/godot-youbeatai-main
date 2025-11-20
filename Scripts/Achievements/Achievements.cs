@@ -43,8 +43,8 @@ public static class Achievements
             tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
-            condition: manager.clapped,
-            tooltip: "Door een keer in je handen te klappen. kan je hier energie punten ⚡ verdienen."
+            condition:manager.firstAudioPlayerRec.Stream != null || manager.secondAudioPlayerRec.Stream != null || manager.thirdAudioPlayerRec.Stream != null || manager.fourthAudioPlayerRec.Stream != null,
+            tooltip: "Door een kort hard geluid te maken neem je een sample op om jou instrument te veranderen."
         )
     ];
 

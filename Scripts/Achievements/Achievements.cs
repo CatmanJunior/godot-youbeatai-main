@@ -12,6 +12,8 @@ public static class Achievements
     static Manager manager => Manager.instance;
     public static bool useAchievements;
     private static bool doneLateReady = false;
+    static bool paused = false;
+    static SceneTreeTimer timer;
 
     // nodes with blockers
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
@@ -30,7 +32,7 @@ public static class Achievements
             result: () => { manager.SetRingVisibility(3, true); }
         ),
         Achievement(
-            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null,
+            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null && pauseBetweenSynthUnlock(),
             tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
             result: () => { manager.layerVoiceOver1.bigLine.Visible = true; }
         ),
@@ -53,6 +55,31 @@ public static class Achievements
         manager.SetRingVisibility(2, false);
         manager.SetRingVisibility(3, false);
         manager.layerVoiceOver1.bigLine.Visible = false;
+    }
+
+    static bool pauseBetweenSynthUnlock()
+    {
+        if (manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null)
+        {
+            if (timer == null)
+            {
+                GD.Print("create timer pausing");
+                timer = manager.GetTree().CreateTimer(3);
+                timer.Timeout += onTimeOut;
+            }
+           
+            if (paused)
+            {
+                return true;
+            }
+            
+        }
+        return false;
+    }
+
+    static void onTimeOut()
+    {
+        paused = true;
     }
 
     // helper for default tuple values
@@ -130,15 +157,15 @@ public static class Achievements
                 var blocker = FindBlocker(node);
                 var worth = achievements[i].worth;
                 var useworth = worth != -1 && worth > 0;
-                var enoughworth = manager.progressBarValue > worth;
+             
 
                 blocker.GuiInput += (inputEvent) =>
                 {
                     if (inputEvent is InputEventMouseButton mouseEvent)
                     {
                         if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                        {
-                            if (useworth && enoughworth) return;
+                        {   var enoughworth = manager.progressBarValue > worth;
+                            if (enoughworth) return;
                             if (manager.achievementspanel.Visible) CloseTooltip();
 
                             OpenTooltip(node);

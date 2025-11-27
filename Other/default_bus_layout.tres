@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=31 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=32 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -12,6 +12,9 @@ resource_name = "Distortion"
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_6n6ik"]
 resource_name = "Phaser"
 
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_xic54"]
+resource_name = "Chorus"
+
 [sub_resource type="AudioEffectDelay" id="AudioEffectDelay_6n6ik"]
 resource_name = "Delay"
 
@@ -20,6 +23,21 @@ resource_name = "Reverb"
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_5jwjk"]
 resource_name = "SpectrumAnalyzer"
+
+[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_se50o"]
+resource_name = "PitchShift"
+
+[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_se50o"]
+resource_name = "Distortion"
+
+[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_se50o"]
+resource_name = "Phaser"
+
+[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_se50o"]
+resource_name = "Delay"
+
+[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_4l2b1"]
+resource_name = "Reverb"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_6n6ik"]
 resource_name = "Reverb"
@@ -37,21 +55,6 @@ resource_name = "Phaser"
 resource_name = "Delay"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_se50o"]
-resource_name = "Reverb"
-
-[sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_se50o"]
-resource_name = "PitchShift"
-
-[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_se50o"]
-resource_name = "Distortion"
-
-[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_se50o"]
-resource_name = "Phaser"
-
-[sub_resource type="AudioEffectDelay" id="AudioEffectDelay_se50o"]
-resource_name = "Delay"
-
-[sub_resource type="AudioEffectReverb" id="AudioEffectReverb_4l2b1"]
 resource_name = "Reverb"
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_6n6ik"]
@@ -90,14 +93,14 @@ resource_name = "Distortion"
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_4ydx6"]
 resource_name = "Phaser"
 
+[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_6n6ik"]
+resource_name = "Chorus"
+
 [sub_resource type="AudioEffectDelay" id="AudioEffectDelay_4ydx6"]
 resource_name = "Delay"
 
 [sub_resource type="AudioEffectReverb" id="AudioEffectReverb_u8yxa"]
 resource_name = "Reverb"
-
-[sub_resource type="AudioEffectChorus" id="AudioEffectChorus_6n6ik"]
-resource_name = "Chorus"
 
 [resource]
 bus/0/volume_db = -4.25003
@@ -175,11 +178,11 @@ bus/9/effect/1/effect = SubResource("AudioEffectDistortion_4ydx6")
 bus/9/effect/1/enabled = false
 bus/9/effect/2/effect = SubResource("AudioEffectPhaser_4ydx6")
 bus/9/effect/2/enabled = false
-bus/9/effect/3/effect = SubResource("AudioEffectDelay_4ydx6")
+bus/9/effect/3/effect = SubResource("AudioEffectChorus_6n6ik")
 bus/9/effect/3/enabled = false
-bus/9/effect/4/effect = SubResource("AudioEffectReverb_u8yxa")
+bus/9/effect/4/effect = SubResource("AudioEffectDelay_4ydx6")
 bus/9/effect/4/enabled = false
-bus/9/effect/5/effect = SubResource("AudioEffectChorus_6n6ik")
+bus/9/effect/5/effect = SubResource("AudioEffectReverb_u8yxa")
 bus/9/effect/5/enabled = false
 bus/10/name = &"Green"
 bus/10/solo = false
@@ -193,17 +196,19 @@ bus/10/effect/1/effect = SubResource("AudioEffectDistortion_xic54")
 bus/10/effect/1/enabled = false
 bus/10/effect/2/effect = SubResource("AudioEffectPhaser_6n6ik")
 bus/10/effect/2/enabled = false
-bus/10/effect/3/effect = SubResource("AudioEffectDelay_6n6ik")
+bus/10/effect/3/effect = SubResource("AudioEffectChorus_xic54")
 bus/10/effect/3/enabled = false
-bus/10/effect/4/effect = SubResource("AudioEffectReverb_xic54")
+bus/10/effect/4/effect = SubResource("AudioEffectDelay_6n6ik")
 bus/10/effect/4/enabled = false
+bus/10/effect/5/effect = SubResource("AudioEffectReverb_xic54")
+bus/10/effect/5/enabled = false
 bus/11/name = &"Voice"
 bus/11/solo = false
 bus/11/mute = false
 bus/11/bypass_fx = false
 bus/11/volume_db = -0.2638178
 bus/11/send = &"SubMaster"
-bus/12/name = &"GreenVoice"
+bus/12/name = &"PurpleVoice"
 bus/12/solo = false
 bus/12/mute = false
 bus/12/bypass_fx = false
@@ -211,14 +216,22 @@ bus/12/volume_db = 0.0
 bus/12/send = &"Voice"
 bus/12/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_5jwjk")
 bus/12/effect/0/enabled = true
-bus/13/name = &"PurpleVoice"
+bus/13/name = &"Purple_alt"
 bus/13/solo = false
 bus/13/mute = false
 bus/13/bypass_fx = false
 bus/13/volume_db = 0.0
-bus/13/send = &"Voice"
-bus/13/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_5jwjk")
-bus/13/effect/0/enabled = true
+bus/13/send = &"PurpleVoice"
+bus/13/effect/0/effect = SubResource("AudioEffectPitchShift_se50o")
+bus/13/effect/0/enabled = false
+bus/13/effect/1/effect = SubResource("AudioEffectDistortion_se50o")
+bus/13/effect/1/enabled = false
+bus/13/effect/2/effect = SubResource("AudioEffectPhaser_se50o")
+bus/13/effect/2/enabled = false
+bus/13/effect/3/effect = SubResource("AudioEffectDelay_se50o")
+bus/13/effect/3/enabled = false
+bus/13/effect/4/effect = SubResource("AudioEffectReverb_4l2b1")
+bus/13/effect/4/enabled = false
 bus/14/name = &"SongVoice"
 bus/14/solo = false
 bus/14/mute = false
@@ -227,35 +240,27 @@ bus/14/volume_db = 0.0
 bus/14/send = &"SubMaster"
 bus/14/effect/0/effect = SubResource("AudioEffectReverb_6n6ik")
 bus/14/effect/0/enabled = true
-bus/15/name = &"Green_alt"
+bus/15/name = &"GreenVoice"
 bus/15/solo = false
 bus/15/mute = false
 bus/15/bypass_fx = false
 bus/15/volume_db = 0.0
 bus/15/send = &"Voice"
-bus/15/effect/0/effect = SubResource("AudioEffectPitchShift_u8yxa")
-bus/15/effect/0/enabled = false
-bus/15/effect/1/effect = SubResource("AudioEffectDistortion_u8yxa")
-bus/15/effect/1/enabled = false
-bus/15/effect/2/effect = SubResource("AudioEffectPhaser_u8yxa")
-bus/15/effect/2/enabled = false
-bus/15/effect/3/effect = SubResource("AudioEffectDelay_u8yxa")
-bus/15/effect/3/enabled = false
-bus/15/effect/4/effect = SubResource("AudioEffectReverb_se50o")
-bus/15/effect/4/enabled = false
-bus/16/name = &"Purple_alt"
+bus/15/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_5jwjk")
+bus/15/effect/0/enabled = true
+bus/16/name = &"Green_alt"
 bus/16/solo = false
 bus/16/mute = false
 bus/16/bypass_fx = false
 bus/16/volume_db = 0.0
-bus/16/send = &"Master"
-bus/16/effect/0/effect = SubResource("AudioEffectPitchShift_se50o")
+bus/16/send = &"GreenVoice"
+bus/16/effect/0/effect = SubResource("AudioEffectPitchShift_u8yxa")
 bus/16/effect/0/enabled = false
-bus/16/effect/1/effect = SubResource("AudioEffectDistortion_se50o")
+bus/16/effect/1/effect = SubResource("AudioEffectDistortion_u8yxa")
 bus/16/effect/1/enabled = false
-bus/16/effect/2/effect = SubResource("AudioEffectPhaser_se50o")
+bus/16/effect/2/effect = SubResource("AudioEffectPhaser_u8yxa")
 bus/16/effect/2/enabled = false
-bus/16/effect/3/effect = SubResource("AudioEffectDelay_se50o")
+bus/16/effect/3/effect = SubResource("AudioEffectDelay_u8yxa")
 bus/16/effect/3/enabled = false
-bus/16/effect/4/effect = SubResource("AudioEffectReverb_4l2b1")
+bus/16/effect/4/effect = SubResource("AudioEffectReverb_se50o")
 bus/16/effect/4/enabled = false

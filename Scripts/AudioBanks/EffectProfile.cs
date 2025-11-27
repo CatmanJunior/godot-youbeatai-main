@@ -7,7 +7,8 @@ public partial class EffectProfile : Resource
 	[Export] public float distortion_db	{get;set;}
 	[Export] public float phaser {get;set;}
 	[Export] public float delay {get;set;}
-	[Export] public float reverb {get;set;}
+	[Export] public float reverb { get; set; }
+	[Export] public bool chorus {get;set;}
 
 	public void Apply(int bus_index)
 	{
@@ -24,16 +25,18 @@ public partial class EffectProfile : Resource
 		if(this.phaser > 0)
 			phaser.RateHz = this.phaser;
 
-		// AudioEffectDelay delay = AudioServer.GetBusEffect(bus_index, 3) as AudioEffectDelay;
-		// AudioServer.SetBusEffectEnabled(bus_index, 3, this.delay > 0);
-		// if (this.delay > 0)
-		// {
-		//     delay.Tap1DelayMs = this.delay;
-		//     delay.Tap2DelayMs = this.delay * 2;
-		// }
+		AudioServer.SetBusEffectEnabled(bus_index, 3, this.chorus);
 
-		AudioEffectReverb reverb = AudioServer.GetBusEffect(bus_index, 4) as AudioEffectReverb;
-		AudioServer.SetBusEffectEnabled(bus_index, 4, this.reverb > 0);
+		AudioEffectDelay delay = AudioServer.GetBusEffect(bus_index, 4) as AudioEffectDelay;
+		AudioServer.SetBusEffectEnabled(bus_index, 4, this.delay > 0);
+		if (this.delay > 0)
+		{
+		    delay.Tap1DelayMs = this.delay;
+		    delay.Tap2DelayMs = this.delay * 2;
+		}
+
+		AudioEffectReverb reverb = AudioServer.GetBusEffect(bus_index, 5) as AudioEffectReverb;
+		AudioServer.SetBusEffectEnabled(bus_index, 5, this.reverb > 0);
 		if(this.reverb > 0)
 			reverb.RoomSize = this.reverb;
 	}

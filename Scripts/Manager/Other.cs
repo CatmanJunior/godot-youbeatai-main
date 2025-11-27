@@ -189,7 +189,7 @@ public partial class Manager : Node
 	{
 		var busindex = AudioServer.GetBusIndex(busName);
 		var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
-		var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
+        var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
 		var volume = magnitude.Length();
 		return volume * 30f;
 	}

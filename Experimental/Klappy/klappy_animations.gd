@@ -1,14 +1,18 @@
 extends Node3D
 
-@onready var animation_tree = $model/AnimationTree
+@onready var animation_tree:AnimationTree = $model/AnimationTree
 
+var talking = false
 var beat_time = 0.0
+@export var manager:Manager
 
 func _ready():
 	# set animation to end to prevent playing on start
 	animation_tree.set("parameters/ClapTrigger/seek_request", 10000.0)
 	animation_tree.set("parameters/StampTrigger/seek_request", 10000.0)
-	
+	animation_tree.set("parameters/talkingTrigger/seek_request", 10000.0)
+	if manager != null:
+		manager.OnUtteranceEnd.connect(_on_utterance_end)
 	# default speed for 120 bpm
 	if beat_time == 0:
 		on_bpm_changed(120.0)
@@ -21,6 +25,12 @@ func _input(event):
 		if event.keycode == KEY_SPACE:
 			on_clap()
 			on_stamp()
+			on_talking()
+
+func _process(_delta: float) -> void:
+	if talking: return
+	if DisplayServer.tts_is_speaking():
+			on_talking()
 
 # trigger clap animation by setting time to 0.0
 func on_clap():
@@ -30,6 +40,19 @@ func on_clap():
 # trigger stamp animation by setting time to 0.0
 func on_stamp():
 	animation_tree.set("parameters/StampTrigger/seek_request", 0)
+
+func on_talking():
+	animation_tree.set("parameters/talkingTrigger/seek_request",0)
+	talking = true
+	get_tree().create_timer(0.7).timeout.connect(_on_timeout)
+	
+
+func _on_timeout():
+	talking = false
+
+func _on_utterance_end(_utterance:int):
+	talking = false
+	animation_tree.advance(1)
 
 # adjust animation speed to match bpm
 func on_bpm_changed(bpm:float):

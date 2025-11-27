@@ -6,12 +6,15 @@
 bg_color = Color(0.1764706, 0.1764706, 0.1764706, 1)
 
 [node name="Blocker" type="Panel"]
+self_modulate = Color(1, 1, 1, 0)
 top_level = true
 z_index = 8
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
+offset_left = -43.0
+offset_top = -36.0
+offset_right = 57.0
+offset_bottom = 64.0
+rotation = -0.48694685
+pivot_offset = Vector2(35, 50)
 mouse_force_pass_scroll_events = false
 mouse_default_cursor_shape = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6mouw")

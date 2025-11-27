@@ -6,7 +6,9 @@ var instruction_label:Label
 func _ready() -> void:
 	assert(manager!= null,"manger not found")
 	manager.OnAchievementDone.connect(_on_achievement_done)
+	manager.OnUtteranceEnd.connect(_on_utterance_end)
 	_get_insrtuction_label()
+
 
 func _on_achievement_done(i):
 	match i:
@@ -26,14 +28,18 @@ func _fill_instruction_label(_name:String):
 	_start_tts(message_name)
 
 func _achievement_panel_visibility(_utterance_id:int):
+	print("panel visibility yay")
 	achievment_panel.visible = !achievment_panel.visible
+
 
 func _start_tts(message:String):
 	var voices = DisplayServer.tts_get_voices_for_language("nl")
 	if(voices.size() == 0): voices = DisplayServer.tts_get_voices_for_language("en")
 	if(DisplayServer.tts_is_speaking()):DisplayServer.tts_stop()
 	DisplayServer.tts_speak(message,voices[0],100)
-	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED,_achievement_panel_visibility)
+
+func _on_utterance_end(_utterance):
+	achievment_panel.visible = false
 
 func _get_insrtuction_label():
 	for c in achievment_panel.get_children():

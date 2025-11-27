@@ -29,6 +29,12 @@ public partial class Manager : Node
 		Achievements.OnReady();
 		OnReadyMixing();
 		UpdateLayerButtonsUserInterfaceDelayed();
+		DisplayServer.TtsSetUtteranceCallback(DisplayServer.TtsUtteranceEvent.Ended, new Callable(this,nameof(UtteranceEnd)));
+	}
+
+	private void UtteranceEnd(int utterancId)
+	{
+		EmitSignal("OnUtteranceEnd", utterancId);
 	}
 
 	public override void _Process(double delta)

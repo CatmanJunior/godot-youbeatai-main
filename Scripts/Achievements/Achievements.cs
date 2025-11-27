@@ -155,8 +155,8 @@ public static class Achievements
             {
                 var node = nodes[i];
                 var blocker = FindBlocker(node);
-                var worth = achievements[i].worth;
-                var useworth = worth != -1 && worth > 0;
+              
+               
              
 
                 blocker.GuiInput += (inputEvent) =>
@@ -164,8 +164,9 @@ public static class Achievements
                     if (inputEvent is InputEventMouseButton mouseEvent)
                     {
                         if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                        {   var enoughworth = manager.progressBarValue > worth;
-                            if (enoughworth) return;
+                        {   
+                         
+                           if (!allowedToSpeak(blocker)) return;
                             if (manager.achievementspanel.Visible) CloseTooltip();
 
                             OpenTooltip(node);
@@ -180,6 +181,30 @@ public static class Achievements
             GD.Print("done late ready true");
             doneLateReady = true;
         }
+    }
+
+    private static bool allowedToSpeak(Blocker _blocker)
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+           
+            var node = nodes[i];
+            var blocker = FindBlocker(node);
+            var worth = achievements[i].worth;
+            var useworth = worth != -1 && worth > 0;
+            var enoughworth = manager.progressBarValue > worth;
+            if (blocker == _blocker)
+            {
+                if (useworth && enoughworth)
+                {
+                    GD.Print(_blocker.Name);
+                    GD.Print("Not allowed to speak");
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public static void StartLoopToCheckIfTooltipCanClose()

@@ -17,4 +17,6 @@ public partial class Manager : Node
     
     [Signal] public delegate void OnAchievementDoneEventHandler(int achievement);
     [Signal] public delegate void OnAllAchievementUnlockedEventHandler();
+    
+    [Signal] public delegate void OnUtteranceEndEventHandler();
 }

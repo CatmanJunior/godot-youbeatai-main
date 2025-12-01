@@ -1,4 +1,6 @@
 using System;
+using System.Globalization;
+using System.Text.RegularExpressions;
 using Godot;
 
 [GlobalClass]
@@ -7,10 +9,10 @@ public partial class Manager : Node
 	public static Manager instance = null;
 
 	public override void _ExitTree()
-    {
+	{
 		Achievements.Reset();
-        if (instance == this) instance = null;
-    }
+		if (instance == this) instance = null;
+	}
 
 	public override void _Ready()
 	{
@@ -53,7 +55,7 @@ public partial class Manager : Node
 		{
 			SetEntireInterfaceVisibility(true);
 			SetCopyPasteClearButtonsActive(false);
-        	achievementspanel.Visible = false;
+			achievementspanel.Visible = false;
 			interfaceSetToDefaultState = true;
 		}
 
@@ -182,5 +184,22 @@ public partial class Manager : Node
 		songModeBackPanel.Visible = layerLoopToggle.ButtonPressed;
 
 		OnUpdateMixing((float)delta);
+	}
+
+	public string Text_without_emoticons(string message)
+	{
+		var without_emoticons = (string input) =>
+		{
+			var output = "";
+			var stringInfo = new StringInfo(input);
+			for (int i = 0; i < stringInfo.LengthInTextElements; i++)
+			{
+				string element = stringInfo.SubstringByTextElements(i, 1);
+				if (!Regex.IsMatch(element, @"\p{Cs}|\p{So}|\p{Sk}|\p{Mn}|\u200D")) output += element;
+			}
+
+			return output;
+		};
+		return without_emoticons(message);
 	}
 }

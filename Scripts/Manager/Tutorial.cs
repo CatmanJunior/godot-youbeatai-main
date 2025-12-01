@@ -698,11 +698,11 @@ public static class Tutorial
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         if (_increasedSpeed)
         {
-            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
         }
         else
         {
-            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
         }
     }
 

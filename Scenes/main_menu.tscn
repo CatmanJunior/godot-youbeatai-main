@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://88rxelg1bo3"]
+[gd_scene load_steps=6 format=3 uid="uid://88rxelg1bo3"]
 
 [ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
 [ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_ce3w2"]
+[ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
 
 [node name="scene" type="Node2D"]
 
-[node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton")]
+[node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton", "ProButton")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -22,6 +24,7 @@ scale = Vector2(2.14354, 2.14354)
 script = ExtResource("1_48xlc")
 freeButton = NodePath("SpelenButton")
 tutorialButton = NodePath("TutorialButton")
+ProButton = NodePath("ProButton")
 
 [node name="TitleLabel" type="Label" parent="MainMenuPanel"]
 layout_mode = 1
@@ -37,35 +40,92 @@ offset_bottom = -28.6071
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_1ehe0")
-theme_override_font_sizes/font_size = 40
-text = "YouBeatAI"
+theme_override_font_sizes/font_size = 38
+text = "Klappy de Ritme Robot"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="SpelenButton" type="Button" parent="MainMenuPanel"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 135.39288
-offset_right = 348.0
-offset_bottom = 174.39288
-focus_mode = 0
-text = "▶️ Vrij Spelen"
-
 [node name="TutorialButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
-offset_left = 50.0
-offset_top = 186.39285
-offset_right = 348.0
-offset_bottom = 225.39285
+offset_left = 49.917427
+offset_top = 135.29024
+offset_right = 347.91742
+offset_bottom = 174.29024
 focus_mode = 0
-text = "❔Tutorial Spelen"
+text = "Uitleg ❓"
+
+[node name="SpelenButton" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_left = 49.917427
+offset_top = 187.07373
+offset_right = 347.91742
+offset_bottom = 226.07373
+focus_mode = 0
+text = "Muziek maken 🎶"
+
+[node name="ProButton" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_left = 49.917427
+offset_top = 236.52463
+offset_right = 347.91742
+offset_bottom = 275.52463
+focus_mode = 0
+text = "Pro 👑"
 
 [node name="PermissionButton" type="Button" parent="MainMenuPanel"]
+visible = false
 layout_mode = 0
 offset_left = 50.0
 offset_top = 610.60724
 offset_right = 348.0
 offset_bottom = 649.60724
 focus_mode = 0
+disabled = true
 text = "🎙️ Microfoon Toegang Verlenen"
 script = ExtResource("3_1ehe0")
+
+[node name="Robot" parent="MainMenuPanel" instance=ExtResource("4_ce3w2")]
+position = Vector2(444.12515, 242.58937)
+scale = Vector2(0.5, 0.5)
+
+[node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0"]
+visible = false
+
+[node name="Skeleton3D" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
+bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
+
+[node name="Tutorial explanition" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_left = 361.08496
+offset_top = 140.88844
+offset_right = 881.08496
+offset_bottom = 660.8884
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("5_n45e2")
+
+[node name="Muziek explanation" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_left = 361.085
+offset_top = 195.47105
+offset_right = 881.08496
+offset_bottom = 715.47107
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("5_n45e2")
+
+[node name="Pro Explanation" type="Button" parent="MainMenuPanel"]
+layout_mode = 0
+offset_left = 361.085
+offset_top = 242.58937
+offset_right = 881.08496
+offset_bottom = 762.58936
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("5_n45e2")
+
+[connection signal="pressed" from="MainMenuPanel/Tutorial explanition" to="MainMenuPanel" method="OnTutorialExplanitionPressed"]
+[connection signal="pressed" from="MainMenuPanel/Muziek explanation" to="MainMenuPanel" method="OnMuziekExplanation"]
+[connection signal="pressed" from="MainMenuPanel/Pro Explanation" to="MainMenuPanel" method="OnProExplanationa"]
+
+[editable path="MainMenuPanel/Robot"]
+[editable path="MainMenuPanel/Robot/AchievementsPanel"]
+[editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model"]

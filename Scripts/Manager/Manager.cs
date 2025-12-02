@@ -202,4 +202,9 @@ public partial class Manager : Node
 		};
 		return without_emoticons(message);
 	}
+	
+	public bool tutorialActivated()
+	{
+		return Tutorial.useTutorial;
+	}
 }

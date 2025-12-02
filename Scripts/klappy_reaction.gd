@@ -6,8 +6,9 @@ var instruction_label:Label
 
 func _ready() -> void:
 	assert(manager!= null,"manger not found")
-	manager.OnAchievementDone.connect(_on_achievement_done)
-	manager.OnUtteranceEnd.connect(_on_utterance_end)
+	if not manager.tutorialActivated():
+		manager.OnAchievementDone.connect(_on_achievement_done)
+		manager.OnUtteranceEnd.connect(_on_utterance_end)
 	_get_insrtuction_label()
 
 

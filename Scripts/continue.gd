@@ -7,6 +7,7 @@ signal animation_stop
 func _enter_tree()-> void:
 	animation_play.connect(play)
 	animation_stop.connect(stop)
+
 func play() -> void:
 	anim.play(animation.resource_name)
 

@@ -1,0 +1,98 @@
+[gd_scene load_steps=10 format=3 uid="uid://bafxjikk2rjnh"]
+
+[ext_resource type="Script" uid="uid://ciy7dpu6yttwv" path="res://Scenes/klappy_respons_bubble.gd" id="1_hgimk"]
+[ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/continue.gd" id="2_3cvs7"]
+[ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_rvsyq"]
+
+[sub_resource type="Theme" id="Theme_3h2yf"]
+/styles/background = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0twqk"]
+bg_color = Color(3.281457, 3.281457, 3.281457, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m4jan"]
+bg_color = Color(0.8509804, 0.8509804, 0.8509804, 0.63529414)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gasai"]
+bg_color = Color(0.70796615, 0.7079666, 0.7079665, 0.85490197)
+
+[sub_resource type="Animation" id="Animation_dcbcy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hc54m"]
+_data = {
+&"RESET": SubResource("Animation_dcbcy"),
+&"continue_button_pulse": ExtResource("3_rvsyq")
+}
+
+[node name="Klappy respons bubble" type="Node2D"]
+script = ExtResource("1_hgimk")
+
+[node name="Panel" type="Panel" parent="."]
+visible = false
+offset_right = 279.0
+offset_bottom = 149.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.5
+offset_top = -48.5
+offset_right = 136.5
+offset_bottom = 43.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+
+[node name="Continue" type="Button" parent="Panel" node_paths=PackedStringArray("anim")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -53.0
+offset_top = -30.5
+offset_right = 54.502502
+offset_bottom = -4.2462616
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(53, 13)
+theme = SubResource("Theme_3h2yf")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_0twqk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_m4jan")
+theme_override_styles/hover = SubResource("StyleBoxFlat_gasai")
+action_mode = 0
+text = " Doorgaan ✅ "
+script = ExtResource("2_3cvs7")
+anim = NodePath("AnimationPlayer")
+animation = ExtResource("3_rvsyq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Panel/Continue"]
+libraries = {
+&"": SubResource("AnimationLibrary_hc54m")
+}
+
+[connection signal="pressed" from="Panel/Continue" to="." method="_on_continue_pressed"]

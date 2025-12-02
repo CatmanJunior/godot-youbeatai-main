@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://88rxelg1bo3"]
+[gd_scene load_steps=7 format=3 uid="uid://88rxelg1bo3"]
 
 [ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
 [ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_ce3w2"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
+[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="6_opfnp"]
 
 [node name="scene" type="Node2D"]
 
-[node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton", "ProButton")]
+[node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton", "ProButton", "KlappyResponse")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -25,6 +26,7 @@ script = ExtResource("1_48xlc")
 freeButton = NodePath("SpelenButton")
 tutorialButton = NodePath("TutorialButton")
 ProButton = NodePath("ProButton")
+KlappyResponse = NodePath("../Klappy respons bubble")
 
 [node name="TitleLabel" type="Label" parent="MainMenuPanel"]
 layout_mode = 1
@@ -47,29 +49,43 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TutorialButton" type="Button" parent="MainMenuPanel"]
-layout_mode = 0
-offset_left = 49.917427
-offset_top = 135.29024
-offset_right = 347.91742
-offset_bottom = 174.29024
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.70978
+offset_top = -24.506653
+offset_right = 72.29022
+offset_bottom = -0.50665283
+grow_horizontal = 2
+grow_vertical = 2
 focus_mode = 0
 text = "Uitleg ❓"
 
 [node name="SpelenButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
-offset_left = 49.917427
-offset_top = 187.07373
-offset_right = 347.91742
-offset_bottom = 226.07373
+offset_left = 135.29022
+offset_top = 166.54694
+offset_right = 272.29022
+offset_bottom = 190.54694
 focus_mode = 0
 text = "Muziek maken 🎶"
 
 [node name="ProButton" type="Button" parent="MainMenuPanel"]
-layout_mode = 0
-offset_left = 49.917427
-offset_top = 236.52463
-offset_right = 347.91742
-offset_bottom = 275.52463
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -64.70978
+offset_top = -90.99994
+offset_right = 72.29022
+offset_bottom = -66.99994
+grow_horizontal = 2
+grow_vertical = 0
 focus_mode = 0
 text = "Pro 👑"
 
@@ -86,7 +102,7 @@ text = "🎙️ Microfoon Toegang Verlenen"
 script = ExtResource("3_1ehe0")
 
 [node name="Robot" parent="MainMenuPanel" instance=ExtResource("4_ce3w2")]
-position = Vector2(444.12515, 242.58937)
+position = Vector2(399.80594, 242.58937)
 scale = Vector2(0.5, 0.5)
 
 [node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0"]
@@ -125,9 +141,13 @@ offset_bottom = 762.58936
 scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
 
+[node name="Klappy respons bubble" parent="." instance=ExtResource("6_opfnp")]
+position = Vector2(939, 263)
+
 [connection signal="pressed" from="MainMenuPanel/Tutorial explanition" to="MainMenuPanel" method="OnTutorialExplanitionPressed"]
 [connection signal="pressed" from="MainMenuPanel/Muziek explanation" to="MainMenuPanel" method="OnMuziekExplanation"]
 [connection signal="pressed" from="MainMenuPanel/Pro Explanation" to="MainMenuPanel" method="OnProExplanationa"]
+[connection signal="continue_pressed" from="Klappy respons bubble" to="MainMenuPanel" method="_on_klappy_respons_bubble_continue_pressed"]
 
 [editable path="MainMenuPanel/Robot"]
 [editable path="MainMenuPanel/Robot/AchievementsPanel"]

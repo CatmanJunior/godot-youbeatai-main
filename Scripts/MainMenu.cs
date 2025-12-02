@@ -18,22 +18,7 @@ public partial class MainMenu : Node
 		Free,
 		Pro
 	}
-
-	// public void OnTutorialExplanitionPressed()
-	// {
-	// 	//TODO Add the pop up and make the display server speak the sentence from the string TutorialExplanationString
-	// 	GD.Print("EXPLAINNNNNNNN");
-	// }
-	//
-	// public void OnMuziekExplanation()
-	// {
-	// 	GD.Print("EXPLAINNNNNNNN");
-	// }
-	//
-	// public void OnProExplanationa()
-	// {
-	// 	GD.Print("EXPLAINNNNNNNN");
-	// }
+	
 
 	public void _on_klappy_respons_bubble_continue_pressed()
 	{
@@ -64,7 +49,6 @@ public partial class MainMenu : Node
 		freeButton.Pressed += () =>
 		{
 			KlappySpeak("Dit is de standaard game modus, waarbij je een leuk liedje mag gaan maken en daarbij nog toffe dingen kan unlocken");
-			// load sound bank selection scene
 			gameType = gameTypes.Free;
 		};
 

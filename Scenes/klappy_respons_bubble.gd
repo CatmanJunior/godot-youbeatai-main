@@ -1,5 +1,4 @@
 extends Node2D
-class_name klappy_response
 @onready var response_label:Label = $Panel/Label
 @onready var response_panel:Panel = $Panel
 @onready var continue_button:Button = $Panel/Continue

@@ -15,7 +15,7 @@ func _on_achievement_done(i):
 	match i:
 		0:  _fill_instruction_label("De 📣 Snare heeft een helder geluid, die wordt meestal op de lijntjes gezet.")
 		1:  _fill_instruction_label("Dit korte ⌚ Hi-hat geluid laat de boel lekker swingen, zet er maar eens een hele hoop neer")
-		2:  _fill_instruction_label("Met dit hoge 🐦 Synth, kan je het lekker druk maken, maar ook even een kort geluidje is die heel goed in.")
+		2:  _fill_instruction_label("Met de hoge 🐦 Synth, kan je het lekker druk maken, maar ook even een kort geluidje is die heel goed in.")
 		3:  _fill_instruction_label("Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven")
 		4:  _fill_instruction_label("Oke nu gaat het echte werk beginnen met de 🎵 Song Mode, alle rondjes worden achter elkaar afgespeeld, en met de microfoon kan je een hele lange opname maken")
 		5:  _fill_instruction_label("Wat een leuke sample, daar krijg ik energie ⚡ van !")

@@ -29,7 +29,8 @@ func _fill_instruction_label(_name:String):
 
 func _achievement_panel_visibility(_utterance_id:int):
 	print("panel visibility yay")
-	achievment_panel.visible = !achievment_panel.visible
+	if not achievment_panel.visible :
+		achievment_panel.visible = true
 
 
 

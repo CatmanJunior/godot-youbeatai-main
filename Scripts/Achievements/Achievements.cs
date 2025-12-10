@@ -12,7 +12,7 @@ public static class Achievements
     static Manager manager => Manager.instance;
     public static bool useAchievements;
     private static bool doneLateReady = false;
-    static bool paused = false;
+    static bool paused = true;
     static SceneTreeTimer timer;
 
     // nodes with blockers
@@ -68,7 +68,7 @@ public static class Achievements
                 timer.Timeout += onTimeOut;
             }
            
-            if (paused)
+            if (!paused)
             {
                 return true;
             }
@@ -79,7 +79,7 @@ public static class Achievements
 
     static void onTimeOut()
     {
-        paused = true;
+        paused = false;
     }
 
     // helper for default tuple values

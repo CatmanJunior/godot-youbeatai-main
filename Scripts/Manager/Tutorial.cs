@@ -516,6 +516,7 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
+            GD.Print("tutorial activated");
             manager.pointer.Visible = false;
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
@@ -608,6 +609,7 @@ public static class Tutorial
 
     private static void _nextLine()
     {
+        GD.Print(BpmManager.instance.bpm);
         outcome?.Invoke();
         if (tutorial_level >= tutorialSteps.Length) return;
         tutorial_level++;
@@ -698,7 +700,8 @@ public static class Tutorial
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         if (_increasedSpeed)
         {
-            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
+            GD.Print(("Increase the speed"));
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 2.5f);
         }
         else
         {

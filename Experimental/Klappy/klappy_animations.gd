@@ -18,6 +18,7 @@ func _ready():
 		manager.OnUtteranceEnd.connect(_on_utterance_end)
 	else:
 		DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED,_on_utterance_end)
+		DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_STARTED,_on_callback_)
 	# default speed for 120 bpm
 	if beat_time == 0:
 		on_bpm_changed(120.0)
@@ -25,20 +26,12 @@ func _ready():
 func init():
 	animation_tree = $model/AnimationTree
 
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_SPACE:
-			on_clap()
-			on_stamp()
-			on_talking()
-
-func _process(_delta: float) -> void:
-	if DisplayServer.tts_is_speaking():
-		if !first_talk:
-			talking = true
-			first_talk = true
-			animation_tree.set("parameters/talkingTrigger/seek_request",0)
-			print("first talk")
+#func _input(event):
+	#if event is InputEventKey and event.pressed:
+		#if event.keycode == KEY_SPACE:
+			#on_clap()
+			#on_stamp()
+			#on_talking()
 
 
 # trigger clap animation by setting time to 0.0
@@ -50,6 +43,13 @@ func on_clap():
 func on_stamp():
 	animation_tree.set("parameters/StampTrigger/seek_request", 0)
 
+func _on_callback_(_i:int):
+	if !first_talk:
+			talking = true
+			first_talk = true
+			animation_tree.set("parameters/talkingTrigger/seek_request",0)
+			print("first talk")
+
 func on_talking():
 	if !talking: 
 		return
@@ -59,6 +59,7 @@ func _on_utterance_end(_utterance:int):
 	print("END")
 	talking = false
 	first_talk = false
+	animation_tree.advance(100)
 
 # adjust animation speed to match bpm
 func on_bpm_changed(bpm:float):

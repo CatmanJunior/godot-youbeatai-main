@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ie3tb"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="3_a7rio"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="4_saqfl"]
-[ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scenes/Klappy_soundbank_screen.gd" id="5_pd2wx"]
+[ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy_soundbank_screen.gd" id="5_pd2wx"]
 
 [node name="scene" type="Node2D"]
 
@@ -610,7 +610,7 @@ visible = false
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("5_pd2wx")
-message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies maar een aantal emoties en themas."
+message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
 
 [editable path="Robot"]
 [editable path="Robot/AchievementsPanel"]

@@ -20,6 +20,7 @@ func _on_achievement_done(i):
 		3:  _fill_instruction_label("Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven")
 		4:  _fill_instruction_label("Oke nu gaat het echte werk beginnen met de 🎵 Song Mode, alle rondjes worden achter elkaar afgespeeld, en met de microfoon kan je een hele lange opname maken")
 		5:  _fill_instruction_label("Wat een leuke sample, daar krijg ik energie ⚡ van !")
+		6: _fill_instruction_label( "Haha leuk! sleep nu de vingerafdruk naar de 🎤 op de mixer dan hoor je jou sample in de beat ring")
 
 func _fill_instruction_label(_name:String):
 	if instruction_label == null : push_error("Label not found")

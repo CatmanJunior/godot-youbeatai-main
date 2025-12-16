@@ -46,11 +46,11 @@ public static class Achievements
         ),
         Achievement(
             condition:manager.firstAudioPlayerRec.Stream != null, 
-            tooltip: "Door een kort hard geluid te maken neem je een sample op om jou instrument te veranderen."
+            tooltip: "Een kadotje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
         ),
         Achievement(
             condition:manager.secondAudioPlayerRec.Stream != null, 
-            tooltip: "Door een kort hard geluid te maken neem je een sample op om jou instrument te veranderen."
+            tooltip: "Kan je hier voor mij een kort gek geluid opnemen?"
         )
         
     ];

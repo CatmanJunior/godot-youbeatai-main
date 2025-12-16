@@ -45,9 +45,14 @@ public static class Achievements
             tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
-            condition:manager.firstAudioPlayerRec.Stream != null || manager.secondAudioPlayerRec.Stream != null || manager.thirdAudioPlayerRec.Stream != null || manager.fourthAudioPlayerRec.Stream != null,
+            condition:manager.firstAudioPlayerRec.Stream != null, 
+            tooltip: "Door een kort hard geluid te maken neem je een sample op om jou instrument te veranderen."
+        ),
+        Achievement(
+            condition:manager.secondAudioPlayerRec.Stream != null, 
             tooltip: "Door een kort hard geluid te maken neem je een sample op om jou instrument te veranderen."
         )
+        
     ];
 
     static void SetupDefaultUserInterfaceState()
@@ -88,7 +93,6 @@ public static class Achievements
 
     public static void OnReady()
     {
-        manager.OnAllAchievementUnlocked += () => unlockAchievement();
         // hide blockers if tutorial, show if achievements
         foreach (var node in nodes)
         {

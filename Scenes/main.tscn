@@ -1,4 +1,4 @@
-[gd_scene load_steps=69 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=70 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -40,6 +40,7 @@
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="31_kwxat"]
+[ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scenes/midi_helper.gd" id="31_v2nl5"]
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
@@ -543,6 +544,9 @@ fill_mode = 4
 texture_progress = ExtResource("19_mlc13")
 tint_progress = Color(0.516666, 0, 1, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="MidiHelper" type="Node" parent="Managers"]
+script = ExtResource("31_v2nl5")
 
 [node name="UserInterface" type="Control" parent="."]
 z_as_relative = false

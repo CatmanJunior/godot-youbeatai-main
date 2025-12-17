@@ -12,15 +12,17 @@ public static class Achievements
     static Manager manager => Manager.instance;
     public static bool useAchievements;
     private static bool doneLateReady = false;
+    static bool paused = true;
+    static SceneTreeTimer timer;
 
     // nodes with blockers
     private static Node2D[] nodes => manager.NodesThatCanBeUnlocked;
-    
+
     // achievements connected to each node
     private static (bool condition, string tooltip, float worth, Action result)[] achievements =>
     [
         Achievement(
-            condition: ActiveBeatsPerRing(0) >= 4, 
+            condition: ActiveBeatsPerRing(0) >= 4,
             tooltip: "Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij.",
             result: () => { manager.SetRingVisibility(2, true); }
         ),
@@ -30,22 +32,27 @@ public static class Achievements
             result: () => { manager.SetRingVisibility(3, true); }
         ),
         Achievement(
-            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null, 
+            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null && pauseBetweenSynthUnlock(),
             tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
             result: () => { manager.layerVoiceOver1.bigLine.Visible = true; }
         ),
         Achievement(
-            condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null, 
+            condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null,
             tooltip: "Als je de paarse ring 🐦 op neemt kan je daarna hier nieuwe lagen toevoegen."
         ),
         Achievement(
-            condition: manager.addedLayer, 
+            condition: manager.addedLayer,
             tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
-            condition: manager.clapped, 
-            tooltip: "Door een keer in je handen te klappen. kan je hier energie punten ⚡ verdienen."
+            condition:manager.firstAudioPlayerRec.Stream != null, 
+            tooltip: "Een kadotje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
+        ),
+        Achievement(
+            condition:manager.secondAudioPlayerRec.Stream != null, 
+            tooltip: "Kan je hier voor mij een kort gek geluid opnemen?"
         )
+        
     ];
 
     static void SetupDefaultUserInterfaceState()
@@ -55,8 +62,34 @@ public static class Achievements
         manager.layerVoiceOver1.bigLine.Visible = false;
     }
 
+    static bool pauseBetweenSynthUnlock()
+    {
+        if (manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null)
+        {
+            if (timer == null)
+            {
+                GD.Print("create timer pausing");
+                timer = manager.GetTree().CreateTimer(3);
+                timer.Timeout += onTimeOut;
+            }
+           
+            if (!paused)
+            {
+                return true;
+            }
+            
+        }
+        return false;
+    }
+
+    static void onTimeOut()
+    {
+        paused = false;
+    }
+
     // helper for default tuple values
-    static (bool condition, string tooltip, float worth, Action result) Achievement(string tooltip, float worth = -1, bool condition = true, Action result = null) => (condition, tooltip, worth, result);
+    static (bool condition, string tooltip, float worth, Action result) Achievement(string tooltip, float worth = -1,
+        bool condition = true, Action result = null) => (condition, tooltip, worth, result);
 
     public static void OnReady()
     {
@@ -82,8 +115,8 @@ public static class Achievements
     {
         if (!useAchievements) return;
 
-        // node positions deltas
-        for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
+        // node positions deltas why??
+        //for (int i = 0; i < nodes.Length; i++) FindBlocker(nodes[i]).GlobalPosition = WorldToUI(nodes[i].GlobalPosition) - FindBlocker(nodes[i]).Size / 2 * FindBlocker(nodes[i]).Scale;
 
         // if node state is locked make node disabled and make node have a locked icon
         for (int i = 0; i < nodes.Length; i++)
@@ -102,6 +135,7 @@ public static class Achievements
                     SetBlockerState(blocker, false);
                     manager.PlayExtraSFX(manager.achievement_sfx);
                     result?.Invoke();
+                    manager.EmitSignal("OnAchievementDone", i);
                 }
                 else
                 {
@@ -112,6 +146,7 @@ public static class Achievements
                         if (manager.progressBarValue < 0) manager.progressBarValue = 0;
                         manager.PlayExtraSFX(manager.achievement_sfx);
                         result?.Invoke();
+                        manager.EmitSignal("OnAchievementDone", i);
                     }
                 }
             }
@@ -124,13 +159,18 @@ public static class Achievements
             {
                 var node = nodes[i];
                 var blocker = FindBlocker(node);
+              
+               
+             
 
                 blocker.GuiInput += (inputEvent) =>
                 {
                     if (inputEvent is InputEventMouseButton mouseEvent)
                     {
                         if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                        {
+                        {   
+                         
+                           if (!allowedToSpeak(blocker)) return;
                             if (manager.achievementspanel.Visible) CloseTooltip();
 
                             OpenTooltip(node);
@@ -142,9 +182,33 @@ public static class Achievements
 
             // disable some uit elements by default
             SetupDefaultUserInterfaceState();
-
+            GD.Print("done late ready true");
             doneLateReady = true;
         }
+    }
+
+    private static bool allowedToSpeak(Blocker _blocker)
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+           
+            var node = nodes[i];
+            var blocker = FindBlocker(node);
+            var worth = achievements[i].worth;
+            var useworth = worth != -1 && worth > 0;
+            var enoughworth = manager.progressBarValue > worth;
+            if (blocker == _blocker)
+            {
+                if (useworth && enoughworth)
+                {
+                    GD.Print(_blocker.Name);
+                    GD.Print("Not allowed to speak");
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     public static void StartLoopToCheckIfTooltipCanClose()
@@ -157,7 +221,15 @@ public static class Achievements
         };
     }
 
-    public static void SetBlockerState(Blocker blocker, bool enabled)
+    public static void unlockAchievement()
+    {
+        for (int i = 0; i < nodes.Length; i++)
+        {
+            SetBlockerState(FindBlocker(nodes[i]), false);
+        }
+    }
+
+public static void SetBlockerState(Blocker blocker, bool enabled)
     {
         blocker.Visible = enabled;
         blocker.MouseFilter = enabled ? Control.MouseFilterEnum.Stop : Control.MouseFilterEnum.Ignore;

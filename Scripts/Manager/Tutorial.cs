@@ -258,24 +258,31 @@ public static class Tutorial
         // groene laag
         (
             instruction: "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
-            condition: () => manager.chaosPadMode == Manager.ChaosPadMode.SynthMixing, //todo check index of choas pad,
+            condition: () =>
+            {
+                returnPlayer(manager.activateGreenChaosButton).Play("Bear_pulse");
+                return manager.chaosPadMode == Manager.ChaosPadMode.SynthMixing;
+            }, //todo check index of choas pad,
             outcome: () =>
             {
                 manager.SetMicRecorderVisibility(true);
                 manager.knob.GlobalPosition = _top.GlobalPosition;
                 allowed = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
+                returnPlayer(manager.activateGreenChaosButton).Stop();
             }
         ),
         (
             instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
             condition: () =>
             {
+                returnPlayer(manager.greenLayerRecordButton.GetParent()).Play("record_pulse");
                 if (manager.greenLayerRecordButton.ButtonPressed)
                 {
                     manager.PlayExtraSFX(manager.achievement_sfx);
                     tutorial_level += 5;
                     DisplayServer.TtsStop();
+                    returnPlayer(manager.greenLayerRecordButton.GetParent()).Stop();
                     return true;
                 }
                 return !DisplayServer.TtsIsSpeaking();
@@ -289,7 +296,7 @@ public static class Tutorial
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
             condition: () =>
             {
-
+               
                 return manager.greenLayerRecordButton.ButtonPressed;
             },
             outcome: () =>
@@ -297,6 +304,7 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 _increasedSpeed = true;
                 DisplayServer.TtsStop();
+                returnPlayer(manager.greenLayerRecordButton.GetParent()).Stop();
                 
             }),
         (
@@ -516,6 +524,7 @@ public static class Tutorial
     {
         if (useTutorial) // enable tutorial
         {
+            GD.Print("tutorial activated");
             manager.pointer.Visible = false;
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
@@ -608,12 +617,22 @@ public static class Tutorial
 
     private static void _nextLine()
     {
+        GD.Print(BpmManager.instance.bpm);
         outcome?.Invoke();
         if (tutorial_level >= tutorialSteps.Length) return;
         tutorial_level++;
       
         SpeakTutorialInstruction(tutorial_level);
         UpdateLists();
+    }
+
+    private static AnimationPlayer returnPlayer(Node parent)
+    {
+        foreach (var child in parent.GetChildren())
+        {
+            if (child is AnimationPlayer player) return player;
+        }
+        return null;
     }
 
     private static void _correctStompPlaySFX()
@@ -698,11 +717,12 @@ public static class Tutorial
         if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
         if (_increasedSpeed)
         {
-            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
+            GD.Print(("Increase the speed"));
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 2.5f);
         }
         else
         {
-            DisplayServer.TtsSpeak(without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100);
         }
     }
 

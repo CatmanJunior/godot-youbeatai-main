@@ -79,6 +79,10 @@ public partial class SoundBankSelectionMenu : Panel
 
 		gebruikButton.Pressed += () =>
 		{
+			if (DisplayServer.TtsIsSpeaking())
+			{
+				DisplayServer.TtsStop();
+			}
 			// remember beat amount
 			{
 				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");

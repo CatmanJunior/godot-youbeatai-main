@@ -84,6 +84,8 @@ public partial class SoundBankSelectionMenu : Panel
 				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
 				if (File.Exists(path)) File.Delete(path);
 				File.WriteAllText(path, hoeveelBeats.Text);
+
+				BpmManager.beatsAmount = int.Parse(hoeveelBeats.Text);
 			}
 
 			// remember if tutorial should be enabled or not

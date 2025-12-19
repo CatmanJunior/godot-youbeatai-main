@@ -1,7 +1,12 @@
+using System;
 using Godot;
 
 public partial class SongVoiceOver : Node
 {
+	// events for stopping and starting recording
+    [Signal] public delegate void OnStartedRecordingEventHandler();
+    [Signal] public delegate void OnStoppedRecordingEventHandler();
+
 	// singleton
     public static SongVoiceOver instance = null;
 
@@ -125,6 +130,7 @@ public partial class SongVoiceOver : Node
 		Manager.instance.metronome_toggle.ButtonPressed = false;
 
 		Manager.instance.CloseCountDown();
+		EmitSignal(SignalName.OnStartedRecording);
     }
 
     private void StopRecording()
@@ -150,5 +156,7 @@ public partial class SongVoiceOver : Node
 		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
 
 		finished = true;
+
+		EmitSignal(SignalName.OnStoppedRecording);
     }
 }

@@ -67,6 +67,7 @@ public partial class MainMenu : Node
 				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
 				if (File.Exists(path)) File.Delete(path);
 				File.WriteAllText(path, "16");
+				BpmManager.beatsAmount = 16;
 			}
 
 			// load main scene with tutorial enabled

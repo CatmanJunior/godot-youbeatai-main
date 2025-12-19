@@ -3,6 +3,9 @@
 /android/
 *.tmp
 
+# builds
+builds/
+
 # vscode
 .vscode/
 *.apk

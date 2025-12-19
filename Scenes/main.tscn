@@ -1,4 +1,4 @@
-[gd_scene load_steps=70 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=76 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -60,6 +60,14 @@ font_size = 80
 [sub_resource type="Curve" id="Curve_aqgau"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
+buffer_length = 0.1
+
+[sub_resource type="Resource" id="Resource_55jeb"]
+script = ExtResource("31_gsvbx")
+id = 48
+metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [sub_resource type="Animation" id="Animation_jut3y"]
 resource_name = "Bear_pulse"
@@ -306,7 +314,6 @@ position = Vector2(27, 344)
 
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
-bpm = 100
 
 [node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("coundDownPanel", "coundDownLabel", "emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "emojiPromptCancelButton", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "micButtons", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "OutSideArea", "OutSideMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "NodesThatCanBeUnlocked", "restartButton", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "recordingDelaySlider", "recordingDelayLabel", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "ringVolumeLights", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "AmountLeft", "greenLayerRecordButton", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
@@ -469,14 +476,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Chords" type="SoundFontPlayer" parent="Managers/SongVoiceOver" node_paths=PackedStringArray("bpmManager")]
 soundfont = ExtResource("28_54nrm")
-stream = SubResource("AudioStreamGenerator_v2nl5")
-bus = &"SongSynth"
+stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("28_v2nl5")
 chordString = "I-V-vi-IV"
-chordDuration = 8
 bpmManager = NodePath("../../BPM")
 notes = ExtResource("30_55jeb")
-base_note = SubResource("Resource_bv80c")
+base_note = SubResource("Resource_55jeb")
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
@@ -541,8 +546,8 @@ instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
-combine_threshold = 0.0
-octaveRange = Vector2i(3, 10)
+combine_threshold = 1.0
+octaveRange = Vector2i(4, 6)
 
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 closed = true
@@ -2621,7 +2626,6 @@ manager = NodePath("../Managers/Manager")
 [connection signal="SetPurpleSynth" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="set_font"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="on_microphone_input"]
 [connection signal="OnMicrophoneInput" from="Managers/MicrophoneCapture" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="on_microphone_input"]
-[connection signal="OnStoppedRecording" from="Managers/SongVoiceOver" to="Managers/SongVoiceOver/Chords" method="_parse"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="start_recording"]

@@ -17,7 +17,7 @@ public partial class LayerVoiceOver : Node
     
     // current layer recording and playback
     AudioEffectRecord audioEffectRecord;
-    public AudioStreamPlayer2D audioPlayer;
+    public AudioStreamPlayer audioPlayer;
     public bool shouldRecord = false;
     public bool recording = false;
     public bool shouldUpdateProgressBar = false;
@@ -101,7 +101,8 @@ public partial class LayerVoiceOver : Node
         };
 
         // create audioplayer
-        audioPlayer = new AudioStreamPlayer2D();
+        audioPlayer = new AudioStreamPlayer();
+        audioPlayer.Stream = new AudioStreamMicrophone();
         AddChild(audioPlayer);
 
         if (this == Manager.instance.layerVoiceOver0) audioPlayer.Bus = "GreenVoice";
@@ -183,7 +184,9 @@ public partial class LayerVoiceOver : Node
             audioDelayBeginMs = Time.GetTicksMsec();
         }
 
-        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += OnTopDelayed;
+        if (audioPlayer.Playing) audioPlayer.Stop();
+        if (!recording) audioPlayer.Play();
+       // GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += OnTopDelayed;
     }
 
     private void OnTopDelayed()
@@ -194,23 +197,38 @@ public partial class LayerVoiceOver : Node
 
     private void StartRecording()
     {
-        shouldUpdateProgressBar = true;
-        bigLine.Visible = false;
+        Manager.instance.metronome_toggle.ButtonPressed = false;
 
-        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () =>
-        {
+        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () => DoRecording();
+
+        // stop tic sounds
+        
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
+
+        Manager.instance.CloseCountDown();
+    }
+
+    private void DoRecording()
+    {
+            shouldUpdateProgressBar = true;
+            bigLine.Visible = false;
             recording = true;
             audioEffectRecord.SetRecordingActive(true);
             GD.Print("recording started");
             EmitSignal(SignalName.OnStartedRecording);
-        };
+    }
 
-        // stop tic sounds
-        Manager.instance.metronome_toggle.ButtonPressed = false;
-
-        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
-
-        Manager.instance.CloseCountDown();
+    private void DoStopRecording()
+    {
+        audioEffectRecord.SetRecordingActive(false);
+        SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
+        GD.Print("recording stopped");
+        recording = false;
+        shouldRecord = false;
+        finished = true;
+        shouldUpdateLines = true;
+        GD.Print(Manager.instance.recordingDelaySlider.Value.ToString() + " seconds delay");
+        EmitSignal(SignalName.OnStoppedRecording);
     }
 
     private void StopRecording()
@@ -218,18 +236,8 @@ public partial class LayerVoiceOver : Node
         shouldUpdateProgressBar = false;
         bigLine.Visible = true;
 
-        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () =>
-        {
-            audioEffectRecord.SetRecordingActive(false);
-            SetCurrentLayerVoiceOver(audioEffectRecord.GetRecording());
-            GD.Print("recording stopped");
-            recording = false;
-            shouldRecord = false;
-            finished = true;
-            shouldUpdateLines = true;
-
-            EmitSignal(SignalName.OnStoppedRecording);
-        };
+        GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () => DoStopRecording();
+     
 
         // buttons after recording
         snellerButton.Disabled = false;

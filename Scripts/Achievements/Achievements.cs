@@ -12,7 +12,7 @@ public static class Achievements
     static Manager manager => Manager.instance;
     public static bool useAchievements;
     private static bool doneLateReady = false;
-    static bool paused = false;
+    static bool paused = true;
     static SceneTreeTimer timer;
 
     // nodes with blockers
@@ -45,9 +45,14 @@ public static class Achievements
             tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
-            condition:manager.firstAudioPlayerRec.Stream != null || manager.secondAudioPlayerRec.Stream != null || manager.thirdAudioPlayerRec.Stream != null || manager.fourthAudioPlayerRec.Stream != null,
-            tooltip: "Door een kort hard geluid te maken neem je een sample op om jou instrument te veranderen."
+            condition:manager.firstAudioPlayerRec.Stream != null, 
+            tooltip: "Een kadotje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
+        ),
+        Achievement(
+            condition:manager.secondAudioPlayerRec.Stream != null, 
+            tooltip: "Kan je hier voor mij een kort gek geluid opnemen?"
         )
+        
     ];
 
     static void SetupDefaultUserInterfaceState()
@@ -68,7 +73,7 @@ public static class Achievements
                 timer.Timeout += onTimeOut;
             }
            
-            if (paused)
+            if (!paused)
             {
                 return true;
             }
@@ -79,7 +84,7 @@ public static class Achievements
 
     static void onTimeOut()
     {
-        paused = true;
+        paused = false;
     }
 
     // helper for default tuple values
@@ -88,7 +93,6 @@ public static class Achievements
 
     public static void OnReady()
     {
-        manager.OnAllAchievementUnlocked += () => unlockAchievement();
         // hide blockers if tutorial, show if achievements
         foreach (var node in nodes)
         {

@@ -2589,8 +2589,8 @@ scale = Vector2(12.747, 20)
 texture = ExtResource("22_wax6p")
 metadata/_edit_lock_ = true
 
-[node name="KlappyReaction" parent="." node_paths=PackedStringArray("manager", "achievment_panel") instance=ExtResource("47_s8vy0")]
-manager = NodePath("../Managers/Manager")
+[node name="KlappyReaction" parent="." node_paths=PackedStringArray("_manager", "achievment_panel") instance=ExtResource("47_s8vy0")]
+_manager = NodePath("../Managers/Manager")
 achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [node name="Unlock Achievements" type="Button" parent="." node_paths=PackedStringArray("manager")]

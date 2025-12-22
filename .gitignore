@@ -12,3 +12,6 @@ builds/
 
 # rider
 .idea/
+
+# libs
+addons/soundfont/lib/~libgd*

@@ -501,8 +501,6 @@ bigLineVolumeDist = 110
 soundfont = ExtResource("27_o1aky")
 volume_db = -7.0
 bus = &"Green"
-bpmManager = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("1_6vcvc"),"bpm":120,"playing":false,"currentBeat":15,"swing":0.05)
-
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
@@ -544,8 +542,6 @@ bigLineReversed = true
 [node name="synth_line" parent="Managers/LayerVoiceOver1" instance=ExtResource("26_o1aky")]
 volume_db = -7.0
 bus = &"Purple"
-bpmManager = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("1_6vcvc"),"bpm":120,"playing":false,"currentBeat":15,"swing":0.05)
-
 instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]

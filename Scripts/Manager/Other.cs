@@ -57,11 +57,19 @@ public partial class Manager : Node
 
     public void PasteLayer()
     {
-        PasteBeatLayoutFromClipboard();
-        PasteLayerVoiceFromClipBoard();
-        SamplesMixing_PasteKnobsForLayer();
-        SynthMixing_PasteKnobsForLayer();
-        EmitSignal(SignalName.OnPasteLayerEvent, currentLayerIndex);
+        var OverWrite = () =>
+        {
+            PasteBeatLayoutFromClipboard();
+            PasteLayerVoiceFromClipBoard();
+            SamplesMixing_PasteKnobsForLayer();
+            SynthMixing_PasteKnobsForLayer();
+            EmitSignal(SignalName.OnPasteLayerEvent, currentLayerIndex);
+        };
+
+        var empty = !LayerHasBeats(layersBeatActives[currentLayerIndex]);
+
+        if (empty) OverWrite();
+        else ConfirmationPrompt.instance.Open(OverWrite);
     }
 
     public void ClearLayer()

@@ -543,6 +543,11 @@ public partial class Manager : Node
 		// outer triangle effects master volume
 		float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
 
+		// knob opacity
+		var cpKnob = knob as ChaosPadKnob;
+		var opacity = Mathf.Clamp(mastervolume, 0.2f, 1.0f);
+		cpKnob.Modulate = new Color(cpKnob.Modulate.R, cpKnob.Modulate.G, cpKnob.Modulate.B, opacity);
+		
 		// clamp weights
 		weights = new Vector3
 		(

@@ -50,10 +50,14 @@ public partial class Manager : Node
         {
             sprite.Scale += Vector2.One;
             if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
-            progressBarValue += 1f / BpmManager.beatsAmount * 100f;
+            progressBarValue += 2f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
             clappedOnBeatAmount++;
+        }
+        else
+        {
+            progressBarValue -= 1f;
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 2;
@@ -72,10 +76,14 @@ public partial class Manager : Node
         {
             sprite.Scale += Vector2.One;
             if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
-            progressBarValue += 1f / BpmManager.beatsAmount * 100f;
+            progressBarValue += 2f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
             stompedOnBeatAmount++;
+        }
+        else
+        {
+            progressBarValue -= 1f;
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 2;

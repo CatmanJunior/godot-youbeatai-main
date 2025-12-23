@@ -76,9 +76,11 @@ public partial class DragAndDropButton : Sprite2D
 		if (ring == 2) Manager.instance.thirdAudioPlayerRec.Play();
 		if (ring == 3) Manager.instance.fourthAudioPlayerRec.Play();
 
+		// if knop is klap
 		if (Manager.instance.button_add_beats.ButtonPressed)
 		{
-			Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
+			// Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
+			BeatStateChanger.SetBeat(ring, BpmManager.instance.currentBeat, true);
 			var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
 			Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
 		}

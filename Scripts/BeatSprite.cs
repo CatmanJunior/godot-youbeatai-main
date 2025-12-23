@@ -13,7 +13,8 @@ public partial class BeatSprite : Sprite2D
 			{
 				if (IsPixelOpaque(GetLocalMousePosition()))
 				{
-					Manager.instance.beatActives[ring, spriteIndex] = !Manager.instance.beatActives[ring, spriteIndex];
+					// Manager.instance.beatActives[ring, spriteIndex] = !Manager.instance.beatActives[ring, spriteIndex];
+					BeatStateChanger.ToggleBeat(ring, spriteIndex);
 
 					if (Manager.instance.beatActives[ring, spriteIndex])
 					{

@@ -49,7 +49,7 @@ public partial class Manager : Node
 	[Export] public Button settingsBackButton;
 	[Export] Button skiptutorialbutton;
 	[Export] public ProgressBar progressBar;
-	public float progressBarValue = 0;
+	public float progressBarValue = 25;
 	[Export] public Sprite2D pointer;
 	[Export] public Sprite2D metronome;
 	[Export] public Sprite2D metronomebg;

@@ -171,11 +171,12 @@ public partial class Manager : Node
 			if (slowBeatTimer > BpmManager.instance.timePerBeat) slowBeatTimer -= BpmManager.instance.timePerBeat;
 			var beatprogress = slowBeatTimer / BpmManager.instance.timePerBeat;
 			metronome.Position = new Vector2(metronome.Position.X, Mathf.Lerp(-0.4f, 0.4f, beatprogress));
-
-			if (progressBarValue > 100) progressBarValue = 100;
-			progressBar.Value = progressBarValue;
 		}
 		else timeafterplay = 0;
+
+		if (progressBarValue > 100) progressBarValue = 100;
+		if (progressBarValue < 0) progressBarValue = 0;
+		progressBar.Value = progressBarValue;
 
 		UpdateBeatSprites(delta);
 

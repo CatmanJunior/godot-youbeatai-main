@@ -74,9 +74,12 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                manager.beatActives[_indexRedRing, _ringTop] = true;
-                manager.beatActives[_indexRedRing, _ringRight] = true;
-                manager.beatActives[_indexRedRing, _ringBottom] = true;
+                // manager.beatActives[_indexRedRing, _ringTop] = true;
+                // manager.beatActives[_indexRedRing, _ringRight] = true;
+                // manager.beatActives[_indexRedRing, _ringBottom] = true;
+                BeatStateChanger.SetBeatFree(_indexRedRing, _ringTop, true);
+                BeatStateChanger.SetBeatFree(_indexRedRing, _ringRight, true);
+                BeatStateChanger.SetBeatFree(_indexRedRing, _ringBottom, true);
                 manager.PlayPauseButton.Visible = true;
                 manager.SetStompVisibility(true);
             }
@@ -166,8 +169,10 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                manager.beatActives[_indexOrangeRing, _ringRight] = true;
-                manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+                // manager.beatActives[_indexOrangeRing, _ringRight] = true;
+                // manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+                BeatStateChanger.SetBeatFree(_indexOrangeRing, _ringRight, true);
+                BeatStateChanger.SetBeatFree(_indexOrangeRing, _ringLeft, true);
                 manager.SetClapVisibility(true);
                 SkipPlay();
             }

@@ -1335,6 +1335,7 @@ offset_right = -608.0
 offset_bottom = -646.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 alignment = 1
 
 [node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
@@ -1461,6 +1462,7 @@ offset_right = -460.0005
 offset_bottom = -663.5458
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2

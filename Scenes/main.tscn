@@ -481,9 +481,9 @@ soundfont = ExtResource("28_54nrm")
 stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("28_v2nl5")
 chordString = "I-V-vi-IV"
+bpmManager = NodePath("../../BPM")
 notes = ExtResource("30_55jeb")
 base_note = SubResource("Resource_55jeb")
-bpmManager = NodePath("../../BPM")
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
@@ -1951,6 +1951,7 @@ offset_bottom = 27.3527
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
+button_pressed = true
 alignment = 1
 metadata/_edit_use_anchors_ = true
 

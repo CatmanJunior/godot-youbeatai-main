@@ -49,7 +49,9 @@ public partial class Manager : Node
 
 		UpdateLayerOutlineSpriteRotation();
 
-		if (Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
+		if (!Input.IsKeyPressed(Key.Shift) && Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;
+		if (Input.IsKeyPressed(Key.Shift) && Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 4000) BpmManager.instance.bpm = 4000;
+		if (Input.IsKeyPressed(Key.Ctrl) && Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 90) BpmManager.instance.bpm = 90;
 
 		if (!interfaceSetToDefaultState)
 		{

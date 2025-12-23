@@ -149,9 +149,10 @@ public partial class Manager : Node
             layerVoiceOver1.OnTop();
 
             // every loop also give energy
-            if (progressBarValue < 50.0f) progressBarValue += 1.0f;
-            else if (progressBarValue < 75.0f) progressBarValue += 0.5f;
-            else if (progressBarValue < 100.0f) progressBarValue += 0.25f;
+            if (progressBarValue < 50.0f) progressBarValue += 2.0f;
+            else if (progressBarValue < 75.0f) progressBarValue += 1.0f;
+            else if (progressBarValue < 90.0f) progressBarValue += 0.5f;
+            else if (progressBarValue <= 999) progressBarValue -= 0.5f;
 
             if (!layerLoopToggle.ButtonPressed) UpdateSongVoiceOverPlayBackPosition();
             

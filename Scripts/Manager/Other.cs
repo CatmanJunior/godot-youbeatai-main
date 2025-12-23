@@ -57,14 +57,14 @@ public partial class Manager : Node
 
     public void PasteLayer()
     {
-        var OverWrite = () =>
+        void OverWrite()
         {
             PasteBeatLayoutFromClipboard();
             PasteLayerVoiceFromClipBoard();
             SamplesMixing_PasteKnobsForLayer();
             SynthMixing_PasteKnobsForLayer();
             EmitSignal(SignalName.OnPasteLayerEvent, currentLayerIndex);
-        };
+        }
 
         var empty = !LayerHasBeats(layersBeatActives[currentLayerIndex]);
 

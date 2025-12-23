@@ -36,6 +36,8 @@ public partial class BeatSprite : Sprite2D
 
 					var position = Manager.instance.beatSprites[ring, spriteIndex].Position;
 					Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
+
+					Manager.instance.SamplesMixing_ChangeRing(ring);
 				}
 			}
 		}

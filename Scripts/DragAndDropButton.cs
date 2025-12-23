@@ -49,8 +49,16 @@ public partial class DragAndDropButton : Sprite2D
 	{
 		if (Manager.instance.button_is_clap.ButtonPressed)
 		{
-			if (ring == 0) Manager.instance.OnStomp();
-			else if (ring == 1) Manager.instance.OnClap();
+			if (ring == 0)
+			{
+				ButtonSound();
+				Manager.instance.OnStomp();
+			}
+			else if (ring == 1)
+			{
+				ButtonSound();
+				Manager.instance.OnClap();
+			}
 			else ButtonBehaviour();
 		}
 		else ButtonBehaviour();
@@ -59,7 +67,7 @@ public partial class DragAndDropButton : Sprite2D
 		EmitSignal(SignalName.OnPressed);
 	}
 
-	public void ButtonBehaviour()
+	public void ButtonSound()
 	{
 		if (ring == 0) Manager.instance.firstAudioPlayer.Play();
 		if (ring == 1) Manager.instance.secondAudioPlayer.Play();
@@ -75,6 +83,11 @@ public partial class DragAndDropButton : Sprite2D
 		if (ring == 1) Manager.instance.secondAudioPlayerRec.Play();
 		if (ring == 2) Manager.instance.thirdAudioPlayerRec.Play();
 		if (ring == 3) Manager.instance.fourthAudioPlayerRec.Play();
+	}
+
+	public void ButtonBehaviour()
+	{
+		ButtonSound();
 
 		// if knop is klap
 		if (Manager.instance.button_add_beats.ButtonPressed)

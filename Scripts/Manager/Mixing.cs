@@ -338,8 +338,8 @@ public partial class Manager : Node
 		LayerVoiceOver layerVoiceOver = SynthMixing_activeSynth == 0 ? layerVoiceOver0 : layerVoiceOver1;
 
 		Color old_color = new();
-		if (SynthMixing_activeSynth == 0) old_color = Color.FromHtml("#25cc00");
-		if (SynthMixing_activeSynth == 1) old_color = Color.FromHtml("#aa00ff");
+		if (SynthMixing_activeSynth == 0) old_color = colors[4];
+		if (SynthMixing_activeSynth == 1) old_color = colors[5];
 		var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
 		var new_color = old_color.Lightened(1f);
@@ -386,8 +386,8 @@ public partial class Manager : Node
 		var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
 		var new_color = new Color();
-		if (SynthMixing_activeSynth == 0) new_color = Color.FromHtml("#25cc00");
-		if (SynthMixing_activeSynth == 1) new_color = Color.FromHtml("#aa00ff");
+		if (SynthMixing_activeSynth == 0) new_color = colors[4];
+		if (SynthMixing_activeSynth == 1) new_color = colors[5];
 
 		var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
@@ -478,7 +478,7 @@ public partial class Manager : Node
 		var old_color = chaosPadTriangleSprite.SelfModulate;
 		var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
-		var new_color = Color.FromHtml("#cf12ccff");
+		var new_color = colors[6];
 		var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
 		float elapsed = 0f;

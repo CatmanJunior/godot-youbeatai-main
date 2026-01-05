@@ -43,6 +43,10 @@ public partial class Manager : Node
 	{
 		time += (float)delta;
 
+		activateGreenChaosButton.Modulate = colors[4];
+		activatePurpleChaosButton.Modulate = colors[5];
+		(SongSelectButton.GetParent() as Sprite2D).Modulate = colors[6];
+
 		HandleCopyPasting();
 
 		if (isShowingCountDown) UpdateCountDownLabel();

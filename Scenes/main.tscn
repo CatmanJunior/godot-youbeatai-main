@@ -1670,16 +1670,17 @@ render_target_update_mode = 4
 [node name="chosen_emoticons_label" type="Label" parent="UserInterface/Robot/SubViewportContainer/SubViewport"]
 z_index = 1
 z_as_relative = false
-offset_left = 97.5
-offset_top = 0.833332
-offset_right = 297.5
-offset_bottom = 47.8333
+offset_left = 265.5
+offset_top = 128.83333
+offset_right = 331.3333
+offset_bottom = 261.8333
 theme = ExtResource("22_hpc6h")
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 4
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 1
 
 [node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" node_paths=PackedStringArray("manager") instance=ExtResource("30_hpc6h")]
 manager = NodePath("../../../../../Managers/Manager")

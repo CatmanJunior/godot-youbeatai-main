@@ -17,6 +17,9 @@ public partial class Manager : Node
 	[Export] Button BpmUpButton;
 	[Export] Button BpmDownButton;
 
+	// idk
+	[Export] Button SongSelectButton;
+
 	// sample buttons
 	[Export] public Sprite2D draganddropButton0;
 	[Export] public Sprite2D draganddropButton1;
@@ -146,7 +149,7 @@ public partial class Manager : Node
 		};
 		settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 		settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
-		var Button = layerLoopToggle.FindChild("Button", true) as Button;
+		var Button = SongSelectButton;
         Button.ButtonUp += () =>
         {
             layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;

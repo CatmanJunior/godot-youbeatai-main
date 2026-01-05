@@ -1710,6 +1710,24 @@ texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" instance=ExtResource("44_kqrg6")]
+anchors_preset = -1
+anchor_left = -24.5
+anchor_top = 18.5
+offset_top = -209.5
+offset_bottom = -21.5
+
+[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.17973857
+
+[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.0032679802
+anchor_top = -0.064705886
+anchor_right = 0.0882353
+anchor_bottom = -0.1882353
 
 [node name="Continue" parent="UserInterface/Robot/AchievementsPanel" index="3"]
 metadata/_edit_use_anchors_ = true

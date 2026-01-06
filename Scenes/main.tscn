@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=85 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -11,7 +11,6 @@
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="6_60v1h"]
 [ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="6_v5052"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="8_4xf5a"]
-[ext_resource type="Texture2D" uid="uid://ddx3ttnpgkple" path="res://Resources/Textures/ring.png" id="8_llrl4"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="9_nnqde"]
 [ext_resource type="Script" uid="uid://dgwusorhvls4u" path="res://Scripts/TemplateManager.cs" id="9_t3vou"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="10_4yy8e"]
@@ -28,16 +27,24 @@
 [ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
+[ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="21_my4ki"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_hpc6h"]
+[ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
+[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="23_ynmfv"]
+[ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="24_cblf0"]
 [ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="24_o1aky"]
+[ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="25_nay3j"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
+[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="26_ovafv"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
+[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="27_owhal"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
+[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="28_uv6w5"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="28_v2nl5"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="30_55jeb"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
@@ -432,8 +439,9 @@ allLayersToMp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersTo
 layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
 layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder")
 spritePrefab = ExtResource("2_1eep1")
-texture = ExtResource("2_1ig4u")
-outline = ExtResource("8_llrl4")
+filled_beat_textures = Array[Texture2D]([ExtResource("21_my4ki"), ExtResource("22_lx3vj"), ExtResource("23_ynmfv"), ExtResource("24_cblf0")])
+outline_beat_textures = Array[Texture2D]([ExtResource("25_nay3j"), ExtResource("26_ovafv"), ExtResource("27_owhal"), ExtResource("28_uv6w5")])
+dot_beat_texture = ExtResource("22_sb4d6")
 colors = PackedColorArray(0.9019608, 0.29411766, 0.5568628, 1, 0.972549, 0.52156866, 0.17254902, 1, 0.2627451, 0.79607844, 0.5294118, 1, 0.011764706, 0.8235294, 0.93333334, 1, 1, 1, 0, 1, 0.516666, 0, 1, 1, 0.61960787, 0.6117647, 0.8980392, 1)
 ringVolumeLights = [NodePath("../../UserInterface/Buttons/DragAndDropButton0/RingVolumeLight"), NodePath("../../UserInterface/Buttons/DragAndDropButton1/RingVolumeLight"), NodePath("../../UserInterface/Buttons/DragAndDropButton2/RingVolumeLight"), NodePath("../../UserInterface/Buttons/DragAndDropButton3/RingVolumeLight")]
 micVolumeLight = NodePath("../../UserInterface/ChaosPad/MicButtonLocation/MicLight")

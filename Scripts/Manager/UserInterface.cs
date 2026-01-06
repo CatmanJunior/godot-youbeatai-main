@@ -72,14 +72,21 @@ public partial class Manager : Node
 	[Export] public Button allLayersToMp3;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
+	
+
+	float global_beat_sprite_scale_factor = 0.28f;
 	float beatScale32 = 1;
 	float beatScale16 = 1.6f;
 	float beatScale8 = 1.6f;
+
 	[Export] PackedScene spritePrefab;
-	[Export] Texture2D texture;
-	[Export] Texture2D outline;
-	Sprite2D[,] beatOutlines;
+
 	public Sprite2D[,] beatSprites;
+
+	[Export] Texture2D[] filled_beat_textures;
+	[Export] Texture2D[] outline_beat_textures;
+	[Export] Texture2D dot_beat_texture;
+
 	Sprite2D[,] templateSprites;
 	[Export] public Color[] colors;
 	public Color[] colorsOverride;
@@ -188,33 +195,22 @@ public partial class Manager : Node
 				var sprite = beatSprites[ring, beat];
 				var active = beatActives[ring, beat];
 
-				var color = (colors[ring] + colorsOverride[ring]) / 2;
+				sprite.Texture = active ? filled_beat_textures[ring] : outline_beat_textures[ring];
 
+				var color = (colors[ring] + colorsOverride[ring]) / 2;
 				if (beat == BpmManager.instance.currentBeat)
 				{
 					if (active) color = color.Lightened(0.75f);
 					else color = new(1, 1, 1, 0.5f);
 				}
 				else if (!active) color.A = 0.2f;
-
 				sprite.Modulate = color;
 
 				float scale = 1;
 				if (BpmManager.beatsAmount == 32) scale = beatScale32;
 				if (BpmManager.beatsAmount == 16) scale = beatScale16;
 				if (BpmManager.beatsAmount == 8) scale = beatScale8;
-
-				if (sprite.Scale.X > scale) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
-			}
-		}
-
-		// update beat outline sprites
-		for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-		{
-			for (int ring = 0; ring < 4; ring++)
-			{
-				var outline = beatOutlines[ring, beat];
-				outline.Modulate = (colors[ring] + colorsOverride[ring]) / 2;
+				if (sprite.Scale.X > scale * global_beat_sprite_scale_factor) sprite.Scale -= Vector2.One * (float)delta * 0.3f;
 			}
 		}
 
@@ -245,18 +241,6 @@ public partial class Manager : Node
 			}
 		}
 
-		// spawn outlines
-		beatOutlines = new Sprite2D[4, BpmManager.beatsAmount];
-		for (int ring = 0; ring < 4; ring++)
-		{
-			for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
-			{
-				var outline = CreateOutline(beat, ring);
-				AddChild(outline);
-				beatOutlines[ring, beat] = outline;
-			}
-		}
-
 		// spawn template sprites
 		templateSprites = new Sprite2D[4, BpmManager.beatsAmount];
 		for (int ring = 0; ring < 4; ring++)
@@ -268,20 +252,6 @@ public partial class Manager : Node
 				templateSprites[ring, beat] = sprite;
 			}
 		}
-	}
-	private Sprite2D CreateOutline(int beat, int ring)
-	{
-		var sprite = new Sprite2D();
-		sprite.Position = SpritePosition(beat, ring);
-
-		float scale = 1;
-		if (BpmManager.beatsAmount == 32) scale = beatScale32;
-		if (BpmManager.beatsAmount == 16) scale = beatScale16;
-		if (BpmManager.beatsAmount == 8) scale = beatScale8;
-		sprite.Scale = Vector2.One * scale;
-
-		sprite.Texture = outline;
-		return sprite;
 	}
 
 	private Vector2 SpritePosition(int beat, int ring)
@@ -297,10 +267,17 @@ public partial class Manager : Node
 		return new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * distance;
 	}
 
+	private float SpriteRotation(int beat, int ring)
+	{
+		float angle = Mathf.Pi * 2 * beat / BpmManager.beatsAmount;
+		return angle;
+	}
+
 	private Sprite2D CreateSprite(int beat, int ring)
 	{
 		var sprite = (Sprite2D)spritePrefab.Instantiate();
 		sprite.Position = SpritePosition(beat, ring);
+		sprite.Rotation = SpriteRotation(beat, ring);
 
 		BeatSprite beatSprite = sprite as BeatSprite;
 		beatSprite.spriteIndex = beat;
@@ -310,9 +287,9 @@ public partial class Manager : Node
 		if (BpmManager.beatsAmount == 32) scale = beatScale32;
 		if (BpmManager.beatsAmount == 16) scale = beatScale16;
 		if (BpmManager.beatsAmount == 8) scale = beatScale8;
-		sprite.Scale = Vector2.One * scale;
+		sprite.Scale = Vector2.One * scale * global_beat_sprite_scale_factor;
 
-		sprite.Texture = texture;
+		sprite.Texture = filled_beat_textures[ring];
 		
 		return sprite;
 	}
@@ -321,9 +298,9 @@ public partial class Manager : Node
 	{
 		var sprite = new Sprite2D();
 		sprite.Position = SpritePosition(beat, ring);
-		sprite.Texture = texture;
+		sprite.Rotation = SpriteRotation(beat, ring);
+		sprite.Texture = dot_beat_texture;
 		sprite.Modulate = new Color(0, 0, 0, 1);
-		sprite.Scale = Vector2.One * 0.2f;
 		return sprite;
 	}
 

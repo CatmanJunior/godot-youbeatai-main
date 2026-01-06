@@ -1,4 +1,4 @@
-[gd_scene load_steps=85 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=92 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -58,10 +58,17 @@
 [ext_resource type="Script" uid="uid://r5hk4ixij08i" path="res://Scripts/PreviewExports.cs" id="43_nwwfm"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
+[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
 [ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scenes/unlock_achievements.gd" id="48_jut3y"]
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="48_uv6w5"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="50_r7bbj"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="51_e5peh"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="52_f6rfp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="52_gsvbx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -1014,32 +1021,8 @@ metadata/_edit_use_anchors_ = true
 [node name="SongSelectButton" type="Sprite2D" parent="UserInterface/Buttons"]
 z_index = -4
 position = Vector2(-580, -146.258)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/SongSelectButton"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_k2e45")
-theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
-metadata/_edit_use_anchors_ = true
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("47_owhal")
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/SongSelectButton"]
 visible = false
@@ -1075,11 +1058,27 @@ offset_bottom = -108.000046
 scale = Vector2(0.7815966, 0.7815966)
 metadata/_edit_use_anchors_ = true
 
+[node name="Button" type="Button" parent="UserInterface/Buttons/SongSelectButton"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, -71.257965)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("48_uv6w5")
 script = ExtResource("14_4mig3")
 button = NodePath("Button")
 
@@ -1110,13 +1109,15 @@ texture_scale = 1.71
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton0"]
 self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.5
-offset_top = -12.5
-offset_right = -12.5
-offset_bottom = -12.5
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1125,8 +1126,8 @@ metadata/_edit_use_anchors_ = true
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 3.7420502)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("50_r7bbj")
 script = ExtResource("14_4mig3")
 ring = 1
 button = NodePath("Button")
@@ -1158,13 +1159,15 @@ texture_scale = 1.71
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton1"]
 self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.5
-offset_top = -12.5
-offset_right = -12.5
-offset_bottom = -12.5
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1173,8 +1176,8 @@ metadata/_edit_use_anchors_ = true
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 78.742035)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("51_e5peh")
 script = ExtResource("14_4mig3")
 ring = 2
 button = NodePath("Button")
@@ -1212,13 +1215,15 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton2"]
 self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.5
-offset_top = -12.5
-offset_right = -12.5
-offset_bottom = -12.5
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1227,8 +1232,8 @@ metadata/_edit_use_anchors_ = true
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 153.74205)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("52_f6rfp")
 script = ExtResource("14_4mig3")
 ring = 3
 button = NodePath("Button")
@@ -1267,13 +1272,15 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton3"]
 self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -13.6721945
-offset_top = -12.811095
-offset_right = -13.6721945
-offset_bottom = -12.811095
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -1282,8 +1289,8 @@ metadata/_edit_use_anchors_ = true
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 228.742)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("53_sasc4")
 script = ExtResource("33_aqgau")
 button = NodePath("Button")
 
@@ -1312,31 +1319,32 @@ energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
-[node name="Button" type="Button" parent="UserInterface/Buttons/GreenSelectButton"]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.5
-offset_top = -12.5
-offset_right = -12.5
-offset_bottom = -12.5
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.1, 1.1)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
 [node name="GreenAim" type="AnimationPlayer" parent="UserInterface/Buttons/GreenSelectButton"]
 libraries = {
 &"": SubResource("AnimationLibrary_dmskm")
 }
 
+[node name="Button" type="Button" parent="UserInterface/Buttons/GreenSelectButton"]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 303.7)
-scale = Vector2(2, 2)
-texture = ExtResource("28_r33sp")
+scale = Vector2(0.51, 0.51)
+texture = ExtResource("55_pfx1i")
 script = ExtResource("33_aqgau")
 id = 1
 button = NodePath("Button")
@@ -1376,13 +1384,15 @@ metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/PurpleSelectButton"]
 self_modulate = Color(1, 1, 1, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -12.5
-offset_top = -12.5
-offset_right = -12.5
-offset_bottom = -12.5
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -64.0
+offset_top = -64.0
+offset_right = -64.0
+offset_bottom = -64.0
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0

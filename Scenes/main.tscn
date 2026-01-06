@@ -541,7 +541,6 @@ beats_amount_scaler = 0.5
 [node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
 closed = true
 width = 4.0
-default_color = Color(1, 1, 0, 1)
 antialiased = true
 
 [node name="TextureProgressBar0" type="TextureProgressBar" parent="Managers/LayerVoiceOver0"]
@@ -583,7 +582,6 @@ octaveRange = Vector2i(4, 6)
 [node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
 closed = true
 width = 5.0
-default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Managers/LayerVoiceOver1"]
@@ -883,7 +881,6 @@ metadata/_edit_use_anchors_ = true
 z_index = 1
 closed = true
 width = 1.0
-default_color = Color(1, 1, 0, 1)
 antialiased = true
 
 [node name="GreenRecAim" type="AnimationPlayer" parent="UserInterface/Buttons/MicButtons/RecordBeatButton0"]
@@ -950,7 +947,6 @@ metadata/_edit_use_anchors_ = true
 z_index = 1
 closed = true
 width = 1.0
-default_color = Color(0.516666, 0, 1, 1)
 antialiased = true
 
 [node name="RecordMasterButton" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
@@ -1204,6 +1200,7 @@ texture_scale = 1.71
 offset_left = -591.0
 offset_right = -491.9316
 offset_bottom = 53.06669
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton2"]
 self_modulate = Color(1, 1, 1, 0)
@@ -1258,6 +1255,7 @@ offset_left = -590.0
 offset_top = 60.999992
 offset_right = -490.58047
 offset_bottom = 149.48396
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton3"]
 self_modulate = Color(1, 1, 1, 0)
@@ -1366,6 +1364,7 @@ offset_top = 149.00002
 offset_right = -505.36505
 offset_bottom = 241.64409
 pivot_offset = Vector2(50, 35)
+metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/PurpleSelectButton"]
 self_modulate = Color(1, 1, 1, 0)
@@ -1407,6 +1406,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
 position = Vector2(-130, -1074)
@@ -1560,6 +1560,7 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 12
 alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="RecordSongButton" type="Sprite2D" parent="UserInterface"]
 self_modulate = Color(0.8, 0.8, 0.8, 1)
@@ -1830,6 +1831,7 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
 text = "⚙"
+metadata/_edit_use_anchors_ = true
 
 [node name="SettingsPanel" type="Panel" parent="UserInterface"]
 visible = false

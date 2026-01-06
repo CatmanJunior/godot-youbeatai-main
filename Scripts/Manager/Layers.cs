@@ -132,6 +132,12 @@ public partial class Manager : Node
             songModeBackPanel.Size = layerButtonsContainer.Size + backPanelOverSize;
             songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
         }
+
+        // set proper color of layer buttons
+        for (int i = 0; i < LayerButtons.Count; i++)
+        {
+            LayerButtons[i].SelfModulate = colors[6];
+        }
     }
 
     public void UpdateLayerButtonsUserInterfaceDelayed() => GetTree().CreateTimer(0.2).Timeout += UpdateLayerButtonsUserInterface;

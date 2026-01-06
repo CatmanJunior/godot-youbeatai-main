@@ -32,6 +32,20 @@ public partial class Manager : Node
 		OnReadyMixing();
 		UpdateLayerButtonsUserInterfaceDelayed();
 		DisplayServer.TtsSetUtteranceCallback(DisplayServer.TtsUtteranceEvent.Ended, new Callable(this,nameof(UtteranceEnd)));
+
+		// set chaos activate buttons colors (non drag drop buttons)
+		activateGreenChaosButton.SelfModulate = colors[4];
+		activatePurpleChaosButton.SelfModulate = colors[5];
+		(SongSelectButton.GetParent() as Sprite2D).SelfModulate = colors[6];
+
+		// set mic buttons colors
+		for (int i = 0; i < micButtons.Length; i++) micButtons[i].SelfModulate = colors[i];
+
+		// set line colors (not needed, they inherit the colors)
+		layerVoiceOver0.bigLine.SelfModulate = colors[4];
+		layerVoiceOver1.bigLine.SelfModulate = colors[5];
+		layerVoiceOver0.smallLine.SelfModulate = colors[4];
+		layerVoiceOver1.smallLine.SelfModulate = colors[5];
 	}
 
 	private void UtteranceEnd(int utterancId)
@@ -42,10 +56,6 @@ public partial class Manager : Node
 	public override void _Process(double delta)
 	{
 		time += (float)delta;
-
-		activateGreenChaosButton.Modulate = colors[4];
-		activatePurpleChaosButton.Modulate = colors[5];
-		(SongSelectButton.GetParent() as Sprite2D).Modulate = colors[6];
 
 		HandleCopyPasting();
 

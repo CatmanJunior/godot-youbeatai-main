@@ -15,7 +15,7 @@ class_name notePlayer
 var cached_song: Sequence = null
 var current_layer: int = 0
 
-# demo code for sub bpm detection (8th,16th notes) 
+# demo code for sub bpm detection (8th,16th notes)
 #var current_beat_i : int = int(current_beat)
 #var current_beat_frac : int = int((current_beat - current_beat_i) * beat_subdivision)
 #$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
@@ -33,7 +33,7 @@ func _input(event):
 	if event is InputEventMIDI:
 		_process_midi_input(event)
 		return
-	
+
 	if event is InputEventKey:
 		_process_key_input(event)
 		return
@@ -41,7 +41,7 @@ func _input(event):
 func _process_key_input(event: InputEventKey):
 	if not allow_key_input:
 		return
-	
+
 	var map = {
 		KEY_A:0,
 		KEY_S:2,
@@ -53,10 +53,10 @@ func _process_key_input(event: InputEventKey):
 		KEY_K:12,
 		KEY_L:14,
 	}
-	
+
 	if event.keycode not in map:
 		return
-	
+
 	if event.is_pressed() and not event.is_echo() :
 		channel_note_on(0, 0, base_note.id + map[event.keycode], 1.0)
 	if event.is_released():
@@ -71,10 +71,10 @@ func on_bpm():
 	var song: Sequence = get_song()
 	if song == null or len(song.sequence) == 0 or bpmManager.currentBeat >= len(song.sequence):
 		return
-	
+
 	if bpmManager.currentBeat != 0:
 		return
-	
+
 	# queue song
 	queue_song(bpmManager.currentBeat, song)
 
@@ -84,7 +84,7 @@ func _on_current_layer_changed(layer: int):
 
 func on_layer_remove_at(layer: int) -> void:
 	songs.remove_at(layer)
-	
+
 func on_add_layer_at(layer: int) -> void:
 	songs.insert(layer, Sequence.new())
 
@@ -106,7 +106,7 @@ func set_song(data: Sequence) -> void:
 func get_song() -> Sequence:
 	if current_layer >= len(songs):
 		return null
-	
+
 	return songs[current_layer]
 
 func queue_song(start: int, song: Sequence):
@@ -124,7 +124,7 @@ func queue_song(start: int, song: Sequence):
 		# gate quiet notes
 		if log_value <= gate:
 			return
-		
+
 		var beatDuration = (60.0/bpmManager.bpm /4.0)
 		var start_time: float = float(note.beat) * beatDuration
 		var stop_time: float = start_time + float(note.duration) * beatDuration
@@ -137,26 +137,8 @@ func play_note(note: Note, duration: float) -> void:
 	channel_note_on(t, 0, note.id, 1.0)
 	channel_note_off(t + duration, 0, note.id)
 
-func play_chord(intervals, duration = 0.5) -> void:
+
+func play_note_raw(note: int, duration: float) -> void:
 	var t = get_time()
-	for i in intervals:
-		channel_note_on(t, 0, base_note.id + i, 1.0)
-		channel_note_off(t + duration, 0, base_note.id + i)
-
-func on_chord_major(offset = 0, duration=0.5) -> void:
-	play_chord([0 + offset, 4 + offset, 7 + offset], duration)
-
-func on_chord_minor(offset = 0, duration=0.5) -> void:
-	play_chord([0 + offset, 3 + offset, 7 + offset], duration)
-
-func on_chord_7(offset = 0, duration=0.5) -> void:
-	play_chord([0 + offset, 4 + offset, 7 + offset, 10 + offset], duration)
-
-func on_chord_major_7(offset = 0, duration=0.5) -> void:
-	play_chord([0 + offset, 4 + offset, 7 + offset, 11 + offset], duration)
-
-func on_chord_minor_7(offset = 0, duration=0.5) -> void:
-	play_chord([0 + offset, 3 + offset, 7 + offset, 10 + offset], duration)
-
-func on_chord_diminished_7(offset = 0, duration=0.5) -> void:
-	play_chord([0 + offset, 3 + offset, 6 + offset, 9 + offset], duration)
+	channel_note_on(t, 0, note, 1.0)
+	channel_note_off(t + duration, 0, note)

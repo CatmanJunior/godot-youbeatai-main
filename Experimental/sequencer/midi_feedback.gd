@@ -1,0 +1,8 @@
+extends notePlayer
+class_name MidiFeedback
+
+func _on_note(element: SequenceElement):
+	var beatDuration = (60.0/bpmManager.bpm /4.0)
+	var duration = float(element.duration) * beatDuration
+
+	play_note_raw(element.note, duration)

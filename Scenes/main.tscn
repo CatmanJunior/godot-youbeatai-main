@@ -1,4 +1,4 @@
-[gd_scene load_steps=92 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=98 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -26,11 +26,15 @@
 [ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="16_ngh84"]
 [ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="20_sasc4"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="21_my4ki"]
+[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="21_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="22_fg68e"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
+[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="23_jekl6"]
 [ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="23_ynmfv"]
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="24_cblf0"]
 [ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="24_o1aky"]
@@ -38,6 +42,7 @@
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="26_ovafv"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="26_v1mrv"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
@@ -69,6 +74,7 @@
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
 [ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -359,7 +365,7 @@ position = Vector2(1239.05, -302)
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("coundDownPanel", "coundDownLabel", "emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "emojiPromptCancelButton", "corners", "knob", "chaosPadTriangleSprite", "iconMain", "iconAlt", "micButtonLocation", "micButtons", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "OutSideArea", "OutSideMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "SongSelectButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "NodesThatCanBeUnlocked", "restartButton", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "recordingDelaySlider", "recordingDelayLabel", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "ringVolumeLights", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "AmountLeft", "greenLayerRecordButton", "layerVoiceOver0", "layerVoiceOver1")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("coundDownPanel", "coundDownLabel", "emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "emojiPromptCancelButton", "corners", "knob", "chaosPadTriangleSprite", "mainIcon", "altIcon", "micButtonLocation", "micButtons", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "OutSideArea", "OutSideMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "SongSelectButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "NodesThatCanBeUnlocked", "restartButton", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "recordingDelaySlider", "recordingDelayLabel", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "ringVolumeLights", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "AmountLeft", "greenLayerRecordButton", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
@@ -377,8 +383,14 @@ emojiPromptCancelButton = NodePath("../../EmojiPrompt/Cancel")
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
 chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
-iconMain = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeftIcon")
-iconAlt = NodePath("../../UserInterface/ChaosPad/Triangle/PointRightIcon")
+mainIcons = Array[Texture2D]([ExtResource("48_uv6w5"), ExtResource("50_r7bbj"), ExtResource("51_e5peh"), ExtResource("20_sasc4")])
+altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), ExtResource("23_jekl6"), ExtResource("52_f6rfp")])
+mainIconSynths = Array[Texture2D]([ExtResource("53_sasc4"), ExtResource("26_v1mrv")])
+altIconSynths = Array[Texture2D]([ExtResource("55_pfx1i"), ExtResource("26_v1mrv")])
+mainIconSong = ExtResource("47_owhal")
+altIconSong = ExtResource("26_v1mrv")
+mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
+altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 micButtons = [NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3"), NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 SynthMixing_LineScaleCurve = SubResource("Curve_aqgau")
@@ -629,6 +641,7 @@ scale = Vector2(1.27546, 1.27546)
 [node name="MicButtons" type="Node2D" parent="UserInterface/Buttons"]
 
 [node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(-23.609894, -763.73505)
 scale = Vector2(2, 2)
@@ -656,6 +669,7 @@ tint_progress = Color(1, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton0"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -671,7 +685,7 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(22, 22)
 theme_override_font_sizes/font_size = 32
-text = "🎤"
+text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -686,6 +700,7 @@ scale = Vector2(0.35, 0.35)
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(39.1131, -763.73505)
 scale = Vector2(2, 2)
@@ -712,6 +727,7 @@ tint_progress = Color(1, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon2" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -727,7 +743,7 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(22, 22)
 theme_override_font_sizes/font_size = 32
-text = "🎤"
+text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -745,6 +761,7 @@ metadata/_edit_use_anchors_ = true
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(101.8351, -763.73505)
 scale = Vector2(2, 2)
@@ -771,6 +788,7 @@ tint_progress = Color(1, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon3" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton2"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -786,12 +804,13 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(22, 22)
 theme_override_font_sizes/font_size = 32
-text = "🎤"
+text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(164.5581, -763.73505)
 scale = Vector2(2, 2)
@@ -818,6 +837,7 @@ tint_progress = Color(1, 0, 0, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="MicIcon4" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton3"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -833,12 +853,13 @@ grow_vertical = 2
 scale = Vector2(0.5, 0.5)
 pivot_offset = Vector2(22, 22)
 theme_override_font_sizes/font_size = 32
-text = "🎤"
+text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(227.2803, -763.73505)
 scale = Vector2(2, 2)
@@ -871,6 +892,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/MicButtons/RecordBeatButton0"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -904,6 +926,7 @@ libraries = {
 }
 
 [node name="RecordBeatButton1" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(290.0025, -763.73505)
 scale = Vector2(2, 2)
@@ -937,6 +960,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/MicButtons/RecordBeatButton1"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -965,6 +989,7 @@ width = 1.0
 antialiased = true
 
 [node name="RecordMasterButton" type="Sprite2D" parent="UserInterface/Buttons/MicButtons"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 position = Vector2(354.08148, -763.52325)
 scale = Vector2(1.9600772, 1.9600772)
@@ -997,6 +1022,7 @@ theme_override_styles/focus = SubResource("StyleBoxFlat_k2e45")
 metadata/_edit_use_anchors_ = true
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/MicButtons/RecordMasterButton"]
+self_modulate = Color(1, 1, 1, 0)
 z_index = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -1400,11 +1426,24 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_kwxat")]
 position = Vector2(399, -160)
+rotation = 3.1415927
 
 [node name="MicButtonLocation" parent="UserInterface/ChaosPad" index="0"]
-position = Vector2(0, -131.72)
+position = Vector2(-0.999997, -99)
 
-[node name="Triangle" parent="UserInterface/ChaosPad" index="1"]
+[node name="ChaosIconTop" type="Sprite2D" parent="UserInterface/ChaosPad"]
+z_index = 1
+position = Vector2(-1.2745056, -99.41176)
+rotation = 3.1415925
+scale = Vector2(0.39000002, 0.39000002)
+texture = ExtResource("47_owhal")
+
+[node name="ChaosIconBack" type="Sprite2D" parent="UserInterface/ChaosPad/ChaosIconTop"]
+show_behind_parent = true
+scale = Vector2(2, 2)
+texture = ExtResource("75_pfx1i")
+
+[node name="Triangle" parent="UserInterface/ChaosPad" index="2"]
 texture = ExtResource("37_gsvbx")
 offset = Vector2(0, -25)
 

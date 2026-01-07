@@ -15,8 +15,17 @@ public partial class Manager : Node
 	[Export] public Node2D[] corners = new Node2D[3]; // left, top, right
 	[Export] public Node2D knob;
 	[Export] public Sprite2D chaosPadTriangleSprite;
-	[Export] public Label iconMain;
-	[Export] public Label iconAlt;
+
+	[Export] public Texture2D[] mainIcons; // 4
+	[Export] public Texture2D[] altIcons; // 4
+	[Export] public Texture2D[] mainIconSynths; // 2
+	[Export] public Texture2D[] altIconSynths; // 2
+	[Export] public Texture2D mainIconSong; // 1
+	[Export] public Texture2D altIconSong; // 1
+
+	[Export] public Sprite2D mainIcon;
+	[Export] public Sprite2D altIcon;
+
 	public Vector3 weights;
 	public float outerTriangleSize = 60;
 	public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
@@ -111,26 +120,8 @@ public partial class Manager : Node
 		SamplesMixing_StartTriangleColorChange(0.2f);
 
 		// update icons
-		if (SamplesMixing_activeRing == 0)
-		{
-			iconMain.Text = "👟";
-			iconAlt.Text = "👞";
-		}
-		if (SamplesMixing_activeRing == 1)
-		{
-			iconMain.Text = "👏";
-			iconAlt.Text = "🥊";
-		}
-		if (SamplesMixing_activeRing == 2)
-		{
-			iconMain.Text = "📣";
-			iconAlt.Text = "📢";
-		}
-		if (SamplesMixing_activeRing == 3)
-		{
-			iconMain.Text = "⌚";
-			iconAlt.Text = "⏰";
-		}
+		mainIcon.Texture = mainIcons[SamplesMixing_activeRing];
+		altIcon.Texture = altIcons[SamplesMixing_activeRing];
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -268,16 +259,8 @@ public partial class Manager : Node
 		SynthMixing_StartTriangleColorChange(0.2f);
 
 		// update icons
-		if (SynthMixing_activeSynth == 0)
-		{
-			iconMain.Text = "🤖";
-			iconAlt.Text = "🎹";
-		}
-		if (SynthMixing_activeSynth == 1)
-		{
-			iconMain.Text = "🤖";
-			iconAlt.Text = "🎹";
-		}
+		mainIcon.Texture = mainIconSynths[SynthMixing_activeSynth];
+		altIcon.Texture = altIconSynths[SynthMixing_activeSynth];
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -462,8 +445,8 @@ public partial class Manager : Node
 		SongMixing_StartTriangleColorChange(0.2f);
 
 		// update icons
-		iconMain.Text = "🤖";
-		iconAlt.Text = "🪗";
+		mainIcon.Texture = mainIconSong;
+		altIcon.Texture = mainIconSong;
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);

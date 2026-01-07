@@ -1,4 +1,4 @@
-[gd_scene load_steps=98 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=100 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -74,6 +74,8 @@
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
 [ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
+[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
@@ -153,7 +155,7 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
-bg_color = Color(0.56, 0.1064, 0.56, 1)
+bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
 draw_center = false
 border_width_left = 4
 border_width_top = 4
@@ -165,8 +167,13 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kqrg6"]
-bg_color = Color(0.92, 0.1748, 0.92, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jekl6"]
+bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
@@ -1047,7 +1054,7 @@ metadata/_edit_use_anchors_ = true
 [node name="SongSelectButton" type="Sprite2D" parent="UserInterface/Buttons"]
 z_index = -4
 position = Vector2(-580, -146.258)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("47_owhal")
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/SongSelectButton"]
@@ -1077,10 +1084,10 @@ anchors_preset = -1
 anchor_top = -0.0214987
 anchor_right = 0.011338258
 anchor_bottom = -0.0214987
-offset_left = -603.0
-offset_top = -233.00005
-offset_right = -503.00003
-offset_bottom = -108.000046
+offset_left = -597.00006
+offset_top = -297.52097
+offset_right = -497.0001
+offset_bottom = -172.52097
 scale = Vector2(0.7815966, 0.7815966)
 metadata/_edit_use_anchors_ = true
 
@@ -1100,10 +1107,16 @@ grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/SongSelectButton"]
+self_modulate = Color(1, 1, 1, 0)
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("23_ynmfv")
+
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, -71.257965)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("48_uv6w5")
 script = ExtResource("14_4mig3")
 button = NodePath("Button")
@@ -1149,10 +1162,15 @@ grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton0"]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("25_nay3j")
+
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 3.7420502)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("50_r7bbj")
 script = ExtResource("14_4mig3")
 ring = 1
@@ -1199,10 +1217,15 @@ grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton1"]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("26_ovafv")
+
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 78.742035)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("51_e5peh")
 script = ExtResource("14_4mig3")
 ring = 2
@@ -1237,6 +1260,7 @@ texture_scale = 1.71
 offset_left = -591.0
 offset_right = -491.9316
 offset_bottom = 53.06669
+scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton2"]
@@ -1255,10 +1279,16 @@ grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton2"]
+z_index = -1
+position = Vector2(0, 6.7202654)
+scale = Vector2(2, 2)
+texture = ExtResource("27_owhal")
+
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 153.74205)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("52_f6rfp")
 script = ExtResource("14_4mig3")
 ring = 3
@@ -1294,6 +1324,7 @@ offset_left = -590.0
 offset_top = 60.999992
 offset_right = -490.58047
 offset_bottom = 149.48396
+scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton3"]
@@ -1312,10 +1343,16 @@ grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton3"]
+z_index = -1
+position = Vector2(2.2401123, -11.200439)
+scale = Vector2(2, 2)
+texture = ExtResource("28_uv6w5")
+
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 228.742)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("53_sasc4")
 script = ExtResource("33_aqgau")
 button = NodePath("Button")
@@ -1366,10 +1403,15 @@ grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/GreenSelectButton"]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("61_jekl6")
+
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 303.7)
-scale = Vector2(0.51, 0.51)
+scale = Vector2(0.35, 0.35)
 texture = ExtResource("55_pfx1i")
 script = ExtResource("33_aqgau")
 id = 1
@@ -1405,6 +1447,7 @@ offset_left = -599.0
 offset_top = 149.00002
 offset_right = -505.36505
 offset_bottom = 241.64409
+scale = Vector2(0.835, 0.835)
 pivot_offset = Vector2(50, 35)
 metadata/_edit_use_anchors_ = true
 
@@ -1423,6 +1466,11 @@ grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/PurpleSelectButton"]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("62_v1mrv")
 
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_kwxat")]
 position = Vector2(399, -160)
@@ -1594,7 +1642,7 @@ theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_aa8k8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_kqrg6")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jekl6")
 max_value = 1.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true

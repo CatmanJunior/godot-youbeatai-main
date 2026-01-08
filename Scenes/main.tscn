@@ -392,8 +392,8 @@ knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
 chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 mainIcons = Array[Texture2D]([ExtResource("48_uv6w5"), ExtResource("50_r7bbj"), ExtResource("51_e5peh"), ExtResource("20_sasc4")])
 altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), ExtResource("23_jekl6"), ExtResource("52_f6rfp")])
-mainIconSynths = Array[Texture2D]([ExtResource("53_sasc4"), ExtResource("26_v1mrv")])
-altIconSynths = Array[Texture2D]([ExtResource("55_pfx1i"), ExtResource("26_v1mrv")])
+mainIconSynths = Array[Texture2D]([ExtResource("53_sasc4"), ExtResource("55_pfx1i")])
+altIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
 mainIconSong = ExtResource("47_owhal")
 altIconSong = ExtResource("26_v1mrv")
 mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
@@ -1479,6 +1479,10 @@ rotation = 3.1415927
 [node name="MicButtonLocation" parent="UserInterface/ChaosPad" index="0"]
 position = Vector2(-0.999997, -99)
 
+[node name="Triangle" parent="UserInterface/ChaosPad" index="1"]
+texture = ExtResource("37_gsvbx")
+offset = Vector2(0, -25)
+
 [node name="ChaosIconTop" type="Sprite2D" parent="UserInterface/ChaosPad"]
 z_index = 1
 position = Vector2(-1.2745056, -99.41176)
@@ -1490,10 +1494,6 @@ texture = ExtResource("47_owhal")
 show_behind_parent = true
 scale = Vector2(2, 2)
 texture = ExtResource("75_pfx1i")
-
-[node name="Triangle" parent="UserInterface/ChaosPad" index="2"]
-texture = ExtResource("37_gsvbx")
-offset = Vector2(0, -25)
 
 [node name="SwitchLayerButtons" type="Node" parent="UserInterface"]
 

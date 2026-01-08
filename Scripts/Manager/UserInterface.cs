@@ -202,13 +202,8 @@ public partial class Manager : Node
 
 				sprite.Texture = active ? filled_beat_textures[ring] : outline_beat_textures[ring];
 
-				var color = (colors[ring] + colorsOverride[ring]) / 2;
-				if (beat == BpmManager.instance.currentBeat)
-				{
-					if (active) color = color.Lightened(0.75f);
-					else color = new(1, 1, 1, 0.5f);
-				}
-				else if (!active) color.A = 0.2f;
+				var color = new Color(1, 1, 1, 1f);
+				if (beat == BpmManager.instance.currentBeat && active) color = color.Lightened(0.75f);
 				sprite.Modulate = color;
 
 				float scale = 1;

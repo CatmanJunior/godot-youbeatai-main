@@ -66,6 +66,18 @@ public partial class Manager : Node
 
 		if (isShowingCountDown) UpdateCountDownLabel();
 
+		if (SamplesMixing_activeRing == 0) ((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = filled_beat_textures[0];
+		else ((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = outline_beat_textures[0];
+
+		if (SamplesMixing_activeRing == 1) ((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = filled_beat_textures[1];
+		else ((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = outline_beat_textures[1];
+
+		if (SamplesMixing_activeRing == 2) ((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = filled_beat_textures[2];
+		else ((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = outline_beat_textures[2];
+
+		if (SamplesMixing_activeRing == 3) ((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = filled_beat_textures[3];
+		else ((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = outline_beat_textures[3];
+
 		UpdateLayerOutlineSpriteRotation();
 
 		if (!Input.IsKeyPressed(Key.Shift) && Input.IsKeyPressed(Key.F6) && BpmManager.instance.bpm != 900) BpmManager.instance.bpm = 900;

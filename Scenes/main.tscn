@@ -1084,10 +1084,10 @@ anchors_preset = -1
 anchor_top = -0.0214987
 anchor_right = 0.011338258
 anchor_bottom = -0.0214987
-offset_left = -597.00006
-offset_top = -297.52097
-offset_right = -497.0001
-offset_bottom = -172.52097
+offset_left = -601.00006
+offset_top = -321.52097
+offset_right = -501.0001
+offset_bottom = -196.52097
 scale = Vector2(0.7815966, 0.7815966)
 metadata/_edit_use_anchors_ = true
 

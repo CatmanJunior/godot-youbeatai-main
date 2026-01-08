@@ -46,6 +46,11 @@ public partial class Manager : Node
 		layerVoiceOver1.bigLine.SelfModulate = colors[5];
 		layerVoiceOver0.smallLine.SelfModulate = colors[4];
 		layerVoiceOver1.smallLine.SelfModulate = colors[5];
+
+		originalDraganddropButton0Scale = draganddropButton0.Scale.X;
+		originalDraganddropButton1Scale = draganddropButton1.Scale.X;
+		originalDraganddropButton2Scale = draganddropButton2.Scale.X;
+		originalDraganddropButton3Scale = draganddropButton3.Scale.X;
 	}
 
 	private void UtteranceEnd(int utterancId)

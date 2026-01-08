@@ -179,13 +179,18 @@ public partial class Manager : Node
 		}
 	}
 
+	float originalDraganddropButton0Scale;
+	float originalDraganddropButton1Scale;
+	float originalDraganddropButton2Scale;
+	float originalDraganddropButton3Scale;
+
 	private void UpdateBeatSprites(double delta)
 	{
 		// update drag and drop button sprite scale
-		if (draganddropButton0.Scale.X > 2) draganddropButton0.Scale -= Vector2.One * (float)delta * 2;
-		if (draganddropButton1.Scale.X > 2) draganddropButton1.Scale -= Vector2.One * (float)delta * 2;
-		if (draganddropButton2.Scale.X > 2) draganddropButton2.Scale -= Vector2.One * (float)delta * 2;
-		if (draganddropButton3.Scale.X > 2) draganddropButton3.Scale -= Vector2.One * (float)delta * 2;
+		if (draganddropButton0.Scale.X > originalDraganddropButton0Scale) draganddropButton0.Scale -= Vector2.One * (float)delta * 2;
+		if (draganddropButton1.Scale.X > originalDraganddropButton1Scale) draganddropButton1.Scale -= Vector2.One * (float)delta * 2;
+		if (draganddropButton2.Scale.X > originalDraganddropButton2Scale) draganddropButton2.Scale -= Vector2.One * (float)delta * 2;
+		if (draganddropButton3.Scale.X > originalDraganddropButton3Scale) draganddropButton3.Scale -= Vector2.One * (float)delta * 2;
 
 		// update beat sprites
 		for (int beat = 0; beat < BpmManager.beatsAmount; beat++)

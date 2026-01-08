@@ -123,15 +123,23 @@ public partial class Manager : Node
 		if (klappylightvalue < 0.05f) klappylightvalue = 0;
 		klappyLight.Energy = klappylightvalue;
 
-		for (int i = 0; i < ringVolumeLights.Length; i++)
+		Sprite2D[] glow = new Sprite2D[4];
+		glow[0] = (Sprite2D)draganddropButton0.FindChild("Glow");
+		glow[1] = (Sprite2D)draganddropButton1.FindChild("Glow");
+		glow[2] = (Sprite2D)draganddropButton2.FindChild("Glow");
+		glow[3] = (Sprite2D)draganddropButton3.FindChild("Glow");
+
+		for (int i = 0; i < glow.Length; i++)
 		{
-			var ringLight = ringVolumeLights[i];
+			var ringLight = glow[i];
 			var busindex = AudioServer.GetBusIndex($"Ring{i}");
 			var analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(busindex, 0);
 			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
 			var volume = magnitude.Length() * 10f;
-			if (volume > 0.10f) ringLight.Energy = volume;
-			else ringLight.Energy = 0f;
+			float alpha = 0f;
+			if (volume > 0.10f) alpha = volume;
+			else alpha = 0f;
+			ringLight.SelfModulate = new Color(1, 1, 1, alpha);
 		}
 
 		UpdateGreenPurpleButtonLights();

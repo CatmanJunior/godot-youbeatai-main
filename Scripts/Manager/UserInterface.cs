@@ -90,7 +90,6 @@ public partial class Manager : Node
 	Sprite2D[,] templateSprites;
 	[Export] public Color[] colors;
 	public Color[] colorsOverride;
-	[Export] public Light2D[] ringVolumeLights;
 	[Export] PointLight2D micVolumeLight;
 	[Export] PointLight2D klappyLight;
 	[Export] public Sprite2D activateGreenChaosButton;

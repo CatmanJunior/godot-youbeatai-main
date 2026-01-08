@@ -41,8 +41,8 @@ public partial class DragAndDropButton : Sprite2D
 		d_pressed = Input.IsKeyPressed(Key.F);
 		if (d_pressed != d_pressed_lastframe && ring == 3 && d_pressed && !Manager.instance.emailPromptOpen) OnPress();
 
-		if (button.ButtonPressed) SelfModulate = Manager.instance.colors[ring];
-		else SelfModulate = Manager.instance.colors[ring] * 0.8f;
+		// if (button.ButtonPressed) SelfModulate = Manager.instance.colors[ring];
+		// else SelfModulate = Manager.instance.colors[ring] * 0.8f;
     }
 
 	public void OnPress()

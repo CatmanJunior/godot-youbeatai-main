@@ -104,7 +104,7 @@ shape = SubResource("CircleShape2D_rq0eu")
 [node name="Tutorial_interactpoints" type="Node2D" parent="."]
 
 [node name="Piano" type="Node2D" parent="Tutorial_interactpoints"]
-position = Vector2(116.00001, 76)
+position = Vector2(-118.99999, 76)
 scale = Vector2(1.5, 1.5)
 
 [node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano" node_paths=PackedStringArray("anim_player")]

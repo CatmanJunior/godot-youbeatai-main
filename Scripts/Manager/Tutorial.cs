@@ -65,7 +65,7 @@ public static class Tutorial
 
         // kick ring
         (
-            instruction:     "Deze rode cirkels vormen een kick-ring",
+            instruction:     "Deze roze cirkels vormen een kick-ring",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: null
         ),
@@ -260,9 +260,9 @@ public static class Tutorial
             }
         ),
 
-        // groene laag
+        // gele laag
         (
-            instruction: "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
+            instruction: "Dit is de gele bass-ring. Klik op de beer 🐻 om de gele laag te kiezen en een brommende melodie toe te voegen",
             condition: () =>
             {
                 returnPlayer(manager.activateGreenChaosButton).Play("Bear_pulse");

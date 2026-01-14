@@ -23,7 +23,7 @@ public static class Achievements
     [
         Achievement(
             condition: ActiveBeatsPerRing(0) >= 4,
-            tooltip: "Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij.",
+            tooltip: "Door 4 beats te plaatsen op de roze ring speel je deze Snare vrij.",
             result: () => { manager.SetRingVisibility(2, true); }
         ),
         Achievement(
@@ -33,7 +33,7 @@ public static class Achievements
         ),
         Achievement(
             condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null && pauseBetweenSynthUnlock(),
-            tooltip: "Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
+            tooltip: "Door de gele ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
             result: () => { manager.layerVoiceOver1.bigLine.Visible = true; }
         ),
         Achievement(

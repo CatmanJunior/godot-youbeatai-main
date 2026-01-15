@@ -1,4 +1,4 @@
-[gd_scene load_steps=103 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=104 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -79,6 +79,7 @@
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
+[ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
@@ -1150,12 +1151,13 @@ anchor_left = 0.106461525
 anchor_top = 0.12904227
 anchor_right = 0.8935385
 anchor_bottom = 0.87095773
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
+offset_left = -85.83238
+offset_top = -81.7338
+offset_right = -85.83238
+offset_bottom = -81.7338
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.445, 1.445)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -1204,12 +1206,13 @@ anchor_left = 0.106461525
 anchor_top = 0.12904227
 anchor_right = 0.8935385
 anchor_bottom = 0.87095773
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
+offset_left = -94.79274
+offset_top = -85.4513
+offset_right = -94.79274
+offset_bottom = -85.4513
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5353229, 1.5353229)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -1265,12 +1268,13 @@ anchor_left = 0.106461525
 anchor_top = 0.12904227
 anchor_right = 0.8935385
 anchor_bottom = 0.87095773
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
+offset_left = -92.55265
+offset_top = -82.44841
+offset_right = -92.55265
+offset_bottom = -82.44841
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.6205204, 1.6205204)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -1328,12 +1332,13 @@ anchor_left = 0.106461525
 anchor_top = 0.12904227
 anchor_right = 0.8935385
 anchor_bottom = 0.87095773
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
+offset_left = -94.79274
+offset_top = -92.886154
+offset_right = -94.79274
+offset_bottom = -92.886154
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.6409695, 1.6409695)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -1394,12 +1399,13 @@ anchor_left = 0.106461525
 anchor_top = 0.12904227
 anchor_right = 0.8935385
 anchor_bottom = 0.87095773
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
+offset_left = -94.79274
+offset_top = -87.64309
+offset_right = -94.79274
+offset_bottom = -87.64309
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.601768, 1.601768)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -1464,12 +1470,13 @@ anchor_left = 0.106461525
 anchor_top = 0.12904227
 anchor_right = 0.8935385
 anchor_bottom = 0.87095773
-offset_left = -64.0
-offset_top = -64.0
-offset_right = -64.0
-offset_bottom = -64.0
+offset_left = -94.79274
+offset_top = -93.48059
+offset_right = -94.79274
+offset_bottom = -93.48059
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.5861195, 1.5861195)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
@@ -1494,6 +1501,13 @@ position = Vector2(-0.999997, -99)
 [node name="Triangle" parent="UserInterface/ChaosPad" index="1"]
 texture = ExtResource("67_qnggo")
 offset = Vector2(0, -25)
+
+[node name="KnobSprite" parent="UserInterface/ChaosPad/Triangle" index="3"]
+scale = Vector2(1, 1)
+texture = ExtResource("68_tab3y")
+
+[node name="Area2D" parent="UserInterface/ChaosPad/Triangle/KnobSprite" index="0"]
+scale = Vector2(0.25, 0.25)
 
 [node name="ChaosIconTop" type="Sprite2D" parent="UserInterface/ChaosPad"]
 z_index = 1

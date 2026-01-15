@@ -64,7 +64,7 @@ public partial class Manager : Node
     {
         foreach(var child in chaosPadTriangleSprite.GetParent().GetChildren() )
         {
-            if( child is Sprite2D && child.Name == "ChaosIconTop")
+            if( child.GetType() == typeof(Sprite2D) && child.Name == "ChaosIconTop")
             {
                 ChaosIconTop = child as Sprite2D;
             }

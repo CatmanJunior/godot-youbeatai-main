@@ -1511,7 +1511,7 @@ texture = ExtResource("68_tab3y")
 scale = Vector2(0.25, 0.25)
 
 [node name="ChaosIconTop" type="Sprite2D" parent="UserInterface/ChaosPad"]
-z_index = 1
+z_index = 3
 position = Vector2(-1.2745056, -99.41176)
 rotation = 3.1415925
 scale = Vector2(0.39000002, 0.39000002)
@@ -1519,6 +1519,8 @@ texture = ExtResource("47_owhal")
 
 [node name="ChaosIconBack" type="Sprite2D" parent="UserInterface/ChaosPad/ChaosIconTop"]
 show_behind_parent = true
+z_index = 1
+z_as_relative = false
 scale = Vector2(2, 2)
 texture = ExtResource("75_pfx1i")
 

@@ -69,58 +69,72 @@ public partial class Manager : Node
 
 		if (isShowingCountDown) UpdateCountDownLabel();
 
+		var ring_button_outline_0 = (Sprite2D)draganddropButton0.FindChild("OutlineSprite");
+		var ring_button_outline_1 = (Sprite2D)draganddropButton1.FindChild("OutlineSprite");
+		var ring_button_outline_2 = (Sprite2D)draganddropButton2.FindChild("OutlineSprite");
+		var ring_button_outline_3 = (Sprite2D)draganddropButton3.FindChild("OutlineSprite");
+
 		if (chaosPadMode == ChaosPadMode.SampleMixing)
 		{
-			if (SamplesMixing_activeRing == 0) ((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = filled_beat_textures[0];
-			else ((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = outline_beat_textures[0];
-
-			if (SamplesMixing_activeRing == 1) ((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = filled_beat_textures[1];
-			else ((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = outline_beat_textures[1];
-
-			if (SamplesMixing_activeRing == 2) ((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = filled_beat_textures[2];
-			else ((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = outline_beat_textures[2];
-
-			if (SamplesMixing_activeRing == 3) ((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = filled_beat_textures[3];
-			else ((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = outline_beat_textures[3];
+			if (SamplesMixing_activeRing == 0) ring_button_outline_0.Texture = filled_beat_textures[0];
+			else ring_button_outline_0.Texture = outline_beat_textures[0];
+			if (SamplesMixing_activeRing == 1) ring_button_outline_1.Texture = filled_beat_textures[1];
+			else ring_button_outline_1.Texture = outline_beat_textures[1];
+			if (SamplesMixing_activeRing == 2) ring_button_outline_2.Texture = filled_beat_textures[2];
+			else ring_button_outline_2.Texture = outline_beat_textures[2];
+			if (SamplesMixing_activeRing == 3) ring_button_outline_3.Texture = filled_beat_textures[3];
+			else ring_button_outline_3.Texture = outline_beat_textures[3];
 		}
 		else
 		{
-			((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = outline_beat_textures[0];
-			((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = outline_beat_textures[1];
-			((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = outline_beat_textures[2];
-			((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = outline_beat_textures[3];
+			ring_button_outline_0.Texture = outline_beat_textures[0];
+			ring_button_outline_1.Texture = outline_beat_textures[1];
+			ring_button_outline_2.Texture = outline_beat_textures[2];
+			ring_button_outline_3.Texture = outline_beat_textures[3];
 		}
 
-		if (chaosPadMode == ChaosPadMode.SynthMixing)
+		var yellow_back = (Sprite2D)activateGreenChaosButton.FindChild("BackSprite");
+		var yellow_outline = (Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite");
+		var purple_back = (Sprite2D)activatePurpleChaosButton.FindChild("BackSprite");
+		var purple_outline = (Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite");
+
+		float progression = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        if (progression == float.NaN) progression = 0;
+
+        if (chaosPadMode == ChaosPadMode.SynthMixing)
 		{
 			if (SynthMixing_activeSynth == 0)
 			{
-				((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = true;
-				((Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite")).Texture = outline_synth_textures[0];
+				yellow_back.Visible = true;
+				yellow_outline.Texture = outline_synth_textures[0];
+				yellow_outline.RotationDegrees = progression * 360f + 30f;
 			}
 			else
 			{
-				((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = false;
-				((Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[0];
+				yellow_back.Visible = false;
+				yellow_outline.Texture = dotted_synth_textures[0];
 			}
 
 			if (SynthMixing_activeSynth == 1)
 			{
-				((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = true;
-				((Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite")).Texture = outline_synth_textures[1];
+				purple_back.Visible = true;
+				purple_outline.Texture = outline_synth_textures[1];
+				purple_outline.RotationDegrees = progression * 360f + 30f;
 			}
 			else
 			{
-				((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = false;
-				((Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[1];
+				purple_back.Visible = false;
+				purple_outline.Texture = dotted_synth_textures[1];
 			}
 		}
 		else
 		{
-			((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = false;
-			((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = false;
-			((Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[0];
-			((Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[1];
+			yellow_back.Visible = false;
+			purple_back.Visible = false;
+			yellow_outline.Texture = dotted_synth_textures[0];
+			purple_outline.Texture = dotted_synth_textures[1];
+			yellow_outline.RotationDegrees = 30f;
+			purple_outline.RotationDegrees = 30f;
 		}
 
 		UpdateLayerOutlineSpriteRotation();

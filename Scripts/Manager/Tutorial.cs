@@ -533,6 +533,7 @@ public static class Tutorial
             manager.pointer.Visible = false;
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
+            manager.settingsButton.Visible = true;
             manager.achievementspanel.Visible = true;
             manager.ContinueButton.Pressed += _tutorialContinue;
             manager.PianoArea.AreaEntered += _bodyContinue;

@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=101 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -73,6 +73,7 @@
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="52_gsvbx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
 [ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
+[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="53_uv6w5"]
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
@@ -1403,6 +1404,12 @@ z_index = -1
 scale = Vector2(2, 2)
 texture = ExtResource("61_jekl6")
 
+[node name="BackSprite" type="Sprite2D" parent="UserInterface/Buttons/GreenSelectButton"]
+visible = false
+modulate = Color(1, 1, 1, 0.3137255)
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("53_uv6w5")
+
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-580, 303.7)
@@ -1466,6 +1473,12 @@ metadata/_edit_use_anchors_ = true
 z_index = -1
 scale = Vector2(2, 2)
 texture = ExtResource("62_v1mrv")
+
+[node name="BackSprite" type="Sprite2D" parent="UserInterface/Buttons/PurpleSelectButton"]
+visible = false
+modulate = Color(1, 1, 1, 0.3137255)
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("53_uv6w5")
 
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_kwxat")]
 position = Vector2(399, -160)

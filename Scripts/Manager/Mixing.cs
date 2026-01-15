@@ -270,7 +270,7 @@ public partial class Manager : Node
 		chaosPadMode = ChaosPadMode.SynthMixing;
 
 		// ring color brightness change
-		SynthMixing_StartLineColorChange(0.3f);
+		// SynthMixing_StartLineColorChange(0.3f);
 		SynthMixing_StartLineSizeChange(0.3f);
 	}
 

@@ -271,7 +271,8 @@ public static class Tutorial
             outcome: () =>
             {
                 manager.SetMicRecorderVisibility(true);
-                manager.knob.GlobalPosition = _top.GlobalPosition;
+                Vector2 calcPos = new Vector2(0, -60);
+                manager.knob.GlobalPosition = _top.GlobalPosition += calcPos;
                 allowed = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 returnPlayer(manager.activateGreenChaosButton).Stop();

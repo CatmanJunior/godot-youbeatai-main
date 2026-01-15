@@ -199,7 +199,7 @@ public partial class Manager : Node
 			var volume = DbToLinear((left + right) / 2f);
 			float alpha = volume > 0.05f ? volume * 3 : 0f;
 			ringLight.SelfModulate = new Color(1, 1, 1, alpha);
-			GD.Print($"ring{i} had alpha: {alpha}");
+			// GD.Print($"ring{i} had alpha: {alpha}");
 		}
 
 		float DbToLinear(float db) => Mathf.Pow(10f, db / 20f);

@@ -33,14 +33,26 @@ public partial class SoundBankSelectionMenu : Panel
 	{
 		chosenEmotions = new List<string>();
 		chosenThemes = new List<string>();
+
+		var AddOrRemoveEmotion = (CheckButton emotionToggle) =>
+		{
+			if (chosenEmotions.Count >= 2) return;
+			var label = (Label)emotionToggle.GetParent();
+			if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
+			else chosenEmotions.Remove(label.Text);
+		};
+
+		var AddOrRemoveTheme = (CheckButton themeToggle) =>
+		{
+			if (chosenEmotions.Count >= 2) return;
+			var label = (Label)themeToggle.GetParent();
+			if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
+			else chosenThemes.Remove(label.Text);
+		};
+
 		foreach (var emotionToggle in emotionToggles)
 		{
-			var label = (Label)emotionToggle.GetParent();
-			emotionToggle.Pressed += () =>
-			{
-				if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
-				if (!emotionToggle.ButtonPressed) chosenEmotions.Remove(label.Text);
-			};
+			emotionToggle.Pressed += () => AddOrRemoveEmotion(emotionToggle);
 
 			var icon = emotionToggle.GetParent() as Label;
 			icon.GuiInput += (InputEvent args) =>
@@ -48,20 +60,14 @@ public partial class SoundBankSelectionMenu : Panel
 				if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
 				{
 					emotionToggle.ButtonPressed = !emotionToggle.ButtonPressed;
-					if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
-					if (!emotionToggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+					AddOrRemoveEmotion(emotionToggle);
 				}
 			};
 		}
 
 		foreach (var themeToggle in themeToggles)
 		{
-			var label = (Label)themeToggle.GetParent();
-			themeToggle.Pressed += () =>
-			{
-				if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
-				if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
-			};
+			themeToggle.Pressed += () => AddOrRemoveTheme(themeToggle);
 
 			var icon = themeToggle.GetParent() as Label;
 			icon.GuiInput += (InputEvent args) =>
@@ -69,8 +75,7 @@ public partial class SoundBankSelectionMenu : Panel
 				if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
 				{
 					themeToggle.ButtonPressed = !themeToggle.ButtonPressed;
-					if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
-					if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
+					AddOrRemoveTheme(themeToggle);
 				}
 			};
 
@@ -83,6 +88,7 @@ public partial class SoundBankSelectionMenu : Panel
 			{
 				DisplayServer.TtsStop();
 			}
+
 			// remember beat amount
 			{
 				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");

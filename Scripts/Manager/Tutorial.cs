@@ -201,7 +201,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
+            instruction: "Jouw beurt! Vul nóg 2 oranje vierkante in door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
             outcome: ()=>
             {
@@ -210,7 +210,7 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }),
         (
-            instruction: "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
+            instruction: "Haal nu ook 1 van de ingevulde cirkels of vierkante weg door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
             outcome: () =>
             {
@@ -401,7 +401,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje ",
+            instruction: "Beweeg het zwart rondje naar het 🌟 sterretje ",
             condition: () => false,
             outcome: () =>
             {

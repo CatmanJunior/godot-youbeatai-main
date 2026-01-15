@@ -93,16 +93,34 @@ public partial class Manager : Node
 
 		if (chaosPadMode == ChaosPadMode.SynthMixing)
 		{
-			if (SynthMixing_activeSynth == 0) ((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = true;
-			else ((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = false;
+			if (SynthMixing_activeSynth == 0)
+			{
+				((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = true;
+				((Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite")).Texture = outline_synth_textures[0];
+			}
+			else
+			{
+				((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = false;
+				((Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[0];
+			}
 
-			if (SynthMixing_activeSynth == 1) ((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = true;
-			else ((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = false;	
+			if (SynthMixing_activeSynth == 1)
+			{
+				((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = true;
+				((Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite")).Texture = outline_synth_textures[1];
+			}
+			else
+			{
+				((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = false;
+				((Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[1];
+			}
 		}
 		else
 		{
 			((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).Visible = false;
-			((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = false;	
+			((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).Visible = false;
+			((Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[0];
+			((Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite")).Texture = dotted_synth_textures[1];
 		}
 
 		UpdateLayerOutlineSpriteRotation();

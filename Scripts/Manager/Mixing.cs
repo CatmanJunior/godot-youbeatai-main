@@ -446,7 +446,7 @@ public partial class Manager : Node
 
 		// update icons
 		mainIcon.Texture = mainIconSong;
-		altIcon.Texture = mainIconSong;
+		altIcon.Texture = altIconSong;
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);

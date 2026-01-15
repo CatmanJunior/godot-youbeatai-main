@@ -1,4 +1,4 @@
-[gd_scene load_steps=104 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=105 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -47,6 +47,7 @@
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="27_owhal"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="28_1tvlp"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="28_uv6w5"]
@@ -398,7 +399,7 @@ mainIcons = Array[Texture2D]([ExtResource("48_uv6w5"), ExtResource("50_r7bbj"), 
 altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), ExtResource("23_jekl6"), ExtResource("52_f6rfp")])
 mainIconSynths = Array[Texture2D]([ExtResource("53_sasc4"), ExtResource("55_pfx1i")])
 altIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
-mainIconSong = ExtResource("47_owhal")
+mainIconSong = ExtResource("28_1tvlp")
 altIconSong = ExtResource("26_v1mrv")
 mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
@@ -1060,7 +1061,7 @@ metadata/_edit_use_anchors_ = true
 z_index = -4
 position = Vector2(-580, -146.258)
 scale = Vector2(0.35, 0.35)
-texture = ExtResource("47_owhal")
+texture = ExtResource("28_1tvlp")
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/SongSelectButton"]
 visible = false

@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 public class BeatStateChanger
 {
@@ -18,6 +19,39 @@ public class BeatStateChanger
         3.0f,
         1.0f,
     ];
+
+    static void OpenTooltip(string text)
+    {
+        manager.achievementspanel.Visible = true;
+        manager.InstructionLabel.Text = text;
+        SpeakTooltip(text);
+    }
+
+    static void SpeakTooltip(string text)
+    {
+        if (manager.muteSpeach.ButtonPressed) return;
+        var voices = DisplayServer.TtsGetVoicesForLanguage("nl");
+        if (voices.Length == 0) voices = DisplayServer.TtsGetVoicesForLanguage("en");
+        if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+        DisplayServer.TtsSpeak(text, voices[0], 100);
+    }
+
+    static void StartLoopToCheckIfTooltipCanClose()
+    {
+        if (manager == null) return;
+        manager.GetTree().CreateTimer(0.4).Timeout += () =>
+        {
+            if (DisplayServer.TtsIsSpeaking()) StartLoopToCheckIfTooltipCanClose();
+            else CloseTooltip();
+        };
+    }
+
+    static void CloseTooltip()
+    {
+        manager.InstructionLabel.Text = "";
+        manager.achievementspanel.Visible = false;
+        if (DisplayServer.TtsIsSpeaking()) DisplayServer.TtsStop();
+    }
 
     public static void SetBeat(int ring, int beat, bool value)
     {
@@ -43,6 +77,8 @@ public class BeatStateChanger
             }
             else
             {
+                OpenTooltip("Speel nog wat muziek om me energie te geven!");
+                StartLoopToCheckIfTooltipCanClose();
                 return;
             }
         }

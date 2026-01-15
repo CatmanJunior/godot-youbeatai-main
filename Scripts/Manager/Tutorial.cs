@@ -53,6 +53,8 @@ public static class Tutorial
             condition: () => manager.clapped,
             outcome: () =>
             {
+                
+                
                 manager.pointer.Visible = true;
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
@@ -271,6 +273,7 @@ public static class Tutorial
             outcome: () =>
             {
                 manager.SetMicRecorderVisibility(true);
+                manager.ChaosIconTop.Visible = true;
                 Vector2 calcPos = new Vector2(0, -60);
                 manager.knob.GlobalPosition = _top.GlobalPosition += calcPos;
                 allowed = true;
@@ -383,6 +386,7 @@ public static class Tutorial
             {
                 //_active = true;
                 manager.chaosPadTriangleSprite.Visible = true;
+               
             }
         ),
         (
@@ -535,6 +539,10 @@ public static class Tutorial
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
             manager.achievementspanel.Visible = true;
+            manager.settingsButton.Visible = true;
+            Sprite2D parent = manager.SongSelectButton.GetParent() as Sprite2D;
+            parent.Visible = false;
+            GD.Print(manager.SongSelectButton);
             manager.ContinueButton.Pressed += _tutorialContinue;
             manager.PianoArea.AreaEntered += _bodyContinue;
             manager.InBetweenArea.AreaEntered += _bodyContinue;
@@ -676,7 +684,7 @@ public static class Tutorial
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-
+        
         _correctClapPlaySFX();
         _correctStompPlaySFX();
 

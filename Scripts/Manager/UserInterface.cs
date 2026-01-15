@@ -18,7 +18,7 @@ public partial class Manager : Node
 	[Export] Button BpmDownButton;
 
 	// idk
-	[Export] Button SongSelectButton;
+	[Export] public Button SongSelectButton;
 
 	// sample buttons
 	[Export] public Sprite2D draganddropButton0;
@@ -100,6 +100,7 @@ public partial class Manager : Node
 	[Export] public Area2D KnobArea;
 	[Export] public Label AmountLeft;
 	[Export] public Button greenLayerRecordButton;
+	public Sprite2D ChaosIconTop;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	private void SetCopyPasteClearButtonsActive(bool active)

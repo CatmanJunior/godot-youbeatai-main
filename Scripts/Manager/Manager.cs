@@ -33,6 +33,8 @@ public partial class Manager : Node
 		UpdateLayerButtonsUserInterfaceDelayed();
 		DisplayServer.TtsSetUtteranceCallback(DisplayServer.TtsUtteranceEvent.Ended, new Callable(this,nameof(UtteranceEnd)));
 
+		GD.Print(ProjectSettings.GlobalizePath("user://"));
+
 		// set chaos activate buttons colors (non drag drop buttons)
 		activateGreenChaosButton.SelfModulate = colors[4];
 		activatePurpleChaosButton.SelfModulate = colors[5];

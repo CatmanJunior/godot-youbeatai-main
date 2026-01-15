@@ -1456,9 +1456,9 @@ texture_scale = 1.71
 
 [node name="Blocker" parent="UserInterface/Buttons/PurpleSelectButton" instance=ExtResource("32_aa8k8")]
 offset_left = -599.0
-offset_top = 149.00002
+offset_top = 245.00003
 offset_right = -505.36505
-offset_bottom = 241.64409
+offset_bottom = 337.64413
 scale = Vector2(0.835, 0.835)
 pivot_offset = Vector2(50, 35)
 metadata/_edit_use_anchors_ = true

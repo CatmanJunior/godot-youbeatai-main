@@ -58,7 +58,6 @@
 [ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scenes/midi_helper.gd" id="31_v2nl5"]
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
-[ext_resource type="Texture2D" uid="uid://nogwhp8q00bt" path="res://Resources/Textures_New/KAOS.png" id="37_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="41_qnggo"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="42_tab3y"]
@@ -79,6 +78,7 @@
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
+[ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
@@ -1492,7 +1492,7 @@ rotation = 3.1415927
 position = Vector2(-0.999997, -99)
 
 [node name="Triangle" parent="UserInterface/ChaosPad" index="1"]
-texture = ExtResource("37_gsvbx")
+texture = ExtResource("67_qnggo")
 offset = Vector2(0, -25)
 
 [node name="ChaosIconTop" type="Sprite2D" parent="UserInterface/ChaosPad"]

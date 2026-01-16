@@ -18,6 +18,8 @@ public partial class SoundBankSelectionMenu : Panel
 	bool themeLimitReached => chosenThemesAmount >= 2;
 	bool emotionLimitReached => chosenEmotionsAmount >= 2;
 
+	bool chosenLimitForBoth => themeLimitReached && emotionLimitReached;
+
 	[Export] CheckButton[] emotionToggles;
 	[Export] CheckButton[] themeToggles;
 
@@ -37,14 +39,30 @@ public partial class SoundBankSelectionMenu : Panel
 
 	void OnEmotionToggle(CheckButton toggle, Label label)
 	{
-		if (toggle.ButtonPressed) chosenEmotions.Add(label.Text);
-		if (!toggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+		if (emotionLimitReached)
+		{
+			toggle.ButtonPressed = false;
+			chosenEmotions.Remove(label.Text);
+		}
+		else
+		{
+			if (toggle.ButtonPressed) chosenEmotions.Add(label.Text);
+			if (!toggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+		}
 	}
 
 	void OnThemeToggle(CheckButton toggle, Label label)
 	{
-		if (toggle.ButtonPressed) chosenThemes.Add(label.Text);
-		if (!toggle.ButtonPressed) chosenThemes.Remove(label.Text);
+		if (themeLimitReached)
+		{
+			toggle.ButtonPressed = false;
+			chosenThemes.Remove(label.Text);
+		}
+		else
+		{
+			if (toggle.ButtonPressed) chosenThemes.Add(label.Text);
+			if (!toggle.ButtonPressed) chosenThemes.Remove(label.Text);
+		}
 	}
 
 	void OnEmotionLabel(CheckButton toggle, Label label)
@@ -163,7 +181,7 @@ public partial class SoundBankSelectionMenu : Panel
 
 		gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ") " + "(" + elecStr + ")";
 
-		gebruikButton.Disabled = chosenSoundBank == null;
+		gebruikButton.Disabled = chosenSoundBank == null || !chosenLimitForBoth;
 
 		string emoticons = "";
 		foreach (var emoticon in chosenEmotions) emoticons += emoticon;

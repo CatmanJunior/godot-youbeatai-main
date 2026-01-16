@@ -12,6 +12,12 @@ public partial class SoundBankSelectionMenu : Panel
 	public static List<string> chosenThemes { get; private set; }
 	public static List<string> chosenEmotions { get; private set; }
 
+	int chosenThemesAmount => chosenThemes.Count;
+	int chosenEmotionsAmount => chosenEmotions.Count;
+
+	bool themeLimitReached => chosenThemesAmount >= 2;
+	bool emotionLimitReached => chosenEmotionsAmount >= 2;
+
 	[Export] CheckButton[] emotionToggles;
 	[Export] CheckButton[] themeToggles;
 
@@ -29,27 +35,47 @@ public partial class SoundBankSelectionMenu : Panel
 	Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
 	Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
 
+	void OnEmotionToggle(CheckButton toggle, Label label)
+	{
+		if (toggle.ButtonPressed) chosenEmotions.Add(label.Text);
+		if (!toggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+	}
+
+	void OnThemeToggle(CheckButton toggle, Label label)
+	{
+		if (toggle.ButtonPressed) chosenThemes.Add(label.Text);
+		if (!toggle.ButtonPressed) chosenThemes.Remove(label.Text);
+	}
+
+	void OnEmotionLabel(CheckButton toggle, Label label)
+	{
+		toggle.ButtonPressed = !toggle.ButtonPressed;
+		OnEmotionToggle(toggle, label);
+	}
+
+	void OnThemeLabel(CheckButton toggle, Label label)
+	{
+		toggle.ButtonPressed = !toggle.ButtonPressed;
+		OnThemeToggle(toggle, label);
+	}
+	
 	public override void _Ready()
 	{
 		chosenEmotions = new List<string>();
 		chosenThemes = new List<string>();
 		foreach (var emotionToggle in emotionToggles)
 		{
-			var label = (Label)emotionToggle.GetParent();
+			var label = emotionToggle.GetParent() as Label;
 			emotionToggle.Pressed += () =>
 			{
-				if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
-				if (!emotionToggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+				OnEmotionToggle(emotionToggle, label);
 			};
 
-			var icon = emotionToggle.GetParent() as Label;
-			icon.GuiInput += (InputEvent args) =>
+			label.GuiInput += (InputEvent args) =>
 			{
 				if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
 				{
-					emotionToggle.ButtonPressed = !emotionToggle.ButtonPressed;
-					if (emotionToggle.ButtonPressed) chosenEmotions.Add(label.Text);
-					if (!emotionToggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+					OnEmotionLabel(emotionToggle, label);
 				}
 			};
 		}
@@ -57,20 +83,17 @@ public partial class SoundBankSelectionMenu : Panel
 		foreach (var themeToggle in themeToggles)
 		{
 			var label = (Label)themeToggle.GetParent();
+
 			themeToggle.Pressed += () =>
 			{
-				if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
-				if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
+				OnThemeToggle(themeToggle, label);
 			};
 
-			var icon = themeToggle.GetParent() as Label;
-			icon.GuiInput += (InputEvent args) =>
+			label.GuiInput += (InputEvent args) =>
 			{
 				if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
 				{
-					themeToggle.ButtonPressed = !themeToggle.ButtonPressed;
-					if (themeToggle.ButtonPressed) chosenThemes.Add(label.Text);
-					if (!themeToggle.ButtonPressed) chosenThemes.Remove(label.Text);
+					OnThemeLabel(themeToggle, label);
 				}
 			};
 

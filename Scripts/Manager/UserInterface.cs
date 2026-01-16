@@ -171,8 +171,7 @@ public partial class Manager : Node
         Button.ButtonUp += () =>
         {
             layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
-			if (layerLoopToggle.ButtonPressed) SongMixing_ChangeToSongMixer();
-			else SamplesMixing_ChangeRing(0);
+			SongMixing_ChangeToSongMixer();
         };
 	}
 

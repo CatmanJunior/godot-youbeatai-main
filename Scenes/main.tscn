@@ -1493,7 +1493,7 @@ scale = Vector2(1.35, 1.35)
 texture = ExtResource("53_uv6w5")
 
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_kwxat")]
-position = Vector2(399, -160)
+position = Vector2(416, -160)
 rotation = 3.1415927
 
 [node name="MicButtonLocation" parent="UserInterface/ChaosPad" index="0"]

@@ -125,7 +125,17 @@ public partial class Manager : Node
 		SaveLayoutButton.Pressed += () => { CopyLayer(); PlayExtraSFX(metronomealt_sfx); };
 		LoadLayoutButton.Pressed += () => { PasteLayer(); PlayExtraSFX(metronomealt_sfx); };
 		ClearLayoutButton.Pressed += () => { ConfirmationPrompt.instance.Open(ClearLayer); PlayExtraSFX(metronomealt_sfx); };
-		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); PlayExtraSFX(metronomealt_sfx); };
+
+		addLayerButton.ButtonUp += () => 
+		{
+			OpenEmojiPrompt(); PlayExtraSFX(metronomealt_sfx);
+
+			if (!pressed_add_layer_once)
+			{
+				TooltipHelper.OpenTooltip("Oke nu gaat het echt beginnen, klick zometeen de songmode knop!");
+				TooltipHelper.StartLoopToCheckIfTooltipCanClose();
+			}
+		};
 
 		restartButton.Pressed += () =>
 		{

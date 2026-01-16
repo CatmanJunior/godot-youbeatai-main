@@ -3,6 +3,7 @@ using Godot;
 
 public partial class Manager : Node
 {
+    bool pressed_add_layer_once = false;
     public bool addedLayer = false;
     public bool loadedtemplate = false;
     public bool hassavedtofile = false;

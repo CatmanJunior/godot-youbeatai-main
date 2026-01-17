@@ -83,6 +83,15 @@
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
 
@@ -184,15 +193,6 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cuat"]
@@ -232,6 +232,127 @@ scale = Vector2(4.12, 1)
 
 [node name="AudioListener" type="AudioListener2D" parent="Camera"]
 current = true
+
+[node name="BeatRingPivotPoint" type="Node2D" parent="."]
+position = Vector2(-88, 24)
+
+[node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint"]
+
+[node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 34
+text = "⏯️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Cross" type="Node2D" parent="BeatRingPivotPoint"]
+
+[node name="Vertical" type="Sprite2D" parent="BeatRingPivotPoint/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal" type="Sprite2D" parent="BeatRingPivotPoint/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 1.5708
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Vertical2" type="Sprite2D" parent="BeatRingPivotPoint/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal2" type="Sprite2D" parent="BeatRingPivotPoint/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = -0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="BigLine0" type="Line2D" parent="BeatRingPivotPoint"]
+closed = true
+width = 4.0
+antialiased = true
+
+[node name="TextureProgressBar0" type="TextureProgressBar" parent="BeatRingPivotPoint"]
+offset_left = -265.0
+offset_top = -267.0
+offset_right = 247.0
+offset_bottom = 245.0
+scale = Vector2(1.05, 1.05)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("19_mlc13")
+tint_progress = Color(1, 1, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="BigLine1" type="Line2D" parent="BeatRingPivotPoint"]
+closed = true
+width = 5.0
+antialiased = true
+
+[node name="TextureProgressBar1" type="TextureProgressBar" parent="BeatRingPivotPoint"]
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(256, 256)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("19_mlc13")
+tint_progress = Color(0.516666, 0, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Pointer" type="Sprite2D" parent="BeatRingPivotPoint"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(0.6, 0.85)
+offset = Vector2(0, -150)
+
+[node name="PointLight2D" type="PointLight2D" parent="BeatRingPivotPoint/Pointer"]
+color = Color(1, 1, 0.698039, 1)
+energy = 4.71
+range_z_max = 100
+texture = ExtResource("26_7k868")
+offset = Vector2(0, -150)
 
 [node name="Managers" type="Node" parent="."]
 
@@ -377,7 +498,7 @@ position = Vector2(1239.05, -302)
 [node name="BPM" type="Node" parent="Managers"]
 script = ExtResource("1_6vcvc")
 
-[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("coundDownPanel", "coundDownLabel", "emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "emojiPromptCancelButton", "corners", "knob", "chaosPadTriangleSprite", "mainIcon", "altIcon", "micButtonLocation", "micButtons", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "OutSideArea", "OutSideMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "SongSelectButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "NodesThatCanBeUnlocked", "restartButton", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "recordingDelaySlider", "recordingDelayLabel", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "AmountLeft", "greenLayerRecordButton", "layerVoiceOver0", "layerVoiceOver1")]
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("coundDownPanel", "coundDownLabel", "emailPrompt", "emailInput", "emailEnter", "emojiPrompt", "emojiButtons", "emojiPromptCancelButton", "corners", "knob", "chaosPadTriangleSprite", "mainIcon", "altIcon", "micButtonLocation", "micButtons", "PianoArea", "PianoMesh", "InBetweenArea", "InBetweenMesh", "OutSideArea", "OutSideMesh", "Klappy", "beat_particles", "pbar_particles", "achievement_particles", "layerButtonsContainer", "addLayerButton", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "BpmUpButton", "BpmDownButton", "SongSelectButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "NodesThatCanBeUnlocked", "restartButton", "muteSpeach", "saveToWavButton", "cross", "chosen_emoticons_label", "metronome_toggle", "micmeter", "add_beats", "button_is_clap", "button_add_beats", "volume_treshold", "recordingDelaySlider", "recordingDelayLabel", "settingsPanel", "settingsButton", "settingsBackButton", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "allLayersToMp3", "layerOutline", "layerOutlineHolder", "micVolumeLight", "klappyLight", "activateGreenChaosButton", "activatePurpleChaosButton", "copyPasteClearButtonsHolder", "ContinueButton", "KlappyContinue", "KnobArea", "AmountLeft", "greenLayerRecordButton", "BearRingPivotPoint", "layerVoiceOver0", "layerVoiceOver1")]
 script = ExtResource("1_rfd7i")
 mainAudioFiles = Array[AudioStream]([ExtResource("5_cl760"), ExtResource("6_v5052"), ExtResource("8_4xf5a"), ExtResource("6_60v1h")])
 mainAudioFilesAlt = Array[AudioStream]([ExtResource("10_hdf80"), ExtResource("11_jwpg7"), ExtResource("12_k2e45"), ExtResource("13_536cc")])
@@ -423,7 +544,7 @@ addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/
 SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayoutButton")
 LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayoutButton")
 ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayoutButton")
-PlayPauseButton = NodePath("../../UserInterface/PlayPauseButtonHolder/PlayPauseButton")
+PlayPauseButton = NodePath("../../BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton")
 BpmUpButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 BpmDownButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 SongSelectButton = NodePath("../../UserInterface/Buttons/SongSelectButton/Button")
@@ -439,7 +560,7 @@ NodesThatCanBeUnlocked = [NodePath("../../UserInterface/Buttons/DragAndDropButto
 restartButton = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
 muteSpeach = NodePath("../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 saveToWavButton = NodePath("../../UserInterface/SettingsPanel/Buttons/SaveToWavButton")
-cross = NodePath("../../UserInterface/Cross/Node2D")
+cross = NodePath("../../BeatRingPivotPoint/Cross")
 chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
 metronome_toggle = NodePath("../../UserInterface/SettingsPanel/Sliders/MetronomeToggle")
 micmeter = NodePath("../../UserInterface/SettingsPanel/Sliders/VolumeTreshold/ProgressBar")
@@ -454,7 +575,7 @@ settingsButton = NodePath("../../UserInterface/SettingsButton")
 settingsBackButton = NodePath("../../UserInterface/SettingsPanel/Back")
 skiptutorialbutton = NodePath("../../UserInterface/Robot/AchievementsPanel/SkipTutorialButton")
 progressBar = NodePath("../ProgressBar")
-pointer = NodePath("../../UserInterface/Pointer")
+pointer = NodePath("../../BeatRingPivotPoint/Pointer")
 metronome = NodePath("../../UserInterface/metronome/metronome_point")
 metronomebg = NodePath("../../UserInterface/metronome")
 bpmLabel = NodePath("../../UserInterface/SettingsPanel/BpmLabel")
@@ -486,6 +607,7 @@ KlappyContinue = NodePath("../../UserInterface/Robot/AchievementsPanel/Button")
 KnobArea = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite/Area2D")
 AmountLeft = NodePath("../../UserInterface/Robot/AchievementsPanel/AmountLef")
 greenLayerRecordButton = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton0/Button0")
+BearRingPivotPoint = NodePath("../../BeatRingPivotPoint")
 layerVoiceOver0 = NodePath("../LayerVoiceOver0")
 layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 
@@ -550,27 +672,28 @@ soundfont = ExtResource("28_54nrm")
 stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("28_v2nl5")
 chordString = "I-V-vi-IV"
-bpmManager = NodePath("../../BPM")
 notes = ExtResource("30_55jeb")
 base_note = SubResource("Resource_55jeb")
+bpmManager = NodePath("../../BPM")
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
-textureProgressBar = NodePath("TextureProgressBar0")
+textureProgressBar = NodePath("../../BeatRingPivotPoint/TextureProgressBar0")
 recordLayerButton = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton0/Button0")
 snellerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 smallLine = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton0/SmallLine0")
-bigLine = NodePath("BigLine0")
+bigLine = NodePath("../../BeatRingPivotPoint/BigLine0")
 bigLineBaseDist = 265
 bigLineVolumeDist = 110
 
-[node name="bass_line" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
+[node name="bass_line" parent="Managers/LayerVoiceOver0" instance=ExtResource("26_o1aky")]
 soundfont = ExtResource("27_o1aky")
 volume_db = -7.0
 bus = &"Green"
-bpmManager = NodePath("../../BPM")
+bpmManager = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("1_6vcvc"),"bpm":120,"playing":false,"currentBeat":15,"swing":0.05)
+
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
@@ -578,65 +701,29 @@ combine_threshold = 0.0
 octaveRange = Vector2i(2, 8)
 beats_amount_scaler = 0.5
 
-[node name="BigLine0" type="Line2D" parent="Managers/LayerVoiceOver0"]
-closed = true
-width = 4.0
-antialiased = true
-
-[node name="TextureProgressBar0" type="TextureProgressBar" parent="Managers/LayerVoiceOver0"]
-offset_left = -265.0
-offset_top = -267.0
-offset_right = 247.0
-offset_bottom = 245.0
-scale = Vector2(1.05, 1.05)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("19_mlc13")
-tint_progress = Color(1, 1, 0, 1)
-metadata/_edit_lock_ = true
-
 [node name="LayerVoiceOver1" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
 script = ExtResource("18_tunoq")
-textureProgressBar = NodePath("TextureProgressBar1")
+textureProgressBar = NodePath("../../BeatRingPivotPoint/TextureProgressBar1")
 recordLayerButton = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/Button1")
 snellerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 langzamerButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 smallLine = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/SmallLine1")
-bigLine = NodePath("BigLine1")
+bigLine = NodePath("../../BeatRingPivotPoint/BigLine1")
 bigLineBaseDist = 70
 bigLineVolumeDist = 20
 bigLineReversed = true
 
-[node name="synth_line" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
+[node name="synth_line" parent="Managers/LayerVoiceOver1" instance=ExtResource("26_o1aky")]
 volume_db = -7.0
 bus = &"Purple"
-bpmManager = NodePath("../../BPM")
+bpmManager = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("1_6vcvc"),"bpm":120,"playing":false,"currentBeat":15,"swing":0.05)
+
 instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
 combine_threshold = 1.0
 octaveRange = Vector2i(4, 6)
-
-[node name="BigLine1" type="Line2D" parent="Managers/LayerVoiceOver1"]
-closed = true
-width = 5.0
-antialiased = true
-
-[node name="TextureProgressBar1" type="TextureProgressBar" parent="Managers/LayerVoiceOver1"]
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(256, 256)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("19_mlc13")
-tint_progress = Color(0.516666, 0, 1, 1)
-metadata/_edit_use_anchors_ = true
 
 [node name="MidiHelper" type="Node" parent="Managers"]
 script = ExtResource("31_v2nl5")
@@ -1753,89 +1840,6 @@ metadata/_edit_use_anchors_ = true
 [node name="draganddropthing" type="Sprite2D" parent="UserInterface"]
 modulate = Color(1, 1, 1, 0)
 texture = ExtResource("2_1ig4u")
-
-[node name="Cross" type="Node" parent="UserInterface"]
-
-[node name="Node2D" type="Node2D" parent="UserInterface/Cross"]
-
-[node name="Vertical" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 1.5708
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Vertical2" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal2" type="Sprite2D" parent="UserInterface/Cross/Node2D"]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = -0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="PlayPauseButtonHolder" type="Node2D" parent="UserInterface"]
-
-[node name="PlayPauseButton" type="Button" parent="UserInterface/PlayPauseButtonHolder"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 30.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 34
-text = "⏯️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="UserInterface/PlayPauseButtonHolder/PlayPauseButton"]
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
-metadata/_edit_use_anchors_ = true
-
-[node name="Pointer" type="Sprite2D" parent="UserInterface"]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(0.6, 0.85)
-offset = Vector2(0, -150)
-
-[node name="PointLight2D" type="PointLight2D" parent="UserInterface/Pointer"]
-color = Color(1, 1, 0.698039, 1)
-energy = 4.71
-range_z_max = 100
-texture = ExtResource("26_7k868")
-offset = Vector2(0, -150)
 
 [node name="metronome" type="Sprite2D" parent="UserInterface"]
 visible = false

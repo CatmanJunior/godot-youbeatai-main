@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using Godot;
 
@@ -237,6 +238,8 @@ public partial class Manager : Node
 		}
 	}
 
+	[Export] public Node2D BearRingPivotPoint;
+
 	void SpritePlacement()
 	{
 		// spawn sprites
@@ -246,7 +249,7 @@ public partial class Manager : Node
 			for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
 			{
 				var sprite = CreateSprite(beat, ring);
-				AddChild(sprite);
+				BearRingPivotPoint.AddChild(sprite);
 				beatSprites[ring, beat] = sprite;
 			}
 		}
@@ -258,7 +261,7 @@ public partial class Manager : Node
 			for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
 			{
 				var sprite = CreateTemplateSprite(beat, ring);
-				AddChild(sprite);
+				BearRingPivotPoint.AddChild(sprite);
 				templateSprites[ring, beat] = sprite;
 			}
 		}

@@ -20,7 +20,7 @@ public partial class Manager : Node
 
         var treshold = volume_treshold.Value;
         var shouldclap = volume > treshold && frequency > ClapBiasSlider.Value;
-        if (shouldclap || Input.IsKeyPressed(Key.N))
+        if (MicrophoneCapture.instance.IsClapping || Input.IsKeyPressed(Key.N))
         {
             if (!clapped)
             {
@@ -30,7 +30,7 @@ public partial class Manager : Node
         }
 
         bool shouldstomp = volume > treshold && frequency < ClapBiasSlider.Value;
-        if (shouldstomp || Input.IsKeyPressed(Key.M))
+        if (MicrophoneCapture.instance.IsStamping || Input.IsKeyPressed(Key.M))
         {
             if (!stomped)
             {

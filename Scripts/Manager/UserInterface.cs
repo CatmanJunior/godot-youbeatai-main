@@ -137,6 +137,7 @@ public partial class Manager : Node
 			{
 				TooltipHelper.OpenTooltip("Oke nu gaat het echt beginnen, klick zometeen de songmode knop!");
 				TooltipHelper.StartLoopToCheckIfTooltipCanClose();
+				pressed_add_layer_once = true;
 			}
 		};
 

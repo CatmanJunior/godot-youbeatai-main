@@ -70,6 +70,17 @@ public partial class MicrophoneCapture : Node
 
         stampVolume = ConvertTo01(analyzer.GetMagnitudeForFrequencyRange(0, stampFreq));
         clapVolume = ConvertTo01(analyzer.GetMagnitudeForFrequencyRange(clapFreq, 20000));
+
+        // if needed we can connect the tresholds to the old treshold slider in the settings menu - Sjoerd 18 jan 2026
+        /*
+            clapthreshold = (float)Manager.instance.volume_treshold.Value;
+            stampThreshold = (float)Manager.instance.volume_treshold.Value;
+        */
+
+        // GD.Print($"stamp volume: {stampVolume}");
+        // GD.Print($"clap volume: {clapVolume}");
+        // GD.Print($"clap treshold: {clapthreshold}");
+        // GD.Print($"stamp treshold: {stampThreshold}");
     }
 
     private double ConvertTo01(Godot.Vector2 rms)

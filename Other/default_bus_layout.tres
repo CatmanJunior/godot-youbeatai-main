@@ -1,4 +1,4 @@
-[gd_resource type="AudioBusLayout" load_steps=35 format=3 uid="uid://cbsvq6wm8s4ny"]
+[gd_resource type="AudioBusLayout" load_steps=36 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -94,6 +94,9 @@ buffer_length = 0.2
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_vcuto"]
 resource_name = "Record"
 
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_se50o"]
+resource_name = "SpectrumAnalyzer"
+
 [sub_resource type="AudioEffectPitchShift" id="AudioEffectPitchShift_4ydx6"]
 resource_name = "PitchShift"
 
@@ -170,6 +173,8 @@ bus/7/effect/0/effect = SubResource("AudioEffectCapture_04ot4")
 bus/7/effect/0/enabled = true
 bus/7/effect/1/effect = SubResource("AudioEffectRecord_vcuto")
 bus/7/effect/1/enabled = true
+bus/7/effect/2/effect = SubResource("AudioEffectSpectrumAnalyzer_se50o")
+bus/7/effect/2/enabled = true
 bus/8/name = &"Synth"
 bus/8/solo = false
 bus/8/mute = false

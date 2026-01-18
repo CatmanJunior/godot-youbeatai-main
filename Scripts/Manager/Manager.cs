@@ -38,7 +38,7 @@ public partial class Manager : Node
 		// set chaos activate buttons colors (non drag drop buttons)
 		activateGreenChaosButton.SelfModulate = colors[4];
 		activatePurpleChaosButton.SelfModulate = colors[5];
-		(SongSelectButton.GetParent() as Sprite2D).SelfModulate = colors[6];
+		// (SongSelectButton.GetParent() as Sprite2D).SelfModulate = colors[6];
 
 		// set mic buttons colors
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].SelfModulate = colors[i];
@@ -94,6 +94,9 @@ public partial class Manager : Node
 			ring_button_outline_2.Texture = outline_beat_textures[2];
 			ring_button_outline_3.Texture = outline_beat_textures[3];
 		}
+
+		var song_tex = (Sprite2D)SongSelectButton.GetParent().FindChild("OutlineSprite");
+		song_tex.Texture = layerLoopToggle.ButtonPressed ? filled_song_texture : outline_song_texture;
 
 		var yellow_back = (Sprite2D)activateGreenChaosButton.FindChild("BackSprite");
 		var yellow_outline = (Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite");

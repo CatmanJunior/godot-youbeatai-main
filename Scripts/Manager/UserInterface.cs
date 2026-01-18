@@ -88,6 +88,8 @@ public partial class Manager : Node
 	[Export] Texture2D[] outline_beat_textures;
 	[Export] Texture2D[] dotted_synth_textures;
 	[Export] Texture2D[] outline_synth_textures;
+	[Export] Texture2D filled_song_texture;
+	[Export] Texture2D outline_song_texture;
 	[Export] Texture2D dot_beat_texture;
 
 	Sprite2D[,] templateSprites;

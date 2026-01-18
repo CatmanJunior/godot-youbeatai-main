@@ -31,8 +31,8 @@ public partial class EffectProfile : Resource
 		AudioServer.SetBusEffectEnabled(bus_index, 4, this.delay > 0);
 		if (this.delay > 0)
 		{
-		    delay.Tap1DelayMs = this.delay;
-		    delay.Tap2DelayMs = this.delay * 2;
+			delay.Tap1DelayMs = this.delay;
+			delay.Tap2DelayMs = this.delay * 2;
 		}
 
 		AudioEffectReverb reverb = AudioServer.GetBusEffect(bus_index, 5) as AudioEffectReverb;

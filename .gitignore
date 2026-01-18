@@ -3,9 +3,15 @@
 /android/
 *.tmp
 
+# builds
+builds/
+
 # vscode
 .vscode/
 *.apk
 
 # rider
 .idea/
+
+# libs
+addons/soundfont/lib/~libgd*

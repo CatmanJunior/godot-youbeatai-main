@@ -103,12 +103,13 @@ public partial class MainMenu : Node
 			File.WriteAllText(path, json);
 		}
 
-		// remember beat amount
-		{
-			string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
-			if (File.Exists(path)) File.Delete(path);
-			File.WriteAllText(path, "16");
-		}
+			// remember beat amount
+			{
+				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
+				if (File.Exists(path)) File.Delete(path);
+				File.WriteAllText(path, "16");
+				BpmManager.beatsAmount = 16;
+			}
 
 		// load main scene with tutorial enabled
 		GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");

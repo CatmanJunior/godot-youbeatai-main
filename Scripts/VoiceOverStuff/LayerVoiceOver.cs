@@ -18,6 +18,7 @@ public partial class LayerVoiceOver : Node
     // current layer recording and playback
     AudioEffectRecord audioEffectRecord;
     public AudioStreamPlayer audioPlayer;
+    public AudioStreamPlayer audioPlayerAlt;
     public bool shouldRecord = false;
     public bool recording = false;
     public bool shouldUpdateProgressBar = false;
@@ -102,11 +103,21 @@ public partial class LayerVoiceOver : Node
 
         // create audioplayer
         audioPlayer = new AudioStreamPlayer();
+        audioPlayerAlt = new AudioStreamPlayer();
         audioPlayer.Stream = new AudioStreamMicrophone();
+        AddChild(audioPlayerAlt);
         AddChild(audioPlayer);
 
-        if (this == Manager.instance.layerVoiceOver0) audioPlayer.Bus = "GreenVoice";
-        else if (this == Manager.instance.layerVoiceOver1) audioPlayer.Bus = "PurpleVoice";
+        if (this == Manager.instance.layerVoiceOver0) 
+        {
+            audioPlayer.Bus = "GreenVoice";
+            audioPlayerAlt.Bus = "Green_alt";
+        }
+        else if (this == Manager.instance.layerVoiceOver1)
+        {
+            audioPlayer.Bus = "PurpleVoice";
+            audioPlayerAlt.Bus = "Purple_alt";
+        }
 
         // setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
@@ -116,8 +127,15 @@ public partial class LayerVoiceOver : Node
         {
             if (layersVoiceOvers[currentLayerIndex] != null)
             {
-                if (audioPlayer.Playing) audioPlayer.Stop();
-                else audioPlayer.Play();
+                if (audioPlayer.Playing)
+                {
+                    audioPlayerAlt.Stop();
+                    audioPlayer.Stop();
+                    return;
+                }
+                
+                audioPlayer.Play();
+                audioPlayerAlt.Play();
             }
         };
 
@@ -179,20 +197,28 @@ public partial class LayerVoiceOver : Node
 
         if (!recording)
         {
-            audioPlayer.Stream = GetCurrentLayerVoiceOver();
+            audioPlayerAlt.Stream = audioPlayer.Stream = GetCurrentLayerVoiceOver();
+            
             shouldMeasureAudioDelay = true;
             audioDelayBeginMs = Time.GetTicksMsec();
         }
 
-        if (audioPlayer.Playing) audioPlayer.Stop();
-        if (!recording) audioPlayer.Play();
+        OnTopDelayed();
        // GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += OnTopDelayed;
     }
 
     private void OnTopDelayed()
     {
-        if (audioPlayer.Playing) audioPlayer.Stop();
-        if (!recording) audioPlayer.Play();
+        if (audioPlayer.Playing) 
+        {   
+            audioPlayer.Stop();
+            audioPlayerAlt.Stop();
+        }
+        if (!recording) 
+        {
+            audioPlayer.Play();
+            audioPlayerAlt.Play();
+        }
     }
 
     private void StartRecording()

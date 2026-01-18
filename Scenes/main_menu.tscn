@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://88rxelg1bo3"]
+[gd_scene load_steps=10 format=3 uid="uid://88rxelg1bo3"]
 
 [ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
@@ -6,19 +6,34 @@
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_ce3w2"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="6_opfnp"]
+[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
+[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.87654406, 0.4330934, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="scene" type="Node2D"]
 
 [node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton", "ProButton", "KlappyResponse")]
+self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 214.0
-offset_top = 26.0
-offset_right = 614.0
-offset_bottom = 326.0
+offset_left = -449.0
+offset_top = -336.0
+offset_right = -49.0
+offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2.14354, 2.14354)
@@ -55,22 +70,24 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -64.70978
-offset_top = -24.506653
-offset_right = 72.29022
-offset_bottom = -0.50665283
+offset_left = -88.803566
+offset_top = -28.006653
+offset_right = 111.19644
+offset_bottom = 2.993393
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
 text = "Uitleg ❓"
 
 [node name="SpelenButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
-offset_left = 135.29022
-offset_top = 166.54694
-offset_right = 272.29022
-offset_bottom = 190.54694
+offset_left = 111.196434
+offset_top = 162.81479
+offset_right = 311.19644
+offset_bottom = 193.81483
 focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
 text = "Muziek maken 🎶"
 
 [node name="ProButton" type="Button" parent="MainMenuPanel"]
@@ -80,13 +97,14 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -64.70978
-offset_top = -90.99994
-offset_right = 72.29022
+offset_left = -88.803566
+offset_top = -97.99994
+offset_right = 111.19644
 offset_bottom = -66.99994
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
 text = "Pro 👑"
 
 [node name="PermissionButton" type="Button" parent="MainMenuPanel"]
@@ -142,7 +160,25 @@ scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
 
 [node name="Klappy respons bubble" parent="." instance=ExtResource("6_opfnp")]
-position = Vector2(939, 263)
+position = Vector2(276, -99)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WorldBackPanel" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("7_yhxw7")
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("8_trj04")
+metadata/_edit_lock_ = true
 
 [connection signal="pressed" from="MainMenuPanel/Tutorial explanition" to="MainMenuPanel" method="OnTutorialExplanitionPressed"]
 [connection signal="pressed" from="MainMenuPanel/Muziek explanation" to="MainMenuPanel" method="OnMuziekExplanation"]

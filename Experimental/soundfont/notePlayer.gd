@@ -21,6 +21,9 @@ var current_layer: int = 0
 #$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
 
 func _ready():
+	if not bpmManager:
+		bpmManager = %BPM
+	
 	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
@@ -137,27 +140,26 @@ func play_note(note: Note, duration: float) -> void:
 	channel_note_on(t, 0, note.id, 1.0)
 	channel_note_off(t + duration, 0, note.id)
 
-func play_chord(intervals) -> void:
-	var duration : float = 0.5
+func play_chord(intervals, duration = 0.5) -> void:
 	var t = get_time()
 	for i in intervals:
-		channel_note_on(t, 0, base_note + i, 1.0)
-		channel_note_off(t + duration, 0, base_note + i)
+		channel_note_on(t, 0, base_note.id + i, 1.0)
+		channel_note_off(t + duration, 0, base_note.id + i)
 
-func on_chord_major() -> void:
-	play_chord([0, 4, 7])
+func on_chord_major(offset = 0, duration=0.5) -> void:
+	play_chord([0 + offset, 4 + offset, 7 + offset], duration)
 
-func on_chord_minor() -> void:
-	play_chord([0, 3, 7])
+func on_chord_minor(offset = 0, duration=0.5) -> void:
+	play_chord([0 + offset, 3 + offset, 7 + offset], duration)
 
-func on_chord_7() -> void:
-	play_chord([0, 4, 7, 10])
+func on_chord_7(offset = 0, duration=0.5) -> void:
+	play_chord([0 + offset, 4 + offset, 7 + offset, 10 + offset], duration)
 
-func on_chord_major_7() -> void:
-	play_chord([0, 4, 7, 11])
+func on_chord_major_7(offset = 0, duration=0.5) -> void:
+	play_chord([0 + offset, 4 + offset, 7 + offset, 11 + offset], duration)
 
-func on_chord_minor_7() -> void:
-	play_chord([0, 3, 7, 10])
+func on_chord_minor_7(offset = 0, duration=0.5) -> void:
+	play_chord([0 + offset, 3 + offset, 7 + offset, 10 + offset], duration)
 
-func on_chord_diminished_7() -> void:
-	play_chord([0, 3, 6, 9])
+func on_chord_diminished_7(offset = 0, duration=0.5) -> void:
+	play_chord([0 + offset, 3 + offset, 6 + offset, 9 + offset], duration)

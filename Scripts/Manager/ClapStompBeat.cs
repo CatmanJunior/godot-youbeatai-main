@@ -20,7 +20,7 @@ public partial class Manager : Node
 
         var treshold = volume_treshold.Value;
         var shouldclap = volume > treshold && frequency > ClapBiasSlider.Value;
-        if (shouldclap || Input.IsKeyPressed(Key.N))
+        if (MicrophoneCapture.instance.IsClapping || Input.IsKeyPressed(Key.N))
         {
             if (!clapped)
             {
@@ -30,7 +30,7 @@ public partial class Manager : Node
         }
 
         bool shouldstomp = volume > treshold && frequency < ClapBiasSlider.Value;
-        if (shouldstomp || Input.IsKeyPressed(Key.M))
+        if (MicrophoneCapture.instance.IsStamping || Input.IsKeyPressed(Key.M))
         {
             if (!stomped)
             {
@@ -48,15 +48,19 @@ public partial class Manager : Node
         var sprite = beatSprites[ring, BpmManager.instance.currentBeat];
         if (active)
         {
-            sprite.Scale += Vector2.One;
+            sprite.Scale += Vector2.One / 5;
             if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
-            progressBarValue += 1f / BpmManager.beatsAmount * 100f;
+            progressBarValue += 2f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
             clappedOnBeatAmount++;
         }
+        else
+        {
+            progressBarValue -= 1f;
+        }
         clappedAmount++;
-        draganddropButton1.Scale += Vector2.One / 2;
+        draganddropButton1.Scale += Vector2.One / 10;
         if (draganddropButton1.Scale.X > 4) draganddropButton1.Scale = Vector2.One * 4;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton1).ButtonBehaviour();
@@ -70,15 +74,19 @@ public partial class Manager : Node
         var sprite = beatSprites[ring, BpmManager.instance.currentBeat];
         if (active)
         {
-            sprite.Scale += Vector2.One;
+            sprite.Scale += Vector2.One / 5;
             if (sprite.Scale.X > 3) sprite.Scale = Vector2.One * 3;
-            progressBarValue += 1f / BpmManager.beatsAmount * 100f;
+            progressBarValue += 2f;
             EmitProgressBarParticles();
             EmitBeatParticles(beatSprites[ring, BpmManager.instance.currentBeat].Position, colors[ring]);
             stompedOnBeatAmount++;
         }
+        else
+        {
+            progressBarValue -= 1f;
+        }
         stompedAmount++;
-        draganddropButton0.Scale += Vector2.One / 2;
+        draganddropButton0.Scale += Vector2.One / 10;
         if (draganddropButton0.Scale.X > 4) draganddropButton0.Scale = Vector2.One * 4;
 
         if (add_beats.ButtonPressed) ((DragAndDropButton)draganddropButton0).ButtonBehaviour();
@@ -139,6 +147,12 @@ public partial class Manager : Node
         {
             layerVoiceOver0.OnTop();
             layerVoiceOver1.OnTop();
+
+            // every loop also give energy
+            if (progressBarValue < 50.0f) progressBarValue += 2.0f;
+            else if (progressBarValue < 75.0f) progressBarValue += 1.0f;
+            else if (progressBarValue < 90.0f) progressBarValue += 0.5f;
+            else if (progressBarValue <= 999) progressBarValue -= 0.5f;
 
             if (!layerLoopToggle.ButtonPressed) UpdateSongVoiceOverPlayBackPosition();
             

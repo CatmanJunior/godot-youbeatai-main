@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://b0bl4lm384p2n"]
+[gd_scene load_steps=15 format=3 uid="uid://b0bl4lm384p2n"]
 
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_sstgy"]
 [ext_resource type="Texture2D" uid="uid://lmpsycd0viao" path="res://Resources/Textures/kaosalfa.png" id="2_kj5vy"]
-[ext_resource type="Texture2D" uid="uid://dmpmrey7e0ttx" path="res://Resources/Textures/fingerprintdik.png" id="3_rq0eu"]
+[ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/chaos_icon.tscn" id="3_j4bys"]
 [ext_resource type="Script" uid="uid://dy4ij5rgc25b5" path="res://Scripts/ChaosPadKnob.cs" id="4_2cxvc"]
+[ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="4_j4bys"]
 [ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/Manager/play_star_animation.gd" id="5_kj5vy"]
 [ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="6_asl8d"]
 [ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="7_2cxvc"]
@@ -72,56 +73,29 @@ texture = ExtResource("2_kj5vy")
 [node name="PointLeft" type="Node2D" parent="Triangle"]
 position = Vector2(-145.09805, 98.039215)
 
+[node name="ChaosIconMain" parent="Triangle/PointLeft" instance=ExtResource("3_j4bys")]
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+
 [node name="PointTop" type="Node2D" parent="Triangle"]
 position = Vector2(-1.9607735, -152.94118)
 
 [node name="PointRight" type="Node2D" parent="Triangle"]
 position = Vector2(145.09804, 96.078445)
 
-[node name="PointLeftIcon" type="Label" parent="Triangle"]
-offset_left = -303.9216
-offset_top = -58.823517
-offset_right = -203.9216
-offset_bottom = 41.176514
-scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 24
-text = "🍎"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="PointTopIcon" type="Label" parent="Triangle"]
-offset_left = -161.35742
-offset_top = -317.64706
-offset_right = -61.35672
-offset_bottom = -217.64706
-scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 24
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="PointRightIcon" type="Label" parent="Triangle"]
-offset_left = -13.725463
-offset_top = -60.784313
-offset_right = 86.274536
-offset_bottom = 39.215702
-scale = Vector2(3.2, 3.2)
-theme_override_font_sizes/font_size = 24
-text = "🍏"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="ChaosIconAlt" parent="Triangle/PointRight" instance=ExtResource("3_j4bys")]
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
 
 [node name="KnobSprite" type="Sprite2D" parent="Triangle"]
 z_index = 2
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("3_rq0eu")
+rotation = 3.1415927
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("4_j4bys")
 script = ExtResource("4_2cxvc")
 
 [node name="Area2D" type="Area2D" parent="Triangle/KnobSprite"]
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.225, 0.225)
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Triangle/KnobSprite/Area2D"]

@@ -120,7 +120,7 @@ public partial class Manager : Node
     {
         // transform container
         layerButtonsContainer.Size = new Vector2(layerButtonsContainer.GetChildCount() * layersButtonsSize, layersButtonsSize);
-        layerButtonsContainer.GlobalPosition = new Vector2(-layerButtonsContainer.Size.X / 2, layerButtonsContainer.GlobalPosition.Y);
+        layerButtonsContainer.Position = new Vector2(-layerButtonsContainer.Size.X / 2, layerButtonsContainer.Position.Y);
 
         // transform outlineholder
         layerOutlineHolder.GlobalPosition = LayerButtons[currentLayerIndex].GlobalPosition + new Vector2(layersButtonsSize, layersButtonsSize) / 2;
@@ -130,7 +130,7 @@ public partial class Manager : Node
         {
             var backPanelOverSize = new Vector2(16, 8);
             songModeBackPanel.Size = layerButtonsContainer.Size + backPanelOverSize;
-            songModeBackPanel.GlobalPosition = layerButtonsContainer.GlobalPosition - backPanelOverSize / 2;
+            songModeBackPanel.Position = layerButtonsContainer.Position - backPanelOverSize / 2;
         }
 
         // set proper color of layer buttons

@@ -1,4 +1,4 @@
-[gd_scene load_steps=105 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=107 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -82,6 +82,8 @@
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
+[ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -91,6 +93,51 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwwfm"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8vy0"]
+bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
+bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jekl6"]
+bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -148,51 +195,6 @@ _data = {
 &"record_pulse": SubResource("Animation_v2nl5")
 }
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwwfm"]
-bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8vy0"]
-bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
-bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jekl6"]
-bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cuat"]
@@ -227,6 +229,13 @@ corner_radius_bottom_left = 1000
 
 [node name="scene" type="Node2D"]
 
+[node name="roland_layout" type="Sprite2D" parent="."]
+visible = false
+self_modulate = Color(1, 1, 1, 0.32156864)
+position = Vector2(-4.0000324, -7.499963)
+scale = Vector2(0.66700506, 0.66519046)
+texture = ExtResource("83_wl4bb")
+
 [node name="Camera" type="Camera2D" parent="."]
 scale = Vector2(4.12, 1)
 
@@ -234,7 +243,7 @@ scale = Vector2(4.12, 1)
 current = true
 
 [node name="BeatRingPivotPoint" type="Node2D" parent="."]
-position = Vector2(-88, 24)
+position = Vector2(-111, 46)
 
 [node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint"]
 
@@ -354,14 +363,166 @@ range_z_max = 100
 texture = ExtResource("26_7k868")
 offset = Vector2(0, -150)
 
+[node name="SwitchLayerButtons" type="Node2D" parent="BeatRingPivotPoint"]
+
+[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="BeatRingPivotPoint/SwitchLayerButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -380.0
+offset_right = 32.0
+offset_bottom = -316.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons"]
+position = Vector2(-130, -1074)
+
+[node name="Outline" type="Sprite2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder"]
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("27_neg2b")
+
+[node name="CopyPasteClearButtons" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder"]
+
+[node name="SaveLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = 45.0
+offset_right = -3.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "💾
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="ClearLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = 45.0
+offset_right = -69.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "🗑️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoadLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 45.0
+offset_right = 63.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "♻️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="AddLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = 45.0
+offset_right = 129.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "+"
+metadata/_edit_use_anchors_ = true
+
+[node name="BlockerHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton"]
+position = Vector2(35, 33)
+
+[node name="Blocker" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" instance=ExtResource("32_aa8k8")]
+top_level = false
+offset_left = -50.99999
+offset_top = -45.0
+offset_right = 59.00001
+offset_bottom = 115.0
+scale = Vector2(0.7174814, 0.7174814)
+
+[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="BeatRingPivotPoint/SwitchLayerButtons"]
+z_index = -2
+anchors_preset = -1
+anchor_left = 0.48892045
+anchor_top = 0.3285358
+anchor_right = 0.49687538
+anchor_bottom = 0.3285358
+offset_left = -644.99994
+offset_top = -1355.0
+offset_right = -303.1823
+offset_bottom = -1178.6367
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_aa8k8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jekl6")
+max_value = 1.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
 [node name="Managers" type="Node" parent="."]
 
 [node name="ProgressBar" type="ProgressBar" parent="Managers"]
 z_index = 6
-offset_left = 271.0
-offset_top = 327.0
-offset_right = 565.16504
-offset_bottom = 349.695
+offset_left = 250.0
+offset_top = 311.0
+offset_right = 544.16504
+offset_bottom = 333.695
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -539,11 +700,11 @@ beat_particles = NodePath("../../BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
 layerButtonPrefab = ExtResource("39_aa8k8")
-layerButtonsContainer = NodePath("../../UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer")
-addLayerButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton")
-SaveLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayoutButton")
-LoadLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayoutButton")
-ClearLayoutButton = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayoutButton")
+layerButtonsContainer = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/SwitchLayerButtonsContainer")
+addLayerButton = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton")
+SaveLayoutButton = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayoutButton")
+LoadLayoutButton = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayoutButton")
+ClearLayoutButton = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayoutButton")
 PlayPauseButton = NodePath("../../BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton")
 BpmUpButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 BpmDownButton = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
@@ -556,7 +717,7 @@ recordSampleButton0 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRec
 recordSampleButton1 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1")
 recordSampleButton2 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2")
 recordSampleButton3 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3")
-NodesThatCanBeUnlocked = [NodePath("../../UserInterface/Buttons/DragAndDropButton2"), NodePath("../../UserInterface/Buttons/DragAndDropButton3"), NodePath("../../UserInterface/Buttons/PurpleSelectButton"), NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder"), NodePath("../../UserInterface/Buttons/SongSelectButton"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1")]
+NodesThatCanBeUnlocked = [NodePath("../../UserInterface/Buttons/DragAndDropButton2"), NodePath("../../UserInterface/Buttons/DragAndDropButton3"), NodePath("../../UserInterface/Buttons/PurpleSelectButton"), NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder"), NodePath("../../UserInterface/Buttons/SongSelectButton"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1")]
 restartButton = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
 muteSpeach = NodePath("../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 saveToWavButton = NodePath("../../UserInterface/SettingsPanel/Buttons/SaveToWavButton")
@@ -588,8 +749,8 @@ layerLoopToggle = NodePath("../../UserInterface/LayerLoopToggle")
 SavingLabel = NodePath("../../SavingLabel")
 InstructionLabel = NodePath("../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
 allLayersToMp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersToMp3")
-layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
-layerOutlineHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder")
+layerOutline = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/Outline")
+layerOutlineHolder = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder")
 spritePrefab = ExtResource("2_1eep1")
 filled_beat_textures = Array[Texture2D]([ExtResource("21_my4ki"), ExtResource("22_lx3vj"), ExtResource("23_ynmfv"), ExtResource("24_cblf0")])
 outline_beat_textures = Array[Texture2D]([ExtResource("25_nay3j"), ExtResource("26_ovafv"), ExtResource("27_owhal"), ExtResource("28_uv6w5")])
@@ -601,7 +762,7 @@ micVolumeLight = NodePath("../../UserInterface/ChaosPad/MicButtonLocation/MicLig
 klappyLight = NodePath("../../UserInterface/Robot/SubViewportContainer/KlappyLight")
 activateGreenChaosButton = NodePath("../../UserInterface/Buttons/GreenSelectButton")
 activatePurpleChaosButton = NodePath("../../UserInterface/Buttons/PurpleSelectButton")
-copyPasteClearButtonsHolder = NodePath("../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons")
+copyPasteClearButtonsHolder = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons")
 ContinueButton = NodePath("../../UserInterface/Robot/AchievementsPanel/Continue")
 KlappyContinue = NodePath("../../UserInterface/Robot/AchievementsPanel/Button")
 KnobArea = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite/Area2D")
@@ -632,7 +793,7 @@ script = ExtResource("11_iqwjw")
 
 [node name="RealTimeAudioRecording" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "recordSongSprite")]
 script = ExtResource("24_o1aky")
-progressbar = NodePath("../../UserInterface/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
+progressbar = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
 recordSongButton = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton/Button0")
 recordSongSprite = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")
 
@@ -672,9 +833,9 @@ soundfont = ExtResource("28_54nrm")
 stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("28_v2nl5")
 chordString = "I-V-vi-IV"
+bpmManager = NodePath("../../BPM")
 notes = ExtResource("30_55jeb")
 base_note = SubResource("Resource_55jeb")
-bpmManager = NodePath("../../BPM")
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton", "smallLine", "bigLine")]
@@ -688,12 +849,11 @@ bigLine = NodePath("../../BeatRingPivotPoint/BigLine0")
 bigLineBaseDist = 265
 bigLineVolumeDist = 110
 
-[node name="bass_line" parent="Managers/LayerVoiceOver0" instance=ExtResource("26_o1aky")]
+[node name="bass_line" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
 soundfont = ExtResource("27_o1aky")
 volume_db = -7.0
 bus = &"Green"
-bpmManager = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("1_6vcvc"),"bpm":120,"playing":false,"currentBeat":15,"swing":0.05)
-
+bpmManager = NodePath("")
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
@@ -713,11 +873,10 @@ bigLineBaseDist = 70
 bigLineVolumeDist = 20
 bigLineReversed = true
 
-[node name="synth_line" parent="Managers/LayerVoiceOver1" instance=ExtResource("26_o1aky")]
+[node name="synth_line" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
 volume_db = -7.0
 bus = &"Purple"
-bpmManager = Object(Node,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"physics_interpolation_mode":0,"auto_translate_mode":0,"editor_description":"","script":ExtResource("1_6vcvc"),"bpm":120,"playing":false,"currentBeat":15,"swing":0.05)
-
+bpmManager = NodePath("")
 instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
@@ -1146,7 +1305,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SongSelectButton" type="Sprite2D" parent="UserInterface/Buttons"]
 z_index = -4
-position = Vector2(-580, -146.258)
+position = Vector2(-554.91113, -152.53024)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("28_1tvlp")
 
@@ -1209,7 +1368,7 @@ texture = ExtResource("23_ynmfv")
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-580, -71.257965)
+position = Vector2(-554.91113, -77.53021)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("48_uv6w5")
 script = ExtResource("14_4mig3")
@@ -1263,7 +1422,7 @@ texture = ExtResource("22_sb4d6")
 
 [node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-580, 3.7420502)
+position = Vector2(-554.91113, -2.5301971)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("50_r7bbj")
 script = ExtResource("14_4mig3")
@@ -1318,7 +1477,7 @@ texture = ExtResource("22_sb4d6")
 
 [node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-580, 78.742035)
+position = Vector2(-554.91113, 72.46979)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("51_e5peh")
 script = ExtResource("14_4mig3")
@@ -1381,7 +1540,7 @@ texture = ExtResource("22_sb4d6")
 
 [node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-580, 153.74205)
+position = Vector2(-554.91113, 147.4698)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("52_f6rfp")
 script = ExtResource("14_4mig3")
@@ -1445,7 +1604,7 @@ texture = ExtResource("22_sb4d6")
 
 [node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-580, 228.742)
+position = Vector2(-554.91113, 222.46976)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("53_sasc4")
 script = ExtResource("33_aqgau")
@@ -1511,7 +1670,7 @@ texture = ExtResource("53_uv6w5")
 
 [node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-580, 303.7)
+position = Vector2(-554.91113, 297.42776)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("55_pfx1i")
 script = ExtResource("33_aqgau")
@@ -1581,7 +1740,7 @@ scale = Vector2(1.35, 1.35)
 texture = ExtResource("53_uv6w5")
 
 [node name="ChaosPad" parent="UserInterface" instance=ExtResource("31_kwxat")]
-position = Vector2(416, -160)
+position = Vector2(403, -201)
 rotation = 3.1415927
 
 [node name="MicButtonLocation" parent="UserInterface/ChaosPad" index="0"]
@@ -1611,158 +1770,6 @@ z_index = 1
 z_as_relative = false
 scale = Vector2(2, 2)
 texture = ExtResource("75_pfx1i")
-
-[node name="SwitchLayerButtons" type="Node" parent="UserInterface"]
-
-[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="UserInterface/SwitchLayerButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -672.0
-offset_top = -710.0
-offset_right = -608.0
-offset_bottom = -646.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons"]
-position = Vector2(-130, -1074)
-
-[node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
-scale = Vector2(0.135, 0.135)
-texture = ExtResource("27_neg2b")
-
-[node name="CopyPasteClearButtons" type="Node2D" parent="UserInterface/SwitchLayerButtons/OutlineHolder"]
-
-[node name="SaveLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -63.0
-offset_top = 45.0
-offset_right = -3.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "💾
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="ClearLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -129.0
-offset_top = 45.0
-offset_right = -69.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "🗑️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="LoadLayoutButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 3.0
-offset_top = 45.0
-offset_right = 63.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "♻️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="AddLayerButton" type="Button" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 69.0
-offset_top = 45.0
-offset_right = 129.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "+"
-metadata/_edit_use_anchors_ = true
-
-[node name="BlockerHolder" type="Node2D" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton"]
-position = Vector2(35, 33)
-
-[node name="Blocker" parent="UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" instance=ExtResource("32_aa8k8")]
-top_level = false
-offset_left = -50.99999
-offset_top = -45.0
-offset_right = 59.00001
-offset_bottom = 115.0
-scale = Vector2(0.7174814, 0.7174814)
-
-[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="UserInterface/SwitchLayerButtons"]
-z_index = -2
-anchors_preset = -1
-anchor_left = 0.48892045
-anchor_top = 0.3285358
-anchor_right = 0.49687538
-anchor_bottom = 0.3285358
-offset_left = -1270.8181
-offset_top = -1591.5458
-offset_right = -929.0005
-offset_bottom = -1415.1825
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_aa8k8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_jekl6")
-max_value = 1.0
-show_percentage = false
-metadata/_edit_use_anchors_ = true
 
 [node name="LayerLoopToggle" type="CheckButton" parent="UserInterface"]
 self_modulate = Color(1, 1, 1, 0)
@@ -1856,7 +1863,7 @@ texture = SubResource("CanvasTexture_6dn85")
 
 [node name="Robot" type="Sprite2D" parent="UserInterface"]
 z_index = 4
-position = Vector2(420, 180)
+position = Vector2(406, 139)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="UserInterface/Robot"]
 anchors_preset = 8
@@ -1884,10 +1891,10 @@ render_target_update_mode = 4
 [node name="chosen_emoticons_label" type="Label" parent="UserInterface/Robot/SubViewportContainer/SubViewport"]
 z_index = 1
 z_as_relative = false
-offset_left = 265.5
-offset_top = 128.83333
-offset_right = 331.3333
-offset_bottom = 261.8333
+offset_left = 321.5
+offset_top = 48.83333
+offset_right = 387.3333
+offset_bottom = 181.83333
 theme = ExtResource("22_hpc6h")
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/outline_size = 4
@@ -1961,9 +1968,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 566.0
-offset_top = -348.0
+offset_top = 285.245
 offset_right = 626.0
-offset_bottom = -288.0
+offset_bottom = 345.245
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -2853,6 +2860,11 @@ disabled = true
 text = "Unlock achievements"
 script = ExtResource("48_jut3y")
 manager = NodePath("../Managers/Manager")
+
+[node name="Podium" type="Sprite2D" parent="."]
+position = Vector2(398, 315.00003)
+scale = Vector2(0.90207714, 1.215)
+texture = ExtResource("84_6h1fc")
 
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/SongVoiceOver/Chords" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]

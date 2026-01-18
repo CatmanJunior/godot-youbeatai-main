@@ -850,7 +850,7 @@ bigLine = NodePath("../../BeatRingPivotPoint/BigLine0")
 bigLineBaseDist = 265
 bigLineVolumeDist = 110
 
-[node name="bass_line" parent="Managers/LayerVoiceOver0" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
+[node name="bass_line" parent="Managers/LayerVoiceOver0" instance=ExtResource("26_o1aky")]
 soundfont = ExtResource("27_o1aky")
 volume_db = -7.0
 bus = &"Green"
@@ -874,7 +874,7 @@ bigLineBaseDist = 70
 bigLineVolumeDist = 20
 bigLineReversed = true
 
-[node name="synth_line" parent="Managers/LayerVoiceOver1" node_paths=PackedStringArray("bpmManager") instance=ExtResource("26_o1aky")]
+[node name="synth_line" parent="Managers/LayerVoiceOver1" instance=ExtResource("26_o1aky")]
 volume_db = -7.0
 bus = &"Purple"
 bpmManager = NodePath("")

@@ -160,7 +160,8 @@ public partial class Manager : Node
 			Tutorial.Reset();
 			Achievements.Reset();
 		};
-		PlayPauseButton.ButtonUp += OnPlayPauseButton;
+		PlayPauseButton.ButtonDown += OnPlayPauseButton;
+		PlayPauseButton.ToggleMode = true;
 		BpmUpButton.Pressed += OnBpmUpButton;
 		BpmDownButton.Pressed += OnBpmDownButton;
 		skiptutorialbutton.Pressed += () =>

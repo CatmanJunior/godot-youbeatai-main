@@ -91,6 +91,7 @@ public partial class LayerVoiceOver : Node
                 langzamerButton.Disabled = false;
                 Manager.instance.SetLayerSwitchButtonsEnabled(true);
                 Manager.instance.PlayPauseButton.Disabled = false;
+                Manager.instance.PlayPauseButton.ButtonDown += Manager.instance.OnPlayPauseButton;
                 SongVoiceOver.instance.recordSongButton.Disabled = false;
 
                 // stop tic sounds
@@ -173,10 +174,18 @@ public partial class LayerVoiceOver : Node
 
         if (shouldUpdateProgressBar)
         {
+            if (!textureProgressBar.Visible)
+            {
+                textureProgressBar.Visible = true;
+            }
             textureProgressBar.Value = progress;
         }
         else
         {
+            if (textureProgressBar.Visible)
+            {
+                textureProgressBar.Visible = false; 
+            }
             textureProgressBar.Value = 0;
         }
 

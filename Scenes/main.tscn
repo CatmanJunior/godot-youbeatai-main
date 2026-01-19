@@ -690,8 +690,8 @@ knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
 chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 mainIcons = Array[Texture2D]([ExtResource("48_uv6w5"), ExtResource("50_r7bbj"), ExtResource("51_e5peh"), ExtResource("20_sasc4")])
 altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), ExtResource("23_jekl6"), ExtResource("52_f6rfp")])
-mainIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
-altIconSynths = Array[Texture2D]([ExtResource("55_pfx1i"), ExtResource("32_55idt")])
+mainIconSynths = Array[Texture2D]([ExtResource("32_55idt"), ExtResource("55_pfx1i")])
+altIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
 mainIconSong = ExtResource("28_1tvlp")
 altIconSong = ExtResource("28_1tvlp")
 mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
@@ -787,6 +787,7 @@ layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
+clapthreshold = 0.05
 stampFreq = 20.0
 stampThreshold = 0.018
 

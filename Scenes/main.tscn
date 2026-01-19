@@ -1942,17 +1942,19 @@ bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753
 position = Vector2(204.067, 67.1816)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
-energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" instance=ExtResource("44_kqrg6")]
+z_index = -1
 anchors_preset = -1
 anchor_left = -24.5
 anchor_top = 18.5
 anchor_bottom = 18.5
-offset_top = -209.5
-offset_bottom = -21.5
+offset_left = -230.5
+offset_top = -226.5
+offset_right = 50.5
+offset_bottom = -38.5
 
 [node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
 layout_mode = 1
@@ -1960,8 +1962,6 @@ anchors_preset = -1
 anchor_right = 0.17973857
 
 [node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
-layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353

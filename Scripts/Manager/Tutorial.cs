@@ -49,7 +49,7 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen",
+            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen",
             condition: () => manager.clapped,
             outcome: () =>
             {
@@ -212,7 +212,7 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }),
         (
-            instruction: "Haal nu ook 1 van de ingevulde cirkels of vormen weg door er op te drukken",
+            instruction: "Haal nu ook 1 van de ingevulde vormen weg door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
             outcome: () =>
             {
@@ -242,7 +242,7 @@ public static class Tutorial
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";_clapping = true;}
         ),
         (
-            instruction: "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
+            instruction: "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen",
             condition: () => manager.clappedOnBeatAmount >= _fixedAmount,
             outcome: () =>
             {
@@ -282,7 +282,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
+            instruction: "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!",
             condition: () =>
             {
                 returnPlayer(manager.greenLayerRecordButton.GetParent()).Play("record_pulse");
@@ -398,7 +398,7 @@ public static class Tutorial
             outcome: null
         ),
         (
-            instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven",
+            instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖aan je sample geven",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
@@ -409,7 +409,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het witte rondje met drie strepen naar het 🌟 sterretje ",
+            instruction: "Beweeg het witte rondje met drie streepjes naar de 💎 diamant ",
             condition: () => false,
             outcome: () =>
             {
@@ -441,7 +441,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het grijze rondje weer naar het 🌟 sterretje",
+            instruction: "Beweeg het witte rondje met streepjes weer naar de 💎 diamant ",
             condition: () => false,
             outcome: () =>
             {
@@ -464,7 +464,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje",
+            instruction: "Beweeg het witte rondje met streepjes nog 1 keer naar de 💎 diamant",
             condition: () => false,
             outcome: () =>
             {

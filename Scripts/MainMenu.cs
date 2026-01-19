@@ -48,19 +48,19 @@ public partial class MainMenu : Node
 	{
 		freeButton.Pressed += () =>
 		{
-			KlappySpeak("Dit is de standaard game modus, waarbij je een leuk liedje mag gaan maken en daarbij nog toffe dingen kan unlocken");
+			KlappySpeak("Dit is de standaard game modus, waarbij je een leuk liedje mag gaan maken en daarbij nog toffe dingen kan unlocken.");
 			gameType = gameTypes.Free;
 		};
 
 		ProButton.Pressed += () =>
 		{
-			KlappySpeak("Bij deze game modus word je helemaal vrij gelaten en mag je helemaal zelf aan de slag.");
+			KlappySpeak("Bij deze game modus word je echt vrij gelaten en mag je helemaal zelf aan de slag.");
 			gameType = gameTypes.Pro;
 		};
 
 		tutorialButton.Pressed += () =>
 		{
-			KlappySpeak("Bij deze modus ga ik jouw uit leggen hoe deze game werkt, terwijl wij samen een liedje maken");
+			KlappySpeak("Bij deze modus ga ik jouw uitleggen hoe deze game werkt, terwijl wij samen een liedje maken.");
 			gameType = gameTypes.Tutorial;
 		};
 	}

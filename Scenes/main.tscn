@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=110 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -35,7 +35,6 @@
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="23_jekl6"]
-[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="23_ynmfv"]
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="24_cblf0"]
 [ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="24_o1aky"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="25_nay3j"]
@@ -57,8 +56,10 @@
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="31_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="31_kwxat"]
 [ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scenes/midi_helper.gd" id="31_v2nl5"]
+[ext_resource type="Texture2D" uid="uid://dcutt8vbgv0ku" path="res://Resources/Textures_New/Icons/Icons-_28_0010_Bear.png" id="32_55idt"]
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
+[ext_resource type="Texture2D" uid="uid://bndvo0vsvj7ns" path="res://Resources/Textures_New_Extra/MenuShapes128_0008_8_Green.png" id="38_87bhu"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="41_qnggo"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="42_tab3y"]
@@ -690,11 +691,11 @@ chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 mainIcons = Array[Texture2D]([ExtResource("48_uv6w5"), ExtResource("50_r7bbj"), ExtResource("51_e5peh"), ExtResource("20_sasc4")])
 altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), ExtResource("23_jekl6"), ExtResource("52_f6rfp")])
 mainIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
-altIconSynths = Array[Texture2D]([ExtResource("53_sasc4"), ExtResource("55_pfx1i")])
+altIconSynths = Array[Texture2D]([ExtResource("55_pfx1i"), ExtResource("32_55idt")])
 mainIconSong = ExtResource("28_1tvlp")
-altIconSong = ExtResource("26_v1mrv")
-mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
-altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
+altIconSong = ExtResource("28_1tvlp")
+mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
+altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 micButtons = [NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3"), NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 SynthMixing_LineScaleCurve = SubResource("Curve_aqgau")
@@ -762,7 +763,7 @@ allLayersToMp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersTo
 layerOutline = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/Outline")
 layerOutlineHolder = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder")
 spritePrefab = ExtResource("2_1eep1")
-filled_beat_textures = Array[Texture2D]([ExtResource("21_my4ki"), ExtResource("22_lx3vj"), ExtResource("23_ynmfv"), ExtResource("24_cblf0")])
+filled_beat_textures = Array[Texture2D]([ExtResource("21_my4ki"), ExtResource("22_lx3vj"), ExtResource("38_87bhu"), ExtResource("24_cblf0")])
 outline_beat_textures = Array[Texture2D]([ExtResource("25_nay3j"), ExtResource("26_ovafv"), ExtResource("27_owhal"), ExtResource("28_uv6w5")])
 dotted_synth_textures = Array[Texture2D]([ExtResource("61_jekl6"), ExtResource("62_v1mrv")])
 outline_synth_textures = Array[Texture2D]([ExtResource("41_qnggo"), ExtResource("42_tab3y")])

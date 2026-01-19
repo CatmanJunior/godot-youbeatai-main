@@ -409,7 +409,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het zwart rondje naar het 🌟 sterretje ",
+            instruction: "Beweeg het witte rondje met drie strepen naar het 🌟 sterretje ",
             condition: () => false,
             outcome: () =>
             {

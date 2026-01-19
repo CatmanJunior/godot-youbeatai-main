@@ -33,10 +33,12 @@ public partial class Manager : Node
 		UpdateLayerButtonsUserInterfaceDelayed();
 		DisplayServer.TtsSetUtteranceCallback(DisplayServer.TtsUtteranceEvent.Ended, new Callable(this,nameof(UtteranceEnd)));
 
+		GD.Print(ProjectSettings.GlobalizePath("user://"));
+
 		// set chaos activate buttons colors (non drag drop buttons)
 		activateGreenChaosButton.SelfModulate = colors[4];
 		activatePurpleChaosButton.SelfModulate = colors[5];
-		(SongSelectButton.GetParent() as Sprite2D).SelfModulate = colors[6];
+		// (SongSelectButton.GetParent() as Sprite2D).SelfModulate = colors[6];
 
 		// set mic buttons colors
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].SelfModulate = colors[i];
@@ -51,6 +53,9 @@ public partial class Manager : Node
 		originalDraganddropButton1Scale = draganddropButton1.Scale.X;
 		originalDraganddropButton2Scale = draganddropButton2.Scale.X;
 		originalDraganddropButton3Scale = draganddropButton3.Scale.X;
+
+		((Sprite2D)activatePurpleChaosButton.FindChild("BackSprite")).SelfModulate = colors[5];
+		((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).SelfModulate = colors[4];
 	}
 
 	private void UtteranceEnd(int utterancId)
@@ -66,17 +71,76 @@ public partial class Manager : Node
 
 		if (isShowingCountDown) UpdateCountDownLabel();
 
-		if (SamplesMixing_activeRing == 0) ((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = filled_beat_textures[0];
-		else ((Sprite2D)draganddropButton0.FindChild("OutlineSprite")).Texture = outline_beat_textures[0];
+		var ring_button_outline_0 = (Sprite2D)draganddropButton0.FindChild("OutlineSprite");
+		var ring_button_outline_1 = (Sprite2D)draganddropButton1.FindChild("OutlineSprite");
+		var ring_button_outline_2 = (Sprite2D)draganddropButton2.FindChild("OutlineSprite");
+		var ring_button_outline_3 = (Sprite2D)draganddropButton3.FindChild("OutlineSprite");
 
-		if (SamplesMixing_activeRing == 1) ((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = filled_beat_textures[1];
-		else ((Sprite2D)draganddropButton1.FindChild("OutlineSprite")).Texture = outline_beat_textures[1];
+		if (chaosPadMode == ChaosPadMode.SampleMixing)
+		{
+			if (SamplesMixing_activeRing == 0) ring_button_outline_0.Texture = filled_beat_textures[0];
+			else ring_button_outline_0.Texture = outline_beat_textures[0];
+			if (SamplesMixing_activeRing == 1) ring_button_outline_1.Texture = filled_beat_textures[1];
+			else ring_button_outline_1.Texture = outline_beat_textures[1];
+			if (SamplesMixing_activeRing == 2) ring_button_outline_2.Texture = filled_beat_textures[2];
+			else ring_button_outline_2.Texture = outline_beat_textures[2];
+			if (SamplesMixing_activeRing == 3) ring_button_outline_3.Texture = filled_beat_textures[3];
+			else ring_button_outline_3.Texture = outline_beat_textures[3];
+		}
+		else
+		{
+			ring_button_outline_0.Texture = outline_beat_textures[0];
+			ring_button_outline_1.Texture = outline_beat_textures[1];
+			ring_button_outline_2.Texture = outline_beat_textures[2];
+			ring_button_outline_3.Texture = outline_beat_textures[3];
+		}
 
-		if (SamplesMixing_activeRing == 2) ((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = filled_beat_textures[2];
-		else ((Sprite2D)draganddropButton2.FindChild("OutlineSprite")).Texture = outline_beat_textures[2];
+		var song_tex = (Sprite2D)SongSelectButton.GetParent().FindChild("OutlineSprite");
+		song_tex.Texture = layerLoopToggle.ButtonPressed ? filled_song_texture : outline_song_texture;
 
-		if (SamplesMixing_activeRing == 3) ((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = filled_beat_textures[3];
-		else ((Sprite2D)draganddropButton3.FindChild("OutlineSprite")).Texture = outline_beat_textures[3];
+		var yellow_back = (Sprite2D)activateGreenChaosButton.FindChild("BackSprite");
+		var yellow_outline = (Sprite2D)activateGreenChaosButton.FindChild("OutlineSprite");
+		var purple_back = (Sprite2D)activatePurpleChaosButton.FindChild("BackSprite");
+		var purple_outline = (Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite");
+
+		float progression = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
+        if (progression == float.NaN) progression = 0;
+
+        if (chaosPadMode == ChaosPadMode.SynthMixing)
+		{
+			if (SynthMixing_activeSynth == 0)
+			{
+				yellow_back.Visible = true;
+				yellow_outline.Texture = outline_synth_textures[0];
+				yellow_outline.RotationDegrees = progression * 360f + 30f;
+			}
+			else
+			{
+				yellow_back.Visible = false;
+				yellow_outline.Texture = dotted_synth_textures[0];
+			}
+
+			if (SynthMixing_activeSynth == 1)
+			{
+				purple_back.Visible = true;
+				purple_outline.Texture = outline_synth_textures[1];
+				purple_outline.RotationDegrees = progression * 360f + 30f;
+			}
+			else
+			{
+				purple_back.Visible = false;
+				purple_outline.Texture = dotted_synth_textures[1];
+			}
+		}
+		else
+		{
+			yellow_back.Visible = false;
+			purple_back.Visible = false;
+			yellow_outline.Texture = dotted_synth_textures[0];
+			purple_outline.Texture = dotted_synth_textures[1];
+			yellow_outline.RotationDegrees = 30f;
+			purple_outline.RotationDegrees = 30f;
+		}
 
 		UpdateLayerOutlineSpriteRotation();
 
@@ -133,14 +197,15 @@ public partial class Manager : Node
 		{
 			var ringLight = glow[i];
 			var busindex = AudioServer.GetBusIndex($"Ring{i}");
-			var analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(busindex, 0);
-			var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
-			var volume = magnitude.Length() * 10f;
-			float alpha = 0f;
-			if (volume > 0.10f) alpha = volume;
-			else alpha = 0f;
+			var left = AudioServer.GetBusPeakVolumeLeftDb(busindex, 0);
+			var right = AudioServer.GetBusPeakVolumeRightDb(busindex, 0);
+			var volume = DbToLinear((left + right) / 2f);
+			float alpha = volume > 0.05f ? volume * 3 : 0f;
 			ringLight.SelfModulate = new Color(1, 1, 1, alpha);
+			// GD.Print($"ring{i} had alpha: {alpha}");
 		}
+
+		float DbToLinear(float db) => Mathf.Pow(10f, db / 20f);
 
 		UpdateGreenPurpleButtonLights();
 

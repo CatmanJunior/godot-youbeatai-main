@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 public class BeatStateChanger
 {
@@ -43,6 +44,8 @@ public class BeatStateChanger
             }
             else
             {
+                TooltipHelper.OpenTooltip("Speel nog wat muziek om me energie te geven!");
+                TooltipHelper.StartLoopToCheckIfTooltipCanClose();
                 return;
             }
         }

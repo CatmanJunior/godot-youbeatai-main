@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using Godot;
 
@@ -85,6 +86,10 @@ public partial class Manager : Node
 
 	[Export] Texture2D[] filled_beat_textures;
 	[Export] Texture2D[] outline_beat_textures;
+	[Export] Texture2D[] dotted_synth_textures;
+	[Export] Texture2D[] outline_synth_textures;
+	[Export] Texture2D filled_song_texture;
+	[Export] Texture2D outline_song_texture;
 	[Export] Texture2D dot_beat_texture;
 
 	Sprite2D[,] templateSprites;
@@ -124,7 +129,18 @@ public partial class Manager : Node
 		SaveLayoutButton.Pressed += () => { CopyLayer(); PlayExtraSFX(metronomealt_sfx); };
 		LoadLayoutButton.Pressed += () => { PasteLayer(); PlayExtraSFX(metronomealt_sfx); };
 		ClearLayoutButton.Pressed += () => { ConfirmationPrompt.instance.Open(ClearLayer); PlayExtraSFX(metronomealt_sfx); };
-		addLayerButton.ButtonUp += () => { OpenEmojiPrompt(); PlayExtraSFX(metronomealt_sfx); };
+
+		addLayerButton.ButtonUp += () => 
+		{
+			OpenEmojiPrompt(); PlayExtraSFX(metronomealt_sfx);
+
+			if (!pressed_add_layer_once)
+			{
+				TooltipHelper.OpenTooltip("Oke nu gaat het echt beginnen, klick zometeen de songmode knop!");
+				TooltipHelper.StartLoopToCheckIfTooltipCanClose();
+				pressed_add_layer_once = true;
+			}
+		};
 
 		restartButton.Pressed += () =>
 		{
@@ -160,8 +176,7 @@ public partial class Manager : Node
         Button.ButtonUp += () =>
         {
             layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
-			if (layerLoopToggle.ButtonPressed) SongMixing_ChangeToSongMixer();
-			else SamplesMixing_ChangeRing(0);
+			SongMixing_ChangeToSongMixer();
         };
 	}
 
@@ -227,6 +242,8 @@ public partial class Manager : Node
 		}
 	}
 
+	[Export] public Node2D BearRingPivotPoint;
+
 	void SpritePlacement()
 	{
 		// spawn sprites
@@ -236,7 +253,7 @@ public partial class Manager : Node
 			for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
 			{
 				var sprite = CreateSprite(beat, ring);
-				AddChild(sprite);
+				BearRingPivotPoint.AddChild(sprite);
 				beatSprites[ring, beat] = sprite;
 			}
 		}
@@ -248,7 +265,7 @@ public partial class Manager : Node
 			for (int beat = 0; beat < BpmManager.beatsAmount; beat++)
 			{
 				var sprite = CreateTemplateSprite(beat, ring);
-				AddChild(sprite);
+				BearRingPivotPoint.AddChild(sprite);
 				templateSprites[ring, beat] = sprite;
 			}
 		}

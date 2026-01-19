@@ -538,6 +538,7 @@ public static class Tutorial
             manager.pointer.Visible = false;
             BpmManager.instance.bpm = 60;
             manager.SetEntireInterfaceVisibility(false);
+            manager.settingsButton.Visible = true;
             manager.achievementspanel.Visible = true;
             manager.settingsButton.Visible = true;
             Sprite2D parent = manager.SongSelectButton.GetParent() as Sprite2D;

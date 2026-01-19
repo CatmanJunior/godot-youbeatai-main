@@ -787,6 +787,8 @@ layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
+stampFreq = 20.0
+stampThreshold = 0.018
 
 [node name="TemplateManager" type="Node" parent="Managers" node_paths=PackedStringArray("templateButton", "leftTemplateButton", "rightTemplateButton", "showTemplateButton", "setTemplateButton")]
 script = ExtResource("9_t3vou")

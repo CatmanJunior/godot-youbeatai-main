@@ -551,7 +551,6 @@ public static class Tutorial
             manager.InBetweenArea.AreaEntered += _bodyContinue;
             manager.KlappyContinue.Pressed += KlappyContinue;
             manager.OutSideArea.AreaEntered += _bodyContinue;
-            manager.add_beats.SetPressed(true);
             _top = manager.corners[1];
             _clapButton = (DragAndDropButton)manager.draganddropButton1;
             _stompButton = (DragAndDropButton)manager.draganddropButton0;

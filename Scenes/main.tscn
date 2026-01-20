@@ -1,4 +1,4 @@
-[gd_scene load_steps=112 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=113 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -89,6 +89,7 @@
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
+[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -240,7 +241,6 @@ position = Vector2(-111, 46)
 
 [node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder"]
 visible = false
-z_index = 1000
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -696,7 +696,7 @@ altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), E
 mainIconSynths = Array[Texture2D]([ExtResource("32_55idt"), ExtResource("55_pfx1i")])
 altIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
 mainIconSong = ExtResource("28_1tvlp")
-altIconSong = ExtResource("28_1tvlp")
+altIconSong = ExtResource("26_v1mrv")
 mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
@@ -1950,11 +1950,12 @@ bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
 bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
-position = Vector2(204.067, 67.1816)
+position = Vector2(202.49997, 89.166664)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
+energy = 1.9
 texture = ExtResource("22_sb4d6")
-texture_scale = 1.71
+texture_scale = 2.41
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" instance=ExtResource("44_kqrg6")]
 z_index = -1
@@ -2679,13 +2680,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -135.0
+offset_left = -197.0
 offset_top = -101.0
-offset_right = 136.0
+offset_right = 199.0
 offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 30
 text = "Kies een icoon voor de laag"
 horizontal_alignment = 1
@@ -2798,7 +2800,7 @@ offset_bottom = 30.62
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 16
-text = "Cancel"
+text = "Sluiten"
 metadata/_edit_use_anchors_ = true
 
 [node name="CountDown" type="Panel" parent="."]

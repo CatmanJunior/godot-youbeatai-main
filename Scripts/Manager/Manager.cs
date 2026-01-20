@@ -183,9 +183,9 @@ public partial class Manager : Node
 		micVolumeLight.Visible = chaosPadTriangleSprite.Visible;
 
 		float klappylightvalue = ((float)progressBar.Value) / 100f * 2f;
-		if (klappylightvalue > 1) klappylightvalue = 2;
+		if (klappylightvalue > 1) klappylightvalue = 1.9f;
 		if (klappylightvalue < 0.05f) klappylightvalue = 0;
-		klappyLight.Energy = klappylightvalue *1.4f;
+		klappyLight.Energy = klappylightvalue ;
 
 		Sprite2D[] glow = new Sprite2D[4];
 		glow[0] = (Sprite2D)draganddropButton0.FindChild("Glow");

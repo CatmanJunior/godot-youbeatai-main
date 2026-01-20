@@ -49,7 +49,7 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen",
+            instruction: "    Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen",
             condition: () => manager.clapped,
             outcome: () =>
             {
@@ -734,7 +734,7 @@ public static class Tutorial
         if (_increasedSpeed)
         {
             GD.Print(("Increase the speed"));
-            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 2.5f);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
         }
         else
         {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=113 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=114 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -87,6 +87,7 @@
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
 [ext_resource type="Script" uid="uid://ccefs8ecih7l7" path="res://Scenes/song_mode_line.gd" id="69_87bhu"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="82_e6rcu"]
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
@@ -189,14 +190,14 @@ _data = {
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cuat"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
+texture = ExtResource("82_e6rcu")
 
 [sub_resource type="LabelSettings" id="LabelSettings_5dpcw"]
-font_size = 14
+font_size = 12
 
 [sub_resource type="LabelSettings" id="LabelSettings_x8qo7"]
-font_size = 14
+font_size = 12
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
@@ -1953,7 +1954,7 @@ bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753
 position = Vector2(202.49997, 89.166664)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
-energy = 1.9
+energy = 0.0
 texture = ExtResource("22_sb4d6")
 texture_scale = 2.41
 
@@ -2017,7 +2018,7 @@ offset_left = -640.0
 offset_top = -360.0
 offset_right = 640.0
 offset_bottom = 360.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_8cuat")
+theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
 
 [node name="Title" type="Label" parent="UserInterface/SettingsPanel"]
 layout_mode = 0
@@ -2025,6 +2026,7 @@ offset_left = 514.0
 offset_top = 20.0
 offset_right = 766.0
 offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 40
 text = "Instellingen"
 horizontal_alignment = 1
@@ -2038,6 +2040,8 @@ offset_top = 8.0
 offset_right = 158.0
 offset_bottom = 48.0
 focus_mode = 0
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 30
 text = "↩️ Terug
 "
 alignment = 0
@@ -2071,6 +2075,7 @@ offset_right = 75.0
 offset_bottom = 87.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = ".........."
 
 [node name="TemplateLeftButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton"]
@@ -2098,6 +2103,7 @@ offset_right = 73.0
 offset_bottom = 84.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "Tip🔮"
 
 [node name="SetTemplateButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton"]
@@ -2108,6 +2114,7 @@ offset_right = 150.0
 offset_bottom = 84.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "Doe 🤖
 "
 
@@ -2118,6 +2125,7 @@ offset_right = 75.0
 offset_bottom = 175.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "🎼 Liedje opslaan"
 alignment = 0
 
@@ -2128,6 +2136,7 @@ offset_right = 75.0
 offset_bottom = 219.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "📥 Beat ring opslaan"
 alignment = 0
@@ -2157,6 +2166,7 @@ offset_right = 75.0
 offset_bottom = 263.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "🔄 Herstart"
 alignment = 0
 
@@ -2192,6 +2202,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🫀"
 horizontal_alignment = 1
@@ -2199,10 +2210,16 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.001080645
+anchor_top = 0.12818676
+anchor_right = -0.0010806274
+anchor_bottom = 0.12818678
 offset_right = 97.0
 offset_bottom = 23.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "metronoom"
 label_settings = SubResource("LabelSettings_5dpcw")
 vertical_alignment = 1
@@ -2226,6 +2243,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "👏"
 horizontal_alignment = 1
@@ -2235,11 +2253,14 @@ metadata/_edit_use_anchors_ = true
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = -0.0659313
-anchor_bottom = -0.0659313
+anchor_left = -0.001080645
+anchor_top = 0.05809751
+anchor_right = -0.0010806274
+anchor_bottom = 0.058097523
 offset_right = 87.0
 offset_bottom = 23.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "knop is klap"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
@@ -2262,6 +2283,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🔘"
 horizontal_alignment = 1
@@ -2269,10 +2291,18 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0010806449
+anchor_top = 0.22292638
+anchor_right = -0.0010806274
+anchor_bottom = 0.22292638
+offset_right = 117.0
+offset_bottom = 18.0
+scale = Vector2(0.95, 0.95)
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 12
 text = "knop maakt beat"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
@@ -2295,6 +2325,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "👂🏼"
 horizontal_alignment = 1
@@ -2306,6 +2337,8 @@ layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 10
 text = "klap maakt beat"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
@@ -2329,6 +2362,7 @@ offset_top = 4.0
 offset_bottom = 24.0
 mouse_filter = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🔇"
 horizontal_alignment = 1
@@ -2340,6 +2374,7 @@ layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "klappy stil"
 label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
@@ -2364,6 +2399,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🎙️"
 horizontal_alignment = 1
@@ -2402,6 +2438,7 @@ offset_left = 151.0
 offset_right = 176.0
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "👟"
 horizontal_alignment = 1
@@ -2414,6 +2451,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🖐🏼"
 horizontal_alignment = 1
@@ -2435,6 +2473,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🌀"
 horizontal_alignment = 1
@@ -2456,6 +2495,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🏛️"
 horizontal_alignment = 1
@@ -2477,6 +2517,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "⛰️"
 horizontal_alignment = 1
@@ -2502,6 +2543,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "⏱️"
 horizontal_alignment = 1
@@ -2515,6 +2557,7 @@ offset_top = -0.7911835
 offset_right = 246.29051
 offset_bottom = 75.72757
 scale = Vector2(0.375, 0.375)
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 40
 text = "0.4s"
 horizontal_alignment = 1
@@ -2532,6 +2575,7 @@ offset_top = 659.0
 offset_right = 1183.89
 offset_bottom = 726.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 32
 text = "bpm"
 horizontal_alignment = 1
@@ -2680,16 +2724,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -197.0
-offset_top = -101.0
-offset_right = 199.0
-offset_bottom = -22.0
+offset_left = -218.0
+offset_top = -99.0
+offset_right = 220.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1, 1.0232327)
 theme = ExtResource("22_hpc6h")
 theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 30
-text = "Kies een icoon voor de laag"
+theme_override_font_sizes/font_size = 24
+text = "Wat voor een nieuwe laag wil je?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -2799,6 +2844,7 @@ offset_right = 76.56
 offset_bottom = 30.62
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 16
 text = "Sluiten"
 metadata/_edit_use_anchors_ = true

@@ -42,7 +42,7 @@ public partial class Manager : Node
         layerButtonsContainer.Visible = visible;
         progressBar.Visible = visible;
         Sprite2D parent = SongSelectButton.GetParent() as Sprite2D;
-        parent.Visible = false;
+        parent.Visible = visible;
         FindChaosIconTop();
         ChaosIconTop.Visible = visible;
     }

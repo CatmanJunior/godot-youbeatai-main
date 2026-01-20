@@ -49,11 +49,10 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "    Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen",
+            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.",
             condition: () => manager.clapped,
             outcome: () =>
             {
-                
                 
                 manager.pointer.Visible = true;
                 manager.SetRingVisibility(_indexRedRing, true);
@@ -64,7 +63,6 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
-
         // kick ring
         (
             instruction:     "Deze roze cirkels vormen een kick-ring",
@@ -487,6 +485,8 @@ public static class Tutorial
             condition: () => false,
             outcome: () =>
             {
+                DisplayServer.TtsStop();
+                manager.UtteranceEnd(0);
                 tutorial_level = -2;
                 manager.SetEntireInterfaceVisibility(true);
                 manager.achievementspanel.Visible = false;
@@ -495,7 +495,7 @@ public static class Tutorial
                 manager.PianoArea.AreaEntered -= _bodyContinue;
                 manager.InBetweenArea.AreaEntered -= _bodyContinue;
                 manager.KlappyContinue.Pressed -= KlappyContinue;
-                DisplayServer.TtsStop();
+                
             }
         )
     ];

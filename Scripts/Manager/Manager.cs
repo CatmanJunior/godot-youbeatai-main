@@ -58,7 +58,7 @@ public partial class Manager : Node
 		((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).SelfModulate = colors[4];
 	}
 
-	private void UtteranceEnd(int utterancId)
+	public void UtteranceEnd(int utterancId)
 	{
 		EmitSignal("OnUtteranceEnd", utterancId);
 	}

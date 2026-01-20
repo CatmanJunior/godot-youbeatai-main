@@ -73,7 +73,7 @@ public partial class Manager : Node
 	[Export] public Button allLayersToMp3;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
-	
+	public bool SongModeActive = false;
 
 	float global_beat_sprite_scale_factor = 0.28f;
 	float beatScale32 = 1;
@@ -174,11 +174,12 @@ public partial class Manager : Node
 		settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 		settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 		var Button = SongSelectButton;
-        Button.ButtonUp += () =>
-        {
-            layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+		Button.ButtonUp += () =>
+		{
+			layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+			SongModeActive = !SongModeActive;
 			SongMixing_ChangeToSongMixer();
-        };
+		};
 	}
 
 	private void UpdateLayerOutlineSpriteRotation()

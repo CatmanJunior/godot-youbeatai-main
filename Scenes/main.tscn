@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=112 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -85,6 +85,7 @@
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Animation" uid="uid://fpshbmdajq3r" path="res://Other/Bear_pulse.res" id="68_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
+[ext_resource type="Script" uid="uid://ccefs8ecih7l7" path="res://Scenes/song_mode_line.gd" id="69_87bhu"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
@@ -182,6 +183,8 @@ _data = {
 &"Bear_pulse": ExtResource("68_k8rh3"),
 &"record_pulse": SubResource("Animation_v2nl5")
 }
+
+[sub_resource type="BoxMesh" id="BoxMesh_55idt"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
@@ -1380,6 +1383,14 @@ metadata/_edit_use_anchors_ = true
 z_index = -1
 scale = Vector2(1.7, 1.7)
 texture = ExtResource("66_vxl7x")
+
+[node name="Song mode line" type="MeshInstance2D" parent="UserInterface/Buttons/SongSelectButton" node_paths=PackedStringArray("manager")]
+self_modulate = Color(0.61960787, 0.6117647, 0.8980392, 1)
+position = Vector2(642.94885, -0.8874006)
+scale = Vector2(1109.9528, 13.182272)
+mesh = SubResource("BoxMesh_55idt")
+script = ExtResource("69_87bhu")
+manager = NodePath("../../../../Managers/Manager")
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4

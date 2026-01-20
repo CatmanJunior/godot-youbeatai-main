@@ -328,7 +328,10 @@ public partial class Manager : Node
 		for (int i = 0; i < LayerButtons.Count; i++)
 		{
 			LayerButtons[i].Modulate = new Color(1, 1, 1, 1);
-			if (!LayerHasBeats(layersBeatActives[i])) LayerButtons[i].Modulate = LayerButtons[i].Modulate.Darkened(0.5f);
+			if (!LayerHasBeats(layersBeatActives[i]))
+			{
+				if (!LayerHasBeats(layersBeatActives[i])) LayerButtons[i].Modulate = LayerButtons[i].Modulate.Darkened(0.35f);
+			};
 		}
 	}
 }

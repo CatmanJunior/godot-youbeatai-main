@@ -1,4 +1,4 @@
-[gd_scene load_steps=114 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=112 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -192,12 +192,6 @@ _data = {
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
 texture = ExtResource("82_e6rcu")
-
-[sub_resource type="LabelSettings" id="LabelSettings_5dpcw"]
-font_size = 12
-
-[sub_resource type="LabelSettings" id="LabelSettings_x8qo7"]
-font_size = 12
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
@@ -534,9 +528,9 @@ hue_variation_max = 0.55
 [node name="ProgressBar" type="ProgressBar" parent="Managers"]
 z_index = 6
 offset_left = 250.0
-offset_top = 311.0
+offset_top = 316.0
 offset_right = 544.16504
-offset_bottom = 333.695
+offset_bottom = 350.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -1594,10 +1588,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton3" instance=ExtResource("32_aa8k8")]
-offset_left = -566.0
-offset_top = 53.0
-offset_right = -466.58047
-offset_bottom = 141.48398
+offset_left = -572.0
+offset_top = 53.000015
+offset_right = -472.58047
+offset_bottom = 141.484
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
@@ -2212,16 +2206,60 @@ metadata/_edit_use_anchors_ = true
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.001080645
-anchor_top = 0.12818676
-anchor_right = -0.0010806274
-anchor_bottom = 0.12818678
-offset_right = 97.0
-offset_bottom = 23.0
+anchor_left = -0.0037179312
+anchor_top = 0.12818654
+anchor_right = 0.93628204
+anchor_bottom = 1.2948532
+offset_right = 95.0
+offset_bottom = 20.0
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
 theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
 text = "metronoom"
-label_settings = SubResource("LabelSettings_5dpcw")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+offset_left = -75.0
+offset_top = 21.1543
+offset_right = 75.0
+offset_bottom = 45.1543
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 4.0
+offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 15
+text = "🔘"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.001080645
+anchor_top = 0.05809625
+anchor_right = -0.0010806274
+anchor_bottom = 0.05809625
+offset_top = -17.80156
+offset_right = 224.0
+offset_bottom = 30.19844
+scale = Vector2(0.35, 0.35)
+theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
+text = "knop is klap"
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2253,58 +2291,18 @@ metadata/_edit_use_anchors_ = true
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.001080645
-anchor_top = 0.05809751
-anchor_right = -0.0010806274
-anchor_bottom = 0.058097523
-offset_right = 87.0
-offset_bottom = 23.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-text = "knop is klap"
-label_settings = SubResource("LabelSettings_x8qo7")
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
-offset_left = -75.0
-offset_top = 21.1543
-offset_right = 75.0
-offset_bottom = 45.1543
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🔘"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.0010806449
-anchor_top = 0.22292638
-anchor_right = -0.0010806274
-anchor_bottom = 0.22292638
+anchor_left = -0.0037179312
+anchor_top = 0.10754522
+anchor_right = 1.4296155
+anchor_bottom = 1.3575453
+offset_top = 17.801556
 offset_right = 117.0
-offset_bottom = 18.0
-scale = Vector2(0.95, 0.95)
+offset_bottom = 35.80156
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
 theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 40
 text = "knop maakt beat"
-label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2336,11 +2334,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
 theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 10
+theme_override_font_sizes/font_size = 40
 text = "klap maakt beat"
-label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2373,10 +2371,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
 theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
 text = "klappy stil"
-label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 

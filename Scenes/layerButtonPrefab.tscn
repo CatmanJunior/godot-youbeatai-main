@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://7ihp2yx2750i"]
+[gd_scene load_steps=7 format=3 uid="uid://7ihp2yx2750i"]
 
 [ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="1_jf038"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jf038"]
 texture = ExtResource("1_jf038")
+
+[sub_resource type="Theme" id="Theme_eueij"]
+Button/styles/normal = SubResource("StyleBoxTexture_jf038")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
 bg_color = Color(1, 1, 1, 1)
@@ -43,8 +46,8 @@ pivot_offset = Vector2(32, 32)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
+theme = SubResource("Theme_eueij")
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxTexture_jf038")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")

@@ -3,6 +3,7 @@ extends PointLight2D
 @export var hLSlider: Slider
 @export var pDSlider: Slider
 
+
 func _on_klappy_high_lowpass_value_changed(value: float) -> void:
 	if value < 0.5:
 		color = "yellow"

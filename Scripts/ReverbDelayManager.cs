@@ -12,17 +12,17 @@ public partial class ReverbDelayManager : Node
     [Export] public Slider reverbSlider;
     [Export] public Slider delaySlider;
 
-    [Export] public Slider highLowPassSlider;
-    [Export] public Slider phaserDistortionSlider;
+    //[Export] public Slider highLowPassSlider;
+    //[Export] public Slider phaserDistortionSlider;
 
 
     AudioEffectReverb reverbEffect;
     AudioEffectDelay delayEffect;
 
-    AudioEffectHighPassFilter highPassEffect;
-    AudioEffectLowPassFilter lowPassEffect;
-    AudioEffectPhaser phaserEffect;
-    AudioEffectDistortion distortionEffect;
+    //AudioEffectHighPassFilter highPassEffect;
+    //AudioEffectLowPassFilter lowPassEffect;
+    //AudioEffectPhaser phaserEffect;
+    //AudioEffectDistortion distortionEffect;
 
 
 
@@ -33,18 +33,18 @@ public partial class ReverbDelayManager : Node
         reverbEffect = new AudioEffectReverb();
         delayEffect = new AudioEffectDelay();
 
-        highPassEffect = new AudioEffectHighPassFilter();
-        lowPassEffect = new AudioEffectLowPassFilter();
-        phaserEffect = new AudioEffectPhaser();
-        distortionEffect = new AudioEffectDistortion();
+        //highPassEffect = new AudioEffectHighPassFilter();
+        //lowPassEffect = new AudioEffectLowPassFilter();
+        //phaserEffect = new AudioEffectPhaser();
+        //distortionEffect = new AudioEffectDistortion();
 
         AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), reverbEffect);
         AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), delayEffect);
 
-        AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), highPassEffect);
-        AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), lowPassEffect);
-        AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), phaserEffect);
-        AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), distortionEffect);
+        //AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), highPassEffect);
+        //AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), lowPassEffect);
+        //AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), phaserEffect);
+        //AudioServer.AddBusEffect(AudioServer.GetBusIndex("Master"), distortionEffect);
 
 
     }
@@ -54,8 +54,8 @@ public partial class ReverbDelayManager : Node
         SetReverbLevel((float)reverbSlider.Value);
         SetDelayLevel((float)delaySlider.Value);
 
-        SetHighLowPassLevel((float)highLowPassSlider.Value);
-        SetPhaserDistortionLevel((float)phaserDistortionSlider.Value);
+        //SetHighLowPassLevel((float)highLowPassSlider.Value);
+        //SetPhaserDistortionLevel((float)phaserDistortionSlider.Value);
     }
 
     private void SetReverbLevel(float level)
@@ -74,7 +74,7 @@ public partial class ReverbDelayManager : Node
         delayEffect.Tap1LevelDb = -20;
     }
 
-    private void SetHighLowPassLevel(float value)
+    /*private void SetHighLowPassLevel(float value)
     {
         int bus = AudioServer.GetBusIndex("Master");
 
@@ -84,7 +84,7 @@ public partial class ReverbDelayManager : Node
         AudioServer.SetBusEffectEnabled(bus, 3, enabled); // lowpass
 
         float minFreq = 40f;
-        float maxFreq = 20000f;
+        float maxFreq = 1000f;
 
         if (!enabled)
         {
@@ -99,7 +99,7 @@ public partial class ReverbDelayManager : Node
             // lowpass
             float t = value / 0.5f;
 
-            lowPassEffect.CutoffHz = Mathf.Lerp(maxFreq, 300f, t);
+            lowPassEffect.CutoffHz = Mathf.Lerp(maxFreq, 100f, t);
             highPassEffect.CutoffHz = minFreq;
         }
         else
@@ -109,6 +109,7 @@ public partial class ReverbDelayManager : Node
 
             highPassEffect.CutoffHz = Mathf.Lerp(minFreq, 4000f, t);
             lowPassEffect.CutoffHz = maxFreq;
+            //lowPassEffect.Db = AudioEffectFilter.FilterDB.Filter24Db;
         }
     }
 
@@ -145,5 +146,5 @@ public partial class ReverbDelayManager : Node
             distortionEffect.Drive = Mathf.Lerp(0.0f, 1.0f, t);
             phaserEffect.Depth = 0f;
         }
-    }
+    }*/
 }

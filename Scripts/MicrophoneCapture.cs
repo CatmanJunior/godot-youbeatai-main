@@ -72,6 +72,7 @@ public partial class MicrophoneCapture : Node
         clapVolume = ConvertTo01(analyzer.GetMagnitudeForFrequencyRange(clapFreq, 20000));
 
         // if needed we can connect the tresholds to the old treshold slider in the settings menu - Sjoerd 18 jan 2026
+        // for both Stamp and Clap need different thresholds on their frequency ranges, 2 separate sliders would work beter - jesse 16 feb 2026
         /*
             clapthreshold = (float)Manager.instance.volume_treshold.Value;
             stampThreshold = (float)Manager.instance.volume_treshold.Value;

@@ -169,7 +169,7 @@ public partial class LayerVoiceOver : Node
         // set progress bar value
         int currentBeat = BpmManager.instance.currentBeat;
         float beatTimer = BpmManager.instance.beatTimer;
-        float progress = ((float)((float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat))) / BpmManager.beatsAmount);
+        float progress = (float)(currentBeat + (beatTimer / BpmManager.instance.timePerBeat)) / BpmManager.beatsAmount;
 
         if (shouldUpdateProgressBar)
         {
@@ -224,7 +224,7 @@ public partial class LayerVoiceOver : Node
     private void StartRecording()
     {
         Manager.instance.metronome_toggle.ButtonPressed = false;
-
+        shouldUpdateProgressBar = true;
         GetTree().CreateTimer(Manager.instance.recordingDelaySlider.Value).Timeout += () => DoRecording();
 
         // stop tic sounds

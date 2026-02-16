@@ -57,7 +57,7 @@ public partial class Manager : Node
         }
         else
         {
-            progressBarValue -= 1f;
+            //progressBarValue -= 1f;
         }
         clappedAmount++;
         draganddropButton1.Scale += Vector2.One / 10;
@@ -83,7 +83,7 @@ public partial class Manager : Node
         }
         else
         {
-            progressBarValue -= 1f;
+           // progressBarValue -= 1f;
         }
         stompedAmount++;
         draganddropButton0.Scale += Vector2.One / 10;

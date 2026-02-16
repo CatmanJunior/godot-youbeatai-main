@@ -1,8 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://bafxjikk2rjnh"]
+[gd_scene load_steps=13 format=3 uid="uid://bafxjikk2rjnh"]
 
 [ext_resource type="Script" uid="uid://ciy7dpu6yttwv" path="res://Scripts/klappy_respons_bubble.gd" id="1_hgimk"]
 [ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/continue.gd" id="2_3cvs7"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_3h2yf"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_0twqk"]
 [ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_rvsyq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3cvs7"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
 
 [sub_resource type="Theme" id="Theme_3h2yf"]
 /styles/background = null
@@ -42,8 +51,9 @@ script = ExtResource("1_hgimk")
 
 [node name="Panel" type="Panel" parent="."]
 visible = false
-offset_right = 279.0
-offset_bottom = 149.0
+offset_right = 339.0
+offset_bottom = 200.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_3cvs7")
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 1
@@ -58,7 +68,10 @@ offset_right = 136.5
 offset_bottom = 43.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_font_sizes/font_size = 18
+theme = ExtResource("2_3h2yf")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_0twqk")
 autowrap_mode = 3
 
 [node name="Continue" type="Button" parent="Panel" node_paths=PackedStringArray("anim")]

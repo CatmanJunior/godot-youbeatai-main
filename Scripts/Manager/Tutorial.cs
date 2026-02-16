@@ -49,10 +49,11 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen",
+            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.",
             condition: () => manager.clapped,
             outcome: () =>
             {
+                
                 manager.pointer.Visible = true;
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
@@ -62,10 +63,9 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
-
         // kick ring
         (
-            instruction:     "Deze rode cirkels vormen een kick-ring",
+            instruction:     "Deze roze cirkels vormen een kick-ring",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: null
         ),
@@ -201,7 +201,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
+            instruction: "Jouw beurt! Vul nóg 2 oranje vormen in door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexOrangeRing) >= _beatsActiveOrangeRing,
             outcome: ()=>
             {
@@ -210,7 +210,7 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }),
         (
-            instruction: "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
+            instruction: "Haal nu ook 1 van de ingevulde vormen weg door er op te drukken",
             condition: () => ActiveBeatsPerRing(_indexRedRing) < _beatsActiveRedRing || ActiveBeatsPerRing(_indexOrangeRing) < _beatsActiveOrangeRing,
             outcome: () =>
             {
@@ -240,7 +240,7 @@ public static class Tutorial
                 manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";_clapping = true;}
         ),
         (
-            instruction: "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
+            instruction: "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen",
             condition: () => manager.clappedOnBeatAmount >= _fixedAmount,
             outcome: () =>
             {
@@ -260,9 +260,9 @@ public static class Tutorial
             }
         ),
 
-        // groene laag
+        // gele laag
         (
-            instruction: "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
+            instruction: "Dit is de gele bass-ring. Klik op de beer 🐻 om de gele laag te kiezen en een brommende melodie toe te voegen",
             condition: () =>
             {
                 returnPlayer(manager.activateGreenChaosButton).Play("Bear_pulse");
@@ -271,14 +271,16 @@ public static class Tutorial
             outcome: () =>
             {
                 manager.SetMicRecorderVisibility(true);
-                manager.knob.GlobalPosition = _top.GlobalPosition;
+                manager.ChaosIconTop.Visible = true;
+                Vector2 calcPos = new Vector2(0, -60);
+                manager.knob.GlobalPosition = _top.GlobalPosition += calcPos;
                 allowed = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 returnPlayer(manager.activateGreenChaosButton).Stop();
             }
         ),
         (
-            instruction: "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
+            instruction: "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!",
             condition: () =>
             {
                 returnPlayer(manager.greenLayerRecordButton.GetParent()).Play("record_pulse");
@@ -367,8 +369,11 @@ public static class Tutorial
         (
             instruction: "Super gedaan, het klinkt heel leuk",
             condition: () => !DisplayServer.TtsIsSpeaking(),
-            outcome: () => BpmManager.instance.playing = false
-        ),
+            outcome: () =>
+            {
+              
+                BpmManager.instance.playing = false;
+            }),
 
         // chaos pad
         (
@@ -382,6 +387,7 @@ public static class Tutorial
             {
                 //_active = true;
                 manager.chaosPadTriangleSprite.Visible = true;
+               
             }
         ),
         (
@@ -390,7 +396,7 @@ public static class Tutorial
             outcome: null
         ),
         (
-            instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven",
+            instruction: "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖aan je sample geven",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
@@ -401,7 +407,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje ",
+            instruction: "Beweeg het witte rondje met drie streepjes naar de 💎 diamant ",
             condition: () => false,
             outcome: () =>
             {
@@ -433,7 +439,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het grijze rondje weer naar het 🌟 sterretje",
+            instruction: "Beweeg het witte rondje met streepjes weer naar de 💎 diamant ",
             condition: () => false,
             outcome: () =>
             {
@@ -456,7 +462,7 @@ public static class Tutorial
             }
         ),
         (
-            instruction: "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje",
+            instruction: "Beweeg het witte rondje met streepjes nog 1 keer naar de 💎 diamant",
             condition: () => false,
             outcome: () =>
             {
@@ -479,6 +485,8 @@ public static class Tutorial
             condition: () => false,
             outcome: () =>
             {
+                DisplayServer.TtsStop();
+                manager.UtteranceEnd(0);
                 tutorial_level = -2;
                 manager.SetEntireInterfaceVisibility(true);
                 manager.achievementspanel.Visible = false;
@@ -487,7 +495,7 @@ public static class Tutorial
                 manager.PianoArea.AreaEntered -= _bodyContinue;
                 manager.InBetweenArea.AreaEntered -= _bodyContinue;
                 manager.KlappyContinue.Pressed -= KlappyContinue;
-                DisplayServer.TtsStop();
+                
             }
         )
     ];
@@ -535,12 +543,14 @@ public static class Tutorial
             manager.SetEntireInterfaceVisibility(false);
             manager.settingsButton.Visible = true;
             manager.achievementspanel.Visible = true;
+            Sprite2D parent = manager.SongSelectButton.GetParent() as Sprite2D;
+            parent.Visible = false;
+            GD.Print(manager.SongSelectButton);
             manager.ContinueButton.Pressed += _tutorialContinue;
             manager.PianoArea.AreaEntered += _bodyContinue;
             manager.InBetweenArea.AreaEntered += _bodyContinue;
             manager.KlappyContinue.Pressed += KlappyContinue;
             manager.OutSideArea.AreaEntered += _bodyContinue;
-            manager.add_beats.SetPressed(true);
             _top = manager.corners[1];
             _clapButton = (DragAndDropButton)manager.draganddropButton1;
             _stompButton = (DragAndDropButton)manager.draganddropButton0;
@@ -676,7 +686,7 @@ public static class Tutorial
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-
+        
         _correctClapPlaySFX();
         _correctStompPlaySFX();
 
@@ -724,7 +734,7 @@ public static class Tutorial
         if (_increasedSpeed)
         {
             GD.Print(("Increase the speed"));
-            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 2.5f);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
         }
         else
         {

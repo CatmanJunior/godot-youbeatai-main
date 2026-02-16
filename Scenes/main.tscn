@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=112 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -35,7 +35,6 @@
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="23_jekl6"]
-[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="23_ynmfv"]
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="24_cblf0"]
 [ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="24_o1aky"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="25_nay3j"]
@@ -57,8 +56,10 @@
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="31_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="31_kwxat"]
 [ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scenes/midi_helper.gd" id="31_v2nl5"]
+[ext_resource type="Texture2D" uid="uid://dcutt8vbgv0ku" path="res://Resources/Textures_New/Icons/Icons-_28_0010_Bear.png" id="32_55idt"]
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="33_aqgau"]
+[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="38_55idt"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="41_qnggo"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="42_tab3y"]
@@ -82,10 +83,14 @@
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="66_vxl7x"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
+[ext_resource type="Animation" uid="uid://fpshbmdajq3r" path="res://Other/Bear_pulse.res" id="68_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
+[ext_resource type="Script" uid="uid://ccefs8ecih7l7" path="res://Scenes/song_mode_line.gd" id="69_87bhu"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="82_e6rcu"]
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
+[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -159,22 +164,6 @@ metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="Animation" id="Animation_jut3y"]
-resource_name = "Bear_pulse"
-length = 2.0
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(-0.00999999, 0.99, 1.99),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 0,
-"values": [Vector2(2, 2), Vector2(3, 3), Vector2(2, 2)]
-}
-
 [sub_resource type="Animation" id="Animation_v2nl5"]
 resource_name = "record_pulse"
 length = 2.0
@@ -193,20 +182,16 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dmskm"]
 _data = {
-&"Bear_pulse": SubResource("Animation_jut3y"),
+&"Bear_pulse": ExtResource("68_k8rh3"),
 &"record_pulse": SubResource("Animation_v2nl5")
 }
 
+[sub_resource type="BoxMesh" id="BoxMesh_55idt"]
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8cuat"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_5dpcw"]
-font_size = 14
-
-[sub_resource type="LabelSettings" id="LabelSettings_x8qo7"]
-font_size = 14
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
+texture = ExtResource("82_e6rcu")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
@@ -250,6 +235,7 @@ position = Vector2(-111, 46)
 [node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint"]
 
 [node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder"]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -269,7 +255,9 @@ text = "⏯️
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton"]
+visible = false
 show_behind_parent = true
+z_index = -1
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -517,14 +505,32 @@ max_value = 1.0
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="BeatRingPivotPoint"]
+z_index = 2
+emitting = false
+amount = 128
+emission_shape = 2
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 90.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+scale_amount_min = 8.0
+scale_amount_max = 12.0
+hue_variation_max = 0.55
+
 [node name="Managers" type="Node" parent="."]
 
 [node name="ProgressBar" type="ProgressBar" parent="Managers"]
 z_index = 6
 offset_left = 250.0
-offset_top = 311.0
+offset_top = 316.0
 offset_right = 544.16504
-offset_bottom = 333.695
+offset_bottom = 350.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 2
@@ -682,12 +688,12 @@ knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
 chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 mainIcons = Array[Texture2D]([ExtResource("48_uv6w5"), ExtResource("50_r7bbj"), ExtResource("51_e5peh"), ExtResource("20_sasc4")])
 altIcons = Array[Texture2D]([ExtResource("21_pfx1i"), ExtResource("22_fg68e"), ExtResource("23_jekl6"), ExtResource("52_f6rfp")])
-mainIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
-altIconSynths = Array[Texture2D]([ExtResource("53_sasc4"), ExtResource("55_pfx1i")])
+mainIconSynths = Array[Texture2D]([ExtResource("32_55idt"), ExtResource("55_pfx1i")])
+altIconSynths = Array[Texture2D]([ExtResource("26_v1mrv"), ExtResource("26_v1mrv")])
 mainIconSong = ExtResource("28_1tvlp")
 altIconSong = ExtResource("26_v1mrv")
-mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
-altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
+mainIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
+altIcon = NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 micButtonLocation = NodePath("../../UserInterface/ChaosPad/MicButtonLocation")
 micButtons = [NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2"), NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3"), NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 SynthMixing_LineScaleCurve = SubResource("Curve_aqgau")
@@ -699,7 +705,7 @@ InBetweenMesh = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/i
 OutSideArea = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/outside/outside")
 OutSideMesh = NodePath("../../UserInterface/ChaosPad/Tutorial_interactpoints/outside/outside2")
 Klappy = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/Klappy")
-beat_particles = NodePath("../../BeatParticleSystem")
+beat_particles = NodePath("../../BeatRingPivotPoint/BeatParticleSystem")
 pbar_particles = NodePath("../../ProgressBarParticleSystem")
 achievement_particles = NodePath("../../AchievementsParticleSystem")
 layerButtonPrefab = ExtResource("39_aa8k8")
@@ -755,7 +761,7 @@ allLayersToMp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersTo
 layerOutline = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/Outline")
 layerOutlineHolder = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder")
 spritePrefab = ExtResource("2_1eep1")
-filled_beat_textures = Array[Texture2D]([ExtResource("21_my4ki"), ExtResource("22_lx3vj"), ExtResource("23_ynmfv"), ExtResource("24_cblf0")])
+filled_beat_textures = Array[Texture2D]([ExtResource("21_my4ki"), ExtResource("22_lx3vj"), ExtResource("38_55idt"), ExtResource("24_cblf0")])
 outline_beat_textures = Array[Texture2D]([ExtResource("25_nay3j"), ExtResource("26_ovafv"), ExtResource("27_owhal"), ExtResource("28_uv6w5")])
 dotted_synth_textures = Array[Texture2D]([ExtResource("61_jekl6"), ExtResource("62_v1mrv")])
 outline_synth_textures = Array[Texture2D]([ExtResource("41_qnggo"), ExtResource("42_tab3y")])
@@ -779,6 +785,9 @@ layerVoiceOver1 = NodePath("../LayerVoiceOver1")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers"]
 script = ExtResource("10_4yy8e")
+clapthreshold = 0.05
+stampFreq = 20.0
+stampThreshold = 0.018
 
 [node name="TemplateManager" type="Node" parent="Managers" node_paths=PackedStringArray("templateButton", "leftTemplateButton", "rightTemplateButton", "showTemplateButton", "setTemplateButton")]
 script = ExtResource("9_t3vou")
@@ -1341,10 +1350,10 @@ anchors_preset = -1
 anchor_top = -0.0214987
 anchor_right = 0.011338258
 anchor_bottom = -0.0214987
-offset_left = -601.00006
-offset_top = -321.52097
-offset_right = -501.0001
-offset_bottom = -196.52097
+offset_left = -577.00006
+offset_top = -329.52097
+offset_right = -477.0001
+offset_bottom = -204.52097
 scale = Vector2(0.7815966, 0.7815966)
 metadata/_edit_use_anchors_ = true
 
@@ -1369,6 +1378,14 @@ metadata/_edit_use_anchors_ = true
 z_index = -1
 scale = Vector2(1.7, 1.7)
 texture = ExtResource("66_vxl7x")
+
+[node name="Song mode line" type="MeshInstance2D" parent="UserInterface/Buttons/SongSelectButton" node_paths=PackedStringArray("manager")]
+self_modulate = Color(0.61960787, 0.6117647, 0.8980392, 1)
+position = Vector2(642.94885, -0.8874006)
+scale = Vector2(1109.9528, 13.182272)
+mesh = SubResource("BoxMesh_55idt")
+script = ExtResource("69_87bhu")
+manager = NodePath("../../../../Managers/Manager")
 
 [node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" node_paths=PackedStringArray("button")]
 z_index = -4
@@ -1507,9 +1524,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton2" instance=ExtResource("32_aa8k8")]
-offset_left = -591.0
-offset_right = -491.9316
-offset_bottom = 53.06669
+offset_left = -567.0
+offset_top = -44.0
+offset_right = -467.9316
+offset_bottom = 45.06669
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
@@ -1570,10 +1588,10 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton3" instance=ExtResource("32_aa8k8")]
-offset_left = -590.0
-offset_top = 60.999992
-offset_right = -490.58047
-offset_bottom = 149.48396
+offset_left = -572.0
+offset_top = 53.000015
+offset_right = -472.58047
+offset_bottom = 141.484
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
@@ -1707,10 +1725,10 @@ texture = ExtResource("22_sb4d6")
 texture_scale = 1.71
 
 [node name="Blocker" parent="UserInterface/Buttons/PurpleSelectButton" instance=ExtResource("32_aa8k8")]
-offset_left = -599.0
-offset_top = 245.00003
-offset_right = -505.36505
-offset_bottom = 337.64413
+offset_left = -575.0
+offset_top = 237.00003
+offset_right = -481.36505
+offset_bottom = 329.64413
 scale = Vector2(0.835, 0.835)
 pivot_offset = Vector2(50, 35)
 metadata/_edit_use_anchors_ = true
@@ -1927,20 +1945,23 @@ bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
 bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
-position = Vector2(204.067, 67.1816)
+position = Vector2(202.49997, 89.166664)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
 energy = 0.0
 texture = ExtResource("22_sb4d6")
-texture_scale = 1.71
+texture_scale = 2.41
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" instance=ExtResource("44_kqrg6")]
+z_index = -1
 anchors_preset = -1
 anchor_left = -24.5
 anchor_top = 18.5
 anchor_bottom = 18.5
-offset_top = -209.5
-offset_bottom = -21.5
+offset_left = -230.5
+offset_top = -226.5
+offset_right = 50.5
+offset_bottom = -38.5
 
 [node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
 layout_mode = 1
@@ -1948,8 +1969,6 @@ anchors_preset = -1
 anchor_right = 0.17973857
 
 [node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
-layout_mode = 1
-anchors_preset = -1
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353
@@ -1993,7 +2012,7 @@ offset_left = -640.0
 offset_top = -360.0
 offset_right = 640.0
 offset_bottom = 360.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_8cuat")
+theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
 
 [node name="Title" type="Label" parent="UserInterface/SettingsPanel"]
 layout_mode = 0
@@ -2001,6 +2020,7 @@ offset_left = 514.0
 offset_top = 20.0
 offset_right = 766.0
 offset_bottom = 76.0
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 40
 text = "Instellingen"
 horizontal_alignment = 1
@@ -2014,6 +2034,8 @@ offset_top = 8.0
 offset_right = 158.0
 offset_bottom = 48.0
 focus_mode = 0
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 30
 text = "↩️ Terug
 "
 alignment = 0
@@ -2047,6 +2069,7 @@ offset_right = 75.0
 offset_bottom = 87.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = ".........."
 
 [node name="TemplateLeftButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton"]
@@ -2074,6 +2097,7 @@ offset_right = 73.0
 offset_bottom = 84.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "Tip🔮"
 
 [node name="SetTemplateButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton"]
@@ -2084,6 +2108,7 @@ offset_right = 150.0
 offset_bottom = 84.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "Doe 🤖
 "
 
@@ -2094,6 +2119,7 @@ offset_right = 75.0
 offset_bottom = 175.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "🎼 Liedje opslaan"
 alignment = 0
 
@@ -2104,6 +2130,7 @@ offset_right = 75.0
 offset_bottom = 219.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "📥 Beat ring opslaan"
 alignment = 0
@@ -2133,6 +2160,7 @@ offset_right = 75.0
 offset_bottom = 263.0
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 text = "🔄 Herstart"
 alignment = 0
 
@@ -2168,6 +2196,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🫀"
 horizontal_alignment = 1
@@ -2175,12 +2204,62 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle"]
-layout_mode = 0
-offset_right = 97.0
-offset_bottom = 23.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0037179312
+anchor_top = 0.12818654
+anchor_right = 0.93628204
+anchor_bottom = 1.2948532
+offset_right = 95.0
+offset_bottom = 20.0
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
 text = "metronoom"
-label_settings = SubResource("LabelSettings_5dpcw")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
+offset_left = -75.0
+offset_top = 21.1543
+offset_right = 75.0
+offset_bottom = 45.1543
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = 4.0
+offset_bottom = 24.0
+theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 15
+text = "🔘"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.001080645
+anchor_top = 0.05809625
+anchor_right = -0.0010806274
+anchor_bottom = 0.05809625
+offset_top = -17.80156
+offset_right = 224.0
+offset_bottom = 30.19844
+scale = Vector2(0.35, 0.35)
+theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
+text = "knop is klap"
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2202,6 +2281,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "👏"
 horizontal_alignment = 1
@@ -2211,46 +2291,18 @@ metadata/_edit_use_anchors_ = true
 [node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = -0.0659313
-anchor_bottom = -0.0659313
-offset_right = 87.0
-offset_bottom = 23.0
+anchor_left = -0.0037179312
+anchor_top = 0.10754522
+anchor_right = 1.4296155
+anchor_bottom = 1.3575453
+offset_top = 17.801556
+offset_right = 117.0
+offset_bottom = 35.80156
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
-text = "knop is klap"
-label_settings = SubResource("LabelSettings_x8qo7")
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders"]
-offset_left = -75.0
-offset_top = 21.1543
-offset_right = 75.0
-offset_bottom = 45.1543
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 15
-text = "🔘"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat"]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
 text = "knop maakt beat"
-label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2271,6 +2323,7 @@ offset_left = -25.0
 offset_top = 4.0
 offset_bottom = 24.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "👂🏼"
 horizontal_alignment = 1
@@ -2281,9 +2334,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
 text = "klap maakt beat"
-label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2305,6 +2360,7 @@ offset_top = 4.0
 offset_bottom = 24.0
 mouse_filter = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🔇"
 horizontal_alignment = 1
@@ -2315,9 +2371,11 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
+scale = Vector2(0.35, 0.35)
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 40
 text = "klappy stil"
-label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
@@ -2340,6 +2398,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🎙️"
 horizontal_alignment = 1
@@ -2378,6 +2437,7 @@ offset_left = 151.0
 offset_right = 176.0
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "👟"
 horizontal_alignment = 1
@@ -2390,6 +2450,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🖐🏼"
 horizontal_alignment = 1
@@ -2411,6 +2472,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🌀"
 horizontal_alignment = 1
@@ -2432,6 +2494,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "🏛️"
 horizontal_alignment = 1
@@ -2453,6 +2516,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "⛰️"
 horizontal_alignment = 1
@@ -2478,6 +2542,7 @@ offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 15
 text = "⏱️"
 horizontal_alignment = 1
@@ -2491,6 +2556,7 @@ offset_top = -0.7911835
 offset_right = 246.29051
 offset_bottom = 75.72757
 scale = Vector2(0.375, 0.375)
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 40
 text = "0.4s"
 horizontal_alignment = 1
@@ -2508,29 +2574,12 @@ offset_top = 659.0
 offset_right = 1183.89
 offset_bottom = 726.0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 32
 text = "bpm"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
-
-[node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
-z_index = 2
-emitting = false
-amount = 128
-emission_shape = 2
-emission_sphere_radius = 16.0
-direction = Vector2(0, 0)
-spread = 90.0
-gravity = Vector2(0, 100)
-initial_velocity_min = 67.42
-initial_velocity_max = 67.42
-angular_velocity_max = 8.8
-angle_min = 45.0
-angle_max = 90.0
-scale_amount_min = 8.0
-scale_amount_max = 12.0
-hue_variation_max = 0.55
 
 [node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
@@ -2674,15 +2723,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -135.0
-offset_top = -101.0
-offset_right = 136.0
-offset_bottom = -22.0
+offset_left = -218.0
+offset_top = -99.0
+offset_right = 220.0
+offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1, 1.0232327)
 theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 30
-text = "Kies een icoon voor de laag"
+theme_override_fonts/font = ExtResource("84_33qc4")
+theme_override_font_sizes/font_size = 24
+text = "Wat voor een nieuwe laag wil je?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -2792,8 +2843,9 @@ offset_right = 76.56
 offset_bottom = 30.62
 focus_mode = 0
 theme = ExtResource("22_hpc6h")
+theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 16
-text = "Cancel"
+text = "Sluiten"
 metadata/_edit_use_anchors_ = true
 
 [node name="CountDown" type="Panel" parent="."]

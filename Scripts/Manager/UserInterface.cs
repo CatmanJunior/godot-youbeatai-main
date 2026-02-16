@@ -26,6 +26,11 @@ public partial class Manager : Node
 	[Export] public Sprite2D draganddropButton1;
 	[Export] public Sprite2D draganddropButton2;
 	[Export] public Sprite2D draganddropButton3;
+	private float originalDraganddropButton0Scale;
+	private float originalDraganddropButton1Scale;
+	private float originalDraganddropButton2Scale;
+	private float originalDraganddropButton3Scale;
+
 	[Export] public RecordSampleButton recordSampleButton0;
 	[Export] public RecordSampleButton recordSampleButton1;
 	[Export] public RecordSampleButton recordSampleButton2;
@@ -105,6 +110,7 @@ public partial class Manager : Node
 	[Export] public Area2D KnobArea;
 	[Export] public Label AmountLeft;
 	[Export] public Button greenLayerRecordButton;
+	[Export] public Node2D BearRingPivotPoint;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	Timer thresholdSaveTimer; // delayed save of microphone threshold value timer
@@ -234,10 +240,6 @@ public partial class Manager : Node
 		}
 	}
 
-	float originalDraganddropButton0Scale;
-	float originalDraganddropButton1Scale;
-	float originalDraganddropButton2Scale;
-	float originalDraganddropButton3Scale;
 
 	private void UpdateBeatSprites(double delta)
 	{
@@ -282,7 +284,7 @@ public partial class Manager : Node
 		}
 	}
 
-	[Export] public Node2D BearRingPivotPoint;
+	
 
 	void SpritePlacement()
 	{

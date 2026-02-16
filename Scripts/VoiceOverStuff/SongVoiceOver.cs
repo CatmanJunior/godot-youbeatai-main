@@ -67,7 +67,8 @@ public partial class SongVoiceOver : Node
 		}
 
 		// set progress bar value
-		if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
+		float loopLength = Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat);
+		if (recording) progressbar.Value = recordingTimer / loopLength;
 
 		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 

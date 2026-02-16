@@ -789,12 +789,10 @@ rightTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/Templa
 showTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/ShowTemplateButton")
 setTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/SetTemplateButton")
 
-[node name="ReverbDelayManager" type="Node" parent="Managers" node_paths=PackedStringArray("reverbSlider", "delaySlider", "highLowPassSlider", "phaserDistortionSlider")]
+[node name="ReverbDelayManager" type="Node" parent="Managers" node_paths=PackedStringArray("reverbSlider", "delaySlider")]
 script = ExtResource("53_o136f")
 reverbSlider = NodePath("../../UserInterface/SettingsPanel/Sliders/ReverbSlider")
 delaySlider = NodePath("../../UserInterface/SettingsPanel/Sliders/DelaySlider")
-highLowPassSlider = NodePath("../../KlappyHighLowpass")
-phaserDistortionSlider = NodePath("../../KlappyPhaserDistortion")
 
 [node name="MidiManager" type="Node" parent="Managers"]
 script = ExtResource("54_08dpv")
@@ -1929,7 +1927,7 @@ bones/14/rotation = Quaternion(0.16030091, -0.008637771, 0.46690783, 0.8696127)
 bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
 bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
 
-[node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer" node_paths=PackedStringArray("hLSlider", "pDSlider")]
+[node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(204.067, 67.1816)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
@@ -1937,8 +1935,35 @@ energy = 0.0
 texture = ExtResource("50_w7368")
 texture_scale = 1.71
 script = ExtResource("78_jjmdw")
-hLSlider = NodePath("../../../../KlappyHighLowpass")
-pDSlider = NodePath("../../../../KlappyPhaserDistortion")
+
+[node name="PointLight2D" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer/KlappyLight"]
+visible = false
+color = Color(1, 1, 1, 0)
+texture = ExtResource("50_w7368")
+
+[node name="green" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer/KlappyLight/PointLight2D"]
+position = Vector2(-72.88046, 12.38208)
+scale = Vector2(1.0000004, 1.0000004)
+color = Color(0, 1, 0, 1)
+texture = ExtResource("50_w7368")
+
+[node name="yellow" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer/KlappyLight/PointLight2D"]
+position = Vector2(-3.8804321, -65.61795)
+scale = Vector2(1.0000004, 1.0000004)
+color = Color(1, 1, 0, 1)
+texture = ExtResource("50_w7368")
+
+[node name="red" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer/KlappyLight/PointLight2D"]
+position = Vector2(60.1196, 4.3820724)
+scale = Vector2(1.0000004, 1.0000004)
+color = Color(0.9999997, 0.12457236, 0.08649377, 1)
+texture = ExtResource("50_w7368")
+
+[node name="blue" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer/KlappyLight/PointLight2D"]
+position = Vector2(-4.880432, 66.382095)
+scale = Vector2(1.0000004, 1.0000004)
+color = Color(0, 0.1837003, 0.99999946, 1)
+texture = ExtResource("50_w7368")
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" instance=ExtResource("78_3xg81")]
 anchors_preset = -1

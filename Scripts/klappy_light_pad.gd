@@ -29,8 +29,11 @@ func _on_gui_input(event: InputEvent) -> void:
 		$cursor.position = pos 
 		var x_percent = pos.x / size.x #ipv pixels maakt hij er 1/0 van
 		var y_percent = 1.0 - (pos.y / size.y)
-		
 		phaser.depth = 1.0 - x_percent
 		distortion.drive = x_percent
 		highpass.cutoff_hz = lerp(40.0, 4000.0, y_percent)
 		lowpass.cutoff_hz = lerp(4000.0, 40.0, y_percent)
+		
+		if pos.x == 1:
+			$UserInterface/Robot/SubViewportContainer/KlappyLight.color = "purple"
+			

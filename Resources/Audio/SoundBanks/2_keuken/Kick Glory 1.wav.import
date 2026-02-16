@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://odobipxdwoem"
+path="res://.godot/imported/Kick Glory 1.wav-dc2a7f0d9ebff4d9ae361d1b2929be98.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/2_keuken/Kick Glory 1.wav"
+dest_files=["res://.godot/imported/Kick Glory 1.wav-dc2a7f0d9ebff4d9ae361d1b2929be98.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

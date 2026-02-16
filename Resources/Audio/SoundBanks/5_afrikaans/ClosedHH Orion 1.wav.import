@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bk4k6m401s56h"
+path="res://.godot/imported/ClosedHH Orion 1.wav-b3731b1b1d0e55f834e624d2ccdff863.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/5_afrikaans/ClosedHH Orion 1.wav"
+dest_files=["res://.godot/imported/ClosedHH Orion 1.wav-b3731b1b1d0e55f834e624d2ccdff863.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

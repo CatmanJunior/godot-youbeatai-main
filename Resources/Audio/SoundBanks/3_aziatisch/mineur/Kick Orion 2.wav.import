@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://lslyglmsdtsj"
+path="res://.godot/imported/Kick Orion 2.wav-750966ce10106f4bd8f190d025d97ddf.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Kick Orion 2.wav"
+dest_files=["res://.godot/imported/Kick Orion 2.wav-750966ce10106f4bd8f190d025d97ddf.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

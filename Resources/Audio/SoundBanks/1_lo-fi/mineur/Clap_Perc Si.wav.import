@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bd7yiyir2m7x2"
+path="res://.godot/imported/Clap_Perc Si.wav-9d324fa660004ed6738639ecec5c423d.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Clap_Perc Si.wav"
+dest_files=["res://.godot/imported/Clap_Perc Si.wav-9d324fa660004ed6738639ecec5c423d.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

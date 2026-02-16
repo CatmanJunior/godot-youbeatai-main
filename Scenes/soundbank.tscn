@@ -1,0 +1,653 @@
+[gd_scene load_steps=9 format=3 uid="uid://b8n1g4l4jrv6d"]
+
+[ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ie3tb"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="3_a7rio"]
+[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="4_saqfl"]
+[ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy_soundbank_screen.gd" id="5_pd2wx"]
+[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="6_lmhht"]
+[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmhht"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.87654406, 0.4330934, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="scene" type="Node2D"]
+
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -222.00006
+offset_top = -327.00003
+offset_right = 117.99994
+offset_bottom = 170.99997
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.29699, 1.29699)
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
+script = ExtResource("1_l0fe3")
+emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle"), NodePath("Emoties/emotion7/toggle")]
+themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
+gebruikButton = NodePath("GebruikButton")
+gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
+hoeveelBeats = NodePath("../OtherSelectionMenu/OptionButton")
+
+[node name="GebruikButton" type="Button" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -94.0
+offset_top = 99.0
+offset_right = 85.0
+offset_bottom = 141.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+disabled = true
+text = "✅ Gebruik
+"
+
+[node name="TitleLabel" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -250.832
+offset_right = 160.0
+offset_bottom = -190.832
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 26
+text = "Wat voor liedje wil je?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Emoties" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.5
+offset_top = -179.009
+offset_right = 105.5
+offset_bottom = -134.009
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 25
+text = "Emoties"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="emotion1" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = -41.5
+offset_top = 37.0
+offset_right = -0.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🤔"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion1"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 31.0
+offset_right = 43.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion2" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 3.5
+offset_top = 37.0
+offset_right = 44.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😢"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion2"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion3" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 49.5
+offset_top = 37.0
+offset_right = 90.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😁"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion3"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion4" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 95.5
+offset_top = 37.0
+offset_right = 136.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😍"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion4"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion5" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 141.5
+offset_top = 37.0
+offset_right = 182.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😵‍💫"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion5"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion6" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 187.5
+offset_top = 37.0
+offset_right = 228.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😳"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion6"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="emotion7" type="Label" parent="SoundBankSelectionMenu/Emoties"]
+layout_mode = 0
+offset_left = 231.5
+offset_top = 37.0
+offset_right = 272.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "😡"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion7"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="Themas" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -115.5
+offset_top = -65.5044
+offset_right = 105.5
+offset_bottom = -20.5044
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 25
+text = "Themas"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="theme1" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = -20.5
+offset_top = 37.0
+offset_right = 20.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🫶"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme1"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 31.0
+offset_right = 43.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme2" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 24.5
+offset_top = 37.0
+offset_right = 65.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🎂"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme2"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme3" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 37.0
+offset_right = 111.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🦄"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme3"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme4" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 116.5
+offset_top = 37.0
+offset_right = 157.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🍽"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme4"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme5" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 162.5
+offset_top = 37.0
+offset_right = 203.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🌍"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme5"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme6" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 208.5
+offset_top = 37.0
+offset_right = 249.5
+offset_bottom = 79.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🌴"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme6"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme7" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = -20.5
+offset_top = 88.0
+offset_right = 20.5
+offset_bottom = 130.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "💔"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme7"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 31.0
+offset_right = 43.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme8" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 24.5
+offset_top = 88.0
+offset_right = 65.5
+offset_bottom = 130.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🪦"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme8"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme9" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 70.5
+offset_top = 88.0
+offset_right = 111.5
+offset_bottom = 130.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🐾"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme9"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme10" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 116.5
+offset_top = 88.0
+offset_right = 157.5
+offset_bottom = 130.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "⏳️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme10"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 31.0
+offset_right = 42.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme11" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 162.5
+offset_top = 88.0
+offset_right = 203.5
+offset_bottom = 130.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🏆"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme11"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="theme12" type="Label" parent="SoundBankSelectionMenu/Themas"]
+layout_mode = 0
+offset_left = 208.5
+offset_top = 88.0
+offset_right = 249.5
+offset_bottom = 130.0
+mouse_filter = 0
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 28
+text = "🎮"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme12"]
+layout_mode = 0
+offset_left = -3.0
+offset_top = 31.0
+offset_right = 41.0
+offset_bottom = 55.0
+focus_mode = 0
+
+[node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 406.664
+offset_right = 324.0
+offset_bottom = 444.664
+theme = ExtResource("2_ie3tb")
+text = "Gevonden Soundbank:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SelectionLabel" type="Label" parent="SoundBankSelectionMenu/SelectieLabelTitle"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 30.0
+offset_right = 322.0
+offset_bottom = 72.0
+theme = ExtResource("2_ie3tb")
+text = "....."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OtherSelectionMenu" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 238.0
+offset_top = -221.0
+offset_right = 535.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
+
+[node name="TitleLabel" type="Label" parent="OtherSelectionMenu"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -133.0
+offset_right = 160.0
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_font_sizes/font_size = 26
+text = "Andere Opties:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HoeveelBeats" type="Label" parent="OtherSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -121.5
+offset_top = -101.5
+offset_right = 51.5
+offset_bottom = -65.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.44248, 1.44248)
+theme = ExtResource("2_ie3tb")
+text = "Hoeveel beats:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OptionButton" type="OptionButton" parent="OtherSelectionMenu"]
+layout_mode = 0
+offset_left = 58.0
+offset_top = 68.0
+offset_right = 258.0
+offset_bottom = 108.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 28
+selected = 1
+item_count = 3
+popup/item_0/text = "32"
+popup/item_0/id = 0
+popup/item_1/text = "16"
+popup/item_1/id = 1
+popup/item_2/text = "8"
+popup/item_2/id = 2
+
+[node name="Robot" parent="." instance=ExtResource("3_a7rio")]
+position = Vector2(547, 200)
+
+[node name="AchievementsPanel" parent="Robot" index="0"]
+visible = false
+
+[node name="Skeleton3D" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
+bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
+
+[node name="Klappy respons bubble" parent="." instance=ExtResource("4_saqfl")]
+position = Vector2(237, 30)
+
+[node name="Continue" parent="Klappy respons bubble/Panel" index="1"]
+visible = false
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("5_pd2wx")
+message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WorldBackPanel" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("6_lmhht")
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("7_avjdi")
+metadata/_edit_lock_ = true
+
+[editable path="Robot"]
+[editable path="Robot/AchievementsPanel"]
+[editable path="Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="Robot/SubViewportContainer/SubViewport/Klappy/model"]
+[editable path="Klappy respons bubble"]

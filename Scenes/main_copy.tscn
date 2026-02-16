@@ -1,0 +1,1314 @@
+[gd_scene load_steps=49 format=3 uid="uid://bpnc43bcfo8yt"]
+
+[ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_0klt1"]
+[ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="2_2aw6o"]
+[ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="3_ge1om"]
+[ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="4_o3nkl"]
+[ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="5_khqwu"]
+[ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="6_jv8xm"]
+[ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="7_eq2yw"]
+[ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="8_kyo1b"]
+[ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="9_dxot1"]
+[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="10_xlfpa"]
+[ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="11_d7y66"]
+[ext_resource type="Texture2D" uid="uid://ddx3ttnpgkple" path="res://Resources/Textures/ring.png" id="12_fxueh"]
+[ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="13_v40um"]
+[ext_resource type="Script" uid="uid://dgwusorhvls4u" path="res://Scripts/TemplateManager.cs" id="14_fs0iq"]
+[ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="15_c27g0"]
+[ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="16_3hlih"]
+[ext_resource type="Script" uid="uid://858ek2iipynw" path="res://Scripts/VoiceOverStuff/SongVoiceOver.cs" id="17_c1ur1"]
+[ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="18_ahwt3"]
+[ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="19_it2ro"]
+[ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="20_qrisc"]
+[ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="21_s7uuy"]
+[ext_resource type="FontFile" uid="uid://b0odqns17imij" path="res://Fonts/NotoColorEmoji.ttf" id="22_2aw6o"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_ge1om"]
+[ext_resource type="Texture2D" uid="uid://cx0bpjp8y6sel" path="res://Resources/Textures/square-outline.png" id="22_ueoar"]
+[ext_resource type="Script" uid="uid://bs8s08unyjudt" path="res://Scripts/DragAndDropButton.cs" id="23_rq72x"]
+[ext_resource type="Texture2D" uid="uid://b5gky5aods412" path="res://Resources/Textures/rawmic.png" id="24_esmyw"]
+[ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="25_l720b"]
+[ext_resource type="Texture2D" uid="uid://fgq18msakepv" path="res://Resources/Textures/robot.png" id="26_8xdn8"]
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="27_l42ve"]
+[ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="28_3vojf"]
+[ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="29_t5ted"]
+[ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_orymn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xng46"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_acarb"]
+bg_color = Color(0.18, 0.18, 0.18, 0.913725)
+corner_radius_top_left = 40
+corner_radius_top_right = 40
+corner_radius_bottom_right = 40
+corner_radius_bottom_left = 40
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_x0c78"]
+font_size = 18
+
+[sub_resource type="Theme" id="Theme_7exd8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lfnhs"]
+bg_color = Color(1, 1, 1, 0.164706)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3brpt"]
+bg_color = Color(1, 0.27, 0.27, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_5adyu"]
+font_size = 22
+
+[sub_resource type="LabelSettings" id="LabelSettings_fbqyi"]
+font_size = 18
+
+[sub_resource type="LabelSettings" id="LabelSettings_5dpcw"]
+font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_x8qo7"]
+font_size = 14
+
+[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
+font_size = 80
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bao2x"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
+
+[node name="scene2" type="Node2D"]
+
+[node name="Camera" type="Camera2D" parent="."]
+scale = Vector2(4.12, 1)
+
+[node name="AudioListener" type="AudioListener2D" parent="Camera"]
+current = true
+
+[node name="Managers" type="Node" parent="."]
+
+[node name="BPM" type="Node" parent="Managers"]
+script = ExtResource("1_0klt1")
+
+[node name="Manager" type="Node" parent="Managers" node_paths=PackedStringArray("saveToWavButton", "beat_particles", "pbar_particles", "achievement_particles", "layerButton1", "layerButton2", "layerButton3", "layerButton4", "layerButton5", "layerButton6", "layerButton7", "layerButton8", "layerButton9", "layerButton10", "robotlight", "SaveLayoutButton", "LoadLayoutButton", "ClearLayoutButton", "PlayPauseButton", "ResetPlayerButton", "BpmUpButton", "BpmDownButton", "draganddropButton0", "draganddropButton1", "draganddropButton2", "draganddropButton3", "recordSampleButton0", "recordSampleButton1", "recordSampleButton2", "recordSampleButton3", "recordSampleCheckButton0", "recordSampleCheckButton1", "recordSampleCheckButton2", "recordSampleCheckButton3", "metronome_toggle", "micmeter", "add_beats", "volume_treshold", "skiptutorialbutton", "progressBar", "pointer", "metronome", "metronomebg", "bpmLabel", "draganddropthing", "swingslider", "swinglabel", "settingsButton", "settingsPanel", "ClapBiasSlider", "achievementspanel", "layerLoopToggle", "SavingLabel", "InstructionLabel", "robot", "allLayersToMp3", "layerOutline")]
+script = ExtResource("2_2aw6o")
+metronome_sfx = ExtResource("3_ge1om")
+metronomealt_sfx = ExtResource("4_o3nkl")
+achievement_sfx = ExtResource("5_khqwu")
+mainAudioFiles = Array[AudioStream]([ExtResource("6_jv8xm"), ExtResource("7_eq2yw"), ExtResource("8_kyo1b"), ExtResource("9_dxot1")])
+saveToWavButton = NodePath("../../UserInterface/MainButtons/SaveToWavButton")
+beat_particles = NodePath("../../BeatParticleSystem")
+pbar_particles = NodePath("../../ProgressBarParticleSystem")
+achievement_particles = NodePath("../../AchievementsParticleSystem")
+layerButton1 = NodePath("../../UserInterface/SwitchLayerButtons/Layer1")
+layerButton2 = NodePath("../../UserInterface/SwitchLayerButtons/Layer2")
+layerButton3 = NodePath("../../UserInterface/SwitchLayerButtons/Layer3")
+layerButton4 = NodePath("../../UserInterface/SwitchLayerButtons/Layer4")
+layerButton5 = NodePath("../../UserInterface/SwitchLayerButtons/Layer5")
+layerButton6 = NodePath("../../UserInterface/SwitchLayerButtons/Layer6")
+layerButton7 = NodePath("../../UserInterface/SwitchLayerButtons/Layer7")
+layerButton8 = NodePath("../../UserInterface/SwitchLayerButtons/Layer8")
+layerButton9 = NodePath("../../UserInterface/SwitchLayerButtons/Layer9")
+layerButton10 = NodePath("../../UserInterface/SwitchLayerButtons/Layer10")
+colors = PackedColorArray(0.84, 0.1428, 0.1428, 1, 1, 0.433333, 0, 1, 1, 1, 0.3, 1, 0.2, 0.56, 1, 1)
+robotlight = NodePath("../../UserInterface/Robot/RobotLight")
+spritePrefab = ExtResource("10_xlfpa")
+texture = ExtResource("11_d7y66")
+outline = ExtResource("12_fxueh")
+SaveLayoutButton = NodePath("../../UserInterface/MainButtons/SaveLayoutButton")
+LoadLayoutButton = NodePath("../../UserInterface/MainButtons/LoadLayoutButton")
+ClearLayoutButton = NodePath("../../UserInterface/MainButtons/ClearLayoutButton")
+PlayPauseButton = NodePath("../../UserInterface/MainButtons/PlayPauseButton")
+ResetPlayerButton = NodePath("../../UserInterface/MainButtons/ResetPlayerButton")
+BpmUpButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
+BpmDownButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
+draganddropButton0 = NodePath("../../UserInterface/SampleButtons/DragAndDropButton0")
+draganddropButton1 = NodePath("../../UserInterface/SampleButtons/DragAndDropButton1")
+draganddropButton2 = NodePath("../../UserInterface/SampleButtons/DragAndDropButton2")
+draganddropButton3 = NodePath("../../UserInterface/SampleButtons/DragAndDropButton3")
+recordSampleButton0 = NodePath("../../UserInterface/SampleButtons/SampleRecordingButton0")
+recordSampleButton1 = NodePath("../../UserInterface/SampleButtons/SampleRecordingButton1")
+recordSampleButton2 = NodePath("../../UserInterface/SampleButtons/SampleRecordingButton2")
+recordSampleButton3 = NodePath("../../UserInterface/SampleButtons/SampleRecordingButton3")
+recordSampleCheckButton0 = NodePath("../../UserInterface/SampleButtons/UseSampleCheckButton0")
+recordSampleCheckButton1 = NodePath("../../UserInterface/SampleButtons/UseSampleCheckButton1")
+recordSampleCheckButton2 = NodePath("../../UserInterface/SampleButtons/UseSampleCheckButton2")
+recordSampleCheckButton3 = NodePath("../../UserInterface/SampleButtons/UseSampleCheckButton3")
+metronome_toggle = NodePath("../../UserInterface/SettingsButton/SettingsPanel/MetronomeToggle")
+micmeter = NodePath("../../UserInterface/SettingsButton/SettingsPanel/MicMeter")
+add_beats = NodePath("../../UserInterface/SettingsButton/SettingsPanel/AddBeatsToggle")
+volume_treshold = NodePath("../../UserInterface/SettingsButton/SettingsPanel/VolumeTreshold")
+skiptutorialbutton = NodePath("../../UserInterface/AchievementsPanel/SkipTutorialButton")
+progressBar = NodePath("../../UserInterface/ProgressBar")
+pointer = NodePath("../../UserInterface/Pointer")
+metronome = NodePath("../../UserInterface/metronome/metronome_point")
+metronomebg = NodePath("../../UserInterface/metronome")
+bpmLabel = NodePath("../../UserInterface/BpmLabel")
+draganddropthing = NodePath("../../UserInterface/draganddropthing")
+swingslider = NodePath("../../UserInterface/SwingSlider")
+swinglabel = NodePath("../../UserInterface/SwingSlider/SwingLabel")
+settingsButton = NodePath("../../UserInterface/SettingsButton")
+settingsPanel = NodePath("../../UserInterface/SettingsButton/SettingsPanel")
+ClapBiasSlider = NodePath("../../UserInterface/SettingsButton/SettingsPanel/ClapStompBias")
+achievementspanel = NodePath("../../UserInterface/AchievementsPanel")
+layerLoopToggle = NodePath("../../UserInterface/SettingsButton/SettingsPanel/LayerLoopToggle")
+SavingLabel = NodePath("../../SavingLabel")
+InstructionLabel = NodePath("../../UserInterface/AchievementsPanel/InstructionLabel")
+robot = NodePath("../../UserInterface/Robot")
+allLayersToMp3 = NodePath("../../UserInterface/MainButtons/AllLayersToMp3")
+layerOutline = NodePath("../../UserInterface/SwitchLayerButtons/Outline")
+
+[node name="MicrophoneCapture" type="Node" parent="Managers"]
+script = ExtResource("13_v40um")
+
+[node name="TemplateManager" type="Node" parent="Managers" node_paths=PackedStringArray("templateButton", "leftTemplateButton", "rightTemplateButton", "showTemplateButton", "setTemplateButton")]
+script = ExtResource("14_fs0iq")
+templateButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/TemplateButton")
+leftTemplateButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/TemplateLeftButton")
+rightTemplateButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/TemplateRightButton")
+showTemplateButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/ShowTemplateButton")
+setTemplateButton = NodePath("../../UserInterface/SettingsButton/SettingsPanel/SetTemplateButton")
+
+[node name="ReverbDelayManager" type="Node" parent="Managers" node_paths=PackedStringArray("reverbSlider", "delaySlider")]
+script = ExtResource("15_c27g0")
+reverbSlider = NodePath("../../UserInterface/ReverbSlider")
+delaySlider = NodePath("../../UserInterface/DelaySlider")
+
+[node name="MidiManager" type="Node" parent="Managers"]
+script = ExtResource("16_3hlih")
+
+[node name="SongVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("progressbar", "recordSongButton", "snellerButton", "langzamerButton")]
+script = ExtResource("17_c1ur1")
+progressbar = NodePath("SongVoiceOverProgressBar")
+recordSongButton = NodePath("../../UserInterface/RecordSongButton")
+snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
+langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
+
+[node name="SongVoiceOverProgressBar" type="ProgressBar" parent="Managers/SongVoiceOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1273.0
+offset_top = -714.0
+offset_right = -1255.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = ExtResource("18_ahwt3")
+theme_override_styles/fill = ExtResource("19_it2ro")
+max_value = 1.0
+fill_mode = 3
+show_percentage = false
+
+[node name="LayerVoiceOver" type="Node" parent="Managers" node_paths=PackedStringArray("textureProgressBar", "recordLayerButton", "snellerButton", "langzamerButton")]
+script = ExtResource("20_qrisc")
+textureProgressBar = NodePath("TextureProgressBar")
+recordLayerButton = NodePath("../../UserInterface/RecordBeatButton")
+snellerButton = NodePath("../../UserInterface/MainButtons/BpmUpButton")
+langzamerButton = NodePath("../../UserInterface/MainButtons/BpmDownButton")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Managers/LayerVoiceOver"]
+offset_left = -265.0
+offset_top = -267.0
+offset_right = 247.0
+offset_bottom = 245.0
+scale = Vector2(1.05, 1.05)
+max_value = 32.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("21_s7uuy")
+
+[node name="UserInterface" type="Node" parent="."]
+
+[node name="RecordSongButton" type="Button" parent="UserInterface"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1169.0
+offset_top = -711.0
+offset_right = -988.0
+offset_bottom = -679.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "🎙️ Liedje Opnemen
+"
+alignment = 0
+
+[node name="RecordBeatButton" type="Button" parent="UserInterface"]
+z_index = 40
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -680.0
+offset_top = -400.0
+offset_right = -600.0
+offset_bottom = -320.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xng46")
+theme_override_styles/hover = SubResource("StyleBoxFlat_acarb")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xng46")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xng46")
+text = "Beat
+Opnemen
+🎤"
+
+[node name="SwitchLayerButtons" type="Node" parent="UserInterface"]
+
+[node name="Layer1" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = 285.0
+offset_right = -542.0
+offset_bottom = 349.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "🌱"
+
+[node name="Layer2" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = 213.0
+offset_right = -542.0
+offset_bottom = 277.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "📜"
+
+[node name="Layer3" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = 142.0
+offset_right = -542.0
+offset_bottom = 206.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "📜"
+
+[node name="Layer4" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = 71.0
+offset_right = -542.0
+offset_bottom = 135.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "🤩"
+
+[node name="Layer5" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_right = -542.0
+offset_bottom = 64.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "🤩"
+
+[node name="Layer6" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = -71.0
+offset_right = -542.0
+offset_bottom = -7.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "📜"
+
+[node name="Layer7" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = -142.0
+offset_right = -542.0
+offset_bottom = -78.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "📜"
+
+[node name="Layer8" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = -213.0
+offset_right = -542.0
+offset_bottom = -149.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_fonts/font = ExtResource("22_2aw6o")
+theme_override_font_sizes/font_size = 20
+text = "🤩"
+
+[node name="Layer9" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = -284.0
+offset_right = -542.0
+offset_bottom = -220.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "😃"
+
+[node name="Layer10" type="Button" parent="UserInterface/SwitchLayerButtons"]
+offset_left = -606.0
+offset_top = -355.0
+offset_right = -542.0
+offset_bottom = -291.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 20
+text = "🏁"
+
+[node name="Outline" type="Sprite2D" parent="UserInterface/SwitchLayerButtons"]
+position = Vector2(-574, 317)
+scale = Vector2(2.25, 2.25)
+texture = ExtResource("22_ueoar")
+
+[node name="MainButtons" type="Node" parent="UserInterface"]
+
+[node name="PlayPauseButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -733.0
+offset_top = -81.0
+offset_right = -553.0
+offset_bottom = -49.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "⏯️ Start / Pauze"
+alignment = 0
+
+[node name="ResetPlayerButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -734.0
+offset_top = -45.0
+offset_right = -554.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "⏮️ Terug naar begin"
+alignment = 0
+
+[node name="ClearLayoutButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1168.0
+offset_top = -284.0
+offset_right = -988.0
+offset_bottom = -252.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "🗑️ Leeg Beat"
+alignment = 0
+
+[node name="SaveLayoutButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1167.0
+offset_top = -248.0
+offset_right = -987.0
+offset_bottom = -216.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "💾 Kopieer Beat"
+alignment = 0
+
+[node name="LoadLayoutButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1167.0
+offset_top = -212.0
+offset_right = -987.0
+offset_bottom = -180.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "♻️ Plak Beat"
+alignment = 0
+
+[node name="AllLayersToMp3" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -730.0
+offset_top = -676.0
+offset_right = -550.0
+offset_bottom = -644.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "🎼 Liedje naar mp3"
+alignment = 0
+
+[node name="BpmUpButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1171.0
+offset_top = -517.0
+offset_right = -991.0
+offset_bottom = -485.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "🐇 Sneller"
+alignment = 0
+
+[node name="BpmDownButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1171.0
+offset_top = -481.0
+offset_right = -991.0
+offset_bottom = -449.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "🐢 Langzamer"
+alignment = 0
+
+[node name="SaveToWavButton" type="Button" parent="UserInterface/MainButtons"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -730.0
+offset_top = -711.0
+offset_right = -550.0
+offset_bottom = -679.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "📥 Beat naar mp3"
+alignment = 0
+
+[node name="SampleButtons" type="Node" parent="UserInterface"]
+
+[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-499, 323)
+scale = Vector2(2, 2)
+texture = ExtResource("11_d7y66")
+script = ExtResource("23_rq72x")
+
+[node name="ClapEmoji" type="Label" parent="UserInterface/SampleButtons/DragAndDropButton0"]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 13.0
+theme = ExtResource("22_ge1om")
+text = "👞"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-424, 323)
+scale = Vector2(2, 2)
+texture = ExtResource("11_d7y66")
+script = ExtResource("23_rq72x")
+ring = 1
+
+[node name="ClapEmoji2" type="Label" parent="UserInterface/SampleButtons/DragAndDropButton1"]
+offset_left = -12.5
+offset_top = -12.0
+offset_right = 11.5
+offset_bottom = 13.0
+theme = ExtResource("22_ge1om")
+text = "🖐️"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-349, 323)
+scale = Vector2(2, 2)
+texture = ExtResource("11_d7y66")
+script = ExtResource("23_rq72x")
+ring = 2
+
+[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
+z_index = -4
+position = Vector2(-274, 323)
+scale = Vector2(2, 2)
+texture = ExtResource("11_d7y66")
+script = ExtResource("23_rq72x")
+ring = 3
+
+[node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-499, 267)
+scale = Vector2(0.75, 0.78)
+texture = ExtResource("24_esmyw")
+script = ExtResource("25_l720b")
+
+[node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-425, 267)
+scale = Vector2(0.75, 0.78)
+texture = ExtResource("24_esmyw")
+script = ExtResource("25_l720b")
+ring = 1
+
+[node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-350, 267)
+scale = Vector2(0.75, 0.78)
+texture = ExtResource("24_esmyw")
+script = ExtResource("25_l720b")
+ring = 2
+
+[node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/SampleButtons"]
+position = Vector2(-274, 267)
+scale = Vector2(0.75, 0.78)
+texture = ExtResource("24_esmyw")
+script = ExtResource("25_l720b")
+ring = 3
+
+[node name="UseSampleCheckButton0" type="CheckButton" parent="UserInterface/SampleButtons"]
+offset_left = -524.0
+offset_top = 221.0
+offset_right = -480.0
+offset_bottom = 245.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+
+[node name="UseSampleCheckButton1" type="CheckButton" parent="UserInterface/SampleButtons"]
+offset_left = -449.0
+offset_top = 221.0
+offset_right = -405.0
+offset_bottom = 245.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+
+[node name="UseSampleCheckButton2" type="CheckButton" parent="UserInterface/SampleButtons"]
+offset_left = -374.0
+offset_top = 221.0
+offset_right = -330.0
+offset_bottom = 245.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+
+[node name="UseSampleCheckButton3" type="CheckButton" parent="UserInterface/SampleButtons"]
+offset_left = -299.0
+offset_top = 221.0
+offset_right = -255.0
+offset_bottom = 245.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+
+[node name="SettingsButton" type="Button" parent="UserInterface"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -241.0
+offset_top = -511.0
+offset_right = -80.0
+offset_bottom = -479.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "Instellingen ⚙️"
+alignment = 2
+
+[node name="SettingsPanel" type="Panel" parent="UserInterface/SettingsButton"]
+layout_mode = 0
+offset_top = 35.0
+offset_right = 162.0
+offset_bottom = 312.0
+
+[node name="TemplateButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 27.5
+offset_right = 75.0
+offset_bottom = 59.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = ".........."
+
+[node name="TemplateLeftButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 62.5
+offset_right = -3.0
+offset_bottom = 94.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "<"
+
+[node name="TemplateRightButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 62.5
+offset_right = 75.0
+offset_bottom = 94.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = ">"
+
+[node name="ShowTemplateButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -75.0
+offset_top = 98.5
+offset_right = -3.0
+offset_bottom = 130.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "Tip🔮"
+
+[node name="SetTemplateButton" type="Button" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 98.5
+offset_right = 75.0
+offset_bottom = 130.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "Doe 🤖
+"
+
+[node name="ClapStompBias" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 86.0
+offset_right = 128.0
+offset_bottom = 103.0
+focus_mode = 0
+theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_y8yhq")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_2m8tu")
+min_value = 100.0
+max_value = 1400.0
+step = 50.0
+value = 800.0
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/ClapStompBias"]
+layout_mode = 0
+offset_left = 82.0
+offset_top = -9.0
+offset_right = 134.0
+offset_bottom = 23.0
+theme = ExtResource("22_ge1om")
+text = "👞"
+label_settings = SubResource("LabelSettings_x0c78")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/ClapStompBias"]
+layout_mode = 0
+offset_left = -42.0
+offset_top = -7.0
+offset_right = 10.0
+offset_bottom = 25.0
+theme = ExtResource("22_ge1om")
+text = "🖐🏼"
+label_settings = SubResource("LabelSettings_x0c78")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VolumeTreshold" type="HSlider" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 110.0
+offset_right = 152.0
+offset_bottom = 127.0
+focus_mode = 0
+max_value = 1.0
+step = 0.001
+value = 0.1
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/VolumeTreshold"]
+layout_mode = 0
+offset_left = -47.0
+offset_top = -5.0
+offset_right = 16.0
+offset_bottom = 27.0
+theme = ExtResource("22_ge1om")
+text = "🔊"
+label_settings = SubResource("LabelSettings_x0c78")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MicMeter" type="ProgressBar" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 137.0
+offset_right = 152.0
+offset_bottom = 156.0
+theme = SubResource("Theme_7exd8")
+theme_override_styles/background = SubResource("StyleBoxFlat_lfnhs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3brpt")
+max_value = 1.0
+value = 0.1
+show_percentage = false
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/MicMeter"]
+layout_mode = 0
+offset_left = -34.0
+offset_top = -5.0
+offset_right = 3.0
+offset_bottom = 27.0
+theme = ExtResource("22_ge1om")
+text = "🎙️"
+label_settings = SubResource("LabelSettings_5adyu")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MetronomeToggle" type="CheckButton" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 60.0
+offset_right = 69.0
+offset_bottom = 85.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 12
+alignment = 2
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/MetronomeToggle"]
+layout_mode = 0
+offset_left = -28.0
+offset_top = -4.0
+offset_right = 9.0
+offset_bottom = 28.0
+theme = ExtResource("22_ge1om")
+text = "🫀"
+label_settings = SubResource("LabelSettings_fbqyi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/MetronomeToggle"]
+layout_mode = 0
+offset_left = 42.0
+offset_top = -1.0
+offset_right = 139.0
+offset_bottom = 22.0
+theme = ExtResource("22_ge1om")
+text = "metronoom"
+label_settings = SubResource("LabelSettings_5dpcw")
+vertical_alignment = 1
+
+[node name="AddBeatsToggle" type="CheckButton" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 33.0
+offset_right = 68.0
+offset_bottom = 58.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/AddBeatsToggle"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -3.0
+offset_right = 11.0
+offset_bottom = 29.0
+theme = ExtResource("22_ge1om")
+text = "👂🏼"
+label_settings = SubResource("LabelSettings_fbqyi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/AddBeatsToggle"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 1.0
+offset_right = 130.0
+offset_bottom = 24.0
+theme = ExtResource("22_ge1om")
+text = "voeg beat toe"
+label_settings = SubResource("LabelSettings_x8qo7")
+vertical_alignment = 1
+
+[node name="LayerLoopToggle" type="CheckButton" parent="UserInterface/SettingsButton/SettingsPanel"]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 7.0
+offset_right = 68.0
+offset_bottom = 32.0
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+theme_override_font_sizes/font_size = 12
+alignment = 1
+
+[node name="Label" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/LayerLoopToggle"]
+layout_mode = 0
+offset_left = -26.0
+offset_top = -3.0
+offset_right = 11.0
+offset_bottom = 29.0
+theme = ExtResource("22_ge1om")
+text = "🔁"
+label_settings = SubResource("LabelSettings_fbqyi")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="UserInterface/SettingsButton/SettingsPanel/LayerLoopToggle"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = 1.0
+offset_right = 130.0
+offset_bottom = 24.0
+theme = ExtResource("22_ge1om")
+text = "liedje modus"
+label_settings = SubResource("LabelSettings_x8qo7")
+vertical_alignment = 1
+
+[node name="RecordButton_old" type="Button" parent="UserInterface"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -2290.0
+offset_top = -5600.0
+offset_right = -2147.0
+offset_bottom = -5568.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "Record ⏺️"
+alignment = 2
+
+[node name="SwingSlider" type="HSlider" parent="UserInterface"]
+offset_left = -531.0
+offset_top = -220.0
+offset_right = -444.0
+offset_bottom = -204.0
+scale = Vector2(2, 2)
+max_value = 0.4
+step = 0.01
+
+[node name="SwingLabel" type="Label" parent="UserInterface/SwingSlider"]
+layout_mode = 0
+offset_left = 90.5
+offset_right = 237.5
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("22_ge1om")
+text = "🌀Swing"
+vertical_alignment = 1
+
+[node name="ReverbSlider" type="HSlider" parent="UserInterface"]
+offset_left = -531.0
+offset_top = -290.0
+offset_right = -444.0
+offset_bottom = -274.0
+scale = Vector2(2, 2)
+max_value = 0.5
+step = 0.01
+
+[node name="Label" type="Label" parent="UserInterface/ReverbSlider"]
+layout_mode = 0
+offset_left = 90.5
+offset_right = 237.5
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("22_ge1om")
+text = "🏛️ Galm"
+vertical_alignment = 1
+
+[node name="DelaySlider" type="HSlider" parent="UserInterface"]
+offset_left = -531.0
+offset_top = -255.0
+offset_right = -444.0
+offset_bottom = -239.0
+scale = Vector2(2, 2)
+max_value = 0.5
+step = 0.01
+
+[node name="Label" type="Label" parent="UserInterface/DelaySlider"]
+layout_mode = 0
+offset_left = 90.5
+offset_right = 237.5
+offset_bottom = 32.0
+scale = Vector2(0.5, 0.5)
+theme = ExtResource("22_ge1om")
+text = "⛰️ Echo"
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="UserInterface"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -69.0
+offset_top = -703.0
+offset_right = -15.0
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = ExtResource("18_ahwt3")
+theme_override_styles/fill = ExtResource("19_it2ro")
+rounded = true
+fill_mode = 3
+
+[node name="Label" type="Label" parent="UserInterface/ProgressBar"]
+z_index = 4
+layout_mode = 0
+offset_left = -17.0
+offset_top = 615.0
+offset_right = 156.0
+offset_bottom = 787.0
+scale = Vector2(0.525, 0.525)
+theme = ExtResource("22_ge1om")
+text = "⚡"
+label_settings = SubResource("LabelSettings_2x3a5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BpmLabel" type="Label" parent="UserInterface"]
+offset_left = -329.0
+offset_top = -156.0
+offset_right = -284.0
+offset_bottom = -89.0
+theme = ExtResource("22_ge1om")
+text = "bpm"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="draganddropthing" type="Sprite2D" parent="UserInterface"]
+modulate = Color(1, 1, 1, 0)
+texture = ExtResource("11_d7y66")
+
+[node name="Cross" type="Node" parent="UserInterface"]
+
+[node name="Vertical" type="Sprite2D" parent="UserInterface/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal" type="Sprite2D" parent="UserInterface/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 1.5708
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Vertical2" type="Sprite2D" parent="UserInterface/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal2" type="Sprite2D" parent="UserInterface/Cross"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = -0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Pointer" type="Sprite2D" parent="UserInterface"]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(4, 100)
+texture = SubResource("CanvasTexture_bao2x")
+centered = false
+offset = Vector2(-0.5, -1)
+
+[node name="metronome" type="Sprite2D" parent="UserInterface"]
+z_index = -1
+position = Vector2(-340.89, -123)
+scale = Vector2(4, 62)
+texture = SubResource("CanvasTexture_6dn85")
+
+[node name="metronome_point" type="Sprite2D" parent="UserInterface/metronome"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(0, -0.4)
+scale = Vector2(2, 0.15)
+texture = SubResource("CanvasTexture_6dn85")
+
+[node name="Robot" type="Sprite2D" parent="UserInterface"]
+visible = false
+z_index = 4
+position = Vector2(310, -77)
+scale = Vector2(0.205455, 0.205455)
+texture = ExtResource("26_8xdn8")
+
+[node name="RobotLight" type="PointLight2D" parent="UserInterface/Robot"]
+position = Vector2(-7.11987, -498.382)
+color = Color(1, 0.918, 0.59, 1)
+energy = 0.0
+texture = ExtResource("27_l42ve")
+texture_scale = 20.0
+metadata/_edit_lock_ = true
+
+[node name="Grijs" type="Sprite2D" parent="UserInterface/Robot"]
+visible = false
+z_index = -20
+position = Vector2(-1457.08, -95.1813)
+scale = Vector2(32.0423, 50.2745)
+texture = ExtResource("28_3vojf")
+metadata/_edit_lock_ = true
+
+[node name="AchievementsPanel" type="Panel" parent="UserInterface"]
+offset_left = 223.0
+offset_top = -340.0
+offset_right = 562.0
+offset_bottom = -162.0
+
+[node name="Title" type="Label" parent="UserInterface/AchievementsPanel"]
+layout_mode = 0
+offset_right = 339.0
+offset_bottom = 43.0
+theme = ExtResource("22_ge1om")
+text = "Huidig Doel:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="UserInterface/AchievementsPanel"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 38.0
+offset_right = 334.0
+offset_bottom = 171.0
+theme = ExtResource("22_ge1om")
+text = "hier komt een instructie"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="SkipTutorialButton" type="Button" parent="UserInterface/AchievementsPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 91.5
+offset_top = -82.0
+offset_right = 165.5
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_ge1om")
+text = "🚫 Stop"
+
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
+z_index = 2
+emitting = false
+amount = 128
+emission_shape = 2
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 90.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+scale_amount_min = 8.0
+scale_amount_max = 12.0
+hue_variation_max = 0.55
+
+[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="."]
+z_index = 2
+position = Vector2(596, -321)
+rotation = 1.5708
+emitting = false
+amount = 800
+lifetime = 2.4
+emission_shape = 2
+emission_sphere_radius = 25.0
+direction = Vector2(0, 0)
+spread = 0.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+scale_amount_min = 8.0
+scale_amount_max = 12.0
+color = Color(0, 1, 0, 1)
+hue_variation_max = 0.55
+
+[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="."]
+z_index = 2
+position = Vector2(286, -316)
+emitting = false
+amount = 20
+texture = ExtResource("29_t5ted")
+lifetime = 2.0
+emission_shape = 2
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 90.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+hue_variation_max = 0.55
+
+[node name="SavingLabel" type="Label" parent="."]
+visible = false
+offset_left = -532.0
+offset_top = -46.0
+offset_right = -294.0
+offset_bottom = 38.0
+theme = ExtResource("22_ge1om")
+theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
+theme_override_font_sizes/font_size = 16
+text = "Opgeslagen naar:
+\"muziekbestand.mp3\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="SavingLabel"]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 238.0
+offset_bottom = 84.0
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 197.0
+offset_top = -71.0
+offset_right = 359.0
+offset_bottom = 97.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(162, 168)
+render_target_update_mode = 4
+
+[node name="Klappy" parent="SubViewportContainer/SubViewport" instance=ExtResource("30_orymn")]
+
+[node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Klappy/Clap Test Animation/Robot" index="0"]
+bones/0/rotation = Quaternion(0.590087, 0.000462703, -0.000348493, 0.807339)
+bones/1/rotation = Quaternion(-0.357547, -0.447655, -0.726425, 0.379568)
+bones/2/position = Vector3(-3.31873e-10, 0.00522447, -1.94082e-09)
+bones/2/rotation = Quaternion(0.160301, 0.00863794, -0.466908, 0.869612)
+bones/4/rotation = Quaternion(0.66695, 0.000244932, 0.00052544, 0.745102)
+bones/9/position = Vector3(0.00529161, -0.00215548, 0.00402698)
+bones/9/rotation = Quaternion(0.706984, 0.00225495, 0.707224, 0.00145952)
+bones/10/rotation = Quaternion(0.00499241, -0.000265091, 0.358627, 0.933468)
+bones/11/rotation = Quaternion(-0.00468026, -0.00287181, -0.821859, 0.569664)
+bones/13/rotation = Quaternion(-0.358287, 0.44713, 0.726726, 0.378913)
+bones/14/position = Vector3(3.92663e-10, 0.00522447, 3.24292e-10)
+bones/14/rotation = Quaternion(0.160301, -0.00863774, 0.466908, 0.869613)
+bones/16/position = Vector3(-0.00554458, -0.00221778, 0.00496329)
+bones/16/rotation = Quaternion(0.707224, -0.00148209, -0.706985, 0.00223224)
+bones/17/position = Vector3(-7.52688e-10, 0.00420524, 6.35182e-10)
+bones/18/rotation = Quaternion(-0.00102162, 0.000626926, 0.821695, 0.569926)
+
+[node name="AnimationTree" parent="SubViewportContainer/SubViewport/Klappy/Clap Test Animation" index="4"]
+parameters/ClapSpeed/scale = -1.0
+parameters/StampSpeed/scale = 0.833333
+
+[connection signal="OnBpmChanged" from="Managers/BPM" to="SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_bpm_changed"]
+[connection signal="OnShouldClapEvent" from="Managers/Manager" to="SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_clap"]
+[connection signal="OnShouldStompEvent" from="Managers/Manager" to="SubViewportContainer/SubViewport/Klappy/Clap Test Animation" method="on_stamp"]
+
+[editable path="SubViewportContainer/SubViewport/Klappy"]
+[editable path="SubViewportContainer/SubViewport/Klappy/Clap Test Animation"]

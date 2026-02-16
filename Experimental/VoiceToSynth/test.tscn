@@ -1,0 +1,120 @@
+[gd_scene load_steps=10 format=3 uid="uid://cwuewtnywilyk"]
+
+[ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
+[ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
+[ext_resource type="Script" uid="uid://ciuedwyx4vnlp" path="res://Experimental/VoiceToSynth/levelLabel.gd" id="3_m3rh1"]
+[ext_resource type="Script" uid="uid://dlgcvaiobdwvj" path="res://Experimental/VoiceToSynth/color_rect.gd" id="5_a0dxq"]
+[ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="6_k0mxu"]
+[ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="8_71jf6"]
+
+[sub_resource type="Gradient" id="Gradient_f7m3q"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_0nud8"]
+gradient = SubResource("Gradient_f7m3q")
+
+[sub_resource type="AudioStreamMicrophone" id="AudioStreamMicrophone_0nud8"]
+
+[node name="Control" type="Control" node_paths=PackedStringArray("bpm")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a0dxq")
+bpm = NodePath("BPMManager")
+
+[node name="BPMManager" type="Node" parent="."]
+script = ExtResource("6_k0mxu")
+swing = 0.0
+
+[node name="MicrophoneCapture" type="Node" parent="."]
+script = ExtResource("1_kki6v")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 500
+dragging_enabled = false
+
+[node name="Actions" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+
+[node name="Record" type="Button" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "⏺️ Record"
+alignment = 0
+
+[node name="Play" type="Button" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "▶️  Play"
+alignment = 0
+
+[node name="Stop" type="Button" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "⏹️Stop"
+alignment = 0
+
+[node name="Button" type="Button" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "Test envelope"
+
+[node name="Label" type="Label" parent="HSplitContainer/Actions"]
+layout_mode = 2
+text = "level"
+horizontal_alignment = 1
+script = ExtResource("3_m3rh1")
+
+[node name="ColorRect" type="ColorRect" parent="HSplitContainer/Actions" node_paths=PackedStringArray("timer")]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+script = ExtResource("5_a0dxq")
+timer = NodePath("Timer")
+
+[node name="Timer" type="Timer" parent="HSplitContainer/Actions/ColorRect"]
+wait_time = 0.1
+autostart = true
+
+[node name="MarginContainer" type="MarginContainer" parent="HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="TextureRect" type="TextureRect" parent="HSplitContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+texture = SubResource("GradientTexture1D_0nud8")
+
+[node name="Microphone" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamMicrophone_0nud8")
+volume_db = -8.456
+autoplay = true
+bus = &"Microphone"
+
+[node name="notePlayer" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("8_71jf6")]
+bpmManager = NodePath("../BPMManager")
+instrument = 6
+allow_key_input = true
+
+[node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
+bpmManager = NodePath("../../../BPMManager")
+
+[connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
+[connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]
+[connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="notePlayer/VoiceRecorder2" method="on_microphone_input"]
+[connection signal="button_down" from="HSplitContainer/Actions/Record" to="." method="start"]
+[connection signal="button_down" from="HSplitContainer/Actions/Record" to="notePlayer/VoiceRecorder2" method="start_recording"]
+[connection signal="button_up" from="HSplitContainer/Actions/Record" to="." method="stop"]
+[connection signal="button_up" from="HSplitContainer/Actions/Record" to="notePlayer/VoiceRecorder2" method="stop_recording"]
+[connection signal="pressed" from="HSplitContainer/Actions/Play" to="." method="start_playing"]
+[connection signal="pressed" from="HSplitContainer/Actions/Stop" to="." method="stop_playing"]
+[connection signal="timeout" from="HSplitContainer/Actions/ColorRect/Timer" to="HSplitContainer/Actions/ColorRect" method="_on_reset"]
+
+[editable path="notePlayer"]

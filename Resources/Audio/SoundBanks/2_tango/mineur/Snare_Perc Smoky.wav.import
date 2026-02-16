@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://bu72168x3ptw4"
+path="res://.godot/imported/Snare_Perc Smoky.wav-87ea7ca18d58d92c8c5152f984b5cc41.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/2_tango/mineur/Snare_Perc Smoky.wav"
+dest_files=["res://.godot/imported/Snare_Perc Smoky.wav-87ea7ca18d58d92c8c5152f984b5cc41.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

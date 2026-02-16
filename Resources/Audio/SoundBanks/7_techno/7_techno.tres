@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://c7fndsac7jjs0"]
+
+[ext_resource type="AudioStream" uid="uid://dgbl8wu1v4lqi" path="res://Resources/Audio/SoundBanks/7_techno/Clap War.wav" id="1_nkqdq"]
+[ext_resource type="AudioStream" uid="uid://c0qmg2guj5x5c" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Clap Fakesch.wav" id="2_iwmnv"]
+[ext_resource type="AudioStream" uid="uid://dfe2o2axnli7g" path="res://Resources/Audio/SoundBanks/7_techno/ClosedHH Bandits 2.wav" id="2_n5lsl"]
+[ext_resource type="AudioStream" uid="uid://xmh8mieolg8w" path="res://Resources/Audio/SoundBanks/7_techno/Kick Elektrocuted 2.wav" id="4_470u0"]
+[ext_resource type="AudioStream" uid="uid://cqno1pepig43l" path="res://Resources/Audio/SoundBanks/7_techno/mineur/ClosedHH BackOut.wav" id="4_kmdtp"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_iwmnv"]
+[ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="5_kmdtp"]
+[ext_resource type="Resource" uid="uid://dry8m7r2tj6dq" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile_Bass.tres" id="6_g7ebr"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_kmdtp"]
+[ext_resource type="AudioStream" uid="uid://c0vncoipende0" path="res://Resources/Audio/SoundBanks/7_techno/Snare Elektrocuted 2.wav" id="7_g7ebr"]
+[ext_resource type="AudioStream" uid="uid://c4jnqb0mi577" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Kick A LowLife.wav" id="7_rojp7"]
+[ext_resource type="AudioStream" uid="uid://d3x5of0xstwhn" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Snare AB 2.wav" id="11_cefoj"]
+
+[resource]
+script = ExtResource("6_kmdtp")
+kick = ExtResource("4_470u0")
+kick_alt = ExtResource("7_rojp7")
+snare = ExtResource("7_g7ebr")
+snare_alt = ExtResource("11_cefoj")
+clap = ExtResource("1_nkqdq")
+clap_alt = ExtResource("2_iwmnv")
+closed = ExtResource("2_n5lsl")
+closed_alt = ExtResource("4_kmdtp")
+green_soundfont = ExtResource("5_iwmnv")
+green_instrument_id = 4
+green_effectProfile = ExtResource("6_g7ebr")
+purple_soundfont = ExtResource("5_iwmnv")
+purple_instrument_id = 12
+effectProfile = ExtResource("5_kmdtp")
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

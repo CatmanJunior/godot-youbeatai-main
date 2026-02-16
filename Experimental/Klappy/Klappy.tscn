@@ -1,0 +1,156 @@
+[gd_scene load_steps=24 format=3 uid="uid://cawoo3gsyyym5"]
+
+[ext_resource type="Script" uid="uid://bpoaf8o2cncdd" path="res://Experimental/Klappy/klappy_animations.gd" id="2_d4ajq"]
+[ext_resource type="Material" uid="uid://dnd3ulqwmqteq" path="res://Experimental/Klappy/Materials/M_Klappy_body.tres" id="3_n8s16"]
+[ext_resource type="Material" uid="uid://c421qn87d0g6f" path="res://Experimental/Klappy/Materials/M_Klappy_Lamp.tres" id="4_1ku2n"]
+[ext_resource type="Material" uid="uid://bb4e4ihd57qm" path="res://Experimental/Klappy/Materials/M_Klappy_Transparant.tres" id="4_haj43"]
+[ext_resource type="Material" uid="uid://b4ov3m707x820" path="res://Experimental/Klappy/Materials/M_Klappy_Arms.tres" id="5_8c4xi"]
+[ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="8_rv124"]
+[ext_resource type="PackedScene" uid="uid://qoagtgg3tv3g" path="res://Experimental/Klappy/Robot_UV_LampFix.fbx" id="17_8c4xi"]
+[ext_resource type="Material" uid="uid://bd57mrnx7ghq1" path="res://Experimental/Klappy/Materials/M_Klappy_Legs.tres" id="19_phjtk"]
+
+[sub_resource type="Environment" id="Environment_vxk86"]
+background_mode = 1
+background_energy_multiplier = 0.0
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.5
+tonemap_mode = 3
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_d4ajq"]
+
+[sub_resource type="Compositor" id="Compositor_igk12"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_fbtxr"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_1ku2n"]
+
+[sub_resource type="AnimationNodeAdd2" id="AnimationNodeAdd2_vxk86"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bsibx"]
+animation = &"animations/Anim_Clap_Solo"
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_1ku2n"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0r4ox"]
+animation = &"animations/Anim_Reset"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n8s16"]
+animation = &"animations/Anim_Stamp_Animation_Single"
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_pr1ly"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_6i03r"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rv124"]
+animation = &"animations/mouth_talking"
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_xtgv0"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_igk12"]
+nodes/output/position = Vector2(1300, 120)
+nodes/Add2/node = SubResource("AnimationNodeAdd2_vxk86")
+nodes/Add2/position = Vector2(240, -120)
+"nodes/Add2 2/node" = SubResource("AnimationNodeAdd2_fbtxr")
+"nodes/Add2 2/position" = Vector2(480, 80)
+nodes/Clap/node = SubResource("AnimationNodeAnimation_bsibx")
+nodes/Clap/position = Vector2(-380, -40)
+nodes/ClapTrigger/node = SubResource("AnimationNodeTimeSeek_1ku2n")
+nodes/ClapTrigger/position = Vector2(-80, -80)
+nodes/Idle/node = SubResource("AnimationNodeAnimation_0r4ox")
+nodes/Idle/position = Vector2(-300, -280)
+nodes/Stamp/node = SubResource("AnimationNodeAnimation_n8s16")
+nodes/Stamp/position = Vector2(-500, 180)
+nodes/StampTrigger/node = SubResource("AnimationNodeTimeSeek_pr1ly")
+nodes/StampTrigger/position = Vector2(-80, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_6i03r")
+nodes/TimeScale/position = Vector2(980, 160)
+nodes/talking/node = SubResource("AnimationNodeAnimation_rv124")
+nodes/talking/position = Vector2(-520, 460)
+nodes/talkingTrigger/node = SubResource("AnimationNodeTimeSeek_xtgv0")
+nodes/talkingTrigger/position = Vector2(-77.00285, 438.32233)
+"nodes/Add2 3/node" = SubResource("AnimationNodeAdd2_1ku2n")
+"nodes/Add2 3/position" = Vector2(800, 200)
+node_connections = [&"output", 0, &"TimeScale", &"Add2", 0, &"Idle", &"Add2", 1, &"ClapTrigger", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"StampTrigger", &"ClapTrigger", 0, &"Clap", &"StampTrigger", 0, &"Stamp", &"TimeScale", 0, &"Add2 3", &"talkingTrigger", 0, &"talking", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"talkingTrigger"]
+
+[node name="Klappy" type="Node3D"]
+script = ExtResource("2_d4ajq")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.72152, 4.92963)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera3D"]
+environment = SubResource("Environment_vxk86")
+camera_attributes = SubResource("CameraAttributesPractical_d4ajq")
+compositor = SubResource("Compositor_igk12")
+
+[node name="model" parent="." instance=ExtResource("17_8c4xi")]
+
+[node name="Skeleton3D" parent="model/Robot" index="0"]
+bones/0/rotation = Quaternion(0.59008735, 0.00046270297, -0.00034849352, 0.8073392)
+bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
+bones/1/rotation = Quaternion(-0.3575469, -0.44765505, -0.72642505, 0.37956807)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/rotation = Quaternion(0.17050238, 0.006425566, -0.3475145, 0.92202026)
+bones/2/scale = Vector3(1, 1, 1)
+bones/4/position = Vector3(-3.17935e-12, 0.0148348, -3.93007e-10)
+bones/4/rotation = Quaternion(0.66281044, 0.000999714, -0.000999714, 0.74878585)
+bones/4/scale = Vector3(1, 1, 1)
+bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
+bones/5/rotation = Quaternion(-0.159763, -0.671292, -0.399951, 0.603226)
+bones/5/scale = Vector3(1, 1, 1)
+bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
+bones/7/rotation = Quaternion(0.153684, 0.159081, 0.362227, 0.905465)
+bones/7/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.7069842, 0.0022549515, 0.70722425, 0.0014595165)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/position = Vector3(1.8759401e-10, 0.004205249, -2.699062e-10)
+bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/position = Vector3(7.16123e-11, 0.00449158, -1.52029e-10)
+bones/11/rotation = Quaternion(-0.004680262, -0.0028718056, -0.82185936, 0.569664)
+bones/11/scale = Vector3(1, 1, 1)
+bones/13/position = Vector3(-0.0109679, 0.0030812805, 0.0112381)
+bones/13/rotation = Quaternion(-0.35828686, 0.44712996, 0.7267258, 0.3789129)
+bones/13/scale = Vector3(1, 1, 1)
+bones/14/position = Vector3(-3.166496e-10, 0.005224468, -3.7252904e-10)
+bones/14/rotation = Quaternion(0.17050217, -0.006425375, 0.34751475, 0.9220202)
+bones/14/scale = Vector3(1, 1, 1)
+bones/16/position = Vector3(-0.005544162, -0.0022948263, 0.0039524715)
+bones/16/rotation = Quaternion(0.70722383, -0.0014820928, -0.7069847, 0.0022322387)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/position = Vector3(1.7832646e-10, 0.0042052404, -1.5350124e-10)
+bones/17/rotation = Quaternion(0.00499249, 0.000264613, -0.358627, 0.933468)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/position = Vector3(-4.31259e-10, 0.00449158, 3.9602e-10)
+bones/18/rotation = Quaternion(-0.0010216191, 0.0006269256, 0.82169485, 0.56992644)
+bones/18/scale = Vector3(1, 1, 1)
+
+[node name="DNT_001" parent="model/Robot/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("3_n8s16")
+surface_material_override/1 = ExtResource("4_1ku2n")
+surface_material_override/2 = ExtResource("19_phjtk")
+surface_material_override/3 = ExtResource("5_8c4xi")
+surface_material_override/4 = ExtResource("4_haj43")
+
+[node name="AnimationPlayer" parent="model" index="1"]
+libraries = {
+&"animations": ExtResource("8_rv124")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="model"]
+tree_root = SubResource("AnimationNodeBlendTree_igk12")
+anim_player = NodePath("../AnimationPlayer")
+parameters/Add2/add_amount = 1.0
+"parameters/Add2 2/add_amount" = 1.0
+parameters/ClapTrigger/seek_request = -1.0
+parameters/StampTrigger/seek_request = -1.0
+parameters/TimeScale/scale = 0.0
+parameters/talkingTrigger/seek_request = -1.0
+"parameters/Add2 3/add_amount" = 1.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.984808, 0.00303058, 0.173622, 0, 0.999848, -0.0174524, -0.173648, 0.0171873, 0.984658, 0, -3.29693, 0)
+light_energy = 0.1
+
+[editable path="model"]

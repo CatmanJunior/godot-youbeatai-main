@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://mrxaxt7o4bgd"
+path="res://.godot/imported/ClosedHH Pueblo.wav-ce766e7acede2b76076387c99e9b79c4.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/5_dance/mineur/ClosedHH Pueblo.wav"
+dest_files=["res://.godot/imported/ClosedHH Pueblo.wav-ce766e7acede2b76076387c99e9b79c4.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

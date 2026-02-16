@@ -1,0 +1,353 @@
+[
+    {
+        "name": "1_kampvuur",
+        "themes": [
+            "💔",
+            "🌴",
+            "⏳️",
+            "🌍",
+            "🐾",
+            "🫶"
+        ],
+        "emotions": [
+            "🤔"
+        ],
+        "bpm": 70,
+        "swing": 10,
+        "electronic": 0
+    },
+    {
+        "name": "1_lo-fi",
+        "themes": [
+            "🪦",
+            "🎮",
+            "🦄",
+            "⏳️"
+        ],
+        "emotions": [
+            "🤔"
+        ],
+        "bpm": 60,
+        "swing": 50,
+        "electronic": 1
+    },
+    {
+        "name": "1_new-age",
+        "themes": [
+            "💔",
+            "🌴",
+            "🦄",
+            "🫶",
+            "🌍"
+        ],
+        "emotions": [
+            "🤔"
+        ],
+        "bpm": 75,
+        "swing": 15,
+        "electronic": 2
+    },
+    {
+        "name": "2_acoustisch",
+        "themes": [
+            "💔",
+            "🎂",
+            "🏆",
+            "🍽",
+            "🌍",
+            "🐾",
+            "🫶"
+        ],
+        "emotions": [
+            "😢"
+        ],
+        "bpm": 70,
+        "swing": 20,
+        "electronic": 0
+    },
+    {
+        "name": "2_keuken",
+        "themes": [
+            "🌴",
+            "🫶",
+            "🍽",
+            "🐾"
+        ],
+        "emotions": [
+            "😢"
+        ],
+        "bpm": 80,
+        "swing": 25,
+        "electronic": 1
+    },
+    {
+        "name": "2_tango",
+        "themes": [
+            "💔",
+            "🪦",
+            "🦄",
+            "🫶",
+            "🌍",
+            "🌴"
+        ],
+        "emotions": [
+            "😢"
+        ],
+        "bpm": 85,
+        "swing": 40,
+        "electronic": 2
+    },
+    {
+        "name": "3_aziatisch",
+        "themes": [
+            "💔",
+            "🪦",
+            "🏆",
+            "🍽",
+            "🐾",
+            "🎮"
+        ],
+        "emotions": [
+            "😁"
+        ],
+        "bpm": 90,
+        "swing": 50,
+        "electronic": 2
+    },
+    {
+        "name": "3_opera",
+        "themes": [
+            "💔",
+            "🪦",
+            "⏳️",
+            "🫶"
+        ],
+        "emotions": [
+            "😁"
+        ],
+        "bpm": 70,
+        "swing": 10,
+        "electronic": 1
+    },
+    {
+        "name": "3_raggae",
+        "themes": [
+            "💔",
+            "🌴",
+            "🪦",
+            "🫶",
+            "🌍",
+            "🐾"
+        ],
+        "emotions": [
+            "😁"
+        ],
+        "bpm": 70,
+        "swing": 70,
+        "electronic": 0
+    },
+    {
+        "name": "3_soul",
+        "themes": [
+            "🎂",
+            "🫶",
+            "🍽",
+            "⏳️"
+        ],
+        "emotions": [
+            "😁"
+        ],
+        "bpm": 80,
+        "swing": 65,
+        "electronic": 1
+    },
+    {
+        "name": "4_balkisch",
+        "themes": [
+            "🎂",
+            "🦄",
+            "🏆",
+            "🪦",
+            "🐾"
+        ],
+        "emotions": [
+            "😍"
+        ],
+        "bpm": 90,
+        "swing": 60,
+        "electronic": 0
+    },
+    {
+        "name": "4_k-pop",
+        "themes": [
+            "💔",
+            "🦄",
+            "🎮",
+            "🫶",
+            "🏆"
+        ],
+        "emotions": [
+            "😍"
+        ],
+        "bpm": 100,
+        "swing": 10,
+        "electronic": 2
+    },
+    {
+        "name": "4_pop",
+        "themes": [
+            "🎂",
+            "🦄",
+            "🍽",
+            "🌍",
+            "🫶"
+        ],
+        "emotions": [
+            "😍"
+        ],
+        "bpm": 110,
+        "swing": 25,
+        "electronic": 1
+    },
+    {
+        "name": "5_afrikaans",
+        "themes": [
+            "🌴",
+            "🎂",
+            "🫶",
+            "🍽",
+            "🌍",
+            "🐾"
+        ],
+        "emotions": [
+            "😵‍💫"
+        ],
+        "bpm": 115,
+        "swing": 55,
+        "electronic": 0
+    },
+    {
+        "name": "5_dance",
+        "themes": [
+            "🫶",
+            "🏆",
+            "🎂",
+            "🎮"
+        ],
+        "emotions": [
+            "😵‍💫"
+        ],
+        "bpm": 120,
+        "swing": 5,
+        "electronic": 2
+    },
+    {
+        "name": "5_zuid-ame",
+        "themes": [
+            "💔",
+            "🫶",
+            "🏆",
+            "🍽",
+            "🌍",
+            "🐾"
+        ],
+        "emotions": [
+            "😵‍💫"
+        ],
+        "bpm": 110,
+        "swing": 55,
+        "electronic": 0
+    },
+    {
+        "name": "6_funk",
+        "themes": [
+            "🌴",
+            "🏆",
+            "🌍",
+            "🫶"
+        ],
+        "emotions": [
+            "😳"
+        ],
+        "bpm": 90,
+        "swing": 60,
+        "electronic": 1
+    },
+    {
+        "name": "6_hiphop",
+        "themes": [
+            "🌴",
+            "🪦",
+            "🍽"
+        ],
+        "emotions": [
+            "😳"
+        ],
+        "bpm": 85,
+        "swing": 70,
+        "electronic": 2
+    },
+    {
+        "name": "6_rock",
+        "themes": [
+            "🎂",
+            "🏆",
+            "🪦",
+            "🌍"
+        ],
+        "emotions": [
+            "😳"
+        ],
+        "bpm": 110,
+        "swing": 15,
+        "electronic": 0
+    },
+    {
+        "name": "7_hardcore",
+        "themes": [
+            "💔",
+            "🪦",
+            "🦄",
+            "🎂",
+            "🎮"
+        ],
+        "emotions": [
+            "😡"
+        ],
+        "bpm": 160,
+        "swing": 0,
+        "electronic": 1
+    },
+    {
+        "name": "7_metal",
+        "themes": [
+            "🌴",
+            "🦄",
+            "🫶",
+            "🏆",
+            "🪦",
+            "🍽",
+            "🐾"
+        ],
+        "emotions": [
+            "😡"
+        ],
+        "bpm": 130,
+        "swing": 0,
+        "electronic": 2
+    },
+    {
+        "name": "7_techno",
+        "themes": [
+            "🎂",
+            "🦄",
+            "🌍"
+        ],
+        "emotions": [
+            "😡"
+        ],
+        "bpm": 140,
+        "swing": 5,
+        "electronic": 2
+    }
+]

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cm5io7pphghwk"
+path="res://.godot/imported/Kick Elegance 2.wav-f20b317eca68c3cca77193d13cd94c29.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/5_zuid-ame/Kick Elegance 2.wav"
+dest_files=["res://.godot/imported/Kick Elegance 2.wav-f20b317eca68c3cca77193d13cd94c29.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

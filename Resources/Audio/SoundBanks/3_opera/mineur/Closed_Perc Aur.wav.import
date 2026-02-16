@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://vyrojnhtfwo2"
+path="res://.godot/imported/Closed_Perc Aur.wav-a6a41c1937e54c1245cdad82d6453bb3.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_opera/mineur/Closed_Perc Aur.wav"
+dest_files=["res://.godot/imported/Closed_Perc Aur.wav-a6a41c1937e54c1245cdad82d6453bb3.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

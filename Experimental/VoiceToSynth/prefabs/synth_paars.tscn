@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3mkb7tbfmhpf"]
+
+[ext_resource type="Script" uid="uid://bocy4ptrkjlbp" path="res://addons/synth/synth.gd" id="1_je2xd"]
+
+[node name="Synth_paars" type="Node"]
+script = ExtResource("1_je2xd")
+waveform = 1
+cutoff = 1000.0
+filter = 1
+resonance = 2.0
+audio_bus = &"Synth"
+metadata/_custom_type_script = "uid://bocy4ptrkjlbp"

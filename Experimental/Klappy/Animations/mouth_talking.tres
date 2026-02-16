@@ -1,0 +1,25 @@
+[gd_resource type="Animation" format=3 uid="uid://bkjmesi0pauoj"]
+
+[resource]
+length = 1.2
+tracks/0/type = "rotation_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Robot/Skeleton3D:Mouth")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0.663, 0.001, -0.001, 0.749, 0.5, 1, 0.574, 0, 0, 0.819, 1, 1, 0.663, 0, 0, 0.749)
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_talking"
+}]
+}

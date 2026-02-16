@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cm8tcwxjl6e5k"
+path="res://.godot/imported/Snare BackOut.wav-5ae035d5e2e5c50bb05ef94cc2bf9d0f.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/5_dance/Snare BackOut.wav"
+dest_files=["res://.godot/imported/Snare BackOut.wav-5ae035d5e2e5c50bb05ef94cc2bf9d0f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

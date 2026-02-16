@@ -1,0 +1,204 @@
+[gd_scene load_steps=15 format=3 uid="uid://b0bl4lm384p2n"]
+
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_sstgy"]
+[ext_resource type="Texture2D" uid="uid://lmpsycd0viao" path="res://Resources/Textures/kaosalfa.png" id="2_kj5vy"]
+[ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/chaos_icon.tscn" id="3_j4bys"]
+[ext_resource type="Script" uid="uid://dy4ij5rgc25b5" path="res://Scripts/ChaosPadKnob.cs" id="4_2cxvc"]
+[ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="4_j4bys"]
+[ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/Manager/play_star_animation.gd" id="5_kj5vy"]
+[ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="6_asl8d"]
+[ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="7_2cxvc"]
+[ext_resource type="Animation" uid="uid://b0td231pq8k03" path="res://outside_star_animation.res" id="8_2cxvc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rq0eu"]
+radius = 192.3508
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sstgy"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kj5vy"]
+radius = 15.297058
+
+[sub_resource type="Animation" id="Animation_j4bys"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Piano/Piano_Star:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("in_between/in_between_star:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v6gb7"]
+_data = {
+&"RESET": SubResource("Animation_j4bys"),
+&"in_between_star_animation": ExtResource("7_2cxvc"),
+&"outside_star_animation": ExtResource("8_2cxvc"),
+&"piano_star_animation": ExtResource("6_asl8d")
+}
+
+[node name="ChaosPad" type="Node2D"]
+
+[node name="MicButtonLocation" type="Node2D" parent="."]
+position = Vector2(0, -216.72)
+
+[node name="MicLight" type="PointLight2D" parent="MicButtonLocation"]
+scale = Vector2(0.833333, 0.833333)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("1_sstgy")
+texture_scale = 1.71
+
+[node name="Triangle" type="Sprite2D" parent="."]
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("2_kj5vy")
+
+[node name="PointLeft" type="Node2D" parent="Triangle"]
+position = Vector2(-145.09805, 98.039215)
+
+[node name="ChaosIconMain" parent="Triangle/PointLeft" instance=ExtResource("3_j4bys")]
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+
+[node name="PointTop" type="Node2D" parent="Triangle"]
+position = Vector2(-1.9607735, -152.94118)
+
+[node name="PointRight" type="Node2D" parent="Triangle"]
+position = Vector2(145.09804, 96.078445)
+
+[node name="ChaosIconAlt" parent="Triangle/PointRight" instance=ExtResource("3_j4bys")]
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+
+[node name="KnobSprite" type="Sprite2D" parent="Triangle"]
+z_index = 2
+rotation = 3.1415927
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("4_j4bys")
+script = ExtResource("4_2cxvc")
+
+[node name="Area2D" type="Area2D" parent="Triangle/KnobSprite"]
+scale = Vector2(0.225, 0.225)
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triangle/KnobSprite/Area2D"]
+shape = SubResource("CircleShape2D_rq0eu")
+
+[node name="Tutorial_interactpoints" type="Node2D" parent="."]
+
+[node name="Piano" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(116.00001, 76)
+scale = Vector2(1.5, 1.5)
+
+[node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano" node_paths=PackedStringArray("anim_player")]
+scale = Vector2(0.7, 0.7)
+monitoring = false
+monitorable = false
+script = ExtResource("5_kj5vy")
+anim_player = NodePath("../../AnimationPlayer")
+animation_resource = ExtResource("6_asl8d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Piano"]
+shape = SubResource("CircleShape2D_sstgy")
+
+[node name="Piano_Star" type="Label" parent="Tutorial_interactpoints/Piano"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "🌟"
+
+[node name="in_between" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(46, -25)
+scale = Vector2(1.3, 1.3)
+
+[node name="in_between" type="Area2D" parent="Tutorial_interactpoints/in_between" node_paths=PackedStringArray("anim_player")]
+scale = Vector2(0.7, 0.7)
+monitoring = false
+monitorable = false
+script = ExtResource("5_kj5vy")
+anim_player = NodePath("../../AnimationPlayer")
+animation_resource = ExtResource("7_2cxvc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/in_between"]
+shape = SubResource("CircleShape2D_kj5vy")
+
+[node name="in_between_star" type="Label" parent="Tutorial_interactpoints/in_between"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "🌟"
+
+[node name="outside" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(85.00001, -93)
+scale = Vector2(1.3, 1.3)
+
+[node name="outside" type="Area2D" parent="Tutorial_interactpoints/outside" node_paths=PackedStringArray("anim_player")]
+monitoring = false
+monitorable = false
+script = ExtResource("5_kj5vy")
+anim_player = NodePath("../../AnimationPlayer")
+animation_resource = ExtResource("8_2cxvc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/outside/outside"]
+shape = SubResource("CircleShape2D_kj5vy")
+
+[node name="outside2" type="Label" parent="Tutorial_interactpoints/outside"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "🌟"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial_interactpoints"]
+libraries = {
+&"": SubResource("AnimationLibrary_v6gb7")
+}

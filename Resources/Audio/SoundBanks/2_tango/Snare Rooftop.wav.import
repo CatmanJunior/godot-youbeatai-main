@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://fj0dr8xiycw6"
+path="res://.godot/imported/Snare Rooftop.wav-73150fecf3d5cd43d2af70fd95be06bd.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/2_tango/Snare Rooftop.wav"
+dest_files=["res://.godot/imported/Snare Rooftop.wav-73150fecf3d5cd43d2af70fd95be06bd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

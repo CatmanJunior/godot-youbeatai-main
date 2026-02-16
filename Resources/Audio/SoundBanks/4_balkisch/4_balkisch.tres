@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="AudioBank" load_steps=14 format=3 uid="uid://q40dwojrjeep"]
+
+[ext_resource type="AudioStream" uid="uid://0od12dqxqvbo" path="res://Resources/Audio/SoundBanks/4_balkisch/Clap Fit.wav" id="1_6uskm"]
+[ext_resource type="AudioStream" uid="uid://cn46mkkpc3n6g" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Clap Floating.wav" id="2_2an5y"]
+[ext_resource type="AudioStream" uid="uid://cc0javux3b3gj" path="res://Resources/Audio/SoundBanks/4_balkisch/ClosedHH Body2Body 2.wav" id="2_7bmbv"]
+[ext_resource type="AudioStream" uid="uid://ojnoc65b86bw" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/ClosedHH Discaux.wav" id="4_achl6"]
+[ext_resource type="AudioStream" uid="uid://ckvcmf4axgphh" path="res://Resources/Audio/SoundBanks/4_balkisch/Kick Breeze.wav" id="4_kj5q1"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_2an5y"]
+[ext_resource type="Resource" uid="uid://k0dg58vddl4l" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile.tres" id="5_achl6"]
+[ext_resource type="Resource" uid="uid://65isouwqh4er" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile_Bass.tres" id="6_8lexy"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_achl6"]
+[ext_resource type="AudioStream" uid="uid://dp7rwu7lkypjn" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Kick Rainbow 1.wav" id="7_8lexy"]
+[ext_resource type="AudioStream" uid="uid://cyqs7v1jh8j15" path="res://Resources/Audio/SoundBanks/4_balkisch/Snare Cameleon.wav" id="7_fvvum"]
+[ext_resource type="SoundFont" uid="uid://c5dodwngr8aq" path="res://Experimental/soundfont/Monsoons Maple Neck 1974 Fender Jazz Bass.sfo" id="7_xq0bs"]
+[ext_resource type="AudioStream" uid="uid://gsxi7tfibrrc" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Snare_ Lusine.wav" id="11_xq0bs"]
+
+[resource]
+script = ExtResource("6_achl6")
+kick = ExtResource("4_kj5q1")
+kick_alt = ExtResource("7_8lexy")
+snare = ExtResource("7_fvvum")
+snare_alt = ExtResource("11_xq0bs")
+clap = ExtResource("1_6uskm")
+clap_alt = ExtResource("2_2an5y")
+closed = ExtResource("2_7bmbv")
+closed_alt = ExtResource("4_achl6")
+green_soundfont = ExtResource("7_xq0bs")
+green_effectProfile = ExtResource("6_8lexy")
+purple_soundfont = ExtResource("5_2an5y")
+purple_instrument_id = 4
+effectProfile = ExtResource("5_achl6")
+metadata/_custom_type_script = "uid://d0cv5il7l6laj"

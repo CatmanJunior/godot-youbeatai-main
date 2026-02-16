@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://s7h4dwban05d"
+path="res://.godot/imported/Clap LowLife.wav-72385874be7474f8f63b246ef2b72753.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/4_k-pop/mineur/Clap LowLife.wav"
+dest_files=["res://.godot/imported/Clap LowLife.wav-72385874be7474f8f63b246ef2b72753.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

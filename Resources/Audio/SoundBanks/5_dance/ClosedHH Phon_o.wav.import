@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://x7obpk11oa56"
+path="res://.godot/imported/ClosedHH Phon_o.wav-12c5becdefdd308d0ceb55c1bf7f4e3a.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/5_dance/ClosedHH Phon_o.wav"
+dest_files=["res://.godot/imported/ClosedHH Phon_o.wav-12c5becdefdd308d0ceb55c1bf7f4e3a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://ct2rppkxbhr04"
+path="res://.godot/imported/Clap FunkHause.wav-60e31c0955e578182e811abe2dbd8b91.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/1_new-age/mineur/Clap FunkHause.wav"
+dest_files=["res://.godot/imported/Clap FunkHause.wav-60e31c0955e578182e811abe2dbd8b91.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

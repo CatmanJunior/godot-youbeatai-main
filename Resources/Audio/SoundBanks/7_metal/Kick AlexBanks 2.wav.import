@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://s11ykx60biwj"
+path="res://.godot/imported/Kick AlexBanks 2.wav-b5bbaae3f91cb494c0b2c77c7f2c1efd.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/7_metal/Kick AlexBanks 2.wav"
+dest_files=["res://.godot/imported/Kick AlexBanks 2.wav-b5bbaae3f91cb494c0b2c77c7f2c1efd.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

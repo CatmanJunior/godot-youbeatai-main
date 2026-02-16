@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EffectProfile" load_steps=2 format=3 uid="uid://bkw52bqhi76nt"]
+
+[ext_resource type="Script" uid="uid://b1ymetkpj7tbs" path="res://Scripts/AudioBanks/EffectProfile.cs" id="1_ml8k0"]
+
+[resource]
+script = ExtResource("1_ml8k0")
+phaser = 0.5
+delay = 100.0
+metadata/_custom_type_script = "uid://b1ymetkpj7tbs"

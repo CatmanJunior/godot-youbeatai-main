@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://cahpjypmhsvgv"
+path="res://.godot/imported/Clap LowLife.wav-fcd26f1d8ab2790fd10f8da3b9113544.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_opera/Clap LowLife.wav"
+dest_files=["res://.godot/imported/Clap LowLife.wav-fcd26f1d8ab2790fd10f8da3b9113544.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

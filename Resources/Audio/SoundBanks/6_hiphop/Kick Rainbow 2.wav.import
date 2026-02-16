@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c075vuhpv2t4w"
+path="res://.godot/imported/Kick Rainbow 2.wav-57fa4a1fc6b8a85c272d60a89ee09612.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/6_hiphop/Kick Rainbow 2.wav"
+dest_files=["res://.godot/imported/Kick Rainbow 2.wav-57fa4a1fc6b8a85c272d60a89ee09612.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

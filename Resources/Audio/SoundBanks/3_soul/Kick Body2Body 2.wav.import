@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c2dwgs0hy2csf"
+path="res://.godot/imported/Kick Body2Body 2.wav-9e628c7473e80447b71526c69369c48f.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/3_soul/Kick Body2Body 2.wav"
+dest_files=["res://.godot/imported/Kick Body2Body 2.wav-9e628c7473e80447b71526c69369c48f.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

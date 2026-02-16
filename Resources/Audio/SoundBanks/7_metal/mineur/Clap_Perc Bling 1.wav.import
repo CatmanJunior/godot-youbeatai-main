@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://co2ml8xfjjglw"
+path="res://.godot/imported/Clap_Perc Bling 1.wav-a7ff30a65da8fae28118bf1b43aea79a.sample"
+
+[deps]
+
+source_file="res://Resources/Audio/SoundBanks/7_metal/mineur/Clap_Perc Bling 1.wav"
+dest_files=["res://.godot/imported/Clap_Perc Bling 1.wav-a7ff30a65da8fae28118bf1b43aea79a.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

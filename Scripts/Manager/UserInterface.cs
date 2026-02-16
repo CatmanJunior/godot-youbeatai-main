@@ -107,6 +107,8 @@ public partial class Manager : Node
 	[Export] public Button greenLayerRecordButton;
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
+	Timer thresholdSaveTimer; // delayed save of microphone threshold value timer
+
 	private void SetCopyPasteClearButtonsActive(bool active)
 	{
 		copyPasteClearButtonsHolder.Visible = active;
@@ -176,6 +178,46 @@ public partial class Manager : Node
             layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
 			SongMixing_ChangeToSongMixer();
         };
+
+		LoadMicrophoneThreshold();
+		SetupMicrophoneThresholdEvents();
+	}
+
+	private void SetupMicrophoneThresholdEvents()
+	{
+		//create timer
+		thresholdSaveTimer = new Timer();
+		thresholdSaveTimer.WaitTime = 0.3f;
+		thresholdSaveTimer.Autostart = false;
+		thresholdSaveTimer.OneShot= true;
+		thresholdSaveTimer.Timeout += SaveMicrophoneThreshold;
+		AddChild(thresholdSaveTimer);
+
+		// link event 
+		volume_treshold.ValueChanged += (double newValue) =>
+		{
+			thresholdSaveTimer.Start();
+		};
+	}
+
+	private void LoadMicrophoneThreshold()
+	{
+		// load last value set for microphone value
+		string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "volume_threshold.value");
+		if( File.Exists( path ) == false )
+			return; // no threshold has been set yet
+
+		// load content
+		string content = File.ReadAllText(path);	
+		if( float.TryParse( content, out float threshold) )
+			volume_treshold.SetValueNoSignal( threshold );	
+	}
+
+	private void SaveMicrophoneThreshold()
+	{
+		string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "volume_threshold.value");
+		GD.Print($"save threshold value({volume_treshold.Value}) to {path}");
+		File.WriteAllText(path, volume_treshold.Value.ToString());
 	}
 
 	private void UpdateLayerOutlineSpriteRotation()

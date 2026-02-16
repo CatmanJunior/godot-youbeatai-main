@@ -41,16 +41,24 @@ public partial class DragAndDropButton : Sprite2D
 		d_pressed = Input.IsKeyPressed(Key.F);
 		if (d_pressed != d_pressed_lastframe && ring == 3 && d_pressed && !Manager.instance.emailPromptOpen) OnPress();
 
-		if (button.ButtonPressed) SelfModulate = Manager.instance.colors[ring];
-		else SelfModulate = Manager.instance.colors[ring] * 0.8f;
+		// if (button.ButtonPressed) SelfModulate = Manager.instance.colors[ring];
+		// else SelfModulate = Manager.instance.colors[ring] * 0.8f;
     }
 
 	public void OnPress()
 	{
 		if (Manager.instance.button_is_clap.ButtonPressed)
 		{
-			if (ring == 0) Manager.instance.OnStomp();
-			else if (ring == 1) Manager.instance.OnClap();
+			if (ring == 0)
+			{
+				ButtonSound();
+				Manager.instance.OnStomp();
+			}
+			else if (ring == 1)
+			{
+				ButtonSound();
+				Manager.instance.OnClap();
+			}
 			else ButtonBehaviour();
 		}
 		else ButtonBehaviour();
@@ -59,7 +67,7 @@ public partial class DragAndDropButton : Sprite2D
 		EmitSignal(SignalName.OnPressed);
 	}
 
-	public void ButtonBehaviour()
+	public void ButtonSound()
 	{
 		if (ring == 0) Manager.instance.firstAudioPlayer.Play();
 		if (ring == 1) Manager.instance.secondAudioPlayer.Play();
@@ -75,10 +83,17 @@ public partial class DragAndDropButton : Sprite2D
 		if (ring == 1) Manager.instance.secondAudioPlayerRec.Play();
 		if (ring == 2) Manager.instance.thirdAudioPlayerRec.Play();
 		if (ring == 3) Manager.instance.fourthAudioPlayerRec.Play();
+	}
 
+	public void ButtonBehaviour()
+	{
+		ButtonSound();
+
+		// if knop is klap
 		if (Manager.instance.button_add_beats.ButtonPressed)
 		{
-			Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
+			// Manager.instance.beatActives[ring, BpmManager.instance.currentBeat] = true;
+			BeatStateChanger.SetBeat(ring, BpmManager.instance.currentBeat, true);
 			var position = Manager.instance.beatSprites[ring, BpmManager.instance.currentBeat].Position;
 			Manager.instance.EmitBeatParticles(position, Manager.instance.colors[ring]);
 		}

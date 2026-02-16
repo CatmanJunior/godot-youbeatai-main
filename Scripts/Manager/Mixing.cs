@@ -15,8 +15,17 @@ public partial class Manager : Node
 	[Export] public Node2D[] corners = new Node2D[3]; // left, top, right
 	[Export] public Node2D knob;
 	[Export] public Sprite2D chaosPadTriangleSprite;
-	[Export] public Label iconMain;
-	[Export] public Label iconAlt;
+
+	[Export] public Texture2D[] mainIcons; // 4
+	[Export] public Texture2D[] altIcons; // 4
+	[Export] public Texture2D[] mainIconSynths; // 2
+	[Export] public Texture2D[] altIconSynths; // 2
+	[Export] public Texture2D mainIconSong; // 1
+	[Export] public Texture2D altIconSong; // 1
+
+	[Export] public Sprite2D mainIcon;
+	[Export] public Sprite2D altIcon;
+
 	public Vector3 weights;
 	public float outerTriangleSize = 60;
 	public ChaosPadMode chaosPadMode = ChaosPadMode.SampleMixing;
@@ -111,26 +120,8 @@ public partial class Manager : Node
 		SamplesMixing_StartTriangleColorChange(0.2f);
 
 		// update icons
-		if (SamplesMixing_activeRing == 0)
-		{
-			iconMain.Text = "👟";
-			iconAlt.Text = "👞";
-		}
-		if (SamplesMixing_activeRing == 1)
-		{
-			iconMain.Text = "👏";
-			iconAlt.Text = "🥊";
-		}
-		if (SamplesMixing_activeRing == 2)
-		{
-			iconMain.Text = "📣";
-			iconAlt.Text = "📢";
-		}
-		if (SamplesMixing_activeRing == 3)
-		{
-			iconMain.Text = "⌚";
-			iconAlt.Text = "⏰";
-		}
+		mainIcon.Texture = mainIcons[SamplesMixing_activeRing];
+		altIcon.Texture = altIcons[SamplesMixing_activeRing];
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -268,16 +259,8 @@ public partial class Manager : Node
 		SynthMixing_StartTriangleColorChange(0.2f);
 
 		// update icons
-		if (SynthMixing_activeSynth == 0)
-		{
-			iconMain.Text = "🤖";
-			iconAlt.Text = "🎹";
-		}
-		if (SynthMixing_activeSynth == 1)
-		{
-			iconMain.Text = "🤖";
-			iconAlt.Text = "🎹";
-		}
+		mainIcon.Texture = mainIconSynths[SynthMixing_activeSynth];
+		altIcon.Texture = altIconSynths[SynthMixing_activeSynth];
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -287,7 +270,7 @@ public partial class Manager : Node
 		chaosPadMode = ChaosPadMode.SynthMixing;
 
 		// ring color brightness change
-		SynthMixing_StartLineColorChange(0.3f);
+		// SynthMixing_StartLineColorChange(0.3f);
 		SynthMixing_StartLineSizeChange(0.3f);
 	}
 
@@ -338,8 +321,8 @@ public partial class Manager : Node
 		LayerVoiceOver layerVoiceOver = SynthMixing_activeSynth == 0 ? layerVoiceOver0 : layerVoiceOver1;
 
 		Color old_color = new();
-		if (SynthMixing_activeSynth == 0) old_color = Color.FromHtml("#25cc00");
-		if (SynthMixing_activeSynth == 1) old_color = Color.FromHtml("#aa00ff");
+		if (SynthMixing_activeSynth == 0) old_color = colors[4];
+		if (SynthMixing_activeSynth == 1) old_color = colors[5];
 		var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
 		var new_color = old_color.Lightened(1f);
@@ -386,8 +369,8 @@ public partial class Manager : Node
 		var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
 		var new_color = new Color();
-		if (SynthMixing_activeSynth == 0) new_color = Color.FromHtml("#25cc00");
-		if (SynthMixing_activeSynth == 1) new_color = Color.FromHtml("#aa00ff");
+		if (SynthMixing_activeSynth == 0) new_color = colors[4];
+		if (SynthMixing_activeSynth == 1) new_color = colors[5];
 
 		var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
@@ -462,8 +445,8 @@ public partial class Manager : Node
 		SongMixing_StartTriangleColorChange(0.2f);
 
 		// update icons
-		iconMain.Text = "🤖";
-		iconAlt.Text = "🪗";
+		mainIcon.Texture = mainIconSong;
+		altIcon.Texture = altIconSong;
 
 		// set mic button location
 		for (int i = 0; i < micButtons.Length; i++) micButtons[i].GlobalPosition = new Vector2(-500, 500);
@@ -478,7 +461,7 @@ public partial class Manager : Node
 		var old_color = chaosPadTriangleSprite.SelfModulate;
 		var old_color_v3 = new Vector3(old_color.R, old_color.G, old_color.B);
 
-		var new_color = Color.FromHtml("#cf12ccff");
+		var new_color = colors[6];
 		var new_color_v3 = new Vector3(new_color.R, new_color.G, new_color.B);
 
 		float elapsed = 0f;
@@ -543,6 +526,11 @@ public partial class Manager : Node
 		// outer triangle effects master volume
 		float mastervolume = IsInsideTriangle(weights) ? 1f : MasterVolumeFromDistance(knob.GlobalPosition, corners[0].GlobalPosition, corners[1].GlobalPosition, corners[2].GlobalPosition);
 
+		// knob opacity
+		var cpKnob = knob as ChaosPadKnob;
+		var opacity = Mathf.Clamp(mastervolume, 0.2f, 1.0f);
+		cpKnob.Modulate = new Color(cpKnob.Modulate.R, cpKnob.Modulate.G, cpKnob.Modulate.B, opacity);
+		
 		// clamp weights
 		weights = new Vector3
 		(

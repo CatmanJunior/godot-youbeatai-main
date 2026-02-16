@@ -46,7 +46,7 @@ public static class Achievements
         ),
         Achievement(
             condition:manager.firstAudioPlayerRec.Stream != null, 
-            tooltip: "Een kadotje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
+            tooltip: "Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
         ),
         Achievement(
             condition:manager.secondAudioPlayerRec.Stream != null, 

@@ -1,14 +1,14 @@
 extends Node
-@export var manager:Manager
+@export var _manager:Manager
 @export var achievment_panel:Panel
 var instruction_label:Label
 
 
 func _ready() -> void:
-	assert(manager!= null,"manger not found")
-	if not manager.tutorialActivated():
-		manager.OnAchievementDone.connect(_on_achievement_done)
-		manager.OnUtteranceEnd.connect(_on_utterance_end)
+	assert(_manager!= null,"manger not found")
+	if not _manager.tutorialActivated():
+		_manager.OnAchievementDone.connect(_on_achievement_done)
+		_manager.OnUtteranceEnd.connect(_on_utterance_end)
 	_get_insrtuction_label()
 
 
@@ -42,7 +42,7 @@ func _start_tts(message:String):
 
 	if(voices.size() == 0): voices = DisplayServer.tts_get_voices_for_language("en")
 	if(DisplayServer.tts_is_speaking()):DisplayServer.tts_stop()
-	DisplayServer.tts_speak(manager.Text_without_emoticons(message),voices[0],100)
+	DisplayServer.tts_speak(_manager.Text_without_emoticons(message),voices[0],100)
 
 func _on_utterance_end(_utterance):
 	achievment_panel.visible = false

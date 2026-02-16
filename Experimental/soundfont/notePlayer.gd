@@ -21,6 +21,9 @@ var current_layer: int = 0
 #$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
 
 func _ready():
+	if not bpmManager:
+		bpmManager = %BPM
+	
 	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)

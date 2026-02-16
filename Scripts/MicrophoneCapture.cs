@@ -11,14 +11,28 @@ public partial class MicrophoneCapture : Node
         if (instance == this) instance = null;
     }
 
-	[Export] string busName = "Microphone";
-	
+    [Export] string busName = "Microphone";
+
+    [Export] private float clapFreq = 7000.0f;
+    [Export] private float clapthreshold = 0.1f;
+    [Export] private float stampFreq = 30.0f;
+    [Export] private float stampThreshold = 0.005f;
+
+
     private AudioEffectCapture audioEffectCapture;
     private AudioStreamPlayer audioStreamPlayer;
+    private AudioEffectSpectrumAnalyzerInstance analyzer;
+    private AudioStream microphone;
 
     public float volume = 0;
     public float frequency = 0;
-    
+
+    public double clapVolume = 0;
+    public double stampVolume = 0;
+
+    public bool IsClapping => clapVolume > clapthreshold && clapVolume > stampVolume;
+    public bool IsStamping => stampVolume > stampThreshold && stampVolume > clapVolume;
+
     [Signal]
     public delegate void OnMicrophoneInputEventHandler(float volume, float frequency);
 
@@ -26,11 +40,14 @@ public partial class MicrophoneCapture : Node
     {
         instance ??= this;
 
+        microphone = new AudioStreamMicrophone();
+
         audioStreamPlayer = new AudioStreamPlayer();
         AddChild(audioStreamPlayer);
         audioStreamPlayer.Finished += () => audioStreamPlayer.Play();
 
-        audioStreamPlayer.Stream = new AudioStreamMicrophone();
+        audioStreamPlayer.Stream = microphone;
+        analyzer = (AudioEffectSpectrumAnalyzerInstance)AudioServer.GetBusEffectInstance(AudioServer.GetBusIndex(busName), 2);
 
         audioStreamPlayer.Bus = busName;
         audioEffectCapture = (AudioEffectCapture)AudioServer.GetBusEffect(AudioServer.GetBusIndex(busName), 0);
@@ -40,7 +57,7 @@ public partial class MicrophoneCapture : Node
 
     public override void _Process(double delta)
     {
-		var frames = audioEffectCapture.GetFramesAvailable();
+        var frames = audioEffectCapture.GetFramesAvailable();
         if (frames > 0)
         {
             Godot.Vector2[] audioData = audioEffectCapture.GetBuffer(frames);
@@ -49,7 +66,30 @@ public partial class MicrophoneCapture : Node
 
             // Call signal
             EmitSignal(SignalName.OnMicrophoneInput, volume, frequency);
-		}
+        }
+
+        stampVolume = ConvertTo01(analyzer.GetMagnitudeForFrequencyRange(0, stampFreq));
+        clapVolume = ConvertTo01(analyzer.GetMagnitudeForFrequencyRange(clapFreq, 20000));
+
+        // if needed we can connect the tresholds to the old treshold slider in the settings menu - Sjoerd 18 jan 2026
+        /*
+            clapthreshold = (float)Manager.instance.volume_treshold.Value;
+            stampThreshold = (float)Manager.instance.volume_treshold.Value;
+        */
+
+        // GD.Print($"stamp volume: {stampVolume}");
+        // GD.Print($"clap volume: {clapVolume}");
+        // GD.Print($"clap treshold: {clapthreshold}");
+        // GD.Print($"stamp treshold: {stampThreshold}");
+    }
+
+    private double ConvertTo01(Godot.Vector2 rms)
+    {
+        float rms_value = (rms.X + rms.Y) * 0.5f;
+        double log_value = 20.0 * (Math.Log(Math.Sqrt(rms_value) / 0.1) / Math.Log(10));
+
+        // convert to value around 0-1
+        return Math.Pow(10, log_value / 10);
     }
 
     private float[] ConvertToMono(Godot.Vector2[] audioData)
@@ -160,7 +200,7 @@ public partial class MicrophoneCapture : Node
                 peakIndex = i;
             }
         }
-        
+
         // Assuming you know the sample rate, calculate the frequency based on the index
         float sampleRate = 44100f; // Set to the appropriate sample rate of your microphone input
         float frequency = peakIndex * (sampleRate / frequencySpectrum.Length);

@@ -9,6 +9,10 @@ builds/
 # vscode
 .vscode/
 *.apk
+.vs/
 
 # rider
 .idea/
+
+# libs
+addons/soundfont/lib/~libgd*

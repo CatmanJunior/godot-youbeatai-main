@@ -1,10 +1,24 @@
-[gd_scene load_steps=6 format=3 uid="uid://b8n1g4l4jrv6d"]
+[gd_scene load_steps=9 format=3 uid="uid://b8n1g4l4jrv6d"]
 
 [ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ie3tb"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="3_a7rio"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="4_saqfl"]
 [ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy_soundbank_screen.gd" id="5_pd2wx"]
+[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="6_lmhht"]
+[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmhht"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.87654406, 0.4330934, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
 
 [node name="scene" type="Node2D"]
 
@@ -14,13 +28,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 335.0
-offset_top = 32.0
-offset_right = 675.0
-offset_bottom = 530.0
+offset_left = -222.00006
+offset_top = -327.00003
+offset_right = 117.99994
+offset_bottom = 170.99997
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.29699, 1.29699)
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
 script = ExtResource("1_l0fe3")
 emotionToggles = [NodePath("Emoties/emotion1/toggle"), NodePath("Emoties/emotion2/toggle"), NodePath("Emoties/emotion3/toggle"), NodePath("Emoties/emotion4/toggle"), NodePath("Emoties/emotion5/toggle"), NodePath("Emoties/emotion6/toggle"), NodePath("Emoties/emotion7/toggle")]
 themeToggles = [NodePath("Themas/theme1/toggle"), NodePath("Themas/theme2/toggle"), NodePath("Themas/theme3/toggle"), NodePath("Themas/theme4/toggle"), NodePath("Themas/theme5/toggle"), NodePath("Themas/theme6/toggle"), NodePath("Themas/theme7/toggle"), NodePath("Themas/theme8/toggle"), NodePath("Themas/theme9/toggle"), NodePath("Themas/theme10/toggle"), NodePath("Themas/theme11/toggle"), NodePath("Themas/theme12/toggle")]
@@ -530,12 +545,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 795.0
-offset_top = 138.0
-offset_right = 1092.0
-offset_bottom = 355.0
+offset_left = 238.0
+offset_top = -221.0
+offset_right = 535.0
+offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
 
 [node name="TitleLabel" type="Label" parent="OtherSelectionMenu"]
 visible = false
@@ -594,7 +610,7 @@ popup/item_2/text = "8"
 popup/item_2/id = 2
 
 [node name="Robot" parent="." instance=ExtResource("3_a7rio")]
-position = Vector2(1104, 559)
+position = Vector2(547, 200)
 
 [node name="AchievementsPanel" parent="Robot" index="0"]
 visible = false
@@ -603,7 +619,7 @@ visible = false
 bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
 
 [node name="Klappy respons bubble" parent="." instance=ExtResource("4_saqfl")]
-position = Vector2(794, 389)
+position = Vector2(237, 30)
 
 [node name="Continue" parent="Klappy respons bubble/Panel" index="1"]
 visible = false
@@ -611,6 +627,24 @@ visible = false
 [node name="Node" type="Node" parent="."]
 script = ExtResource("5_pd2wx")
 message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WorldBackPanel" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("6_lmhht")
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("7_avjdi")
+metadata/_edit_lock_ = true
 
 [editable path="Robot"]
 [editable path="Robot/AchievementsPanel"]

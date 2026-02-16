@@ -1,30 +1,28 @@
-[gd_scene load_steps=6 format=3 uid="uid://7ihp2yx2750i"]
-
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_jf038"]
+[gd_scene load_steps=5 format=3 uid="uid://7ihp2yx2750i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jwpg7"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+bg_color = Color(0.9, 0.9, 0.9, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hdf80"]
-bg_color = Color(0.44, 0.44, 0.44, 1)
+bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r33sp"]
-bg_color = Color(0.27, 0.27, 0.27, 1)
+bg_color = Color(0.75, 0.75, 0.75, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_neg2b"]
-bg_color = Color(0.14, 0.14, 0.14, 1)
+bg_color = Color(0.37, 0.37, 0.37, 1)
 corner_radius_top_left = 800
 corner_radius_top_right = 800
 corner_radius_bottom_right = 800
@@ -46,7 +44,6 @@ pivot_offset = Vector2(32, 32)
 size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
-theme = ExtResource("1_jf038")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_jwpg7")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")

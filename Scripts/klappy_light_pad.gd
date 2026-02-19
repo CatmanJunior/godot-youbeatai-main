@@ -22,7 +22,6 @@ func _ready() -> void:
 	AudioServer.add_bus_effect(bus_index, highpass)
 	AudioServer.add_bus_effect(bus_index, lowpass)
 
-	#nog iets dat je eerst op lampje moet klikken
 
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT: #hier logica touchscreen bij
@@ -33,35 +32,27 @@ func _on_gui_input(event: InputEvent) -> void:
 		
 		$cursor.position = pos 
 		
-		var x_percent = pos.x / size.x #ipv pixels maakt hij er 1/0 van
+		var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
 		var y_percent = 1.0 - (pos.y / size.y)
 		
 		phaser.depth = 1.0 - x_percent
 		distortion.drive = x_percent
-		highpass.cutoff_hz = lerp(40.0, 4000.0, y_percent)
+		highpass.cutoff_hz = lerp(40.0, 1000.0, y_percent)
 		lowpass.cutoff_hz = lerp(4000.0, 40.0, y_percent)
 		
 		#print(pos)
 		
-		#dit werkt maar omdat red bovenstaat zal hij rechtsbovenin altijd rood worden enz
-		if pos.x == 200:
-			klappyLight.color = "red"
-		elif pos.x == 0:
-			klappyLight.color = "green"
-		elif pos.y == 200:
-			klappyLight.color = "blue"
-		elif pos.y == 0:
-			klappyLight.color = "yellow"
-			
-		#elif pos.x == 0 && pos.y == 0:
-			#klappyLight.color = "lightgreen"
-		#elif pos.x == 200 && pos.y == 200:
-			#klappyLight.color = "violet"
-		#elif pos.x == 0 && pos.y == 200:
-			#klappyLight.color = "teal"
-		#elif pos.x == 200 && pos.y == 0:
-			#klappyLight.color = "orange"
+		#klappys lampje word veranderd van kleur op basis van muis positie in het vak
+		var color := Color("#ffe8aa")
+		var strength := 0.8
+#het midden is 100 dus vanaf daar meten (0-200)
+		if pos.x >= 130:
+			color = color.lerp(Color.RED, strength)
+		if pos.x <= 70:
+			color = color.lerp(Color.GREEN, strength)
+		if pos.y >= 130:
+			color = color.lerp(Color.BLUE, strength)
+		if pos.y <= 70:
+			color = color.lerp(Color.YELLOW, strength)
 
-		else:
-			klappyLight.color = "#ffe8aa"
-			
+		klappyLight.color = color 

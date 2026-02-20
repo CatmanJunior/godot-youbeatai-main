@@ -73,9 +73,9 @@ public partial class MicrophoneCapture : Node
 
         // if needed we can connect the tresholds to the old treshold slider in the settings menu - Sjoerd 18 jan 2026
         /*
-            clapthreshold = (float)Manager.instance.volume_treshold.Value;
-            stampThreshold = (float)Manager.instance.volume_treshold.Value;
-        */
+			clapthreshold = (float)Manager.instance.volume_treshold.Value;
+			stampThreshold = (float)Manager.instance.volume_treshold.Value;
+		*/
 
         // GD.Print($"stamp volume: {stampVolume}");
         // GD.Print($"clap volume: {clapVolume}");

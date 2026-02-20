@@ -15,12 +15,12 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 [application]
 
 config/name="youbeatai-godot"
-run/main_scene="uid://88rxelg1bo3"
+run/main_scene="uid://838r2e366gu0"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
 
 [audio]
 
-buses/default_bus_layout="res://Other/default_bus_layout.tres"
+buses/default_bus_layout="uid://cbsvq6wm8s4ny"
 general/text_to_speech=true
 driver/enable_input=true
 

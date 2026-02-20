@@ -159,8 +159,9 @@ public partial class Manager : Node
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_RetrieveActiveKnob();
         if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_RetrieveActiveKnob();
         if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_RetrieveActiveKnob();
-        
+
         // do stuff with new layer
+
         EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
         layerVoiceOver0.SetSmallVolumeline();
         layerVoiceOver1.SetSmallVolumeline();

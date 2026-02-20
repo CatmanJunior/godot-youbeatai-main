@@ -1,7 +1,6 @@
 extends SoundFontPlayer
 class_name notePlayer
 
-@export var bpmManager: BpmManager
 @export var notes: Notes
 @export var instrument: int :
 	set(v):
@@ -21,9 +20,6 @@ var current_layer: int = 0
 #$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
 
 func _ready():
-	if not bpmManager:
-		bpmManager = %BPM
-	
 	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
@@ -72,14 +68,14 @@ func _process_midi_input(event: InputEventMIDI):
 
 func on_bpm():
 	var song: Sequence = get_song()
-	if song == null or len(song.sequence) == 0 or bpmManager.currentBeat >= len(song.sequence):
+	if song == null or len(song.sequence) == 0 or %bpmManager.currentBeat >= len(song.sequence):
 		return
 	
-	if bpmManager.currentBeat != 0:
+	if %bpmManager.currentBeat != 0:
 		return
 	
 	# queue song
-	queue_song(bpmManager.currentBeat, song)
+	queue_song(%bpmManager.currentBeat, song)
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
@@ -104,7 +100,7 @@ func on_song_clear() -> void:
 
 func set_song(data: Sequence) -> void:
 	songs[current_layer] = data
-	queue_song(bpmManager.currentBeat, data)
+	queue_song(%bpmManager.currentBeat, data)
 
 func get_song() -> Sequence:
 	if current_layer >= len(songs):
@@ -128,7 +124,7 @@ func queue_song(start: int, song: Sequence):
 		if log_value <= gate:
 			return
 		
-		var beatDuration = (60.0/bpmManager.bpm /4.0)
+		var beatDuration = (60.0/%bpmManager.bpm /4.0)
 		var start_time: float = float(note.beat) * beatDuration
 		var stop_time: float = start_time + float(note.duration) * beatDuration
 		print("%f - %f, %f" % [start_time, stop_time, beatDuration])

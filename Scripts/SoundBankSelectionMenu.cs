@@ -6,259 +6,259 @@ using System.IO;
 
 public partial class SoundBankSelectionMenu : Panel
 {
-	public int chosenElectronicFactorSoundBank;
-	public int chosenElectronicFactorThemes = -1;
+    public int chosenElectronicFactorSoundBank;
+    public int chosenElectronicFactorThemes = -1;
 
-	public static List<string> chosenThemes { get; private set; }
-	public static List<string> chosenEmotions { get; private set; }
+    public static List<string> chosenThemes { get; private set; }
+    public static List<string> chosenEmotions { get; private set; }
 
-	int chosenThemesAmount => chosenThemes.Count;
-	int chosenEmotionsAmount => chosenEmotions.Count;
+    int chosenThemesAmount => chosenThemes.Count;
+    int chosenEmotionsAmount => chosenEmotions.Count;
 
-	bool themeLimitReached => chosenThemesAmount >= 2;
-	bool emotionLimitReached => chosenEmotionsAmount >= 2;
+    bool themeLimitReached => chosenThemesAmount >= 2;
+    bool emotionLimitReached => chosenEmotionsAmount >= 2;
 
-	bool chosenLimitForBoth => themeLimitReached && emotionLimitReached;
+    bool chosenLimitForBoth => themeLimitReached && emotionLimitReached;
 
-	[Export] CheckButton[] emotionToggles;
-	[Export] CheckButton[] themeToggles;
+    [Export] CheckButton[] emotionToggles;
+    [Export] CheckButton[] themeToggles;
 
-	[Export] Button gebruikButton;
-	[Export] Label gevondenSoundBankLabel;
+    [Export] Button gebruikButton;
+    [Export] Label gevondenSoundBankLabel;
 
-	public List<SoundBank> soundbanks;
+    public List<SoundBank> soundbanks;
 
-	public static SoundBank chosenSoundBank { get; private set; }
+    public static SoundBank chosenSoundBank { get; private set; }
 
-	// other settings to remember
-	[Export] OptionButton hoeveelBeats;
-	
-	// setting files
-	Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
-	Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
+    // other settings to remember
+    [Export] OptionButton hoeveelBeats;
 
-	void OnEmotionToggle(CheckButton toggle, Label label)
-	{
-		if (emotionLimitReached)
-		{
-			toggle.ButtonPressed = false;
-			chosenEmotions.Remove(label.Text);
-		}
-		else
-		{
-			if (toggle.ButtonPressed) chosenEmotions.Add(label.Text);
-			if (!toggle.ButtonPressed) chosenEmotions.Remove(label.Text);
-		}
-	}
+    // setting files
+    Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
+    Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
 
-	void OnThemeToggle(CheckButton toggle, Label label)
-	{
-		if (themeLimitReached)
-		{
-			toggle.ButtonPressed = false;
-			chosenThemes.Remove(label.Text);
-		}
-		else
-		{
-			if (toggle.ButtonPressed) chosenThemes.Add(label.Text);
-			if (!toggle.ButtonPressed) chosenThemes.Remove(label.Text);
-		}
-	}
+    void OnEmotionToggle(CheckButton toggle, Label label)
+    {
+        if (emotionLimitReached)
+        {
+            toggle.ButtonPressed = false;
+            chosenEmotions.Remove(label.Text);
+        }
+        else
+        {
+            if (toggle.ButtonPressed) chosenEmotions.Add(label.Text);
+            if (!toggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+        }
+    }
 
-	void OnEmotionLabel(CheckButton toggle, Label label)
-	{
-		toggle.ButtonPressed = !toggle.ButtonPressed;
-		OnEmotionToggle(toggle, label);
-	}
+    void OnThemeToggle(CheckButton toggle, Label label)
+    {
+        if (themeLimitReached)
+        {
+            toggle.ButtonPressed = false;
+            chosenThemes.Remove(label.Text);
+        }
+        else
+        {
+            if (toggle.ButtonPressed) chosenThemes.Add(label.Text);
+            if (!toggle.ButtonPressed) chosenThemes.Remove(label.Text);
+        }
+    }
 
-	void OnThemeLabel(CheckButton toggle, Label label)
-	{
-		toggle.ButtonPressed = !toggle.ButtonPressed;
-		OnThemeToggle(toggle, label);
-	}
-	
-	public override void _Ready()
-	{
-		chosenEmotions = new List<string>();
-		chosenThemes = new List<string>();
-		foreach (var emotionToggle in emotionToggles)
-		{
-			var label = emotionToggle.GetParent() as Label;
-			emotionToggle.Pressed += () =>
-			{
-				OnEmotionToggle(emotionToggle, label);
-			};
+    void OnEmotionLabel(CheckButton toggle, Label label)
+    {
+        toggle.ButtonPressed = !toggle.ButtonPressed;
+        OnEmotionToggle(toggle, label);
+    }
 
-			label.GuiInput += (InputEvent args) =>
-			{
-				if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-				{
-					OnEmotionLabel(emotionToggle, label);
-				}
-			};
-		}
+    void OnThemeLabel(CheckButton toggle, Label label)
+    {
+        toggle.ButtonPressed = !toggle.ButtonPressed;
+        OnThemeToggle(toggle, label);
+    }
 
-		foreach (var themeToggle in themeToggles)
-		{
-			var label = (Label)themeToggle.GetParent();
+    public override void _Ready()
+    {
+        chosenEmotions = new List<string>();
+        chosenThemes = new List<string>();
+        foreach (var emotionToggle in emotionToggles)
+        {
+            var label = emotionToggle.GetParent() as Label;
+            emotionToggle.Pressed += () =>
+            {
+                OnEmotionToggle(emotionToggle, label);
+            };
 
-			themeToggle.Pressed += () =>
-			{
-				OnThemeToggle(themeToggle, label);
-			};
+            label.GuiInput += (InputEvent args) =>
+            {
+                if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                {
+                    OnEmotionLabel(emotionToggle, label);
+                }
+            };
+        }
 
-			label.GuiInput += (InputEvent args) =>
-			{
-				if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-				{
-					OnThemeLabel(themeToggle, label);
-				}
-			};
+        foreach (var themeToggle in themeToggles)
+        {
+            var label = (Label)themeToggle.GetParent();
 
-			soundbanks = LoadSoundBanks();
-		}
+            themeToggle.Pressed += () =>
+            {
+                OnThemeToggle(themeToggle, label);
+            };
 
-		gebruikButton.Pressed += () =>
-		{
-			if (DisplayServer.TtsIsSpeaking())
-			{
-				DisplayServer.TtsStop();
-			}
-			// remember beat amount
-			{
-				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
-				if (File.Exists(path)) File.Delete(path);
-				File.WriteAllText(path, hoeveelBeats.Text);
+            label.GuiInput += (InputEvent args) =>
+            {
+                if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+                {
+                    OnThemeLabel(themeToggle, label);
+                }
+            };
 
-				BpmManager.beatsAmount = int.Parse(hoeveelBeats.Text);
-			}
+            soundbanks = LoadSoundBanks();
+        }
 
-			// remember if tutorial should be enabled or not
-			{
-				string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
-				if (File.Exists(path)) File.Delete(path);
-				File.WriteAllText(path, false.ToString());
-			}
+        gebruikButton.Pressed += () =>
+        {
+            if (DisplayServer.TtsIsSpeaking())
+            {
+                DisplayServer.TtsStop();
+            }
+            // remember beat amount
+            {
+                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, hoeveelBeats.Text);
 
-			// load main scene
-			GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
-		};
-	}
+                BpmManager.beatsAmount = int.Parse(hoeveelBeats.Text);
+            }
 
-	private int GetOffset()
-	{
-		int offset = 0;
-		foreach (string theme in chosenThemes) if (offsetLookup.ContainsKey(theme)) offset += int.Parse(offsetLookup[theme]);
-		return offset;
-	}
+            // remember if tutorial should be enabled or not
+            {
+                string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, false.ToString());
+            }
 
-	public override void _Process(double delta)
-	{
-		int a = 0, b = 0, c = 0;
-		if (chosenThemes.Count > 0)
-		{
-			foreach (string theme in chosenThemes)
-			{
-				int e = int.Parse(lookup[theme]);
-				if (e == 0) a++;
-				if (e == 1) b++;
-				if (e == 2) c++;
-			}
-		}
+            // load main scene
+            GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
+        };
+    }
 
-		string elecStr = "none";
-		if (a > 0 || b > 0 || c > 0)
-		{
-			int largestvalue = Math.Max(a, Math.Max(b, c));
-			if (largestvalue == a) chosenElectronicFactorThemes = 0;
-			if (largestvalue == b) chosenElectronicFactorThemes = 1;
-			if (largestvalue == c) chosenElectronicFactorThemes = 2;
-			if (chosenElectronicFactorThemes == 0) elecStr = "accoustisch";
-			if (chosenElectronicFactorThemes == 1) elecStr = "normaal";
-			if (chosenElectronicFactorThemes == 2) elecStr = "electrisch";
-		}
-		
+    private int GetOffset()
+    {
+        int offset = 0;
+        foreach (string theme in chosenThemes) if (offsetLookup.ContainsKey(theme)) offset += int.Parse(offsetLookup[theme]);
+        return offset;
+    }
 
-		gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ") " + "(" + elecStr + ")";
+    public override void _Process(double delta)
+    {
+        int a = 0, b = 0, c = 0;
+        if (chosenThemes.Count > 0)
+        {
+            foreach (string theme in chosenThemes)
+            {
+                int e = int.Parse(lookup[theme]);
+                if (e == 0) a++;
+                if (e == 1) b++;
+                if (e == 2) c++;
+            }
+        }
 
-		gebruikButton.Disabled = chosenSoundBank == null || !chosenLimitForBoth;
+        string elecStr = "none";
+        if (a > 0 || b > 0 || c > 0)
+        {
+            int largestvalue = Math.Max(a, Math.Max(b, c));
+            if (largestvalue == a) chosenElectronicFactorThemes = 0;
+            if (largestvalue == b) chosenElectronicFactorThemes = 1;
+            if (largestvalue == c) chosenElectronicFactorThemes = 2;
+            if (chosenElectronicFactorThemes == 0) elecStr = "accoustisch";
+            if (chosenElectronicFactorThemes == 1) elecStr = "normaal";
+            if (chosenElectronicFactorThemes == 2) elecStr = "electrisch";
+        }
 
-		string emoticons = "";
-		foreach (var emoticon in chosenEmotions) emoticons += emoticon;
 
-		string themes = "";
-		foreach (var theme in chosenThemes) themes += theme;
+        gevondenSoundBankLabel.Text = chosenSoundBank == null ? "..." : chosenSoundBank.name + " (bpm: " + chosenSoundBank?.bpm + ", swing: " + chosenSoundBank?.swing + "%, bpm-offset: " + GetOffset().ToString() + ") " + "(" + elecStr + ")";
 
-		chosenSoundBank = ChooseSoundBank();
-	}
+        gebruikButton.Disabled = chosenSoundBank == null || !chosenLimitForBoth;
 
-	public SoundBank ChooseSoundBank()
-	{
-		SoundBank bestMatch = null;
-		float bestScore = float.MinValue;
+        string emoticons = "";
+        foreach (var emoticon in chosenEmotions) emoticons += emoticon;
 
-		foreach (var bank in soundbanks)
-		{
-			// check theme matches
-			int themeMatches = 0;
-			foreach (var theme in chosenThemes) if (bank.themes.Contains(theme)) themeMatches++;
+        string themes = "";
+        foreach (var theme in chosenThemes) themes += theme;
 
-			// check emotion matches
-			int emotionMatches = 0;
-			foreach (var emotion in chosenEmotions) if (bank.emotions.Contains(emotion)) emotionMatches++;
+        chosenSoundBank = ChooseSoundBank();
+    }
 
-			// if no matches ignore soundbank
-			if (themeMatches == 0 && emotionMatches == 0) continue;
+    public SoundBank ChooseSoundBank()
+    {
+        SoundBank bestMatch = null;
+        float bestScore = float.MinValue;
 
-			// normalized scores (0–1)
-			float themeScore = (float)themeMatches / (float)chosenThemes.Count;
-			float emotionScore = (float)emotionMatches / (float)chosenEmotions.Count;
+        foreach (var bank in soundbanks)
+        {
+            // check theme matches
+            int themeMatches = 0;
+            foreach (var theme in chosenThemes) if (bank.themes.Contains(theme)) themeMatches++;
 
-			// weighted score
-			float totalScore = (themeScore * 0.5f) + (emotionScore * 0.3f);
+            // check emotion matches
+            int emotionMatches = 0;
+            foreach (var emotion in chosenEmotions) if (bank.emotions.Contains(emotion)) emotionMatches++;
 
-			// if 2 banks allign, use electronic factor to decide
-			if (bestScore == totalScore)
-			{
-				if (chosenElectronicFactorThemes == bank.electronic) totalScore += 0.01f;
-				if (chosenElectronicFactorThemes != bank.electronic) totalScore -= 0.01f;
-			}
+            // if no matches ignore soundbank
+            if (themeMatches == 0 && emotionMatches == 0) continue;
 
-			// if score is better overwrite best match
-			if (totalScore > bestScore)
-			{
-				bestScore = totalScore;
-				bestMatch = bank;
-			}
-		}
+            // normalized scores (0–1)
+            float themeScore = (float)themeMatches / (float)chosenThemes.Count;
+            float emotionScore = (float)emotionMatches / (float)chosenEmotions.Count;
 
-		return bestMatch;
-	}
+            // weighted score
+            float totalScore = (themeScore * 0.5f) + (emotionScore * 0.3f);
 
-	public List<SoundBank> LoadSoundBanks()
-	{
-		string path = "res://Resources/SoundBankMatrix/soundbanks.json";
-		if (!Godot.FileAccess.FileExists(path))
-		{
-			GD.Print("json file not found");
-			return null;
-		}
+            // if 2 banks allign, use electronic factor to decide
+            if (bestScore == totalScore)
+            {
+                if (chosenElectronicFactorThemes == bank.electronic) totalScore += 0.01f;
+                if (chosenElectronicFactorThemes != bank.electronic) totalScore -= 0.01f;
+            }
 
-		var file = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read);
-		string jsonText = file.GetAsText();
+            // if score is better overwrite best match
+            if (totalScore > bestScore)
+            {
+                bestScore = totalScore;
+                bestMatch = bank;
+            }
+        }
 
-		var soundbanks = JsonSerializer.Deserialize<List<SoundBank>>(jsonText);
+        return bestMatch;
+    }
 
-		return soundbanks;
-	}
+    public List<SoundBank> LoadSoundBanks()
+    {
+        string path = "res://Resources/SoundBankMatrix/soundbanks.json";
+        if (!Godot.FileAccess.FileExists(path))
+        {
+            GD.Print("json file not found");
+            return null;
+        }
+
+        var file = Godot.FileAccess.Open(path, Godot.FileAccess.ModeFlags.Read);
+        string jsonText = file.GetAsText();
+
+        var soundbanks = JsonSerializer.Deserialize<List<SoundBank>>(jsonText);
+
+        return soundbanks;
+    }
 }
 
 public class SoundBank
 {
-	public string name { get; set; }
-	public List<string> themes { get; set; }
-	public List<string> emotions { get; set; }
-	public int bpm { get; set; }
-	public int swing { get; set; }
-	public int electronic { get; set; }
+    public string name { get; set; }
+    public List<string> themes { get; set; }
+    public List<string> emotions { get; set; }
+    public int bpm { get; set; }
+    public int swing { get; set; }
+    public int electronic { get; set; }
 }

@@ -90,8 +90,9 @@ public static class AudioSaving
         string song_old = user($"song_{sanitizedTime}_temp_old.wav");
         string realtime_new = user($"realtime_{sanitizedTime}_temp_new.wav");
         string song_new = user($"song_{sanitizedTime}_temp_new.wav");
-        
+
         // audiostreams to wavs
+
         ConvertAudioStreamWavToWav(RealTimeAudioRecording.instance.recording_result, realtime_old);
         ConvertAudioStreamWavToWav(SongVoiceOver.instance.voiceOver, song_old);
 
@@ -99,8 +100,9 @@ public static class AudioSaving
         float timePerLayer = BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat;
         float startTime = layer * timePerLayer;
         float endTime = startTime + timePerLayer;
-        
+
         // remove segments from wav files
+
         RemoveSegmentFromWavFile(realtime_old, realtime_new, startTime, endTime);
         RemoveSegmentFromWavFile(song_old, song_new, startTime, endTime);
 
@@ -172,7 +174,8 @@ public static class AudioSaving
         using var reader1 = new AudioFileReader(file1);
         using var reader2 = new AudioFileReader(file2);
         using var writer = new WaveFileWriter(outputFile, reader1.WaveFormat);
-        
+
+
         float[] buffer = new float[1024];
         int read;
 

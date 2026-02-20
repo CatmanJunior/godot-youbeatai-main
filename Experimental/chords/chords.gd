@@ -39,7 +39,7 @@ func on_bpm():
 	if current % chordDuration != 0:
 		return
 	
-	var beatDuration = 60.0/bpmManager.bpm /4.0
+	var beatDuration = 60.0/%BpmManager.bpm /4.0
 	var duration = chordDuration * beatDuration
 	
 	chord_song[song_cursor].call(duration)

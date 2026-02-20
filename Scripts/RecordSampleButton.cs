@@ -27,7 +27,7 @@ public partial class RecordSampleButton : Sprite2D
     {
         var busIndex = AudioServer.GetBusIndex("Microphone");
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(busIndex, 1);
-		if (audioEffectRecord == null) GD.Print("no record effect found");
+        if (audioEffectRecord == null) GD.Print("no record effect found");
     }
 
     public override void _Process(double delta)
@@ -139,7 +139,7 @@ public partial class RecordSampleButton : Sprite2D
     private void StartRecording()
     {
         SetVolume(0f);
-		var fill = GetChild(0) as TextureProgressBar;
+        var fill = GetChild(0) as TextureProgressBar;
         fill.Value = 1;
         audioEffectRecord.SetRecordingActive(true);
         recording = true;
@@ -148,11 +148,12 @@ public partial class RecordSampleButton : Sprite2D
     private void StopRecording()
     {
         SetVolume(1);
-		var fill = GetChild(0) as TextureProgressBar;
+        var fill = GetChild(0) as TextureProgressBar;
         fill.Value = 0;
         audioEffectRecord.SetRecordingActive(false);
-		recordedAudio = audioEffectRecord.GetRecording();
-        
+        recordedAudio = audioEffectRecord.GetRecording();
+
+
         recording = false;
         recordedAudio = TrimAudioStream((AudioStreamWav)recordedAudio, silenceLength);
         hasDetectedSound = false;
@@ -166,7 +167,8 @@ public partial class RecordSampleButton : Sprite2D
         {
             manager.firstAudioPlayerRec.Stop();
             manager.firstAudioPlayerRec.Stream = manager.recordSampleButton0.recordedAudio;
-            
+
+
         }
         if (ring == 1)
         {

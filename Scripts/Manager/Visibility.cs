@@ -45,7 +45,8 @@ public partial class Manager : Node
 
     public void SetGreenLayerVisibility(bool visible)
     {
-        
+
+
         layerVoiceOver0.textureProgressBar.Visible = visible;
         activateGreenChaosButton.Visible = visible;
         layerVoiceOver0.bigLine.Visible = visible;
@@ -111,18 +112,19 @@ public partial class Manager : Node
     public void SetLayerSwitchButtonsVisibility(bool visible)
     {
         for (int i = 0; i < LayerButtons.Count; i++)
-		{
-			LayerButtons[i].Visible = visible;
+        {
+            LayerButtons[i].Visible = visible;
         }
-        
+
+
         layerOutline.Visible = visible;
     }
 
     public void SetLayerSwitchButtonsEnabled(bool enabled)
     {
         for (int i = 0; i < LayerButtons.Count; i++)
-		{
-			LayerButtons[i].Disabled = !enabled;
+        {
+            LayerButtons[i].Disabled = !enabled;
         }
     }
 }

@@ -47,8 +47,8 @@ public static class Tutorial
 
     private static (string instruction, Func<bool> condition, Action outcome)[] tutorialSteps =>
     [
-        // intro
-        (
+		// intro
+		(
             instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen",
             condition: () => manager.clapped,
             outcome: () =>
@@ -63,8 +63,8 @@ public static class Tutorial
             }
         ),
 
-        // kick ring
-        (
+		// kick ring
+		(
             instruction:     "Deze rode cirkels vormen een kick-ring",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: null
@@ -74,10 +74,10 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                // manager.beatActives[_indexRedRing, _ringTop] = true;
-                // manager.beatActives[_indexRedRing, _ringRight] = true;
-                // manager.beatActives[_indexRedRing, _ringBottom] = true;
-                BeatStateChanger.SetBeatFree(_indexRedRing, _ringTop, true);
+				// manager.beatActives[_indexRedRing, _ringTop] = true;
+				// manager.beatActives[_indexRedRing, _ringRight] = true;
+				// manager.beatActives[_indexRedRing, _ringBottom] = true;
+				BeatStateChanger.SetBeatFree(_indexRedRing, _ringTop, true);
                 BeatStateChanger.SetBeatFree(_indexRedRing, _ringRight, true);
                 BeatStateChanger.SetBeatFree(_indexRedRing, _ringBottom, true);
                 manager.PlayPauseButton.Visible = true;
@@ -121,7 +121,7 @@ public static class Tutorial
             {
                 _beatsActiveRedRing = ActiveBeatsPerRing(_indexRedRing);
                 return BpmManager.instance.playing;
-                
+
             },
             outcome: () =>
             {
@@ -139,7 +139,7 @@ public static class Tutorial
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
-        
+
         (
             instruction: "Stamp 👟 5 keer mee met de kick van je Beat!",
             condition: () => manager.stompedOnBeatAmount >= _fixedAmount,
@@ -163,15 +163,15 @@ public static class Tutorial
             outcome: () => manager.SetRingVisibility(_indexOrangeRing, true)
         ),
 
-        // klap ring
-        (
+		// klap ring
+		(
             instruction: "Deze oranje ring is de clap-ring",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                // manager.beatActives[_indexOrangeRing, _ringRight] = true;
-                // manager.beatActives[_indexOrangeRing, _ringLeft] = true;
-                BeatStateChanger.SetBeatFree(_indexOrangeRing, _ringRight, true);
+				// manager.beatActives[_indexOrangeRing, _ringRight] = true;
+				// manager.beatActives[_indexOrangeRing, _ringLeft] = true;
+				BeatStateChanger.SetBeatFree(_indexOrangeRing, _ringRight, true);
                 BeatStateChanger.SetBeatFree(_indexOrangeRing, _ringLeft, true);
                 manager.SetClapVisibility(true);
                 SkipPlay();
@@ -227,9 +227,9 @@ public static class Tutorial
             outcome: () =>
             {
                 _textAllowed = true;
-               
+
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                
+
                 timer.Start(2);
             }
         ),
@@ -256,19 +256,19 @@ public static class Tutorial
             outcome: () =>
             {
                 manager.SetGreenLayerVisibility(true);
-               
+
             }
         ),
 
-        // groene laag
-        (
+		// groene laag
+		(
             instruction: "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
             condition: () =>
             {
                 returnPlayer(manager.activateGreenChaosButton).Play("Bear_pulse");
                 return manager.chaosPadMode == Manager.ChaosPadMode.SynthMixing;
             }, //todo check index of choas pad,
-            outcome: () =>
+			outcome: () =>
             {
                 manager.SetMicRecorderVisibility(true);
                 manager.knob.GlobalPosition = _top.GlobalPosition;
@@ -294,14 +294,14 @@ public static class Tutorial
             },
             outcome: () =>
             {
-                
+
             }
         ),
         (
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
             condition: () =>
             {
-               
+
                 return manager.greenLayerRecordButton.ButtonPressed;
             },
             outcome: () =>
@@ -310,28 +310,28 @@ public static class Tutorial
                 _increasedSpeed = true;
                 DisplayServer.TtsStop();
                 returnPlayer(manager.greenLayerRecordButton.GetParent()).Stop();
-                
+
             }),
         (
             instruction: "4",
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-               
+
             }),
         (
             instruction: "3",
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
+
             }),
         (
             instruction: "2",
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-               
+
             }
             ),
         (
@@ -339,8 +339,8 @@ public static class Tutorial
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
-               
+
+
             }),
         (
             instruction: "",
@@ -349,17 +349,17 @@ public static class Tutorial
             {
                 _increasedSpeed = false;
                 timer.Start(3);
-               
+
             }),
-      //  (
-         //   instruction: "Laat eens horen!▶️",
-        //    condition: () => BpmManager.instance.playing,
-          //  outcome: () =>
-          //  { 
-         //       manager.PlayExtraSFX(manager.achievement_sfx);
-        //       timer.Start(3);
-        //    }),
-        (
+	  //  (
+		 //   instruction: "Laat eens horen!▶️",
+		//    condition: () => BpmManager.instance.playing,
+		  //  outcome: () =>
+		  //  { 
+		 //       manager.PlayExtraSFX(manager.achievement_sfx);
+		//       timer.Start(3);
+		//    }),
+		(
             instruction:"",
             condition: () => timer.IsStopped(),
             outcome: null
@@ -370,8 +370,8 @@ public static class Tutorial
             outcome: () => BpmManager.instance.playing = false
         ),
 
-        // chaos pad
-        (
+		// chaos pad
+		(
             instruction: "Laten we je sample veranderen!",
             condition: () =>
             {
@@ -380,8 +380,8 @@ public static class Tutorial
             },
             outcome: () =>
             {
-                //_active = true;
-                manager.chaosPadTriangleSprite.Visible = true;
+				//_active = true;
+				manager.chaosPadTriangleSprite.Visible = true;
             }
         ),
         (
@@ -394,7 +394,7 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
+
                 manager.PianoArea.Monitoring = true;
                 manager.PianoMesh.Visible = true;
                 manager.PianoArea.EmitSignal("animation_star_play");
@@ -473,8 +473,8 @@ public static class Tutorial
             outcome: null
         ),
 
-        // End of tutorial
-        (
+		// End of tutorial
+		(
             instruction: "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!",
             condition: () => false,
             outcome: () =>
@@ -517,7 +517,7 @@ public static class Tutorial
         _clapButton = null;
         _stompButton = null;
         _increasedSpeed = false;
-        
+
     }
 
     public static void CheckIfTutorialWasChosen()
@@ -627,7 +627,7 @@ public static class Tutorial
         outcome?.Invoke();
         if (tutorial_level >= tutorialSteps.Length) return;
         tutorial_level++;
-      
+
         SpeakTutorialInstruction(tutorial_level);
         UpdateLists();
     }
@@ -724,7 +724,7 @@ public static class Tutorial
         if (_increasedSpeed)
         {
             GD.Print(("Increase the speed"));
-            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 2.5f);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100, 1f, 2.5f);
         }
         else
         {
@@ -744,7 +744,7 @@ public static class Tutorial
             return BpmManager.instance.playing;
         }
     }
-    
+
 
     private static void UpdateLists()
     {

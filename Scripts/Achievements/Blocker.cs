@@ -30,13 +30,15 @@ public partial class Blocker : Panel
         {
             if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left && hovering)
             {
-            
+
+
                 pressed = true;
             }
 
             if (!mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
             {
-            
+
+
                 pressed = false;
             }
         }

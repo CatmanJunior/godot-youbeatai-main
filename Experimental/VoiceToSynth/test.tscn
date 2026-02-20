@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cwuewtnywilyk"]
+[gd_scene format=3 uid="uid://cwuewtnywilyk"]
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkqjwj0b55t7n"]
+[gd_scene format=3 uid="uid://bkqjwj0b55t7n"]
 
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="1_qhdw1"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="1_x0ko1"]

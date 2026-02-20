@@ -9,10 +9,10 @@ public partial class ReverbDelayManager : Node
         if (instance == this) instance = null;
     }
 
-	[Export] public Slider reverbSlider;
-	[Export] public Slider delaySlider;
+    [Export] public Slider reverbSlider;
+    [Export] public Slider delaySlider;
 
-	AudioEffectReverb reverbEffect;
+    AudioEffectReverb reverbEffect;
     AudioEffectDelay delayEffect;
 
     public override void _Ready()

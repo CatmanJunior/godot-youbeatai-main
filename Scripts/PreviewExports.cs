@@ -6,10 +6,10 @@ public partial class PreviewExports : Node
     public static PreviewExports instance = null;
 
     [Export] public Button ListenSongExportButton;
-	[Export] public Button ListenBeatExportButton;
+    [Export] public Button ListenBeatExportButton;
 
-	[Export] public AudioStreamPlayer audioPlayerSong;
-	[Export] public AudioStreamPlayer audioPlayerBeat;
+    [Export] public AudioStreamPlayer audioPlayerSong;
+    [Export] public AudioStreamPlayer audioPlayerBeat;
 
     public bool HasRecorded => RealTimeAudioRecording.instance.recording_result != null;
 

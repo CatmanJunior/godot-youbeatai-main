@@ -4,7 +4,7 @@ public partial class RecordButton : Sprite2D
 {
     [Export] int id;
 
-	bool inside => IsPixelOpaque(GetLocalMousePosition());
+    bool inside => IsPixelOpaque(GetLocalMousePosition());
 
     Color original_c;
     Color hover_c;
@@ -22,14 +22,14 @@ public partial class RecordButton : Sprite2D
 
     public override void _Input(InputEvent inputEvent)
     {
-		if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
-		{
-			// on release
-			if (mouseEvent.IsReleased())
-			{
-				if (inside) OnPressed();
-			}
-		}
+        if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
+        {
+            // on release
+            if (mouseEvent.IsReleased())
+            {
+                if (inside) OnPressed();
+            }
+        }
     }
 
     public override void _Process(double delta)

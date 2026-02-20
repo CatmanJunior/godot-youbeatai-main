@@ -7,7 +7,8 @@ public class EmailSender
     {
         string from = "youbeatai@gmail.com";
         string pass = "plkqkbpemvqierqw";
-        
+
+
         string subject = "Hier is je liedje!";
         string body = "Het liedje is als bestand bijgevoegd";
 

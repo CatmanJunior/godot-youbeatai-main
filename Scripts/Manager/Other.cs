@@ -9,17 +9,17 @@ public partial class Manager : Node
     public bool hassavedtofile = false;
     bool metronome_sfx_enabled = false;
     bool up_pressed = false;
-	bool up_pressed_lastframe = false;
+    bool up_pressed_lastframe = false;
     bool dn_pressed = false;
-	bool dn_pressed_lastframe = false;
+    bool dn_pressed_lastframe = false;
     bool lf_pressed = false;
-	bool lf_pressed_lastframe = false;
+    bool lf_pressed_lastframe = false;
     bool rt_pressed = false;
-	bool rt_pressed_lastframe = false;
+    bool rt_pressed_lastframe = false;
     public bool f7_pressed = false;
-	public bool f7_pressed_lastframe = false;
+    public bool f7_pressed_lastframe = false;
     public bool f11_pressed = false;
-	public bool f11_pressed_lastframe = false;
+    public bool f11_pressed_lastframe = false;
     float time = 0;
     float slowBeatTimer = 0;
     public bool first_tts_done = false;
@@ -134,7 +134,8 @@ public partial class Manager : Node
         if (BpmManager.instance.bpm < 300) BpmManager.instance.bpm += 5;
         haschangedbpm = true;
     }
-    
+
+
     public void OnBpmDownButton()
     {
         if (BpmManager.instance.bpm > 40) BpmManager.instance.bpm -= 5;
@@ -179,42 +180,42 @@ public partial class Manager : Node
     }
 
     AudioEffectInstance GetBusEffectInstanceByName(int busIndex, string effectName)
-	{
-		int effectCount = AudioServer.GetBusEffectCount(busIndex);
-		for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffectInstance(busIndex, i);
-		GD.PushWarning($"Effect '{effectName}' not found.");
-		return null;
-	}
+    {
+        int effectCount = AudioServer.GetBusEffectCount(busIndex);
+        for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffectInstance(busIndex, i);
+        GD.PushWarning($"Effect '{effectName}' not found.");
+        return null;
+    }
 
     AudioEffect GetBusEffectByName(int busIndex, string effectName)
-	{
-		int effectCount = AudioServer.GetBusEffectCount(busIndex);
-		for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffect(busIndex, i);
-		GD.PushWarning($"Effect '{effectName}' not found.");
-		return null;
-	}
+    {
+        int effectCount = AudioServer.GetBusEffectCount(busIndex);
+        for (int i = 0; i < effectCount; i++) if (AudioServer.GetBusEffect(busIndex, i).ResourceName == effectName) return AudioServer.GetBusEffect(busIndex, i);
+        GD.PushWarning($"Effect '{effectName}' not found.");
+        return null;
+    }
 
-	float GetVolumeFromBus(string busName)
-	{
-		var busindex = AudioServer.GetBusIndex(busName);
-		var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
+    float GetVolumeFromBus(string busName)
+    {
+        var busindex = AudioServer.GetBusIndex(busName);
+        var analyzer = (AudioEffectSpectrumAnalyzerInstance)GetBusEffectInstanceByName(busindex, "SpectrumAnalyzer");
         var magnitude = analyzer.GetMagnitudeForFrequencyRange(20, 20000);
-		var volume = magnitude.Length();
-		return volume * 30f;
-	}
+        var volume = magnitude.Length();
+        return volume * 30f;
+    }
 
-	void UpdateGreenPurpleButtonLights()
+    void UpdateGreenPurpleButtonLights()
     {
         var greenLight = activateGreenChaosButton.GetChild<Light2D>(1);
-		var purpleLight = activatePurpleChaosButton.GetChild<Light2D>(1);
-		var green_volume_voice = GetVolumeFromBus("GreenVoice");
-		var purple_volume_voice = GetVolumeFromBus("PurpleVoice");
+        var purpleLight = activatePurpleChaosButton.GetChild<Light2D>(1);
+        var green_volume_voice = GetVolumeFromBus("GreenVoice");
+        var purple_volume_voice = GetVolumeFromBus("PurpleVoice");
 
-		if (green_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver0.GetCurrentLayerVoiceOver() != null) greenLight.Energy = green_volume_voice;
-		else greenLight.Energy = 0f;
+        if (green_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver0.GetCurrentLayerVoiceOver() != null) greenLight.Energy = green_volume_voice;
+        else greenLight.Energy = 0f;
 
-		if (purple_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver1.GetCurrentLayerVoiceOver() != null) purpleLight.Energy = purple_volume_voice;
-		else purpleLight.Energy = 0f;
+        if (purple_volume_voice > 0.1f && BpmManager.instance.playing && layerVoiceOver1.GetCurrentLayerVoiceOver() != null) purpleLight.Energy = purple_volume_voice;
+        else purpleLight.Energy = 0f;
     }
 
     public async void ExecuteNextFrame(Action action)

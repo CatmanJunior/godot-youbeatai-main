@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://br4od8trqfgr4"]
+[gd_scene format=3 uid="uid://br4od8trqfgr4"]
 
 [ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="1_a6tcu"]
 [ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="1_x42kv"]

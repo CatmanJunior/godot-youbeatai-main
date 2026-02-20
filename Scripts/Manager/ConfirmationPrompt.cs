@@ -19,7 +19,8 @@ public partial class ConfirmationPrompt : Panel
     {
         if (instance == this) instance = null;
     }
-    
+
+
     public void Open(Action agreeAction)
     {
         // show confirmation prompt

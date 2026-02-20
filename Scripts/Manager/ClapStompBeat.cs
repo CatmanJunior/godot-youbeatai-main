@@ -155,7 +155,8 @@ public partial class Manager : Node
             else if (progressBarValue <= 999) progressBarValue -= 0.5f;
 
             if (!layerLoopToggle.ButtonPressed) UpdateSongVoiceOverPlayBackPosition();
-            
+
+
             if (currentLayerIndex == 0)
             {
                 RealTimeAudioRecording.instance.OnTop();

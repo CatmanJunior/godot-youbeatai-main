@@ -3,88 +3,88 @@ using Godot;
 
 public partial class SongVoiceOver : Node
 {
-	// events for stopping and starting recording
+    // events for stopping and starting recording
     [Signal] public delegate void OnStartedRecordingEventHandler();
     [Signal] public delegate void OnStoppedRecordingEventHandler();
 
-	// singleton
+    // singleton
     public static SongVoiceOver instance = null;
 
-	public override void _ExitTree()
+    public override void _ExitTree()
     {
         if (instance == this) instance = null;
     }
 
-	// user interface
-	[Export] public ProgressBar progressbar;
-	[Export] public Button recordSongButton;
-	[Export] public Sprite2D recordSongSprite;
+    // user interface
+    [Export] public ProgressBar progressbar;
+    [Export] public Button recordSongButton;
+    [Export] public Sprite2D recordSongSprite;
 
-	// recording
-	public AudioStreamWav voiceOver = null;
+    // recording
+    public AudioStreamWav voiceOver = null;
     AudioEffectRecord audioEffectRecord;
-	public AudioStreamPlayer2D audioPlayer;
-	public bool shouldRecord = false;
-	public bool recording = false;
-	float recordingTimer = 0;
+    public AudioStreamPlayer2D audioPlayer;
+    public bool shouldRecord = false;
+    public bool recording = false;
+    float recordingTimer = 0;
 
-	public float recordingLength = 0;
+    public float recordingLength = 0;
 
-	public bool finished = false;
+    public bool finished = false;
 
 
-	// other
-	[Export] public Button snellerButton;
-	[Export] public Button langzamerButton;
+    // other
+    [Export] public Button snellerButton;
+    [Export] public Button langzamerButton;
 
-	public override void _Ready()
+    public override void _Ready()
     {
-		// init singleton
+        // init singleton
         instance ??= this;
 
-		// init record button
-		recordSongButton.Pressed += OnButton;
+        // init record button
+        recordSongButton.Pressed += OnButton;
 
-		// create audioplayer
-		audioPlayer = new AudioStreamPlayer2D();
-		AddChild(audioPlayer);
-		audioPlayer.Bus = "SongVoice";
+        // create audioplayer
+        audioPlayer = new AudioStreamPlayer2D();
+        AddChild(audioPlayer);
+        audioPlayer.Bus = "SongVoice";
 
-		// setup record effect
+        // setup record effect
         audioEffectRecord = (AudioEffectRecord)AudioServer.GetBusEffect(AudioServer.GetBusIndex("Microphone"), 1);
     }
 
     public override void _Process(double delta)
-	{
-		// set color of fake button
-		((RecordButton)recordSongButton.GetParent()).pressed = shouldRecord;
+    {
+        // set color of fake button
+        ((RecordButton)recordSongButton.GetParent()).pressed = shouldRecord;
 
-		// update recording timer
-		if (recording) recordingTimer += (float)delta;
-		else
-		{
-			recordingTimer = 0;
-		}
+        // update recording timer
+        if (recording) recordingTimer += (float)delta;
+        else
+        {
+            recordingTimer = 0;
+        }
 
-		// set progress bar value
-		if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
+        // set progress bar value
+        if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
 
-		//if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
+        //if (audioPlayer.Playing) GD.Print(SongVoiceOver.instance.audioPlayer.GetPlaybackPosition());
 
-		audioPlayer.VolumeLinear = 6f;
-	}
+        audioPlayer.VolumeLinear = 6f;
+    }
 
     public void OnButton()
     {
         Manager.instance.layerLoopToggle.ButtonPressed = true;
         shouldRecord = !shouldRecord;
 
-		// buttons during recording
-		snellerButton.Disabled = true;
-		langzamerButton.Disabled= true;
-		Manager.instance.SetLayerSwitchButtonsEnabled(false);
-		Manager.instance.PlayPauseButton.Disabled = true;
-		recordSongButton.Disabled = true;
+        // buttons during recording
+        snellerButton.Disabled = true;
+        langzamerButton.Disabled = true;
+        Manager.instance.SetLayerSwitchButtonsEnabled(false);
+        Manager.instance.PlayPauseButton.Disabled = true;
+        recordSongButton.Disabled = true;
 
         // metronoom aan
         Manager.instance.metronome_toggle.ButtonPressed = true;
@@ -96,67 +96,67 @@ public partial class SongVoiceOver : Node
         // playing true
         BpmManager.instance.playing = true;
 
-		// also play metronome sound on first beat
-		Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
+        // also play metronome sound on first beat
+        Manager.instance.PlayExtraSFX(Manager.instance.metronome_sfx);
 
-		Manager.instance.ShowCountDown();
+        Manager.instance.ShowCountDown();
     }
 
-	public void OnTop()
-	{
-		if (recording)
-		{
-			StopRecording();
-			if (voiceOver != null) audioPlayer.Play();
-		}
-		else
-		{
-			if (shouldRecord) StartRecording();
-			else if (voiceOver != null) audioPlayer.Play();
-		}
-	}
+    public void OnTop()
+    {
+        if (recording)
+        {
+            StopRecording();
+            if (voiceOver != null) audioPlayer.Play();
+        }
+        else
+        {
+            if (shouldRecord) StartRecording();
+            else if (voiceOver != null) audioPlayer.Play();
+        }
+    }
 
     private void StartRecording()
     {
-		recording = true;
+        recording = true;
         audioEffectRecord.SetRecordingActive(true);
-		GD.Print("recording started");
+        GD.Print("recording started");
 
-		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
-		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
+        Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = true;
+        Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = true;
 
-		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 0.1f);
 
-		Manager.instance.metronome_toggle.ButtonPressed = false;
+        Manager.instance.metronome_toggle.ButtonPressed = false;
 
-		Manager.instance.CloseCountDown();
-		EmitSignal(SignalName.OnStartedRecording);
+        Manager.instance.CloseCountDown();
+        EmitSignal(SignalName.OnStartedRecording);
     }
 
     private void StopRecording()
     {
         audioEffectRecord.SetRecordingActive(false);
-		GD.Print("recording stopped");
-		recordingLength = recordingTimer;
-		recording = false;
-		shouldRecord = false;
-		voiceOver = audioEffectRecord.GetRecording();
-		audioPlayer.Stream = voiceOver;
+        GD.Print("recording stopped");
+        recordingLength = recordingTimer;
+        recording = false;
+        shouldRecord = false;
+        voiceOver = audioEffectRecord.GetRecording();
+        audioPlayer.Stream = voiceOver;
 
-		// buttons during recording
-		snellerButton.Disabled = false;
-		langzamerButton.Disabled= false;
-		Manager.instance.SetLayerSwitchButtonsEnabled(true);
-		Manager.instance.PlayPauseButton.Disabled = false;
-		recordSongButton.Disabled = false;
+        // buttons during recording
+        snellerButton.Disabled = false;
+        langzamerButton.Disabled = false;
+        Manager.instance.SetLayerSwitchButtonsEnabled(true);
+        Manager.instance.PlayPauseButton.Disabled = false;
+        recordSongButton.Disabled = false;
 
-		Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
-		Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
+        Manager.instance.layerVoiceOver0.recordLayerButton.Disabled = false;
+        Manager.instance.layerVoiceOver1.recordLayerButton.Disabled = false;
 
-		AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
+        AudioServer.SetBusVolumeLinear(AudioServer.GetBusIndex("SubMaster"), 1f);
 
-		finished = true;
+        finished = true;
 
-		EmitSignal(SignalName.OnStoppedRecording);
+        EmitSignal(SignalName.OnStoppedRecording);
     }
 }

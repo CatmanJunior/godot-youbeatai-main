@@ -12,7 +12,8 @@ public class BeatStateChanger
         set => manager.progressBarValue = value;
     }
 
-    private static float[] costs = 
+    private static float[] costs =
+
     [
         2.0f,
         2.0f,

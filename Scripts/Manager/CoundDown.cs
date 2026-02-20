@@ -6,7 +6,8 @@ public partial class Manager
     [Export] public Label coundDownLabel;
 
     private bool isShowingCountDown = false;
-    
+
+
     public void ShowCountDown()
     {
         coundDownPanel.Position = micButtonLocation.GlobalPosition - coundDownPanel.Size / 2 * coundDownPanel.Scale;

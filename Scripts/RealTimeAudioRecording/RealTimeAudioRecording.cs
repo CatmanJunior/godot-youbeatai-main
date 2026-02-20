@@ -29,9 +29,9 @@ public partial class RealTimeAudioRecording : Node
     public bool finished = false;
 
     // user interface
-	[Export] public ProgressBar progressbar;
-	[Export] public Button recordSongButton;
-	[Export] public Sprite2D recordSongSprite;
+    [Export] public ProgressBar progressbar;
+    [Export] public Button recordSongButton;
+    [Export] public Sprite2D recordSongSprite;
 
     public override void _Ready()
     {
@@ -57,8 +57,9 @@ public partial class RealTimeAudioRecording : Node
 
         // set progress bar value
         if (recording) progressbar.Value = recordingTimer / (Manager.instance.layersAmount * (BpmManager.beatsAmount * BpmManager.instance.baseTimePerBeat));
-        
+
         // debug
+
         if (Input.IsActionJustPressed("f1"))
         {
             if (!recording) StartRecordingMaster();
@@ -102,8 +103,9 @@ public partial class RealTimeAudioRecording : Node
             // 4 beats voor de eerste noot op eerste laag
             Manager.instance.SwitchLayer(Manager.instance.layersAmount - 1);
             BpmManager.instance.currentBeat = BpmManager.beatsAmount / 2;
-            
+
             // playing true
+
             BpmManager.instance.playing = true;
 
             // also play metronome sound on first beat
@@ -124,8 +126,9 @@ public partial class RealTimeAudioRecording : Node
 
             // stop layer looping
             Manager.instance.layerLoopToggle.ButtonPressed = false;
-            
+
             // close countdown
+
             Manager.instance.CloseCountDown();
         }
     }

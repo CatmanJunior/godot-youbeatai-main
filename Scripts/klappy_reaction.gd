@@ -1,14 +1,16 @@
 extends Node
-@export var _manager:Manager
+
 @export var achievment_panel:Panel
 var instruction_label:Label
 
+var _manager: Node
 
 func _ready() -> void:
-	assert(_manager!= null,"manger not found")
-	if not _manager.tutorialActivated():
-		_manager.OnAchievementDone.connect(_on_achievement_done)
-		_manager.OnUtteranceEnd.connect(_on_utterance_end)
+	_manager = %GameManager
+
+	# if not _manager.tutorialActivated():
+		# _manager.OnAchievementDone.connect(_on_achievement_done)
+		# _manager.OnUtteranceEnd.connect(_on_utterance_end)
 	_get_insrtuction_label()
 
 

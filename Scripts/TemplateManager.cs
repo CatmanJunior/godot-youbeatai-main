@@ -94,8 +94,9 @@ public partial class TemplateManager : Node
     private bool[,] ToActives(string content)
     {
         string[] lines = content.Trim().Split('\n');
-        
+
         // Check if we received the expected number of lines
+
         if (lines.Length != 4)
         {
             GD.PrintErr($"Invalid number of lines: {lines.Length}. Expected 4 lines.");

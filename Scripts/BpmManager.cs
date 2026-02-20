@@ -1,110 +1,125 @@
-using Godot;
 using System.IO;
+using Godot;
 
 [GlobalClass]
 public partial class BpmManager : Node
 {
-	public static BpmManager instance = null;
+    public static BpmManager instance = null;
 
-	public override void _ExitTree()
-	{
-		if (instance == this) instance = null;
-	}
+    public override void _ExitTree()
+    {
+        if (instance == this)
+            instance = null;
+    }
 
-	public BpmManager()
-	{
-		//beatsAmount = ReadBeatsAmount();
-	}
+    public BpmManager()
+    {
+        //beatsAmount = ReadBeatsAmount();
+    }
 
-	// bpm
-	private int _bpm = 120;
-	[Export]
-	public int bpm
-	{
-		get => _bpm;
-		set
-		{
-			_bpm = value;
-			EmitSignal(SignalName.OnBpmChanged, _bpm);
-		}
-	}
+    // bpm
+    private int _bpm = 120;
 
-	// timing
-	public static int beatsAmount = 16;
-	public int amount_of_beats => beatsAmount;
-	private static int ReadBeatsAmount()
-	{
-		int amount;
-		try
-		{
-			string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
-			string content = File.ReadAllText(path);
-			amount = int.Parse(content);
-			if (File.Exists(path)) File.Delete(path);
-			GD.Print("beats_amount.txt found: " + amount + " beats");
-		}
-		catch
-		{
-			amount = 16;
-			throw new System.Exception("beats_amount.txt not found in user folder");
-		}
+    [Export]
+    public int bpm
+    {
+        get => _bpm;
+        set
+        {
+            _bpm = value;
+            EmitSignal(SignalName.OnBpmChanged, _bpm);
+        }
+    }
 
-		return amount;
-	}
+    // timing
+    public static int beatsAmount = 16;
 
+    //TODO REMOVE IS NOT USED
+    public int amount_of_beats => beatsAmount;
 
-	private bool _playing;
-	[Export]
-	public bool playing
-	{
-		set
-		{
-			if (_playing != value)
-				EmitSignal(SignalName.OnPlayingChanged, value);
-			_playing = value;
-		}
-		get => _playing;
-	}
+    //TODO REMOVE IS NOT USED
+    private static int ReadBeatsAmount()
+    {
+        int amount;
+        try
+        {
+            string path = Path.Combine(
+                ProjectSettings.GlobalizePath("user://"),
+                "beats_amount.txt"
+            );
+            string content = File.ReadAllText(path);
+            amount = int.Parse(content);
+            if (File.Exists(path))
+                File.Delete(path);
+            GD.Print("beats_amount.txt found: " + amount + " beats");
+        }
+        catch
+        {
+            amount = 16;
+            throw new System.Exception("beats_amount.txt not found in user folder");
+        }
 
-	[Export] public int currentBeat = beatsAmount - 1;
-	public float beatTimer = 0;
-	[Export] public float swing = 0.05f;
+        return amount;
+    }
 
-	public float baseTimePerBeat;
-	public float timePerBeat;
+    private bool _playing;
 
-	// events
-	[Signal]
-	public delegate void OnBeatEventEventHandler();
-	[Signal]
-	public delegate void OnBpmChangedEventHandler(float bpm);
+    [Export]
+    public bool playing
+    {
+        set
+        {
+            if (_playing != value)
+                EmitSignal(SignalName.OnPlayingChanged, value);
+            _playing = value;
+        }
+        get => _playing;
+    }
 
-	[Signal]
-	public delegate void OnPlayingChangedEventHandler(bool playing);
+    [Export]
+    public int currentBeat = beatsAmount - 1;
+    public float beatTimer = 0;
 
-	public override void _Ready()
-	{
-		instance ??= this;
-	}
+    [Export]
+    public float swing = 0.05f;
 
-	public override void _Process(double delta)
-	{
-		if (playing)
-		{
-			beatTimer += (float)delta;
-			float beats_per_bar = 4;
-			baseTimePerBeat = 60f / bpm / beats_per_bar;
-			timePerBeat =
-				(currentBeat % 2 == 1) ?
-					baseTimePerBeat + (baseTimePerBeat * swing)
-					: baseTimePerBeat - (baseTimePerBeat * swing);
+    public float baseTimePerBeat;
+    public float timePerBeat;
 
-			if (beatTimer > timePerBeat)
-			{
-				beatTimer -= timePerBeat;
-				currentBeat = (currentBeat + 1) % beatsAmount;
-				EmitSignal(SignalName.OnBeatEvent);
-			}
-		}
-	}
+    // events
+    //TODO These are already signals, why do we need to declare them as delegates? Can we just use the signals without declaring these delegates?
+    [Signal]
+    public delegate void OnBeatEventEventHandler();
+
+    [Signal]
+    public delegate void OnBpmChangedEventHandler(float bpm);
+
+    [Signal]
+    public delegate void OnPlayingChangedEventHandler(bool playing);
+
+    public override void _Ready()
+    {
+        instance ??= this;
+    }
+
+    public override void _Process(double delta)
+    {
+        if (playing)
+        {
+            beatTimer += (float)delta;
+            float beats_per_bar = 4;
+            baseTimePerBeat = 60f / bpm / beats_per_bar;
+            timePerBeat =
+                (currentBeat % 2 == 1)
+                    ? baseTimePerBeat + (baseTimePerBeat * swing)
+                    : baseTimePerBeat - (baseTimePerBeat * swing);
+
+            if (beatTimer > timePerBeat)
+            {
+                beatTimer -= timePerBeat;
+                currentBeat = (currentBeat + 1) % beatsAmount;
+                EmitSignal(SignalName.OnBeatEvent);
+            }
+        }
+    }
 }

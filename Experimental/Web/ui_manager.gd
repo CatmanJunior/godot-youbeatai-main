@@ -130,15 +130,8 @@ func _ready():
 	colors = %Colors.colors.duplicate()
 	colors_override = colors.duplicate()
 	
-	if draganddrop_button0:
-		original_draganddrop_button0_scale = draganddrop_button0.scale.x
-	if draganddrop_button1:
-		original_draganddrop_button1_scale = draganddrop_button1.scale.x
-	if draganddrop_button2:
-		original_draganddrop_button2_scale = draganddrop_button2.scale.x
-	if draganddrop_button3:
-		original_draganddrop_button3_scale = draganddrop_button3.scale.x
-	
+	_instrument_buttons_default_scale()
+
 	layer_manager = %LayerManager
 	var keyboard = %KeyboardInput
 	# Connect keyboard signals
@@ -147,9 +140,30 @@ func _ready():
 	keyboard.play_pause_pressed.connect(_on_play_pause)
 	keyboard.enter_pressed.connect(_on_enter_pressed)
 
+func _instrument_buttons_default_scale():
+	original_draganddrop_button0_scale = draganddrop_button0.scale.x
+	original_draganddrop_button1_scale = draganddrop_button1.scale.x
+	original_draganddrop_button2_scale = draganddrop_button2.scale.x
+	original_draganddrop_button3_scale = draganddrop_button3.scale.x
 
 func _process(delta: float) -> void:
 	update_ui(delta)
+
+func update_ui(delta: float):
+	_update_interface_state()
+	_update_saving_label(delta)
+	_update_play_pause_button()
+	_update_pointer()
+	_update_metronome(delta)
+	_update_ring_button_outlines()
+	_update_synth_button_outlines()
+	_update_progress_bar()
+	_update_labels()
+	_update_drag_and_drop()
+	_update_mic_meter()
+	_update_beat_sprites(delta)
+	_update_layer_outline_sprite_rotation()
+	_update_copy_paste_buttons(delta)
 
 func init_button_actions():
 	# Emoji buttons
@@ -167,14 +181,14 @@ func init_button_actions():
 	# Save/export buttons
 	if all_layers_to_mp3:
 		all_layers_to_mp3.button_up.connect(func():
-			open_email_prompt("save_all_mp3")
+			#TODO: Export all layers to mp3
 			if settings_panel:
 				settings_panel.visible = false
 		)
 	
 	if save_to_wav_button:
 		save_to_wav_button.pressed.connect(func():
-			open_email_prompt("save_wav")
+			#TODO: Open save to wav prompt
 			if settings_panel:
 				settings_panel.visible = false
 		)
@@ -317,7 +331,7 @@ func sprite_position(beat: int, ring: int, beats_amount: int) -> Vector2:
 	
 	return Vector2(cos(angle), sin(angle)) * distance
 
-func sprite_rotation(beat: int, ring: int, beats_amount: int) -> float:
+func sprite_rotation(beat: int, _ring: int, beats_amount: int) -> float:
 	return PI * 2.0 * beat / beats_amount
 
 func create_sprite(beat: int, ring: int, beats_amount: int) -> Sprite2D:
@@ -356,22 +370,6 @@ func create_template_sprite(beat: int, ring: int, beats_amount: int) -> Sprite2D
 	sprite.texture = dot_beat_texture
 	sprite.modulate = Color(0, 0, 0, 1)
 	return sprite
-
-func update_ui(delta: float):
-	_update_interface_state()
-	_update_saving_label(delta)
-	_update_play_pause_button()
-	_update_pointer()
-	_update_metronome(delta)
-	_update_ring_button_outlines()
-	_update_synth_button_outlines()
-	_update_progress_bar()
-	_update_labels()
-	_update_drag_and_drop()
-	_update_mic_meter()
-	_update_beat_sprites(delta)
-	_update_layer_outline_sprite_rotation()
-	_update_copy_paste_buttons(delta)
 
 func _update_beat_sprites(delta: float):
 	# Update drag and drop button sprite scale
@@ -478,8 +476,7 @@ func update_layer_switch_buttons_colors():
 	
 	# Get layer buttons from layer manager
 	var layer_buttons = []
-	if layer_manager.has_method("get_layer_buttons"):
-		layer_buttons = layer_manager.get_layer_buttons()
+	layer_buttons = layer_manager.get_layer_buttons()
 	
 	for i in range(layer_buttons.size()):
 		var button = layer_buttons[i]
@@ -509,19 +506,14 @@ func _update_saving_label(delta: float):
 		saving_label.visible = saving_label_active
 
 func _update_play_pause_button():
-	if play_pause_button and %BpmManager:
-		play_pause_button.text = "⏸️" if %BpmManager.playing else "▶️"
+	play_pause_button.text = "⏸️" if %BpmManager.playing else "▶️"
 
 func _update_pointer():
-	if not pointer or not %BpmManager:
-		return
 	if %BpmManager.playing:
 		var progression = float(%BpmManager.current_beat + (%BpmManager.beat_timer / %BpmManager.time_per_beat)) / float(%BpmManager.beats_amount)
 		pointer.rotation_degrees = progression * 360.0 - 7.0
 
 func _update_metronome(delta: float):
-	if not metronome or not %BpmManager:
-		return
 	if %BpmManager.playing:
 		slow_beat_timer += delta / 4.0
 		if slow_beat_timer > %BpmManager.time_per_beat:
@@ -530,9 +522,6 @@ func _update_metronome(delta: float):
 		metronome.position.y = lerp(-0.4, 0.4, beat_progress)
 
 func _update_ring_button_outlines():
-	if not draganddrop_button0 or not draganddrop_button1 or not draganddrop_button2 or not draganddrop_button3:
-		return
-	
 	var outlines = [
 		draganddrop_button0.find_child("OutlineSprite") as Sprite2D,
 		draganddrop_button1.find_child("OutlineSprite") as Sprite2D,
@@ -679,29 +668,24 @@ func close_emoji_prompt():
 	# Hide emoji selection prompt
 	pass
 
-func open_email_prompt(action: String):
-	email_prompt_open = true
-	# Show email prompt
-
 func copy_layer():
 	# Save current layer state
-	if layer_manager and layer_manager.has_method("copy_layer"):
-		layer_manager.copy_layer()
+	layer_manager.copy_layer()
 
 func paste_layer():
 	# Restore saved layer state
-	if layer_manager and layer_manager.has_method("paste_layer"):
-		layer_manager.paste_layer()
+	layer_manager.paste_layer()
 
 func clear_layer():
 	# Clear current layer
-	if layer_manager and layer_manager.has_method("clear_layer"):
-		layer_manager.clear_layer()
+	layer_manager.clear_layer()
 
 func play_extra_sfx():
 	# Play UI sound effect
 	pass
 
+
+#signal handlers
 func _on_restart_button():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 	
@@ -727,11 +711,8 @@ func _on_bpm_down():
 		%BpmManager.bpm -= 1
 
 func _on_play_pause():
-	if not email_prompt_open and play_pause_button and not play_pause_button.disabled:
-		if %BpmManager:
-			%BpmManager.playing = !%BpmManager.playing
+	if play_pause_button and not play_pause_button.disabled:
+		%BpmManager.playing = !%BpmManager.playing
 
 func _on_enter_pressed():
-	if email_prompt_open:
-		# Handle email prompt confirmation
-		pass
+	pass

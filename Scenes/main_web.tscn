@@ -50,6 +50,7 @@
 [ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="36_xwqw4"]
 [ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="37_glyvh"]
 [ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Experimental/Web/beat_manager.gd" id="38_2ikc6"]
+[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Experimental/Web/audioRecorder.gd" id="39_pyso5"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="40_e8hom"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="41_jrm6x"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="42_e22mk"]
@@ -69,6 +70,7 @@
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Experimental/Web/particle_manager.gd" id="59_j7ciw"]
 [ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Experimental/Web/visibility_manager.gd" id="60_3jbv4"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="60_uwd3s"]
+[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Experimental/Web/colors.gd" id="61_p5fwe"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="62_koofn"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="63_0ayl2"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
@@ -705,6 +707,9 @@ unique_name_in_owner = true
 script = ExtResource("38_2ikc6")
 metronome_sfx = ExtResource("35_dbt8u")
 
+[node name="AudioRecorder" type="Node" parent="Managers/GameManager" unique_id=1738535162]
+script = ExtResource("39_pyso5")
+
 [node name="KeyboardInput" type="Node" parent="Managers" unique_id=2017263538]
 unique_name_in_owner = true
 script = ExtResource("25_scmae")
@@ -795,7 +800,13 @@ script = ExtResource("59_j7ciw")
 [node name="VisabilityManager" type="Node" parent="Managers/UiManager" unique_id=1739542982]
 script = ExtResource("60_3jbv4")
 
+[node name="Colors" type="Node" parent="Managers/UiManager" unique_id=1947290805]
+unique_name_in_owner = true
+script = ExtResource("61_p5fwe")
+colors = PackedColorArray(0.9019608, 0.29411766, 0.5568628, 1, 0.972549, 0.52156866, 0.17254902, 1, 0.2627451, 0.79607844, 0.5294118, 1, 0.011764706, 0.8235294, 0.93333334, 1, 1, 1, 0, 1, 0.516666, 0, 1, 1, 0.61960787, 0.6117647, 0.8980392, 1)
+
 [node name="MicrophoneCapture" type="Node" parent="Managers" unique_id=634715111]
+unique_name_in_owner = true
 script = ExtResource("51_3b1sv")
 
 [node name="TemplateManager" type="Node" parent="Managers" unique_id=612415882 node_paths=PackedStringArray("templateButton", "leftTemplateButton", "rightTemplateButton", "showTemplateButton", "setTemplateButton")]

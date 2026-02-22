@@ -75,7 +75,6 @@
 [ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="66_psmtq"]
 [ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Experimental/Web/layer_voice_over.gd" id="66_pyso5"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="67_uicn8"]
-[ext_resource type="Script" uid="uid://bs8s08unyjudt" path="res://Scripts/DragAndDropButton.cs" id="68_j6rml"]
 [ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Experimental/Web/song_voice_over_manager.gd" id="69_hxd57"]
 [ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="69_uot8d"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="70_3tlvj"]
@@ -85,6 +84,7 @@
 [ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="74_uoj6j"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_wgwc4"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="76_hn88f"]
+[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Experimental/Web/DragAndDropButton.gd" id="77_3t1px"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="77_bcfhr"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="78_ikay4"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="78_j5x8m"]
@@ -675,10 +675,9 @@ script = ExtResource("10_uqoqp")
 unique_name_in_owner = true
 script = ExtResource("10_pyso5")
 
-[node name="MixingManager" type="Node" parent="Managers/GameManager" unique_id=991830872 node_paths=PackedStringArray("corners")]
+[node name="MixingManager" type="Node" parent="Managers/GameManager" unique_id=991830872]
 unique_name_in_owner = true
 script = ExtResource("11_hxd57")
-corners = [null, null, null]
 main_icons = Array[Texture2D]([ExtResource("22_irepe"), ExtResource("23_mf0w8"), ExtResource("24_h0xuh"), ExtResource("15_8eq3q")])
 alt_icons = Array[Texture2D]([ExtResource("16_8djmd"), ExtResource("17_jjn8x"), ExtResource("18_458pc"), ExtResource("29_580qm")])
 main_icon_synths = Array[Texture2D]([ExtResource("20_pem2i"), ExtResource("20_pem2i")])
@@ -714,7 +713,7 @@ script = ExtResource("25_scmae")
 unique_name_in_owner = true
 script = ExtResource("9_3e1b8")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "save_layout_button", "load_layout_button", "clear_layout_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "draganddrop_button0", "draganddrop_button1", "draganddrop_button2", "draganddrop_button3", "record_sample_button0", "record_sample_button1", "record_sample_button2", "record_sample_button3", "chaos_pad_triangle_sprite", "nodes_that_can_be_unlocked", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "save_layout_button", "load_layout_button", "clear_layout_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "draganddrop_button0", "draganddrop_button1", "draganddrop_button2", "draganddrop_button3", "record_sample_button0", "record_sample_button1", "record_sample_button2", "record_sample_button3", "corners", "chaos_pad_triangle_sprite", "nodes_that_can_be_unlocked", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
 unique_name_in_owner = true
 script = ExtResource("26_scmae")
 layer_button_prefab = ExtResource("27_p4tck")
@@ -735,6 +734,7 @@ record_sample_button0 = NodePath("../../UserInterface/Buttons/MicButtons/SampleR
 record_sample_button1 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1")
 record_sample_button2 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2")
 record_sample_button3 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3")
+corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 chaos_pad_triangle_sprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 nodes_that_can_be_unlocked = [null, null, null, null, null, null, null]
 restart_button = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
@@ -1384,8 +1384,8 @@ z_index = -4
 position = Vector2(-554.91113, -77.53021)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("22_irepe")
-script = ExtResource("68_j6rml")
-button = NodePath("Button")
+script = ExtResource("77_3t1px")
+button = NodePath("Button0")
 
 [node name="Icon" type="Label" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=882232344]
 visible = false
@@ -1405,7 +1405,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=2114046322]
+[node name="Button0" type="Button" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=2114046322]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1438,9 +1438,9 @@ z_index = -4
 position = Vector2(-554.91113, -2.5301971)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("23_mf0w8")
-script = ExtResource("68_j6rml")
+script = ExtResource("77_3t1px")
 ring = 1
-button = NodePath("Button")
+button = NodePath("Button1")
 
 [node name="Icon2" type="Label" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1892097510]
 visible = false
@@ -1460,7 +1460,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1269864039]
+[node name="Button1" type="Button" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1269864039]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1493,9 +1493,9 @@ z_index = -4
 position = Vector2(-554.91113, 72.46979)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("24_h0xuh")
-script = ExtResource("68_j6rml")
+script = ExtResource("77_3t1px")
 ring = 2
-button = NodePath("Button")
+button = NodePath("Button2")
 
 [node name="Icon3" type="Label" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=400101627]
 visible = false
@@ -1516,13 +1516,14 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1700258079 instance=ExtResource("6_2qaqg")]
+visible = false
 offset_left = -591.0
 offset_right = -491.9316
 offset_bottom = 53.06669
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=485947179]
+[node name="Button2" type="Button" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=485947179]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1556,9 +1557,9 @@ z_index = -4
 position = Vector2(-554.91113, 147.4698)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("29_580qm")
-script = ExtResource("68_j6rml")
+script = ExtResource("77_3t1px")
 ring = 3
-button = NodePath("Button")
+button = NodePath("Button3")
 
 [node name="Icon4" type="Label" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1692699775]
 visible = false
@@ -1579,6 +1580,7 @@ vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=761345688 instance=ExtResource("6_2qaqg")]
+visible = false
 offset_left = -590.0
 offset_top = 60.999992
 offset_right = -490.58047
@@ -1586,7 +1588,7 @@ offset_bottom = 149.48396
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=137693653]
+[node name="Button3" type="Button" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=137693653]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -2033,6 +2035,7 @@ position = Vector2(328, 136)
 scale = Vector2(1.8903, 1.8903)
 
 [node name="BpmUpButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=1898004136]
+visible = false
 offset_left = 34.0
 offset_top = 3.0
 offset_right = 75.0
@@ -2187,7 +2190,7 @@ metadata/_edit_use_anchors_ = true
 offset_left = -75.0
 offset_top = 3.35274
 offset_right = 75.0
-offset_bottom = 27.3527
+offset_bottom = 27.35274
 focus_mode = 0
 theme = ExtResource("2_3e1b8")
 theme_override_font_sizes/font_size = 12

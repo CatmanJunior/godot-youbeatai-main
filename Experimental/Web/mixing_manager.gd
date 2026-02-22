@@ -7,7 +7,6 @@ enum ChaosPadMode {
 }
 
 # Chaos pad controls
-@export var corners: Array[Node2D] = []  # left, top, right
 @export var knob: Node2D
 @export var chaos_pad_triangle_sprite: Sprite2D
 
@@ -46,11 +45,11 @@ var synth_mixing_active_synth: int = 0
 # Song mixing
 var song_mixing_knob_position: Vector2
 
-# Reference to other managers
 var current_layer_index: int = 0
 var colors: Array[Color] = []
 
 func _ready():
+
 	on_ready_mixing()
 
 func on_ready_mixing():
@@ -87,15 +86,17 @@ func samples_mixing_retrieve_active_knob():
 		if samples_mixing_active_ring < samples_mixing_knob_positions[current_layer_index].size():
 			knob.global_position = samples_mixing_knob_positions[current_layer_index][samples_mixing_active_ring]
 
+
+#TODO Fix this
 func samples_mixing_re_apply_remembered_volumes():
 	"""Re-apply remembered mixing volumes for all rings"""
 	if current_layer_index >= samples_mixing_knob_positions.size():
 		return
 	
-	for i in range(4):
-		if i < samples_mixing_knob_positions[current_layer_index].size():
-			var result = get_weights_for_position(samples_mixing_knob_positions[current_layer_index][i])
-			samples_mixing_update_volumes_for_ring(i, result.master_volume, result.weights)
+	# for i in range(4):
+	# 	if i < samples_mixing_knob_positions[current_layer_index].size():
+			# var result = get_weights_for_position(samples_mixing_knob_positions[current_layer_index][i])
+			# samples_mixing_update_volumes_for_ring(i, result.master_volume, result.weights)
 
 func samples_mixing_change_ring(new_ring: int):
 	# Save knob position
@@ -174,15 +175,17 @@ func synth_mixing_retrieve_active_knob():
 		if synth_mixing_active_synth < synth_mixing_knob_positions[current_layer_index].size():
 			knob.global_position = synth_mixing_knob_positions[current_layer_index][synth_mixing_active_synth]
 
+
+#TODO Fix this
 func synth_mixing_re_apply_remembered_volumes():
 	"""Re-apply remembered mixing volumes for both synths"""
 	if current_layer_index >= synth_mixing_knob_positions.size():
 		return
 	
-	for i in range(2):
-		if i < synth_mixing_knob_positions[current_layer_index].size():
-			var result = get_weights_for_position(synth_mixing_knob_positions[current_layer_index][i])
-			synth_mixing_update_volumes_for_synth(i, result.master_volume, result.weights)
+	# for i in range(2):
+	# 	if i < synth_mixing_knob_positions[current_layer_index].size():
+	# 		var result = get_weights_for_position(synth_mixing_knob_positions[current_layer_index][i])
+	# 		synth_mixing_update_volumes_for_synth(i, result.master_volume, result.weights)
 
 func synth_mixing_change_synth(synth: int):
 	# Save knob position
@@ -299,32 +302,14 @@ func get_standard_knob_positions_synth() -> Array[Vector2]:
 	var centered_pos = chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
 	return [centered_pos, centered_pos]
 
-func get_weights_for_position(position: Vector2) -> Dictionary:
-	"""Calculate weights based on knob position in triangle"""
-	# Simplified version - calculate barycentric coordinates
-	var master_volume = 1.0
-	var calc_weights = Vector3(0.33, 0.33, 0.33)  # Default equal weights
-	
-	# TODO: Implement proper barycentric coordinate calculation
-	# This would involve using the triangle corners to determine weights
-	
-	return {
-		"master_volume": master_volume,
-		"weights": calc_weights
-	}
-
-func on_update_mixing(delta: float):
+func on_update_mixing(mixingWeights : Vector3, master_volume: float):
 	"""Called every frame to update mixing state"""
 	if not knob:
 		return
-	
-	var result = get_weights_for_position(knob.global_position)
-	weights = result.weights
-	var master_volume = result.master_volume
-	
+		
 	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
 		samples_mixing_update_volumes_for_ring(samples_mixing_active_ring, master_volume)
 	elif chaos_pad_mode == ChaosPadMode.SYNTH_MIXING:
-		synth_mixing_update_volumes_for_synth(synth_mixing_active_synth, master_volume)
+		synth_mixing_update_volumes_for_synth(synth_mixing_active_synth, master_volume, mixingWeights)
 	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_update_volumes_for_song(master_volume)

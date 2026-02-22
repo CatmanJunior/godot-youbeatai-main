@@ -1,53 +1,60 @@
 extends Sprite2D
 
+signal on_mouse_up
+signal on_dragging(position: Vector2)
+
+var corners: Array[Node2D] = []  # left, top, right
+var outer_triangle_size: float = 60.0
+
+
 var dragging: bool = false
 var drag_offset: Vector2 = Vector2.ZERO
-var cached_on_mouse_up_action: Callable = Callable()
 
 var ui_manager: Node
+var mixing_manager: Node
 
 func _ready():
 	ui_manager = get_node("/root/scene/Managers/UiManager")
+	mixing_manager = get_node("/root/scene/Managers/GameManager/MixingManager")
+	corners = ui_manager.corners
 
-func sub_to_on_mouse_up(action: Callable) -> void:
-	cached_on_mouse_up_action = action
 
 func _input(input_event: InputEvent) -> void:
 	if input_event is InputEventMouseButton:
 		var mouse_button_event = input_event as InputEventMouseButton
 		if mouse_button_event.button_index == MOUSE_BUTTON_LEFT:
+			var chaospad_opaque = ui_manager.chaos_pad_triangle_sprite.is_pixel_opaque(ui_manager.chaos_pad_triangle_sprite.get_local_mouse_position())
+			var knob_opaque = is_pixel_opaque(get_local_mouse_position())
 			if mouse_button_event.pressed:
-				var chaospad_opaque = ui_manager.chaos_pad_triangle_sprite.is_pixel_opaque(ui_manager.chaos_pad_triangle_sprite.get_local_mouse_position())
-				var knob_opaque = is_pixel_opaque(get_local_mouse_position())
 				if knob_opaque or chaospad_opaque:
 					dragging = true
 					drag_offset = global_position - mouse_button_event.position
 			else:
 				dragging = false
-				var chaospad_opaque = ui_manager.chaos_pad_triangle_sprite.is_pixel_opaque(ui_manager.chaos_pad_triangle_sprite.get_local_mouse_position())
-				var knob_opaque = is_pixel_opaque(get_local_mouse_position())
 				if knob_opaque or chaospad_opaque:
-					cached_on_mouse_up_action.call()
+					on_mouse_up.emit()
 	
 	if input_event is InputEventMouseMotion and dragging:
 		var mouse_motion_event = input_event as InputEventMouseMotion
-		new_position(mouse_motion_event.position + drag_offset)
+		var new_pos = mouse_motion_event.position + drag_offset
+		# Update knob position
+		var pos = new_position(new_pos)
+		on_dragging.emit(pos)
 
-func new_position(position: Vector2) -> void:
+func new_position(knobPosition: Vector2) -> Vector2:
 	# triangle edges
-	var corners: Array[Node2D] = ui_manager.corners
 	var a: Vector2 = corners[0].global_position
 	var b: Vector2 = corners[1].global_position
 	var c: Vector2 = corners[2].global_position
 	
 	# free movement inside triangle
-	var weights = ui_manager.get_barycentric_weights(position, a, b, c)
-	if ui_manager.is_inside_triangle(weights):
-		global_position = position
-		return
+	var weights = get_weights_for_position().weights
+	if is_inside_triangle(weights):
+		global_position = knobPosition
+		return knobPosition
 	
 	# max dist from triangle
-	var maxdist: float = ui_manager.outer_triangle_size
+	var maxdist: float = mixing_manager.outer_triangle_size
 	
 	# distance from point to segment
 	var distance_to_segment = func(p: Vector2, seg_a: Vector2, seg_b: Vector2) -> float:
@@ -65,23 +72,102 @@ func new_position(position: Vector2) -> void:
 		return seg_a + ab * t
 	
 	# check distance from each edge
-	var dist_ab: float = distance_to_segment.call(position, a, b)
-	var dist_bc: float = distance_to_segment.call(position, b, c)
-	var dist_ca: float = distance_to_segment.call(position, c, a)
+	var dist_ab: float = distance_to_segment.call(knobPosition, a, b)
+	var dist_bc: float = distance_to_segment.call(knobPosition, b, c)
+	var dist_ca: float = distance_to_segment.call(knobPosition, c, a)
 	
 	var min_dist: float = minf(dist_ab, minf(dist_bc, dist_ca))
 	
 	# if the position is too far from the closest edge, move it closer
 	if min_dist > maxdist:
-		var closest_point: Vector2 = position
+		var closest_point: Vector2 = knobPosition
 		if min_dist == dist_ab:
-			closest_point = closest_point_on_segment.call(position, a, b)
+			closest_point = closest_point_on_segment.call(knobPosition, a, b)
 		elif min_dist == dist_bc:
-			closest_point = closest_point_on_segment.call(position, b, c)
+			closest_point = closest_point_on_segment.call(knobPosition, b, c)
 		elif min_dist == dist_ca:
-			closest_point = closest_point_on_segment.call(position, c, a)
+			closest_point = closest_point_on_segment.call(knobPosition, c, a)
 		
-		var dir: Vector2 = (position - closest_point).normalized()
-		position = closest_point + dir * maxdist
+		var dir: Vector2 = (knobPosition - closest_point).normalized()
+		knobPosition = closest_point + dir * maxdist
 	
-	global_position = position
+	global_position = knobPosition
+	return knobPosition
+
+func get_weights_for_position() -> Dictionary:
+	"""Calculate weights based on knob position in triangle"""
+	
+	# Get triangle corners
+	var p1 = corners[0].global_position  # left
+	var p2 = corners[1].global_position  # top
+	var p3 = corners[2].global_position  # right
+	
+	# Calculate barycentric coordinates using the area method
+	var area_total = sign_area(p1, p2, p3)
+	if area_total == 0:
+		return {"master_volume": 0.0, "weights": Vector3.ZERO}
+	
+	var area1 = sign_area(position, p2, p3)
+	var area2 = sign_area(p1, position, p3)
+	var area3 = sign_area(p1, p2, position)
+	
+	var u = area1 / area_total
+	var v = area2 / area_total
+	var w = area3 / area_total
+	
+	# Clamp weights to [0, 1] for positions outside triangle
+	u = clamp(u, 0.0, 1.0)
+	v = clamp(v, 0.0, 1.0)
+	w = clamp(w, 0.0, 1.0)
+	
+	# Normalize weights
+	var total = u + v + w
+	if total > 0:
+		u /= total
+		v /= total
+		w /= total
+	
+	var calc_weights = Vector3(u, v, w)
+	
+	# Calculate master volume based on distance from triangle
+	var closest_point = get_closest_point_on_triangle(position, p1, p2, p3)
+	var distance_from_triangle = position.distance_to(closest_point)
+	
+	# Master volume decreases as we move away from the triangle
+	var master_volume = max(0.0, 1.0 - (distance_from_triangle / outer_triangle_size))
+	
+	return {
+		"master_volume": master_volume,
+		"weights": calc_weights
+	}
+
+func is_inside_triangle(triangleWeights: Vector3) -> bool:
+	"""Check if the position is inside the triangle based on weights"""
+	return triangleWeights.x >= 0 and triangleWeights.y >= 0 and triangleWeights.z >= 0
+
+func sign_area(p1: Vector2, p2: Vector2, p3: Vector2) -> float:
+	"""Calculate signed area of triangle (used for barycentric coordinates)"""
+	return (p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) / 2.0
+
+func get_closest_point_on_triangle(point: Vector2, p1: Vector2, p2: Vector2, p3: Vector2) -> Vector2:
+	"""Find the closest point on the triangle to the given point"""
+	var closest = point
+	var min_dist = INF
+	
+	# Check closest point on each edge
+	var edges = [[p1, p2], [p2, p3], [p3, p1]]
+	for edge in edges:
+		var closest_on_edge = get_closest_point_on_segment(point, edge[0], edge[1])
+		var dist = point.distance_to(closest_on_edge)
+		if dist < min_dist:
+			min_dist = dist
+			closest = closest_on_edge
+	
+	return closest
+
+func get_closest_point_on_segment(point: Vector2, segment_start: Vector2, segment_end: Vector2) -> Vector2:
+	"""Find the closest point on a line segment to the given point"""
+	var segment = segment_end - segment_start
+	var to_point = point - segment_start
+	var t = max(0.0, min(1.0, to_point.dot(segment) / segment.dot(segment)))
+	return segment_start + t * segment

@@ -6,7 +6,8 @@ var time: float = 0.0
 signal on_utterance_end(utterance_id: int)
 
 func _exit_tree():
-	$Achievements.reset()
+	# $Achievements.reset()
+	pass
 
 func _ready():
 	# Setup
@@ -37,10 +38,9 @@ func utterance_end(utterance_id: int):
 
 func _process(delta: float):
 	time += delta
-	%UiManager.update_ui(delta)
 	# %VisualEffects.update_effects(delta)
 	# %AudioPlayerManager.update_audio(delta)
-	%MixingManager.on_update_mixing(delta)
+	# %MixingManager.on_update_mixing(delta)
 	# %LayerManager.update_layers(delta)
 	# $Tutorial.update_tutorial()
 	# $Achievements.on_update()

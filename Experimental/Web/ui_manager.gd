@@ -27,6 +27,7 @@ extends Node
 @export var record_sample_button3: Node
 
 # Other interface elements
+@export var corners: Array[Node2D] = []
 @export var chaos_pad_triangle_sprite: Sprite2D
 @export var nodes_that_can_be_unlocked: Array[Node2D] = []
 @export var restart_button: Button
@@ -75,18 +76,18 @@ extends Node
 
 # Sprite/texture management
 @export var sprite_prefab: PackedScene
-@export var filled_beat_textures: Array[Texture2D] = []
-@export var outline_beat_textures: Array[Texture2D] = []
-@export var dotted_synth_textures: Array[Texture2D] = []
-@export var outline_synth_textures: Array[Texture2D] = []
+@export var filled_beat_textures: Array[Texture2D]
+@export var outline_beat_textures: Array[Texture2D]
+@export var dotted_synth_textures: Array[Texture2D]
+@export var outline_synth_textures: Array[Texture2D]
 @export var filled_song_texture: Texture2D
 @export var outline_song_texture: Texture2D
 @export var dot_beat_texture: Texture2D
-@export var colors: Array[Color] = []
 
-var colors_override: Array[Color] = []
-var beat_sprites: Array = []  # 2D array [ring][beat]
-var template_sprites: Array = []  # 2D array [ring][beat]
+var colors: PackedColorArray
+var colors_override: PackedColorArray = []
+var beat_sprites: Array = [] # 2D array [ring][beat]
+var template_sprites: Array = [] # 2D array [ring][beat]
 
 # Beat sprite scale factors
 var global_beat_sprite_scale_factor: float = 0.28
@@ -112,11 +113,12 @@ var original_draganddrop_button1_scale: float
 var original_draganddrop_button2_scale: float
 var original_draganddrop_button3_scale: float
 
-enum ChaosPadMode { None, SampleMixing, SynthMixing }
+enum ChaosPadMode {None, SampleMixing, SynthMixing}
 var chaos_pad_mode = ChaosPadMode.None
 
 # References to other managers
 var layer_manager: Node
+
 var emoji_buttons: Array = []
 var emoji_prompt_cancel_button: Button
 
@@ -124,7 +126,9 @@ var emoji_prompt_cancel_button: Button
 signal layer_added(index: int, emoji: String)
 
 func _ready():
-	colors_override = colors
+	print("Colors at _ready: ", colors)
+	colors = %Colors.colors.duplicate()
+	colors_override = colors.duplicate()
 	
 	if draganddrop_button0:
 		original_draganddrop_button0_scale = draganddrop_button0.scale.x
@@ -135,17 +139,13 @@ func _ready():
 	if draganddrop_button3:
 		original_draganddrop_button3_scale = draganddrop_button3.scale.x
 	
-	# Get references
-	if get_parent().has_node("LayerManager"):
-		layer_manager = get_parent().get_node("LayerManager")
-	
-	# Connect keyboard signals if keyboard input exists
-	if get_parent().has_node("KeyboardInput"):
-		var keyboard = get_parent().get_node("KeyboardInput")
-		keyboard.bpm_up_pressed.connect(_on_bpm_up)
-		keyboard.bpm_down_pressed.connect(_on_bpm_down)
-		keyboard.play_pause_pressed.connect(_on_play_pause)
-		keyboard.enter_pressed.connect(_on_enter_pressed)
+	layer_manager = %LayerManager
+	var keyboard = %KeyboardInput
+	# Connect keyboard signals
+	keyboard.bpm_up_pressed.connect(_on_bpm_up)
+	keyboard.bpm_down_pressed.connect(_on_bpm_down)
+	keyboard.play_pause_pressed.connect(_on_play_pause)
+	keyboard.enter_pressed.connect(_on_enter_pressed)
 
 
 func _process(delta: float) -> void:
@@ -154,8 +154,8 @@ func _process(delta: float) -> void:
 func init_button_actions():
 	# Emoji buttons
 	for button in emoji_buttons:
-		button.button_up.connect(func(): 
-			var current_layer_index = 0  # Get from layer manager
+		button.button_up.connect(func():
+			var current_layer_index = 0 # Get from layer manager
 			add_layer(current_layer_index + 1, button.text)
 			close_emoji_prompt()
 			added_layer = true
@@ -264,7 +264,7 @@ func sprite_placement():
 		push_warning("bear_ring_pivot_point not assigned")
 		return
 	
-	var beats_amount = 16  # Get from BpmManager
+	var beats_amount = 16 # Get from BpmManager
 	if %BpmManager:
 		beats_amount = %BpmManager.beats_amount
 	
@@ -425,7 +425,7 @@ func _update_beat_sprites(delta: float):
 				sprite.scale -= Vector2.ONE * delta * 0.3
 	
 	# Update template sprites
-	var show_template = false  # Get from template manager
+	var show_template = false # Get from template manager
 	for ring in range(min(4, template_sprites.size())):
 		if ring >= template_sprites.size():
 			continue
@@ -463,7 +463,7 @@ func _update_copy_paste_buttons(delta: float):
 	if not copy_paste_clear_buttons_holder:
 		return
 	
-	var any_layer_button_pressed = false  # Get from layer manager
+	var any_layer_button_pressed = false # Get from layer manager
 	if layer_manager and layer_manager.has_method("get_any_layer_button_pressed"):
 		any_layer_button_pressed = layer_manager.get_any_layer_button_pressed()
 	

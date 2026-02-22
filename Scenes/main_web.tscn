@@ -63,7 +63,6 @@
 [ext_resource type="Script" uid="uid://dgwusorhvls4u" path="res://Scripts/TemplateManager.cs" id="52_dmqqp"]
 [ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="53_txw87"]
 [ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="54_wssgk"]
-[ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="55_nms80"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="57_7pcuk"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="58_stq2o"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="59_4cism"]
@@ -74,11 +73,10 @@
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="62_koofn"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="63_0ayl2"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
-[ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="66_psmtq"]
 [ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Experimental/Web/layer_voice_over.gd" id="66_pyso5"]
+[ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Experimental/Web/real_time_audio_recording.gd" id="67_hxd57"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="67_uicn8"]
 [ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Experimental/Web/song_voice_over_manager.gd" id="69_hxd57"]
-[ext_resource type="Script" uid="uid://dn2fbslx6trfr" path="res://Scripts/LayerChaosPadSelectButton.cs" id="69_uot8d"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="70_3tlvj"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_vb5o2"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_rnt4q"]
@@ -88,9 +86,12 @@
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="76_hn88f"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Experimental/Web/DragAndDropButton.gd" id="77_3t1px"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="77_bcfhr"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Experimental/Web/record_sample_button.gd" id="77_hxd57"]
+[ext_resource type="Script" uid="uid://bdroe2aknnaw1" path="res://Experimental/Web/record_button.gd" id="78_8eq3q"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="78_ikay4"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="78_j5x8m"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="80_hb2vt"]
+[ext_resource type="Script" uid="uid://c1br0m0n3lhxh" path="res://Experimental/Web/layer_chaos_pad_select_button.gd" id="80_hxd57"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="81_7gfte"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="82_crcsx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="83_g0gna"]
@@ -677,15 +678,21 @@ script = ExtResource("10_uqoqp")
 unique_name_in_owner = true
 script = ExtResource("10_pyso5")
 
-[node name="MixingManager" type="Node" parent="Managers/GameManager" unique_id=991830872]
+[node name="MixingManager" type="Node" parent="Managers/GameManager" unique_id=991830872 node_paths=PackedStringArray("knob", "chaos_pad_triangle_sprite", "main_icon", "alt_icon", "mic_button_location", "mic_buttons")]
 unique_name_in_owner = true
 script = ExtResource("11_hxd57")
+knob = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite")
+chaos_pad_triangle_sprite = NodePath("../../../UserInterface/ChaosPad/Triangle")
 main_icons = Array[Texture2D]([ExtResource("22_irepe"), ExtResource("23_mf0w8"), ExtResource("24_h0xuh"), ExtResource("15_8eq3q")])
 alt_icons = Array[Texture2D]([ExtResource("16_8djmd"), ExtResource("17_jjn8x"), ExtResource("18_458pc"), ExtResource("29_580qm")])
 main_icon_synths = Array[Texture2D]([ExtResource("20_pem2i"), ExtResource("20_pem2i")])
 alt_icon_synths = Array[Texture2D]([ExtResource("31_xwqw4"), ExtResource("32_glyvh")])
 main_icon_song = ExtResource("33_2ikc6")
 alt_icon_song = ExtResource("24_3dyd7")
+main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
+alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
+mic_button_location = NodePath("../../../UserInterface/ChaosPad/MicButtonLocation")
+mic_buttons = [NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton2"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton3"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 synth_mixing_line_scale_curve = SubResource("Curve_11cd6")
 synth_mixing_line_color_curve = SubResource("Curve_11cd6")
 
@@ -708,6 +715,7 @@ script = ExtResource("38_2ikc6")
 metronome_sfx = ExtResource("35_dbt8u")
 
 [node name="AudioRecorder" type="Node" parent="Managers/GameManager" unique_id=1738535162]
+unique_name_in_owner = true
 script = ExtResource("39_pyso5")
 
 [node name="KeyboardInput" type="Node" parent="Managers" unique_id=2017263538]
@@ -825,11 +833,11 @@ delaySlider = NodePath("../../UserInterface/SettingsPanel/Sliders/DelaySlider")
 [node name="MidiManager" type="Node" parent="Managers" unique_id=674668927]
 script = ExtResource("54_wssgk")
 
-[node name="RealTimeAudioRecording" type="Node" parent="Managers" unique_id=1028778843 node_paths=PackedStringArray("progressbar", "recordSongButton", "recordSongSprite")]
-script = ExtResource("55_nms80")
-progressbar = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
-recordSongButton = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton/Button0")
-recordSongSprite = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")
+[node name="RealTimeAudioRecording" type="Node" parent="Managers" unique_id=1028778843 node_paths=PackedStringArray("progress_bar", "record_song_button", "record_song_sprite")]
+script = ExtResource("67_hxd57")
+progress_bar = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
+record_song_button = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton/Button0")
+record_song_sprite = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")
 
 [node name="LayerVoiceOver1" type="Node" parent="Managers" unique_id=447489058 node_paths=PackedStringArray("texture_progress_bar", "record_layer_button", "small_line", "big_line")]
 unique_name_in_owner = true
@@ -874,6 +882,7 @@ octaveRange = Vector2i(2, 8)
 beats_amount_scaler = 0.5
 
 [node name="SongVoiceOver" type="Node" parent="Managers" unique_id=1295732403]
+unique_name_in_owner = true
 script = ExtResource("69_hxd57")
 
 [node name="SongVoiceOverProgressBar" type="ProgressBar" parent="Managers/SongVoiceOver" unique_id=975227951]
@@ -932,7 +941,7 @@ z_index = 1
 position = Vector2(-23.609894, -763.73505)
 scale = Vector2(2, 2)
 texture = ExtResource("65_tbynx")
-script = ExtResource("66_psmtq")
+script = ExtResource("77_hxd57")
 
 [node name="Fill" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton0" unique_id=1322117929]
 z_index = 1
@@ -991,7 +1000,7 @@ z_index = 1
 position = Vector2(39.1131, -763.73505)
 scale = Vector2(2, 2)
 texture = ExtResource("65_tbynx")
-script = ExtResource("66_psmtq")
+script = ExtResource("77_hxd57")
 ring = 1
 
 [node name="Fill2" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1" unique_id=1824441183]
@@ -1052,7 +1061,7 @@ z_index = 1
 position = Vector2(101.8351, -763.73505)
 scale = Vector2(2, 2)
 texture = ExtResource("65_tbynx")
-script = ExtResource("66_psmtq")
+script = ExtResource("77_hxd57")
 ring = 2
 
 [node name="Fill3" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton2" unique_id=701772151]
@@ -1101,7 +1110,7 @@ z_index = 1
 position = Vector2(164.5581, -763.73505)
 scale = Vector2(2, 2)
 texture = ExtResource("65_tbynx")
-script = ExtResource("66_psmtq")
+script = ExtResource("77_hxd57")
 ring = 3
 
 [node name="Fill4" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton3" unique_id=1274518585]
@@ -1150,7 +1159,7 @@ z_index = 1
 position = Vector2(227.2803, -763.73505)
 scale = Vector2(2.01, 2.01)
 texture = ExtResource("65_tbynx")
-script = ExtResource("67_uicn8")
+script = ExtResource("78_8eq3q")
 
 [node name="Button0" type="Button" parent="UserInterface/Buttons/MicButtons/RecordBeatButton0" unique_id=623378627]
 z_index = 1
@@ -1215,7 +1224,7 @@ z_index = 1
 position = Vector2(290.0025, -763.73505)
 scale = Vector2(2, 2)
 texture = ExtResource("65_tbynx")
-script = ExtResource("67_uicn8")
+script = ExtResource("78_8eq3q")
 id = 1
 
 [node name="Button1" type="Button" parent="UserInterface/Buttons/MicButtons/RecordBeatButton1" unique_id=967864382]
@@ -1278,7 +1287,7 @@ z_index = 1
 position = Vector2(354.08148, -763.52325)
 scale = Vector2(1.9600772, 1.9600772)
 texture = ExtResource("65_tbynx")
-script = ExtResource("67_uicn8")
+script = ExtResource("78_8eq3q")
 
 [node name="Button0" type="Button" parent="UserInterface/Buttons/MicButtons/RecordMasterButton" unique_id=1861445586]
 z_index = 1
@@ -1633,7 +1642,7 @@ z_index = -4
 position = Vector2(-554.91113, 222.46976)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("31_xwqw4")
-script = ExtResource("69_uot8d")
+script = ExtResource("80_hxd57")
 button = NodePath("Button")
 
 [node name="Icon5" type="Label" parent="UserInterface/Buttons/GreenSelectButton" unique_id=1802639549]
@@ -1697,7 +1706,7 @@ z_index = -4
 position = Vector2(-554.91113, 297.42776)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("32_glyvh")
-script = ExtResource("69_uot8d")
+script = ExtResource("80_hxd57")
 id = 1
 button = NodePath("Button")
 
@@ -2881,6 +2890,23 @@ manager = NodePath("../Managers/GameManager")
 position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("86_i7eoh")
+
+[connection signal="ring_0_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton0" method="_on_press"]
+[connection signal="ring_1_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton1" method="_on_press"]
+[connection signal="ring_2_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton2" method="_on_press"]
+[connection signal="ring_3_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton3" method="_on_press"]
+[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
+[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="start_recording"]
+[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton1" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
+[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton1" to="Managers/GameManager/AudioRecorder" method="start_recording"]
+[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton2" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
+[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton2" to="Managers/GameManager/AudioRecorder" method="start_recording"]
+[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton3" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
+[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton3" to="Managers/GameManager/AudioRecorder" method="start_recording"]
+[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton0" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton1" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton2" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton3" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 
 [editable path="Managers/LayerVoiceOver1/synth_line"]
 [editable path="Managers/LayerVoiceOver0/bass_line"]

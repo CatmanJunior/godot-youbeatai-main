@@ -3,6 +3,8 @@ extends Node
 var recorded_audio: AudioStream = null
 var audio_effect_record: AudioEffectRecord
 
+var result: AudioStreamWAV = null
+
 var recording: bool = false
 var silence_length: float = 0.0
 var recording_length: float = 0.0
@@ -35,21 +37,16 @@ func _trim_audio_stream(original: AudioStream, seconds_to_trim: float) -> AudioS
 
 	var trimmed_data: PackedByteArray = original_data.slice(aligned_trim_bytes)
 
-	var result: AudioStream = ClassDB.instantiate("AudioStreamWav")
-	result.set("data", trimmed_data)
-	result.set("format", original.get("format"))
-	result.set("stereo", original.get("stereo"))
-	result.set("mix_rate", original.get("mix_rate"))
-	result.set("loop_mode", original.get("loop_mode"))
+	result = AudioStreamWAV.new()
+	result.data = trimmed_data
+
 	return result
 
 func _set_volume(value: float) -> void:
 	var db: float = linear_to_db(value)
-	%AudioPlayerManager.firstAudioPlayer.volume_db = db
-	%AudioPlayerManager.secondAudioPlayer.volume_db = db
-	%AudioPlayerManager.thirdAudioPlayer.volume_db = db
-	%AudioPlayerManager.fourthAudioPlayer.volume_db = db
-
+	for player in %AudioPlayerManager.audio_players:
+		player.volume_db = db
+		
 func start_recording(ring: int) -> void:
 	_set_volume(0.0)
 	current_recording_ring = ring
@@ -69,20 +66,11 @@ func stop_recording() -> void:
 	silence_length = 0.0
 	recording_length = 0.0
 	actual_sound_length = 0.0
-
-	if current_recording_ring == 0:
-		%AudioPlayerManager.firstAudioPlayerRec.stop()
-		%AudioPlayerManager.firstAudioPlayerRec.stream = %UiManager.recordSampleButton0.recorded_audio
-	if current_recording_ring == 1:
-		%AudioPlayerManager.secondAudioPlayerRec.stop()
-		%AudioPlayerManager.secondAudioPlayerRec.stream = %UiManager.recordSampleButton1.recorded_audio
-	if current_recording_ring == 2:
-		%AudioPlayerManager.thirdAudioPlayerRec.stop()
-		%AudioPlayerManager.thirdAudioPlayerRec.stream = %UiManager.recordSampleButton2.recorded_audio
-	if current_recording_ring == 3:
-		%AudioPlayerManager.fourthAudioPlayerRec.stop()
-		%AudioPlayerManager.fourthAudioPlayerRec.stream = %UiManager.recordSampleButton3.recorded_audio
-
+	
+	var player = %AudioPlayerManager.audio_players_rec[current_recording_ring]
+	player.stop()
+	player.stream = recorded_audio
+		
 
 func get_recording_volume() -> float:
 	return %MicrophoneCapture.volume
@@ -96,7 +84,7 @@ func _ready():
 func _process(delta: float):
 	if recording:
 		recording_length += delta
-		if get_recording_volume() > %UiManager.volume_treshold.value:
+		if get_recording_volume() > %UiManager.volume_threshold.value:
 			has_detected_sound = true
 		if not has_detected_sound:
 			silence_length += delta

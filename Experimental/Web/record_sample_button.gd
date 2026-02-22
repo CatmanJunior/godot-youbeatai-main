@@ -1,5 +1,9 @@
 extends Sprite2D
 
+signal button_on(ring: int)
+signal button_off
+
+
 @export var ring: int = 0
 
 var pressing: bool = false
@@ -13,10 +17,10 @@ func _input(event: InputEvent):
 		if event.is_pressed() and inside:
 			pressing = !pressing
 			if pressing:
-				%AudioRecorder.start_recording(ring)
+				emit_signal("button_on", ring)
 				_start_recording()
 			else:
-				%AudioRecorder.stop_recording()
+				emit_signal("button_off")
 				_stopRecording()
 
 func _stopRecording():

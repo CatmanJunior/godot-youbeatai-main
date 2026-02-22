@@ -139,6 +139,18 @@ func remove_layer_button(layer: int):
 	button_to_remove.queue_free()
 	layer_buttons.erase(button_to_remove)
 
+
+func clear_layer(layer: int):
+	"""Clear all beats from a layer"""
+	if layer < 0 or layer >= layers_beat_actives.size():
+		return
+	
+	for ring in range(4):
+		for beat in range(beats_amount):
+			layers_beat_actives[layer][ring][beat] = false
+	
+	layer_cleared.emit()
+
 func sort_layer_buttons_in_container():
 	"""Sort layer buttons in the container based on their index"""
 	var buttons: Array[Button] = []

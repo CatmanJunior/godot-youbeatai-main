@@ -313,3 +313,4 @@ func on_update_mixing(mixingWeights : Vector3, master_volume: float):
 		synth_mixing_update_volumes_for_synth(synth_mixing_active_synth, master_volume, mixingWeights)
 	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_update_volumes_for_song(master_volume)
+

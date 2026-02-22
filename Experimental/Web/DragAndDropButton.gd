@@ -3,7 +3,9 @@ extends Sprite2D
 @export var ring: int = 0
 @export var button: Button
 
-signal on_pressed
+#emit signal with ring index as argument
+
+signal on_pressed(ring: int)
 
 
 var beatManager: Node
@@ -18,17 +20,7 @@ func _ready():
 	beatManager = %BeatManager
 	gameManager = %GameManager
 
-	# Connect to keyboard input manager signals
-	var keyboard_manager = %KeyboardInput
-	if keyboard_manager:
-		if ring == 0:
-			keyboard_manager.ring_0_pressed.connect(_on_press)
-		elif ring == 1:
-			keyboard_manager.ring_1_pressed.connect(_on_press)
-		elif ring == 2:
-			keyboard_manager.ring_2_pressed.connect(_on_press)
-		elif ring == 3:
-			keyboard_manager.ring_3_pressed.connect(_on_press)
+
 
 func _on_press():
 	if %UiManager.button_is_clap.button_pressed:
@@ -43,8 +35,7 @@ func _on_press():
 	else:
 		_button_behaviour()
 
-	%MixingManager.samples_mixing_change_ring(ring)
-	on_pressed.emit()
+	on_pressed.emit(ring)
 
 
 func _button_sound():
@@ -65,7 +56,6 @@ func _button_behaviour():
 		# # %UiManager.emit_beat_particles(position, gameManager.colors[ring])
 
 	if %MixingManager.samples_mixing_active_ring != ring:
-		%MixingManager.samples_mixing_change_ring(ring)
 		_start_color_change(ring, 0.3)
 
 

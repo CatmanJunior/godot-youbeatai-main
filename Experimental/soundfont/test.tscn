@@ -11,7 +11,9 @@
 resource_name = "load"
 script/source = "extends Control
 
-@export var bankData : EffectProfile;
+@export var bankData : EffectProfile:
+	set(v):
+		bankData.Apply(AudioServer.get_bus_index(\"Purple\"))	
 
 func _ready():
 	bankData.Apply(AudioServer.get_bus_index(\"Purple\"))

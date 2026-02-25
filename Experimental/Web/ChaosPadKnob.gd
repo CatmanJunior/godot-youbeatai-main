@@ -1,6 +1,6 @@
 extends Sprite2D
 
-signal on_mouse_up
+signal on_mouse_up(master_volume :float , weights :Vector3)
 signal on_dragging(position: Vector2)
 
 var corners: Array[Node2D] = []  # left, top, right
@@ -32,13 +32,17 @@ func _input(input_event: InputEvent) -> void:
 			else:
 				dragging = false
 				if knob_opaque or chaospad_opaque:
-					on_mouse_up.emit()
+					var result = get_weights_for_position()
+					on_mouse_up.emit(result.master_volume, result.weights)
 	
 	if input_event is InputEventMouseMotion and dragging:
 		var mouse_motion_event = input_event as InputEventMouseMotion
 		var new_pos = mouse_motion_event.position + drag_offset
 		# Update knob position
 		var pos = new_position(new_pos)
+		#set position
+		global_position = pos
+
 		on_dragging.emit(pos)
 
 func new_position(knobPosition: Vector2) -> Vector2:
@@ -107,9 +111,9 @@ func get_weights_for_position() -> Dictionary:
 	if area_total == 0:
 		return {"master_volume": 0.0, "weights": Vector3.ZERO}
 	
-	var area1 = sign_area(position, p2, p3)
-	var area2 = sign_area(p1, position, p3)
-	var area3 = sign_area(p1, p2, position)
+	var area1 = sign_area(global_position, p2, p3)
+	var area2 = sign_area(p1, global_position, p3)
+	var area3 = sign_area(p1, p2, global_position)
 	
 	var u = area1 / area_total
 	var v = area2 / area_total
@@ -130,8 +134,8 @@ func get_weights_for_position() -> Dictionary:
 	var calc_weights = Vector3(u, v, w)
 	
 	# Calculate master volume based on distance from triangle
-	var closest_point = get_closest_point_on_triangle(position, p1, p2, p3)
-	var distance_from_triangle = position.distance_to(closest_point)
+	var closest_point = get_closest_point_on_triangle(global_position, p1, p2, p3)
+	var distance_from_triangle = global_position.distance_to(closest_point)
 	
 	# Master volume decreases as we move away from the triangle
 	var master_volume = max(0.0, 1.0 - (distance_from_triangle / outer_triangle_size))

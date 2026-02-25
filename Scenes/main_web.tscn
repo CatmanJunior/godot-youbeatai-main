@@ -2907,6 +2907,7 @@ texture = ExtResource("86_i7eoh")
 [connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton1" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton2" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton3" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_mouse_up" from="UserInterface/ChaosPad/Triangle/KnobSprite" to="Managers/GameManager/MixingManager" method="samples_mixing_update_volumes"]
 
 [editable path="Managers/LayerVoiceOver1/synth_line"]
 [editable path="Managers/LayerVoiceOver0/bass_line"]

@@ -11,10 +11,10 @@ enum ChaosPadMode {
 @export var chaos_pad_triangle_sprite: Sprite2D
 
 # Icons
-@export var main_icons: Array[Texture2D] = []  # 4 for rings
-@export var alt_icons: Array[Texture2D] = []  # 4 for rings
-@export var main_icon_synths: Array[Texture2D] = []  # 2 for synths
-@export var alt_icon_synths: Array[Texture2D] = []  # 2 for synths
+@export var main_icons: Array[Texture2D] = [] # 4 for rings
+@export var alt_icons: Array[Texture2D] = [] # 4 for rings
+@export var main_icon_synths: Array[Texture2D] = [] # 2 for synths
+@export var alt_icon_synths: Array[Texture2D] = [] # 2 for synths
 @export var main_icon_song: Texture2D
 @export var alt_icon_song: Texture2D
 
@@ -30,12 +30,12 @@ var chaos_pad_mode: ChaosPadMode = ChaosPadMode.SAMPLE_MIXING
 @export var mic_buttons: Array[Node2D] = []
 
 # Sample mixing
-var samples_mixing_knob_positions: Array = []  # Array of Array[Vector2]
+var samples_mixing_knob_positions: Array = [] # Array of Array[Vector2]
 var samples_mixing_knob_positions_clipboard: Array[Vector2] = []
 var samples_mixing_active_ring: int = 0
 
 # Synth mixing
-var synth_mixing_knob_positions: Array = []  # Array of Array[Vector2]
+var synth_mixing_knob_positions: Array = [] # Array of Array[Vector2]
 var synth_mixing_knob_positions_clipboard: Array[Vector2] = []
 var synth_mixing_active_synth: int = 0
 
@@ -49,7 +49,6 @@ var current_layer_index: int = 0
 var colors: Array[Color] = []
 
 func _ready():
-
 	on_ready_mixing()
 
 func on_ready_mixing():
@@ -138,7 +137,9 @@ func samples_mixing_start_triangle_color_change(duration: float):
 	var tween = create_tween()
 	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", colors[samples_mixing_active_ring], duration)
 
-func samples_mixing_update_volumes_for_ring(ring: int, master_volume: float, given_weights: Vector3 = Vector3.ZERO):
+func samples_mixing_update_volumes(master_volume: float, given_weights: Vector3):
+	print("Updating volumes for ring %s with master volume %s and weights %s" % [samples_mixing_active_ring, master_volume, given_weights])
+	var ring = samples_mixing_active_ring
 	var weights_to_use = given_weights if given_weights != Vector3.ZERO else weights
 	
 	var main_volume = weights_to_use.x * master_volume
@@ -146,10 +147,10 @@ func samples_mixing_update_volumes_for_ring(ring: int, master_volume: float, giv
 	var alt_volume = weights_to_use.z * master_volume
 	
 	# Get the audio player manager to set volumes
-	var audio_manager = get_node_or_null("../AudioPlayerManager")
+	var audio_manager = %AudioPlayerManager
 	if audio_manager:
 		for player_array in ["audio_players", "audio_players_alt", "audio_players_rec"]:
-			if audio_manager.has(player_array) and ring < audio_manager[player_array].size():
+			if ring < audio_manager[player_array].size():
 				var volume = main_volume if player_array == "audio_players" else (alt_volume if player_array == "audio_players_alt" else rec_volume)
 				audio_manager[player_array][ring].volume_db = linear_to_db(volume)
 
@@ -302,15 +303,14 @@ func get_standard_knob_positions_synth() -> Array[Vector2]:
 	var centered_pos = chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
 	return [centered_pos, centered_pos]
 
-func on_update_mixing(mixingWeights : Vector3, master_volume: float):
+func on_update_mixing(mixingWeights: Vector3, master_volume: float):
 	"""Called every frame to update mixing state"""
 	if not knob:
 		return
 		
 	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
-		samples_mixing_update_volumes_for_ring(samples_mixing_active_ring, master_volume)
+		samples_mixing_update_volumes(master_volume, mixingWeights)
 	elif chaos_pad_mode == ChaosPadMode.SYNTH_MIXING:
 		synth_mixing_update_volumes_for_synth(synth_mixing_active_synth, master_volume, mixingWeights)
 	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_update_volumes_for_song(master_volume)
-

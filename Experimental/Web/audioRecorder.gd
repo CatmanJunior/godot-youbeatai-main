@@ -92,15 +92,16 @@ func _process(delta: float):
 		if has_detected_sound:
 			actual_sound_length += delta
 
-			var base_time_per_beat: float = %BpmManager.baseTimePerBeat
+			var base_time_per_beat: float = %BpmManager.base_time_per_beat
 			if base_time_per_beat == 0.0:
 				base_time_per_beat = 0.2
 
 			var percentage: float = actual_sound_length / (base_time_per_beat * 2.0)
-			var fill: TextureProgressBar = get_child(0) as TextureProgressBar
+			# var fill: TextureProgressBar = get_child(0) as TextureProgressBar
 
 			if percentage > 1.0:
 				#TODO reset the recording button
 				stop_recording()
 			else:
-				fill.value = 1.0 - percentage
+				# fill.value = 1.0 - percentage
+				pass

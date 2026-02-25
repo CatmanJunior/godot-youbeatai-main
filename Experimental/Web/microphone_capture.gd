@@ -1,5 +1,8 @@
 extends Node
 
+const FftLib = preload("res://fft/Fft.gd")
+const ComplexNum = preload("res://fft/Complex.gd")
+
 @export var bus_name: String = "Microphone"
 @export var clap_freq: float = 7000.0
 @export var clap_threshold: float = 0.1
@@ -21,8 +24,6 @@ var is_clapping: bool:
 
 var is_stamping: bool:
 	get: return stamp_volume > stamp_threshold and stamp_volume > clap_volume
-
-signal on_microphone_input(volume: float, frequency: float)
 
 func _ready():
 	microphone = AudioStreamMicrophone.new()
@@ -49,16 +50,12 @@ func _process(_delta: float):
 		var audio_data: PackedVector2Array = audio_effect_capture.get_buffer(frames)
 		volume = _get_volume_from_audio_data(audio_data)
 		frequency = _get_peak_frequency(_perform_fft(_convert_to_mono(audio_data)))
-		emit_signal("on_microphone_input", volume, frequency)
+		EventBus.microphone_data_updated.emit(volume, frequency)
 
-	stamp_volume = _convert_to_01(analyzer.get_magnitude_for_frequency_range(0.0, stamp_freq))
-	clap_volume = _convert_to_01(analyzer.get_magnitude_for_frequency_range(clap_freq, 20000.0))
+	stamp_volume = _normalize_to_range(analyzer.get_magnitude_for_frequency_range(0.0, stamp_freq))
+	clap_volume = _normalize_to_range(analyzer.get_magnitude_for_frequency_range(clap_freq, 20000.0))
 
-	# if needed we can connect the thresholds to the old threshold slider in the settings menu
-	# clap_threshold = Manager.instance.volume_treshold.value
-	# stamp_threshold = Manager.instance.volume_treshold.value
-
-func _convert_to_01(rms: Vector2) -> float:
+func _normalize_to_range(rms: Vector2) -> float:
 	var rms_value: float = (rms.x + rms.y) * 0.5
 	var log_value: float = 20.0 * (log(sqrt(rms_value) / 0.1) / log(10))
 	return pow(10.0, log_value / 10.0)
@@ -91,48 +88,27 @@ func _perform_fft(audio_data: PackedFloat32Array) -> PackedFloat32Array:
 	if N != next_power:
 		audio_data.resize(next_power)
 
-	# Convert to complex numbers stored as Vector2 (x = real, y = imaginary)
-	var complex_data: Array[Vector2] = []
+	# Convert mono samples to Complex objects for Fft.gd
+	var complex_data: Array = []
 	complex_data.resize(audio_data.size())
 	for i in range(audio_data.size()):
-		complex_data[i] = Vector2(audio_data[i], 0.0)
+		complex_data[i] = ComplexNum.new(audio_data[i], 0.0)
 
-	_fft(complex_data)
-
+	# Run FFT from the fft/ library
+	complex_data = FftLib.fft(complex_data)
+	
+	# Extract magnitudes from the first half (positive frequencies)
 	var magnitudes := PackedFloat32Array()
-	magnitudes.resize(audio_data.size() / 2)
-	for i in range(audio_data.size() / 2):
-		magnitudes[i] = complex_data[i].length()
+	
+	@warning_ignore("integer_division")
+	var half_size: int = audio_data.size() / 2
+	
+	magnitudes.resize(half_size)
+	for i in range(half_size):
+		var c: ComplexNum = complex_data[i]
+		magnitudes[i] = sqrt(c.re * c.re + c.im * c.im)
 
 	return magnitudes
-
-func _fft(data: Array) -> void:
-	var N: int = data.size()
-	if N <= 1:
-		return
-
-	var even: Array[Vector2] = []
-	var odd: Array[Vector2] = []
-	even.resize(N / 2)
-	odd.resize(N / 2)
-
-	for i in range(N / 2):
-		even[i] = data[2 * i]
-		odd[i] = data[2 * i + 1]
-
-	_fft(even)
-	_fft(odd)
-
-	for i in range(N / 2):
-		var angle: float = -2.0 * PI * float(i) / float(N)
-		var tw := Vector2(cos(angle), sin(angle))
-		# Complex multiply: tw * odd[i]
-		var t := Vector2(
-			tw.x * odd[i].x - tw.y * odd[i].y,
-			tw.x * odd[i].y + tw.y * odd[i].x
-		)
-		data[i] = even[i] + t
-		data[i + N / 2] = even[i] - t
 
 func _get_peak_frequency(frequency_spectrum: PackedFloat32Array) -> float:
 	var peak_index: int = 0

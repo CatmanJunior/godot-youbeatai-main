@@ -29,7 +29,7 @@ signal clap_triggered()
 signal stomp_triggered()
 
 # ── Layers ──
-signal layer_changed(layer_index: int)
+signal layer_changed(layer_index: int, beat_actives: Array)
 signal layer_added(layer_index: int, emoji: String)
 signal layer_removed(layer_index: int)
 signal layer_cleared()
@@ -63,13 +63,14 @@ signal interface_visibility_changed(visible: bool)
 signal buttons_disabled_changed(disabled: bool)
 signal copy_requested()
 signal paste_requested()
-signal clear_requested()
+signal layer_clear_requested()
 
 # ── Recording ──
 signal recording_started()
 signal recording_stopped(audio: AudioStream)
 signal master_recording_started()
 signal master_recording_stopped()
+signal microphone_data_updated(volume: float, frequency: float)
 
 # ── Saving / Loading ──
 signal save_requested()

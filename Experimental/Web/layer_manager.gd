@@ -28,14 +28,10 @@ var song_mode_back_panel: ProgressBar
 # Color palette
 var colors: Array[Color] = []
 
-# Signals
-signal layer_switched(layer: int)
-signal layer_added_local(layer: int)
-signal layer_removed_local(layer: int)
-signal layer_cleared
-
-# References — only for UI elements that live in the scene tree
 var beats_amount: int = 16
+
+# Clipboard for copy/paste
+var clipboard_beat_actives: Array = []
 
 func _ready() -> void:
 	layer_button_prefab = %UiManager.layer_button_prefab
@@ -44,10 +40,11 @@ func _ready() -> void:
 	song_mode_back_panel = %UiManager.real_time_audio_recording_progress_bar
 	
 	# Connect to EventBus
-	# EventBus.copy_requested.connect(copy_layer)
-	# EventBus.paste_requested.connect(paste_layer)
-	EventBus.clear_requested.connect(func(): clear_layer(current_layer_index))
-	EventBus.layer_added.connect(func(idx, emoji): add_layer(idx, emoji))
+	EventBus.copy_requested.connect(copy_layer)
+	EventBus.paste_requested.connect(paste_layer)
+	EventBus.layer_clear_requested.connect(clear_layer)
+
+	spawn_initial_layer_buttons()
 
 
 func spawn_initial_layer_buttons():
@@ -60,7 +57,10 @@ func add_layer(layer: int, emoji: String = ""):
 	"""Add a new layer at the specified index"""
 	if layers_amount == LAYERS_AMOUNT_MAX:
 		return
-	
+
+	# Insert silence into active recordings for the new layer
+	_insert_silence_for_layer(layer)
+
 	layers_amount += 1
 	new_layer_button(layer, emoji)
 	
@@ -77,7 +77,7 @@ func add_layer(layer: int, emoji: String = ""):
 	layers_voice_overs_1.insert(layer, null)
 	
 	# Notify other managers about new layer via EventBus
-	layer_added_local.emit(layer)
+	EventBus.layer_added.emit(layer, emoji)
 	
 	sort_layer_buttons_in_container()
 	update_layer_buttons_user_interface()
@@ -87,7 +87,10 @@ func remove_layer(layer: int):
 	"""Remove a layer at the specified index"""
 	if layers_amount <= 1:
 		return
-	
+
+	# Remove the layer's audio segment from active recordings
+	_remove_audio_for_layer(layer)
+
 	remove_layer_button(layer)
 	await get_tree().process_frame
 	
@@ -96,8 +99,8 @@ func remove_layer(layer: int):
 	layers_voice_overs_1.remove_at(layer)
 	
 	# Notify other managers about removed layer
-	layer_removed_local.emit(layer)
 	EventBus.layer_removed.emit(layer)
+
 	layers_amount -= 1
 	
 	# If the deleted layer was the current one, go to first layer
@@ -137,8 +140,38 @@ func remove_layer_button(layer: int):
 	layer_buttons.erase(button_to_remove)
 
 
-func clear_layer(layer: int):
+func copy_layer():
+	"""Copy the current layer's beat actives to the clipboard"""
+	var layer = current_layer_index
+	if layer < 0 or layer >= layers_beat_actives.size():
+		return
+	
+	clipboard_beat_actives = []
+	for ring in range(4):
+		var ring_beats = []
+		for beat in range(beats_amount):
+			ring_beats.append(layers_beat_actives[layer][ring][beat])
+		clipboard_beat_actives.append(ring_beats)
+
+func paste_layer():
+	"""Paste the clipboard's beat actives into the current layer"""
+	if clipboard_beat_actives.is_empty():
+		return
+	
+	var layer = current_layer_index
+	if layer < 0 or layer >= layers_beat_actives.size():
+		return
+	
+	for ring in range(4):
+		for beat in range(beats_amount):
+			layers_beat_actives[layer][ring][beat] = clipboard_beat_actives[ring][beat]
+	
+	EventBus.layer_changed.emit(current_layer_index, get_current_layer())
+	update_layer_buttons_user_interface()
+
+func clear_layer():
 	"""Clear all beats from a layer"""
+	var layer = current_layer_index
 	if layer < 0 or layer >= layers_beat_actives.size():
 		return
 	
@@ -146,7 +179,7 @@ func clear_layer(layer: int):
 		for beat in range(beats_amount):
 			layers_beat_actives[layer][ring][beat] = false
 	
-	layer_cleared.emit()
+	EventBus.layer_cleared.emit()
 
 func sort_layer_buttons_in_container():
 	"""Sort layer buttons in the container based on their index"""
@@ -194,19 +227,17 @@ func update_layer_buttons_user_interface_delayed():
 func switch_layer(layer_index: int, save_layer_first: bool = true):
 	"""Switch to a different layer"""
 	# Save current layer first if needed
+	print("Switching to layer " + str(layer_index) + ", save current layer first: " + str(save_layer_first))
 	if save_layer_first:
-		set_current_layer(get_beat_actives_from_game())
-	
-	# Notify mixing manager to store knob via EventBus
-	# (MixingManager listens to layer_changed and handles its own state)
+		set_current_layer(%BeatManager.beat_actives)
 	
 	# Switch to new layer
 	current_layer_index = layer_index
-	var new_beat_actives = get_current_layer()
-	apply_beat_actives_to_game(new_beat_actives)
 	
-	layer_switched.emit(current_layer_index)
-	EventBus.layer_changed.emit(current_layer_index)
+	var new_beat_actives = get_current_layer()
+	
+	EventBus.layer_changed.emit(current_layer_index, new_beat_actives)
+	
 	update_layer_buttons_user_interface()
 
 func switch_layer_next_frame(layer_index: int, save_layer_first: bool = true):
@@ -223,37 +254,76 @@ func next_layer():
 
 func get_current_layer() -> Array:
 	"""Get the beat actives for the current layer"""
-	if current_layer_index < layers_beat_actives.size():
-		return layers_beat_actives[current_layer_index]
-	return []
+	return layers_beat_actives[current_layer_index]
 
 func set_current_layer(value: Array):
 	"""Set the beat actives for the current layer"""
 	if current_layer_index < layers_beat_actives.size():
 		layers_beat_actives[current_layer_index] = value
 
-func layer_has_beats(layer: Array) -> bool:
+func layer_has_beats(layer: int) -> bool:
 	"""Check if a layer has any active beats"""
+	if layer < 0 or layer >= layers_beat_actives.size():
+		return false
+	var layer_beats = layers_beat_actives[layer]
 	for ring in range(4):
-		if ring < layer.size():
-			for beat in range(layer[ring].size()):
-				if layer[ring][beat]:
-					return true
+		for beat in range(beats_amount):
+			if layer_beats[ring][beat]:
+				return true
 	return false
 
-func on_beat():
-	"""Handle beat event for the current layer"""
-	# Called each beat from the game manager
-	# The current layer's beat actives are already managed by the layer system
-	pass
 
-# These methods need to be connected to the actual game logic
-func get_beat_actives_from_game() -> Array:
-	"""Get the current beat actives from the game (to be implemented)"""
-	# This should get the actual beat actives from the game manager
-	return get_current_layer()
+# ── Audio recording manipulation when layers change ──────────────────────────
 
-func apply_beat_actives_to_game(beat_actives: Array):
-	"""Apply beat actives to the game (to be implemented)"""
-	# This should apply the beat actives to the game manager
-	pass
+func _insert_silence_for_layer(layer: int) -> void:
+	var song_vo = get_node_or_null("%SongVoiceOver")
+	if song_vo == null or song_vo.voice_over == null:
+		return # No active recording, nothing to do
+
+	var rec_node = get_node_or_null("%RealTimeAudioRecording")
+	var bpm_node = get_node_or_null("%BpmManager")
+	if rec_node == null or bpm_node == null:
+		return
+
+	var result := AudioSavingManager.insert_silent_layer_part_of_recordings(
+		rec_node.recording_result, song_vo.voice_over,
+		layer, bpm_node.beats_amount, bpm_node.base_time_per_beat)
+
+	if result.recording:
+		rec_node.recording_result = result.recording
+		rec_node.recording_length = float(result.recording.get_length())
+	if result.voice_over:
+		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
+		song_vo.voice_over = result.voice_over
+		if song_vo.audio_player:
+			song_vo.audio_player.stream = song_vo.voice_over
+			if was_playing:
+				song_vo.audio_player.play()
+		song_vo.recording_length = float(result.voice_over.get_length())
+
+
+func _remove_audio_for_layer(layer: int) -> void:
+	var song_vo = get_node_or_null("%SongVoiceOver")
+	if song_vo == null or song_vo.voice_over == null:
+		return
+
+	var rec_node = get_node_or_null("%RealTimeAudioRecording")
+	var bpm_node = get_node_or_null("%BpmManager")
+	if rec_node == null or bpm_node == null:
+		return
+
+	var result := AudioSavingManager.remove_layer_part_of_recordings(
+		rec_node.recording_result, song_vo.voice_over,
+		layer, bpm_node.beats_amount, bpm_node.base_time_per_beat)
+
+	if result.recording:
+		rec_node.recording_result = result.recording
+		rec_node.recording_length = float(result.recording.get_length())
+	if result.voice_over:
+		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
+		song_vo.voice_over = result.voice_over
+		if song_vo.audio_player:
+			song_vo.audio_player.stream = song_vo.voice_over
+			if was_playing:
+				song_vo.audio_player.play()
+		song_vo.recording_length = float(result.voice_over.get_length())

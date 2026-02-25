@@ -3,19 +3,14 @@ extends Node
 
 var time: float = 0.0
 
-signal on_utterance_end(utterance_id: int)
-
 func _exit_tree():
 	# $Achievements.reset()
 	pass
 
 func _ready():
 	# Setup
-	%"LayerManager".spawn_initial_layer_buttons()
-	# Beat events now flow through EventBus (BpmManager -> EventBus.beat_triggered)
-	# Managers connect to EventBus.beat_triggered in their own _ready()
 	read_json_from_previous_scene_and_set_values()
-	%AudioPlayerManager.init_all_audio_players()
+
 
 	call_deferred("deferred_setup")
 	
@@ -30,7 +25,6 @@ func deferred_setup():
 	%UiManager.update_layer_buttons_delayed()
 
 func utterance_end(utterance_id: int):
-	on_utterance_end.emit(utterance_id)
 	EventBus.utterance_ended.emit(utterance_id)
 
 func _process(delta: float):

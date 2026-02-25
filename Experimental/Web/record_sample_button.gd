@@ -14,7 +14,6 @@ var inside: bool:
 
 func _input(event: InputEvent):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-
 		if not event.pressed and inside and down:
 			pressing = !pressing
 			if pressing:
@@ -29,6 +28,7 @@ func _input(event: InputEvent):
 			down = true
 		else:
 			down = false
+			
 func _stop_recording():
 	var fill: TextureProgressBar = get_child(0) as TextureProgressBar
 	fill.value = 0

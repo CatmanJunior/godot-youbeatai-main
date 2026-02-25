@@ -129,23 +129,18 @@ func _on_record_button_pressed():
 	"""Handle record button press"""
 	if not recording and not should_record:
 		# Start recording session
-		if game_manager:
-			game_manager.layer_loop_toggle.button_pressed = false
+		%UiManager.layer_loop_toggle.button_pressed = false
 		
 		should_record = true
 		
 		# Disable buttons during recording
-		if bpm_up_button:
-			bpm_up_button.disabled = true
-		if bpm_down_button:
-			bpm_down_button.disabled = true
-		if game_manager:
-			game_manager.set_layer_switch_buttons_enabled(false)
-			game_manager.play_pause_button.disabled = true
-			if game_manager.has_method("show_count_down"):
-				game_manager.show_count_down()
-		if song_voice_over:
-			song_voice_over.record_song_button.disabled = true
+		# bpm_up_button.disabled = true
+		# bpm_down_button.disabled = true
+		# game_manager.set_layer_switch_buttons_enabled(false)
+		# game_manager.play_pause_button.disabled = true
+
+		game_manager.show_count_down()
+		# song_voice_over.record_song_button.disabled = true
 		
 		# Enable metronome and start playback
 		if game_manager:

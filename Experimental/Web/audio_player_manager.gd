@@ -1,4 +1,5 @@
 extends Node
+# Audio Player Manager — manages audio players for rings and sound effects, and handles audio-related events.
 
 # Audio Stream Players for 4 rings (main, alt, recorded)
 var audio_players: Array[AudioStreamPlayer2D] = []
@@ -85,14 +86,6 @@ func set_rec_stream(ring: int, stream: AudioStream):
 	"""Set the recorded audio stream for a ring"""
 	if ring >= 0 and ring < audio_players_rec.size():
 		audio_players_rec[ring].stream = stream
-
-# NOTE: on_beat is no longer connected — beat playing is now handled by
-# BeatManager -> EventBus.play_ring_requested -> play_ring()
-# Kept only if something reconnects it directly.
-func on_beat(beat: int):
-	for ring in range(4):
-		# Would need BeatManager reference — prefer using EventBus flow instead
-		pass
 
 func get_ring_volume(ring: int) -> float:
 	"""Get the volume for a specific ring bus"""

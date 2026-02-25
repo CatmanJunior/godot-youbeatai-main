@@ -59,7 +59,7 @@ func _ready():
 	
 	on_ready_mixing()
 
-func _on_layer_changed(layer_index: int):
+func _on_layer_changed(layer_index: int, _new_layer_beats: Array):
 	"""Store current knob, switch layer, retrieve new knob"""
 	# Store current knob position
 	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
@@ -343,7 +343,7 @@ func get_standard_knob_positions_synth() -> Array[Vector2]:
 	var centered_pos = chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
 	return [centered_pos, centered_pos]
 
-func on_update_mixing(mixingWeights: Vector3, master_volume: float):
+func on_update_mixing(master_volume: float, mixingWeights: Vector3):
 	"""Called every frame to update mixing state"""
 	if not knob:
 		return

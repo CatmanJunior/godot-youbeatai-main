@@ -46,6 +46,12 @@ func _ready():
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.clap_triggered.connect(on_clap)
 	EventBus.stomp_triggered.connect(on_stomp)
+	EventBus.layer_changed.connect(_on_layer_changed)
+
+func _on_layer_changed(_new_layer_index: int, new_layer_beats: Array):
+	"""Handle layer change via EventBus"""
+	# Update beat_actives to match the new layer's beats
+	beat_actives = new_layer_beats
 
 func _on_beat_sprite_clicked(p_ring: int, beat: int):
 	"""Handle beat sprite click via EventBus"""

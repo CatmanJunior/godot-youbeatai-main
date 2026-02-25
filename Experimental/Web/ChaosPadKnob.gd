@@ -1,9 +1,9 @@
 extends Sprite2D
 
-signal on_mouse_up(master_volume :float , weights :Vector3)
-signal on_dragging(position: Vector2)
+signal on_mouse_up(master_volume: float, weights: Vector3)
 
-var corners: Array[Node2D] = []  # left, top, right
+
+var corners: Array[Node2D] = [] # left, top, right
 var outer_triangle_size: float = 60.0
 
 
@@ -12,29 +12,18 @@ var drag_offset: Vector2 = Vector2.ZERO
 
 var ui_manager: Node
 var mixing_manager: Node
+var setting_panel: Panel
 
 func _ready():
 	ui_manager = get_node("/root/scene/Managers/UiManager")
 	mixing_manager = get_node("/root/scene/Managers/GameManager/MixingManager")
+	setting_panel = get_node("/root/scene/UserInterface/SettingsPanel")
 	corners = ui_manager.corners
 
 
 func _input(input_event: InputEvent) -> void:
-	if input_event is InputEventMouseButton:
-		var mouse_button_event = input_event as InputEventMouseButton
-		if mouse_button_event.button_index == MOUSE_BUTTON_LEFT:
-			var chaospad_opaque = ui_manager.chaos_pad_triangle_sprite.is_pixel_opaque(ui_manager.chaos_pad_triangle_sprite.get_local_mouse_position())
-			var knob_opaque = is_pixel_opaque(get_local_mouse_position())
-			if mouse_button_event.pressed:
-				if knob_opaque or chaospad_opaque:
-					dragging = true
-					drag_offset = global_position - mouse_button_event.position
-			else:
-				dragging = false
-				if knob_opaque or chaospad_opaque:
-					var result = get_weights_for_position()
-					on_mouse_up.emit(result.master_volume, result.weights)
-					EventBus.mixing_weights_changed.emit(result.master_volume, result.weights)
+	if setting_panel.visible:
+		return
 	
 	if input_event is InputEventMouseMotion and dragging:
 		var mouse_motion_event = input_event as InputEventMouseMotion
@@ -44,7 +33,25 @@ func _input(input_event: InputEvent) -> void:
 		#set position
 		global_position = pos
 
-		on_dragging.emit(pos)
+	if input_event is not InputEventMouseButton:
+		return
+	
+	var mouse_button_event = input_event as InputEventMouseButton
+	if mouse_button_event.button_index != MOUSE_BUTTON_LEFT:
+		return
+
+	var chaospad_opaque = ui_manager.chaos_pad_triangle_sprite.is_pixel_opaque(ui_manager.chaos_pad_triangle_sprite.get_local_mouse_position())
+	var knob_opaque = is_pixel_opaque(get_local_mouse_position())
+	if mouse_button_event.pressed:
+		if knob_opaque or chaospad_opaque:
+			dragging = true
+			drag_offset = global_position - mouse_button_event.position
+	else:
+		dragging = false
+		if knob_opaque or chaospad_opaque:
+			var result = get_weights_for_position()
+			EventBus.mixing_weights_changed.emit(result.master_volume, result.weights)
+
 
 func new_position(knobPosition: Vector2) -> Vector2:
 	# triangle edges
@@ -103,9 +110,9 @@ func get_weights_for_position() -> Dictionary:
 	"""Calculate weights based on knob position in triangle"""
 	
 	# Get triangle corners
-	var p1 = corners[0].global_position  # left
-	var p2 = corners[1].global_position  # top
-	var p3 = corners[2].global_position  # right
+	var p1 = corners[0].global_position # left
+	var p2 = corners[1].global_position # top
+	var p3 = corners[2].global_position # right
 	
 	# Calculate barycentric coordinates using the area method
 	var area_total = sign_area(p1, p2, p3)

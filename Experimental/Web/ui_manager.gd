@@ -4,11 +4,12 @@ extends Node
 @export var layer_button_prefab: PackedScene
 @export var layer_buttons_container: HBoxContainer
 @export var add_layer_button: Button
+@export var clear_layer_button: Button
+@export var save_layer_button: Button
+@export var remove_layer_button: Button
+@export var load_layer_button: Button
 
-# Left buttons
-@export var save_layout_button: Button
-@export var load_layout_button: Button
-@export var clear_layout_button: Button
+
 @export var play_pause_button: Button
 @export var bpm_up_button: Button
 @export var bpm_down_button: Button
@@ -124,6 +125,8 @@ func _ready():
 
 	layer_manager = %LayerManager
 
+	EventBus.layer_changed.connect(_on_switch_layer)
+
 	init_button_actions()
 	initialize_sprite_positions()
 	
@@ -157,7 +160,7 @@ func init_button_actions():
 	# Emoji buttons
 	for button in emoji_buttons:
 		button.button_up.connect(func():
-			var current_layer_index = 0 # Get from layer manager
+			var current_layer_index = layer_manager.current_layer_index
 			add_layer(current_layer_index + 1, button.text)
 			close_emoji_prompt()
 			added_layer = true
@@ -168,38 +171,38 @@ func init_button_actions():
 	
 	# Save/export buttons
 	all_layers_to_mp3.button_up.connect(func():
-		#TODO: Export all layers to mp3
+		_export_song_wav()
 		settings_panel.visible = false
 	)
 	
 	save_to_wav_button.pressed.connect(func():
-		#TODO: Open save to wav prompt
+		_export_beat_wav()
 		settings_panel.visible = false
 	)
 	
 	mute_speach.pressed.connect(DisplayServer.tts_stop)
 	
-	# Layout buttons
-	save_layout_button.pressed.connect(func():
-		copy_layer()
-		play_extra_sfx()
+	load_layer_button.pressed.connect(func():
+		_paste_layer()
+		_play_extra_sfx()
+	)
+
+	# Layer buttons
+	save_layer_button.pressed.connect(func():
+		_copy_layer()
+		_play_extra_sfx()
 	)
 	
-	load_layout_button.pressed.connect(func():
-		paste_layer()
-		play_extra_sfx()
-	)
-	
-	clear_layout_button.pressed.connect(func():
+	clear_layer_button.pressed.connect(func():
 		# Open confirmation prompt
-		clear_layer()
-		play_extra_sfx()
+		_clear_layer()
+		_play_extra_sfx()
 	)
 	
 	# Add layer button
 	add_layer_button.button_up.connect(func():
 		open_emoji_prompt()
-		play_extra_sfx()
+		_play_extra_sfx()
 		
 		if not pressed_add_layer_once:
 			# Show tooltip
@@ -391,7 +394,7 @@ func _update_copy_paste_buttons(delta: float):
 func update_layer_switch_buttons_colors():
 	# Get layer buttons from layer manager
 	var layer_buttons = []
-	layer_buttons = layer_manager.get_layer_buttons()
+	layer_buttons = layer_manager.layer_buttons
 	
 	for i in range(layer_buttons.size()):
 		var button = layer_buttons[i]
@@ -409,12 +412,43 @@ func _update_interface_state():
 		achievements_panel.visible = false
 		interface_set_to_default_state = true
 
+func show_saving_label(path: String) -> void:
+	if saving_label:
+		saving_label.text = "Saved to: " + path.get_file()
+		saving_label_active = true
+		saving_label_timer = 0.0
+
 func _update_saving_label(delta: float):
 	if saving_label_active and saving_label_timer < 4:
 		saving_label_timer += delta
 	else:
 		saving_label_active = false
 	saving_label.visible = saving_label_active
+
+# ── Audio export helpers ──────────────────────────────────────────────────────
+
+func _export_song_wav() -> void:
+	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
+	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
+	var bpm: int = %BpmManager.bpm
+
+	var path: String = AudioSavingManager.save_realtime_recorded_song_as_file(
+		recording, voice_over, bpm)
+	if path != "":
+		show_saving_label(path)
+
+func _export_beat_wav() -> void:
+	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
+	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
+	var bpm: int = %BpmManager.bpm
+	var layer_index: int = %LayerManager.current_layer_index
+	var beats_amount: int = %BpmManager.beats_amount
+	var base_time_per_beat: float = %BpmManager.base_time_per_beat
+
+	var path: String = AudioSavingManager.save_realtime_recorded_beat_as_file(
+		recording, voice_over, bpm, layer_index, beats_amount, base_time_per_beat)
+	if path != "":
+		show_saving_label(path)
 
 func _update_play_pause_button():
 	play_pause_button.text = "⏸️" if %BpmManager.playing else "▶️"
@@ -553,24 +587,42 @@ func close_emoji_prompt():
 	# Hide emoji selection prompt
 	pass
 
-func copy_layer():
+func _copy_layer():
 	# Save current layer state via EventBus
 	EventBus.copy_requested.emit()
 
-func paste_layer():
+func _paste_layer():
 	# Restore saved layer state via EventBus
 	EventBus.paste_requested.emit()
 
-func clear_layer():
+func _clear_layer():
 	# Clear current layer via EventBus
-	EventBus.clear_requested.emit()
+	EventBus.layer_clear_requested.emit()
 
-func play_extra_sfx():
+func _play_extra_sfx():
 	# Play UI sound effect
 	pass
 
 
 #signal handlers
+func _on_switch_layer(_layer_index: int, _new_layer_beats: Array):
+	update_layer_switch_buttons_colors()
+	set_copy_paste_clear_buttons_active(true)
+	print("Layer switched to index: " + str(_layer_index))
+	# Reset beat sprite scales so the new layer's visuals refresh immediately
+	var beats_amount = %BpmManager.beats_amount
+	for ring in range(min(4, beat_sprites.size())):
+		for beat in range(min(beats_amount, beat_sprites[ring].size())):
+			var sprite = beat_sprites[ring][beat] as Sprite2D
+			var scale_factor = 1.0
+			if beats_amount == 32:
+				scale_factor = beat_scale_32
+			elif beats_amount == 16:
+				scale_factor = beat_scale_16
+			elif beats_amount == 8:
+				scale_factor = beat_scale_8
+			sprite.scale = Vector2.ONE * scale_factor * global_beat_sprite_scale_factor
+
 func _on_restart_button():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
 	

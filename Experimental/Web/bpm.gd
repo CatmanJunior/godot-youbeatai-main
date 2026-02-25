@@ -3,7 +3,7 @@ extends Node
 @export var bpm: int = 120:
 	set(value):
 		bpm = value
-		on_bpm_changed.emit(bpm)
+		EventBus.bpm_changed.emit(bpm)
 
 static var beats_amount: int = 16
 
@@ -16,7 +16,7 @@ var _playing: bool = false
 @export var playing: bool:
 	set(value):
 		if _playing != value:
-			on_playing_changed.emit(value)
+			EventBus.playing_changed.emit(value)
 		_playing = value
 	get:
 		return _playing
@@ -29,13 +29,12 @@ var beat_timer: float = 0.0
 var base_time_per_beat: float
 var time_per_beat: float
 
-#----------------- Signals -----------------------
-signal on_beat_event(beat: int)
-signal on_bpm_changed(bpm: float)
-signal on_playing_changed(playing: bool)
-
 func _ready():
-	pass
+	EventBus.bpm_up_requested.connect(func(value): bpm += value)
+	EventBus.bpm_down_requested.connect(func(value): bpm -= value)
+	EventBus.bpm_set_requested.connect(func(value): bpm = value)
+	EventBus.play_pause_toggled.connect(func(): playing = !playing)
+	
 
 func _process(delta: float):
 	if playing:
@@ -47,4 +46,4 @@ func _process(delta: float):
 		if beat_timer > time_per_beat:
 			beat_timer -= time_per_beat
 			current_beat = (current_beat + 1) % beats_amount
-			on_beat_event.emit(current_beat)
+			EventBus.beat_triggered.emit(current_beat)

@@ -30,14 +30,11 @@ var colors: Array[Color] = []
 
 # Signals
 signal layer_switched(layer: int)
-signal layer_added(layer: int)
-signal layer_removed(layer: int)
+signal layer_added_local(layer: int)
+signal layer_removed_local(layer: int)
 signal layer_cleared
-signal layer_copied(layer: int)
-signal layer_pasted(layer: int)
 
-# References to other managers
-var mixing_manager: Node
+# References — only for UI elements that live in the scene tree
 var beats_amount: int = 16
 
 func _ready() -> void:
@@ -45,6 +42,12 @@ func _ready() -> void:
 	layer_buttons_container = %UiManager.layer_buttons_container
 	layer_outline_holder = %UiManager.layer_outline_holder
 	song_mode_back_panel = %UiManager.real_time_audio_recording_progress_bar
+	
+	# Connect to EventBus
+	# EventBus.copy_requested.connect(copy_layer)
+	# EventBus.paste_requested.connect(paste_layer)
+	EventBus.clear_requested.connect(func(): clear_layer(current_layer_index))
+	EventBus.layer_added.connect(func(idx, emoji): add_layer(idx, emoji))
 
 
 func spawn_initial_layer_buttons():
@@ -73,12 +76,8 @@ func add_layer(layer: int, emoji: String = ""):
 	layers_voice_overs_0.insert(layer, null)
 	layers_voice_overs_1.insert(layer, null)
 	
-	# Insert knob positions in mixing manager
-	if mixing_manager:
-		mixing_manager.samples_mixing_knob_positions.insert(layer, mixing_manager.get_standard_knob_positions_samples())
-		mixing_manager.synth_mixing_knob_positions.insert(layer, mixing_manager.get_standard_knob_positions_synth())
-	
-	layer_added.emit(layer)
+	# Notify other managers about new layer via EventBus
+	layer_added_local.emit(layer)
 	
 	sort_layer_buttons_in_container()
 	update_layer_buttons_user_interface()
@@ -96,11 +95,9 @@ func remove_layer(layer: int):
 	layers_voice_overs_0.remove_at(layer)
 	layers_voice_overs_1.remove_at(layer)
 	
-	if mixing_manager:
-		mixing_manager.samples_mixing_knob_positions.remove_at(layer)
-		mixing_manager.synth_mixing_knob_positions.remove_at(layer)
-	
-	layer_removed.emit(layer)
+	# Notify other managers about removed layer
+	layer_removed_local.emit(layer)
+	EventBus.layer_removed.emit(layer)
 	layers_amount -= 1
 	
 	# If the deleted layer was the current one, go to first layer
@@ -199,32 +196,17 @@ func switch_layer(layer_index: int, save_layer_first: bool = true):
 	# Save current layer first if needed
 	if save_layer_first:
 		set_current_layer(get_beat_actives_from_game())
-		
-		if mixing_manager:
-			var mode = mixing_manager.chaos_pad_mode
-			if mode == mixing_manager.ChaosPadMode.SAMPLE_MIXING:
-				mixing_manager.samples_mixing_store_active_knob()
-			elif mode == mixing_manager.ChaosPadMode.SYNTH_MIXING:
-				mixing_manager.synth_mixing_store_active_knob()
-			elif mode == mixing_manager.ChaosPadMode.SONG_MIXING:
-				mixing_manager.song_mixing_store_active_knob()
+	
+	# Notify mixing manager to store knob via EventBus
+	# (MixingManager listens to layer_changed and handles its own state)
 	
 	# Switch to new layer
 	current_layer_index = layer_index
 	var new_beat_actives = get_current_layer()
 	apply_beat_actives_to_game(new_beat_actives)
 	
-	# Retrieve knob positions for new layer
-	if mixing_manager:
-		var mode = mixing_manager.chaos_pad_mode
-		if mode == mixing_manager.ChaosPadMode.SAMPLE_MIXING:
-			mixing_manager.samples_mixing_retrieve_active_knob()
-		elif mode == mixing_manager.ChaosPadMode.SYNTH_MIXING:
-			mixing_manager.synth_mixing_retrieve_active_knob()
-		elif mode == mixing_manager.ChaosPadMode.SONG_MIXING:
-			mixing_manager.song_mixing_retrieve_active_knob()
-	
 	layer_switched.emit(current_layer_index)
+	EventBus.layer_changed.emit(current_layer_index)
 	update_layer_buttons_user_interface()
 
 func switch_layer_next_frame(layer_index: int, save_layer_first: bool = true):

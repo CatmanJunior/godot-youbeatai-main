@@ -22,6 +22,12 @@ var achievement_particles_time: float = 0.0
 var achievement_particles_curtime: float = 0.0
 var achievement_particles_emitting: bool = false
 
+func _ready():
+	# Connect to EventBus so other scripts don't need a direct reference
+	EventBus.particles_requested.connect(emit_beat_particles)
+	EventBus.progress_bar_particles_requested.connect(emit_progress_bar_particles)
+	EventBus.achievement_particles_requested.connect(emit_achievement_particles)
+
 func handle_particles(delta: float):
 	"""Update all particle systems"""
 	_handle_beat_particles(delta)

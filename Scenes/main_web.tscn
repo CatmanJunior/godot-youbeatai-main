@@ -60,7 +60,6 @@
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="49_dll78"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_662co"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="51_3b1sv"]
-[ext_resource type="Script" uid="uid://dgwusorhvls4u" path="res://Scripts/TemplateManager.cs" id="52_dmqqp"]
 [ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="53_txw87"]
 [ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="54_wssgk"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="57_7pcuk"]
@@ -72,6 +71,7 @@
 [ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Experimental/Web/colors.gd" id="61_p5fwe"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="62_koofn"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="63_0ayl2"]
+[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Experimental/Web/template_manager.gd" id="64_hxd57"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
 [ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Experimental/Web/layer_voice_over.gd" id="66_pyso5"]
 [ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Experimental/Web/real_time_audio_recording.gd" id="67_hxd57"]
@@ -726,7 +726,7 @@ script = ExtResource("25_scmae")
 unique_name_in_owner = true
 script = ExtResource("9_3e1b8")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "save_layout_button", "load_layout_button", "clear_layout_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "draganddrop_button0", "draganddrop_button1", "draganddrop_button2", "draganddrop_button3", "record_sample_button0", "record_sample_button1", "record_sample_button2", "record_sample_button3", "corners", "chaos_pad_triangle_sprite", "nodes_that_can_be_unlocked", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "save_layout_button", "load_layout_button", "clear_layout_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "instrument_buttons", "record_sample_button0", "record_sample_button1", "record_sample_button2", "record_sample_button3", "corners", "chaos_pad_triangle_sprite", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
 unique_name_in_owner = true
 script = ExtResource("26_scmae")
 layer_button_prefab = ExtResource("27_p4tck")
@@ -739,17 +739,13 @@ play_pause_button = NodePath("../../BeatRingPivotPoint/PlayPauseButtonHolder/Pla
 bpm_up_button = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
 bpm_down_button = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 song_select_button = NodePath("../../UserInterface/Buttons/SongSelectButtonSprite/SongSelectButton")
-draganddrop_button0 = NodePath("../../UserInterface/Buttons/DragAndDropButton0")
-draganddrop_button1 = NodePath("../../UserInterface/Buttons/DragAndDropButton1")
-draganddrop_button2 = NodePath("../../UserInterface/Buttons/DragAndDropButton2")
-draganddrop_button3 = NodePath("../../UserInterface/Buttons/DragAndDropButton3")
+instrument_buttons = [NodePath("../../UserInterface/Buttons/InstrumentButton0"), NodePath("../../UserInterface/Buttons/InstrumentButton1"), NodePath("../../UserInterface/Buttons/InstrumentButton2"), NodePath("../../UserInterface/Buttons/InstrumentButton3")]
 record_sample_button0 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0")
 record_sample_button1 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1")
 record_sample_button2 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2")
 record_sample_button3 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3")
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 chaos_pad_triangle_sprite = NodePath("../../UserInterface/ChaosPad/Triangle")
-nodes_that_can_be_unlocked = [null, null, null, null, null, null, null]
 restart_button = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
 mute_speach = NodePath("../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 save_to_wav_button = NodePath("../../UserInterface/SettingsPanel/Buttons/SaveToWavButton")
@@ -812,18 +808,20 @@ script = ExtResource("60_3jbv4")
 unique_name_in_owner = true
 script = ExtResource("61_p5fwe")
 colors = PackedColorArray(0.9019608, 0.29411766, 0.5568628, 1, 0.972549, 0.52156866, 0.17254902, 1, 0.2627451, 0.79607844, 0.5294118, 1, 0.011764706, 0.8235294, 0.93333334, 1, 1, 1, 0, 1, 0.516666, 0, 1, 1, 0.61960787, 0.6117647, 0.8980392, 1)
+metadata/_edit_pinned_properties_ = [&"colors"]
 
 [node name="MicrophoneCapture" type="Node" parent="Managers" unique_id=634715111]
 unique_name_in_owner = true
 script = ExtResource("51_3b1sv")
 
-[node name="TemplateManager" type="Node" parent="Managers" unique_id=612415882 node_paths=PackedStringArray("templateButton", "leftTemplateButton", "rightTemplateButton", "showTemplateButton", "setTemplateButton")]
-script = ExtResource("52_dmqqp")
-templateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton")
-leftTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/TemplateLeftButton")
-rightTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/TemplateRightButton")
-showTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/ShowTemplateButton")
-setTemplateButton = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/SetTemplateButton")
+[node name="TemplateManager" type="Node" parent="Managers" unique_id=612415882 node_paths=PackedStringArray("template_button", "left_template_button", "right_template_button", "show_template_button", "set_template_button")]
+unique_name_in_owner = true
+script = ExtResource("64_hxd57")
+template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton")
+left_template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/TemplateLeftButton")
+right_template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/TemplateRightButton")
+show_template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/ShowTemplateButton")
+set_template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/SetTemplateButton")
 
 [node name="ReverbDelayManager" type="Node" parent="Managers" unique_id=11349349 node_paths=PackedStringArray("reverbSlider", "delaySlider")]
 script = ExtResource("53_txw87")
@@ -1399,7 +1397,7 @@ z_index = -1
 scale = Vector2(1.7, 1.7)
 texture = ExtResource("49_dll78")
 
-[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" unique_id=1430746148 node_paths=PackedStringArray("button")]
+[node name="InstrumentButton0" type="Sprite2D" parent="UserInterface/Buttons" unique_id=1430746148 node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-554.91113, -77.53021)
 scale = Vector2(0.35, 0.35)
@@ -1407,7 +1405,7 @@ texture = ExtResource("22_irepe")
 script = ExtResource("77_3t1px")
 button = NodePath("Button0")
 
-[node name="Icon" type="Label" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=882232344]
+[node name="Icon" type="Label" parent="UserInterface/Buttons/InstrumentButton0" unique_id=882232344]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -1425,7 +1423,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Button0" type="Button" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=2114046322]
+[node name="Button0" type="Button" parent="UserInterface/Buttons/InstrumentButton0" unique_id=2114046322]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1442,18 +1440,18 @@ scale = Vector2(1.445, 1.445)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=216583544]
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton0" unique_id=216583544]
 z_index = -1
 scale = Vector2(2, 2)
 texture = ExtResource("40_e8hom")
 
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=1825896008]
+[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton0" unique_id=1825896008]
 self_modulate = Color(1, 1, 1, 0)
 z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/Buttons" unique_id=2057671434 node_paths=PackedStringArray("button")]
+[node name="InstrumentButton1" type="Sprite2D" parent="UserInterface/Buttons" unique_id=2057671434 node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-554.91113, -2.5301971)
 scale = Vector2(0.35, 0.35)
@@ -1462,7 +1460,7 @@ script = ExtResource("77_3t1px")
 ring = 1
 button = NodePath("Button1")
 
-[node name="Icon2" type="Label" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1892097510]
+[node name="Icon2" type="Label" parent="UserInterface/Buttons/InstrumentButton1" unique_id=1892097510]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -1480,7 +1478,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Button1" type="Button" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1269864039]
+[node name="Button1" type="Button" parent="UserInterface/Buttons/InstrumentButton1" unique_id=1269864039]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1497,18 +1495,18 @@ scale = Vector2(1.5353229, 1.5353229)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1785339428]
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton1" unique_id=1785339428]
 z_index = -1
 scale = Vector2(2, 2)
 texture = ExtResource("41_jrm6x")
 
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=974007946]
+[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton1" unique_id=974007946]
 self_modulate = Color(1, 1, 1, 0)
 z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/Buttons" unique_id=819907347 node_paths=PackedStringArray("button")]
+[node name="InstrumentButton2" type="Sprite2D" parent="UserInterface/Buttons" unique_id=819907347 node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-554.91113, 72.46979)
 scale = Vector2(0.35, 0.35)
@@ -1517,7 +1515,7 @@ script = ExtResource("77_3t1px")
 ring = 2
 button = NodePath("Button2")
 
-[node name="Icon3" type="Label" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=400101627]
+[node name="Icon3" type="Label" parent="UserInterface/Buttons/InstrumentButton2" unique_id=400101627]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -1535,7 +1533,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1700258079 instance=ExtResource("6_2qaqg")]
+[node name="Blocker" parent="UserInterface/Buttons/InstrumentButton2" unique_id=1700258079 instance=ExtResource("6_2qaqg")]
 visible = false
 offset_left = -591.0
 offset_right = -491.9316
@@ -1543,7 +1541,7 @@ offset_bottom = 53.06669
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
-[node name="Button2" type="Button" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=485947179]
+[node name="Button2" type="Button" parent="UserInterface/Buttons/InstrumentButton2" unique_id=485947179]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1560,19 +1558,19 @@ scale = Vector2(1.6205204, 1.6205204)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1436821717]
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton2" unique_id=1436821717]
 z_index = -1
 position = Vector2(0, 6.7202654)
 scale = Vector2(2, 2)
 texture = ExtResource("42_e22mk")
 
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=699803031]
+[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton2" unique_id=699803031]
 self_modulate = Color(1, 1, 1, 0)
 z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/Buttons" unique_id=1264262575 node_paths=PackedStringArray("button")]
+[node name="InstrumentButton3" type="Sprite2D" parent="UserInterface/Buttons" unique_id=1264262575 node_paths=PackedStringArray("button")]
 z_index = -4
 position = Vector2(-554.91113, 147.4698)
 scale = Vector2(0.35, 0.35)
@@ -1581,7 +1579,7 @@ script = ExtResource("77_3t1px")
 ring = 3
 button = NodePath("Button3")
 
-[node name="Icon4" type="Label" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1692699775]
+[node name="Icon4" type="Label" parent="UserInterface/Buttons/InstrumentButton3" unique_id=1692699775]
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
@@ -1599,7 +1597,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=761345688 instance=ExtResource("6_2qaqg")]
+[node name="Blocker" parent="UserInterface/Buttons/InstrumentButton3" unique_id=761345688 instance=ExtResource("6_2qaqg")]
 visible = false
 offset_left = -590.0
 offset_top = 60.999992
@@ -1608,7 +1606,7 @@ offset_bottom = 149.48396
 scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
-[node name="Button3" type="Button" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=137693653]
+[node name="Button3" type="Button" parent="UserInterface/Buttons/InstrumentButton3" unique_id=137693653]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
 anchor_left = 0.106461525
@@ -1625,13 +1623,13 @@ scale = Vector2(1.6409695, 1.6409695)
 focus_mode = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1914293939]
+[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton3" unique_id=1914293939]
 z_index = -1
 position = Vector2(2.2401123, -11.200439)
 scale = Vector2(2, 2)
 texture = ExtResource("43_b7kng")
 
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1993552059]
+[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/InstrumentButton3" unique_id=1993552059]
 self_modulate = Color(1, 1, 1, 0)
 z_index = -2
 scale = Vector2(2, 2)
@@ -2891,10 +2889,6 @@ position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("86_i7eoh")
 
-[connection signal="ring_0_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton0" method="_on_press"]
-[connection signal="ring_1_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton1" method="_on_press"]
-[connection signal="ring_2_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton2" method="_on_press"]
-[connection signal="ring_3_pressed" from="Managers/KeyboardInput" to="UserInterface/Buttons/DragAndDropButton3" method="_on_press"]
 [connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
 [connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="start_recording"]
 [connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton1" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
@@ -2903,10 +2897,10 @@ texture = ExtResource("86_i7eoh")
 [connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton2" to="Managers/GameManager/AudioRecorder" method="start_recording"]
 [connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton3" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
 [connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton3" to="Managers/GameManager/AudioRecorder" method="start_recording"]
-[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton0" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
-[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton1" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
-[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton2" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
-[connection signal="on_pressed" from="UserInterface/Buttons/DragAndDropButton3" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton0" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton1" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton2" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
+[connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton3" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_mouse_up" from="UserInterface/ChaosPad/Triangle/KnobSprite" to="Managers/GameManager/MixingManager" method="samples_mixing_update_volumes"]
 
 [editable path="Managers/LayerVoiceOver1/synth_line"]

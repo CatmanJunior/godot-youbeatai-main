@@ -27,6 +27,7 @@ driver/enable_input=true
 [autoload]
 
 FFT="*res://fft/Fft.gd"
+EventBus="*uid://bj8qgtrwxpsxm"
 
 [display]
 

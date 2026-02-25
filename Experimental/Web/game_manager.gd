@@ -12,15 +12,11 @@ func _exit_tree():
 func _ready():
 	# Setup
 	%"LayerManager".spawn_initial_layer_buttons()
-	%BpmManager.on_beat_event.connect(on_beat)
-	# $Tutorial.check_if_tutorial_was_chosen()
-	# $Achievements.check_if_achievements_mode_should_be_active()
+	# Beat events now flow through EventBus (BpmManager -> EventBus.beat_triggered)
+	# Managers connect to EventBus.beat_triggered in their own _ready()
 	read_json_from_previous_scene_and_set_values()
 	%AudioPlayerManager.init_all_audio_players()
-	%UiManager.init_button_actions()
-	%UiManager.sprite_placement()
-	# $Tutorial.setup_tutorial()
-	
+
 	call_deferred("deferred_setup")
 	
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
@@ -35,6 +31,7 @@ func deferred_setup():
 
 func utterance_end(utterance_id: int):
 	on_utterance_end.emit(utterance_id)
+	EventBus.utterance_ended.emit(utterance_id)
 
 func _process(delta: float):
 	time += delta
@@ -45,9 +42,9 @@ func _process(delta: float):
 	# $Tutorial.update_tutorial()
 	# $Achievements.on_update()
 
-func on_beat(_beat: int):
-	# %VisualEffects.on_beat()
-	%LayerManager.on_beat()
+# Beat events now flow through EventBus — no need for game_manager to forward them
+# func on_beat(_beat: int):
+# 	%LayerManager.on_beat()
 
 func tutorialActivated() -> bool:
 	# return $Tutorial.tutorial_activated

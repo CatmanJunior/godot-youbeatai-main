@@ -18,39 +18,31 @@ signal purple_synth_set(font: Resource, instrument: int)
 
 func _ready():
 	init_all_audio_players()
-	%BpmManager.on_beat_event.connect(on_beat)
+	# Connect to EventBus instead of direct manager references
+	EventBus.play_ring_requested.connect(play_ring)
+	EventBus.play_sfx_requested.connect(play_sfx)
+	EventBus.beat_triggered.connect(_on_beat_pitch_randomization)
 
 func init_all_audio_players():
 	# Create SFX player
 	sfx_player = AudioStreamPlayer2D.new()
 	add_child(sfx_player)
-	
-	# Create 4 main audio players
+
+	# Create 4 audio players for main, alt, and recorded streams
+	_create_audio_players(audio_players, main_audio_files)
+	_create_audio_players(audio_players_alt, alt_audio_files)
+	_create_audio_players(audio_players_rec, [])
+
+func _create_audio_players(players_array: Array[AudioStreamPlayer2D], audio_files: Array[AudioStream]):
+	"""Create 4 audio players for a ring and assign audio files"""
 	for i in range(4):
 		var player = AudioStreamPlayer2D.new()
 		player.bus = "Ring" + str(i)
 		add_child(player)
-		audio_players.append(player)
+		players_array.append(player)
 		
-		if i < main_audio_files.size():
-			player.stream = main_audio_files[i]
-	
-	# Create 4 alt audio players
-	for i in range(4):
-		var player = AudioStreamPlayer2D.new()
-		player.bus = "Ring" + str(i)
-		add_child(player)
-		audio_players_alt.append(player)
-		
-		if i < alt_audio_files.size():
-			player.stream = alt_audio_files[i]
-	
-	# Create 4 recorded audio players
-	for i in range(4):
-		var player = AudioStreamPlayer2D.new()
-		player.bus = "Ring" + str(i)
-		add_child(player)
-		audio_players_rec.append(player)
+		if i < audio_files.size():
+			player.stream = audio_files[i]
 
 func play_ring(ring: int):
 	"""Play audio for a specific ring based on beat actives"""
@@ -62,11 +54,22 @@ func play_ring(ring: int):
 	if audio_players_rec[ring].stream != null:
 		audio_players_rec[ring].play()
 
-func _play_sfx(stream: AudioStream):
+func play_sfx(stream: AudioStream):
 	"""Play a sound effect"""
 	if stream:
 		sfx_player.stream = stream
 		sfx_player.play()
+
+func _on_beat_pitch_randomization(_beat: int):
+	"""Apply random pitch variation for ring 3 on each beat"""
+	if audio_players.size() > 3:
+		var strength = 0.2
+		var pitch = 1.0 + (randf() - 0.5) * strength
+		audio_players[3].pitch_scale = pitch
+		if audio_players_alt.size() > 3:
+			audio_players_alt[3].pitch_scale = pitch
+		if audio_players_rec.size() > 3:
+			audio_players_rec[3].pitch_scale = pitch
 
 func set_main_stream(ring: int, stream: AudioStream):
 	"""Set the main audio stream for a ring"""
@@ -83,11 +86,13 @@ func set_rec_stream(ring: int, stream: AudioStream):
 	if ring >= 0 and ring < audio_players_rec.size():
 		audio_players_rec[ring].stream = stream
 
+# NOTE: on_beat is no longer connected — beat playing is now handled by
+# BeatManager -> EventBus.play_ring_requested -> play_ring()
+# Kept only if something reconnects it directly.
 func on_beat(beat: int):
-	"""Play audio for all active rings on beat"""
 	for ring in range(4):
-		if %BeatManager.get_beat(ring, beat):
-			play_ring(ring)
+		# Would need BeatManager reference — prefer using EventBus flow instead
+		pass
 
 func get_ring_volume(ring: int) -> float:
 	"""Get the volume for a specific ring bus"""

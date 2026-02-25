@@ -49,7 +49,47 @@ var current_layer_index: int = 0
 var colors: Array[Color] = []
 
 func _ready():
+	# Connect to EventBus so other scripts don't need a direct reference
+	EventBus.ring_selected.connect(samples_mixing_change_ring)
+	EventBus.synth_selected.connect(synth_mixing_change_synth)
+	EventBus.mixing_weights_changed.connect(on_update_mixing)
+	EventBus.layer_changed.connect(_on_layer_changed)
+	EventBus.layer_added.connect(_on_layer_added)
+	EventBus.layer_removed.connect(_on_layer_removed)
+	
 	on_ready_mixing()
+
+func _on_layer_changed(layer_index: int):
+	"""Store current knob, switch layer, retrieve new knob"""
+	# Store current knob position
+	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
+		samples_mixing_store_active_knob()
+	elif chaos_pad_mode == ChaosPadMode.SYNTH_MIXING:
+		synth_mixing_store_active_knob()
+	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
+		song_mixing_store_active_knob()
+	
+	current_layer_index = layer_index
+	
+	# Retrieve knob position for new layer
+	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
+		samples_mixing_retrieve_active_knob()
+	elif chaos_pad_mode == ChaosPadMode.SYNTH_MIXING:
+		synth_mixing_retrieve_active_knob()
+	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
+		song_mixing_retrieve_active_knob()
+
+func _on_layer_added(_layer_index: int, _emoji: String):
+	"""Insert default knob positions for a new layer"""
+	samples_mixing_knob_positions.insert(_layer_index, get_standard_knob_positions_samples())
+	synth_mixing_knob_positions.insert(_layer_index, get_standard_knob_positions_synth())
+
+func _on_layer_removed(layer_index: int):
+	"""Remove knob positions when a layer is deleted"""
+	if layer_index < samples_mixing_knob_positions.size():
+		samples_mixing_knob_positions.remove_at(layer_index)
+	if layer_index < synth_mixing_knob_positions.size():
+		synth_mixing_knob_positions.remove_at(layer_index)
 
 func on_ready_mixing():
 	samples_mixing_knob_positions_clipboard = get_standard_knob_positions_samples()

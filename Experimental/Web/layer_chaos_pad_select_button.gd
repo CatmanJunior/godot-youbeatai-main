@@ -7,4 +7,4 @@ func _ready():
 	button.button_up.connect(_on_press)
 
 func _on_press():
-	%MixingManager.synth_mixing_change_synth(id)
+	EventBus.synth_selected.emit(id)

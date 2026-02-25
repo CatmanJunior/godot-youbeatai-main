@@ -95,9 +95,7 @@ func _next_template():
 		current_template = 0
 
 func _set_template():
-	%BeatManager.beat_actives = get_current_actives()
-	# TODO: signal or flag that a template was selected if needed
-	# %GameManager.selected_template = true
+	EventBus.template_set.emit(get_current_actives())
 
 func _toggle_show_template():
 	show_template = !show_template

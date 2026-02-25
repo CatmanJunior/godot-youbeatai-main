@@ -34,6 +34,7 @@ func _input(input_event: InputEvent) -> void:
 				if knob_opaque or chaospad_opaque:
 					var result = get_weights_for_position()
 					on_mouse_up.emit(result.master_volume, result.weights)
+					EventBus.mixing_weights_changed.emit(result.master_volume, result.weights)
 	
 	if input_event is InputEventMouseMotion and dragging:
 		var mouse_motion_event = input_event as InputEventMouseMotion

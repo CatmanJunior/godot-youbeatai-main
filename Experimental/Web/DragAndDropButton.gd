@@ -7,18 +7,11 @@ extends Sprite2D
 
 signal on_pressed(ring: int)
 
-
-var beatManager: Node
-var gameManager: Node
-
 var color_is_changing: bool = false
 
 
 func _ready():
 	button.button_up.connect(_on_press)
-	
-	beatManager = %BeatManager
-	gameManager = %GameManager
 
 
 
@@ -26,10 +19,10 @@ func _on_press():
 	if %UiManager.button_is_clap.button_pressed:
 		if ring == 0:
 			_button_sound()
-			beatManager.on_stomp()
+			EventBus.stomp_triggered.emit()
 		elif ring == 1:
 			_button_sound()
-			beatManager.on_clap()
+			EventBus.clap_triggered.emit()
 		else:
 			_button_behaviour()
 	else:
@@ -39,21 +32,15 @@ func _on_press():
 
 
 func _button_sound():
-	%AudioPlayerManager.audio_players[ring].play()
-	%AudioPlayerManager.audio_players_alt[ring].play()
-	%AudioPlayerManager.audio_players_rec[ring].play()
+	EventBus.play_ring_requested.emit(ring)
 
 
 func _button_behaviour():
 	_button_sound()
 
-	#TODO: Emit beat particles at position with color based on ring
-	var button_add_beats : CheckButton = %UiManager.button_add_beats
+	var button_add_beats: CheckButton = %UiManager.button_add_beats
 	if button_add_beats.pressed:
-		%BeatManager.set_beat(ring, %BpmManager.current_beat, true)
-		# var beat_sprites: Array = %UiManager.beat_sprites
-		# var position = beat_sprites[ring][%BpmManager.current_beat].global_position
-		# # %UiManager.emit_beat_particles(position, gameManager.colors[ring])
+		EventBus.beat_set_requested.emit(ring, %BpmManager.current_beat, true)
 
 	if %MixingManager.samples_mixing_active_ring != ring:
 		_start_color_change(ring, 0.3)

@@ -31,45 +31,46 @@ var colors: Array[Color] = []
 signal should_clap
 signal should_stomp
 
-# References to other managers
-var audio_player_manager: Node
-var particle_manager: Node
-var layer_manager: Node
-var microphone_capture: Node
-
 func _ready():
-	audio_player_manager = %AudioPlayerManager
-	layer_manager = %LayerManager
-
-
 	# Initialize beat_actives array [4 rings][beats_amount beats]
 	for ring in range(4):
 		var ring_beats = []
 		for beat in range(beats_amount):
 			ring_beats.append(false)
 		beat_actives.append(ring_beats)
+	
+	# Connect to EventBus
+	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
+	EventBus.beat_triggered.connect(_on_beat_triggered)
+	EventBus.beat_set_requested.connect(set_beat)
+	EventBus.template_set.connect(_on_template_set)
+	EventBus.clap_triggered.connect(on_clap)
+	EventBus.stomp_triggered.connect(on_stomp)
+
+func _on_beat_sprite_clicked(p_ring: int, beat: int):
+	"""Handle beat sprite click via EventBus"""
+	toggle_beat(p_ring, beat)
+	var is_active = get_beat(p_ring, beat)
+	if is_active:
+		EventBus.play_ring_requested.emit(p_ring)
+	if p_ring < colors.size():
+		EventBus.particles_requested.emit(Vector2.ZERO, colors[p_ring])
+	EventBus.beat_state_changed.emit(p_ring, beat, is_active)
+	EventBus.ring_selected.emit(p_ring)
+
+func _on_beat_triggered(beat: int):
+	"""Called each beat via EventBus"""
+	current_beat = beat
+	on_beat()
+
+func _on_template_set(actives: Array):
+	"""Apply template beat actives"""
+	beat_actives = actives
 
 func check_if_clapping_or_stomping():
-	"""Check microphone input for clapping or stomping"""
-	if not microphone_capture:
-		return
-	
-	var volume = microphone_capture.volume if microphone_capture.has("volume") else 0.0
-	var frequency = microphone_capture.frequency if microphone_capture.has("frequency") else 0.0
-	
-	# Check for clap (high frequency)
-	var is_clapping = microphone_capture.is_clapping if microphone_capture.has("is_clapping") else false
-	if is_clapping or Input.is_key_pressed(KEY_N):
-		if not clapped:
-			on_clap()
-			clapped = true
-	
-	# Check for stomp (low frequency)
-	var is_stamping = microphone_capture.is_stamping if microphone_capture.has("is_stamping") else false
-	if is_stamping or Input.is_key_pressed(KEY_M):
-		if not stomped:
-			on_stomp()
-			stomped = true
+	"""Check microphone input for clapping or stomping.
+	Now handled externally — microphone_capture emits EventBus signals."""
+	pass
 
 func on_clap():
 	"""Handle clap detection"""
@@ -82,10 +83,9 @@ func on_clap():
 	if active:
 		# Hit on beat - reward player
 		progress_bar_value += 2.0
-		if particle_manager:
-			particle_manager.emit_progress_bar_particles()
-			if ring < colors.size():
-				particle_manager.emit_beat_particles(Vector2.ZERO, colors[ring])
+		EventBus.progress_bar_particles_requested.emit()
+		if ring < colors.size():
+			EventBus.particles_requested.emit(Vector2.ZERO, colors[ring])
 		clapped_on_beat_amount += 1
 	else:
 		# Missed beat - penalize player
@@ -108,10 +108,9 @@ func on_stomp():
 	if active:
 		# Hit on beat - reward player
 		progress_bar_value += 2.0
-		if particle_manager:
-			particle_manager.emit_progress_bar_particles()
-			if ring < colors.size():
-				particle_manager.emit_beat_particles(Vector2.ZERO, colors[ring])
+		EventBus.progress_bar_particles_requested.emit()
+		if ring < colors.size():
+			EventBus.particles_requested.emit(Vector2.ZERO, colors[ring])
 		stomped_on_beat_amount += 1
 	else:
 		# Missed beat - penalize player
@@ -131,12 +130,11 @@ func on_beat():
 		if current_beat % beats_per_quarter == 0:
 			play_metronome_sfx()
 	
-	# Play audio for active beats
-	if audio_player_manager:
-		for ring in range(4):
-			if ring < beat_actives.size() and current_beat < beat_actives[ring].size():
-				if beat_actives[ring][current_beat]:
-					audio_player_manager.play_ring(ring, beat_actives)
+	# Play audio for active beats via EventBus
+	for ring in range(4):
+		if ring < beat_actives.size() and current_beat < beat_actives[ring].size():
+			if beat_actives[ring][current_beat]:
+				EventBus.play_ring_requested.emit(ring)
 	
 	# Reset clap/stomp state
 	clapped = false
@@ -159,20 +157,12 @@ func on_beat():
 	var clap_active = beat_actives[1][next_beat] if next_beat < beat_actives[1].size() else false
 	if clap_active:
 		should_clap.emit()
+		EventBus.should_clap.emit()
 	
 	var stomp_active = beat_actives[0][next_beat] if next_beat < beat_actives[0].size() else false
 	if stomp_active:
 		should_stomp.emit()
-	
-	# Random pitch variation for ring 3
-	if audio_player_manager and audio_player_manager.audio_players.size() > 3:
-		var strength = 0.2
-		var scale = 1.0 + (randf() - 0.5) * strength
-		audio_player_manager.audio_players[3].pitch_scale = scale
-		if audio_player_manager.audio_players_alt.size() > 3:
-			audio_player_manager.audio_players_alt[3].pitch_scale = scale
-		if audio_player_manager.audio_players_rec.size() > 3:
-			audio_player_manager.audio_players_rec[3].pitch_scale = scale
+		EventBus.should_stomp.emit()
 
 func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""
@@ -199,5 +189,5 @@ func clear_all_beats():
 
 func play_metronome_sfx():
 	"""Play metronome sound effect"""
-	if audio_player_manager and metronome_sfx:
-		audio_player_manager.play_sfx(metronome_sfx)
+	if metronome_sfx:
+		EventBus.play_sfx_requested.emit(metronome_sfx)

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://dyy8617ukyptm"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=14 format=3 uid="uid://dyy8617ukyptm"]
 
 [ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="1_qlc07"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://pgoewkr5e6g2" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile.tres" id="5_tm1gk"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_ytapi"]
 [ext_resource type="Resource" uid="uid://d4c5jcrp0ty32" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile_bass.tres" id="6_tm1gk"]
+[ext_resource type="SoundFont" uid="uid://c2kol6oi2ukwu" path="res://Experimental/soundfont/Hardy-Boy.sf2" id="7_6simi"]
 [ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://b7ycvuoy7t3tc" path="res://Resources/Audio/SoundBanks/7_hardcore/Snare Fakesch.wav" id="7_tm1gk"]
 
@@ -23,8 +24,8 @@ clap = ExtResource("1_7jbdn")
 clap_alt = ExtResource("2_ytapi")
 closed = ExtResource("2_120gr")
 closed_alt = ExtResource("4_tm1gk")
-green_soundfont = ExtResource("5_ytapi")
-green_instrument_id = 12
+green_soundfont = ExtResource("7_6simi")
+green_instrument_id = 2
 green_effectProfile = ExtResource("6_tm1gk")
 purple_soundfont = ExtResource("5_ytapi")
 purple_instrument_id = 9

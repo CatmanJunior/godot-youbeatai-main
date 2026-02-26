@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://bg0wxntk7lvv1"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=14 format=3 uid="uid://bg0wxntk7lvv1"]
 
 [ext_resource type="AudioStream" uid="uid://dg23rhypshw0l" path="res://Resources/Audio/SoundBanks/6_rock/Clap Smoky.wav" id="1_5ewh3"]
 [ext_resource type="AudioStream" uid="uid://dinxghfhfe4k" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Clap Overflow 1.wav" id="2_oryav"]
@@ -10,6 +10,7 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_oryav"]
 [ext_resource type="Resource" uid="uid://o1cld5bbq2y1" path="res://Resources/Audio/SoundBanks/6_rock/EffectProfile_bass.tres" id="6_4uiet"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_5dk7e"]
+[ext_resource type="SoundFont" uid="uid://bdkkd0bm8nmvw" path="res://Experimental/soundfont/Emu Rockgtr.sf2" id="7_3o70d"]
 [ext_resource type="AudioStream" uid="uid://c6recttco4teo" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Snare Butter 2.wav" id="7_4uiet"]
 [ext_resource type="AudioStream" uid="uid://qffta4dethj5" path="res://Resources/Audio/SoundBanks/6_rock/Snare Crystal 1.wav" id="7_x7f7w"]
 
@@ -23,8 +24,7 @@ clap = ExtResource("1_5ewh3")
 clap_alt = ExtResource("2_oryav")
 closed = ExtResource("2_s8q6a")
 closed_alt = ExtResource("4_5dk7e")
-green_soundfont = ExtResource("5_oryav")
-green_instrument_id = 12
+green_soundfont = ExtResource("7_3o70d")
 green_effectProfile = ExtResource("6_4uiet")
 purple_soundfont = ExtResource("5_oryav")
 purple_instrument_id = 15

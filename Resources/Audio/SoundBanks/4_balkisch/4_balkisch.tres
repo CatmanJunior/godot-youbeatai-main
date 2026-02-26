@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_achl6"]
 [ext_resource type="AudioStream" uid="uid://dp7rwu7lkypjn" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Kick Rainbow 1.wav" id="7_8lexy"]
 [ext_resource type="AudioStream" uid="uid://cyqs7v1jh8j15" path="res://Resources/Audio/SoundBanks/4_balkisch/Snare Cameleon.wav" id="7_fvvum"]
-[ext_resource type="SoundFont" uid="uid://c5dodwngr8aq" path="res://Experimental/soundfont/Monsoons Maple Neck 1974 Fender Jazz Bass.sfo" id="7_xq0bs"]
+[ext_resource type="SoundFont" uid="uid://bku54wgk62esj" path="res://Experimental/soundfont/Emu Funky Guitars.sf2" id="7_xq0bs"]
 [ext_resource type="AudioStream" uid="uid://gsxi7tfibrrc" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Snare_ Lusine.wav" id="11_xq0bs"]
 
 [resource]
@@ -25,6 +25,7 @@ clap_alt = ExtResource("2_2an5y")
 closed = ExtResource("2_7bmbv")
 closed_alt = ExtResource("4_achl6")
 green_soundfont = ExtResource("7_xq0bs")
+green_instrument_id = 18
 green_effectProfile = ExtResource("6_8lexy")
 purple_soundfont = ExtResource("5_2an5y")
 purple_instrument_id = 4

@@ -1,4 +1,4 @@
-[gd_scene load_steps=109 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=114 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -62,7 +62,6 @@
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="39_aa8k8"]
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="41_qnggo"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="42_tab3y"]
-[ext_resource type="Script" uid="uid://r5hk4ixij08i" path="res://Scripts/PreviewExports.cs" id="43_nwwfm"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
@@ -80,12 +79,17 @@
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
+[ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
+[ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="66_vxl7x"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
+[ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="80_55idt"]
+[ext_resource type="Shader" uid="uid://b6ylrcyr2mrhf" path="res://Shaders/FillCircle.gdshader" id="80_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
+[ext_resource type="Script" uid="uid://dsntbqiqpscqk" path="res://Experimental/SongExport/field.gd" id="84_33qc4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -211,6 +215,17 @@ font_size = 14
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55idt"]
+shader = ExtResource("80_k8rh3")
+shader_parameter/primary_color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/unfilled_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+shader_parameter/value = 0.33999999240032
+shader_parameter/smooth_ = 0.005
+shader_parameter/width_in = 0.85
+shader_parameter/width_out = 0.95
+shader_parameter/border_width = 0.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -391,6 +406,7 @@ scale = Vector2(0.135, 0.135)
 texture = ExtResource("27_neg2b")
 
 [node name="CopyPasteClearButtons" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder"]
+position = Vector2(-1, 1)
 
 [node name="SaveLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons"]
 anchors_preset = 8
@@ -672,7 +688,7 @@ achievement_sfx = ExtResource("3_p4kny")
 coundDownPanel = NodePath("../../CountDown")
 coundDownLabel = NodePath("../../CountDown/Label")
 emailPrompt = NodePath("../../EmailPrompt")
-emailInput = NodePath("../../EmailPrompt/LineEdit")
+emailInput = NodePath("../../EmailPrompt/EmailField")
 emailEnter = NodePath("../../EmailPrompt/Enter")
 emojiPrompt = NodePath("../../EmojiPrompt")
 emojiButtons = [NodePath("../../EmojiPrompt/Emoji_0"), NodePath("../../EmojiPrompt/Emoji_1"), NodePath("../../EmojiPrompt/Emoji_2"), NodePath("../../EmojiPrompt/Emoji_3"), NodePath("../../EmojiPrompt/Emoji_4")]
@@ -859,6 +875,7 @@ soundfont = ExtResource("27_o1aky")
 volume_db = -7.0
 bus = &"Green"
 bpmManager = NodePath("")
+gate = 0.0
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
@@ -883,6 +900,7 @@ volume_db = -7.0
 bus = &"Purple"
 bpmManager = NodePath("")
 instrument = 6
+gate = 0.0
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
@@ -891,6 +909,29 @@ octaveRange = Vector2i(4, 6)
 
 [node name="MidiHelper" type="Node" parent="Managers"]
 script = ExtResource("31_v2nl5")
+
+[node name="Exporter" type="Node" parent="Managers" node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "settings_panel", "mail_panel", "mail_button", "mail_field", "name_field")]
+script = ExtResource("65_87bhu")
+loading = NodePath("../../UserInterface/CenterContainer")
+manager = NodePath("../Manager")
+bpm_manager = NodePath("../BPM")
+loop_button = NodePath("../../UserInterface/LayerLoopToggle")
+settings_panel = NodePath("../../UserInterface/SettingsPanel")
+mail_panel = NodePath("../../EmailPrompt")
+mail_button = NodePath("../../EmailPrompt/Enter")
+mail_field = NodePath("../../EmailPrompt/EmailField")
+name_field = NodePath("../../EmailPrompt/Naam")
+metadata/_custom_type_script = "uid://c6xnic6xfnewu"
+
+[node name="ListenToLastExport" type="Node" parent="Managers/Exporter" node_paths=PackedStringArray("player", "play_song_button", "play_beat_button")]
+script = ExtResource("66_33qc4")
+player = NodePath("lastExportPlayer")
+play_song_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/ListenSongExportButton")
+play_beat_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/ListenBeatExportButton")
+metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
+
+[node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/Exporter/ListenToLastExport"]
+playback_type = 1
 
 [node name="UserInterface" type="Control" parent="."]
 z_as_relative = false
@@ -2136,17 +2177,6 @@ theme = ExtResource("22_hpc6h")
 text = "🔄 Herstart"
 alignment = 0
 
-[node name="PreviewExportsManager" type="Node2D" parent="UserInterface/SettingsPanel/Buttons" node_paths=PackedStringArray("ListenSongExportButton", "ListenBeatExportButton", "audioPlayerSong", "audioPlayerBeat")]
-script = ExtResource("43_nwwfm")
-ListenSongExportButton = NodePath("../ListenSongExportButton")
-ListenBeatExportButton = NodePath("../ListenBeatExportButton")
-audioPlayerSong = NodePath("AudioStreamPlayerSong")
-audioPlayerBeat = NodePath("AudioStreamPlayerBeat")
-
-[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="UserInterface/SettingsPanel/Buttons/PreviewExportsManager"]
-
-[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="UserInterface/SettingsPanel/Buttons/PreviewExportsManager"]
-
 [node name="Sliders" type="Node2D" parent="UserInterface/SettingsPanel"]
 position = Vector2(911, 144)
 scale = Vector2(2.52787, 2.52787)
@@ -2514,6 +2544,30 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="CenterContainer" type="CenterContainer" parent="UserInterface" node_paths=PackedStringArray("progress")]
+visible = false
+z_index = 1000
+z_as_relative = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("80_55idt")
+progress = NodePath("ColorRect")
+
+[node name="Background" type="ColorRect" parent="UserInterface/CenterContainer"]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+color = Color(0, 0, 0, 0.11764706)
+
+[node name="ColorRect" type="ColorRect" parent="UserInterface/CenterContainer"]
+material = SubResource("ShaderMaterial_55idt")
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
 emitting = false
@@ -2606,50 +2660,94 @@ anchor_bottom = 0.5
 offset_left = -636.0
 offset_top = -2000.0
 offset_right = 636.0
-offset_bottom = -1810.0
+offset_bottom = -1650.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
 
 [node name="Title" type="Label" parent="EmailPrompt"]
 layout_mode = 1
-anchors_preset = 8
+anchors_preset = 5
 anchor_left = 0.5
-anchor_top = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -135.0
-offset_top = -101.0
-offset_right = 136.0
-offset_bottom = -22.0
+offset_left = -135.5
+offset_right = 135.5
+offset_bottom = 79.0
 grow_horizontal = 2
-grow_vertical = 2
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 30
 text = "Jouw Email Adress:"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="LineEdit" type="LineEdit" parent="EmailPrompt"]
-layout_mode = 0
-offset_left = 390.0
-offset_top = 64.0
-offset_right = 890.0
-offset_bottom = 114.0
+[node name="EmailField" type="LineEdit" parent="EmailPrompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = 25.0
+offset_right = 250.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_font_sizes/font_size = 28
 placeholder_text = "jouwemailadress@gmail.com"
 alignment = 1
 emoji_menu_enabled = false
+script = ExtResource("84_33qc4")
 
 [node name="Enter" type="Button" parent="EmailPrompt"]
-layout_mode = 0
-offset_left = 517.0
-offset_top = 129.0
-offset_right = 756.0
-offset_bottom = 178.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -119.5
+offset_top = -60.0
+offset_right = 119.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
 focus_mode = 0
 theme_override_font_sizes/font_size = 24
 text = "Doorgaan"
+
+[node name="Naam" type="LineEdit" parent="EmailPrompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -75.0
+offset_right = 250.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+placeholder_text = "Wat is je naam?"
+alignment = 1
+script = ExtResource("84_33qc4")
+
+[node name="CheckButton" type="CheckButton" parent="EmailPrompt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 258.0
+offset_top = 38.0
+offset_right = 302.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+button_pressed = true
 
 [node name="EmojiPrompt" type="Panel" parent="."]
 top_level = true
@@ -2874,6 +2972,7 @@ texture = ExtResource("84_6h1fc")
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]
 [connection signal="OnBpmChanged" from="Managers/BPM" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="on_bpm_changed"]
+[connection signal="OnPlayingChanged" from="Managers/BPM" to="Managers/Exporter/ListenToLastExport" method="on_player_state_changed"]
 [connection signal="OnAddLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_add_layer_at"]
 [connection signal="OnAddLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver1/synth_line" method="on_add_layer_at"]
 [connection signal="OnClearLayerEvent" from="Managers/Manager" to="Managers/LayerVoiceOver0/bass_line" method="on_song_clear"]
@@ -2896,6 +2995,14 @@ texture = ExtResource("84_6h1fc")
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="stop_recording"]
+[connection signal="onExportBeat" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_beat"]
+[connection signal="onExportSong" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_song"]
+[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]
+[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/SaveToWavButton" to="Managers/Exporter" method="setup_beat_export_dialog"]
+[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenSongExportButton" to="Managers/Exporter/ListenToLastExport" method="play_song"]
+[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenBeatExportButton" to="Managers/Exporter/ListenToLastExport" method="play_beat"]
+[connection signal="toggled" from="EmailPrompt/CheckButton" to="Managers/Exporter" method="on_mail_toggle_changed"]
+[connection signal="toggled" from="EmailPrompt/CheckButton" to="EmailPrompt/EmailField" method="reset_from_toggle"]
 [connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]

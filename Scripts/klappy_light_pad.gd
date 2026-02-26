@@ -10,7 +10,7 @@ var lowpass
 @export var klappyLight: PointLight2D 
 
 func _ready() -> void:
-	bus_index = AudioServer.get_bus_index("Master")
+	bus_index = AudioServer.get_bus_index("SubMaster")
 
 	phaser = AudioEffectPhaser.new()
 	distortion = AudioEffectDistortion.new()
@@ -21,9 +21,19 @@ func _ready() -> void:
 	AudioServer.add_bus_effect(bus_index, distortion)
 	AudioServer.add_bus_effect(bus_index, highpass)
 	AudioServer.add_bus_effect(bus_index, lowpass)
-
+	
+	AudioServer.set_bus_effect_enabled(bus_index, 1, false)
+	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
+	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
+	AudioServer.set_bus_effect_enabled(bus_index, 4, false)
 
 func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		AudioServer.set_bus_effect_enabled(bus_index, 1, event.is_pressed())
+		AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
+		AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
+		AudioServer.set_bus_effect_enabled(bus_index, 4, event.is_pressed())
+	
 	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT: #hier logica touchscreen bij
 		var pos = event.position
 		
@@ -35,7 +45,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
 		var y_percent = 1.0 - (pos.y / size.y)
 		
-		phaser.depth = 1.0 - x_percent
+		phaser.depth = 1.0 - x_percent #kijk hier zo even naar
 		distortion.drive = x_percent
 		highpass.cutoff_hz = lerp(40.0, 1000.0, y_percent)
 		lowpass.cutoff_hz = lerp(4000.0, 40.0, y_percent)

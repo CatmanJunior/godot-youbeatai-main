@@ -27,6 +27,7 @@ bpm = NodePath("BPMManager")
 
 [node name="BPMManager" type="Node" parent="."]
 script = ExtResource("6_k0mxu")
+playing = true
 swing = 0.0
 
 [node name="MicrophoneCapture" type="Node" parent="."]
@@ -101,10 +102,11 @@ bus = &"Microphone"
 [node name="notePlayer" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("8_71jf6")]
 bpmManager = NodePath("../BPMManager")
 instrument = 6
-allow_key_input = true
+gate = 0.0
 
 [node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../BPMManager")
+combine_threshold = 0.0
 
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]

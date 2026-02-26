@@ -70,7 +70,7 @@ public partial class BpmManager : Node
 	public float beatTimer = 0;
 	[Export] public float swing = 0.05f;
 
-	public float baseTimePerBeat;
+	[Export] public float baseTimePerBeat;
 	public float timePerBeat;
 
 	// events

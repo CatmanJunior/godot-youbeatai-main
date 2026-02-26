@@ -15,6 +15,7 @@ public partial class PreviewExports : Node
 
     public override void _Ready()
     {
+        return;
         if (instance == null) instance = this;
 
         ListenSongExportButton.ButtonUp += () =>
@@ -76,11 +77,11 @@ public partial class PreviewExports : Node
 
     public override void _Process(double delta)
     {
-        ListenSongExportButton.Disabled = !HasRecorded;
-        ListenBeatExportButton.Disabled = !HasRecorded;
+        ListenSongExportButton.Disabled = false;
+        ListenBeatExportButton.Disabled = false;
 
-        Manager.instance.allLayersToMp3.Disabled = !HasRecorded;
-        Manager.instance.saveToWavButton.Disabled = !HasRecorded;
+        Manager.instance.allLayersToMp3.Disabled = false;
+        Manager.instance.saveToWavButton.Disabled = false;
 
         ListenSongExportButton.Text = audioPlayerSong.Playing ? "⏹️" : "▶️";
         ListenBeatExportButton.Text = audioPlayerBeat.Playing ? "⏹️" : "▶️";

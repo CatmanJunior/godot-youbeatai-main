@@ -129,8 +129,8 @@ public partial class Manager : Node
 		foreach (var button in emojiButtons) button.ButtonUp += () => { AddLayer(currentLayerIndex + 1, button.Text); CloseEmojiPrompt(); addedLayer = true; };
 		emojiPromptCancelButton.ButtonUp += CloseEmojiPrompt;
 
-		allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedSongAsFileAndSendToEmail); settingsPanel.Visible = false; };
-		saveToWavButton.Pressed += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedBeatAsFileAndSendToEmail); settingsPanel.Visible = false; };
+		// allLayersToMp3.ButtonUp += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedSongAsFileAndSendToEmail); settingsPanel.Visible = false; };
+		// saveToWavButton.Pressed += () => { OpenEmailPrompt(AudioSaving.SaveRealTimeRecordedBeatAsFileAndSendToEmail); settingsPanel.Visible = false; };
 		muteSpeach.Pressed += DisplayServer.TtsStop;
 
 		SaveLayoutButton.Pressed += () => { CopyLayer(); PlayExtraSFX(metronomealt_sfx); };

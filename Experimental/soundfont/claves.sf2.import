@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://bmngkmwnlq62u"
+path="res://.godot/imported/claves.sf2-13d6fdf436b25a362dc717095fec40a4.res"
+
+[deps]
+
+source_file="res://Experimental/soundfont/claves.sf2"
+dest_files=["res://.godot/imported/claves.sf2-13d6fdf436b25a362dc717095fec40a4.res"]
+
+[params]
+

@@ -69,14 +69,13 @@ func _on_envelope_level_changed(level: float):
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
-	print(layer)
 
-func on_microphone_input(volume: float, frequency: float):
+func on_microphone_input(_volume: float, frequency: float):
 	if not recorder.is_recording_active():
 		return
 
 	var time = Time.get_unix_time_from_system() - start_record_time
-	data.push_back(Vector3(frequency, volume, time))
+	data.push_back(Vector3(frequency, _volume, time))
 
 func start_recording():
 	print("start recording")

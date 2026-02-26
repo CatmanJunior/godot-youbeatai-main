@@ -1,15 +1,17 @@
-[gd_scene load_steps=10 format=3 uid="uid://88rxelg1bo3"]
+[gd_scene load_steps=13 format=3 uid="uid://88rxelg1bo3"]
 
 [ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
 [ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
+[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="4_16hvj"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_ce3w2"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="6_opfnp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
 border_width_left = 2
 border_width_top = 2
@@ -20,6 +22,20 @@ corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.4745098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.3907979, 0.69834554, 1.5790963, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.8901961)
 
 [node name="scene" type="Node2D"]
 
@@ -50,16 +66,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -218.66072
+offset_left = -200.0
 offset_top = -150.0
-offset_right = 210.3393
+offset_right = 229.0
 offset_bottom = -43.000107
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_1ehe0")
-theme_override_font_sizes/font_size = 38
+theme_override_fonts/font = ExtResource("3_trj04")
+theme_override_font_sizes/font_size = 30
 text = "Klappy de
- Ritme Robot"
+Ritme Robot"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -70,24 +87,30 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -88.803566
-offset_top = -28.006653
-offset_right = 111.19644
-offset_bottom = 2.993393
+offset_left = -88.96871
+offset_top = -28.705307
+offset_right = 111.03128
+offset_bottom = 3.294693
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Uitleg ❓"
 
 [node name="SpelenButton" type="Button" parent="MainMenuPanel"]
 layout_mode = 0
-offset_left = 111.196434
+offset_left = 111.03129
 offset_top = 162.81479
-offset_right = 311.19644
+offset_right = 311.03128
 offset_bottom = 193.81483
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Muziek maken 🎶"
 
 [node name="ProButton" type="Button" parent="MainMenuPanel"]
@@ -97,14 +120,17 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -88.803566
+offset_left = -88.96871
 offset_top = -97.99994
-offset_right = 111.19644
+offset_right = 111.03128
 offset_bottom = -66.99994
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_yhxw7")
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Pro 👑"
 
 [node name="PermissionButton" type="Button" parent="MainMenuPanel"]
@@ -128,6 +154,10 @@ visible = false
 
 [node name="Skeleton3D" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
 bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
+
+[node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" index="1"]
+energy = 1.71
+texture_scale = 2.41
 
 [node name="Tutorial explanition" type="Button" parent="MainMenuPanel"]
 visible = false
@@ -160,7 +190,7 @@ scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
 
 [node name="Klappy respons bubble" parent="." instance=ExtResource("6_opfnp")]
-position = Vector2(276, -99)
+position = Vector2(276, -134)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 

@@ -41,6 +41,10 @@ public partial class Manager : Node
         layerVoiceOver1.bigLine.Visible = visible;
         layerButtonsContainer.Visible = visible;
         progressBar.Visible = visible;
+        Sprite2D parent = SongSelectButton.GetParent() as Sprite2D;
+        parent.Visible = visible;
+        FindChaosIconTop();
+        ChaosIconTop.Visible = visible;
     }
 
     public void SetGreenLayerVisibility(bool visible)
@@ -54,6 +58,18 @@ public partial class Manager : Node
     public void SetMicRecorderVisibility(bool visible)
     {
         ((Sprite2D)layerVoiceOver0.recordLayerButton.GetParent()).Visible = visible;
+    }
+
+    public void FindChaosIconTop()
+    {
+        foreach(var child in chaosPadTriangleSprite.GetParent().GetChildren() )
+        {
+            if( child.GetType() == typeof(Sprite2D) && child.Name == "ChaosIconTop")
+            {
+                ChaosIconTop = child as Sprite2D;
+            }
+        }
+        
     }
 
     public void SetRingVisibility(int ring, bool visible)

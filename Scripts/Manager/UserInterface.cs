@@ -19,7 +19,7 @@ public partial class Manager : Node
 	[Export] Button BpmDownButton;
 
 	// idk
-	[Export] Button SongSelectButton;
+	[Export] public Button SongSelectButton;
 
 	// sample buttons
 	[Export] public Sprite2D draganddropButton0;
@@ -78,7 +78,7 @@ public partial class Manager : Node
 	[Export] public Button allLayersToMp3;
 	[Export] Sprite2D layerOutline;
 	[Export] Node2D layerOutlineHolder;
-	
+	public bool SongModeActive = false;
 
 	float global_beat_sprite_scale_factor = 0.28f;
 	float beatScale32 = 1;
@@ -110,7 +110,11 @@ public partial class Manager : Node
 	[Export] public Area2D KnobArea;
 	[Export] public Label AmountLeft;
 	[Export] public Button greenLayerRecordButton;
+
 	[Export] public Node2D BearRingPivotPoint;
+
+	public Sprite2D ChaosIconTop;
+
 	float copyPaseClearButtonHolderTimeSinceActivation = 0;
 
 	Timer thresholdSaveTimer; // delayed save of microphone threshold value timer
@@ -145,6 +149,7 @@ public partial class Manager : Node
 			{
 				TooltipHelper.OpenTooltip("Oke nu gaat het echt beginnen, klick zometeen de songmode knop!");
 				TooltipHelper.StartLoopToCheckIfTooltipCanClose();
+				pressed_add_layer_once = true;
 			}
 		};
 
@@ -166,7 +171,8 @@ public partial class Manager : Node
 			Tutorial.Reset();
 			Achievements.Reset();
 		};
-		PlayPauseButton.ButtonUp += OnPlayPauseButton;
+		PlayPauseButton.ButtonDown += OnPlayPauseButton;
+		PlayPauseButton.ToggleMode = true;
 		BpmUpButton.Pressed += OnBpmUpButton;
 		BpmDownButton.Pressed += OnBpmDownButton;
 		skiptutorialbutton.Pressed += () =>
@@ -179,9 +185,10 @@ public partial class Manager : Node
 		settingsButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 		settingsBackButton.Pressed += () => settingsPanel.Visible = !settingsPanel.Visible;
 		var Button = SongSelectButton;
-        Button.ButtonUp += () =>
-        {
-            layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+		Button.ButtonUp += () =>
+		{
+			layerLoopToggle.ButtonPressed = !layerLoopToggle.ButtonPressed;
+			SongModeActive = !SongModeActive;
 			SongMixing_ChangeToSongMixer();
         };
 
@@ -368,7 +375,10 @@ public partial class Manager : Node
 		for (int i = 0; i < LayerButtons.Count; i++)
 		{
 			LayerButtons[i].Modulate = new Color(1, 1, 1, 1);
-			if (!LayerHasBeats(layersBeatActives[i])) LayerButtons[i].Modulate = LayerButtons[i].Modulate.Darkened(0.5f);
+			if (!LayerHasBeats(layersBeatActives[i]))
+			{
+				if (!LayerHasBeats(layersBeatActives[i])) LayerButtons[i].Modulate = LayerButtons[i].Modulate.Darkened(0.35f);
+			};
 		}
 	}
 }

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://bjwvetawisqrg"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=14 format=3 uid="uid://bjwvetawisqrg"]
 
 [ext_resource type="AudioStream" uid="uid://bi8o2au5213ir" path="res://Resources/Audio/SoundBanks/6_funk/Clap Smoky.wav" id="1_qv8qv"]
 [ext_resource type="AudioStream" uid="uid://b8n1joccgqmwp" path="res://Resources/Audio/SoundBanks/6_funk/ClosedHH FeelTheFunk 2.wav" id="2_7gpna"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_hgown"]
 [ext_resource type="Resource" uid="uid://bkw52bqhi76nt" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile_Bass.tres" id="6_loxld"]
 [ext_resource type="AudioStream" uid="uid://sefuiwp4k82o" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Snare Bling.wav" id="7_05f0b"]
+[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Experimental/soundfont/tencho.sfo" id="7_l1u2o"]
 [ext_resource type="AudioStream" uid="uid://6m7uj6j1xdum" path="res://Resources/Audio/SoundBanks/6_funk/Snare Acidy.wav" id="7_loxld"]
 
 [resource]
@@ -23,8 +24,9 @@ clap = ExtResource("1_qv8qv")
 clap_alt = ExtResource("2_7xnpc")
 closed = ExtResource("2_7gpna")
 closed_alt = ExtResource("4_hgown")
-green_soundfont = ExtResource("5_7xnpc")
-green_instrument_id = 5
+green_soundfont = ExtResource("7_l1u2o")
+green_instrument_id = 15
+green_beats = 0.5
 green_effectProfile = ExtResource("6_loxld")
 purple_soundfont = ExtResource("5_7xnpc")
 purple_instrument_id = 12

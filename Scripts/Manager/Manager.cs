@@ -58,7 +58,7 @@ public partial class Manager : Node
 		((Sprite2D)activateGreenChaosButton.FindChild("BackSprite")).SelfModulate = colors[4];
 	}
 
-	private void UtteranceEnd(int utterancId)
+	public void UtteranceEnd(int utterancId)
 	{
 		EmitSignal("OnUtteranceEnd", utterancId);
 	}
@@ -104,9 +104,9 @@ public partial class Manager : Node
 		var purple_outline = (Sprite2D)activatePurpleChaosButton.FindChild("OutlineSprite");
 
 		float progression = (float)((float)(BpmManager.instance.currentBeat + (BpmManager.instance.beatTimer / BpmManager.instance.timePerBeat)) / (float)BpmManager.beatsAmount);
-        if (progression == float.NaN) progression = 0;
+		if (progression == float.NaN) progression = 0;
 
-        if (chaosPadMode == ChaosPadMode.SynthMixing)
+		if (chaosPadMode == ChaosPadMode.SynthMixing)
 		{
 			if (SynthMixing_activeSynth == 0)
 			{
@@ -183,9 +183,9 @@ public partial class Manager : Node
 		micVolumeLight.Visible = chaosPadTriangleSprite.Visible;
 
 		float klappylightvalue = ((float)progressBar.Value) / 100f * 2f;
-		if (klappylightvalue > 1) klappylightvalue = 1;
+		if (klappylightvalue > 1) klappylightvalue = 1.5f;
 		if (klappylightvalue < 0.05f) klappylightvalue = 0;
-		klappyLight.Energy = klappylightvalue;
+		klappyLight.Energy = klappylightvalue ;
 
 		Sprite2D[] glow = new Sprite2D[4];
 		glow[0] = (Sprite2D)draganddropButton0.FindChild("Glow");

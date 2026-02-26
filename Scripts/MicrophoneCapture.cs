@@ -66,8 +66,6 @@ public partial class MicrophoneCapture : Node
 	{
 		while(IsQueuedForDeletion() == false)
 		{
-			GD.Print("hoi");
-
 			var frames = audioEffectCapture.GetFramesAvailable();
 			if (frames > 0)
 			{

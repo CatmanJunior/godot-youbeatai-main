@@ -83,7 +83,6 @@ func on_bpm():
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
-	print(layer)
 
 func on_layer_remove_at(layer: int) -> void:
 	songs.remove_at(layer)
@@ -96,7 +95,6 @@ func on_song_copy(copy_song: int) -> void:
 	cached_song = songs[copy_song].duplicate()
 
 func on_paste_song(_layer: int) -> void:
-	print(_layer)
 	set_song(cached_song)
 
 func on_song_clear() -> void:

@@ -102,6 +102,7 @@ bus = &"Microphone"
 [node name="notePlayer" parent="." node_paths=PackedStringArray("bpmManager") instance=ExtResource("8_71jf6")]
 bpmManager = NodePath("../BPMManager")
 instrument = 6
+allow_key_input = true
 gate = 0.0
 
 [node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]

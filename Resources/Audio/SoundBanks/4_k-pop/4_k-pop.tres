@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://cj5y6m1shvso3"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=14 format=3 uid="uid://cj5y6m1shvso3"]
 
 [ext_resource type="AudioStream" uid="uid://cilj15pepualk" path="res://Resources/Audio/SoundBanks/4_k-pop/Clap Glow.wav" id="1_vywy1"]
 [ext_resource type="AudioStream" uid="uid://cjuhoodg6l5pc" path="res://Resources/Audio/SoundBanks/4_k-pop/ClosedHH Breeze.wav" id="2_1ef4n"]
@@ -7,11 +7,12 @@
 [ext_resource type="AudioStream" uid="uid://vmc1pmhstp2t" path="res://Resources/Audio/SoundBanks/4_k-pop/mineur/Kick AB FM 1.wav" id="4_hj3mw"]
 [ext_resource type="AudioStream" uid="uid://dejpbq2iqc3kl" path="res://Resources/Audio/SoundBanks/4_k-pop/Kick Crystal.wav" id="4_uugc7"]
 [ext_resource type="Resource" uid="uid://b4yp7q5u4revi" path="res://Resources/Audio/SoundBanks/4_k-pop/EffectProfile.tres" id="5_3sxj6"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_5c012"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_3sxj6"]
 [ext_resource type="Resource" uid="uid://dgggeimdpo25r" path="res://Resources/Audio/SoundBanks/4_k-pop/EffectProfile_Bass.tres" id="6_nifs5"]
 [ext_resource type="AudioStream" uid="uid://h4mw755n1xok" path="res://Resources/Audio/SoundBanks/4_k-pop/Snare_Perc Eleg.wav" id="7_nifs5"]
 [ext_resource type="AudioStream" uid="uid://cs5palem2cpmy" path="res://Resources/Audio/SoundBanks/4_k-pop/mineur/Snare Flowdown 1.wav" id="7_uugc7"]
+[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Experimental/soundfont/tencho.sfo" id="7_wfdh8"]
+[ext_resource type="SoundFont" uid="uid://c2kol6oi2ukwu" path="res://Experimental/soundfont/Hardy-Boy.sf2" id="10_662hv"]
 
 [resource]
 script = ExtResource("6_3sxj6")
@@ -23,10 +24,10 @@ clap = ExtResource("1_vywy1")
 clap_alt = ExtResource("2_hj3mw")
 closed = ExtResource("2_1ef4n")
 closed_alt = ExtResource("4_5c012")
-green_soundfont = ExtResource("5_5c012")
-green_instrument_id = 14
+green_soundfont = ExtResource("7_wfdh8")
+green_instrument_id = 4
 green_effectProfile = ExtResource("6_nifs5")
-purple_soundfont = ExtResource("5_5c012")
-purple_instrument_id = 2
+purple_soundfont = ExtResource("10_662hv")
+purple_instrument_id = 11
 effectProfile = ExtResource("5_3sxj6")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

@@ -27,6 +27,10 @@ func _ready():
 	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
+	
+	for preset in get_presetcount():
+		print( "%s - %s" %[preset, get_presetname(preset)])
+	
 
 func set_font(font: SoundFont, instr: int):
 	soundfont = font

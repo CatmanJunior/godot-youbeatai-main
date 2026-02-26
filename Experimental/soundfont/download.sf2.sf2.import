@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://dmbeoorqvpgxs"
+path="res://.godot/imported/download.sf2.sf2-90839e1634dd5918c2a8712cb74ab803.res"
+
+[deps]
+
+source_file="res://Experimental/soundfont/download.sf2.sf2"
+dest_files=["res://.godot/imported/download.sf2.sf2-90839e1634dd5918c2a8712cb74ab803.res"]
+
+[params]
+

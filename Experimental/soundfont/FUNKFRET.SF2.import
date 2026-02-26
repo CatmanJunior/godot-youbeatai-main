@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://iyh1djcmplal"
+path="res://.godot/imported/FUNKFRET.SF2-aeda88a332003d7fb581366eda8aea06.res"
+
+[deps]
+
+source_file="res://Experimental/soundfont/FUNKFRET.SF2"
+dest_files=["res://.godot/imported/FUNKFRET.SF2-aeda88a332003d7fb581366eda8aea06.res"]
+
+[params]
+

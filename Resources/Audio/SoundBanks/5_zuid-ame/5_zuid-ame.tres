@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://bgisjm38j67en"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=14 format=3 uid="uid://bgisjm38j67en"]
 
 [ext_resource type="AudioStream" uid="uid://bs1dce42fqla5" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Clap Lusine 1.wav" id="1_lyvmd"]
 [ext_resource type="AudioStream" uid="uid://2mli5as68hek" path="res://Resources/Audio/SoundBanks/5_zuid-ame/ClosedHH Sinister 2.wav" id="2_4yojl"]
@@ -10,6 +10,7 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_xcqui"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_1d0q0"]
 [ext_resource type="Resource" uid="uid://cpm50u1ocghef" path="res://Resources/Audio/SoundBanks/5_zuid-ame/EffectProfile_bass.tres" id="6_d27c3"]
+[ext_resource type="SoundFont" uid="uid://bku54wgk62esj" path="res://Experimental/soundfont/Emu Funky Guitars.sf2" id="7_ahppo"]
 [ext_resource type="AudioStream" uid="uid://7cda032xv3gf" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Snare Crystal 1.wav" id="7_d27c3"]
 [ext_resource type="AudioStream" uid="uid://bumn8a50plb2w" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Snare Crystal 2.wav" id="7_ph0eh"]
 
@@ -23,8 +24,8 @@ clap = ExtResource("1_lyvmd")
 clap_alt = ExtResource("2_xcqui")
 closed = ExtResource("2_4yojl")
 closed_alt = ExtResource("4_1d0q0")
-green_soundfont = ExtResource("5_xcqui")
-green_instrument_id = 8
+green_soundfont = ExtResource("7_ahppo")
+green_instrument_id = 13
 green_effectProfile = ExtResource("6_d27c3")
 purple_soundfont = ExtResource("5_xcqui")
 purple_instrument_id = 2

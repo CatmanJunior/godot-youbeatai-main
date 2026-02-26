@@ -98,6 +98,21 @@
 [ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scenes/unlock_achievements.gd" id="85_op1ei"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
+font_size = 80
+
+[sub_resource type="Curve" id="Curve_11cd6"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
+buffer_length = 0.1
+
+[sub_resource type="Resource" id="Resource_55jeb"]
+script = ExtResource("60_uwd3s")
+id = 48
+metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
 corner_radius_top_left = 4
@@ -151,21 +166,6 @@ corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
-
-[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
-font_size = 80
-
-[sub_resource type="Curve" id="Curve_11cd6"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
-buffer_length = 0.1
-
-[sub_resource type="Resource" id="Resource_55jeb"]
-script = ExtResource("60_uwd3s")
-id = 48
-metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -254,279 +254,6 @@ scale = Vector2(4.12, 1)
 
 [node name="AudioListener" type="AudioListener2D" parent="Camera" unique_id=1417091584]
 current = true
-
-[node name="BeatRingPivotPoint" type="Node2D" parent="." unique_id=821308409]
-position = Vector2(-111, 46)
-
-[node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint" unique_id=2078282804]
-
-[node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder" unique_id=545432555]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 30.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 34
-text = "⏯️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton" unique_id=383495845]
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
-metadata/_edit_use_anchors_ = true
-
-[node name="Cross" type="Node2D" parent="BeatRingPivotPoint" unique_id=424861057]
-
-[node name="Vertical" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=1265927989]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=956002503]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 1.5708
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Vertical2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=133667257]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=308333869]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = -0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="BigLine0" type="Line2D" parent="BeatRingPivotPoint" unique_id=1196447538]
-closed = true
-width = 4.0
-antialiased = true
-
-[node name="TextureProgressBar0" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=2069096729]
-offset_left = -265.0
-offset_top = -267.0
-offset_right = 247.0
-offset_bottom = 245.0
-scale = Vector2(1.05, 1.05)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("3_ikay4")
-tint_progress = Color(1, 1, 0, 1)
-metadata/_edit_lock_ = true
-
-[node name="BigLine1" type="Line2D" parent="BeatRingPivotPoint" unique_id=206440121]
-closed = true
-width = 5.0
-antialiased = true
-
-[node name="TextureProgressBar1" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=959956238]
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(256, 256)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("3_ikay4")
-tint_progress = Color(0.516666, 0, 1, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="Pointer" type="Sprite2D" parent="BeatRingPivotPoint" unique_id=1556552632]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(0.6, 0.85)
-offset = Vector2(0, -150)
-
-[node name="PointLight2D" type="PointLight2D" parent="BeatRingPivotPoint/Pointer" unique_id=1161459888]
-color = Color(1, 1, 0.698039, 1)
-energy = 4.71
-range_z_max = 100
-texture = ExtResource("4_snosd")
-offset = Vector2(0, -150)
-
-[node name="SwitchLayerButtons" type="Node2D" parent="BeatRingPivotPoint" unique_id=262273642]
-
-[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=972681269]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -380.0
-offset_right = 32.0
-offset_bottom = -316.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=1360909549]
-position = Vector2(-130, -1074)
-
-[node name="Outline" type="Sprite2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder" unique_id=256449080]
-scale = Vector2(0.135, 0.135)
-texture = ExtResource("5_8pi72")
-
-[node name="CopyPasteClearButtons" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder" unique_id=1464857620]
-
-[node name="SaveLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=1456438466]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -63.0
-offset_top = 45.0
-offset_right = -3.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "💾
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="ClearLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=978404546]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -129.0
-offset_top = 45.0
-offset_right = -69.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "🗑️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="LoadLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=194953894]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 3.0
-offset_top = 44.0
-offset_right = 63.0
-offset_bottom = 104.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "♻️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="AddLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=956747033]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 69.0
-offset_top = 45.0
-offset_right = 129.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "+"
-metadata/_edit_use_anchors_ = true
-
-[node name="BlockerHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton" unique_id=864605343]
-position = Vector2(35, 33)
-
-[node name="Blocker" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" unique_id=1309913212 instance=ExtResource("6_2qaqg")]
-top_level = false
-offset_left = -50.99999
-offset_top = -45.0
-offset_right = 59.00001
-offset_bottom = 115.0
-scale = Vector2(0.7174814, 0.7174814)
-
-[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=1918014083]
-z_index = -2
-anchors_preset = -1
-anchor_left = 0.48892045
-anchor_top = 0.3285358
-anchor_right = 0.49687538
-anchor_bottom = 0.3285358
-offset_left = -644.99994
-offset_top = -1355.0
-offset_right = -303.1823
-offset_bottom = -1178.6367
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_aa8k8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_jekl6")
-max_value = 1.0
-show_percentage = false
-metadata/_edit_use_anchors_ = true
 
 [node name="Managers" type="Node" parent="." unique_id=816526421]
 
@@ -770,7 +497,7 @@ swing_label = NodePath("../../UserInterface/SettingsPanel/Sliders/SwingSlider/Sw
 clap_bias_slider = NodePath("../../UserInterface/SettingsPanel/Sliders/ClapStompBias")
 achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 layer_loop_toggle = NodePath("../../UserInterface/LayerLoopToggle")
-saving_label = NodePath("../../SavingLabel")
+saving_label = NodePath("../../UserInterface/SavingLabel")
 instruction_label = NodePath("../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
 all_layers_to_mp3 = NodePath("../../UserInterface/SettingsPanel/Buttons/AllLayersToMp3")
 layer_outline = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/Outline")
@@ -916,6 +643,268 @@ metadata/_custom_type_script = "uid://bysoee7k07v3y"
 [node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=2087930821]
 
 [node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1533921532]
+
+[node name="BeatRingPivotPoint" type="Node2D" parent="." unique_id=821308409]
+position = Vector2(-111, 46)
+
+[node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint" unique_id=2078282804]
+
+[node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder" unique_id=545432555]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 34
+text = "⏯️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton" unique_id=383495845]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Cross" type="Node2D" parent="BeatRingPivotPoint" unique_id=424861057]
+
+[node name="Vertical" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=1265927989]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=956002503]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 1.5708
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Vertical2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=133667257]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=308333869]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = -0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="BigLine0" type="Line2D" parent="BeatRingPivotPoint" unique_id=1196447538]
+closed = true
+width = 4.0
+antialiased = true
+
+[node name="TextureProgressBar0" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=2069096729]
+offset_left = -265.0
+offset_top = -267.0
+offset_right = 247.0
+offset_bottom = 245.0
+scale = Vector2(1.05, 1.05)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("3_ikay4")
+tint_progress = Color(1, 1, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="BigLine1" type="Line2D" parent="BeatRingPivotPoint" unique_id=206440121]
+closed = true
+width = 5.0
+antialiased = true
+
+[node name="TextureProgressBar1" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=959956238]
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(256, 256)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("3_ikay4")
+tint_progress = Color(0.516666, 0, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Pointer" type="Sprite2D" parent="BeatRingPivotPoint" unique_id=1556552632]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(0.6, 0.85)
+offset = Vector2(0, -150)
+
+[node name="PointLight2D" type="PointLight2D" parent="BeatRingPivotPoint/Pointer" unique_id=1161459888]
+color = Color(1, 1, 0.698039, 1)
+energy = 4.71
+range_z_max = 100
+texture = ExtResource("4_snosd")
+offset = Vector2(0, -150)
+
+[node name="SwitchLayerButtons" type="Node2D" parent="BeatRingPivotPoint" unique_id=262273642]
+
+[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=972681269]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -380.0
+offset_right = 32.0
+offset_bottom = -316.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=1360909549]
+position = Vector2(-130, -1074)
+
+[node name="Outline" type="Sprite2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder" unique_id=256449080]
+scale = Vector2(0.135, 0.135)
+texture = ExtResource("5_8pi72")
+
+[node name="CopyPasteClearButtons" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder" unique_id=1464857620]
+
+[node name="SaveLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=1456438466]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = 45.0
+offset_right = -3.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "💾
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="ClearLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=978404546]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = 45.0
+offset_right = -69.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "🗑️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoadLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=194953894]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 44.0
+offset_right = 63.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "♻️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="AddLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=956747033]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = 45.0
+offset_right = 129.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
+action_mode = 0
+text = "+"
+metadata/_edit_use_anchors_ = true
+
+[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=1918014083]
+z_index = -2
+anchors_preset = -1
+anchor_left = 0.48892045
+anchor_top = 0.3285358
+anchor_right = 0.49687538
+anchor_bottom = 0.3285358
+offset_left = -644.99994
+offset_top = -1355.0
+offset_right = -303.1823
+offset_bottom = -1178.6367
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_aa8k8")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jekl6")
+max_value = 1.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="UserInterface" type="Control" parent="." unique_id=1276878844]
 z_as_relative = false
@@ -1359,18 +1348,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Blocker" parent="UserInterface/Buttons/SongSelectButtonSprite" unique_id=1234523764 instance=ExtResource("6_2qaqg")]
-anchors_preset = -1
-anchor_top = -0.0214987
-anchor_right = 0.011338258
-anchor_bottom = -0.0214987
-offset_left = -601.00006
-offset_top = -321.52097
-offset_right = -501.0001
-offset_bottom = -196.52097
-scale = Vector2(0.7815966, 0.7815966)
-metadata/_edit_use_anchors_ = true
-
 [node name="SongSelectButton" type="Button" parent="UserInterface/Buttons/SongSelectButtonSprite" unique_id=2027137242]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
@@ -1529,14 +1506,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Blocker" parent="UserInterface/Buttons/InstrumentButton2" unique_id=1700258079 instance=ExtResource("6_2qaqg")]
-visible = false
-offset_left = -591.0
-offset_right = -491.9316
-offset_bottom = 53.06669
-scale = Vector2(0.835, 0.835)
-metadata/_edit_use_anchors_ = true
-
 [node name="Button2" type="Button" parent="UserInterface/Buttons/InstrumentButton2" unique_id=485947179]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = -1
@@ -1591,15 +1560,6 @@ grow_vertical = 2
 text = "⌚"
 horizontal_alignment = 1
 vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Blocker" parent="UserInterface/Buttons/InstrumentButton3" unique_id=761345688 instance=ExtResource("6_2qaqg")]
-visible = false
-offset_left = -590.0
-offset_top = 60.999992
-offset_right = -490.58047
-offset_bottom = 149.48396
-scale = Vector2(0.835, 0.835)
 metadata/_edit_use_anchors_ = true
 
 [node name="Button3" type="Button" parent="UserInterface/Buttons/InstrumentButton3" unique_id=137693653]
@@ -1728,15 +1688,6 @@ color = Color(1, 0.911449, 0.665059, 1)
 energy = 0.0
 texture = ExtResource("50_662co")
 texture_scale = 1.71
-
-[node name="Blocker" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=1809820422 instance=ExtResource("6_2qaqg")]
-offset_left = -599.0
-offset_top = 245.00003
-offset_right = -505.36505
-offset_bottom = 337.64413
-scale = Vector2(0.835, 0.835)
-pivot_offset = Vector2(50, 35)
-metadata/_edit_use_anchors_ = true
 
 [node name="Button" type="Button" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=1946227292]
 self_modulate = Color(1, 1, 1, 0)
@@ -2531,7 +2482,309 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="BeatParticleSystem" type="CPUParticles2D" parent="." unique_id=1548217805]
+[node name="SavingLabel" type="Label" parent="UserInterface" unique_id=1221552974]
+visible = false
+layout_mode = 0
+offset_left = -449.0
+offset_top = -46.0
+offset_right = -294.0
+offset_bottom = 106.0
+theme = ExtResource("2_3e1b8")
+theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
+theme_override_font_sizes/font_size = 16
+text = "Opgeslagen naar:
+\"muziekbestand.mp3\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="UserInterface/SavingLabel" unique_id=1245544513]
+show_behind_parent = true
+layout_mode = 0
+offset_left = -8.0
+offset_top = 2.0
+offset_right = 166.0
+offset_bottom = 154.0
+
+[node name="EmailPrompt" type="Panel" parent="UserInterface" unique_id=823856902]
+top_level = true
+z_index = 20
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -636.0
+offset_top = -2000.0
+offset_right = 636.0
+offset_bottom = -1810.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Title" type="Label" parent="UserInterface/EmailPrompt" unique_id=1473769607]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -101.0
+offset_right = 136.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 30
+text = "Jouw Email Adress:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LineEdit" type="LineEdit" parent="UserInterface/EmailPrompt" unique_id=834869394]
+layout_mode = 0
+offset_left = 390.0
+offset_top = 64.0
+offset_right = 890.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 28
+placeholder_text = "jouwemailadress@gmail.com"
+alignment = 1
+emoji_menu_enabled = false
+
+[node name="Enter" type="Button" parent="UserInterface/EmailPrompt" unique_id=1828249719]
+layout_mode = 0
+offset_left = 517.0
+offset_top = 129.0
+offset_right = 756.0
+offset_bottom = 178.0
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Doorgaan"
+
+[node name="EmojiPrompt" type="Panel" parent="UserInterface" unique_id=2003787577]
+top_level = true
+z_index = 20
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -864.0
+offset_top = -1184.0
+offset_right = -416.0
+offset_bottom = -994.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Title" type="Label" parent="UserInterface/EmojiPrompt" unique_id=1833317208]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -135.0
+offset_top = -101.0
+offset_right = 136.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 30
+text = "Kies een icoon voor de laag"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Emoji_0" type="Button" parent="UserInterface/EmojiPrompt" unique_id=812537394]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3263158
+anchor_right = 0.5
+anchor_bottom = 0.3263158
+offset_left = -176.0
+offset_top = 9.0
+offset_right = -112.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+text = "🌱"
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_1" type="Button" parent="UserInterface/EmojiPrompt" unique_id=1423779326]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3263158
+anchor_right = 0.5
+anchor_bottom = 0.3263158
+offset_left = -103.0
+offset_top = 9.0
+offset_right = -39.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+text = "📜"
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_2" type="Button" parent="UserInterface/EmojiPrompt" unique_id=568017860]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3263158
+anchor_right = 0.5
+anchor_bottom = 0.3263158
+offset_left = -32.0
+offset_top = 9.0
+offset_right = 32.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+text = "🤩"
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_3" type="Button" parent="UserInterface/EmojiPrompt" unique_id=61610416]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3263158
+anchor_right = 0.5
+anchor_bottom = 0.3263158
+offset_left = 39.0
+offset_top = 9.0
+offset_right = 103.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+text = "😀"
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_4" type="Button" parent="UserInterface/EmojiPrompt" unique_id=13913610]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3263158
+anchor_right = 0.5
+anchor_bottom = 0.3263158
+offset_left = 110.0
+offset_top = 9.0
+offset_right = 174.0
+offset_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+text = "🏁"
+metadata/_edit_use_anchors_ = true
+
+[node name="Cancel" type="Button" parent="UserInterface/EmojiPrompt" unique_id=1710627866]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41517857
+anchor_top = 0.8
+anchor_right = 0.41517857
+anchor_bottom = 0.8
+offset_right = 76.56
+offset_bottom = 30.62
+focus_mode = 0
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 16
+text = "Cancel"
+metadata/_edit_use_anchors_ = true
+
+[node name="CountDown" type="Panel" parent="UserInterface" unique_id=1384439720]
+top_level = true
+z_index = 20
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -680.0
+offset_top = 640.0
+offset_right = -600.0
+offset_bottom = 720.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Label" type="Label" parent="UserInterface/CountDown" unique_id=1700594140]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_3e1b8")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmationPrompt" parent="UserInterface" unique_id=1975970629 instance=ExtResource("81_7gfte")]
+layout_mode = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="UserInterface" unique_id=1605810403]
+modulate = Color(1, 1, 1, 0.21568628)
+z_index = -20
+scale = Vector2(5.88, 5.88)
+texture = ExtResource("50_662co")
+metadata/_edit_lock_ = true
+
+[node name="WorldBackPanel" type="Sprite2D" parent="UserInterface" unique_id=514149156]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("82_crcsx")
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="UserInterface" unique_id=289933258]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("83_g0gna")
+metadata/_edit_lock_ = true
+
+[node name="KlappyReaction" parent="UserInterface" unique_id=1688376857 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("84_05f8y")]
+achievment_panel = NodePath("../Robot/AchievementsPanel")
+
+[node name="Unlock Achievements" type="Button" parent="UserInterface" unique_id=1951503100 node_paths=PackedStringArray("manager")]
+visible = false
+layout_mode = 0
+offset_left = 394.0
+offset_top = -242.0
+offset_right = 552.0
+offset_bottom = -218.0
+disabled = true
+text = "Unlock achievements"
+script = ExtResource("85_op1ei")
+manager = NodePath("../../Managers/GameManager")
+
+[node name="Podium" type="Sprite2D" parent="UserInterface" unique_id=1386549650]
+position = Vector2(398, 315.00003)
+scale = Vector2(0.90207714, 1.215)
+texture = ExtResource("86_i7eoh")
+
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=1548217805]
 z_index = 2
 emitting = false
 amount = 128
@@ -2549,7 +2802,7 @@ scale_amount_min = 8.0
 scale_amount_max = 12.0
 hue_variation_max = 0.55
 
-[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="." unique_id=863094518]
+[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=863094518]
 z_index = 2
 position = Vector2(279, 337)
 rotation = 1.5708
@@ -2571,7 +2824,7 @@ scale_amount_max = 12.0
 color = Color(0, 1, 0, 1)
 hue_variation_max = 0.55
 
-[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="." unique_id=642041361]
+[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=642041361]
 z_index = 2
 position = Vector2(303, -332)
 emitting = false
@@ -2589,302 +2842,6 @@ angular_velocity_max = 8.8
 angle_min = 45.0
 angle_max = 90.0
 hue_variation_max = 0.55
-
-[node name="SavingLabel" type="Label" parent="." unique_id=1221552974]
-visible = false
-offset_left = -449.0
-offset_top = -46.0
-offset_right = -294.0
-offset_bottom = 106.0
-theme = ExtResource("2_3e1b8")
-theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
-theme_override_font_sizes/font_size = 16
-text = "Opgeslagen naar:
-\"muziekbestand.mp3\""
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Panel" type="Panel" parent="SavingLabel" unique_id=1245544513]
-show_behind_parent = true
-layout_mode = 0
-offset_left = -8.0
-offset_top = 2.0
-offset_right = 166.0
-offset_bottom = 154.0
-
-[node name="EmailPrompt" type="Panel" parent="." unique_id=823856902]
-top_level = true
-z_index = 20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -636.0
-offset_top = -2000.0
-offset_right = 636.0
-offset_bottom = -1810.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
-
-[node name="Title" type="Label" parent="EmailPrompt" unique_id=1473769607]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -135.0
-offset_top = -101.0
-offset_right = 136.0
-offset_bottom = -22.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 30
-text = "Jouw Email Adress:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="LineEdit" type="LineEdit" parent="EmailPrompt" unique_id=834869394]
-layout_mode = 0
-offset_left = 390.0
-offset_top = 64.0
-offset_right = 890.0
-offset_bottom = 114.0
-theme_override_font_sizes/font_size = 28
-placeholder_text = "jouwemailadress@gmail.com"
-alignment = 1
-emoji_menu_enabled = false
-
-[node name="Enter" type="Button" parent="EmailPrompt" unique_id=1828249719]
-layout_mode = 0
-offset_left = 517.0
-offset_top = 129.0
-offset_right = 756.0
-offset_bottom = 178.0
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-text = "Doorgaan"
-
-[node name="EmojiPrompt" type="Panel" parent="." unique_id=2003787577]
-top_level = true
-z_index = 20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -864.0
-offset_top = -1184.0
-offset_right = -416.0
-offset_bottom = -994.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
-
-[node name="Title" type="Label" parent="EmojiPrompt" unique_id=1833317208]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -135.0
-offset_top = -101.0
-offset_right = 136.0
-offset_bottom = -22.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 30
-text = "Kies een icoon voor de laag"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Emoji_0" type="Button" parent="EmojiPrompt" unique_id=812537394]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = -176.0
-offset_top = 9.0
-offset_right = -112.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "🌱"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_1" type="Button" parent="EmojiPrompt" unique_id=1423779326]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = -103.0
-offset_top = 9.0
-offset_right = -39.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "📜"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_2" type="Button" parent="EmojiPrompt" unique_id=568017860]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = -32.0
-offset_top = 9.0
-offset_right = 32.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "🤩"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_3" type="Button" parent="EmojiPrompt" unique_id=61610416]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = 39.0
-offset_top = 9.0
-offset_right = 103.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "😀"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_4" type="Button" parent="EmojiPrompt" unique_id=13913610]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = 110.0
-offset_top = 9.0
-offset_right = 174.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "🏁"
-metadata/_edit_use_anchors_ = true
-
-[node name="Cancel" type="Button" parent="EmojiPrompt" unique_id=1710627866]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.41517857
-anchor_top = 0.8
-anchor_right = 0.41517857
-anchor_bottom = 0.8
-offset_right = 76.56
-offset_bottom = 30.62
-focus_mode = 0
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 16
-text = "Cancel"
-metadata/_edit_use_anchors_ = true
-
-[node name="CountDown" type="Panel" parent="." unique_id=1384439720]
-top_level = true
-z_index = 20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -680.0
-offset_top = 640.0
-offset_right = -600.0
-offset_bottom = 720.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
-
-[node name="Label" type="Label" parent="CountDown" unique_id=1700594140]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_3e1b8")
-theme_override_font_sizes/font_size = 50
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ConfirmationPrompt" parent="." unique_id=1975970629 instance=ExtResource("81_7gfte")]
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1605810403]
-modulate = Color(1, 1, 1, 0.21568628)
-z_index = -20
-scale = Vector2(5.88, 5.88)
-texture = ExtResource("50_662co")
-metadata/_edit_lock_ = true
-
-[node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=514149156]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -30
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("82_crcsx")
-metadata/_edit_lock_ = true
-
-[node name="Gradient" type="Sprite2D" parent="." unique_id=289933258]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -30
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("83_g0gna")
-metadata/_edit_lock_ = true
-
-[node name="KlappyReaction" parent="." unique_id=1688376857 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("84_05f8y")]
-achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
-
-[node name="Unlock Achievements" type="Button" parent="." unique_id=1951503100 node_paths=PackedStringArray("manager")]
-visible = false
-offset_left = 394.0
-offset_top = -242.0
-offset_right = 552.0
-offset_bottom = -218.0
-disabled = true
-text = "Unlock achievements"
-script = ExtResource("85_op1ei")
-manager = NodePath("../Managers/GameManager")
-
-[node name="Podium" type="Sprite2D" parent="." unique_id=1386549650]
-position = Vector2(398, 315.00003)
-scale = Vector2(0.90207714, 1.215)
-texture = ExtResource("86_i7eoh")
 
 [connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
 [connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="start_recording"]

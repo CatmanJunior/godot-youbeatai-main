@@ -44,13 +44,16 @@ func _ready():
 
 	audio_stream_player.play()
 
-func _process(_delta: float):
+func process_audio_data():
 	var frames = audio_effect_capture.get_frames_available()
 	if frames > 0:
 		var audio_data: PackedVector2Array = audio_effect_capture.get_buffer(frames)
 		volume = _get_volume_from_audio_data(audio_data)
 		frequency = _get_peak_frequency(_perform_fft(_convert_to_mono(audio_data)))
 		EventBus.microphone_data_updated.emit(volume, frequency)
+
+func _process(_delta: float):
+	# process_audio_data()
 
 	stamp_volume = _normalize_to_range(analyzer.get_magnitude_for_frequency_range(0.0, stamp_freq))
 	clap_volume = _normalize_to_range(analyzer.get_magnitude_for_frequency_range(clap_freq, 20000.0))

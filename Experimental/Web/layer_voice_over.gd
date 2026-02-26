@@ -53,7 +53,7 @@ func _ready():
 	gameManager = %GameManager
 	bpmManager = %BpmManager
 	layerManager = %LayerManager
-	songVoiceOver = %SongVoiceOverManager
+	songVoiceOver = %SongVoiceOver
 	uiManager = %UiManager
 	audioPlayerManager = %AudioPlayerManager
 	bpm_up_button = uiManager.bpm_up_button
@@ -83,7 +83,7 @@ func _ready():
 	if microphone_bus_index >= 0:
 		audio_effect_record = AudioServer.get_bus_effect(microphone_bus_index, 1)
 	
-	EventBus.play_pause_toggled.connect(_on_play_pause_pressed)		
+	EventBus.play_pause_toggled.connect(_on_play_pause_pressed)
 	
 	# Setup volume lines
 	if small_line:
@@ -145,7 +145,8 @@ func _on_record_button_pressed():
 		
 		# Play metronome sound
 		
-		audioPlayerManager.play_extra_sfx(gameManager.metronome_sfx)
+		audioPlayerManager.play_sfx(audioPlayerManager.metronome_sfx)
+		start_recording()
 	
 	elif not recording and should_record:
 		# Cancel recording
@@ -155,7 +156,6 @@ func _on_record_button_pressed():
 		_toggle_buttons(true)
 		EventBus.countdown_close_requested.emit()
 
-		songVoiceOver.record_song_button.disabled = false
 
 func _on_play_pause_pressed():
 	"""Handle play/pause button"""
@@ -219,12 +219,8 @@ func on_top_delayed():
 
 func start_recording():
 	"""Start the recording process"""
-	if gameManager:
-		gameManager.metronome_toggle.button_pressed = false
-	
 	var delay = 0.5
-	if gameManager and gameManager.has("recording_delay_slider"):
-		delay = gameManager.recording_delay_slider.value
+	delay = uiManager.recording_delay_slider.value
 	
 	await get_tree().create_timer(delay).timeout
 	do_recording()
@@ -232,8 +228,7 @@ func start_recording():
 	# Reduce submix volume
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
 	
-	if gameManager and gameManager.has_method("close_count_down"):
-		gameManager.close_count_down()
+	EventBus.countdown_close_requested.emit()
 
 func do_recording():
 	"""Actually start recording"""
@@ -284,7 +279,6 @@ func _toggle_buttons(enabled: bool):
 	uiManager.metronome_toggle.disabled = not enabled
 
 	
-
 func set_volume_line(line: Line2D, audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool = false):
 	"""Set volume visualization line"""
 	if not line:

@@ -141,7 +141,8 @@ public partial class Manager : Node
         clapped = false;
         stomped = false;
 
-        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording) if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
+        if (layerLoopToggle.ButtonPressed || SongVoiceOver.instance.recording)
+            if (BpmManager.instance.currentBeat == BpmManager.beatsAmount - 1) NextLayer();
 
         if (BpmManager.instance.currentBeat == 0)
         {
@@ -155,7 +156,7 @@ public partial class Manager : Node
             else if (progressBarValue <= 999) progressBarValue -= 0.5f;
 
             if (!layerLoopToggle.ButtonPressed) UpdateSongVoiceOverPlayBackPosition();
-            
+
             if (currentLayerIndex == 0)
             {
                 RealTimeAudioRecording.instance.OnTop();

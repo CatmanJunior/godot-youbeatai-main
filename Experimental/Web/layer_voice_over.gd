@@ -39,21 +39,25 @@ var audio_delay_total_seconds: float = 0.0
 # State tracking
 var should_update_lines: bool = false
 
-# References to other managers
-var game_manager: Node
-var bpm_manager: Node
-var layer_manager: Node
-var song_voice_over: Node
+# References
+var gameManager: Node
+var bpmManager: Node
+var layerManager: Node
+var songVoiceOver: Node
+var uiManager: Node
+var audioPlayerManager: Node
+
 var is_green_layer: bool = false # true for green, false for purple
 
 func _ready():
-	game_manager = %GameManager
-	bpm_manager = %BpmManager
-	layer_manager = %LayerManager
-	song_voice_over = get_node_or_null("/root/SongVoiceOver")
-
-	bpm_up_button = %UiManager.bpm_up_button
-	bpm_down_button = %UiManager.bpm_down_button
+	gameManager = %GameManager
+	bpmManager = %BpmManager
+	layerManager = %LayerManager
+	songVoiceOver = %SongVoiceOverManager
+	uiManager = %UiManager
+	audioPlayerManager = %AudioPlayerManager
+	bpm_up_button = uiManager.bpm_up_button
+	bpm_down_button = uiManager.bpm_down_button
 
 	# Set up record button
 	if record_layer_button:
@@ -79,11 +83,7 @@ func _ready():
 	if microphone_bus_index >= 0:
 		audio_effect_record = AudioServer.get_bus_effect(microphone_bus_index, 1)
 	
-	# Setup play/pause button
-	if game_manager:
-		var play_pause_button = game_manager.get_node_or_null("%PlayPauseButton")
-		if play_pause_button:
-			play_pause_button.pressed.connect(_on_play_pause_pressed)
+	EventBus.play_pause_toggled.connect(_on_play_pause_pressed)		
 	
 	# Setup volume lines
 	if small_line:
@@ -106,11 +106,11 @@ func _process(delta: float):
 		recording_timer = 0.0
 	
 	# Update progress bar
-	if bpm_manager:
-		var current_beat = bpm_manager.current_beat
-		var beat_timer = bpm_manager.beat_timer
-		var time_per_beat = bpm_manager.time_per_beat
-		var beats_amount = bpm_manager.beats_amount
+	if bpmManager:
+		var current_beat = bpmManager.current_beat
+		var beat_timer = bpmManager.beat_timer
+		var time_per_beat = bpmManager.time_per_beat
+		var beats_amount = bpmManager.beats_amount
 		
 		var progress = float(current_beat + (beat_timer / time_per_beat)) / beats_amount
 		
@@ -129,47 +129,33 @@ func _on_record_button_pressed():
 	"""Handle record button press"""
 	if not recording and not should_record:
 		# Start recording session
-		%UiManager.layer_loop_toggle.button_pressed = false
+		uiManager.layer_loop_toggle.button_pressed = false
 		
 		should_record = true
 		
 		# Disable buttons during recording
-		# bpm_up_button.disabled = true
-		# bpm_down_button.disabled = true
-		# game_manager.set_layer_switch_buttons_enabled(false)
-		# game_manager.play_pause_button.disabled = true
+		_toggle_buttons(false)
 
-		game_manager.show_count_down()
-		# song_voice_over.record_song_button.disabled = true
+		EventBus.countdown_show_requested.emit()
+		# songVoiceOver.record_song_button.disabled = true
 		
 		# Enable metronome and start playback
-		if game_manager:
-			game_manager.metronome_toggle.button_pressed = true
-		if bpm_manager:
-			bpm_manager.current_beat = 0
-			bpm_manager.playing = true
+		bpmManager.current_beat = 0
+		bpmManager.playing = true
 		
 		# Play metronome sound
-		if game_manager and game_manager.has_method("play_extra_sfx"):
-			game_manager.play_extra_sfx(game_manager.metronome_sfx)
+		
+		audioPlayerManager.play_extra_sfx(gameManager.metronome_sfx)
 	
 	elif not recording and should_record:
 		# Cancel recording
 		should_record = false
 		
 		# Re-enable buttons
-		if bpm_up_button:
-			bpm_up_button.disabled = false
-		if bpm_down_button:
-			bpm_down_button.disabled = false
-		if game_manager:
-			game_manager.set_layer_switch_buttons_enabled(true)
-			game_manager.play_pause_button.disabled = false
-			game_manager.metronome_toggle.button_pressed = false
-			if game_manager.has_method("close_count_down"):
-				game_manager.close_count_down()
-		if song_voice_over:
-			song_voice_over.record_song_button.disabled = false
+		_toggle_buttons(true)
+		EventBus.countdown_close_requested.emit()
+
+		songVoiceOver.record_song_button.disabled = false
 
 func _on_play_pause_pressed():
 	"""Handle play/pause button"""
@@ -185,7 +171,7 @@ func _on_play_pause_pressed():
 
 func get_current_layer_index() -> int:
 	"""Get current layer index from layer manager"""
-	return layer_manager.current_layer_index
+	return layerManager.current_layer_index
 
 func set_current_layer_voice_over(voice_over: AudioStream):
 	"""Set the current layer's voice over"""
@@ -233,12 +219,12 @@ func on_top_delayed():
 
 func start_recording():
 	"""Start the recording process"""
-	if game_manager:
-		game_manager.metronome_toggle.button_pressed = false
+	if gameManager:
+		gameManager.metronome_toggle.button_pressed = false
 	
 	var delay = 0.5
-	if game_manager and game_manager.has("recording_delay_slider"):
-		delay = game_manager.recording_delay_slider.value
+	if gameManager and gameManager.has("recording_delay_slider"):
+		delay = gameManager.recording_delay_slider.value
 	
 	await get_tree().create_timer(delay).timeout
 	do_recording()
@@ -246,8 +232,8 @@ func start_recording():
 	# Reduce submix volume
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
 	
-	if game_manager and game_manager.has_method("close_count_down"):
-		game_manager.close_count_down()
+	if gameManager and gameManager.has_method("close_count_down"):
+		gameManager.close_count_down()
 
 func do_recording():
 	"""Actually start recording"""
@@ -272,38 +258,32 @@ func do_stop_recording():
 	finished = true
 	should_update_lines = true
 	
-	if game_manager and game_manager.has("recording_delay_slider"):
-		print(str(game_manager.recording_delay_slider.value) + " seconds delay")
-	
 	stopped_recording.emit()
 
 func stop_recording():
 	"""Stop recording (with delay)"""
 	should_update_progress_bar = false
-	if big_line:
-		big_line.visible = true
+	big_line.visible = true
 	
 	var delay = 0.5
-	if game_manager and game_manager.has("recording_delay_slider"):
-		delay = game_manager.recording_delay_slider.value
+	delay = uiManager.recording_delay_slider.value
 	
 	await get_tree().create_timer(delay).timeout
 	do_stop_recording()
 	
-	# Re-enable buttons
-	if bpm_up_button:
-		bpm_up_button.disabled = false
-	if bpm_down_button:
-		bpm_down_button.disabled = false
-	if game_manager:
-		game_manager.set_layer_switch_buttons_enabled(true)
-		game_manager.play_pause_button.disabled = false
-		game_manager.metronome_toggle.button_pressed = false
-	if song_voice_over:
-		song_voice_over.record_song_button.disabled = false
+	_toggle_buttons(true)
 	
 	# Restore submix volume
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), 0.0)
+
+func _toggle_buttons(enabled: bool):
+	"""Toggle UI buttons on or off"""
+	bpm_up_button.disabled = not enabled
+	bpm_down_button.disabled = not enabled
+	uiManager.play_pause_button.disabled = not enabled
+	uiManager.metronome_toggle.disabled = not enabled
+
+	
 
 func set_volume_line(line: Line2D, audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool = false):
 	"""Set volume visualization line"""

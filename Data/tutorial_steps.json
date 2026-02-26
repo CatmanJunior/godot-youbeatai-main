@@ -1,0 +1,217 @@
+[
+  {
+    "instruction": "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen",
+    "condition": "_cond_clapped",
+    "outcome": "_outcome_intro"
+  },
+  {
+    "instruction": "Deze rode cirkels vormen een kick-ring",
+    "condition": "_cond_tts_done",
+    "outcome": null
+  },
+  {
+    "instruction": "Op deze ring kun je de kick plaatsen van je Beat",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_kick_place"
+  },
+  {
+    "instruction": "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen",
+    "condition": "_cond_playing",
+    "outcome": "_outcome_start_timer_allowed"
+  },
+  {
+    "instruction": "",
+    "condition": "_cond_timer_done",
+    "outcome": null
+  },
+  {
+    "instruction": "Druk op ⏸️ om de Beat op pauze te zetten",
+    "condition": "_cond_not_playing",
+    "outcome": "_outcome_pause_beat"
+  },
+  {
+    "instruction": "Nu jij!, vul nog 2 cirkels door er op te drukken",
+    "condition": "_cond_red_ring_filled",
+    "outcome": "_outcome_red_ring_filled"
+  },
+  {
+    "instruction": "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️",
+    "condition": "_cond_update_red_and_playing",
+    "outcome": "_outcome_timer_2"
+  },
+  {
+    "instruction": "",
+    "condition": "_cond_timer_stopped",
+    "outcome": "_outcome_stomp_setup"
+  },
+  {
+    "instruction": "Stamp 👟 5 keer mee met de kick van je Beat!",
+    "condition": "_cond_stomped_enough",
+    "outcome": "_outcome_stomp_done"
+  },
+  {
+    "instruction": "Wow super gedaan!",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_noop"
+  },
+  {
+    "instruction": "Op naar level 2!",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_show_orange_ring"
+  },
+  {
+    "instruction": "Deze oranje ring is de clap-ring",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_clap_ring_setup"
+  },
+  {
+    "instruction": "Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!",
+    "condition": "_cond_playing",
+    "outcome": "_outcome_clap_listen"
+  },
+  {
+    "instruction": "",
+    "condition": "_cond_timer_done",
+    "outcome": null
+  },
+  {
+    "instruction": "Klinkt al leuk!",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_stop_playing"
+  },
+  {
+    "instruction": "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken",
+    "condition": "_cond_orange_ring_filled",
+    "outcome": "_outcome_orange_ring_filled"
+  },
+  {
+    "instruction": "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken",
+    "condition": "_cond_circle_removed",
+    "outcome": "_outcome_circle_removed"
+  },
+  {
+    "instruction": "Ik ben benieuwd laat mij eens horen! ▶️",
+    "condition": "_cond_update_orange_and_playing",
+    "outcome": "_outcome_listen_again"
+  },
+  {
+    "instruction": "",
+    "condition": "_cond_timer_done",
+    "outcome": "_outcome_clap_count_setup"
+  },
+  {
+    "instruction": "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels",
+    "condition": "_cond_clapped_enough",
+    "outcome": "_outcome_clap_done"
+  },
+  {
+    "instruction": "Super goed gedaan, je hebt talent!",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_show_green_layer"
+  },
+  {
+    "instruction": "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
+    "condition": "_cond_green_bear",
+    "outcome": "_outcome_green_bear"
+  },
+  {
+    "instruction": "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
+    "condition": "_cond_green_record_or_tts",
+    "outcome": null
+  },
+  {
+    "instruction": "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
+    "condition": "_cond_green_record_pressed",
+    "outcome": "_outcome_green_record_pressed"
+  },
+  {
+    "instruction": "4",
+    "condition": "_cond_tts_done",
+    "outcome": null
+  },
+  {
+    "instruction": "3",
+    "condition": "_cond_tts_done",
+    "outcome": null
+  },
+  {
+    "instruction": "2",
+    "condition": "_cond_tts_done",
+    "outcome": null
+  },
+  {
+    "instruction": "1",
+    "condition": "_cond_tts_done",
+    "outcome": null
+  },
+  {
+    "instruction": "",
+    "condition": "_cond_voice_over_finished",
+    "outcome": "_outcome_voice_over_done"
+  },
+  {
+    "instruction": "",
+    "condition": "_cond_timer_stopped",
+    "outcome": null
+  },
+  {
+    "instruction": "Super gedaan, het klinkt heel leuk",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_stop_playing"
+  },
+  {
+    "instruction": "Laten we je sample veranderen!",
+    "condition": "_cond_save_knob_and_tts",
+    "outcome": "_outcome_show_triangle"
+  },
+  {
+    "instruction": "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen",
+    "condition": "_cond_tts_done",
+    "outcome": null
+  },
+  {
+    "instruction": "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven",
+    "condition": "_cond_tts_done",
+    "outcome": "_outcome_show_piano_area"
+  },
+  {
+    "instruction": "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje ",
+    "condition": "_cond_false",
+    "outcome": "_outcome_move_to_star_1"
+  },
+  {
+    "instruction": "Luister maar eens!▶️",
+    "condition": "_cond_playing",
+    "outcome": "_outcome_listen_piano"
+  },
+  {
+    "instruction": "Dit geeft een hele andere sfeer aan je beat",
+    "condition": "_cond_false",
+    "outcome": "_outcome_show_in_between"
+  },
+  {
+    "instruction": "Beweeg het grijze rondje weer naar het 🌟 sterretje",
+    "condition": "_cond_false",
+    "outcome": "_outcome_move_in_between"
+  },
+  {
+    "instruction": "Zo krijg je een mix tussen jouw sample en het instrument!",
+    "condition": "_cond_false",
+    "outcome": "_outcome_show_outside"
+  },
+  {
+    "instruction": "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje",
+    "condition": "_cond_false",
+    "outcome": "_outcome_move_outside"
+  },
+  {
+    "instruction": "Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer",
+    "condition": "_cond_false",
+    "outcome": null
+  },
+  {
+    "instruction": "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!",
+    "condition": "_cond_false",
+    "outcome": "_outcome_end_tutorial"
+  }
+]

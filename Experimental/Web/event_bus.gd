@@ -10,6 +10,7 @@ signal playing_changed(playing: bool)
 signal bpm_up_requested(value: int)
 signal bpm_down_requested(value: int)
 signal bpm_set_requested(value: int)
+signal playing_change_requested(playing: bool)
 signal play_pause_toggled()
 
 # ── Beat Clock ──

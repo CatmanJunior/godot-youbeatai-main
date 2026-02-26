@@ -21,12 +21,13 @@ var recording_timer: float = 0.0
 var recording_length: float = 0.0
 var finished: bool = false
 
-# References to other managers
+# References
 var game_manager: Node
 var bpm_manager: Node
 var layer_manager: Node
 var layer_voice_over_0: Node
 var layer_voice_over_1: Node
+var uiManager: Node
 
 func _ready():
 	game_manager = %GameManager
@@ -34,6 +35,7 @@ func _ready():
 	layer_manager = %LayerManager
 	layer_voice_over_0 = %LayerVoiceOver0
 	layer_voice_over_1 = %LayerVoiceOver1
+	uiManager = %UiManager
 	
 	# Setup record button
 	if record_song_button:
@@ -175,7 +177,7 @@ func stop_recording():
 		langzamer_button.disabled = false
 	if game_manager:
 		game_manager.set_layer_switch_buttons_enabled(true)
-		game_manager.play_pause_button.disabled = false
+		uiManager.play_pause_button.disabled = false
 		record_song_button.disabled = false
 	
 	if layer_voice_over_0:

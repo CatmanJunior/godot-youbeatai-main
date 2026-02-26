@@ -58,7 +58,6 @@
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="45_dmvtp"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="49_dll78"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_662co"]
-[ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="51_3b1sv"]
 [ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="53_txw87"]
 [ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="54_wssgk"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="57_7pcuk"]
@@ -69,6 +68,7 @@
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="60_uwd3s"]
 [ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Experimental/Web/colors.gd" id="61_p5fwe"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="62_koofn"]
+[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Experimental/Web/microphone_capture.gd" id="62_pyso5"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="63_0ayl2"]
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Experimental/Web/template_manager.gd" id="64_hxd57"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
@@ -808,7 +808,7 @@ metadata/_edit_pinned_properties_ = [&"colors"]
 
 [node name="MicrophoneCapture" type="Node" parent="Managers" unique_id=634715111]
 unique_name_in_owner = true
-script = ExtResource("51_3b1sv")
+script = ExtResource("62_pyso5")
 
 [node name="TemplateManager" type="Node" parent="Managers" unique_id=612415882 node_paths=PackedStringArray("template_button", "left_template_button", "right_template_button", "show_template_button", "set_template_button")]
 unique_name_in_owner = true
@@ -833,27 +833,6 @@ progress_bar = NodePath("../../BeatRingPivotPoint/SwitchLayerButtons/RealTimeAud
 record_song_button = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton/Button0")
 record_song_sprite = NodePath("../../UserInterface/Buttons/MicButtons/RecordMasterButton")
 
-[node name="LayerVoiceOver1" type="Node" parent="Managers" unique_id=447489058 node_paths=PackedStringArray("texture_progress_bar", "record_layer_button", "small_line", "big_line")]
-unique_name_in_owner = true
-script = ExtResource("66_pyso5")
-texture_progress_bar = NodePath("../../BeatRingPivotPoint/TextureProgressBar1")
-record_layer_button = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/Button1")
-small_line = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/SmallLine1")
-big_line = NodePath("../../BeatRingPivotPoint/BigLine1")
-big_line_base_dist = 70
-big_line_volume_dist = 20
-big_line_reversed = true
-
-[node name="synth_line" parent="Managers/LayerVoiceOver1" unique_id=1143707371 instance=ExtResource("62_koofn")]
-volume_db = -7.0
-bus = &"Purple"
-instrument = 6
-
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
-bpmManager = NodePath("../../../../BpmManager")
-combine_threshold = 1.0
-octaveRange = Vector2i(4, 6)
-
 [node name="LayerVoiceOver0" type="Node" parent="Managers" unique_id=2078734728 node_paths=PackedStringArray("texture_progress_bar", "record_layer_button", "small_line", "big_line")]
 unique_name_in_owner = true
 script = ExtResource("66_pyso5")
@@ -874,6 +853,27 @@ bpmManager = NodePath("../../../../BpmManager")
 combine_threshold = 0.0
 octaveRange = Vector2i(2, 8)
 beats_amount_scaler = 0.5
+
+[node name="LayerVoiceOver1" type="Node" parent="Managers" unique_id=447489058 node_paths=PackedStringArray("texture_progress_bar", "record_layer_button", "small_line", "big_line")]
+unique_name_in_owner = true
+script = ExtResource("66_pyso5")
+texture_progress_bar = NodePath("../../BeatRingPivotPoint/TextureProgressBar1")
+record_layer_button = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/Button1")
+small_line = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/SmallLine1")
+big_line = NodePath("../../BeatRingPivotPoint/BigLine1")
+big_line_base_dist = 70
+big_line_volume_dist = 20
+big_line_reversed = true
+
+[node name="synth_line" parent="Managers/LayerVoiceOver1" unique_id=1143707371 instance=ExtResource("62_koofn")]
+volume_db = -7.0
+bus = &"Purple"
+instrument = 6
+
+[node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
+bpmManager = NodePath("../../../../BpmManager")
+combine_threshold = 1.0
+octaveRange = Vector2i(4, 6)
 
 [node name="SongVoiceOver" type="Node" parent="Managers" unique_id=1295732403]
 unique_name_in_owner = true
@@ -2900,8 +2900,8 @@ texture = ExtResource("86_i7eoh")
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton3" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_mouse_up" from="UserInterface/ChaosPad/Triangle/KnobSprite" to="Managers/GameManager/MixingManager" method="samples_mixing_update_volumes"]
 
-[editable path="Managers/LayerVoiceOver1/synth_line"]
 [editable path="Managers/LayerVoiceOver0/bass_line"]
+[editable path="Managers/LayerVoiceOver1/synth_line"]
 [editable path="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker"]
 [editable path="UserInterface/ChaosPad"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]

@@ -27,10 +27,6 @@ var colors: Array[Color] = []
 # Metronome
 @export var metronome_sfx: AudioStream
 
-# Signals
-signal should_clap
-signal should_stomp
-
 func _ready():
 	# Initialize beat_actives array [4 rings][beats_amount beats]
 	for ring in range(4):
@@ -142,10 +138,6 @@ func on_beat():
 			if beat_actives[ring][current_beat]:
 				EventBus.play_ring_requested.emit(ring)
 	
-	# Reset clap/stomp state
-	clapped = false
-	stomped = false
-	
 	# Update progress bar value
 	if current_beat == 0:
 		if progress_bar_value < 50.0:
@@ -162,12 +154,10 @@ func on_beat():
 	
 	var clap_active = beat_actives[1][next_beat] if next_beat < beat_actives[1].size() else false
 	if clap_active:
-		should_clap.emit()
 		EventBus.should_clap.emit()
 	
 	var stomp_active = beat_actives[0][next_beat] if next_beat < beat_actives[0].size() else false
 	if stomp_active:
-		should_stomp.emit()
 		EventBus.should_stomp.emit()
 
 func toggle_beat(ring: int, beat: int):

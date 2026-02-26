@@ -3,6 +3,8 @@ extends Node
 
 var time: float = 0.0
 
+var first_tts_done: bool = false
+
 func _exit_tree():
 	# $Achievements.reset()
 	pass
@@ -26,6 +28,16 @@ func deferred_setup():
 
 func utterance_end(utterance_id: int):
 	EventBus.utterance_ended.emit(utterance_id)
+
+
+func text_without_emoticons(text: String) -> String:
+	var emoticon_pattern = r"(:\)|:\(|:D|:P|;\)|<3|:\*|:\|)"
+	var regex = RegEx.new()
+	regex.compile(emoticon_pattern)
+	return regex.sub(text, "")
+
+func show_countdown():
+	EventBus.countdown_show_requested.emit()
 
 func _process(delta: float):
 	time += delta

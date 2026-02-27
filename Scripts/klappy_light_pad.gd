@@ -33,8 +33,13 @@ func _on_gui_input(event: InputEvent) -> void:
 		AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
 		AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
 		AudioServer.set_bus_effect_enabled(bus_index, 4, event.is_pressed())
+		
+		if event.is_released():
+			var pos = Vector2(100, 100)
+			$cursor.position = pos
+			klappyLight.color = Color("#ffe8aa")
 	
-	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT: #hier logica touchscreen bij
+	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
 		var pos = event.position
 		
 		pos.x = clamp(pos.x, 0, size.x) #zorgt dat je binnen het grid blijft
@@ -45,17 +50,20 @@ func _on_gui_input(event: InputEvent) -> void:
 		var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
 		var y_percent = 1.0 - (pos.y / size.y)
 		
-		phaser.depth = 1.0 - x_percent #kijk hier zo even naar
+		phaser.depth = 1.0 - x_percent 
 		distortion.drive = x_percent
-		highpass.cutoff_hz = lerp(40.0, 1000.0, y_percent)
+		highpass.cutoff_hz = lerp(40.0, 1000.0, y_percent) #waardes moeten anders
 		lowpass.cutoff_hz = lerp(4000.0, 40.0, y_percent)
 		
 		#print(pos)
 		
 		#klappys lampje word veranderd van kleur op basis van muis positie in het vak
-		var color := Color("#ffe8aa")
+		var color := Color("#ffe8aa") #wanneer niet lampje ingedrukt moet deze eig standaard
 		var strength := 0.8
 #het midden is 100 dus vanaf daar meten (0-200)
+
+		#if !event.is_pressed(): #dit werkt nog nie
+		#	color = "#ffe8aa"
 		if pos.x >= 130:
 			color = color.lerp(Color.RED, strength)
 		if pos.x <= 70:
@@ -66,3 +74,5 @@ func _on_gui_input(event: InputEvent) -> void:
 			color = color.lerp(Color.YELLOW, strength)
 
 		klappyLight.color = color 
+		
+	

@@ -52,8 +52,8 @@ func _on_gui_input(event: InputEvent) -> void:
 		
 		phaser.depth = 1.0 - x_percent 
 		distortion.drive = x_percent
-		highpass.cutoff_hz = lerp(40.0, 1000.0, y_percent) #waardes moeten anders
-		lowpass.cutoff_hz = lerp(4000.0, 40.0, y_percent)
+		highpass.cutoff_hz = lerp(20.0, 200.0, y_percent) #waardes moeten anders
+		lowpass.cutoff_hz = lerp(1000.0, 200.0, y_percent)
 		
 		#print(pos)
 		
@@ -61,9 +61,6 @@ func _on_gui_input(event: InputEvent) -> void:
 		var color := Color("#ffe8aa") #wanneer niet lampje ingedrukt moet deze eig standaard
 		var strength := 0.8
 #het midden is 100 dus vanaf daar meten (0-200)
-
-		#if !event.is_pressed(): #dit werkt nog nie
-		#	color = "#ffe8aa"
 		if pos.x >= 130:
 			color = color.lerp(Color.RED, strength)
 		if pos.x <= 70:
@@ -74,5 +71,4 @@ func _on_gui_input(event: InputEvent) -> void:
 			color = color.lerp(Color.YELLOW, strength)
 
 		klappyLight.color = color 
-		
-	
+		$cursor/Trail.default_color = color

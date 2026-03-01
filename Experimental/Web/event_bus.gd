@@ -49,6 +49,7 @@ signal ring_selected(ring: int)
 signal synth_selected(synth: int)
 signal mixing_weights_changed(master_volume: float, weights: Vector3)
 signal volume_changed(ring: int, volume_db: float)
+signal set_ring_volume_requested(ring: int, volume: Vector3)
 
 # ── Particles ──
 signal particles_requested(position: Vector2, color: Color)

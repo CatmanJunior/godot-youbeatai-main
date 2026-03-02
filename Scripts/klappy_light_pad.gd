@@ -34,7 +34,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
 		AudioServer.set_bus_effect_enabled(bus_index, 4, event.is_pressed())
 		
-		if event.is_released():
+		if event.is_released(): #wanneer muis losgelaten word pos 100,100 en klaplight normaal 
 			var pos = Vector2(100, 100)
 			$cursor.position = pos
 			klappyLight.color = Color("#ffe8aa")
@@ -58,7 +58,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		#print(pos)
 		
 		#klappys lampje word veranderd van kleur op basis van muis positie in het vak
-		var color := Color("#ffe8aa") #wanneer niet lampje ingedrukt moet deze eig standaard
+		var color := Color("#ffe8aa")
 		var strength := 0.8
 #het midden is 100 dus vanaf daar meten (0-200)
 		if pos.x >= 130:
@@ -71,4 +71,4 @@ func _on_gui_input(event: InputEvent) -> void:
 			color = color.lerp(Color.YELLOW, strength)
 
 		klappyLight.color = color 
-		$cursor/Trail.default_color = color
+		$cursor/Trail.default_color = color #trail word dezelfde kleur als light

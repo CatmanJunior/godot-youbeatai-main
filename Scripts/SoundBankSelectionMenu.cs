@@ -20,7 +20,7 @@ public partial class SoundBankSelectionMenu : Panel
 
     bool chosenLimitForBoth => themeLimitReached && emotionLimitReached;
 
-    [Export] CheckButton[] emotionToggles;
+    [Export] Button[] emotionToggles; //checkbutton moet een button array wordne
     [Export] CheckButton[] themeToggles;
 
     [Export] Button gebruikButton;
@@ -42,7 +42,7 @@ public partial class SoundBankSelectionMenu : Panel
     Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
     Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
 
-    void OnEmotionToggle(CheckButton toggle, Label label)
+    void OnEmotionToggle(Button toggle, Label label)
     {
         if (emotionLimitReached)
         {
@@ -98,8 +98,8 @@ public partial class SoundBankSelectionMenu : Panel
             {
                 if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
                 {
-                    OnEmotionLabel(emotionToggle, label);
-                }
+                    //OnEmotionLabel(emotionToggle, label); 
+                } //dit is om te deselecteren if im correct? moet dus wel in game terug komen
             };
         }
 

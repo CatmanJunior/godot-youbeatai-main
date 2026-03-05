@@ -539,7 +539,7 @@ func _update_drag_and_drop():
 		draganddropthing.modulate = Color(1, 1, 1, 0)
 
 func _update_mic_meter():
-		mic_meter.value = %MicrophoneCapture.volume
+		mic_meter.value = %MicrophoneCapture.get_microphone_volume() * 100.0
 
 func update_layer_buttons_delayed():
 	# Implementation - update layer button UI

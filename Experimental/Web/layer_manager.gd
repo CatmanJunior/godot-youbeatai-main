@@ -81,7 +81,7 @@ func add_layer(layer: int, emoji: String = ""):
 	
 	sort_layer_buttons_in_container()
 	update_layer_buttons_user_interface()
-	switch_layer_next_frame(layer)
+
 
 func remove_layer(layer: int):
 	"""Remove a layer at the specified index"""

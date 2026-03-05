@@ -50,7 +50,11 @@ var song_mixing_knob_position: Vector2
 var current_layer_index: int = 0
 var colors: Array[Color] = []
 
+var default_knob_position: Vector2
+
 func _ready():
+	default_knob_position = get_default_knob_position()
+
 	# Connect to EventBus so other scripts don't need a direct reference
 	EventBus.ring_selected.connect(samples_mixing_change_ring)
 	EventBus.synth_selected.connect(synth_mixing_change_synth)
@@ -72,8 +76,9 @@ func _on_layer_changed(layer_index: int, _new_layer_beats: Array):
 
 func _on_layer_added(_layer_index: int, _emoji: String):
 	"""Insert default knob positions for a new layer"""
-	samples_mixing_knob_positions.insert(_layer_index, range(4).map(get_default_knob_position))
-	synth_mixing_knob_positions.insert(_layer_index, range(2).map(get_default_knob_position))
+	print("Layer added, inserting default knob positions at index %s" % current_layer_index)
+	samples_mixing_knob_positions.insert(current_layer_index, [default_knob_position, default_knob_position, default_knob_position, default_knob_position])
+	synth_mixing_knob_positions.insert(current_layer_index, [default_knob_position, default_knob_position])
 
 func _on_layer_removed(layer_index: int):
 	"""Remove knob positions when a layer is deleted"""
@@ -83,16 +88,20 @@ func _on_layer_removed(layer_index: int):
 		synth_mixing_knob_positions.remove_at(layer_index)
 
 func _prepare_clipboard():
-	samples_mixing_knob_positions_clipboard = range(4).map(get_default_knob_position)
-	synth_mixing_knob_positions_clipboard =  range(2).map(get_default_knob_position)
-
-
-
+	for i in range(4):
+		samples_mixing_knob_positions_clipboard.append(default_knob_position)
+	for i in range(2):
+		synth_mixing_knob_positions_clipboard.append(default_knob_position)
+	
 func _on_ready_mixing():
 	_prepare_clipboard()
 
 	song_mixing_knob_position = chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
-	
+
+	# Initialize knob position arrays for the first layer
+	samples_mixing_knob_positions.append([default_knob_position, default_knob_position, default_knob_position, default_knob_position])
+	synth_mixing_knob_positions.append([default_knob_position, default_knob_position])
+
 	_change_ring(chaos_pad_mode, 0)
 
 func _change_ring(mode: ChaosPadMode, new_index: int = 0):
@@ -180,7 +189,7 @@ func samples_mixing_update_volumes(master_volume: float, given_weights: Vector3)
 	var new_volume = weights_to_use * master_volume
 
 	
-	EventBus.set_ring_volume_requested.emit(ring, new_volume) 
+	EventBus.set_ring_volume_requested.emit(ring, new_volume)
 
 # SYNTH MIXING =============================================================
 
@@ -317,7 +326,7 @@ func song_mixing_update_volumes_for_song(master_volume: float):
 
 # UTILITY ==================================================================
 
-func get_default_knob_position() -> Array[Vector2]:
+func get_default_knob_position() -> Vector2:
 	var centered_pos = chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
 	return centered_pos
 

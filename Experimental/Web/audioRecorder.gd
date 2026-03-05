@@ -67,13 +67,10 @@ func stop_recording() -> void:
 	recording_length = 0.0
 	actual_sound_length = 0.0
 	
-	var player = %AudioPlayerManager.audio_players_rec[current_recording_ring]
-	player.stop()
-	player.stream = recorded_audio
-		
+	EventBus.request_set_stream.emit(current_recording_ring, 2, recorded_audio)
 
 func get_recording_volume() -> float:
-	return %MicrophoneCapture.volume
+	return %MicrophoneCapture.get_microphone_volume()
 
 func _ready():
 	var bus_index: int = AudioServer.get_bus_index("Microphone")

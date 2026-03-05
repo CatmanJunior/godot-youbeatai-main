@@ -28,6 +28,7 @@ func _ready():
 	EventBus.set_ring_volume_requested.connect(set_ring_volume)
 	EventBus.play_sfx_requested.connect(play_sfx)
 	EventBus.beat_triggered.connect(_on_beat_pitch_randomization)
+	EventBus.request_set_stream.connect(_on_request_set_stream)
 
 func _init_sfx_player():
 	sfx_player = AudioStreamPlayer.new()
@@ -71,12 +72,20 @@ func play_sfx(stream: AudioStream):
 		sfx_player.stream = stream
 		sfx_player.play()
 
+
+#Signal handlers
 func _on_beat_pitch_randomization(_beat: int):
 	if audio_players.size() > 3:
 		var strength = 0.2
 		var pitch = 1.0 + (randf() - 0.5) * strength
 		audio_players[3].pitch_scale = pitch
 
+func _on_request_set_stream(ring: int, track: int, audio: AudioStream):
+	if ring >= 0 and ring < sync_streams.size():
+		sync_streams[ring].set_sync_stream(track, audio)
+
+
+#Helper
 func _create_silent_stream() -> AudioStreamWAV:
 	"""Helper: Create a silent audio stream for recording layer when no recording is present"""
 	var wav = AudioStreamWAV.new()
@@ -87,17 +96,6 @@ func _create_silent_stream() -> AudioStreamWAV:
 	wav.data = PackedByteArray([0, 0]) # single silent sample, loops
 	return wav
 
-func set_main_stream(ring: int, stream: AudioStream):
-	if ring >= 0 and ring < sync_streams.size():
-		sync_streams[ring].set_sync_stream(0, stream)
-
-func set_alt_stream(ring: int, stream: AudioStream):
-	if ring >= 0 and ring < sync_streams.size():
-		sync_streams[ring].set_sync_stream(1, stream)
-
-func set_rec_stream(ring: int, stream: AudioStream):
-	if ring >= 0 and ring < sync_streams.size():
-		sync_streams[ring].set_sync_stream(2, stream)
 
 func get_ring_volume(ring: int) -> float:
 	"""Get the volume for a specific ring bus"""
@@ -121,4 +119,3 @@ func set_ring_volume(ring: int, weights: Vector3):
 	sync_streams[ring].set_sync_stream_volume(0, linear_to_db(max(sqrt(w.x), 0.0001)))
 	sync_streams[ring].set_sync_stream_volume(1, linear_to_db(max(sqrt(w.y), 0.0001)))
 	sync_streams[ring].set_sync_stream_volume(2, linear_to_db(max(sqrt(w.z), 0.0001)))
-

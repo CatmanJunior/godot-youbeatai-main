@@ -23,7 +23,6 @@ func deferred_setup():
 	%MixingManager.samples_mixing_re_apply_remembered_volumes()
 	%MixingManager.synth_mixing_re_apply_remembered_volumes()
 	# %Achievements.on_ready()
-	%MixingManager.on_ready_mixing()
 	%UiManager.update_layer_buttons_delayed()
 
 func utterance_end(utterance_id: int):

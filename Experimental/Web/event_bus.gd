@@ -51,6 +51,10 @@ signal mixing_weights_changed(master_volume: float, weights: Vector3)
 signal volume_changed(ring: int, volume_db: float)
 signal set_ring_volume_requested(ring: int, volume: Vector3)
 
+# ── Chaos Pad ──
+signal chaos_pad_dragging(knob_position: Vector2, master_volume: float, weights: Vector3)
+signal chaos_pad_released(master_volume: float, weights: Vector3)
+
 # ── Particles ──
 signal particles_requested(position: Vector2, color: Color)
 signal progress_bar_particles_requested()
@@ -70,6 +74,7 @@ signal layer_clear_requested()
 # ── Recording ──
 signal recording_started()
 signal recording_stopped(audio: AudioStream)
+signal request_set_stream(ring: int, track: int, audio: AudioStream) #track is 0 for main, 1 for alt, 2 for recording
 signal master_recording_started()
 signal master_recording_stopped()
 signal microphone_data_updated(volume: float, frequency: float)

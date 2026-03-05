@@ -101,10 +101,6 @@
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
 
-[sub_resource type="Curve" id="Curve_11cd6"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
-
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
 buffer_length = 0.1
 
@@ -419,8 +415,6 @@ main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIc
 alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 mic_button_location = NodePath("../../../UserInterface/ChaosPad/MicButtonLocation")
 mic_buttons = [NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton2"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton3"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
-synth_mixing_line_scale_curve = SubResource("Curve_11cd6")
-synth_mixing_line_color_curve = SubResource("Curve_11cd6")
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/GameManager" unique_id=550979596]
 unique_name_in_owner = true
@@ -2855,7 +2849,6 @@ hue_variation_max = 0.55
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton1" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton2" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton3" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
-[connection signal="on_mouse_up" from="UserInterface/ChaosPad/Triangle/KnobSprite" to="Managers/GameManager/MixingManager" method="samples_mixing_update_volumes"]
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]
 [editable path="Managers/LayerVoiceOver1/synth_line"]

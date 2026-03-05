@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://b8n1g4l4jrv6d"]
+[gd_scene load_steps=29 format=3 uid="uid://b8n1g4l4jrv6d"]
 
 [ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_avjdi"]
@@ -34,6 +34,8 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_grpai"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18n7q"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1x81"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k11aq"]
@@ -49,16 +51,18 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
-corner_radius_top_left = 50
-corner_radius_top_right = 50
-corner_radius_bottom_right = 50
-corner_radius_bottom_left = 50
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
 
 [sub_resource type="Theme" id="Theme_7oxff"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h74sy"]
+
 [node name="scene" type="Node2D"]
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "button8", "button16", "button32")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "emotie1", "emotie2", "thema1", "thema2", "gebruikButton", "gevondenSoundBankLabel", "button8", "button16", "button32")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -74,7 +78,11 @@ scale = Vector2(1.29699, 1.29699)
 theme_override_styles/panel = SubResource("StyleBoxEmpty_8jt4r")
 script = ExtResource("1_l0fe3")
 emotionToggles = [NodePath("emoties/emotion1/Button"), NodePath("emoties/emotion2/Button"), NodePath("emoties/emotion3/Button"), NodePath("emoties/emotion4/Button"), NodePath("emoties/emotion5/Button"), NodePath("emoties/emotion6/Button"), NodePath("emoties/emotion7/Button")]
-themeToggles = [NodePath("themas/theme1/toggle"), NodePath("themas/theme2/toggle"), NodePath("themas/theme3/toggle"), NodePath("themas/theme4/toggle"), NodePath("themas/theme5/toggle"), NodePath("themas/theme6/toggle"), NodePath("themas/theme7/toggle"), NodePath("themas/theme8/toggle"), NodePath("themas/theme9/toggle"), NodePath("themas/theme10/toggle"), NodePath("themas/theme11/toggle"), NodePath("themas/theme12/toggle")]
+themeToggles = [NodePath("themas/theme1/Button"), NodePath("themas/theme2/Button"), NodePath("themas/theme3/Button"), NodePath("themas/theme4/Button"), NodePath("themas/theme5/Button"), NodePath("themas/theme6/Button"), NodePath("themas/theme7/Button"), NodePath("themas/theme8/Button"), NodePath("themas/theme9/Button"), NodePath("themas/theme10/Button"), NodePath("themas/theme11/Button"), NodePath("themas/theme12/Button")]
+emotie1 = NodePath("../Label")
+emotie2 = NodePath("../Label2")
+thema1 = NodePath("../Label3")
+thema2 = NodePath("../Label4")
 gebruikButton = NodePath("Ready/Ready")
 gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
 button8 = NodePath("beats/8/Button")
@@ -123,14 +131,6 @@ text = "🤔"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion1"]
-layout_mode = 0
-offset_left = -1.0
-offset_top = 31.0
-offset_right = 43.0
-offset_bottom = 55.0
-focus_mode = 0
-
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion1"]
 layout_mode = 0
 offset_left = 3.85508
@@ -154,14 +154,6 @@ text = "😢"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion2"]
-layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
-
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion2"]
 layout_mode = 0
 offset_left = 3.85508
@@ -183,14 +175,6 @@ theme_override_font_sizes/font_size = 28
 text = "😁"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion3"]
-layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
 
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion3"]
 layout_mode = 0
@@ -214,14 +198,6 @@ text = "😍"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion4"]
-layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
-
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion4"]
 layout_mode = 0
 offset_left = 3.85508
@@ -243,14 +219,6 @@ theme_override_font_sizes/font_size = 28
 text = "😵‍💫"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion5"]
-layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
 
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion5"]
 layout_mode = 0
@@ -274,14 +242,6 @@ text = "😳"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion6"]
-layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
-
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion6"]
 layout_mode = 0
 offset_left = 3.85508
@@ -303,14 +263,6 @@ theme_override_font_sizes/font_size = 28
 text = "😡"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/emoties/emotion7"]
-layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
 
 [node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion7"]
 layout_mode = 0
@@ -363,13 +315,14 @@ text = "🫶"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme1"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme1"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 31.0
-offset_right = 43.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme2" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -384,13 +337,14 @@ text = "🎂"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme2"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme2"]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme3" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -405,13 +359,14 @@ text = "🦄"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme3"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme3"]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme4" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -426,13 +381,14 @@ text = "🍽"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme4"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme4"]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme5" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -447,13 +403,14 @@ text = "🌍"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme5"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme5"]
 layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme6" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -468,13 +425,14 @@ text = "🌴"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme6"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme6"]
 layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme7" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -489,13 +447,14 @@ text = "💔"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme7"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme7"]
 layout_mode = 0
-offset_left = -1.0
-offset_top = 31.0
-offset_right = 43.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme8" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -510,13 +469,14 @@ text = "🪦"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme8"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme8"]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme9" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -531,13 +491,14 @@ text = "🐾"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme9"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme9"]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme10" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -552,13 +513,14 @@ text = "⏳️"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme10"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme10"]
 layout_mode = 0
-offset_left = -2.0
-offset_top = 31.0
-offset_right = 42.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme11" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -573,13 +535,14 @@ text = "🏆"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme11"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme11"]
 layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="theme12" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -594,13 +557,14 @@ text = "🎮"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/themas/theme12"]
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme12"]
 layout_mode = 0
-offset_left = -3.0
-offset_top = 31.0
-offset_right = 41.0
-offset_bottom = 55.0
-focus_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
 
 [node name="beats" type="Panel" parent="SoundBankSelectionMenu"]
 layout_mode = 1
@@ -755,7 +719,7 @@ layout_mode = 0
 offset_left = 597.53735
 offset_top = 334.6209
 offset_right = 797.5374
-offset_bottom = 414.6209
+offset_bottom = 413.26456
 theme_override_styles/panel = SubResource("StyleBoxFlat_g2pn6")
 
 [node name="Ready" type="Button" parent="SoundBankSelectionMenu/Ready"]
@@ -769,9 +733,11 @@ theme = SubResource("Theme_7oxff")
 theme_type_variation = &"FlatButton"
 theme_override_constants/line_spacing = -10
 theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h74sy")
 disabled = true
 text = "Ready to
 start ?"
+flat = true
 icon_alignment = 1
 
 [node name="Label" type="Label" parent="SoundBankSelectionMenu"]
@@ -847,6 +813,42 @@ theme_override_font_sizes/font_size = 26
 text = "Wat voor liedje wil je?"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -73.0
+offset_top = -223.0
+offset_right = 27.0
+offset_bottom = -123.0
+theme_override_font_sizes/font_size = 30
+text = "."
+
+[node name="Label2" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -12.0
+offset_top = -223.0
+offset_right = 88.0
+offset_bottom = -123.0
+theme_override_font_sizes/font_size = 30
+text = "."
+
+[node name="Label3" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -73.0
+offset_top = 11.0
+offset_right = 27.0
+offset_bottom = 111.0
+theme_override_font_sizes/font_size = 30
+text = "."
+
+[node name="Label4" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -12.0
+offset_top = 11.0
+offset_right = 88.0
+offset_bottom = 111.0
+theme_override_font_sizes/font_size = 30
+text = "."
 
 [connection signal="pressed" from="SoundBankSelectionMenu/beats/8/Button" to="SoundBankSelectionMenu/beats" method="_on_button_pressed"]
 [connection signal="pressed" from="SoundBankSelectionMenu/beats/16/Button2" to="SoundBankSelectionMenu/beats" method="_on_button_2_pressed"]

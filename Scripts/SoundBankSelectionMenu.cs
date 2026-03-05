@@ -21,7 +21,16 @@ public partial class SoundBankSelectionMenu : Panel
     bool chosenLimitForBoth => themeLimitReached && emotionLimitReached;
 
     [Export] Button[] emotionToggles; //checkbutton moet een button array wordne
-    [Export] CheckButton[] themeToggles;
+    [Export] Button[] themeToggles;
+
+    [Export] Label emotie1;
+    [Export] Label emotie2;
+
+    [Export] Label thema1;
+    [Export] Label thema2;
+
+    bool selected1 = false;
+
 
     [Export] Button gebruikButton;
     [Export] Label gevondenSoundBankLabel;
@@ -44,43 +53,73 @@ public partial class SoundBankSelectionMenu : Panel
 
     void OnEmotionToggle(Button toggle, Label label)
     {
-        if (emotionLimitReached)
+        if (!chosenEmotions.Contains(label.Text))
         {
-            toggle.ButtonPressed = false;
+            chosenEmotions.Add(label.Text);
+
+            if (emotie1.Text == ".")
+            {
+                emotie1.Text = label.Text;
+                label.Text = "✅"; //ipv dit wil je eig gewn een sprite2d aan en uit zetten?
+            }
+            else if (emotie2.Text == ".")
+            {
+                emotie2.Text = label.Text;
+                label.Text = "✅";
+            }
+
+        } //morgen gaan we er labels van maken die we aan en uit zetten ipb het vinkje per code
+        else
+        {
             chosenEmotions.Remove(label.Text);
-        }
-        else
-        {
-            if (toggle.ButtonPressed) chosenEmotions.Add(label.Text);
-            if (!toggle.ButtonPressed) chosenEmotions.Remove(label.Text);
+
+            if (label.Text == "✅")
+                emotie1.Text = ".";
+            //label text moet hier weer zijn originele emotie worden
+
+            if (emotie2.Text == label.Text)
+                emotie2.Text = ".";
         }
     }
 
-    void OnThemeToggle(CheckButton toggle, Label label)
+
+    void OnThemeToggle(Button toggle, Label label)
     {
-        if (themeLimitReached)
+        if (!chosenThemes.Contains(label.Text))
         {
-            toggle.ButtonPressed = false;
+            chosenThemes.Add(label.Text);
+
+            if (thema1.Text == ".")
+                thema1.Text = label.Text;
+            else if (thema2.Text == ".")
+                thema2.Text = label.Text;
+
+            label.Text = ("✅");
+
+        }
+        else
+        {
             chosenThemes.Remove(label.Text);
-        }
-        else
-        {
-            if (toggle.ButtonPressed) chosenThemes.Add(label.Text);
-            if (!toggle.ButtonPressed) chosenThemes.Remove(label.Text);
+
+            if (thema1.Text == label.Text)
+                thema1.Text = ".";
+            if (thema2.Text == label.Text)
+                thema2.Text = ".";
         }
     }
 
-    void OnEmotionLabel(CheckButton toggle, Label label)
-    {
-        toggle.ButtonPressed = !toggle.ButtonPressed;
-        OnEmotionToggle(toggle, label);
-    }
+    //void OnEmotionLabel(Button toggle, Label label)
+    //{
+    //    toggle.ButtonPressed = !toggle.ButtonPressed;
+    //    OnEmotionToggle(toggle, label);
+    //}
 
-    void OnThemeLabel(CheckButton toggle, Label label)
-    {
-        toggle.ButtonPressed = !toggle.ButtonPressed;
-        OnThemeToggle(toggle, label);
-    }
+    //void OnThemeLabel(Button toggle, Label label)
+    //{
+    //    toggle.ButtonPressed = !toggle.ButtonPressed;
+    //    OnThemeToggle(toggle, label);
+    //}
+
 
     public override void _Ready()
     {
@@ -94,13 +133,13 @@ public partial class SoundBankSelectionMenu : Panel
                 OnEmotionToggle(emotionToggle, label);
             };
 
-            label.GuiInput += (InputEvent args) =>
-            {
-                if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                {
-                    //OnEmotionLabel(emotionToggle, label); 
-                } //dit is om te deselecteren if im correct? moet dus wel in game terug komen
-            };
+            //label.GuiInput += (InputEvent args) =>
+            //{
+            //    if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+            //    {
+            //        //OnEmotionLabel(emotionToggle, label);
+            //    }
+            //};
         }
 
         foreach (var themeToggle in themeToggles)
@@ -110,15 +149,16 @@ public partial class SoundBankSelectionMenu : Panel
             themeToggle.Pressed += () =>
             {
                 OnThemeToggle(themeToggle, label);
+
             };
 
-            label.GuiInput += (InputEvent args) =>
-            {
-                if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                {
-                    OnThemeLabel(themeToggle, label);
-                }
-            };
+            //label.GuiInput += (InputEvent args) =>
+            //{
+            //    if (args is InputEventMouseButton mouseEvent && mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
+            //    {
+            //        //OnThemeLabel(themeToggle, label);
+            //    }
+            //};
 
             soundbanks = LoadSoundBanks();
         }

@@ -1,11 +1,8 @@
 using Godot;
-
 using System;
+using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using System.Globalization;
-using System.Reflection;
-using Range = Godot.Range;
 
 public static class Tutorial
 {
@@ -53,7 +50,7 @@ public static class Tutorial
             condition: () => manager.clapped,
             outcome: () =>
             {
-                
+
                 manager.pointer.Visible = true;
                 manager.SetRingVisibility(_indexRedRing, true);
                 manager.cross.Visible = true;
@@ -121,7 +118,7 @@ public static class Tutorial
             {
                 _beatsActiveRedRing = ActiveBeatsPerRing(_indexRedRing);
                 return BpmManager.instance.playing;
-                
+
             },
             outcome: () =>
             {
@@ -134,12 +131,12 @@ public static class Tutorial
             ,
             outcome: () =>
             {
-                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
+                manager.AmountLeft.Text = $"Goed gestampt {manager.stompedOnBeatAmount} / 5";
                 _stomping = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
             }
         ),
-        
+
         (
             instruction: "Stamp 👟 5 keer mee met de kick van je Beat!",
             condition: () => manager.stompedOnBeatAmount >= _fixedAmount,
@@ -227,9 +224,9 @@ public static class Tutorial
             outcome: () =>
             {
                 _textAllowed = true;
-               
+
                 manager.PlayExtraSFX(manager.achievement_sfx);
-                
+
                 timer.Start(2);
             }
         ),
@@ -256,7 +253,7 @@ public static class Tutorial
             outcome: () =>
             {
                 manager.SetGreenLayerVisibility(true);
-               
+
             }
         ),
 
@@ -296,14 +293,14 @@ public static class Tutorial
             },
             outcome: () =>
             {
-                
+
             }
         ),
         (
             instruction: "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
             condition: () =>
             {
-               
+
                 return manager.greenLayerRecordButton.ButtonPressed;
             },
             outcome: () =>
@@ -312,28 +309,28 @@ public static class Tutorial
                 _increasedSpeed = true;
                 DisplayServer.TtsStop();
                 returnPlayer(manager.greenLayerRecordButton.GetParent()).Stop();
-                
+
             }),
         (
             instruction: "4",
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-               
+
             }),
         (
             instruction: "3",
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
+
             }),
         (
             instruction: "2",
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-               
+
             }
             ),
         (
@@ -341,8 +338,8 @@ public static class Tutorial
             condition: () =>  !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
-               
+
+
             }),
         (
             instruction: "",
@@ -351,7 +348,7 @@ public static class Tutorial
             {
                 _increasedSpeed = false;
                 timer.Start(3);
-               
+
             }),
       //  (
          //   instruction: "Laat eens horen!▶️",
@@ -371,13 +368,13 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-              
+
                 BpmManager.instance.playing = false;
             }),
 
         // chaos pad
         (
-            instruction: "Laten we je sample veranderen!",
+            instruction: "Laten we je sample nog leuker maken!",
             condition: () =>
             {
                 _knobPos = manager.knob.GlobalPosition;
@@ -387,7 +384,7 @@ public static class Tutorial
             {
                 //_active = true;
                 manager.chaosPadTriangleSprite.Visible = true;
-               
+
             }
         ),
         (
@@ -400,7 +397,7 @@ public static class Tutorial
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
-                
+
                 manager.PianoArea.Monitoring = true;
                 manager.PianoMesh.Visible = true;
                 manager.PianoArea.EmitSignal("animation_star_play");
@@ -495,7 +492,7 @@ public static class Tutorial
                 manager.PianoArea.AreaEntered -= _bodyContinue;
                 manager.InBetweenArea.AreaEntered -= _bodyContinue;
                 manager.KlappyContinue.Pressed -= KlappyContinue;
-                
+
             }
         )
     ];
@@ -525,7 +522,7 @@ public static class Tutorial
         _clapButton = null;
         _stompButton = null;
         _increasedSpeed = false;
-        
+
     }
 
     public static void CheckIfTutorialWasChosen()
@@ -637,7 +634,7 @@ public static class Tutorial
         outcome?.Invoke();
         if (tutorial_level >= tutorialSteps.Length) return;
         tutorial_level++;
-      
+
         SpeakTutorialInstruction(tutorial_level);
         UpdateLists();
     }
@@ -659,7 +656,7 @@ public static class Tutorial
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 _previousStomp = manager.stompedOnBeatAmount;
-                manager.AmountLeft.Text = $"Goed gestamped {manager.stompedOnBeatAmount} / 5";
+                manager.AmountLeft.Text = $"Goed gestampt {manager.stompedOnBeatAmount} / 5";
             }
         }
     }
@@ -672,7 +669,7 @@ public static class Tutorial
             {
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 _previousClap = manager.clappedOnBeatAmount;
-                manager.AmountLeft.Text = $"Goed geklapped {manager.clappedOnBeatAmount} / 5";
+                manager.AmountLeft.Text = $"Goed geklapt {manager.clappedOnBeatAmount} / 5";
             }
         }
     }
@@ -686,7 +683,7 @@ public static class Tutorial
             SpeakTutorialInstruction(tutorial_level);
             manager.first_tts_done = true;
         }
-        
+
         _correctClapPlaySFX();
         _correctStompPlaySFX();
 
@@ -734,7 +731,7 @@ public static class Tutorial
         if (_increasedSpeed)
         {
             GD.Print(("Increase the speed"));
-            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100,1f, 1.5f);
+            DisplayServer.TtsSpeak(manager.Text_without_emoticons(tutorialSteps[instructionIndex].instruction), voices[0], 100, 1f, 1.5f);
         }
         else
         {
@@ -754,7 +751,7 @@ public static class Tutorial
             return BpmManager.instance.playing;
         }
     }
-    
+
 
     private static void UpdateLists()
     {

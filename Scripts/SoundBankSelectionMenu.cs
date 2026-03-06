@@ -51,7 +51,7 @@ public partial class SoundBankSelectionMenu : Panel
     Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
     Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
 
-    void OnEmotionToggle(Button toggle, Label label)
+    void OnEmotionToggle(Button toggle, Label label, Label check)
     {
         if (!chosenEmotions.Contains(label.Text))
         {
@@ -60,41 +60,53 @@ public partial class SoundBankSelectionMenu : Panel
             if (emotie1.Text == ".")
             {
                 emotie1.Text = label.Text;
-                label.Text = "✅"; //ipv dit wil je eig gewn een sprite2d aan en uit zetten?
+                check.Visible = true;
             }
+
+
             else if (emotie2.Text == ".")
             {
                 emotie2.Text = label.Text;
-                label.Text = "✅";
-            }
+                check.Visible = true;
 
-        } //morgen gaan we er labels van maken die we aan en uit zetten ipb het vinkje per code
+            }
+        }
         else
         {
             chosenEmotions.Remove(label.Text);
 
-            if (label.Text == "✅")
+            if (emotie1.Text == label.Text)
+            {
                 emotie1.Text = ".";
-            //label text moet hier weer zijn originele emotie worden
+                check.Visible = false;
+
+            }
 
             if (emotie2.Text == label.Text)
+            {
                 emotie2.Text = ".";
+                check.Visible = false;
+
+            }
         }
     }
 
-
-    void OnThemeToggle(Button toggle, Label label)
+    void OnThemeToggle(Button toggle, Label label, Label check)
     {
         if (!chosenThemes.Contains(label.Text))
         {
             chosenThemes.Add(label.Text);
 
             if (thema1.Text == ".")
+            {
                 thema1.Text = label.Text;
+                check.Visible = true;
+            }
             else if (thema2.Text == ".")
+            {
                 thema2.Text = label.Text;
-
-            label.Text = ("✅");
+                check.Visible = true;
+            }
 
         }
         else
@@ -102,9 +114,15 @@ public partial class SoundBankSelectionMenu : Panel
             chosenThemes.Remove(label.Text);
 
             if (thema1.Text == label.Text)
+            {
                 thema1.Text = ".";
+                check.Visible = false;
+            }
             if (thema2.Text == label.Text)
+            {
                 thema2.Text = ".";
+                check.Visible = false;
+            }
         }
     }
 
@@ -125,12 +143,15 @@ public partial class SoundBankSelectionMenu : Panel
     {
         chosenEmotions = new List<string>();
         chosenThemes = new List<string>();
+
         foreach (var emotionToggle in emotionToggles)
         {
             var label = emotionToggle.GetParent() as Label;
+            var container = emotionToggle.GetParent();
+            var check = container.GetNode<Label>("Label");
             emotionToggle.Pressed += () =>
             {
-                OnEmotionToggle(emotionToggle, label);
+                OnEmotionToggle(emotionToggle, label, check);
             };
 
             //label.GuiInput += (InputEvent args) =>
@@ -144,11 +165,13 @@ public partial class SoundBankSelectionMenu : Panel
 
         foreach (var themeToggle in themeToggles)
         {
-            var label = (Label)themeToggle.GetParent();
+            var label = themeToggle.GetParent() as Label;
+            var container = themeToggle.GetParent();
+            var check = container.GetNode<Label>("Label");
 
             themeToggle.Pressed += () =>
             {
-                OnThemeToggle(themeToggle, label);
+                OnThemeToggle(themeToggle, label, check);
 
             };
 

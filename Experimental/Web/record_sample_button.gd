@@ -1,39 +1,13 @@
-extends Sprite2D
+extends Button
 
-signal button_on(ring: int)
-signal button_off
+@export var fillTexture: TextureProgressBar
 
+var toggled_on: bool = false
 
-@export var ring: int = 0
+func _pressed() -> void:
+	toggled_on = !toggled_on
+	EventBus.recording_sample_button_toggled.emit(toggled_on)
+	fillTexture.value = 1 if toggled_on else 0
 
-var pressing: bool = false
-var down: bool = false
-
-var inside: bool:
-	get: return is_pixel_opaque(get_local_mouse_position())
-
-func _input(event: InputEvent):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if not event.pressed and inside and down:
-			pressing = !pressing
-			if pressing:
-				emit_signal("button_on", ring)
-				_start_recording()
-			else:
-				emit_signal("button_off")
-				_stop_recording()
-			down = false
-			
-		if event.pressed and inside:
-			down = true
-		else:
-			down = false
-			
-func _stop_recording():
-	var fill: TextureProgressBar = get_child(0) as TextureProgressBar
-	fill.value = 0
-	pressing = false
-
-func _start_recording():
-	var fill: TextureProgressBar = get_child(0) as TextureProgressBar
-	fill.value = 1
+func set_fill(value: float) -> void:
+	fillTexture.value = value

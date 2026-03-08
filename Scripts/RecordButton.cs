@@ -19,7 +19,6 @@ public partial class RecordButton : Sprite2D
         pressed_c = new Color(1, 0, 0, 1);
     }
 
-
     public override void _Input(InputEvent inputEvent)
     {
         if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)

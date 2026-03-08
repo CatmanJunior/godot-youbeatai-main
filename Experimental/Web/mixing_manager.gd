@@ -164,12 +164,6 @@ func samples_mixing_change_ring(new_ring: int):
 	if alt_icon and new_ring < alt_icons.size():
 		alt_icon.texture = alt_icons[new_ring]
 	
-	# Set mic button location
-	for i in range(mic_buttons.size()):
-		mic_buttons[i].global_position = Vector2(-500, 500)
-	if new_ring < mic_buttons.size() and mic_button_location:
-		mic_buttons[new_ring].global_position = mic_button_location.global_position
-	
 	# Set chaos pad mode
 	chaos_pad_mode = ChaosPadMode.SAMPLE_MIXING
 

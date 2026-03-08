@@ -35,6 +35,7 @@ func _ready():
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
 	EventBus.play_pause_toggled.connect(func(): playing = !playing)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
+	EventBus.bpm_changed.emit(bpm)
 
 
 func _on_playing_change_requested(isplaying: bool):

@@ -40,6 +40,7 @@ func _ready():
 func _process(_delta: float):
 	stamp_volume = _get_magnitude(0.0, stamp_freq_max)
 	clap_volume = _get_magnitude(clap_freq_min, 20000.0)
+	EventBus.microphone_volume = _get_magnitude(0.0, 20000.0)
 
 func _get_magnitude(freq_min: float, freq_max: float) -> float:
 	var rms: Vector2 = analyzer.get_magnitude_for_frequency_range(freq_min, freq_max)

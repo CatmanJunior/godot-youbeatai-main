@@ -1,6 +1,10 @@
 extends Node
 
+
 @warning_ignore_start("unused_signal")
+
+# ── Shared State ──
+var microphone_volume: float = 0.0
 
 # ── Playback / BPM ──
 signal playback_started()
@@ -78,6 +82,9 @@ signal request_set_stream(ring: int, track: int, audio: AudioStream) #track is 0
 signal master_recording_started()
 signal master_recording_stopped()
 signal microphone_data_updated(volume: float, frequency: float)
+signal request_mute_all(mute: bool)
+signal recording_volume_threshold_changed(threshold: float)
+signal recording_sample_button_toggled(toggled: bool)
 
 # ── Saving / Loading ──
 signal save_requested()

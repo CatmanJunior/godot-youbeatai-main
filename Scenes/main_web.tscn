@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="3_ikay4"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="4_snosd"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="5_8pi72"]
-[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="6_2qaqg"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="7_0dny5"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_3t5nw"]
 [ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Experimental/Web/bpm.gd" id="9_3e1b8"]
@@ -80,7 +79,6 @@
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_vb5o2"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_rnt4q"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="73_autlv"]
-[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="74_uoj6j"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_wgwc4"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="76_hn88f"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Experimental/Web/instrument_button.gd" id="77_3t1px"]
@@ -95,8 +93,10 @@
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="82_crcsx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="83_g0gna"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="84_05f8y"]
+[ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="85_hxd57"]
 [ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scenes/unlock_achievements.gd" id="85_op1ei"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
+[ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Experimental/Web/volume_treshold_slider.gd" id="91_8eq3q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -265,7 +265,6 @@ theme_override_constants/outline_size = 2
 theme_override_styles/background = ExtResource("7_0dny5")
 theme_override_styles/fill = ExtResource("8_3t5nw")
 rounded = true
-metadata/_edit_use_anchors_ = true
 
 [node name="EnergyIcon" type="Label" parent="Managers/ProgressBar" unique_id=568368759]
 z_index = 4
@@ -414,7 +413,7 @@ alt_icon_song = ExtResource("24_3dyd7")
 main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 mic_button_location = NodePath("../../../UserInterface/ChaosPad/MicButtonLocation")
-mic_buttons = [NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton2"), NodePath("../../../UserInterface/Buttons/MicButtons/SampleRecordingButton3"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
+mic_buttons = [NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/GameManager" unique_id=550979596]
 unique_name_in_owner = true
@@ -430,9 +429,10 @@ unique_name_in_owner = true
 script = ExtResource("38_2ikc6")
 metronome_sfx = ExtResource("35_dbt8u")
 
-[node name="AudioRecorder" type="Node" parent="Managers/GameManager" unique_id=1738535162]
+[node name="AudioRecorder" type="Node" parent="Managers/GameManager" unique_id=1738535162 node_paths=PackedStringArray("recording_sample_button")]
 unique_name_in_owner = true
 script = ExtResource("39_pyso5")
+recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosButtonMic")
 
 [node name="KeyboardInput" type="Node" parent="Managers" unique_id=2017263538]
 unique_name_in_owner = true
@@ -457,10 +457,10 @@ bpm_up_button = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton"
 bpm_down_button = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 song_select_button = NodePath("../../UserInterface/Buttons/SongSelectButtonSprite/SongSelectButton")
 instrument_buttons = [NodePath("../../UserInterface/Buttons/InstrumentButton0"), NodePath("../../UserInterface/Buttons/InstrumentButton1"), NodePath("../../UserInterface/Buttons/InstrumentButton2"), NodePath("../../UserInterface/Buttons/InstrumentButton3")]
-record_sample_button0 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton0")
-record_sample_button1 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton1")
-record_sample_button2 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton2")
-record_sample_button3 = NodePath("../../UserInterface/Buttons/MicButtons/SampleRecordingButton3")
+record_sample_button0 = NodePath("")
+record_sample_button1 = NodePath("")
+record_sample_button2 = NodePath("")
+record_sample_button3 = NodePath("")
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 chaos_pad_triangle_sprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 restart_button = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
@@ -911,224 +911,6 @@ position = Vector2(172, -101)
 scale = Vector2(1.27546, 1.27546)
 
 [node name="MicButtons" type="Node2D" parent="UserInterface/Buttons" unique_id=2066053258]
-
-[node name="SampleRecordingButton0" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=1232570721]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-position = Vector2(-23.609894, -763.73505)
-scale = Vector2(2, 2)
-texture = ExtResource("65_tbynx")
-script = ExtResource("77_hxd57")
-
-[node name="Fill" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton0" unique_id=1322117929]
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -24.5
-offset_top = -24.5
-offset_right = 0.5
-offset_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-max_value = 1.0
-step = 0.05
-fill_mode = 5
-texture_progress = ExtResource("65_tbynx")
-tint_progress = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="MicIcon" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton0" unique_id=1929832111]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -34.5
-offset_top = -34.75
-offset_right = 9.5
-offset_bottom = 10.25
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(22, 22)
-theme_override_font_sizes/font_size = 32
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Blocker" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton0" unique_id=548579461 instance=ExtResource("6_2qaqg")]
-top_level = false
-offset_left = -33.620766
-offset_top = -44.35547
-offset_right = 54.127373
-offset_bottom = 69.81003
-scale = Vector2(0.35, 0.35)
-metadata/_edit_use_anchors_ = true
-
-[node name="SampleRecordingButton1" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=1500018493]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-position = Vector2(39.1131, -763.73505)
-scale = Vector2(2, 2)
-texture = ExtResource("65_tbynx")
-script = ExtResource("77_hxd57")
-ring = 1
-
-[node name="Fill2" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1" unique_id=1824441183]
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-grow_horizontal = 2
-grow_vertical = 2
-max_value = 1.0
-step = 0.05
-fill_mode = 5
-texture_progress = ExtResource("65_tbynx")
-tint_progress = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="MicIcon2" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1" unique_id=798464555]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -34.5
-offset_top = -34.75
-offset_right = 9.5
-offset_bottom = 10.25
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(22, 22)
-theme_override_font_sizes/font_size = 32
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Blocker" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1" unique_id=235846913 instance=ExtResource("6_2qaqg")]
-top_level = false
-offset_left = -36.4922
-offset_top = -45.93813
-offset_right = 49.56145
-offset_bottom = 80.61427
-scale = Vector2(0.35, 0.35)
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker" index="0"]
-metadata/_edit_use_anchors_ = true
-
-[node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=857886724]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-position = Vector2(101.8351, -763.73505)
-scale = Vector2(2, 2)
-texture = ExtResource("65_tbynx")
-script = ExtResource("77_hxd57")
-ring = 2
-
-[node name="Fill3" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton2" unique_id=701772151]
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-grow_horizontal = 2
-grow_vertical = 2
-max_value = 1.0
-step = 0.05
-fill_mode = 5
-texture_progress = ExtResource("65_tbynx")
-tint_progress = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="MicIcon3" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton2" unique_id=7259082]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.77462
-offset_top = -34.739017
-offset_right = 10.22538
-offset_bottom = 10.2609825
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(22, 22)
-theme_override_font_sizes/font_size = 32
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SampleRecordingButton3" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=1612113412]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-position = Vector2(164.5581, -763.73505)
-scale = Vector2(2, 2)
-texture = ExtResource("65_tbynx")
-script = ExtResource("77_hxd57")
-ring = 3
-
-[node name="Fill4" type="TextureProgressBar" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton3" unique_id=1274518585]
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -25.0
-offset_top = -25.0
-grow_horizontal = 2
-grow_vertical = 2
-max_value = 1.0
-step = 0.05
-fill_mode = 5
-texture_progress = ExtResource("65_tbynx")
-tint_progress = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="MicIcon4" type="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton3" unique_id=538938222]
-self_modulate = Color(1, 1, 1, 0)
-z_index = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -34.5
-offset_top = -34.75
-offset_right = 9.5
-offset_bottom = 10.25
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(22, 22)
-theme_override_font_sizes/font_size = 32
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="RecordBeatButton0" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=1634389025]
 self_modulate = Color(1, 1, 1, 0)
@@ -1729,19 +1511,57 @@ texture = ExtResource("73_autlv")
 [node name="Area2D" parent="UserInterface/ChaosPad/Triangle/KnobSprite" index="0" unique_id=317530432]
 scale = Vector2(0.25, 0.25)
 
-[node name="ChaosIconTop" type="Sprite2D" parent="UserInterface/ChaosPad" unique_id=1602351594]
+[node name="ChaosButtonMic" type="Button" parent="UserInterface/ChaosPad" unique_id=1367204768 node_paths=PackedStringArray("fillTexture")]
 z_index = 3
-position = Vector2(-1.2745056, -99.41176)
+offset_left = 32.999996
+offset_top = -67.99999
+offset_right = 207.995
+offset_bottom = 106.935005
 rotation = 3.1415925
 scale = Vector2(0.39000002, 0.39000002)
-texture = ExtResource("74_uoj6j")
+flat = true
+script = ExtResource("77_hxd57")
+fillTexture = NodePath("ChaosIconMicBg/Rec_mic_Fill")
 
-[node name="ChaosIconBack" type="Sprite2D" parent="UserInterface/ChaosPad/ChaosIconTop" unique_id=235714816]
+[node name="ChaosIconMicBg" type="Sprite2D" parent="UserInterface/ChaosPad/ChaosButtonMic" unique_id=235714816]
 show_behind_parent = true
 z_index = 1
 z_as_relative = false
 scale = Vector2(2, 2)
 texture = ExtResource("75_wgwc4")
+centered = false
+
+[node name="Rec_mic_Fill" type="TextureProgressBar" parent="UserInterface/ChaosPad/ChaosButtonMic/ChaosIconMicBg" unique_id=1001300981]
+z_index = 1
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.945
+offset_top = -41.042
+offset_right = -14.94499
+offset_bottom = -16.041796
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.22, 3.22)
+max_value = 1.0
+step = 0.05
+fill_mode = 5
+texture_progress = ExtResource("65_tbynx")
+tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ChaosIconMic" type="Sprite2D" parent="UserInterface/ChaosPad/ChaosButtonMic/ChaosIconMicBg" unique_id=2105280767]
+show_behind_parent = true
+z_index = 2
+z_as_relative = false
+position = Vector2(0, 4.455)
+scale = Vector2(0.5000001, 0.5000001)
+texture = ExtResource("85_hxd57")
+centered = false
+offset = Vector2(22.435, 19.34)
 
 [node name="LayerLoopToggle" type="CheckButton" parent="UserInterface" unique_id=113633084]
 self_modulate = Color(1, 1, 1, 0)
@@ -2294,6 +2114,7 @@ focus_mode = 0
 max_value = 1.0
 step = 0.001
 value = 0.1
+script = ExtResource("91_8eq3q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold" unique_id=1176903580]
@@ -2837,14 +2658,6 @@ angle_min = 45.0
 angle_max = 90.0
 hue_variation_max = 0.55
 
-[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
-[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton0" to="Managers/GameManager/AudioRecorder" method="start_recording"]
-[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton1" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
-[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton1" to="Managers/GameManager/AudioRecorder" method="start_recording"]
-[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton2" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
-[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton2" to="Managers/GameManager/AudioRecorder" method="start_recording"]
-[connection signal="button_off" from="UserInterface/Buttons/MicButtons/SampleRecordingButton3" to="Managers/GameManager/AudioRecorder" method="stop_recording"]
-[connection signal="button_on" from="UserInterface/Buttons/MicButtons/SampleRecordingButton3" to="Managers/GameManager/AudioRecorder" method="start_recording"]
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton0" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton1" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
 [connection signal="on_pressed" from="UserInterface/Buttons/InstrumentButton2" to="Managers/GameManager/MixingManager" method="samples_mixing_change_ring"]
@@ -2852,7 +2665,6 @@ hue_variation_max = 0.55
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]
 [editable path="Managers/LayerVoiceOver1/synth_line"]
-[editable path="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker"]
 [editable path="UserInterface/ChaosPad"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]

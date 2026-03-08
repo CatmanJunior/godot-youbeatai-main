@@ -29,6 +29,13 @@ func _ready():
 	EventBus.play_sfx_requested.connect(play_sfx)
 	EventBus.beat_triggered.connect(_on_beat_pitch_randomization)
 	EventBus.request_set_stream.connect(_on_request_set_stream)
+	EventBus.request_mute_all.connect(_mute_all)
+
+func _mute_all(mute: bool):
+	var volume_db = -80.0 if mute else 0.0
+	for player in audio_players:
+		player.volume_db = volume_db
+	sfx_player.volume_db = volume_db
 
 func _init_sfx_player():
 	sfx_player = AudioStreamPlayer.new()

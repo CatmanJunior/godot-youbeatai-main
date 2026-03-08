@@ -14,6 +14,67 @@ var actual_sound_length: float = 0.0
 var recording_volume: float
 var current_recording_ring: int = 0
 
+var recording_volume_threshold: float = 0.1
+var base_time_per_beat: float
+
+@export var recording_sample_button: Button
+
+func _ready():
+	EventBus.recording_volume_threshold_changed.connect(_on_recording_volume_threshold_changed)
+	EventBus.recording_sample_button_toggled.connect(_on_recording_sample_button_toggled)
+	EventBus.ring_selected.connect(_on_ring_selected)
+	EventBus.bpm_changed.connect(_on_bpm_changed)
+
+	var bus_index: int = AudioServer.get_bus_index("Microphone")
+	audio_effect_record = AudioServer.get_bus_effect(bus_index, 1) as AudioEffectRecord
+	if audio_effect_record == null:
+		print("no record effect found")
+
+func _process(delta: float):
+	if recording:
+		_handle_recording(delta)
+
+func _handle_recording(delta: float) -> void:
+	recording_length += delta
+	if get_recording_volume() > recording_volume_threshold:
+		print("Detected sound with volume: %s" % get_recording_volume())
+		has_detected_sound = true
+	if not has_detected_sound:
+		silence_length += delta
+		return
+	
+	actual_sound_length += delta
+	print(base_time_per_beat)
+	var percentage: float = actual_sound_length / (base_time_per_beat * 2.0)
+	print("Recording... length: %s seconds, actual sound length: %s seconds, percentage: %s" %
+		[recording_length, actual_sound_length, percentage])
+	
+	if percentage > 1.0:
+		recording_sample_button.button_pressed = false
+		_stop_recording()
+	else:
+		recording_sample_button.set_fill(1-percentage)
+		
+
+#------------------Event Handlers----------------------
+func _on_bpm_changed(bpm: float) -> void:
+	base_time_per_beat = 60.0 / bpm
+
+func _on_ring_selected(ring: int) -> void:
+	current_recording_ring = ring
+
+func _on_recording_sample_button_toggled(toggled: bool) -> void:
+	print("Recording sample button toggled: %s" % toggled)
+	if toggled and not recording:
+		_start_recording()
+	elif recording:
+		_stop_recording()
+
+func _on_recording_volume_threshold_changed(threshold: float) -> void:
+	print("Recording volume threshold changed to: %s" % threshold)
+	recording_volume_threshold = threshold
+
+
 func _trim_audio_stream(original: AudioStream, seconds_to_trim: float) -> AudioStream:
 	var original_data: PackedByteArray = original.data
 	var audio_length: float = original.get_length()
@@ -37,25 +98,22 @@ func _trim_audio_stream(original: AudioStream, seconds_to_trim: float) -> AudioS
 
 	var trimmed_data: PackedByteArray = original_data.slice(aligned_trim_bytes)
 
-	result = AudioStreamWAV.new()
-	result.data = trimmed_data
+	var trimmed: AudioStreamWAV = AudioStreamWAV.new()
+	trimmed.data = trimmed_data
+	trimmed.mix_rate = original.mix_rate
+	trimmed.stereo = original.stereo
+	trimmed.format = original.format
 
-	return result
+	return trimmed
 
-func _set_volume(value: float) -> void:
-	var db: float = linear_to_db(value)
-	for player in %AudioPlayerManager.audio_players:
-		player.volume_db = db
-		
-func start_recording(ring: int) -> void:
-	_set_volume(0.0)
-	current_recording_ring = ring
+func _start_recording() -> void:
+	EventBus.request_mute_all.emit(true)
 
 	audio_effect_record.set_recording_active(true)
 	recording = true
 
-func stop_recording() -> void:
-	_set_volume(1.0)
+func _stop_recording() -> void:
+	EventBus.request_mute_all.emit(false)
 
 	audio_effect_record.set_recording_active(false)
 	recorded_audio = audio_effect_record.get_recording()
@@ -70,35 +128,4 @@ func stop_recording() -> void:
 	EventBus.request_set_stream.emit(current_recording_ring, 2, recorded_audio)
 
 func get_recording_volume() -> float:
-	return %MicrophoneCapture.get_microphone_volume()
-
-func _ready():
-	var bus_index: int = AudioServer.get_bus_index("Microphone")
-	audio_effect_record = AudioServer.get_bus_effect(bus_index, 1) as AudioEffectRecord
-	if audio_effect_record == null:
-		print("no record effect found")
-
-func _process(delta: float):
-	if recording:
-		recording_length += delta
-		if get_recording_volume() > %UiManager.volume_threshold.value:
-			has_detected_sound = true
-		if not has_detected_sound:
-			silence_length += delta
-
-		if has_detected_sound:
-			actual_sound_length += delta
-
-			var base_time_per_beat: float = %BpmManager.base_time_per_beat
-			if base_time_per_beat == 0.0:
-				base_time_per_beat = 0.2
-
-			var percentage: float = actual_sound_length / (base_time_per_beat * 2.0)
-			# var fill: TextureProgressBar = get_child(0) as TextureProgressBar
-
-			if percentage > 1.0:
-				#TODO reset the recording button
-				stop_recording()
-			else:
-				# fill.value = 1.0 - percentage
-				pass
+	return EventBus.microphone_volume

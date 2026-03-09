@@ -82,7 +82,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
 func _process(_delta: float) -> void: #misschien niet in de process??
-	if KlappyEnergy.value == 90:
+	if KlappyEnergy.value == 100:
 		unlocked = true
 		print("yaaay")
 		klappyLight.energy = 5

@@ -29,7 +29,7 @@ public partial class SoundBankSelectionMenu : Panel
     [Export] Label thema1;
     [Export] Label thema2;
 
-    bool selected1 = false;
+    public bool TutorialEnabled = true;
 
 
     [Export] Button gebruikButton;
@@ -53,6 +53,9 @@ public partial class SoundBankSelectionMenu : Panel
 
     void OnEmotionToggle(Button toggle, Label label, Label check)
     {
+        if (chosenEmotions.Count >= 2 && !chosenEmotions.Contains(label.Text))
+            return;
+
         if (!chosenEmotions.Contains(label.Text))
         {
             chosenEmotions.Add(label.Text);
@@ -63,12 +66,10 @@ public partial class SoundBankSelectionMenu : Panel
                 check.Visible = true;
             }
 
-
             else if (emotie2.Text == ".")
             {
                 emotie2.Text = label.Text;
                 check.Visible = true;
-
             }
         }
         else
@@ -79,20 +80,21 @@ public partial class SoundBankSelectionMenu : Panel
             {
                 emotie1.Text = ".";
                 check.Visible = false;
-
             }
 
             if (emotie2.Text == label.Text)
             {
                 emotie2.Text = ".";
                 check.Visible = false;
-
             }
         }
     }
 
     void OnThemeToggle(Button toggle, Label label, Label check)
     {
+        if (chosenThemes.Count >= 2 && !chosenThemes.Contains(label.Text))
+            return;
+
         if (!chosenThemes.Contains(label.Text))
         {
             chosenThemes.Add(label.Text);
@@ -107,7 +109,6 @@ public partial class SoundBankSelectionMenu : Panel
                 thema2.Text = label.Text;
                 check.Visible = true;
             }
-
         }
         else
         {
@@ -129,13 +130,13 @@ public partial class SoundBankSelectionMenu : Panel
     //void OnEmotionLabel(Button toggle, Label label)
     //{
     //    toggle.ButtonPressed = !toggle.ButtonPressed;
-    //    OnEmotionToggle(toggle, label);
+    //    OnEmotionToggle(toggle, label, label);
     //}
 
     //void OnThemeLabel(Button toggle, Label label)
     //{
     //    toggle.ButtonPressed = !toggle.ButtonPressed;
-    //    OnThemeToggle(toggle, label);
+    //    OnThemeToggle(toggle, label, label);
     //}
 
 

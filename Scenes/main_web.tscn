@@ -7,10 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="5_8pi72"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="7_0dny5"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_3t5nw"]
-[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/bpm.gd" id="9_3e1b8"]
-[ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/layer_manager.gd" id="10_pyso5"]
-[ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/game_manager.gd" id="10_uqoqp"]
-[ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/mixing_manager.gd" id="11_hxd57"]
+[ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/layer_manager.gd" id="10_pyso5"]
+[ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_uqoqp"]
+[ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="11_hxd57"]
 [ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="13_sma4m"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="14_rgdu2"]
 [ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="15_8eq3q"]
@@ -27,9 +26,9 @@
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="24_6q34d"]
 [ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="24_h0xuh"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="25_6j1t0"]
-[ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/keyboard_input_manager.gd" id="25_scmae"]
-[ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/audio_player_manager.gd" id="26_pxq5n"]
-[ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/ui_manager.gd" id="26_scmae"]
+[ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="25_scmae"]
+[ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/Audio/audio_player_manager.gd" id="26_pxq5n"]
+[ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="26_scmae"]
 [ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="26_xpu48"]
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="27_irepe"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="27_p4tck"]
@@ -47,8 +46,8 @@
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="35_dbt8u"]
 [ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="36_xwqw4"]
 [ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="37_glyvh"]
-[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/beat_manager.gd" id="38_2ikc6"]
-[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/audioRecorder.gd" id="39_pyso5"]
+[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="38_2ikc6"]
+[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/audioRecorder.gd" id="39_pyso5"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="40_e8hom"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="41_jrm6x"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="42_e22mk"]
@@ -60,43 +59,101 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="57_7pcuk"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="58_stq2o"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="59_4cism"]
-[ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/particle_manager.gd" id="59_j7ciw"]
-[ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Scripts/visibility_manager.gd" id="60_3jbv4"]
+[ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="59_j7ciw"]
+[ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Scripts/UI/visibility_manager.gd" id="60_3jbv4"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="60_uwd3s"]
-[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/colors.gd" id="61_p5fwe"]
+[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/UI/colors.gd" id="61_p5fwe"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="62_koofn"]
-[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/microphone_capture.gd" id="62_pyso5"]
+[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="62_pyso5"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="63_0ayl2"]
-[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/template_manager.gd" id="64_hxd57"]
+[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="64_hxd57"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
-[ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Scripts/layer_voice_over.gd" id="66_pyso5"]
-[ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Scripts/real_time_audio_recording.gd" id="67_hxd57"]
-[ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Scripts/song_voice_over_manager.gd" id="69_hxd57"]
+[ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Scripts/Audio/layer_voice_over.gd" id="66_pyso5"]
+[ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Scripts/Audio/real_time_audio_recording.gd" id="67_hxd57"]
+[ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Scripts/Audio/song_voice_over_manager.gd" id="69_hxd57"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="70_3tlvj"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_vb5o2"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_rnt4q"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="73_autlv"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_wgwc4"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="76_hn88f"]
-[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/instrument_button.gd" id="77_3t1px"]
+[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/Buttons/instrument_button.gd" id="77_3t1px"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="77_bcfhr"]
-[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/record_sample_button.gd" id="77_hxd57"]
-[ext_resource type="Script" uid="uid://bdroe2aknnaw1" path="res://Scripts/record_button.gd" id="78_8eq3q"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="77_hxd57"]
+[ext_resource type="Script" uid="uid://bdroe2aknnaw1" path="res://Scripts/Buttons/record_button.gd" id="78_8eq3q"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="78_ikay4"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="78_j5x8m"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="80_hb2vt"]
-[ext_resource type="Script" uid="uid://c1br0m0n3lhxh" path="res://Scripts/layer_chaos_pad_select_button.gd" id="80_hxd57"]
+[ext_resource type="Script" uid="uid://c1br0m0n3lhxh" path="res://Scripts/Buttons/layer_chaos_pad_select_button.gd" id="80_hxd57"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="81_7gfte"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="82_crcsx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="83_g0gna"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="84_05f8y"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="85_hxd57"]
-[ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scripts/unlock_achievements.gd" id="85_op1ei"]
+[ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scripts/Achievements/unlock_achievements.gd" id="85_op1ei"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
-[ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Scripts/volume_treshold_slider.gd" id="91_8eq3q"]
+[ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Scripts/UI/volume_treshold_slider.gd" id="91_8eq3q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
+
+[sub_resource type="GDScript" id="GDScript_3t5nw"]
+script/source = "extends Node
+
+@export var bpm: int = 120:
+	set(value):
+		bpm = value
+		EventBus.bpm_changed.emit(bpm)
+
+static var beats_amount: int = 16
+
+@export var amount_of_beats: int:
+	get:
+		return beats_amount
+
+var _playing: bool = false
+
+@export var playing: bool:
+	set(value):
+		if _playing != value:
+			EventBus.playing_changed.emit(value)
+		_playing = value
+	get:
+		return _playing
+
+@export var current_beat: int = beats_amount - 1
+var beat_timer: float = 0.0
+
+@export var swing: float = 0.05
+
+var base_time_per_beat: float
+var time_per_beat: float
+
+func _ready():
+	EventBus.bpm_up_requested.connect(func(value): bpm += value)
+	EventBus.bpm_down_requested.connect(func(value): bpm -= value)
+	EventBus.bpm_set_requested.connect(func(value): bpm = value)
+	EventBus.play_pause_toggled.connect(func(): playing = !playing)
+	EventBus.playing_change_requested.connect(_on_playing_change_requested)
+	EventBus.bpm_changed.emit(bpm)
+
+
+func _on_playing_change_requested(isplaying: bool):
+	playing = isplaying
+	
+
+func _process(delta: float):
+	if playing:
+		beat_timer += delta
+		var beats_per_bar = 4.0
+		base_time_per_beat = 60.0 / bpm / beats_per_bar
+		time_per_beat = base_time_per_beat + (base_time_per_beat * swing) if (current_beat % 2 == 1) else base_time_per_beat - (base_time_per_beat * swing)
+		
+		if beat_timer > time_per_beat:
+			beat_timer -= time_per_beat
+			current_beat = (current_beat + 1) % beats_amount
+			EventBus.beat_triggered.emit(current_beat)
+"
 
 [sub_resource type="CSharpScript" id="CSharpScript_cwyb6"]
 script/source = "using Godot;
@@ -582,7 +639,7 @@ script = ExtResource("10_uqoqp")
 unique_name_in_owner = true
 script = ExtResource("10_pyso5")
 
-[node name="MixingManager" type="Node" parent="Managers/GameManager" unique_id=991830872 node_paths=PackedStringArray("knob", "chaos_pad_triangle_sprite", "main_icon", "alt_icon", "mic_button_location", "mic_buttons")]
+[node name="MixingManager" type="Node" parent="Managers/GameManager" unique_id=991830872 node_paths=PackedStringArray("knob", "chaos_pad_triangle_sprite", "main_icon", "alt_icon")]
 unique_name_in_owner = true
 script = ExtResource("11_hxd57")
 knob = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite")
@@ -595,8 +652,6 @@ main_icon_song = ExtResource("33_2ikc6")
 alt_icon_song = ExtResource("24_3dyd7")
 main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
-mic_button_location = NodePath("../../../UserInterface/ChaosPad/MicButtonLocation")
-mic_buttons = [null, null, null, null, NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/GameManager" unique_id=550979596]
 unique_name_in_owner = true
@@ -623,7 +678,7 @@ script = ExtResource("25_scmae")
 
 [node name="BpmManager" type="Node" parent="Managers" unique_id=422395042]
 unique_name_in_owner = true
-script = ExtResource("9_3e1b8")
+script = SubResource("GDScript_3t5nw")
 
 [node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "clear_layer_button", "save_layer_button", "remove_layer_button", "load_layer_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "instrument_buttons", "corners", "chaos_pad_triangle_sprite", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
 unique_name_in_owner = true
@@ -757,6 +812,7 @@ beats_amount_scaler = 0.5
 [node name="LayerVoiceOver1" type="Node" parent="Managers" unique_id=447489058 node_paths=PackedStringArray("texture_progress_bar", "record_layer_button", "small_line", "big_line")]
 unique_name_in_owner = true
 script = ExtResource("66_pyso5")
+synth_index = 1
 texture_progress_bar = NodePath("../../BeatRingPivotPoint/TextureProgressBar1")
 record_layer_button = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/Button1")
 small_line = NodePath("../../UserInterface/Buttons/MicButtons/RecordBeatButton1/SmallLine1")

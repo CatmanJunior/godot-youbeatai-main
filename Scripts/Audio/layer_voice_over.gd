@@ -1,11 +1,7 @@
 extends Node
 
-# Signals for recording state
-signal started_recording
-signal stopped_recording
-
-# Storage of all layer recordings (ground truth)
-var layers_voice_overs: Array[AudioStream] = []
+# Which synth slot this voice-over node controls (0 = green, 1 = purple)
+@export var synth_index: int = 0
 
 # UI References
 @export var texture_progress_bar: TextureProgressBar
@@ -21,8 +17,6 @@ var bpm_down_button: Button
 @export var big_line_reversed: bool = false
 
 # Recording state
-var audio_player: AudioStreamPlayer
-var audio_player_alt: AudioStreamPlayer
 var should_record: bool = false
 var recording: bool = false
 var should_update_progress_bar: bool = false
@@ -47,8 +41,6 @@ var songVoiceOver: Node
 var uiManager: Node
 var audioPlayerManager: Node
 
-var is_green_layer: bool = false # true for green, false for purple
-
 func _ready():
 	gameManager = %GameManager
 	bpmManager = %BpmManager
@@ -62,21 +54,6 @@ func _ready():
 	# Set up record button
 	if record_layer_button:
 		record_layer_button.pressed.connect(_on_record_button_pressed)
-	
-	# Create audio players
-	audio_player = AudioStreamPlayer.new()
-	audio_player_alt = AudioStreamPlayer.new()
-	audio_player.stream = AudioStreamMicrophone.new()
-	add_child(audio_player)
-	add_child(audio_player_alt)
-	
-	# Set audio bus based on which layer this is
-	if is_green_layer:
-		audio_player.bus = "GreenVoice"
-		audio_player_alt.bus = "Green_alt"
-	else:
-		audio_player.bus = "PurpleVoice"
-		audio_player_alt.bus = "Purple_alt"
 	
 	# Setup recording effect
 	var microphone_bus_index = AudioServer.get_bus_index("Microphone")
@@ -93,7 +70,7 @@ func _ready():
 
 func _process(delta: float):
 	# Measure audio delay if needed
-	if should_measure_audio_delay and audio_player.get_playback_position() > 0:
+	if should_measure_audio_delay and audioPlayerManager.get_voice_playback_position(synth_index) > 0:
 		audio_delay_end_ms = Time.get_ticks_msec()
 		audio_delay_total_seconds = float(audio_delay_end_ms - audio_delay_begin_ms) / 1000.0
 		print("⚠️ audio delay is: " + str(audio_delay_total_seconds).pad_zeros(5))
@@ -159,36 +136,37 @@ func _on_record_button_pressed():
 
 func _on_play_pause_pressed():
 	"""Handle play/pause button"""
-	if layers_voice_overs.size() > get_current_layer_index():
-		var current_audio = layers_voice_overs[get_current_layer_index()]
-		if current_audio:
-			if audio_player.playing:
-				audio_player.stop()
-				audio_player_alt.stop()
-			else:
-				audio_player.play()
-				audio_player_alt.play()
+	var current_audio = get_current_layer_voice_over()
+	if current_audio:
+		if audioPlayerManager.is_voice_playing(synth_index):
+			audioPlayerManager.stop_voice(synth_index)
+		else:
+			audioPlayerManager.play_voice(synth_index)
 
 func get_current_layer_index() -> int:
 	"""Get current layer index from layer manager"""
 	return layerManager.current_layer_index
 
 func set_current_layer_voice_over(voice_over: AudioStream):
-	"""Set the current layer's voice over"""
+	"""Set the current layer's voice over in SynthData"""
 	var current_index = get_current_layer_index()
-	if current_index < layers_voice_overs.size():
-		layers_voice_overs[current_index] = voice_over
+	if current_index >= 0 and current_index < layerManager.layers.size():
+		var layer: LayerData = layerManager.layers[current_index]
+		if synth_index < layer.synths.size():
+			layer.synths[synth_index].layer_voice_over = voice_over
 		
-		audio_player.stream = get_current_layer_voice_over()
-		audio_player.stop()
-		audio_player.play()
+		audioPlayerManager.set_voice_stream(synth_index, voice_over)
+		audioPlayerManager.stop_voice(synth_index)
+		audioPlayerManager.play_voice(synth_index)
 		should_update_lines = true
 
 func get_current_layer_voice_over() -> AudioStream:
-	"""Get the current layer's voice over"""
+	"""Get the current layer's voice over from SynthData"""
 	var current_index = get_current_layer_index()
-	if current_index < layers_voice_overs.size():
-		return layers_voice_overs[current_index]
+	if current_index >= 0 and current_index < layerManager.layers.size():
+		var layer: LayerData = layerManager.layers[current_index]
+		if synth_index < layer.synths.size():
+			return layer.synths[synth_index].layer_voice_over
 	return null
 
 func on_top():
@@ -199,8 +177,7 @@ func on_top():
 		stop_recording()
 	
 	if not recording:
-		audio_player_alt.stream = get_current_layer_voice_over()
-		audio_player.stream = get_current_layer_voice_over()
+		audioPlayerManager.set_voice_stream(synth_index, get_current_layer_voice_over())
 		
 		should_measure_audio_delay = true
 		audio_delay_begin_ms = Time.get_ticks_msec()
@@ -209,13 +186,11 @@ func on_top():
 
 func on_top_delayed():
 	"""Delayed processing when layer comes to top"""
-	if audio_player.playing:
-		audio_player.stop()
-		audio_player_alt.stop()
+	if audioPlayerManager.is_voice_playing(synth_index):
+		audioPlayerManager.stop_voice(synth_index)
 	
 	if not recording:
-		audio_player.play()
-		audio_player_alt.play()
+		audioPlayerManager.play_voice(synth_index)
 
 func start_recording():
 	"""Start the recording process"""
@@ -239,7 +214,7 @@ func do_recording():
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(true)
 	print("recording started")
-	started_recording.emit()
+	# EventBus.recording_started.emit()
 
 func do_stop_recording():
 	"""Actually stop recording"""
@@ -253,7 +228,7 @@ func do_stop_recording():
 	finished = true
 	should_update_lines = true
 	
-	stopped_recording.emit()
+	# EventBus.recording_stopped.emit()
 
 func stop_recording():
 	"""Stop recording (with delay)"""
@@ -293,13 +268,13 @@ func set_volume_line(line: Line2D, audio: AudioStream, points: int, base_dist: i
 func _calculate_volume_offsets(_audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool) -> Array:
 	"""Calculate volume offsets for visualization"""
 	var offsets = []
-	var current_index = get_current_layer_index()
 	
 	for i in range(points):
 		var volume_offset = 0.0
 		
-		if current_index < layers_voice_overs.size() and layers_voice_overs[current_index]:
-			var audio_stream = layers_voice_overs[current_index]
+		var voice_over_audio = get_current_layer_voice_over()
+		if voice_over_audio:
+			var audio_stream = voice_over_audio
 			if audio_stream is AudioStreamWAV:
 				var length = audio_stream.get_length()
 				var percentage = float(i) / points

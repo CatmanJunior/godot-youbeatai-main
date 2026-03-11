@@ -3,10 +3,15 @@ extends Node
 
 
 const RING_COUNT = 4
+const VOICE_COUNT = 2
 
 # Audio Stream Players for 4 rings (main, alt, recorded)
 var audio_players: Array[AudioStreamPlayer] = []
 var sync_streams: Array[AudioStreamSynchronized] = []
+
+# Audio Stream Players for 2 voice-over synths (green, purple)
+var voice_players: Array[AudioStreamPlayer] = []
+var voice_sync_streams: Array[AudioStreamSynchronized] = []
 
 var sfx_player: AudioStreamPlayer
 
@@ -21,6 +26,7 @@ var sfx_player: AudioStreamPlayer
 
 func _ready():
 	_init_ring_audio_players()
+	_init_voice_audio_players()
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
@@ -30,10 +36,13 @@ func _ready():
 	EventBus.beat_triggered.connect(_on_beat_pitch_randomization)
 	EventBus.request_set_stream.connect(_on_request_set_stream)
 	EventBus.request_mute_all.connect(_mute_all)
+	EventBus.set_voice_volume_requested.connect(set_voice_volume)
 
 func _mute_all(mute: bool):
 	var volume_db = -80.0 if mute else 0.0
 	for player in audio_players:
+		player.volume_db = volume_db
+	for player in voice_players:
 		player.volume_db = volume_db
 	sfx_player.volume_db = volume_db
 
@@ -68,6 +77,27 @@ func _init_ring_audio_players():
 		sync_streams.append(sync_stream)
 
 
+func _init_voice_audio_players():
+	var bus_names = ["GreenVoice", "PurpleVoice"]
+	for i in range(VOICE_COUNT):
+		var sync_stream = AudioStreamSynchronized.new()
+		sync_stream.stream_count = 2
+		
+		sync_stream.set_sync_stream(0, _create_silent_stream()) # voice_over clean
+		sync_stream.set_sync_stream(1, _create_silent_stream()) # voice_over alt
+		
+		sync_stream.set_sync_stream_volume(0, 0.0)
+		sync_stream.set_sync_stream_volume(1, -80.0)
+		
+		var player = AudioStreamPlayer.new()
+		player.bus = bus_names[i]
+		player.stream = sync_stream
+		add_child(player)
+		
+		voice_players.append(player)
+		voice_sync_streams.append(sync_stream)
+
+
 func play_ring(ring: int):
 	if ring < 0 or ring >= RING_COUNT:
 		return
@@ -78,6 +108,40 @@ func play_sfx(stream: AudioStream):
 	if stream:
 		sfx_player.stream = stream
 		sfx_player.play()
+
+
+# Voice-over playback
+func play_voice(synth_index: int):
+	if synth_index >= 0 and synth_index < VOICE_COUNT:
+		voice_players[synth_index].play()
+
+func stop_voice(synth_index: int):
+	if synth_index >= 0 and synth_index < VOICE_COUNT:
+		voice_players[synth_index].stop()
+
+func is_voice_playing(synth_index: int) -> bool:
+	if synth_index >= 0 and synth_index < VOICE_COUNT:
+		return voice_players[synth_index].playing
+	return false
+
+func get_voice_playback_position(synth_index: int) -> float:
+	if synth_index >= 0 and synth_index < VOICE_COUNT:
+		return voice_players[synth_index].get_playback_position()
+	return 0.0
+
+func set_voice_stream(synth_index: int, audio: AudioStream):
+	if synth_index >= 0 and synth_index < VOICE_COUNT:
+		var stream = audio if audio else _create_silent_stream()
+		voice_sync_streams[synth_index].set_sync_stream(0, stream)
+		voice_sync_streams[synth_index].set_sync_stream(1, stream)
+
+func set_voice_volume(synth_index: int, weights: Vector3):
+	if synth_index < 0 or synth_index >= VOICE_COUNT:
+		return
+	var total = weights.x + weights.y + weights.z
+	var w = weights / total if total > 0.0 else Vector3(1, 0, 0)
+	voice_sync_streams[synth_index].set_sync_stream_volume(0, linear_to_db(max(sqrt(w.x), 0.0001)))
+	voice_sync_streams[synth_index].set_sync_stream_volume(1, linear_to_db(max(sqrt(w.y), 0.0001)))
 
 
 #Signal handlers

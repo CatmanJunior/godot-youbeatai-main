@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://hgqfyhhdm0ag"]
+[gd_scene format=3 uid="uid://hgqfyhhdm0ag"]
 
-[ext_resource type="Script" uid="uid://d4gpt5imqk7y0" path="res://Scripts/klappy_reaction.gd" id="1_msxu7"]
+[ext_resource type="Script" uid="uid://d4gpt5imqk7y0" path="res://Scripts/Klappy/klappy_reaction.gd" id="1_msxu7"]
 
 [node name="KlappyReaction" type="Node"]
 script = ExtResource("1_msxu7")

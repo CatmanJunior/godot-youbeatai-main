@@ -605,10 +605,9 @@ func _play_extra_sfx():
 
 
 #signal handlers
-func _on_switch_layer(_layer_index: int, _new_layer_beats: Array):
+func _on_switch_layer(_layer: LayerData):
 	update_layer_switch_buttons_colors()
 	set_copy_paste_clear_buttons_active(true)
-	print("Layer switched to index: " + str(_layer_index))
 	# Reset beat sprite scales so the new layer's visuals refresh immediately
 	var beats_amount = %BpmManager.beats_amount
 	for ring in range(min(4, beat_sprites.size())):

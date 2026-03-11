@@ -20,8 +20,8 @@ func _ready():
 	print(ProjectSettings.globalize_path("user://"))
 
 func deferred_setup():
-	%MixingManager.samples_mixing_re_apply_remembered_volumes()
-	%MixingManager.synth_mixing_re_apply_remembered_volumes()
+	# %MixingManager.samples_mixing_re_apply_remembered_volumes()
+	# %MixingManager.synth_mixing_re_apply_remembered_volumes()
 	# %Achievements.on_ready()
 	%UiManager.update_layer_buttons_delayed()
 

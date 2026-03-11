@@ -60,14 +60,15 @@ func _ready():
 
 func _on_layer_changed(layer_data: LayerData):
 	"""Store current knob, switch layer, retrieve new knob"""
-	store_active_knob(chaos_pad_mode)
+	if current_layer != null:
+		store_active_knob(chaos_pad_mode)
 	
 	current_layer = layer_data
 	
 	# Retrieve knob position for new layer
 	var pos = retrieve_active_knob(chaos_pad_mode)
 	knob.global_position = pos
-	
+
 	_apply_stored_volumes()
 
 func _on_ready_mixing():
@@ -171,15 +172,12 @@ func synth_mixing_apply_stored_volumes():
 
 func synth_mixing_update_volumes(synth: int, master_volume: float, given_weights: Vector3):
 	print("Updating volumes for synth %s with master volume %s and weights %s" % [synth, master_volume, given_weights])
-	#TODO this needs the be moved to the audio stuff not here, abstract the shit out of it
-	if synth == 0:
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("GreenVoice"), linear_to_db(given_weights.y * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Green"), linear_to_db(given_weights.z * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Green_alt"), linear_to_db(given_weights.x * master_volume))
-	elif synth == 1:
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("PurpleVoice"), linear_to_db(given_weights.y * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Purple"), linear_to_db(given_weights.z * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Purple_alt"), linear_to_db(given_weights.x * master_volume))
+	# Voice mixing via synced streams in AudioPlayerManager
+	var voice_weights = Vector3(given_weights.y * master_volume, given_weights.x * master_volume, 0.0)
+	EventBus.set_voice_volume_requested.emit(synth, voice_weights)
+	# Synth bus volume (SoundFontPlayer)
+	var synth_bus = "Green" if synth == 0 else "Purple"
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index(synth_bus), linear_to_db(given_weights.z * master_volume))
 
 func synth_mixing_change_synth(synth: int):
 	# Save knob position

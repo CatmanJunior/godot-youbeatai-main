@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://bafxjikk2rjnh"]
+[gd_scene format=3 uid="uid://bafxjikk2rjnh"]
 
-[ext_resource type="Script" uid="uid://ciy7dpu6yttwv" path="res://Scripts/klappy_respons_bubble.gd" id="1_hgimk"]
-[ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/continue.gd" id="2_3cvs7"]
+[ext_resource type="Script" uid="uid://ciy7dpu6yttwv" path="res://Scripts/Klappy/klappy_respons_bubble.gd" id="1_hgimk"]
+[ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/Klappy/continue.gd" id="2_3cvs7"]
 [ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_rvsyq"]
 
 [sub_resource type="Theme" id="Theme_3h2yf"]

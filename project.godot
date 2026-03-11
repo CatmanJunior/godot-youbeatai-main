@@ -28,6 +28,7 @@ driver/enable_input=true
 
 FFT="*res://fft/Fft.gd"
 EventBus="*uid://bj8qgtrwxpsxm"
+GameState="*res://Scripts/Global/game_state.gd"
 
 [display]
 

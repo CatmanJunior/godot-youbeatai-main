@@ -96,6 +96,7 @@ signal template_applied(template_name: String)
 # ── Voice Over ──
 signal voice_over_started()
 signal voice_over_stopped()
+signal set_voice_volume_requested(synth_index: int, weights: Vector3)
 
 # ── Achievements ──
 signal achievement_done(achievement_id: int)

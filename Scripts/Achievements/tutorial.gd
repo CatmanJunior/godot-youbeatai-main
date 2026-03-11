@@ -406,7 +406,7 @@ func _read_use_tutorial() -> bool:
 func _active_beats_per_ring(index_ring: int) -> int:
 	var amount: int = 0
 	for beat in range(bpmManager.beats_amount):
-		if beatManager.beat_actives[index_ring][beat]:
+		if beatManager.current_layer.get_beat(index_ring, beat):
 			amount += 1
 	return amount
 

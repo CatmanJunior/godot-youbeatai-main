@@ -11,6 +11,9 @@ var lowpass
 @export var KlappyEnergy: ProgressBar
 
 var unlocked:= false
+var start_energy
+var flicker_done = false
+var waarde = 0
 
 func _ready() -> void:
 	bus_index = AudioServer.get_bus_index("SubMaster")
@@ -30,8 +33,12 @@ func _ready() -> void:
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 4, false)
 	
+	start_energy = klappyLight.energy
+	
 	unlocked = false
 	
+	if KlappyEnergy != null:
+		KlappyEnergy.value_changed.connect(on_klappy_energy)
 
 func _on_gui_input(event: InputEvent) -> void:
 	if unlocked == true:
@@ -81,8 +88,15 @@ func _on_gui_input(event: InputEvent) -> void:
 			klappyLight.color = color 
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
-func _process(_delta: float) -> void: #misschien niet in de process??
-	if KlappyEnergy.value == 100:
+func on_klappy_energy(value):
+	if value >= 90 and not flicker_done:  #bij de 90 ofzo en dan moet klappy wat zeggen over lampje
 		unlocked = true
-		print("yaaay")
-		klappyLight.energy = 5
+		flicker_done = true
+		lightFlicker()
+	
+func lightFlicker():
+	for i in 15:
+		klappyLight.energy = start_energy * randf_range(2.3, 5.8)
+		await get_tree().create_timer(randf_range(0.02, 0.06)).timeout
+		klappyLight.energy = start_energy
+	

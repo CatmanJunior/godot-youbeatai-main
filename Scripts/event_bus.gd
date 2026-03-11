@@ -34,7 +34,7 @@ signal clap_triggered()
 signal stomp_triggered()
 
 # ── Layers ──
-signal layer_changed(layer_index: int, beat_actives: Array)
+signal layer_changed(layer_data: LayerData)
 signal layer_added(layer_index: int, emoji: String)
 signal layer_removed(layer_index: int)
 signal layer_cleared()

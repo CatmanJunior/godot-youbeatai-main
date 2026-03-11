@@ -8,16 +8,13 @@ const LAYERS_BUTTON_SIZE: int = 72
 # Layer state
 var current_layer_index: int = 0
 var layers_amount: int = 0
+var current_layer: LayerData
 
-# Layer data - array of beat actives for each layer [ring][beat]
-var layers_beat_actives: Array = []
+# Layer data — each entry is a LayerData instance
+var layers: Array[LayerData] = []
 
 # Layer buttons
 var layer_buttons: Array[Button] = []
-
-# Layer voice overs
-var layers_voice_overs_0: Array[AudioStream] = []
-var layers_voice_overs_1: Array[AudioStream] = []
 
 # UI references
 var layer_button_prefab: PackedScene
@@ -31,7 +28,7 @@ var colors: Array[Color] = []
 var beats_amount: int = 16
 
 # Clipboard for copy/paste
-var clipboard_beat_actives: Array = []
+var clipboard_layer: LayerData = null
 
 func _ready() -> void:
 	layer_button_prefab = %UiManager.layer_button_prefab
@@ -40,8 +37,8 @@ func _ready() -> void:
 	song_mode_back_panel = %UiManager.real_time_audio_recording_progress_bar
 	
 	# Connect to EventBus
-	EventBus.copy_requested.connect(copy_layer)
-	EventBus.paste_requested.connect(paste_layer)
+	EventBus.copy_requested.connect(_copy_layer)
+	EventBus.paste_requested.connect(_paste_layer)
 	EventBus.layer_clear_requested.connect(clear_layer)
 
 	spawn_initial_layer_buttons()
@@ -56,26 +53,21 @@ func spawn_initial_layer_buttons():
 func add_layer(layer: int, emoji: String = ""):
 	"""Add a new layer at the specified index"""
 	if layers_amount == LAYERS_AMOUNT_MAX:
+		print("Maximum layers reached, cannot add more.")
 		return
 
 	# Insert silence into active recordings for the new layer
 	_insert_silence_for_layer(layer)
 
 	layers_amount += 1
-	new_layer_button(layer, emoji)
+	_new_layer_button(layer, emoji)
 	
-	# Create new beat actives array for this layer [4 rings, beats_amount beats]
-	var new_beat_actives = []
-	for ring in range(4):
-		var ring_beats = []
-		for beat in range(beats_amount):
-			ring_beats.append(false)
-		new_beat_actives.append(ring_beats)
+	# Create a new LayerData instance
+	var new_layer := LayerData.new(beats_amount, Vector2.ZERO, emoji)
+	layers.insert(layer, new_layer)
 	
-	layers_beat_actives.insert(layer, new_beat_actives)
-	layers_voice_overs_0.insert(layer, null)
-	layers_voice_overs_1.insert(layer, null)
-	
+	current_layer = new_layer
+
 	# Notify other managers about new layer via EventBus
 	EventBus.layer_added.emit(layer, emoji)
 	
@@ -91,12 +83,10 @@ func remove_layer(layer: int):
 	# Remove the layer's audio segment from active recordings
 	_remove_audio_for_layer(layer)
 
-	remove_layer_button(layer)
+	_remove_layer_button(layer)
 	await get_tree().process_frame
 	
-	layers_beat_actives.remove_at(layer)
-	layers_voice_overs_0.remove_at(layer)
-	layers_voice_overs_1.remove_at(layer)
+	layers.remove_at(layer)
 	
 	# Notify other managers about removed layer
 	EventBus.layer_removed.emit(layer)
@@ -105,9 +95,9 @@ func remove_layer(layer: int):
 	
 	# If the deleted layer was the current one, go to first layer
 	if layer == current_layer_index:
-		switch_layer(0, false)
+		switch_layer(0)
 
-func new_layer_button(layer: int, emoji: String = "") -> Button:
+func _new_layer_button(layer: int, emoji: String = "") -> Button:
 	"""Create a new layer button"""
 	if not layer_button_prefab:
 		return null
@@ -129,7 +119,7 @@ func new_layer_button(layer: int, emoji: String = "") -> Button:
 	
 	return layer_button
 
-func remove_layer_button(layer: int):
+func _remove_layer_button(layer: int):
 	"""Remove a layer button"""
 	if layer < 0 or layer >= layer_buttons.size():
 		return
@@ -140,44 +130,31 @@ func remove_layer_button(layer: int):
 	layer_buttons.erase(button_to_remove)
 
 
-func copy_layer():
-	"""Copy the current layer's beat actives to the clipboard"""
-	var layer = current_layer_index
-	if layer < 0 or layer >= layers_beat_actives.size():
-		return
-	
-	clipboard_beat_actives = []
-	for ring in range(4):
-		var ring_beats = []
-		for beat in range(beats_amount):
-			ring_beats.append(layers_beat_actives[layer][ring][beat])
-		clipboard_beat_actives.append(ring_beats)
+func _copy_layer():
+	"""Copy the current layer to the clipboard"""	
+	clipboard_layer = current_layer.duplicate_layer()
 
-func paste_layer():
-	"""Paste the clipboard's beat actives into the current layer"""
-	if clipboard_beat_actives.is_empty():
+func _paste_layer():
+	"""Paste the clipboard into the current layer"""
+	if clipboard_layer == null:
 		return
 	
-	var layer = current_layer_index
-	if layer < 0 or layer >= layers_beat_actives.size():
-		return
+	# Copy beat and knob data from clipboard into current layer
+	current_layer.set_beat_actives(clipboard_layer.get_beat_actives())
+	current_layer.set_sample_knob_positions(clipboard_layer.get_sample_knob_positions())
+	for i in range(LayerData.SYNTHS_PER_LAYER):
+		current_layer.synths[i] = clipboard_layer.synths[i].duplicate_synth()
 	
-	for ring in range(4):
-		for beat in range(beats_amount):
-			layers_beat_actives[layer][ring][beat] = clipboard_beat_actives[ring][beat]
-	
-	EventBus.layer_changed.emit(current_layer_index, get_current_layer())
+	EventBus.layer_changed.emit(current_layer)
 	update_layer_buttons_user_interface()
 
 func clear_layer():
-	"""Clear all beats from a layer"""
+	"""Clear all beats from the current layer"""
 	var layer = current_layer_index
-	if layer < 0 or layer >= layers_beat_actives.size():
+	if layer < 0 or layer >= layers.size():
 		return
 	
-	for ring in range(4):
-		for beat in range(beats_amount):
-			layers_beat_actives[layer][ring][beat] = false
+	layers[layer].clear_beats()
 	
 	EventBus.layer_cleared.emit()
 
@@ -224,26 +201,22 @@ func update_layer_buttons_user_interface_delayed():
 	await get_tree().create_timer(0.2).timeout
 	update_layer_buttons_user_interface()
 
-func switch_layer(layer_index: int, save_layer_first: bool = true):
+func switch_layer(layer_index: int):
 	"""Switch to a different layer"""
 	# Save current layer first if needed
-	print("Switching to layer " + str(layer_index) + ", save current layer first: " + str(save_layer_first))
-	if save_layer_first:
-		set_current_layer(%BeatManager.beat_actives)
+	print("Switching to layer " + str(layer_index)) # Debug print
 	
 	# Switch to new layer
 	current_layer_index = layer_index
-	
-	var new_beat_actives = get_current_layer()
-	
-	EventBus.layer_changed.emit(current_layer_index, new_beat_actives)
+	current_layer = layers[current_layer_index]
+	EventBus.layer_changed.emit(current_layer)
 	
 	update_layer_buttons_user_interface()
 
-func switch_layer_next_frame(layer_index: int, save_layer_first: bool = true):
+func switch_layer_next_frame(layer_index: int):
 	"""Switch to a different layer on the next frame"""
 	await get_tree().process_frame
-	switch_layer(layer_index, save_layer_first)
+	switch_layer(layer_index)
 
 func next_layer():
 	"""Switch to the next layer (or loop to first)"""
@@ -252,25 +225,20 @@ func next_layer():
 	else:
 		switch_layer(current_layer_index + 1)
 
-func get_current_layer() -> Array:
-	"""Get the beat actives for the current layer"""
-	return layers_beat_actives[current_layer_index]
+func get_current_layer_data() -> LayerData:
+	"""Get the LayerData for the current layer"""
+	return layers[current_layer_index]
 
 func set_current_layer(value: Array):
 	"""Set the beat actives for the current layer"""
-	if current_layer_index < layers_beat_actives.size():
-		layers_beat_actives[current_layer_index] = value
+	if current_layer_index < layers.size():
+		layers[current_layer_index].set_beat_actives(value)
 
 func layer_has_beats(layer: int) -> bool:
 	"""Check if a layer has any active beats"""
-	if layer < 0 or layer >= layers_beat_actives.size():
+	if layer < 0 or layer >= layers.size():
 		return false
-	var layer_beats = layers_beat_actives[layer]
-	for ring in range(4):
-		for beat in range(beats_amount):
-			if layer_beats[ring][beat]:
-				return true
-	return false
+	return layers[layer].has_active_beats()
 
 
 # ── Audio recording manipulation when layers change ──────────────────────────

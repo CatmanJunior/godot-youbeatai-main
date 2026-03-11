@@ -21,10 +21,6 @@ enum ChaosPadMode {
 @export var main_icon: Sprite2D
 @export var alt_icon: Sprite2D
 
-# Mic buttons
-@export var mic_button_location: Node2D
-@export var mic_buttons: Array[Node2D] = []
-
 # Curves for visual feedback
 @export var synth_mixing_line_scale_curve: Curve
 @export var synth_mixing_line_color_curve: Curve
@@ -34,25 +30,24 @@ var weights: Vector3 = Vector3.ZERO
 var outer_triangle_size: float = 60.0
 var chaos_pad_mode: ChaosPadMode = ChaosPadMode.SAMPLE_MIXING
 
-# Sample mixing
-var samples_mixing_knob_positions: Array = [] # Array of Array[Vector2]
-var samples_mixing_knob_positions_clipboard: Array[Vector2] = []
+# Active ring/synth selection
 var samples_mixing_active_ring: int = 0
-
-# Synth mixing
-var synth_mixing_knob_positions: Array = [] # Array of Array[Vector2]
-var synth_mixing_knob_positions_clipboard: Array[Vector2] = []
 var synth_mixing_active_synth: int = 0
 
-# Song mixing
+# Song mixing (global, not per-layer)
 var song_mixing_knob_position: Vector2
 
-var current_layer_index: int = 0
 var colors: Array[Color] = []
 
 var default_knob_position: Vector2
 
+# Reference to layer manager for LayerData access
+var layer_manager: Node
+
+var current_layer: LayerData
+
 func _ready():
+	# TODO: Do this in the layer_data instead
 	default_knob_position = get_default_knob_position()
 
 	# Connect to EventBus so other scripts don't need a direct reference
@@ -60,49 +55,25 @@ func _ready():
 	EventBus.synth_selected.connect(synth_mixing_change_synth)
 	EventBus.mixing_weights_changed.connect(on_update_mixing)
 	EventBus.layer_changed.connect(_on_layer_changed)
-	EventBus.layer_added.connect(_on_layer_added)
-	EventBus.layer_removed.connect(_on_layer_removed)
 	
 	_on_ready_mixing()
 
-func _on_layer_changed(layer_index: int, _new_layer_beats: Array):
+func _on_layer_changed(layer_data: LayerData):
 	"""Store current knob, switch layer, retrieve new knob"""
 	store_active_knob(chaos_pad_mode)
 	
-	current_layer_index = layer_index
+	current_layer = layer_data
 	
 	# Retrieve knob position for new layer
-	retrieve_active_knob(chaos_pad_mode)
-
-func _on_layer_added(_layer_index: int, _emoji: String):
-	"""Insert default knob positions for a new layer"""
-	print("Layer added, inserting default knob positions at index %s" % current_layer_index)
-	samples_mixing_knob_positions.insert(current_layer_index, [default_knob_position, default_knob_position, default_knob_position, default_knob_position])
-	synth_mixing_knob_positions.insert(current_layer_index, [default_knob_position, default_knob_position])
-
-func _on_layer_removed(layer_index: int):
-	"""Remove knob positions when a layer is deleted"""
-	if layer_index < samples_mixing_knob_positions.size():
-		samples_mixing_knob_positions.remove_at(layer_index)
-	if layer_index < synth_mixing_knob_positions.size():
-		synth_mixing_knob_positions.remove_at(layer_index)
-
-func _prepare_clipboard():
-	for i in range(4):
-		samples_mixing_knob_positions_clipboard.append(default_knob_position)
-	for i in range(2):
-		synth_mixing_knob_positions_clipboard.append(default_knob_position)
+	var pos = retrieve_active_knob(chaos_pad_mode)
+	knob.global_position = pos
 	
+	_apply_stored_volumes()
+
 func _on_ready_mixing():
-	_prepare_clipboard()
+	song_mixing_knob_position = chaos_pad_triangle_sprite.global_position
 
-	song_mixing_knob_position = chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
-
-	# Initialize knob position arrays for the first layer
-	samples_mixing_knob_positions.append([default_knob_position, default_knob_position, default_knob_position, default_knob_position])
-	synth_mixing_knob_positions.append([default_knob_position, default_knob_position])
-
-	_change_ring(chaos_pad_mode, 0)
+	# _change_ring(chaos_pad_mode, 0)
 
 func _change_ring(mode: ChaosPadMode, new_index: int = 0):
 	if mode == ChaosPadMode.SAMPLE_MIXING:
@@ -115,36 +86,36 @@ func _change_ring(mode: ChaosPadMode, new_index: int = 0):
 # SAMPLE MIXING ============================================================
 func store_active_knob(mode: ChaosPadMode):
 	if mode == ChaosPadMode.SAMPLE_MIXING:
-		samples_mixing_store_active_knob()
+		current_layer.set_sample_knob_position(samples_mixing_active_ring, knob.global_position)
 	elif mode == ChaosPadMode.SYNTH_MIXING:
-		synth_mixing_store_active_knob()
+		current_layer.set_synth_knob_position(synth_mixing_active_synth, knob.global_position)
 	elif mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_store_active_knob()
 
-func samples_mixing_copy_knobs_for_layer():
-	samples_mixing_knob_positions_clipboard = samples_mixing_knob_positions[current_layer_index].duplicate()
+func retrieve_active_knob(mode: ChaosPadMode) -> Vector2:
+	var pos: Vector2
+	if mode == ChaosPadMode.SAMPLE_MIXING:
+		pos = current_layer.get_sample_knob_position(samples_mixing_active_ring)
+	elif mode == ChaosPadMode.SYNTH_MIXING:
+		pos = current_layer.get_synth_knob_position(synth_mixing_active_synth)
+	elif mode == ChaosPadMode.SONG_MIXING:
+		pos = song_mixing_retrieve_active_knob()
+	if pos == Vector2.ZERO:
+		pos = default_knob_position
+	return pos
 
-func samples_mixing_paste_knobs_for_layer():
-	samples_mixing_knob_positions[current_layer_index] = samples_mixing_knob_positions_clipboard.duplicate()
-	knob.global_position = samples_mixing_knob_positions_clipboard[samples_mixing_active_ring]
-
-func samples_mixing_store_active_knob():
-	if current_layer_index < samples_mixing_knob_positions.size() and knob:
-		if samples_mixing_active_ring < samples_mixing_knob_positions[current_layer_index].size():
-			samples_mixing_knob_positions[current_layer_index][samples_mixing_active_ring] = knob.global_position
-
-
-#TODO Fix this
-func samples_mixing_re_apply_remembered_volumes():
+func _apply_stored_volumes():
 	"""Re-apply remembered mixing volumes for all rings"""
-	if current_layer_index >= samples_mixing_knob_positions.size():
+	if current_layer == null:
 		return
 	
-	# for i in range(4):
-	# 	if i < samples_mixing_knob_positions[current_layer_index].size():
-			# var result = get_weights_for_position(samples_mixing_knob_positions[current_layer_index][i])
-			# samples_mixing_update_volumes_for_ring(i, result.master_volume, result.weights)
+	for i in range(current_layer.RINGS_PER_LAYER):
+		samples_mixing_update_volumes(i, current_layer.rings[i].master_volume, current_layer.rings[i].weights)
 
+	for i in range(current_layer.SYNTHS_PER_LAYER):
+		synth_mixing_update_volumes(i, current_layer.synths[i].master_volume, current_layer.synths[i].weights)
+
+		
 func samples_mixing_change_ring(new_ring: int):
 	# Save knob position
 	store_active_knob(chaos_pad_mode)
@@ -153,8 +124,10 @@ func samples_mixing_change_ring(new_ring: int):
 	samples_mixing_active_ring = new_ring
 	
 	# Retrieve knob position
-	retrieve_active_knob(chaos_pad_mode)
+	var pos = retrieve_active_knob(chaos_pad_mode)
 	
+	knob.global_position = pos
+
 	# Set chaos pad color
 	samples_mixing_start_triangle_color_change(0.2)
 	
@@ -174,9 +147,9 @@ func samples_mixing_start_triangle_color_change(duration: float):
 	var tween = create_tween()
 	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", colors[samples_mixing_active_ring], duration)
 
-func samples_mixing_update_volumes(master_volume: float, given_weights: Vector3):
-	print("Updating volumes for ring %s with master volume %s and weights %s" % [samples_mixing_active_ring, master_volume, given_weights])
-	var ring = samples_mixing_active_ring
+func samples_mixing_update_volumes(ring: int, master_volume: float, given_weights: Vector3):
+	print("Updating volumes for ring %s with master volume %s and weights %s" % [ring, master_volume, given_weights])
+
 	var weights_to_use = given_weights if given_weights != Vector3.ZERO else weights
 
 	# Calculate individual volumes for main, alt, and rec based on weights and master volume
@@ -186,44 +159,27 @@ func samples_mixing_update_volumes(master_volume: float, given_weights: Vector3)
 	EventBus.set_ring_volume_requested.emit(ring, new_volume)
 
 # SYNTH MIXING =============================================================
-
-func synth_mixing_copy_knobs_for_layer():
-	if current_layer_index < synth_mixing_knob_positions.size():
-		synth_mixing_knob_positions_clipboard = synth_mixing_knob_positions[current_layer_index].duplicate()
-
-func synth_mixing_paste_knobs_for_layer():
-	synth_mixing_knob_positions[current_layer_index] = synth_mixing_knob_positions_clipboard.duplicate()
-	knob.global_position = synth_mixing_knob_positions_clipboard[synth_mixing_active_synth]
-
-func synth_mixing_store_active_knob():
-	if synth_mixing_active_synth < synth_mixing_knob_positions[current_layer_index].size():
-		synth_mixing_knob_positions[current_layer_index][synth_mixing_active_synth] = knob.global_position
-
-func synth_mixing_retrieve_active_knob():
-	knob.global_position = synth_mixing_knob_positions[current_layer_index][synth_mixing_active_synth]
-
-func samples_mixing_retrieve_active_knob():
-	knob.global_position = samples_mixing_knob_positions[current_layer_index][samples_mixing_active_ring]
-
-func retrieve_active_knob(mode: ChaosPadMode):
-	if mode == ChaosPadMode.SAMPLE_MIXING:
-		samples_mixing_retrieve_active_knob()
-	elif mode == ChaosPadMode.SYNTH_MIXING:
-		synth_mixing_retrieve_active_knob()
-	elif mode == ChaosPadMode.SONG_MIXING:
-		song_mixing_retrieve_active_knob()
-
-
-#TODO Fix this
-func synth_mixing_re_apply_remembered_volumes():
+func synth_mixing_apply_stored_volumes():
 	"""Re-apply remembered mixing volumes for both synths"""
-	if current_layer_index >= synth_mixing_knob_positions.size():
+	if current_layer == null:
 		return
 	
-	# for i in range(2):
-	# 	if i < synth_mixing_knob_positions[current_layer_index].size():
-	# 		var result = get_weights_for_position(synth_mixing_knob_positions[current_layer_index][i])
-	# 		synth_mixing_update_volumes_for_synth(i, result.master_volume, result.weights)
+	for i in range(current_layer.SYNTHS_PER_LAYER):
+		var weights_to_use = current_layer.synths[i].weights if current_layer.synths[i].weights != Vector3.ZERO else weights
+		var master_volume = current_layer.synths[i].master_volume
+		synth_mixing_update_volumes(i, master_volume, weights_to_use)
+
+func synth_mixing_update_volumes(synth: int, master_volume: float, given_weights: Vector3):
+	print("Updating volumes for synth %s with master volume %s and weights %s" % [synth, master_volume, given_weights])
+	#TODO this needs the be moved to the audio stuff not here, abstract the shit out of it
+	if synth == 0:
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("GreenVoice"), linear_to_db(given_weights.y * master_volume))
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Green"), linear_to_db(given_weights.z * master_volume))
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Green_alt"), linear_to_db(given_weights.x * master_volume))
+	elif synth == 1:
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("PurpleVoice"), linear_to_db(given_weights.y * master_volume))
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Purple"), linear_to_db(given_weights.z * master_volume))
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Purple_alt"), linear_to_db(given_weights.x * master_volume))
 
 func synth_mixing_change_synth(synth: int):
 	# Save knob position
@@ -244,13 +200,6 @@ func synth_mixing_change_synth(synth: int):
 	if alt_icon and synth < alt_icon_synths.size():
 		alt_icon.texture = alt_icon_synths[synth]
 	
-	# Set mic button location
-	for i in range(mic_buttons.size()):
-		mic_buttons[i].global_position = Vector2(-500, 500)
-	var mic_index = 4 + synth
-	if mic_index < mic_buttons.size() and mic_button_location:
-		mic_buttons[mic_index].global_position = mic_button_location.global_position
-	
 	# Set chaos pad mode
 	chaos_pad_mode = ChaosPadMode.SYNTH_MIXING
 
@@ -262,17 +211,6 @@ func synth_mixing_start_triangle_color_change(duration: float):
 	var tween = create_tween()
 	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", colors[color_index], duration)
 
-func synth_mixing_update_volumes_for_synth(synth: int, master_volume: float, given_weights: Vector3 = Vector3.ZERO):
-	var weights_to_use = given_weights if given_weights != Vector3.ZERO else weights
-	
-	if synth == 0:
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("GreenVoice"), linear_to_db(weights_to_use.y * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Green"), linear_to_db(weights_to_use.z * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Green_alt"), linear_to_db(weights_to_use.x * master_volume))
-	elif synth == 1:
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("PurpleVoice"), linear_to_db(weights_to_use.y * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Purple"), linear_to_db(weights_to_use.z * master_volume))
-		AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Purple_alt"), linear_to_db(weights_to_use.x * master_volume))
 
 # SONG MIXING ==============================================================
 
@@ -297,12 +235,6 @@ func song_mixing_change_to_song_mixer():
 		main_icon.texture = main_icon_song
 	if alt_icon and alt_icon_song:
 		alt_icon.texture = alt_icon_song
-	
-	# Set mic button location
-	for i in range(mic_buttons.size()):
-		mic_buttons[i].global_position = Vector2(-500, 500)
-	if mic_buttons.size() > 6 and mic_button_location:
-		mic_buttons[6].global_position = mic_button_location.global_position
 	
 	# Set chaos pad mode
 	chaos_pad_mode = ChaosPadMode.SONG_MIXING
@@ -330,8 +262,8 @@ func on_update_mixing(master_volume: float, mixingWeights: Vector3):
 		return
 		
 	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
-		samples_mixing_update_volumes(master_volume, mixingWeights)
+		samples_mixing_update_volumes(samples_mixing_active_ring, master_volume, mixingWeights)
 	elif chaos_pad_mode == ChaosPadMode.SYNTH_MIXING:
-		synth_mixing_update_volumes_for_synth(synth_mixing_active_synth, master_volume, mixingWeights)
+		synth_mixing_update_volumes(synth_mixing_active_synth, master_volume, mixingWeights)
 	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_update_volumes_for_song(master_volume)

@@ -6,7 +6,6 @@ extends Node3D
 var first_talk = false
 var talking = false
 var beat_time = 0.0
-@export var manager:Manager
 
 func _ready():
 	
@@ -14,11 +13,9 @@ func _ready():
 	animation_tree.set("parameters/ClapTrigger/seek_request", 10000.0)
 	animation_tree.set("parameters/StampTrigger/seek_request", 10000.0)
 	animation_tree.set("parameters/talkingTrigger/seek_request", 10000.0)
-	if manager != null:
-		manager.OnUtteranceEnd.connect(_on_utterance_end)
-	else:
-		DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED,_on_utterance_end)
-	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_STARTED,_on_callback_)
+	EventBus.utterance_ended.connect(_on_utterance_end)
+	EventBus.bpm_changed.connect(on_bpm_changed)
+	
 	# default speed for 120 bpm
 	if beat_time == 0:
 		on_bpm_changed(120.0)

@@ -7,10 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="5_8pi72"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="7_0dny5"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_3t5nw"]
-[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Experimental/Web/bpm.gd" id="9_3e1b8"]
-[ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Experimental/Web/layer_manager.gd" id="10_pyso5"]
-[ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Experimental/Web/game_manager.gd" id="10_uqoqp"]
-[ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Experimental/Web/mixing_manager.gd" id="11_hxd57"]
+[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/bpm.gd" id="9_3e1b8"]
+[ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/layer_manager.gd" id="10_pyso5"]
+[ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/game_manager.gd" id="10_uqoqp"]
+[ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/mixing_manager.gd" id="11_hxd57"]
 [ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="13_sma4m"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="14_rgdu2"]
 [ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="15_8eq3q"]
@@ -27,9 +27,9 @@
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="24_6q34d"]
 [ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="24_h0xuh"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="25_6j1t0"]
-[ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Experimental/Web/keyboard_input_manager.gd" id="25_scmae"]
-[ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Experimental/Web/audio_player_manager.gd" id="26_pxq5n"]
-[ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Experimental/Web/ui_manager.gd" id="26_scmae"]
+[ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/keyboard_input_manager.gd" id="25_scmae"]
+[ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/audio_player_manager.gd" id="26_pxq5n"]
+[ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/ui_manager.gd" id="26_scmae"]
 [ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="26_xpu48"]
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="27_irepe"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="27_p4tck"]
@@ -47,8 +47,8 @@
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="35_dbt8u"]
 [ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="36_xwqw4"]
 [ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="37_glyvh"]
-[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Experimental/Web/beat_manager.gd" id="38_2ikc6"]
-[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Experimental/Web/audioRecorder.gd" id="39_pyso5"]
+[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/beat_manager.gd" id="38_2ikc6"]
+[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/audioRecorder.gd" id="39_pyso5"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="40_e8hom"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="41_jrm6x"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="42_e22mk"]
@@ -57,49 +57,185 @@
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="45_dmvtp"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="49_dll78"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_662co"]
-[ext_resource type="Script" uid="uid://c3whfo805sukd" path="res://Scripts/ReverbDelayManager.cs" id="53_txw87"]
-[ext_resource type="Script" uid="uid://cmwdwqp2tgh0h" path="res://Scripts/MidiManager.cs" id="54_wssgk"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="57_7pcuk"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="58_stq2o"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="59_4cism"]
-[ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Experimental/Web/particle_manager.gd" id="59_j7ciw"]
-[ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Experimental/Web/visibility_manager.gd" id="60_3jbv4"]
+[ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/particle_manager.gd" id="59_j7ciw"]
+[ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Scripts/visibility_manager.gd" id="60_3jbv4"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="60_uwd3s"]
-[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Experimental/Web/colors.gd" id="61_p5fwe"]
+[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/colors.gd" id="61_p5fwe"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="62_koofn"]
-[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Experimental/Web/microphone_capture.gd" id="62_pyso5"]
+[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/microphone_capture.gd" id="62_pyso5"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="63_0ayl2"]
-[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Experimental/Web/template_manager.gd" id="64_hxd57"]
+[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/template_manager.gd" id="64_hxd57"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
-[ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Experimental/Web/layer_voice_over.gd" id="66_pyso5"]
-[ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Experimental/Web/real_time_audio_recording.gd" id="67_hxd57"]
-[ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="67_uicn8"]
-[ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Experimental/Web/song_voice_over_manager.gd" id="69_hxd57"]
+[ext_resource type="Script" uid="uid://ba5ingele0hwe" path="res://Scripts/layer_voice_over.gd" id="66_pyso5"]
+[ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Scripts/real_time_audio_recording.gd" id="67_hxd57"]
+[ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Scripts/song_voice_over_manager.gd" id="69_hxd57"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="70_3tlvj"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_vb5o2"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_rnt4q"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="73_autlv"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_wgwc4"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="76_hn88f"]
-[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Experimental/Web/instrument_button.gd" id="77_3t1px"]
+[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/instrument_button.gd" id="77_3t1px"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="77_bcfhr"]
-[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Experimental/Web/record_sample_button.gd" id="77_hxd57"]
-[ext_resource type="Script" uid="uid://bdroe2aknnaw1" path="res://Experimental/Web/record_button.gd" id="78_8eq3q"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/record_sample_button.gd" id="77_hxd57"]
+[ext_resource type="Script" uid="uid://bdroe2aknnaw1" path="res://Scripts/record_button.gd" id="78_8eq3q"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="78_ikay4"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="78_j5x8m"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="80_hb2vt"]
-[ext_resource type="Script" uid="uid://c1br0m0n3lhxh" path="res://Experimental/Web/layer_chaos_pad_select_button.gd" id="80_hxd57"]
+[ext_resource type="Script" uid="uid://c1br0m0n3lhxh" path="res://Scripts/layer_chaos_pad_select_button.gd" id="80_hxd57"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="81_7gfte"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="82_crcsx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="83_g0gna"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="84_05f8y"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="85_hxd57"]
-[ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scenes/unlock_achievements.gd" id="85_op1ei"]
+[ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scripts/unlock_achievements.gd" id="85_op1ei"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
-[ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Experimental/Web/volume_treshold_slider.gd" id="91_8eq3q"]
+[ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Scripts/volume_treshold_slider.gd" id="91_8eq3q"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
+
+[sub_resource type="CSharpScript" id="CSharpScript_cwyb6"]
+script/source = "using Godot;
+
+public partial class ReverbDelayManager : Node
+{
+    public static ReverbDelayManager instance = null;
+
+    public override void _ExitTree()
+    {
+        if (instance == this) instance = null;
+    }
+
+    [Export] public Slider reverbSlider;
+    [Export] public Slider delaySlider;
+
+    AudioEffectReverb reverbEffect;
+    AudioEffectDelay delayEffect;
+
+    public override void _Ready()
+    {
+        instance ??= this;
+        reverbEffect = new AudioEffectReverb();
+        delayEffect = new AudioEffectDelay();
+        AudioServer.AddBusEffect(AudioServer.GetBusIndex(\"Master\"), reverbEffect);
+        AudioServer.AddBusEffect(AudioServer.GetBusIndex(\"Master\"), delayEffect);
+    }
+
+    public override void _Process(double delta)
+    {
+        SetReverbLevel((float)reverbSlider.Value);
+        SetDelayLevel((float)delaySlider.Value);
+    }
+
+    private void SetReverbLevel(float level)
+    {
+        AudioServer.SetBusEffectEnabled(AudioServer.GetBusIndex(\"Master\"), 0, level > 0);
+        reverbEffect.Wet = level;
+        reverbEffect.RoomSize = level;
+    }
+
+    private void SetDelayLevel(float level)
+    {
+        AudioServer.SetBusEffectEnabled(AudioServer.GetBusIndex(\"Master\"), 1, level > 0);
+        delayEffect.Tap1Active = true;
+        delayEffect.Tap2Active = false;
+        delayEffect.Tap1DelayMs = level * 1000f;
+        delayEffect.Tap1LevelDb = -20;
+    }
+}"
+
+[sub_resource type="CSharpScript" id="CSharpScript_3t1px"]
+script/source = "using Godot;
+using System;
+using System.Collections.Generic;
+
+partial class MidiManager : Node
+{
+    public override void _Ready()
+    {
+        try
+        {
+            OS.OpenMidiInputs();
+            GD.Print(OS.GetConnectedMidiInputs());
+        }
+        catch (Exception)
+        {
+
+        }
+    }
+
+    public override void _Process(double delta)
+    {
+    }
+
+    public override void _Input(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventMidi midiEvent)
+        {
+            /*
+			GD.Print($\"Channel {midiEvent.Channel}\");
+			GD.Print($\"Message {midiEvent.Message}\");
+			GD.Print($\"Pitch {midiEvent.Pitch}\");
+			GD.Print($\"Velocity {midiEvent.Velocity}\");
+			GD.Print($\"Instrument {midiEvent.Instrument}\");
+			GD.Print($\"Pressure {midiEvent.Pressure}\");
+			GD.Print($\"Controller number: {midiEvent.ControllerNumber}\");
+			GD.Print($\"Controller value: {midiEvent.ControllerValue}\");
+			*/
+
+            // bpm
+            if (midiEvent.Message == MidiMessage.ControlChange && midiEvent.ControllerNumber == 92)
+            {
+                GD.Print($\"BPM Change Detected: {midiEvent.ControllerValue}\");
+                BpmManager.instance.bpm = midiEvent.ControllerValue;
+            }
+
+            // notes
+            if (midiEvent.Message == MidiMessage.NoteOn && midiEvent.Velocity > 0)
+            {
+                int pitch = midiEvent.Pitch;
+                string noteName = GetNoteName(pitch);
+                GD.Print($\"Note Played: {noteName}\");
+            }
+
+            // pitch
+            if (midiEvent.Message == MidiMessage.PitchBend)
+            {
+                var scaled = Mathf.Clamp(Mathf.InverseLerp(0, 16000, midiEvent.Pitch), 0, 1);
+                GD.Print($\"Pitchblend: {scaled}\");
+            }
+        }
+    }
+
+    private string GetNoteName(int pitch)
+    {
+        var NoteNames = new Dictionary<int, string>
+        {
+            { 0, \"C\" },
+            { 1, \"C#\" },
+            { 2, \"D\" },
+            { 3, \"D#\" },
+            { 4, \"E\" },
+            { 5, \"F\" },
+            { 6, \"F#\" },
+            { 7, \"G\" },
+            { 8, \"G#\" },
+            { 9, \"A\" },
+            { 10, \"A#\" },
+            { 11, \"B\" }
+        };
+
+        int octave = (pitch / 12) - 1;
+        int noteIndex = pitch % 12;
+        string note = NoteNames.ContainsKey(noteIndex) ? NoteNames[noteIndex] : \"Unknown\";
+        return $\"{note}{octave}\";
+    }
+}
+"
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
 buffer_length = 0.1
@@ -203,6 +339,53 @@ _data = {
 &"Bear_pulse": SubResource("Animation_jut3y"),
 &"record_pulse": SubResource("Animation_v2nl5")
 }
+
+[sub_resource type="CSharpScript" id="CSharpScript_p5fwe"]
+script/source = "using Godot;
+
+public partial class RecordButton : Sprite2D
+{
+    [Export] int id;
+
+    bool inside => IsPixelOpaque(GetLocalMousePosition());
+
+    Color original_c;
+    Color hover_c;
+    Color pressed_c;
+
+    public bool pressed = false;
+
+    public override void _Ready()
+    {
+        original_c = SelfModulate;
+        hover_c = original_c.Lightened(0.2f);
+        pressed_c = new Color(1, 0, 0, 1);
+    }
+
+    public override void _Input(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
+        {
+            // on release
+            if (mouseEvent.IsReleased())
+            {
+                if (inside) OnPressed();
+            }
+        }
+    }
+
+    public override void _Process(double delta)
+    {
+        if (pressed) SelfModulate = pressed_c;
+        else if (inside) SelfModulate = hover_c;
+        else SelfModulate = original_c;
+    }
+
+    public void OnPressed()
+    {
+        // on click
+    }
+}"
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
 
@@ -413,7 +596,7 @@ alt_icon_song = ExtResource("24_3dyd7")
 main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
 alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 mic_button_location = NodePath("../../../UserInterface/ChaosPad/MicButtonLocation")
-mic_buttons = [NodePath(""), NodePath(""), NodePath(""), NodePath(""), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
+mic_buttons = [null, null, null, null, NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton0"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordBeatButton1"), NodePath("../../../UserInterface/Buttons/MicButtons/RecordMasterButton")]
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/GameManager" unique_id=550979596]
 unique_name_in_owner = true
@@ -442,7 +625,7 @@ script = ExtResource("25_scmae")
 unique_name_in_owner = true
 script = ExtResource("9_3e1b8")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "clear_layer_button", "save_layer_button", "remove_layer_button", "load_layer_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "instrument_buttons", "record_sample_button0", "record_sample_button1", "record_sample_button2", "record_sample_button3", "corners", "chaos_pad_triangle_sprite", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("layer_buttons_container", "add_layer_button", "clear_layer_button", "save_layer_button", "remove_layer_button", "load_layer_button", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "instrument_buttons", "corners", "chaos_pad_triangle_sprite", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "layer_loop_toggle", "saving_label", "instruction_label", "all_layers_to_mp3", "layer_outline", "layer_outline_holder", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "copy_paste_clear_buttons_holder", "continue_button", "klappy_continue", "knob_area", "amount_left", "green_layer_record_button", "bear_ring_pivot_point")]
 unique_name_in_owner = true
 script = ExtResource("26_scmae")
 layer_button_prefab = ExtResource("27_p4tck")
@@ -457,10 +640,6 @@ bpm_up_button = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmUpButton"
 bpm_down_button = NodePath("../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
 song_select_button = NodePath("../../UserInterface/Buttons/SongSelectButtonSprite/SongSelectButton")
 instrument_buttons = [NodePath("../../UserInterface/Buttons/InstrumentButton0"), NodePath("../../UserInterface/Buttons/InstrumentButton1"), NodePath("../../UserInterface/Buttons/InstrumentButton2"), NodePath("../../UserInterface/Buttons/InstrumentButton3")]
-record_sample_button0 = NodePath("")
-record_sample_button1 = NodePath("")
-record_sample_button2 = NodePath("")
-record_sample_button3 = NodePath("")
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 chaos_pad_triangle_sprite = NodePath("../../UserInterface/ChaosPad/Triangle")
 restart_button = NodePath("../../UserInterface/SettingsPanel/Buttons/RestartButton")
@@ -524,7 +703,7 @@ script = ExtResource("60_3jbv4")
 [node name="Colors" type="Node" parent="Managers/UiManager" unique_id=1947290805]
 unique_name_in_owner = true
 script = ExtResource("61_p5fwe")
-colors = PackedColorArray(0.9019608, 0.29411766, 0.5568628, 1, 0.972549, 0.52156866, 0.17254902, 1, 0.2627451, 0.79607844, 0.5294118, 1, 0.011764706, 0.8235294, 0.93333334, 1, 1, 1, 0, 1, 0.516666, 0, 1, 1, 0.61960787, 0.6117647, 0.8980392, 1)
+colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.516666, 0, 1, 1), Color(0.61960787, 0.6117647, 0.8980392, 1)])
 metadata/_edit_pinned_properties_ = [&"colors"]
 
 [node name="MicrophoneCapture" type="Node" parent="Managers" unique_id=634715111]
@@ -541,12 +720,12 @@ show_template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/Templ
 set_template_button = NodePath("../../UserInterface/SettingsPanel/Buttons/TemplateButton/SetTemplateButton")
 
 [node name="ReverbDelayManager" type="Node" parent="Managers" unique_id=11349349 node_paths=PackedStringArray("reverbSlider", "delaySlider")]
-script = ExtResource("53_txw87")
+script = SubResource("CSharpScript_cwyb6")
 reverbSlider = NodePath("../../UserInterface/SettingsPanel/Sliders/ReverbSlider")
 delaySlider = NodePath("../../UserInterface/SettingsPanel/Sliders/DelaySlider")
 
 [node name="MidiManager" type="Node" parent="Managers" unique_id=674668927]
-script = ExtResource("54_wssgk")
+script = SubResource("CSharpScript_3t1px")
 
 [node name="RealTimeAudioRecording" type="Node" parent="Managers" unique_id=1028778843 node_paths=PackedStringArray("progress_bar", "record_song_button", "record_song_sprite")]
 script = ExtResource("67_hxd57")
@@ -1589,7 +1768,7 @@ z_index = -4
 position = Vector2(337, -932.75)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("65_tbynx")
-script = ExtResource("67_uicn8")
+script = SubResource("CSharpScript_p5fwe")
 
 [node name="Button0" type="Button" parent="UserInterface/RecordSongButton" unique_id=1229890865]
 anchors_preset = 8
@@ -1695,8 +1874,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
 
-[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=1875388525 node_paths=PackedStringArray("manager") instance=ExtResource("77_bcfhr")]
-manager = NodePath("../../../../../Managers/GameManager")
+[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=1875388525 instance=ExtResource("77_bcfhr")]
 
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
@@ -2555,6 +2733,7 @@ vertical_alignment = 1
 
 [node name="ConfirmationPrompt" parent="UserInterface" unique_id=1975970629 instance=ExtResource("81_7gfte")]
 layout_mode = 1
+script = null
 
 [node name="Sprite2D" type="Sprite2D" parent="UserInterface" unique_id=1605810403]
 modulate = Color(1, 1, 1, 0.21568628)
@@ -2582,7 +2761,7 @@ metadata/_edit_lock_ = true
 [node name="KlappyReaction" parent="UserInterface" unique_id=1688376857 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("84_05f8y")]
 achievment_panel = NodePath("../Robot/AchievementsPanel")
 
-[node name="Unlock Achievements" type="Button" parent="UserInterface" unique_id=1951503100 node_paths=PackedStringArray("manager")]
+[node name="Unlock Achievements" type="Button" parent="UserInterface" unique_id=1951503100]
 visible = false
 layout_mode = 0
 offset_left = 394.0
@@ -2592,7 +2771,6 @@ offset_bottom = -218.0
 disabled = true
 text = "Unlock achievements"
 script = ExtResource("85_op1ei")
-manager = NodePath("../../Managers/GameManager")
 
 [node name="Podium" type="Sprite2D" parent="UserInterface" unique_id=1386549650]
 position = Vector2(398, 315.00003)

@@ -250,7 +250,6 @@ position = Vector2(-111, 46)
 [node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint"]
 
 [node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder"]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -267,6 +266,7 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 34
 text = "⏯️
 "
+flat = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton"]
@@ -783,7 +783,7 @@ dotted_synth_textures = Array[Texture2D]([ExtResource("61_jekl6"), ExtResource("
 outline_synth_textures = Array[Texture2D]([ExtResource("41_qnggo"), ExtResource("42_tab3y")])
 filled_song_texture = ExtResource("48_ihvwq")
 outline_song_texture = ExtResource("66_vxl7x")
-dot_beat_texture = ExtResource("22_sb4d6")
+dot_beat_texture = ExtResource("28_r33sp")
 colors = PackedColorArray(0.9019608, 0.29411766, 0.5568628, 1, 0.972549, 0.52156866, 0.17254902, 1, 0.2627451, 0.79607844, 0.5294118, 1, 0.011764706, 0.8235294, 0.93333334, 1, 1, 1, 0, 1, 0.516666, 0, 1, 1, 0.61960787, 0.6117647, 0.8980392, 1)
 micVolumeLight = NodePath("../../UserInterface/ChaosPad/MicButtonLocation/MicLight")
 klappyLight = NodePath("../../UserInterface/Robot/SubViewportContainer/KlappyLight")
@@ -1974,18 +1974,6 @@ energy = NodePath("../../../../../Managers/ProgressBar")
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
 
-[node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009995494)
-bones/0/rotation = Quaternion(0.59008735, 0.00046270297, -0.00034849352, 0.8073392)
-bones/2/position = Vector3(1.3504178e-09, 0.0052244687, -1.2665987e-09)
-bones/2/rotation = Quaternion(0.17050238, 0.006425566, -0.3475145, 0.92202026)
-bones/9/position = Vector3(0.0052917814, -0.0022954554, 0.0039823772)
-bones/9/rotation = Quaternion(0.7069842, 0.0022549515, 0.70722425, 0.0014595165)
-bones/14/position = Vector3(-3.166496e-10, 0.005224468, -3.7252904e-10)
-bones/14/rotation = Quaternion(0.17050217, -0.006425375, 0.34751475, 0.9220202)
-bones/16/position = Vector3(-0.005544162, -0.0022948263, 0.0039524715)
-bones/16/rotation = Quaternion(0.70722383, -0.0014820928, -0.7069847, 0.0022322387)
-
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(202.49997, 89.166664)
 scale = Vector2(0.833333, 0.833333)
@@ -2612,6 +2600,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="soundtesttext" type="Label" parent="UserInterface/SettingsPanel"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 86.0
+offset_right = 139.0
+offset_bottom = 111.0
+theme_override_font_sizes/font_size = 25
+
 [node name="CenterContainer" type="CenterContainer" parent="UserInterface" node_paths=PackedStringArray("progress")]
 visible = false
 z_index = 1000
@@ -3073,8 +3069,6 @@ KlappyEnergy = NodePath("../Managers/ProgressBar")
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="stop_recording"]
-[connection signal="onExportBeat" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_beat"]
-[connection signal="onExportSong" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_song"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/SaveToWavButton" to="Managers/Exporter" method="setup_beat_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenSongExportButton" to="Managers/Exporter/ListenToLastExport" method="play_song"]

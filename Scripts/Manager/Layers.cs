@@ -1,6 +1,4 @@
 using Godot;
-using NAudio.Mixer;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -159,7 +157,7 @@ public partial class Manager : Node
         if (chaosPadMode == ChaosPadMode.SampleMixing) SamplesMixing_RetrieveActiveKnob();
         if (chaosPadMode == ChaosPadMode.SynthMixing) SynthMixing_RetrieveActiveKnob();
         if (chaosPadMode == ChaosPadMode.SongMixing) SongMixing_RetrieveActiveKnob();
-        
+
         // do stuff with new layer
         EmitSignal(SignalName.OnSwitchLayer, currentLayerIndex);
         layerVoiceOver0.SetSmallVolumeline();
@@ -168,6 +166,8 @@ public partial class Manager : Node
         layerVoiceOver1.SetBigVolumeline();
         UpdateSongVoiceOverPlayBackPosition();
         UpdateLayerButtonsUserInterface();
+
+        Manager.instance.showTemplate = false;
     }
 
     public async void SwitchLayerNextFrame(int layerIndex, bool saveLayerFirst = true)

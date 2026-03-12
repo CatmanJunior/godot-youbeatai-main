@@ -1,15 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkd4xm6dcj43i"]
+[gd_scene load_steps=4 format=3 uid="uid://dkd4xm6dcj43i"]
 
 [ext_resource type="Script" uid="uid://dm7r5d1s47gmy" path="res://Scripts/klappy_light_pad.gd" id="1_omcsf"]
 [ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scenes/trail.gd" id="3_cwede"]
 
 [sub_resource type="Curve" id="Curve_fob3f"]
-_data = [Vector2(0.009975061, 0.46353167), 0.0, 0.0, 0, 0, Vector2(0.99750626, 0.48224568), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 0.014961481), 0.0, 0.0, 0, 0, Vector2(0.9922482, 0.20945948), 0.0, 0.0, 0, 0]
 point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_ogf6k"]
-offsets = PackedFloat32Array(0, 0.98630136)
-colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.5372549)
 
 [node name="KlappyLightPad" type="Control"]
 custom_minimum_size = Vector2(200, 200)
@@ -40,8 +36,7 @@ texture_repeat = 2
 points = PackedVector2Array(504, -263, 333, -259)
 width = 35.0
 width_curve = SubResource("Curve_fob3f")
-default_color = Color(0.9490196, 0.9490196, 0.9490196, 1)
-gradient = SubResource("Gradient_ogf6k")
+default_color = Color(1, 1, 1, 0.5372549)
 texture_mode = 2
 script = ExtResource("3_cwede")
 

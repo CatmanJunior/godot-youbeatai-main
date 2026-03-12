@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://b8n1g4l4jrv6d"]
+[gd_scene load_steps=30 format=3 uid="uid://b8n1g4l4jrv6d"]
 
 [ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_avjdi"]
@@ -33,6 +33,8 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_grpai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yrcn8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18n7q"]
 
@@ -104,9 +106,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -112.95386
+offset_left = -150.73364
 offset_top = -97.03199
-offset_right = 107.04613
+offset_right = 149.19157
 offset_bottom = -52.03199
 grow_horizontal = 2
 grow_vertical = 2
@@ -141,6 +143,17 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 toggle_mode = true
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion1"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="emotion2" type="Label" parent="SoundBankSelectionMenu/emoties"]
 layout_mode = 0
 offset_left = 58.878292
@@ -162,6 +175,17 @@ offset_right = 38.85508
 offset_bottom = 36.542046
 theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion2"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="emotion3" type="Label" parent="SoundBankSelectionMenu/emoties"]
 layout_mode = 0
@@ -185,6 +209,17 @@ offset_bottom = 36.542046
 theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion3"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="emotion4" type="Label" parent="SoundBankSelectionMenu/emoties"]
 layout_mode = 0
 offset_left = 150.8783
@@ -206,6 +241,17 @@ offset_right = 38.85508
 offset_bottom = 36.542046
 theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion4"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="emotion5" type="Label" parent="SoundBankSelectionMenu/emoties"]
 layout_mode = 0
@@ -229,6 +275,17 @@ offset_bottom = 36.542046
 theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion5"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="emotion6" type="Label" parent="SoundBankSelectionMenu/emoties"]
 layout_mode = 0
 offset_left = 242.87831
@@ -250,6 +307,17 @@ offset_right = 38.85508
 offset_bottom = 36.542046
 theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion6"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="emotion7" type="Label" parent="SoundBankSelectionMenu/emoties"]
 layout_mode = 0
@@ -273,12 +341,23 @@ offset_bottom = 36.542046
 theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/emoties/emotion7"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="themas" type="Panel" parent="SoundBankSelectionMenu"]
 layout_mode = 0
-offset_left = 22.359465
-offset_top = 212.8004
-offset_right = 360.06448
-offset_bottom = 334.9278
+offset_left = 20.046417
+offset_top = 202.77719
+offset_right = 357.75143
+offset_bottom = 324.9046
 theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
 
 [node name="Themas text" type="Label" parent="SoundBankSelectionMenu/themas"]
@@ -288,10 +367,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -110.25529
-offset_top = -116.57684
-offset_right = 109.74472
-offset_bottom = -71.57684
+offset_left = -153.43219
+offset_top = -106.553635
+offset_right = 148.80609
+offset_bottom = -61.553635
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ie3tb")
@@ -324,6 +403,17 @@ offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme1"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="theme2" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
 offset_left = 84.3218
@@ -345,6 +435,17 @@ offset_right = 36.54203
 offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme2"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="theme3" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -368,6 +469,17 @@ offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme3"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="theme4" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
 offset_left = 176.32181
@@ -389,6 +501,17 @@ offset_right = 36.54203
 offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme4"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="theme5" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -412,6 +535,17 @@ offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme5"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="theme6" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
 offset_left = 268.3218
@@ -433,6 +567,17 @@ offset_right = 36.54203
 offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme6"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="theme7" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -456,6 +601,17 @@ offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme7"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="theme8" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
 offset_left = 84.3218
@@ -477,6 +633,17 @@ offset_right = 36.54203
 offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme8"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="theme9" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -500,6 +667,17 @@ offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme9"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="theme10" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
 offset_left = 176.32181
@@ -521,6 +699,17 @@ offset_right = 36.54203
 offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme10"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="theme11" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
@@ -544,6 +733,17 @@ offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
 
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme11"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
+
 [node name="theme12" type="Label" parent="SoundBankSelectionMenu/themas"]
 layout_mode = 0
 offset_left = 268.3218
@@ -565,6 +765,17 @@ offset_right = 36.54203
 offset_bottom = 36.542034
 theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
 flat = true
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu/themas/theme12"]
+visible = false
+layout_mode = 0
+offset_top = 1.542038
+offset_right = 41.0
+offset_bottom = 37.779785
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 30
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yrcn8")
+text = "✔️"
 
 [node name="beats" type="Panel" parent="SoundBankSelectionMenu"]
 layout_mode = 1
@@ -589,9 +800,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -160.0
+offset_left = -198.2305
 offset_top = -133.0
-offset_right = 60.0
+offset_right = 105.549774
 offset_bottom = -73.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -604,7 +815,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="8" type="Sprite2D" parent="SoundBankSelectionMenu/beats"]
-position = Vector2(-0.7710142, 88.66684)
+position = Vector2(2.394132, 84.81176)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("11_8jt4r")
 
@@ -635,7 +846,7 @@ text = "8"
 flat = true
 
 [node name="16" type="Sprite2D" parent="SoundBankSelectionMenu/beats"]
-position = Vector2(124.133575, 87.89583)
+position = Vector2(127.29872, 84.04075)
 scale = Vector2(0.771016, 0.771016)
 texture = ExtResource("12_k1x81")
 
@@ -663,7 +874,7 @@ text = "16"
 flat = true
 
 [node name="32" type="Sprite2D" parent="SoundBankSelectionMenu/beats"]
-position = Vector2(249.80916, 87.12481)
+position = Vector2(252.9743, 83.26973)
 scale = Vector2(0.771016, 0.771016)
 texture = ExtResource("13_k11aq")
 
@@ -692,11 +903,12 @@ text = "32"
 flat = true
 
 [node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu"]
+visible = false
 layout_mode = 0
-offset_left = 537.39813
-offset_top = 434.853
-offset_right = 847.39813
-offset_bottom = 472.853
+offset_left = 538.9402
+offset_top = -13.1073
+offset_right = 848.9402
+offset_bottom = 24.8927
 theme = ExtResource("2_ie3tb")
 theme_override_fonts/font = ExtResource("2_avjdi")
 text = "Gevonden Soundbank:"
@@ -716,27 +928,26 @@ vertical_alignment = 1
 
 [node name="Ready" type="Panel" parent="SoundBankSelectionMenu"]
 layout_mode = 0
-offset_left = 597.53735
-offset_top = 334.6209
-offset_right = 797.5374
-offset_bottom = 413.26456
+offset_left = 593.68225
+offset_top = 67.8494
+offset_right = 793.6823
+offset_bottom = 146.49304
 theme_override_styles/panel = SubResource("StyleBoxFlat_g2pn6")
 
 [node name="Ready" type="Button" parent="SoundBankSelectionMenu/Ready"]
 modulate = Color(0.5254902, 0.8509804, 0.47058824, 1)
 layout_mode = 0
-offset_left = 30.069578
-offset_top = -8.481202
-offset_right = 166.06958
-offset_bottom = 83.5188
+offset_left = 35.466736
+offset_top = -8.481178
+offset_right = 171.46674
+offset_bottom = 83.51882
 theme = SubResource("Theme_7oxff")
 theme_type_variation = &"FlatButton"
 theme_override_constants/line_spacing = -10
 theme_override_font_sizes/font_size = 25
 theme_override_styles/focus = SubResource("StyleBoxEmpty_h74sy")
 disabled = true
-text = "Ready to
-start ?"
+text = "Start "
 flat = true
 icon_alignment = 1
 
@@ -746,20 +957,28 @@ offset_right = 40.0
 offset_bottom = 16.0
 
 [node name="Robot" parent="." instance=ExtResource("3_a7rio")]
-position = Vector2(326, -141)
+position = Vector2(474, 152)
 
 [node name="AchievementsPanel" parent="Robot" index="0"]
 visible = false
 
 [node name="Skeleton3D" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
+bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
+bones/4/rotation = Quaternion(0.6664186, 0.0010095574, -0.0009971554, 0.7455765)
+bones/5/position = Vector3(3.4170494e-05, 0.016205063, 0.0067133754)
+bones/7/position = Vector3(3.4172117e-05, 0.01620506, 0.0067133736)
+bones/9/position = Vector3(0.0052915406, -0.0022284086, 0.004496879)
+bones/9/rotation = Quaternion(0.7068752, -0.012596929, 0.70709896, -0.013409111)
+bones/10/rotation = Quaternion(0.0049924124, -0.00026509096, 0.35862666, 0.9334677)
+bones/16/position = Vector3(-0.0069037513, -0.0019778507, 0.004023196)
+bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
 
 [node name="KlappyLight" parent="Robot/SubViewportContainer" index="1"]
 energy = 1.71
 texture_scale = 2.41
 
 [node name="Klappy respons bubble" parent="." instance=ExtResource("4_saqfl")]
-position = Vector2(22, -298)
+position = Vector2(85, -27)
 
 [node name="Continue" parent="Klappy respons bubble/Panel" index="1"]
 visible = false
@@ -787,7 +1006,7 @@ texture = ExtResource("7_avjdi")
 metadata/_edit_lock_ = true
 
 [node name="MenuShapes1280002KlappyBg" type="Sprite2D" parent="."]
-position = Vector2(329, -92)
+position = Vector2(477, 201)
 scale = Vector2(2, 2)
 texture = ExtResource("10_bt16w")
 
@@ -795,60 +1014,49 @@ texture = ExtResource("10_bt16w")
 position = Vector2(1742, -219)
 texture = ExtResource("10_g2pn6")
 
-[node name="TitleLabel" type="Label" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 114.00006
-offset_top = -318.0
-offset_right = 434.00006
-offset_bottom = -258.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("2_ie3tb")
-theme_override_fonts/font = ExtResource("2_avjdi")
-theme_override_font_sizes/font_size = 26
-text = "Wat voor liedje wil je?"
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -112.0
+offset_top = -246.0
+offset_right = -12.0
+offset_bottom = -146.0
+theme_override_font_sizes/font_size = 40
+text = "."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(100, 100)
-offset_left = -73.0
-offset_top = -223.0
-offset_right = 27.0
-offset_bottom = -123.0
-theme_override_font_sizes/font_size = 30
-text = "."
-
 [node name="Label2" type="Label" parent="."]
 custom_minimum_size = Vector2(100, 100)
-offset_left = -12.0
-offset_top = -223.0
-offset_right = 88.0
-offset_bottom = -123.0
-theme_override_font_sizes/font_size = 30
+offset_left = -51.0
+offset_top = -246.0
+offset_right = 49.0
+offset_bottom = -146.0
+theme_override_font_sizes/font_size = 40
 text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="."]
 custom_minimum_size = Vector2(100, 100)
-offset_left = -73.0
-offset_top = 11.0
-offset_right = 27.0
-offset_bottom = 111.0
-theme_override_font_sizes/font_size = 30
+offset_left = -112.0
+offset_top = -12.0
+offset_right = -12.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 40
 text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Label4" type="Label" parent="."]
 custom_minimum_size = Vector2(100, 100)
-offset_left = -12.0
-offset_top = 11.0
-offset_right = 88.0
-offset_bottom = 111.0
-theme_override_font_sizes/font_size = 30
+offset_left = -51.0
+offset_top = -12.0
+offset_right = 49.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 40
 text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="SoundBankSelectionMenu/beats/8/Button" to="SoundBankSelectionMenu/beats" method="_on_button_pressed"]
 [connection signal="pressed" from="SoundBankSelectionMenu/beats/16/Button2" to="SoundBankSelectionMenu/beats" method="_on_button_2_pressed"]

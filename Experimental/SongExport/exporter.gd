@@ -91,7 +91,7 @@ func validate_form() -> bool:
 
 func start_beat_export():
 	var beat_time = 60.0 / bpm_manager.bpm / 4.0
-	var beat_length = beat_time * (bpm_manager.amount_of_beats-1)
+	var beat_length = beat_time * (bpm_manager.amount_of_beats)
 
 	if not validate_form():
 		name_field.modulate = Color.RED
@@ -105,7 +105,7 @@ func start_beat_export():
 
 func start_song_export():
 	var beat_time = 60.0 / bpm_manager.bpm / 4.0
-	var song_length = (manager.layersAmount * beat_time * bpm_manager.amount_of_beats) - beat_time * 1
+	var song_length = (manager.layersAmount * beat_time * bpm_manager.amount_of_beats)
 	
 	if not validate_form():
 		name_field.modulate = Color.RED
@@ -129,13 +129,12 @@ func export_to_wav(length: float, song: bool):
 
 	await get_tree().process_frame
 	
-	manager.SwitchLayer(0, true)
-	bpm_manager.currentBeat = 0
 	if bpm_manager.playing:
 		manager.OnPlayPauseButton()
 
 	await get_tree().create_timer(0.75).timeout
-
+	manager.SwitchLayer(0, true)
+	bpm_manager.currentBeat = bpm_manager.amount_of_beats -1 
 	manager.OnPlayPauseButton()
 	recorder.set_recording_active(true);
 	

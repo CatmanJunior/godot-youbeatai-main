@@ -94,7 +94,7 @@ public partial class TemplateManager : Node
     private bool[,] ToActives(string content)
     {
         string[] lines = content.Trim().Split('\n');
-        
+
         // Check if we received the expected number of lines
         if (lines.Length != 4)
         {
@@ -117,16 +117,20 @@ public partial class TemplateManager : Node
         return boolArray;
     }
 
+
+    private bool isChanged = true;
     void PreviousTemplate()
     {
         currentTemplate--;
         if (currentTemplate < 0) currentTemplate = names.Count - 1;
+        isChanged = true;
     }
 
     void NextTemplate()
     {
         currentTemplate++;
         if (currentTemplate >= names.Count) currentTemplate = 0;
+        isChanged = true;
     }
 
     void SetTemplate()
@@ -135,7 +139,19 @@ public partial class TemplateManager : Node
         Manager.instance.selectedTemplate = true;
     }
 
-    void ToggleShowTemplate() => Manager.instance.showTemplate = !Manager.instance.showTemplate;
+    void ToggleShowTemplate()
+    {
+        if (!isChanged) //een check zodat hij niet als je van template wisselt hij hem om en om uit zet, hij moet altijd aan zetten wanneer je wisselt. ja heel duidelijk excuus, het werkt :)
+        {
+            Manager.instance.showTemplate = !Manager.instance.showTemplate;
+        }
+        else
+        {
+            Manager.instance.showTemplate = true;
+        }
+
+        isChanged = false;
+    }
 
     public bool[,] GetCurrentActives() => actives[currentTemplate];
 }

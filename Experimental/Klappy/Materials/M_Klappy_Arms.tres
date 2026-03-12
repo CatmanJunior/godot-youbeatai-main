@@ -3,4 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://d1wdxuaes71s7" path="res://Experimental/Klappy/Textures/TKleppy_Arms_Base_color.png" id="1_j120h"]
 
 [resource]
+transparency = 1
+albedo_color = Color(0.91, 0.91, 0.91, 1)
 albedo_texture = ExtResource("1_j120h")

@@ -267,6 +267,7 @@ theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 34
 text = "⏯️
 "
+flat = true
 metadata/_edit_use_anchors_ = true
 
 [node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton"]
@@ -783,7 +784,7 @@ dotted_synth_textures = Array[Texture2D]([ExtResource("61_jekl6"), ExtResource("
 outline_synth_textures = Array[Texture2D]([ExtResource("41_qnggo"), ExtResource("42_tab3y")])
 filled_song_texture = ExtResource("48_ihvwq")
 outline_song_texture = ExtResource("66_vxl7x")
-dot_beat_texture = ExtResource("22_sb4d6")
+dot_beat_texture = ExtResource("28_r33sp")
 colors = PackedColorArray(0.9019608, 0.29411766, 0.5568628, 1, 0.972549, 0.52156866, 0.17254902, 1, 0.2627451, 0.79607844, 0.5294118, 1, 0.011764706, 0.8235294, 0.93333334, 1, 1, 1, 0, 1, 0.516666, 0, 1, 1, 0.61960787, 0.6117647, 0.8980392, 1)
 micVolumeLight = NodePath("../../UserInterface/ChaosPad/MicButtonLocation/MicLight")
 klappyLight = NodePath("../../UserInterface/Robot/SubViewportContainer/KlappyLight")
@@ -2605,6 +2606,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="soundtesttext" type="Label" parent="UserInterface/SettingsPanel"]
+layout_mode = 0
+offset_left = 88.0
+offset_top = 86.0
+offset_right = 139.0
+offset_bottom = 111.0
+theme_override_font_sizes/font_size = 25
+
 [node name="CenterContainer" type="CenterContainer" parent="UserInterface" node_paths=PackedStringArray("progress")]
 visible = false
 z_index = 1000
@@ -3068,8 +3077,6 @@ KlappyEnergy = NodePath("../Managers/ProgressBar")
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="stop_recording"]
-[connection signal="onExportBeat" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_beat"]
-[connection signal="onExportSong" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_song"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/SaveToWavButton" to="Managers/Exporter" method="setup_beat_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenSongExportButton" to="Managers/Exporter/ListenToLastExport" method="play_song"]

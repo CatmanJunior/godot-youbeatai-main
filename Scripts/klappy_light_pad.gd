@@ -13,7 +13,8 @@ var lowpass
 var unlocked:= false
 var start_energy
 var flicker_done = false
-var waarde = 0
+
+var colors = ["green", "red", "blue", "yellow"]
 
 func _ready() -> void:
 	bus_index = AudioServer.get_bus_index("SubMaster")
@@ -89,14 +90,17 @@ func _on_gui_input(event: InputEvent) -> void:
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
 func on_klappy_energy(value):
-	if value >= 90 and not flicker_done:  #bij de 90 ofzo en dan moet klappy wat zeggen over lampje
+	if value >= 28 and not flicker_done:  #bij de 90 ofzo en dan moet klappy wat zeggen over lampje
 		unlocked = true
 		flicker_done = true
 		lightFlicker()
 	
 func lightFlicker():
-	for i in 15:
-		klappyLight.energy = start_energy * randf_range(2.3, 5.8)
-		await get_tree().create_timer(randf_range(0.02, 0.06)).timeout
+	for i in colors:
+		klappyLight.color = i
+		klappyLight.energy = 2
+		await get_tree().create_timer(0.3).timeout
 		klappyLight.energy = start_energy
+		
+	klappyLight.color = Color("#ffe8aa")
 	

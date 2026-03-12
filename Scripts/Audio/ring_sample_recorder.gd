@@ -1,11 +1,17 @@
 extends Node
 
-var recorded_audio: AudioStream = null
-var audio_effect_record: AudioEffectRecord
+## Ring sample recording: immediate start, auto-stops when the captured sound
+## reaches 2× the current beat length, trims leading silence, then publishes
+## the result via EventBus. Delegates mic capture to MicrophoneRecorder.
 
+var mic: MicrophoneRecorder
+
+var recorded_audio: AudioStream = null
 var result: AudioStreamWAV = null
 
-var recording: bool = false
+var recording: bool:
+	get: return mic.recording if mic else false
+
 var silence_length: float = 0.0
 var recording_length: float = 0.0
 var has_detected_sound: bool = false
@@ -25,10 +31,7 @@ func _ready():
 	EventBus.ring_selected.connect(_on_ring_selected)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
 
-	var bus_index: int = AudioServer.get_bus_index("Microphone")
-	audio_effect_record = AudioServer.get_bus_effect(bus_index, 1) as AudioEffectRecord
-	if audio_effect_record == null:
-		print("no record effect found")
+	mic = %MicrophoneCapture
 
 func _process(delta: float):
 	if recording:
@@ -108,17 +111,11 @@ func _trim_audio_stream(original: AudioStream, seconds_to_trim: float) -> AudioS
 
 func _start_recording() -> void:
 	EventBus.request_mute_all.emit(true)
-
-	audio_effect_record.set_recording_active(true)
-	recording = true
+	mic.start_recording()
 
 func _stop_recording() -> void:
 	EventBus.request_mute_all.emit(false)
-
-	audio_effect_record.set_recording_active(false)
-	recorded_audio = audio_effect_record.get_recording()
-
-	recording = false
+	recorded_audio = mic.stop_recording()
 	recorded_audio = _trim_audio_stream(recorded_audio, silence_length)
 	has_detected_sound = false
 	silence_length = 0.0

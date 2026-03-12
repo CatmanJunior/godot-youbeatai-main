@@ -3,8 +3,6 @@ extends Node
 
 @warning_ignore_start("unused_signal")
 
-# ── Shared State ──
-var microphone_volume: float = 0.0
 
 # ── Playback / BPM ──
 signal playback_started()
@@ -53,7 +51,7 @@ signal ring_selected(ring: int)
 signal synth_selected(synth: int)
 signal mixing_weights_changed(master_volume: float, weights: Vector3)
 signal volume_changed(ring: int, volume_db: float)
-signal set_ring_volume_requested(ring: int, volume: Vector3)
+signal set_ring_volume_requested(ring: int, weights: Vector3)
 
 # ── Chaos Pad ──
 signal chaos_pad_dragging(knob_position: Vector2, master_volume: float, weights: Vector3)

@@ -1,6 +1,7 @@
 extends Node
 # Audio Player Manager — manages audio players for rings and sound effects, and handles audio-related events.
 
+var voice_bus_names = ["GreenVoice", "PurpleVoice"]
 
 const RING_COUNT = 4
 const VOICE_COUNT = 2
@@ -78,7 +79,6 @@ func _init_ring_audio_players():
 
 
 func _init_voice_audio_players():
-	var bus_names = ["GreenVoice", "PurpleVoice"]
 	for i in range(VOICE_COUNT):
 		var sync_stream = AudioStreamSynchronized.new()
 		sync_stream.stream_count = 2
@@ -90,7 +90,7 @@ func _init_voice_audio_players():
 		sync_stream.set_sync_stream_volume(1, -80.0)
 		
 		var player = AudioStreamPlayer.new()
-		player.bus = bus_names[i]
+		player.bus = voice_bus_names[i]
 		player.stream = sync_stream
 		add_child(player)
 		
@@ -112,32 +112,23 @@ func play_sfx(stream: AudioStream):
 
 # Voice-over playback
 func play_voice(synth_index: int):
-	if synth_index >= 0 and synth_index < VOICE_COUNT:
-		voice_players[synth_index].play()
+	voice_players[synth_index].play()
 
 func stop_voice(synth_index: int):
-	if synth_index >= 0 and synth_index < VOICE_COUNT:
-		voice_players[synth_index].stop()
+	voice_players[synth_index].stop()
 
 func is_voice_playing(synth_index: int) -> bool:
-	if synth_index >= 0 and synth_index < VOICE_COUNT:
-		return voice_players[synth_index].playing
-	return false
-
+	return voice_players[synth_index].playing
+	
 func get_voice_playback_position(synth_index: int) -> float:
-	if synth_index >= 0 and synth_index < VOICE_COUNT:
-		return voice_players[synth_index].get_playback_position()
-	return 0.0
+	return voice_players[synth_index].get_playback_position()
 
 func set_voice_stream(synth_index: int, audio: AudioStream):
-	if synth_index >= 0 and synth_index < VOICE_COUNT:
-		var stream = audio if audio else _create_silent_stream()
-		voice_sync_streams[synth_index].set_sync_stream(0, stream)
-		voice_sync_streams[synth_index].set_sync_stream(1, stream)
+	var stream = audio if audio else _create_silent_stream()
+	voice_sync_streams[synth_index].set_sync_stream(0, stream)
+	voice_sync_streams[synth_index].set_sync_stream(1, stream)
 
 func set_voice_volume(synth_index: int, weights: Vector3):
-	if synth_index < 0 or synth_index >= VOICE_COUNT:
-		return
 	var total = weights.x + weights.y + weights.z
 	var w = weights / total if total > 0.0 else Vector3(1, 0, 0)
 	voice_sync_streams[synth_index].set_sync_stream_volume(0, linear_to_db(max(sqrt(w.x), 0.0001)))

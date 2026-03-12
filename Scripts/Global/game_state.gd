@@ -4,6 +4,8 @@ extends Node
 ## Provides easy access to layers, playback state, and common data
 ## without needing %UniqueNode references everywhere.
 
+var microphone_volume: float = 0.0
+
 # ── Layers ───────────────────────────────────────────────────────────────────
 
 var layers: Array[LayerData] = []

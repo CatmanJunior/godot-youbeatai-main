@@ -1,37 +1,44 @@
 extends Node
 
+## Coordinates voice-over recording, playback, and waveform visualization
+## for a single synth slot. Delegates recording to VoiceRecorder and
+## waveform drawing to WaveformVisualizer.
+
 # Which synth slot this voice-over node controls (0 = green, 1 = purple)
 @export var synth_index: int = 0
 
 # UI References
 @export var texture_progress_bar: TextureProgressBar
 @export var record_layer_button: Button
-var bpm_up_button: Button
-var bpm_down_button: Button
-
-# Volume visualization lines
 @export var small_line: Line2D
 @export var big_line: Line2D
 @export var big_line_base_dist: int = 280
 @export var big_line_volume_dist: int = 28
 @export var big_line_reversed: bool = false
 
-# Recording state
-var should_record: bool = false
-var recording: bool = false
-var should_update_progress_bar: bool = false
-var finished: bool = false
-var recording_timer: float = 0.0
+var bpm_up_button: Button
+var bpm_down_button: Button
 
-# Audio recording
-var audio_effect_record: AudioEffectRecord
+# Sub-components
+var recorder: VoiceRecorder
+var waveform: WaveformVisualizer
+
+# Progress bar state
+var should_update_progress_bar: bool = false
+
+# Audio delay measurement
 var should_measure_audio_delay: bool = false
 var audio_delay_begin_ms: int = 0
 var audio_delay_end_ms: int = 0
 var audio_delay_total_seconds: float = 0.0
 
-# State tracking
-var should_update_lines: bool = false
+# Backward-compatible accessors — external code reads these directly
+var recording: bool:
+	get: return recorder.recording if recorder else false
+var should_record: bool:
+	get: return recorder.should_record if recorder else false
+var finished: bool:
+	get: return recorder.finished if recorder else false
 
 # References
 var gameManager: Node
@@ -40,6 +47,7 @@ var layerManager: Node
 var songVoiceOver: Node
 var uiManager: Node
 var audioPlayerManager: Node
+
 
 func _ready():
 	gameManager = %GameManager
@@ -51,91 +59,96 @@ func _ready():
 	bpm_up_button = uiManager.bpm_up_button
 	bpm_down_button = uiManager.bpm_down_button
 
+	# Initialize sub-components
+	recorder = VoiceRecorder.new(get_tree(), func(): return uiManager.recording_delay_slider.value, %MicrophoneCapture)
+	recorder.recording_started.connect(_on_recording_started)
+	recorder.recording_stopped.connect(_on_recording_stopped)
+
+	waveform = WaveformVisualizer.new(small_line, big_line, big_line_base_dist, big_line_volume_dist, big_line_reversed)
+
 	# Set up record button
 	if record_layer_button:
 		record_layer_button.pressed.connect(_on_record_button_pressed)
-	
-	# Setup recording effect
-	var microphone_bus_index = AudioServer.get_bus_index("Microphone")
-	if microphone_bus_index >= 0:
-		audio_effect_record = AudioServer.get_bus_effect(microphone_bus_index, 1)
-	
-	EventBus.play_pause_toggled.connect(_on_play_pause_pressed)
-	
-	# Setup volume lines
-	if small_line:
-		set_small_volume_line()
-	if big_line:
-		set_big_volume_line()
 
-func _process(delta: float):
+	EventBus.play_pause_toggled.connect(_on_play_pause_pressed)
+
+	# Initial waveform draw
+	waveform.update_lines(get_current_layer_voice_over())
+
+
+func _process(_delta: float):
 	# Measure audio delay if needed
 	if should_measure_audio_delay and audioPlayerManager.get_voice_playback_position(synth_index) > 0:
 		audio_delay_end_ms = Time.get_ticks_msec()
 		audio_delay_total_seconds = float(audio_delay_end_ms - audio_delay_begin_ms) / 1000.0
 		print("⚠️ audio delay is: " + str(audio_delay_total_seconds).pad_zeros(5))
 		should_measure_audio_delay = false
-	
-	# Update recording timer
-	if recording:
-		recording_timer += delta
-	else:
-		recording_timer = 0.0
-	
+
 	# Update progress bar
 	if bpmManager:
 		var current_beat = bpmManager.current_beat
 		var beat_timer = bpmManager.beat_timer
 		var time_per_beat = bpmManager.time_per_beat
 		var beats_amount = bpmManager.beats_amount
-		
+
 		var progress = float(current_beat + (beat_timer / time_per_beat)) / beats_amount
-		
+
 		if should_update_progress_bar and texture_progress_bar:
 			texture_progress_bar.value = progress
 		elif texture_progress_bar:
 			texture_progress_bar.value = 0.0
-	
-	# Update volume lines
-	if should_update_lines:
-		set_small_volume_line()
-		set_big_volume_line()
-		should_update_lines = false
+
+
+# -- Record button handling ---------------------------------------------------
 
 func _on_record_button_pressed():
-	"""Handle record button press"""
 	if not recording and not should_record:
-		# Start recording session
+		# Arm recording
 		uiManager.layer_loop_toggle.button_pressed = false
-		
-		should_record = true
-		
-		# Disable buttons during recording
+		recorder.arm()
 		_toggle_buttons(false)
 
 		EventBus.countdown_show_requested.emit()
-		# songVoiceOver.record_song_button.disabled = true
-		
-		# Enable metronome and start playback
+
+		# Start playback with metronome
 		bpmManager.current_beat = 0
 		bpmManager.playing = true
-		
-		# Play metronome sound
-		
 		audioPlayerManager.play_sfx(audioPlayerManager.metronome_sfx)
-		start_recording()
-	
+
+		recorder.start()
+
 	elif not recording and should_record:
-		# Cancel recording
-		should_record = false
-		
-		# Re-enable buttons
+		# Cancel armed recording
+		recorder.cancel()
 		_toggle_buttons(true)
 		EventBus.countdown_close_requested.emit()
 
 
+# -- Recorder signal handlers -------------------------------------------------
+
+func _on_recording_started():
+	should_update_progress_bar = true
+	if big_line:
+		big_line.visible = false
+	EventBus.countdown_close_requested.emit()
+	EventBus.recording_started.emit()
+
+
+func _on_recording_stopped(recorded_audio: AudioStream):
+	should_update_progress_bar = false
+	if big_line:
+		big_line.visible = true
+	_toggle_buttons(true)
+
+	if recorded_audio:
+		set_current_layer_voice_over(recorded_audio)
+	waveform.update_lines(get_current_layer_voice_over())
+	EventBus.recording_stopped.emit(recorded_audio)
+
+
+# -- Play / pause -------------------------------------------------------------
+
 func _on_play_pause_pressed():
-	"""Handle play/pause button"""
 	var current_audio = get_current_layer_voice_over()
 	if current_audio:
 		if audioPlayerManager.is_voice_playing(synth_index):
@@ -143,25 +156,26 @@ func _on_play_pause_pressed():
 		else:
 			audioPlayerManager.play_voice(synth_index)
 
+
+# -- Layer data access ---------------------------------------------------------
+
 func get_current_layer_index() -> int:
-	"""Get current layer index from layer manager"""
 	return layerManager.current_layer_index
 
+
 func set_current_layer_voice_over(voice_over: AudioStream):
-	"""Set the current layer's voice over in SynthData"""
 	var current_index = get_current_layer_index()
 	if current_index >= 0 and current_index < layerManager.layers.size():
 		var layer: LayerData = layerManager.layers[current_index]
 		if synth_index < layer.synths.size():
 			layer.synths[synth_index].layer_voice_over = voice_over
-		
+
 		audioPlayerManager.set_voice_stream(synth_index, voice_over)
 		audioPlayerManager.stop_voice(synth_index)
 		audioPlayerManager.play_voice(synth_index)
-		should_update_lines = true
+
 
 func get_current_layer_voice_over() -> AudioStream:
-	"""Get the current layer's voice over from SynthData"""
 	var current_index = get_current_layer_index()
 	if current_index >= 0 and current_index < layerManager.layers.size():
 		var layer: LayerData = layerManager.layers[current_index]
@@ -169,163 +183,35 @@ func get_current_layer_voice_over() -> AudioStream:
 			return layer.synths[synth_index].layer_voice_over
 	return null
 
+
+# -- Loop top handling ---------------------------------------------------------
+
 func on_top():
-	"""Called when this layer comes to the top in playback"""
 	if should_record and not recording:
-		start_recording()
+		recorder.start()
 	elif recording:
-		stop_recording()
-	
+		recorder.stop()
+
 	if not recording:
 		audioPlayerManager.set_voice_stream(synth_index, get_current_layer_voice_over())
-		
 		should_measure_audio_delay = true
 		audio_delay_begin_ms = Time.get_ticks_msec()
-	
+
 	on_top_delayed()
 
+
 func on_top_delayed():
-	"""Delayed processing when layer comes to top"""
 	if audioPlayerManager.is_voice_playing(synth_index):
 		audioPlayerManager.stop_voice(synth_index)
-	
+
 	if not recording:
 		audioPlayerManager.play_voice(synth_index)
 
-func start_recording():
-	"""Start the recording process"""
-	var delay = 0.5
-	delay = uiManager.recording_delay_slider.value
-	
-	await get_tree().create_timer(delay).timeout
-	do_recording()
-	
-	# Reduce submix volume
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
-	
-	EventBus.countdown_close_requested.emit()
 
-func do_recording():
-	"""Actually start recording"""
-	should_update_progress_bar = true
-	if big_line:
-		big_line.visible = false
-	recording = true
-	if audio_effect_record:
-		audio_effect_record.set_recording_active(true)
-	print("recording started")
-	# EventBus.recording_started.emit()
-
-func do_stop_recording():
-	"""Actually stop recording"""
-	if audio_effect_record:
-		audio_effect_record.set_recording_active(false)
-		set_current_layer_voice_over(audio_effect_record.get_recording())
-	
-	print("recording stopped")
-	recording = false
-	should_record = false
-	finished = true
-	should_update_lines = true
-	
-	# EventBus.recording_stopped.emit()
-
-func stop_recording():
-	"""Stop recording (with delay)"""
-	should_update_progress_bar = false
-	big_line.visible = true
-	
-	var delay = 0.5
-	delay = uiManager.recording_delay_slider.value
-	
-	await get_tree().create_timer(delay).timeout
-	do_stop_recording()
-	
-	_toggle_buttons(true)
-	
-	# Restore submix volume
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), 0.0)
+# -- UI helpers ----------------------------------------------------------------
 
 func _toggle_buttons(enabled: bool):
-	"""Toggle UI buttons on or off"""
 	bpm_up_button.disabled = not enabled
 	bpm_down_button.disabled = not enabled
 	uiManager.play_pause_button.disabled = not enabled
 	uiManager.metronome_toggle.disabled = not enabled
-
-	
-func set_volume_line(line: Line2D, audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool = false):
-	"""Set volume visualization line"""
-	if not line:
-		return
-	
-	var offsets = _calculate_volume_offsets(audio, points, base_dist, volume_dist, reversed)
-	
-	line.clear_points()
-	for offset in offsets:
-		line.add_point(offset)
-
-func _calculate_volume_offsets(_audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool) -> Array:
-	"""Calculate volume offsets for visualization"""
-	var offsets = []
-	
-	for i in range(points):
-		var volume_offset = 0.0
-		
-		var voice_over_audio = get_current_layer_voice_over()
-		if voice_over_audio:
-			var audio_stream = voice_over_audio
-			if audio_stream is AudioStreamWAV:
-				var length = audio_stream.get_length()
-				var percentage = float(i) / points
-				var volume = get_volume_at_time(audio_stream, percentage * length)
-				volume_offset = volume * volume_dist
-		
-		var angle = - PI / 2.0 + TAU * i / points
-		var final_dist = base_dist - volume_offset if reversed else base_dist + volume_offset
-		
-		var offset = Vector2(cos(angle), sin(angle)) * final_dist
-		offsets.append(offset)
-	
-	return offsets
-
-func set_small_volume_line():
-	"""Set small volume visualization line"""
-	set_volume_line(small_line, get_current_layer_voice_over(), 40, 15, 15)
-
-func set_big_volume_line():
-	"""Set big volume visualization line"""
-	set_volume_line(big_line, get_current_layer_voice_over(), 100, big_line_base_dist, big_line_volume_dist, big_line_reversed)
-
-func get_volume_at_time(audio: AudioStreamWAV, time: float) -> float:
-	"""Get volume at a specific time in the audio"""
-	if not audio or audio.data.size() == 0:
-		push_error("Invalid audio stream")
-		return 0.0
-	
-	var sample_rate = audio.mix_rate
-	var channels = 2 if audio.stereo else 1
-	var format_size = 2 if audio.format == AudioStreamWAV.FORMAT_16_BITS else 1
-	
-	var sample_index = int(time * sample_rate) * channels
-	var byte_index = sample_index * format_size
-	
-	if byte_index >= audio.data.size() - format_size:
-		push_error("Time exceeds sample length")
-		return 0.0
-	
-	# Read sample based on format
-	var volume = 0.0
-	if audio.format == AudioStreamWAV.FORMAT_16_BITS:
-		# Read 16-bit sample
-		var bytes = audio.data.slice(byte_index, byte_index + 2)
-		var value = bytes.decode_s16(0)
-		volume = abs(value / 32768.0)
-	else:
-		# Read 8-bit sample
-		var value = audio.data[byte_index] as int
-		if value > 127:
-			value -= 256
-		volume = abs(value / 128.0)
-	
-	return volume

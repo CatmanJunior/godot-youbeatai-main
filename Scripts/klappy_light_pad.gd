@@ -8,6 +8,12 @@ var highpass
 var lowpass
 
 @export var klappyLight: PointLight2D 
+@export var KlappyEnergy: ProgressBar
+
+var unlocked:= false
+var start_energy
+var flicker_done = false
+var waarde = 0
 
 func _ready() -> void:
 	bus_index = AudioServer.get_bus_index("SubMaster")
@@ -26,43 +32,71 @@ func _ready() -> void:
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 4, false)
+	
+	start_energy = klappyLight.energy
+	
+	unlocked = false
+	
+	if KlappyEnergy != null:
+		KlappyEnergy.value_changed.connect(on_klappy_energy)
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton:
-		AudioServer.set_bus_effect_enabled(bus_index, 1, event.is_pressed())
-		AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
-		AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
-		AudioServer.set_bus_effect_enabled(bus_index, 4, event.is_pressed())
-	
-	if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT: #hier logica touchscreen bij
-		var pos = event.position
+	if unlocked == true:
+		klappyLight.energy = 0.5
+		if event is InputEventMouseButton:
+			AudioServer.set_bus_effect_enabled(bus_index, 1, event.is_pressed())
+			AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
+			AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
+			AudioServer.set_bus_effect_enabled(bus_index, 4, event.is_pressed())
+			
+			if event.is_released(): #wanneer muis losgelaten word pos 100,100 en klaplight normaal 
+				var pos = Vector2(100, 100)
+				$cursor.position = pos
+				klappyLight.color = Color("#ffe8aa")
 		
-		pos.x = clamp(pos.x, 0, size.x) #zorgt dat je binnen het grid blijft
-		pos.y = clamp(pos.y, 0, size.y)
-		
-		$cursor.position = pos 
-		
-		var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
-		var y_percent = 1.0 - (pos.y / size.y)
-		
-		phaser.depth = 1.0 - x_percent #kijk hier zo even naar
-		distortion.drive = x_percent
-		highpass.cutoff_hz = lerp(40.0, 1000.0, y_percent)
-		lowpass.cutoff_hz = lerp(4000.0, 40.0, y_percent)
-		
-		#print(pos)
-		
-		#klappys lampje word veranderd van kleur op basis van muis positie in het vak
-		var color := Color("#ffe8aa")
-		var strength := 0.8
-#het midden is 100 dus vanaf daar meten (0-200)
-		if pos.x >= 130:
-			color = color.lerp(Color.RED, strength)
-		if pos.x <= 70:
-			color = color.lerp(Color.GREEN, strength)
-		if pos.y >= 130:
-			color = color.lerp(Color.BLUE, strength)
-		if pos.y <= 70:
-			color = color.lerp(Color.YELLOW, strength)
+		if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+			var pos = event.position
+			
+			pos.x = clamp(pos.x, 0, size.x) #zorgt dat je binnen het grid blijft
+			pos.y = clamp(pos.y, 0, size.y)
+			
+			$cursor.position = pos 
+			
+			var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
+			var y_percent = 1.0 - (pos.y / size.y)
+			
+			phaser.depth = 1.0 - x_percent 
+			distortion.drive = x_percent
+			highpass.cutoff_hz = lerp(20.0, 200.0, y_percent) #waardes moeten anders
+			lowpass.cutoff_hz = lerp(1000.0, 200.0, y_percent)
+			
+			#print(pos)
+			
+			#klappys lampje word veranderd van kleur op basis van muis positie in het vak
+			var color := Color("#ffe8aa")
+			var strength := 0.8
+	#het midden is 100 dus vanaf daar meten (0-200)
+			if pos.x >= 130:
+				color = color.lerp(Color.RED, strength)
+			if pos.x <= 70:
+				color = color.lerp(Color.GREEN, strength)
+			if pos.y >= 130:
+				color = color.lerp(Color.BLUE, strength)
+			if pos.y <= 70:
+				color = color.lerp(Color.YELLOW, strength)
 
-		klappyLight.color = color 
+			klappyLight.color = color 
+			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
+			
+func on_klappy_energy(value):
+	if value >= 90 and not flicker_done:  #bij de 90 ofzo en dan moet klappy wat zeggen over lampje
+		unlocked = true
+		flicker_done = true
+		lightFlicker()
+	
+func lightFlicker():
+	for i in 15:
+		klappyLight.energy = start_energy * randf_range(2.3, 5.8)
+		await get_tree().create_timer(randf_range(0.02, 0.06)).timeout
+		klappyLight.energy = start_energy
+	

@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=117 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -86,7 +86,7 @@
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Animation" uid="uid://fpshbmdajq3r" path="res://Other/Bear_pulse.res" id="68_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
-[ext_resource type="Script" uid="uid://ccefs8ecih7l7" path="res://Scenes/song_mode_line.gd" id="69_87bhu"]
+[ext_resource type="Script" path="res://Scenes/song_mode_line.gd" id="69_87bhu"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 [ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="80_55idt"]
 [ext_resource type="Shader" uid="uid://b6ylrcyr2mrhf" path="res://Shaders/FillCircle.gdshader" id="80_k8rh3"]
@@ -94,6 +94,7 @@
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
+[ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/klappy_light_pad.tscn" id="92_p4gyq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -1965,30 +1966,31 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
 
-[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" node_paths=PackedStringArray("manager") instance=ExtResource("30_hpc6h")]
+[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" node_paths=PackedStringArray("manager", "energy") instance=ExtResource("30_hpc6h")]
 manager = NodePath("../../../../../Managers/Manager")
+energy = NodePath("../../../../../Managers/ProgressBar")
 
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
 
 [node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869257, 0.7947603)
-bones/2/position = Vector3(5.6829363e-10, 0.00522447, -1.0098351e-09)
-bones/2/rotation = Quaternion(0.16030091, 0.008637974, -0.46690783, 0.86961263)
-bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
-bones/9/position = Vector3(0.00529154, -0.0022284095, 0.0044968794)
-bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
-bones/14/position = Vector3(-6.6628947e-10, 0.00522447, 8.150752e-10)
-bones/14/rotation = Quaternion(0.16030091, -0.008637771, 0.46690783, 0.8696127)
-bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
-bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
+bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009995494)
+bones/0/rotation = Quaternion(0.59008735, 0.00046270297, -0.00034849352, 0.8073392)
+bones/2/position = Vector3(1.3504178e-09, 0.0052244687, -1.2665987e-09)
+bones/2/rotation = Quaternion(0.17050238, 0.006425566, -0.3475145, 0.92202026)
+bones/9/position = Vector3(0.0052917814, -0.0022954554, 0.0039823772)
+bones/9/rotation = Quaternion(0.7069842, 0.0022549515, 0.70722425, 0.0014595165)
+bones/14/position = Vector3(-3.166496e-10, 0.005224468, -3.7252904e-10)
+bones/14/rotation = Quaternion(0.17050217, -0.006425375, 0.34751475, 0.9220202)
+bones/16/position = Vector3(-0.005544162, -0.0022948263, 0.0039524715)
+bones/16/rotation = Quaternion(0.70722383, -0.0014820928, -0.7069847, 0.0022322387)
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer"]
 position = Vector2(202.49997, 89.166664)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
-energy = 0.0
+energy = 0.5
 texture = ExtResource("22_sb4d6")
 texture_scale = 2.41
 
@@ -3035,6 +3037,15 @@ position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("84_6h1fc")
 
+[node name="KlappyLightPad" parent="." node_paths=PackedStringArray("klappyLight", "KlappyEnergy") instance=ExtResource("92_p4gyq")]
+offset_left = 360.0
+offset_top = 21.0
+offset_right = 460.0
+offset_bottom = 121.0
+klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
+KlappyEnergy = NodePath("../Managers/ProgressBar")
+
+[connection signal="value_changed" from="Managers/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/SongVoiceOver/Chords" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver0/bass_line" method="on_bpm"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/LayerVoiceOver1/synth_line" method="on_bpm"]

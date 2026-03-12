@@ -47,6 +47,8 @@ public partial class Manager : Node
         var purple_alt = AudioServer.GetBusIndex("Purple_alt");
         bank.effectProfile.Apply(purple_alt);
 
+        EmitSignal(SignalName.OnAudioBankLoaded, bank);
+
         // set swing
         float chosenswing = chosenSoundBank.swing / 100f * 0.2f;
         BpmManager.instance.swing = chosenswing;

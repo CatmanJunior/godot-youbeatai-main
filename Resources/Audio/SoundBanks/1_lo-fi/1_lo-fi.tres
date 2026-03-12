@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://c454guqg60bap"]
+[gd_resource type="Resource" script_class="AudioBank" load_steps=29 format=3 uid="uid://c454guqg60bap"]
 
 [ext_resource type="AudioStream" uid="uid://7l06ded8vxoa" path="res://Resources/Audio/SoundBanks/1_lo-fi/Clap Amnesia.wav" id="1_81lb8"]
 [ext_resource type="AudioStream" uid="uid://bd7yiyir2m7x2" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Clap_Perc Si.wav" id="2_i41ue"]
@@ -8,9 +8,98 @@
 [ext_resource type="AudioStream" uid="uid://n4ahyv3pyc4j" path="res://Resources/Audio/SoundBanks/1_lo-fi/Kick Blossom 1.wav" id="6_w75j6"]
 [ext_resource type="AudioStream" uid="uid://dsvwgyu3cdkb" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Kick Bazzazian 2.wav" id="7_qsyax"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_qyjr2"]
+[ext_resource type="Script" uid="uid://h8sdae8gbqea" path="res://Scripts/AudioBanks/Chord.cs" id="9_fyb6c"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_q1ehn"]
 [ext_resource type="AudioStream" uid="uid://duc4jv7w5emho" path="res://Resources/Audio/SoundBanks/1_lo-fi/Snare CandyClub.wav" id="10_7ulmg"]
+[ext_resource type="Script" uid="uid://28mxlysh26rg" path="res://Scripts/AudioBanks/ChordProgression.cs" id="10_xd8ou"]
 [ext_resource type="AudioStream" uid="uid://6phiwinlbqwv" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Snare Cosmos 1.wav" id="11_dr1sr"]
+
+[sub_resource type="Resource" id="Resource_uc366"]
+script = ExtResource("9_fyb6c")
+base_note = 62
+type = 4
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_fyb6c"]
+script = ExtResource("9_fyb6c")
+base_note = 67
+type = 2
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_xd8ou"]
+script = ExtResource("9_fyb6c")
+base_note = 60
+type = 3
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_qsyax"]
+script = ExtResource("9_fyb6c")
+base_note = 69
+type = 4
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_w75j6"]
+script = ExtResource("10_xd8ou")
+progression = Array[Object]([SubResource("Resource_uc366"), SubResource("Resource_fyb6c"), SubResource("Resource_xd8ou"), SubResource("Resource_qsyax")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"
+
+[sub_resource type="Resource" id="Resource_qyjr2"]
+script = ExtResource("9_fyb6c")
+base_note = 64
+type = 4
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_q1ehn"]
+script = ExtResource("9_fyb6c")
+base_note = 69
+type = 2
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_7ulmg"]
+script = ExtResource("9_fyb6c")
+base_note = 62
+type = 3
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_dr1sr"]
+script = ExtResource("9_fyb6c")
+base_note = 59
+type = 4
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_f28h7"]
+script = ExtResource("10_xd8ou")
+progression = Array[Object]([SubResource("Resource_qyjr2"), SubResource("Resource_q1ehn"), SubResource("Resource_7ulmg"), SubResource("Resource_dr1sr")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"
+
+[sub_resource type="Resource" id="Resource_lsme8"]
+script = ExtResource("9_fyb6c")
+base_note = 60
+type = 3
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_ej55j"]
+script = ExtResource("9_fyb6c")
+base_note = 69
+type = 4
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_bv0ue"]
+script = ExtResource("9_fyb6c")
+base_note = 62
+type = 4
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_38x3v"]
+script = ExtResource("9_fyb6c")
+base_note = 67
+type = 2
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_55f07"]
+script = ExtResource("10_xd8ou")
+progression = Array[Object]([SubResource("Resource_lsme8"), SubResource("Resource_ej55j"), SubResource("Resource_bv0ue"), SubResource("Resource_38x3v")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"
 
 [resource]
 script = ExtResource("9_q1ehn")
@@ -30,4 +119,7 @@ purple_soundfont = ExtResource("8_qyjr2")
 purple_instrument_id = 14
 purple_beats = 1.0
 effectProfile = ExtResource("5_81lb8")
+progressions = Array[Object]([SubResource("Resource_w75j6"), SubResource("Resource_f28h7"), SubResource("Resource_55f07")])
+chord_soundfont = ExtResource("8_qyjr2")
+chord_instrument_id = 14
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

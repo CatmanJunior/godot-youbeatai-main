@@ -66,10 +66,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
 			var y_percent = 1.0 - (pos.y / size.y)
 			
-			phaser.depth = 1.0 - x_percent 
-			distortion.drive = x_percent
-			highpass.cutoff_hz = lerp(20.0, 200.0, y_percent) #waardes moeten anders
-			lowpass.cutoff_hz = lerp(1000.0, 200.0, y_percent)
+			phaser.depth = clamp(1.0 - x_percent * 2.0, 0.0, 1.0)
+			distortion.drive = clamp((x_percent - 0.5) * 2.0, 0.0, 1.0)
+			highpass.resonance = 0.5
+			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
+			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
 			#print(pos)
 			
@@ -90,7 +91,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
 func on_klappy_energy(value):
-	if value >= 28 and not flicker_done:  #bij de 90 ofzo en dan moet klappy wat zeggen over lampje
+	if value >= 100 and not flicker_done:  
 		unlocked = true
 		flicker_done = true
 		lightFlicker()

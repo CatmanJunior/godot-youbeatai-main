@@ -338,11 +338,11 @@ func _play_achievement_sfx():
 # ── Beat counting ────────────────────────────────────────────────────────────
 
 func _active_beats_per_ring(ring_index: int) -> int:
-	var layer : LayerData = beat_manager.current_layer
-	if layer == null or ring_index < 0 or ring_index >= layer.rings.size():
+	var section : SectionData = beat_manager.current_section
+	if section == null or ring_index < 0 or ring_index >= section.sample_tracks.size():
 		return 0
 	var count := 0
-	for active in layer.rings[ring_index].beats:
+	for active in section.sample_tracks[ring_index].beats:
 		if active:
 			count += 1
 	return count

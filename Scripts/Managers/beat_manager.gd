@@ -1,6 +1,6 @@
 extends Node
 
-var current_layer : LayerData
+var current_section : SectionData
 
 # Clap and stomp detection
 var stomped: bool = false
@@ -27,7 +27,7 @@ var colors: Array[Color] = []
 @export var metronome_sfx: AudioStream
 
 func _ready():
-	current_layer = LayerData.new(beats_amount)
+	current_section = SectionData.new(beats_amount)
 	
 	# Connect to EventBus
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
@@ -36,12 +36,11 @@ func _ready():
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.clap_triggered.connect(on_clap)
 	EventBus.stomp_triggered.connect(on_stomp)
-	EventBus.layer_changed.connect(_on_layer_changed)
+	EventBus.section_changed.connect(_on_section_changed)
 
-func _on_layer_changed(layer: LayerData):
-	"""Handle layer change via EventBus"""
-	# Update beat_actives to match the new layer's beats
-	current_layer = layer
+func _on_section_changed(section: SectionData):
+	"""Handle section change via EventBus"""
+	current_section = section
 
 func _on_beat_sprite_clicked(p_ring: int, beat: int):
 	"""Handle beat sprite click via EventBus"""
@@ -60,8 +59,8 @@ func _on_beat_triggered(beat: int):
 
 func _on_template_set(actives: Array):
 	"""Apply template beat actives"""
-	if current_layer:
-		current_layer.set_beat_actives(actives)
+	if current_section:
+		current_section.set_beat_actives(actives)
 
 func on_clap():
 	"""Handle clap detection"""
@@ -69,7 +68,7 @@ func on_clap():
 		return
 	
 	var ring = 1
-	var active = current_layer.get_beat(ring, current_beat)
+	var active = current_section.get_beat(ring, current_beat)
 	
 	if active:
 		# Hit on beat - reward player
@@ -94,7 +93,7 @@ func on_stomp():
 		return
 	
 	var ring = 0
-	var active = current_layer.get_beat(ring, current_beat)
+	var active = current_section.get_beat(ring, current_beat)
 	
 	if active:
 		# Hit on beat - reward player
@@ -122,8 +121,8 @@ func on_beat():
 			play_metronome_sfx()
 	
 	# Play audio for active beats via EventBus
-	for ring_index in range(current_layer.rings.size()):
-		if current_layer.get_beat(ring_index, current_beat):
+	for ring_index in range(current_section.sample_tracks.size()):
+		if current_section.get_beat(ring_index, current_beat):
 			EventBus.play_ring_requested.emit(ring_index)
 		
 	# Update progress bar value
@@ -140,11 +139,11 @@ func on_beat():
 	# Emit signals for next beat
 	var next_beat = (current_beat + 1) % beats_amount
 	
-	var clap_active = current_layer.get_beat(1, next_beat)
+	var clap_active = current_section.get_beat(1, next_beat)
 	if clap_active:
 		EventBus.should_clap.emit()
 	
-	var stomp_active = current_layer.get_beat(0, next_beat)
+	var stomp_active = current_section.get_beat(0, next_beat)
 	if stomp_active:
 		EventBus.should_stomp.emit()
 
@@ -152,19 +151,19 @@ func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""
 	print("Toggling beat - Ring: ", ring, " Beat: ", beat) # Debug print
 	
-	current_layer.toggle_beat(ring, beat)
+	current_section.toggle_beat(ring, beat)
 	
-	var is_active = current_layer.get_beat(ring, beat)
+	var is_active = current_section.get_beat(ring, beat)
 	EventBus.beat_state_changed.emit(ring, beat, is_active)
 
 func set_beat(ring: int, beat: int, active: bool):
 	"""Set a beat to active or inactive"""
-	current_layer.set_beat(ring, beat, active)
+	current_section.set_beat(ring, beat, active)
 	EventBus.beat_state_changed.emit(ring, beat, active)
 
 func get_beat(ring: int, beat: int) -> bool:
 	"""Get whether a beat is active"""
-	return current_layer.get_beat(ring, beat)
+	return current_section.get_beat(ring, beat)
 
 func play_metronome_sfx():
 	"""Play metronome sound effect"""

@@ -1,5 +1,4 @@
 extends Node
-@onready var manager:Manager = $"../Manager"
 
 func free() -> void:
 	OS.open_midi_inputs()
@@ -10,8 +9,9 @@ func _input(input_event):
 
 func _print_midi_info(midi_event):
 	#if delay: return
-	if(midi_event.message == 250):
-		manager.OnPlayPauseButton()
-		print("started")
-	if(midi_event.message == 252):
-		manager.OnPlayPauseButton()
+	if (midi_event.message == 250):
+		print("received MIDI Start")
+		pass
+	if (midi_event.message == 252):
+		print("received MIDI Stop")
+		pass

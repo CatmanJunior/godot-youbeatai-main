@@ -1,4 +1,4 @@
-class_name WaveformVisualizer
+class_name SynthWaveformVisualizer
 
 ## Draws circular waveform lines from AudioStreamWAV data onto Line2D nodes.
 

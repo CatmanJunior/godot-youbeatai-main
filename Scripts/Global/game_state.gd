@@ -1,17 +1,21 @@
 extends Node
 
 ## Global game state singleton (autoload).
-## Provides easy access to layers, playback state, and common data
+## Provides easy access to sections, playback state, and common data
 ## without needing %UniqueNode references everywhere.
+
+const BEATS_AMOUNT_DEFAULT: int = 16
 
 var microphone_volume: float = 0.0
 
-# ── Layers ───────────────────────────────────────────────────────────────────
+var recording_delay_seconds: float = 0.0
 
-var layers: Array[LayerData] = []
-var current_layer: LayerData = null
-var current_layer_index: int = 0
-var layers_amount: int = 0
+# ── Sections ─────────────────────────────────────────────────────────────────
+
+var sections: Array[SectionData] = []
+var current_section: SectionData = null
+var current_section_index: int = 0
+var sections_amount: int = 0
 
 # ── Playback ─────────────────────────────────────────────────────────────────
 
@@ -23,46 +27,46 @@ var swing: float = 0.05
 
 # ── Mixing ───────────────────────────────────────────────────────────────────
 
-var selected_ring: int = 0
-var selected_synth: int = 0
+var selected_sample_track: int = 0
+var selected_synth_track: int = 0
 
 # ── Recording ────────────────────────────────────────────────────────────────
 
 var is_recording: bool = false
 
 func _ready() -> void:
-	EventBus.layer_changed.connect(_on_layer_changed)
-	EventBus.layer_added.connect(_on_layer_added)
-	EventBus.layer_removed.connect(_on_layer_removed)
+	EventBus.section_changed.connect(_on_section_changed)
+	EventBus.section_added.connect(_on_section_added)
+	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.playing_changed.connect(func(value: bool): playing = value)
 	EventBus.bpm_changed.connect(func(value: float): bpm = int(value))
 	EventBus.beat_triggered.connect(func(beat: int): current_beat = beat)
-	EventBus.ring_selected.connect(func(ring: int): selected_ring = ring)
-	EventBus.synth_selected.connect(func(synth: int): selected_synth = synth)
+	EventBus.ring_selected.connect(func(ring: int): selected_sample_track = ring)
+	EventBus.synth_selected.connect(func(synth: int): selected_synth_track = synth)
 	EventBus.recording_started.connect(func(): is_recording = true)
 	EventBus.recording_stopped.connect(func(_audio): is_recording = false)
 
 
-# ── Layer helpers ────────────────────────────────────────────────────────────
+# ── Section helpers ──────────────────────────────────────────────────────────
 
-func _on_layer_changed(layer: LayerData) -> void:
-	current_layer = layer
+func _on_section_changed(section: SectionData) -> void:
+	current_section = section
 
-func _on_layer_added(layer_index: int, _emoji: String) -> void:
-	_sync_layers()
+func _on_section_added(section_index: int, _emoji: String) -> void:
+	_sync_sections()
 
-func _on_layer_removed(_layer_index: int) -> void:
-	_sync_layers()
+func _on_section_removed(_section_index: int) -> void:
+	_sync_sections()
 
-func _sync_layers() -> void:
-	var lm = _get_layer_manager()
-	if lm:
-		layers = lm.layers
-		layers_amount = lm.layers_amount
-		current_layer_index = lm.current_layer_index
-		current_layer = lm.current_layer
+func _sync_sections() -> void:
+	var sm = _get_section_manager()
+	if sm:
+		sections = sm.sections
+		sections_amount = sm.sections_amount
+		current_section_index = sm.current_section_index
+		current_section = sm.current_section
 
-func _get_layer_manager():
+func _get_section_manager():
 	var tree = get_tree()
 	if tree == null or tree.current_scene == null:
 		return null
@@ -71,31 +75,31 @@ func _get_layer_manager():
 
 # ── Convenience accessors ────────────────────────────────────────────────────
 
-func get_layer(index: int) -> LayerData:
-	if index >= 0 and index < layers.size():
-		return layers[index]
+func get_section(index: int) -> SectionData:
+	if index >= 0 and index < sections.size():
+		return sections[index]
 	return null
 
-func get_current_ring_data(ring: int) -> RingData:
-	if current_layer and ring >= 0 and ring < current_layer.rings.size():
-		return current_layer.rings[ring]
+func get_current_sample_track(track: int) -> SampleTrackData:
+	if current_section and track >= 0 and track < current_section.sample_tracks.size():
+		return current_section.sample_tracks[track]
 	return null
 
-func get_current_synth_data(synth: int) -> SynthData:
-	if current_layer and synth >= 0 and synth < current_layer.synths.size():
-		return current_layer.synths[synth]
+func get_current_synth_track(synth: int) -> SynthTrackData:
+	if current_section and synth >= 0 and synth < current_section.synth_tracks.size():
+		return current_section.synth_tracks[synth]
 	return null
 
-func get_beat(ring: int, beat: int) -> bool:
-	if current_layer:
-		return current_layer.get_beat(ring, beat)
+func get_beat(track: int, beat: int) -> bool:
+	if current_section:
+		return current_section.get_beat(track, beat)
 	return false
 
-func has_active_beats_on_layer(layer_index: int) -> bool:
-	var layer = get_layer(layer_index)
-	if layer:
-		return layer.has_active_beats()
+func has_active_beats_on_section(section_index: int) -> bool:
+	var section = get_section(section_index)
+	if section:
+		return section.has_active_beats()
 	return false
 
-func is_last_layer() -> bool:
-	return current_layer_index == layers_amount - 1
+func is_last_section() -> bool:
+	return current_section_index == sections_amount - 1

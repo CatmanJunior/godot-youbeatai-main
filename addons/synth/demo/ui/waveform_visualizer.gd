@@ -6,6 +6,7 @@ var _waveform: PackedVector2Array = []
 
 @export var _synth: Synth
 
+
 func _ready() -> void:
 	assert(_synth != null)
 	_synth.wave_cycle_completed.connect(update_waveform)

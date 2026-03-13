@@ -56,7 +56,7 @@ func _process(delta: float):
 
 	# Set progress bar value
 	if recording and progress_bar and layer_manager and bpm_manager:
-		var layers_amount = layer_manager.layers_amount
+		var layers_amount = layer_manager.sections_amount
 		var beats_amount = bpm_manager.beats_amount
 		var base_time_per_beat = bpm_manager.base_time_per_beat
 		var total_time = layers_amount * beats_amount * base_time_per_beat
@@ -107,7 +107,7 @@ func _on_button():
 
 		# 4 beats voor de eerste noot op eerste laag
 		if layer_manager:
-			var last_layer = layer_manager.layers_amount - 1
+			var last_layer = layer_manager.sections_amount - 1
 			layer_manager.switch_layer(last_layer)
 
 		if bpm_manager:

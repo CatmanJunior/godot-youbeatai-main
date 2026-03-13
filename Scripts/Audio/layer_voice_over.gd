@@ -1,8 +1,8 @@
 extends Node
 
 ## Coordinates voice-over recording, playback, and waveform visualization
-## for a single synth slot. Delegates recording to VoiceRecorder and
-## waveform drawing to WaveformVisualizer.
+## for a single synth slot. Delegates recording to SynthVoiceRecorder and
+## waveform drawing to SynthWaveformVisualizer.
 
 # Which synth slot this voice-over node controls (0 = green, 1 = purple)
 @export var synth_index: int = 0
@@ -20,8 +20,8 @@ var bpm_up_button: Button
 var bpm_down_button: Button
 
 # Sub-components
-var recorder: VoiceRecorder
-var waveform: WaveformVisualizer
+var recorder: SynthVoiceRecorder
+var waveform: SynthWaveformVisualizer
 
 # Progress bar state
 var should_update_progress_bar: bool = false
@@ -60,11 +60,12 @@ func _ready():
 	bpm_down_button = uiManager.bpm_down_button
 
 	# Initialize sub-components
-	recorder = VoiceRecorder.new(get_tree(), func(): return uiManager.recording_delay_slider.value, %MicrophoneCapture)
+	recorder = SynthVoiceRecorder.new(get_tree(), GameState.recording_delay_seconds)
+	
 	recorder.recording_started.connect(_on_recording_started)
 	recorder.recording_stopped.connect(_on_recording_stopped)
 
-	waveform = WaveformVisualizer.new(small_line, big_line, big_line_base_dist, big_line_volume_dist, big_line_reversed)
+	waveform = SynthWaveformVisualizer.new(small_line, big_line, big_line_base_dist, big_line_volume_dist, big_line_reversed)
 
 	# Set up record button
 	if record_layer_button:
@@ -160,15 +161,15 @@ func _on_play_pause_pressed():
 # -- Layer data access ---------------------------------------------------------
 
 func get_current_layer_index() -> int:
-	return layerManager.current_layer_index
+	return layerManager.current_section_index
 
 
 func set_current_layer_voice_over(voice_over: AudioStream):
 	var current_index = get_current_layer_index()
-	if current_index >= 0 and current_index < layerManager.layers.size():
-		var layer: LayerData = layerManager.layers[current_index]
-		if synth_index < layer.synths.size():
-			layer.synths[synth_index].layer_voice_over = voice_over
+	if current_index >= 0 and current_index < layerManager.sections.size():
+		var section: SectionData = layerManager.sections[current_index]
+		if synth_index < section.synth_tracks.size():
+			section.synth_tracks[synth_index].layer_voice_over = voice_over
 
 		audioPlayerManager.set_voice_stream(synth_index, voice_over)
 		audioPlayerManager.stop_voice(synth_index)
@@ -177,10 +178,10 @@ func set_current_layer_voice_over(voice_over: AudioStream):
 
 func get_current_layer_voice_over() -> AudioStream:
 	var current_index = get_current_layer_index()
-	if current_index >= 0 and current_index < layerManager.layers.size():
-		var layer: LayerData = layerManager.layers[current_index]
-		if synth_index < layer.synths.size():
-			return layer.synths[synth_index].layer_voice_over
+	if current_index >= 0 and current_index < layerManager.sections.size():
+		var section: SectionData = layerManager.sections[current_index]
+		if synth_index < section.synth_tracks.size():
+			return section.synth_tracks[synth_index].layer_voice_over
 	return null
 
 

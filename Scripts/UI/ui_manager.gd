@@ -125,7 +125,7 @@ func _ready():
 
 	layer_manager = %LayerManager
 
-	EventBus.layer_changed.connect(_on_switch_layer)
+	EventBus.section_changed.connect(_on_switch_layer)
 
 	init_button_actions()
 	initialize_sprite_positions()
@@ -160,7 +160,7 @@ func init_button_actions():
 	# Emoji buttons
 	for button in emoji_buttons:
 		button.button_up.connect(func():
-			var current_layer_index = layer_manager.current_layer_index
+			var current_layer_index = layer_manager.current_section_index
 			add_layer(current_layer_index + 1, button.text)
 			close_emoji_prompt()
 			added_layer = true
@@ -441,7 +441,7 @@ func _export_beat_wav() -> void:
 	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
 	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
 	var bpm: int = %BpmManager.bpm
-	var layer_index: int = %LayerManager.current_layer_index
+	var layer_index: int = %LayerManager.current_section_index
 	var beats_amount: int = %BpmManager.beats_amount
 	var base_time_per_beat: float = %BpmManager.base_time_per_beat
 
@@ -573,11 +573,11 @@ func get_template_active(ring: int, beat: int) -> bool:
 	return false
 
 func layer_has_beats(layer_index: int) -> bool:
-	# Check if layer has any beats
-	return layer_manager.layer_has_beats(layer_index)
+	# Check if section has any beats
+	return layer_manager.section_has_beats(layer_index)
 
 func add_layer(index: int, emoji: String):
-	EventBus.layer_added.emit(index, emoji)
+	EventBus.section_added.emit(index, emoji)
 
 func open_emoji_prompt():
 	# Show emoji selection prompt
@@ -597,7 +597,7 @@ func _paste_layer():
 
 func _clear_layer():
 	# Clear current layer via EventBus
-	EventBus.layer_clear_requested.emit()
+	EventBus.section_clear_requested.emit()
 
 func _play_extra_sfx():
 	# Play UI sound effect
@@ -605,7 +605,7 @@ func _play_extra_sfx():
 
 
 #signal handlers
-func _on_switch_layer(_layer: LayerData):
+func _on_switch_layer(_section: SectionData):
 	update_layer_switch_buttons_colors()
 	set_copy_paste_clear_buttons_active(true)
 	# Reset beat sprite scales so the new layer's visuals refresh immediately

@@ -1,4 +1,4 @@
-class_name VoiceRecorder
+class_name SynthVoiceRecorder
 
 ## Voice-over recording policy: adds a configurable delay before start/stop,
 ## ducks the SubMaster bus during recording, and tracks arm/finished state.
@@ -19,10 +19,10 @@ var recording_timer: float:
 	get: return mic.recording_timer if mic else 0.0
 
 var _scene_tree: SceneTree
-var _get_delay: Callable  # () -> float
+var _get_delay: float
 
 
-func _init(scene_tree: SceneTree, get_delay: Callable, microphone_recorder: MicrophoneRecorder = null) -> void:
+func _init(scene_tree: SceneTree, get_delay: float, microphone_recorder: MicrophoneRecorder = null) -> void:
 	_scene_tree = scene_tree
 	_get_delay = get_delay
 	mic = microphone_recorder
@@ -37,7 +37,7 @@ func cancel() -> void:
 
 
 func start() -> void:
-	var delay: float = _get_delay.call()
+	var delay: float = _get_delay
 	await _scene_tree.create_timer(delay).timeout
 	mic.start_recording()
 	print("recording started")
@@ -46,7 +46,7 @@ func start() -> void:
 
 
 func stop() -> void:
-	var delay: float = _get_delay.call()
+	var delay: float = _get_delay
 	await _scene_tree.create_timer(delay).timeout
 	var recorded_audio := mic.stop_recording()
 	print("recording stopped")

@@ -66,7 +66,7 @@ func _process(delta: float):
 	
 	# Update progress bar
 	if recording and progress_bar and game_manager and layer_manager:
-		var layers_amount = layer_manager.layers_amount if layer_manager.has("layers_amount") else 4
+		var layers_amount = layer_manager.sections_amount if layer_manager.has("sections_amount") else 4
 		var beats_amount = bpm_manager.beats_amount if bpm_manager and bpm_manager.has("beats_amount") else 16
 		var base_time_per_beat = bpm_manager.base_time_per_beat if bpm_manager and bpm_manager.has("base_time_per_beat") else 0.5
 		
@@ -101,7 +101,7 @@ func _on_record_button_pressed():
 	
 	# Start from last layer
 	if layer_manager and game_manager:
-		var last_layer = layer_manager.layers_amount - 1
+		var last_layer = layer_manager.sections_amount - 1
 		game_manager.switch_layer(last_layer)
 	
 	# Set beat position

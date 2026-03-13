@@ -41,10 +41,10 @@ var colors: Array[Color] = []
 
 var default_knob_position: Vector2
 
-# Reference to layer manager for LayerData access
+# Reference to layer manager for SectionData access
 var layer_manager: Node
 
-var current_layer: LayerData
+var current_section: SectionData
 
 func _ready():
 	# TODO: Do this in the layer_data instead
@@ -54,16 +54,16 @@ func _ready():
 	EventBus.ring_selected.connect(samples_mixing_change_ring)
 	EventBus.synth_selected.connect(synth_mixing_change_synth)
 	EventBus.mixing_weights_changed.connect(on_update_mixing)
-	EventBus.layer_changed.connect(_on_layer_changed)
+	EventBus.section_changed.connect(_on_section_changed)
 	
 	_on_ready_mixing()
 
-func _on_layer_changed(layer_data: LayerData):
-	"""Store current knob, switch layer, retrieve new knob"""
-	if current_layer != null:
+func _on_section_changed(section_data: SectionData):
+	"""Store current knob, switch section, retrieve new knob"""
+	if current_section != null:
 		store_active_knob(chaos_pad_mode)
 	
-	current_layer = layer_data
+	current_section = section_data
 	
 	# Retrieve knob position for new layer
 	var pos = retrieve_active_knob(chaos_pad_mode)
@@ -87,18 +87,18 @@ func _change_ring(mode: ChaosPadMode, new_index: int = 0):
 # SAMPLE MIXING ============================================================
 func store_active_knob(mode: ChaosPadMode):
 	if mode == ChaosPadMode.SAMPLE_MIXING:
-		current_layer.set_sample_knob_position(samples_mixing_active_ring, knob.global_position)
+		current_section.set_sample_knob_position(samples_mixing_active_ring, knob.global_position)
 	elif mode == ChaosPadMode.SYNTH_MIXING:
-		current_layer.set_synth_knob_position(synth_mixing_active_synth, knob.global_position)
+		current_section.set_synth_knob_position(synth_mixing_active_synth, knob.global_position)
 	elif mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_store_active_knob()
 
 func retrieve_active_knob(mode: ChaosPadMode) -> Vector2:
 	var pos: Vector2
 	if mode == ChaosPadMode.SAMPLE_MIXING:
-		pos = current_layer.get_sample_knob_position(samples_mixing_active_ring)
+		pos = current_section.get_sample_knob_position(samples_mixing_active_ring)
 	elif mode == ChaosPadMode.SYNTH_MIXING:
-		pos = current_layer.get_synth_knob_position(synth_mixing_active_synth)
+		pos = current_section.get_synth_knob_position(synth_mixing_active_synth)
 	elif mode == ChaosPadMode.SONG_MIXING:
 		pos = song_mixing_retrieve_active_knob()
 	if pos == Vector2.ZERO:
@@ -106,15 +106,15 @@ func retrieve_active_knob(mode: ChaosPadMode) -> Vector2:
 	return pos
 
 func _apply_stored_volumes():
-	"""Re-apply remembered mixing volumes for all rings"""
-	if current_layer == null:
+	"""Re-apply remembered mixing volumes for all tracks"""
+	if current_section == null:
 		return
 	
-	for i in range(current_layer.RINGS_PER_LAYER):
-		samples_mixing_update_volumes(i, current_layer.rings[i].master_volume, current_layer.rings[i].weights)
+	for i in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
+		samples_mixing_update_volumes(i, current_section.sample_tracks[i].master_volume, current_section.sample_tracks[i].weights)
 
-	for i in range(current_layer.SYNTHS_PER_LAYER):
-		synth_mixing_update_volumes(i, current_layer.synths[i].master_volume, current_layer.synths[i].weights)
+	for i in range(SectionData.SYNTH_TRACKS_PER_SECTION):
+		synth_mixing_update_volumes(i, current_section.synth_tracks[i].master_volume, current_section.synth_tracks[i].weights)
 
 		
 func samples_mixing_change_ring(new_ring: int):
@@ -162,12 +162,12 @@ func samples_mixing_update_volumes(ring: int, master_volume: float, given_weight
 # SYNTH MIXING =============================================================
 func synth_mixing_apply_stored_volumes():
 	"""Re-apply remembered mixing volumes for both synths"""
-	if current_layer == null:
+	if current_section == null:
 		return
 	
-	for i in range(current_layer.SYNTHS_PER_LAYER):
-		var weights_to_use = current_layer.synths[i].weights if current_layer.synths[i].weights != Vector3.ZERO else weights
-		var master_volume = current_layer.synths[i].master_volume
+	for i in range(SectionData.SYNTH_TRACKS_PER_SECTION):
+		var weights_to_use = current_section.synth_tracks[i].weights if current_section.synth_tracks[i].weights != Vector3.ZERO else weights
+		var master_volume = current_section.synth_tracks[i].master_volume
 		synth_mixing_update_volumes(i, master_volume, weights_to_use)
 
 func synth_mixing_update_volumes(synth: int, master_volume: float, given_weights: Vector3):

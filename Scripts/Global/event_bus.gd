@@ -31,13 +31,13 @@ signal should_stomp()
 signal clap_triggered()
 signal stomp_triggered()
 
-# ── Layers ──
-signal layer_changed(layer_data: LayerData)
-signal layer_added(layer_index: int, emoji: String)
-signal layer_removed(layer_index: int)
-signal layer_cleared()
-signal layer_copied()
-signal layer_pasted()
+# ── Sections ──
+signal section_changed(section_data: SectionData)
+signal section_added(section_index: int, emoji: String)
+signal section_removed(section_index: int)
+signal section_cleared()
+signal section_copied()
+signal section_pasted()
 
 # ── Audio Playback ──
 signal play_ring_requested(ring: int)
@@ -71,7 +71,7 @@ signal interface_visibility_changed(visible: bool)
 signal buttons_disabled_changed(disabled: bool)
 signal copy_requested()
 signal paste_requested()
-signal layer_clear_requested()
+signal section_clear_requested()
 
 # ── Recording ──
 signal recording_started()

@@ -46,20 +46,43 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.",
-            condition: () => manager.clapped,
-            outcome: () =>
-            {
+        instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.",
 
-                manager.pointer.Visible = true;
-                manager.SetRingVisibility(_indexRedRing, true);
-                manager.cross.Visible = true;
-                manager.KlappyContinue.Visible = false;
-                manager.settingsButton.Visible = true;
-                manager.ContinueButton.EmitSignal("animation_play");
-                manager.PlayExtraSFX(manager.achievement_sfx);
+        condition: (() =>
+        {
+            if (!manager.HasNode("StepDelayTimer"))
+            {
+                Timer t = new Timer();
+                t.Name = "StepDelayTimer";
+                t.WaitTime = 8f;
+                t.OneShot = true;
+                t.Timeout += () => t.SetMeta("ready", true);
+                manager.AddChild(t);
+                t.Start();
             }
-        ),
+
+            Timer timer = manager.GetNode<Timer>("StepDelayTimer");
+            bool ready = timer.HasMeta("ready") && (bool)timer.GetMeta("ready");
+
+            return manager.clapped && ready;
+        }),
+
+        outcome: () =>
+        {
+            // outcome
+            manager.pointer.Visible = true;
+            manager.SetRingVisibility(_indexRedRing, true);
+            manager.cross.Visible = true;
+            manager.KlappyContinue.Visible = false;
+            manager.settingsButton.Visible = true;
+            manager.ContinueButton.EmitSignal("animation_play");
+            manager.PlayExtraSFX(manager.achievement_sfx);
+
+            // Timer opruimen zodat hij niet meerdere keren afgaat
+            if (manager.HasNode("StepDelayTimer"))
+                manager.GetNode<Timer>("StepDelayTimer").QueueFree();
+        }
+    ),
         // kick ring
         (
             instruction:     "Deze roze cirkels vormen een kick-ring",
@@ -601,6 +624,7 @@ public static class Tutorial
                 amount++;
         return amount;
     }
+
 
     private static void KlappyContinue()
     {

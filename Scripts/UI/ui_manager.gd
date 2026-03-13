@@ -1,14 +1,6 @@
 extends Node
 
-# Switch layer buttons
-@export var layer_button_prefab: PackedScene
-@export var layer_buttons_container: HBoxContainer
-@export var add_layer_button: Button
-@export var clear_layer_button: Button
-@export var save_layer_button: Button
-@export var remove_layer_button: Button
-@export var load_layer_button: Button
-
+@export var section_ui: Node
 
 @export var play_pause_button: Button
 @export var bpm_up_button: Button
@@ -19,10 +11,7 @@ extends Node
 
 # Sample buttons (Sprite2D in C#, but might be buttons in Godot)
 @export var instrument_buttons: Array[Sprite2D] = []
-@export var record_sample_button0: Node
-@export var record_sample_button1: Node
-@export var record_sample_button2: Node
-@export var record_sample_button3: Node
+
 
 # Other interface elements
 @export var corners: Array[Node2D] = []
@@ -55,21 +44,17 @@ extends Node
 @export var swing_label: Label
 @export var clap_bias_slider: Slider
 @export var achievements_panel: Panel
-@export var layer_loop_toggle: CheckButton
+@export var section_loop_toggle: CheckButton
 @export var saving_label: Label
 @export var instruction_label: Label
-@export var all_layers_to_mp3: Button
-@export var layer_outline: Sprite2D
-@export var layer_outline_holder: Node2D
+@export var all_sections_to_mp3: Button
 @export var real_time_audio_recording_progress_bar: ProgressBar
 @export var activate_green_chaos_button: Sprite2D
 @export var activate_purple_chaos_button: Sprite2D
-@export var copy_paste_clear_buttons_holder: Node2D
 @export var continue_button: Button
 @export var klappy_continue: Button
 @export var knob_area: Area2D
 @export var amount_left: Label
-@export var green_layer_record_button: Sprite2D
 @export var bear_ring_pivot_point: Node2D
 
 # Sprite/texture management
@@ -102,20 +87,11 @@ var email_prompt_open: bool = false
 var dragginganddropping: bool = false
 var holding_for_ring: int = 0
 var slow_beat_timer: float = 0.0
-var copy_paste_clear_button_holder_time_since_activation: float = 0.0
-var pressed_add_layer_once: bool = false
-var added_layer: bool = false
 
 var original_instrument_button_scales: Array[float] = []
 
 enum ChaosPadMode {None, SampleMixing, SynthMixing}
 var chaos_pad_mode = ChaosPadMode.None
-
-# References to other managers
-var layer_manager: Node
-
-var emoji_buttons: Array = []
-var emoji_prompt_cancel_button: Button
 
 func _ready():
 	colors = %Colors.colors.duplicate()
@@ -123,9 +99,7 @@ func _ready():
 	
 	_instrument_buttons_default_scale()
 
-	layer_manager = %LayerManager
-
-	EventBus.section_changed.connect(_on_switch_layer)
+	EventBus.section_changed.connect(_on_switch_section)
 
 	init_button_actions()
 	initialize_sprite_positions()
@@ -152,25 +126,13 @@ func update_ui(delta: float):
 	_update_drag_and_drop()
 	_update_mic_meter()
 	_update_beat_sprites(delta)
-	_update_layer_outline_sprite_rotation()
-	_update_copy_paste_buttons(delta)
+	if section_ui:
+		section_ui.update(delta)
 
 
 func init_button_actions():
-	# Emoji buttons
-	for button in emoji_buttons:
-		button.button_up.connect(func():
-			var current_layer_index = layer_manager.current_section_index
-			add_layer(current_layer_index + 1, button.text)
-			close_emoji_prompt()
-			added_layer = true
-		)
-	
-	#TODO: Fix this
-	# emoji_prompt_cancel_button.button_up.connect(close_emoji_prompt)
-	
 	# Save/export buttons
-	all_layers_to_mp3.button_up.connect(func():
+	all_sections_to_mp3.button_up.connect(func():
 		_export_song_wav()
 		settings_panel.visible = false
 	)
@@ -181,33 +143,6 @@ func init_button_actions():
 	)
 	
 	mute_speach.pressed.connect(DisplayServer.tts_stop)
-	
-	load_layer_button.pressed.connect(func():
-		_paste_layer()
-		_play_extra_sfx()
-	)
-
-	# Layer buttons
-	save_layer_button.pressed.connect(func():
-		_copy_layer()
-		_play_extra_sfx()
-	)
-	
-	clear_layer_button.pressed.connect(func():
-		# Open confirmation prompt
-		_clear_layer()
-		_play_extra_sfx()
-	)
-	
-	# Add layer button
-	add_layer_button.button_up.connect(func():
-		open_emoji_prompt()
-		_play_extra_sfx()
-		
-		if not pressed_add_layer_once:
-			# Show tooltip
-			pressed_add_layer_once = true
-	)
 	
 	# Restart button
 	restart_button.pressed.connect(_on_restart_button)
@@ -239,12 +174,12 @@ func init_button_actions():
 	
 	# Song select button
 	song_select_button.button_up.connect(func():
-		layer_loop_toggle.button_pressed = !layer_loop_toggle.button_pressed
+		section_loop_toggle.button_pressed = !section_loop_toggle.button_pressed
 		# song_mixing_change_to_song_mixer()
 	)
 		
 func initialize_sprite_positions():
-	var beats_amount = %BpmManager.beats_amount
+	var beats_amount = GameState.beats_amount
 	
 	# Spawn beat sprites
 	beat_sprites = []
@@ -327,8 +262,8 @@ func _update_beat_sprites(delta: float):
 		if instrument_buttons[i].scale.x > original_instrument_button_scales[i]:
 			instrument_buttons[i].scale -= Vector2.ONE * delta * 2
 	
-	var beats_amount = %BpmManager.beats_amount
-	var current_beat = %BpmManager.current_beat
+	var beats_amount = GameState.beats_amount
+	var current_beat = GameState.current_beat
 	
 	# Update beat sprites
 
@@ -368,44 +303,6 @@ func _update_beat_sprites(delta: float):
 			if template_active and show_template:
 				sprite.modulate = Color(0, 0, 0, 1)
 
-func _update_layer_outline_sprite_rotation():
-	var time_per_beat = %BpmManager.time_per_beat
-	var current_beat = %BpmManager.current_beat
-	var beat_timer = %BpmManager.beat_timer
-	var beats_amount = %BpmManager.beats_amount
-	
-	var clock_rot = 0.0
-	if time_per_beat != 0:
-		clock_rot = float(current_beat + (beat_timer / time_per_beat)) / float(beats_amount)
-	else:
-		clock_rot = float(current_beat) / float(beats_amount)
-	
-	layer_outline.rotation_degrees = clock_rot * 360.0 - 7.0
-
-func _update_copy_paste_buttons(delta: float):
-	#TODO handle showing/hiding copy/paste/clear buttons when layer buttons are pressed, and hiding them after a few seconds of inactivity
-	var any_layer_button_pressed = false
-	
-	if copy_paste_clear_button_holder_time_since_activation >= 3.5:
-		set_copy_paste_clear_buttons_active(false)
-	elif not any_layer_button_pressed:
-		copy_paste_clear_button_holder_time_since_activation += delta
-
-func update_layer_switch_buttons_colors():
-	# Get layer buttons from layer manager
-	var layer_buttons = []
-	layer_buttons = layer_manager.layer_buttons
-	
-	for i in range(layer_buttons.size()):
-		var button = layer_buttons[i]
-		
-		button.modulate = Color(1, 1, 1, 1)
-		
-		# Check if layer has beats
-		var has_beats = layer_has_beats(i)
-		if not has_beats:
-			button.modulate = button.modulate.darkened(0.5)
-
 func _update_interface_state():
 	if not interface_set_to_default_state:
 		set_entire_interface_visibility(true)
@@ -430,7 +327,7 @@ func _update_saving_label(delta: float):
 func _export_song_wav() -> void:
 	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
 	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
-	var bpm: int = %BpmManager.bpm
+	var bpm: int = GameState.current_bpm
 
 	var path: String = AudioSavingManager.save_realtime_recorded_song_as_file(
 		recording, voice_over, bpm)
@@ -440,30 +337,30 @@ func _export_song_wav() -> void:
 func _export_beat_wav() -> void:
 	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
 	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
-	var bpm: int = %BpmManager.bpm
-	var layer_index: int = %LayerManager.current_section_index
-	var beats_amount: int = %BpmManager.beats_amount
-	var base_time_per_beat: float = %BpmManager.base_time_per_beat
+	var bpm: int = GameState.current_bpm
+	var section_index: int = GameState.current_section_index
+	var beats_amount: int = GameState.current_beats_amount
+	var base_time_per_beat: float = GameState.current_base_time_per_beat
 
 	var path: String = AudioSavingManager.save_realtime_recorded_beat_as_file(
-		recording, voice_over, bpm, layer_index, beats_amount, base_time_per_beat)
+		recording, voice_over, bpm, section_index, beats_amount, base_time_per_beat)
 	if path != "":
 		show_saving_label(path)
 
 func _update_play_pause_button():
-	play_pause_button.text = "⏸️" if %BpmManager.playing else "▶️"
+	play_pause_button.text = "⏸️" if GameState.playing else "▶️"
 
 func _update_pointer():
-	if %BpmManager.playing:
-		var progression = float(%BpmManager.current_beat + (%BpmManager.beat_timer / %BpmManager.time_per_beat)) / float(%BpmManager.beats_amount)
+	if GameState.playing:
+		var progression = float(GameState.current_beat + (GameState.beat_timer / GameState.time_per_beat)) / float(GameState.beats_amount)
 		pointer.rotation_degrees = progression * 360.0 - 7.0
 
 func _update_metronome(delta: float):
-	if %BpmManager.playing:
+	if GameState.playing:
 		slow_beat_timer += delta / 4.0
-		if slow_beat_timer > %BpmManager.time_per_beat:
-			slow_beat_timer -= %BpmManager.time_per_beat
-		var beat_progress = slow_beat_timer / %BpmManager.time_per_beat
+		if slow_beat_timer > GameState.time_per_beat:
+			slow_beat_timer -= GameState.time_per_beat
+		var beat_progress = slow_beat_timer / GameState.time_per_beat
 		metronome.position.y = lerp(-0.4, 0.4, beat_progress)
 
 func _update_ring_button_outlines():
@@ -481,7 +378,7 @@ func _update_ring_button_outlines():
 			outlines[i].texture = outline_beat_textures[i]
 
 func _update_synth_button_outlines():
-	var progression = float(%BpmManager.current_beat + (%BpmManager.beat_timer / %BpmManager.time_per_beat)) / float(%BpmManager.beats_amount)
+	var progression = float(GameState.current_beat + (GameState.beat_timer / GameState.time_per_beat)) / float(GameState.beats_amount)
 	if is_nan(progression):
 		progression = 0.0
 	
@@ -526,10 +423,10 @@ func _update_progress_bar():
 	progress_bar.value = progress_bar_value
 
 func _update_labels():
-	bpm_label.text = str(%BpmManager.bpm)
+	bpm_label.text = str(GameState.current_bpm)
 	recording_delay_label.text = "%.2fs" % recording_delay_slider.value
-	%BpmManager.swing = swing_slider.value
-	real_time_audio_recording_progress_bar.visible = layer_loop_toggle.button_pressed
+	GameState.swing = swing_slider.value
+	real_time_audio_recording_progress_bar.visible = section_loop_toggle.button_pressed
 
 func _update_drag_and_drop():
 	if dragginganddropping and holding_for_ring < colors.size():
@@ -541,10 +438,6 @@ func _update_drag_and_drop():
 func _update_mic_meter():
 		mic_meter.value = EventBus.microphone_volume * 100.0
 
-func update_layer_buttons_delayed():
-	# Implementation - update layer button UI
-	pass
-
 func set_entire_interface_visibility(visible: bool):
 	# Show/hide all interface elements
 	if nodes_that_can_be_unlocked.size() == 0:
@@ -552,17 +445,9 @@ func set_entire_interface_visibility(visible: bool):
 	for node in nodes_that_can_be_unlocked:
 		node.visible = visible
 
-func set_copy_paste_clear_buttons_active(active: bool):
-	copy_paste_clear_buttons_holder.visible = active
-	if active:
-		copy_paste_clear_buttons_holder.position = Vector2.ZERO
-	else:
-		copy_paste_clear_buttons_holder.position += Vector2(0, 20000)
-	copy_paste_clear_button_holder_time_since_activation = 0
-
 # Helper methods that need implementation from other managers
 func get_beat_active(ring: int, beat: int) -> bool:
-	return %BeatManager.get_beat(ring, beat)
+	return GameState.get_beat(ring, beat)
 
 func get_template_active(ring: int, beat: int) -> bool:
 	var current_actives = %TemplateManager.get_current_actives()
@@ -572,44 +457,13 @@ func get_template_active(ring: int, beat: int) -> bool:
 			return row[beat]
 	return false
 
-func layer_has_beats(layer_index: int) -> bool:
-	# Check if section has any beats
-	return layer_manager.section_has_beats(layer_index)
-
-func add_layer(index: int, emoji: String):
-	EventBus.section_added.emit(index, emoji)
-
-func open_emoji_prompt():
-	# Show emoji selection prompt
-	pass
-
-func close_emoji_prompt():
-	# Hide emoji selection prompt
-	pass
-
-func _copy_layer():
-	# Save current layer state via EventBus
-	EventBus.copy_requested.emit()
-
-func _paste_layer():
-	# Restore saved layer state via EventBus
-	EventBus.paste_requested.emit()
-
-func _clear_layer():
-	# Clear current layer via EventBus
-	EventBus.section_clear_requested.emit()
-
-func _play_extra_sfx():
-	# Play UI sound effect
-	pass
-
-
 #signal handlers
-func _on_switch_layer(_section: SectionData):
-	update_layer_switch_buttons_colors()
-	set_copy_paste_clear_buttons_active(true)
-	# Reset beat sprite scales so the new layer's visuals refresh immediately
-	var beats_amount = %BpmManager.beats_amount
+func _on_switch_section(_section: SectionData):
+	if section_ui:
+		section_ui.update_section_switch_buttons_colors()
+		section_ui.set_copy_paste_clear_buttons_active(true)
+	# Reset beat sprite scales so the new section's visuals refresh immediately
+	var beats_amount = GameState.beats_amount
 	for ring in range(min(4, beat_sprites.size())):
 		for beat in range(min(beats_amount, beat_sprites[ring].size())):
 			var sprite = beat_sprites[ring][beat] as Sprite2D

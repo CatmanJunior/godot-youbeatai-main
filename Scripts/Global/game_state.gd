@@ -6,9 +6,13 @@ extends Node
 
 const BEATS_AMOUNT_DEFAULT: int = 16
 
+var base_time_per_beat: float = 0.5
+
 var microphone_volume: float = 0.0
 
 var recording_delay_seconds: float = 0.0
+
+var recording_volume_threshold: float = 0.1
 
 # ── Sections ─────────────────────────────────────────────────────────────────
 
@@ -39,13 +43,20 @@ func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.playing_changed.connect(func(value: bool): playing = value)
-	EventBus.bpm_changed.connect(func(value: float): bpm = int(value))
+	EventBus.bpm_changed.connect(_on_bpm_changed)
 	EventBus.beat_triggered.connect(func(beat: int): current_beat = beat)
 	EventBus.ring_selected.connect(func(ring: int): selected_sample_track = ring)
 	EventBus.synth_selected.connect(func(synth: int): selected_synth_track = synth)
 	EventBus.recording_started.connect(func(): is_recording = true)
 	EventBus.recording_stopped.connect(func(_audio): is_recording = false)
+	EventBus.recording_volume_threshold_changed.connect(_on_recording_volume_threshold_changed)
 
+func _on_bpm_changed(new_bpm: int) -> void:
+	bpm = new_bpm
+	base_time_per_beat = 60.0 / bpm
+	
+func _on_recording_volume_threshold_changed(threshold: float) -> void:
+	recording_volume_threshold = threshold
 
 # ── Section helpers ──────────────────────────────────────────────────────────
 

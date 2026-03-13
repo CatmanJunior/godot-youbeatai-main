@@ -1,9 +1,5 @@
 extends Node
 
-## Ring sample recording: immediate start, auto-stops when the captured sound
-## reaches 2× the current beat length, trims leading silence, then publishes
-## the result via EventBus. Delegates mic capture to MicrophoneRecorder.
-
 var mic: MicrophoneRecorder
 
 var recorded_audio: AudioStream = null
@@ -18,18 +14,16 @@ var has_detected_sound: bool = false
 var actual_sound_length: float = 0.0
 
 var recording_volume: float
-var current_recording_ring: int = 0
+var current_selected_track: TrackData = null
 
 var recording_volume_threshold: float = 0.1
-var base_time_per_beat: float
 
 @export var recording_sample_button: Button
 
 func _ready():
 	EventBus.recording_volume_threshold_changed.connect(_on_recording_volume_threshold_changed)
 	EventBus.recording_sample_button_toggled.connect(_on_recording_sample_button_toggled)
-	EventBus.ring_selected.connect(_on_ring_selected)
-	EventBus.bpm_changed.connect(_on_bpm_changed)
+	EventBus.track_selected.connect(_on_track_selected)
 
 	mic = %MicrophoneCapture
 
@@ -47,10 +41,10 @@ func _handle_recording(delta: float) -> void:
 		return
 	
 	actual_sound_length += delta
-	print(base_time_per_beat)
-	var percentage: float = actual_sound_length / (base_time_per_beat * 2.0)
-	print("Recording... length: %s seconds, actual sound length: %s seconds, percentage: %s" %
-		[recording_length, actual_sound_length, percentage])
+
+	var beats_to_record = 1 if current_selected_track.track_type == TrackData.TrackType.SAMPLE else GameState.beats_amount
+
+	var percentage: float = actual_sound_length / (GameState.base_time_per_beat * beats_to_record)
 	
 	if percentage > 1.0:
 		recording_sample_button.button_pressed = false
@@ -60,11 +54,8 @@ func _handle_recording(delta: float) -> void:
 		
 
 #------------------Event Handlers----------------------
-func _on_bpm_changed(bpm: float) -> void:
-	base_time_per_beat = 60.0 / bpm
-
-func _on_ring_selected(ring: int) -> void:
-	current_recording_ring = ring
+func _on_track_selected(track: TrackData) -> void:
+	current_selected_track = track
 
 func _on_recording_sample_button_toggled(toggled: bool) -> void:
 	print("Recording sample button toggled: %s" % toggled)
@@ -76,7 +67,6 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 func _on_recording_volume_threshold_changed(threshold: float) -> void:
 	print("Recording volume threshold changed to: %s" % threshold)
 	recording_volume_threshold = threshold
-
 
 func _trim_audio_stream(original: AudioStream, seconds_to_trim: float) -> AudioStream:
 	var original_data: PackedByteArray = original.data
@@ -121,8 +111,7 @@ func _stop_recording() -> void:
 	silence_length = 0.0
 	recording_length = 0.0
 	actual_sound_length = 0.0
-	
-	EventBus.request_set_stream.emit(current_recording_ring, 2, recorded_audio)
+	current_selected_track.set_recording_audio_stream(recorded_audio)
 
 func get_recording_volume() -> float:
-	return EventBus.microphone_volume
+	return GameState.microphone_volume

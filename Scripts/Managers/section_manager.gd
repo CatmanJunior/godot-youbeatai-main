@@ -63,7 +63,7 @@ func add_section(section: int, emoji: String = ""):
 	_new_section_button(section, emoji)
 	
 	# Create a new SectionData instance
-	var new_section : SectionData = SectionData.new(section, emoji)
+	var new_section: SectionData = SectionData.new(section, emoji)
 	sections.insert(section, new_section)
 	
 	current_section = new_section
@@ -131,7 +131,7 @@ func _remove_section_button(section: int):
 
 
 func _copy_section():
-	"""Copy the current section to the clipboard"""	
+	"""Copy the current section to the clipboard"""
 	clipboard_section = current_section.duplicate_section()
 
 func _paste_section():
@@ -204,11 +204,11 @@ func update_section_buttons_user_interface_delayed():
 func switch_section(section_index: int):
 	"""Switch to a different section"""
 	print("Switching to section " + str(section_index)) # Debug print
-	
+	var old_section = current_section
 	# Switch to new section
 	current_section_index = section_index
 	current_section = sections[current_section_index]
-	EventBus.section_changed.emit(current_section)
+	EventBus.section_changed.emit(old_section, current_section)
 	
 	update_section_buttons_user_interface()
 

@@ -32,7 +32,7 @@ signal clap_triggered()
 signal stomp_triggered()
 
 # ── Sections ──
-signal section_changed(old_section_data : SectionData, section_data: SectionData)
+signal section_changed(old_section_data: SectionData, section_data: SectionData)
 signal section_added(section_index: int, emoji: String)
 signal section_removed(section_index: int)
 signal section_cleared()
@@ -47,12 +47,12 @@ signal green_synth_set(font: Resource, instrument: int)
 signal purple_synth_set(font: Resource, instrument: int)
 
 # ── Mixing ──
-signal track
+signal track_selected(track: int)
 signal ring_selected(ring: int)
 signal synth_selected(synth: int)
 signal mixing_weights_changed(master_volume: float, weights: Vector3)
 signal volume_changed(ring: int, volume_db: float)
-signal set_ring_volume_requested(ring: int, weights: Vector3)
+signal set_track_volume_requested(track: int, master_volume: float, weights: Vector3)
 
 # ── Chaos Pad ──
 signal chaos_pad_dragging(knob_position: Vector2, master_volume: float, weights: Vector3)
@@ -77,7 +77,7 @@ signal section_clear_requested()
 # ── Recording ──
 signal recording_started()
 signal recording_stopped(audio: AudioStream)
-signal request_set_stream(ring: int, track: int, audio: AudioStream) #track is 0 for main, 1 for alt, 2 for recording
+signal request_set_stream(track: int, audio_layer: int, audio: AudioStream) # track is 0 for main, 1 for alt, 2 for recording
 signal master_recording_started()
 signal master_recording_stopped()
 signal microphone_data_updated(volume: float, frequency: float)

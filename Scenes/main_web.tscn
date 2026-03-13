@@ -92,6 +92,10 @@
 [ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scripts/Achievements/unlock_achievements.gd" id="85_op1ei"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
 [ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Scripts/UI/volume_treshold_slider.gd" id="91_8eq3q"]
+[ext_resource type="Script" uid="uid://wbvs8wzrjltxr" path="res://Scripts/UI/beat_ring_ui.gd" id="92_brui1"]
+[ext_resource type="Script" uid="uid://ktw0zjhi34tm7" path="res://Scripts/UI/chaos_pad_ui.gd" id="93_cpui1"]
+[ext_resource type="Script" uid="uid://xcxguhh2h59no" path="res://Scripts/UI/transport_ui.gd" id="94_trui1"]
+[ext_resource type="Script" uid="uid://jtk95wld1z6w0" path="res://Scripts/UI/audio_export_ui.gd" id="95_aeui1"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
@@ -629,7 +633,7 @@ script = ExtResource("25_scmae")
 unique_name_in_owner = true
 script = SubResource("GDScript_3t5nw")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("section_ui", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "instrument_buttons", "corners", "chaos_pad_triangle_sprite", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "saving_label", "instruction_label", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "continue_button", "klappy_continue", "knob_area", "amount_left", "bear_ring_pivot_point")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("section_ui", "play_pause_button", "bpm_up_button", "bpm_down_button", "song_select_button", "instrument_buttons", "corners", "chaos_pad_triangle_sprite", "restart_button", "mute_speach", "save_to_wav_button", "cross", "chosen_emoticons_label", "metronome_toggle", "mic_meter", "add_beats", "button_is_clap", "button_add_beats", "volume_threshold", "recording_delay_slider", "recording_delay_label", "settings_panel", "settings_button", "settings_back_button", "skip_tutorial_button", "progress_bar", "pointer", "metronome", "metronome_bg", "bpm_label", "draganddropthing", "swing_slider", "swing_label", "clap_bias_slider", "achievements_panel", "saving_label", "instruction_label", "real_time_audio_recording_progress_bar", "activate_green_chaos_button", "activate_purple_chaos_button", "continue_button", "klappy_continue", "knob_area", "amount_left", "bear_ring_pivot_point", "beat_ring_ui", "chaos_pad_ui", "transport_ui", "audio_export_ui")]
 unique_name_in_owner = true
 script = ExtResource("26_scmae")
 section_ui = NodePath("SectionUi")
@@ -685,6 +689,10 @@ outline_synth_textures = Array[Texture2D]([ExtResource("24_6q34d"), ExtResource(
 filled_song_texture = ExtResource("26_xpu48")
 outline_song_texture = ExtResource("49_dll78")
 dot_beat_texture = ExtResource("50_662co")
+beat_ring_ui = NodePath("BeatRingUi")
+chaos_pad_ui = NodePath("ChaosPadUi")
+transport_ui = NodePath("TransportUi")
+audio_export_ui = NodePath("AudioExportUi")
 
 [node name="ParticleManager" type="Node" parent="Managers/UiManager" unique_id=1448765172]
 script = ExtResource("59_j7ciw")
@@ -700,6 +708,18 @@ metadata/_edit_pinned_properties_ = [&"colors"]
 
 [node name="SectionUi" type="Node" parent="Managers/UiManager" unique_id=1840430508]
 script = ExtResource("56_0dny5")
+
+[node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=2130000001]
+script = ExtResource("92_brui1")
+
+[node name="ChaosPadUi" type="Node" parent="Managers/UiManager" unique_id=2130000002]
+script = ExtResource("93_cpui1")
+
+[node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=2130000003]
+script = ExtResource("94_trui1")
+
+[node name="AudioExportUi" type="Node" parent="Managers/UiManager" unique_id=2130000004]
+script = ExtResource("95_aeui1")
 
 [node name="MicrophoneCapture" type="Node" parent="Managers" unique_id=634715111]
 unique_name_in_owner = true

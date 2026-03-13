@@ -31,8 +31,7 @@ var outer_triangle_size: float = 60.0
 var chaos_pad_mode: ChaosPadMode = ChaosPadMode.SAMPLE_MIXING
 
 # Active ring/synth selection
-var samples_mixing_active_ring: int = 0
-var synth_mixing_active_synth: int = 0
+var active_track: int = 0
 
 # Song mixing (global, not per-layer)
 var song_mixing_knob_position: Vector2
@@ -43,8 +42,6 @@ var default_knob_position: Vector2
 
 # Reference to layer manager for SectionData access
 var layer_manager: Node
-
-var current_section: SectionData
 
 func _ready():
 	# TODO: Do this in the layer_data instead
@@ -58,18 +55,16 @@ func _ready():
 	
 	_on_ready_mixing()
 
-func _on_section_changed(section_data: SectionData):
+func _on_section_changed(old_section_data: SectionData, _new_section_data: SectionData):
 	"""Store current knob, switch section, retrieve new knob"""
-	if current_section != null:
-		store_active_knob(chaos_pad_mode)
-	
-	current_section = section_data
+	if old_section_data != null:
+		store_active_knob(chaos_pad_mode, old_section_data)
 	
 	# Retrieve knob position for new layer
 	var pos = retrieve_active_knob(chaos_pad_mode)
 	knob.global_position = pos
 
-	_apply_stored_volumes()
+	_apply_stored_volumes(old_section_data)
 
 func _on_ready_mixing():
 	song_mixing_knob_position = chaos_pad_triangle_sprite.global_position
@@ -85,44 +80,39 @@ func _change_ring(mode: ChaosPadMode, new_index: int = 0):
 		song_mixing_change_to_song_mixer()
 
 # SAMPLE MIXING ============================================================
-func store_active_knob(mode: ChaosPadMode):
-	if mode == ChaosPadMode.SAMPLE_MIXING:
-		current_section.set_sample_knob_position(samples_mixing_active_ring, knob.global_position)
-	elif mode == ChaosPadMode.SYNTH_MIXING:
-		current_section.set_synth_knob_position(synth_mixing_active_synth, knob.global_position)
+func store_active_knob(mode: ChaosPadMode, new_section_data: SectionData):
+	if mode == ChaosPadMode.SAMPLE_MIXING or mode == ChaosPadMode.SYNTH_MIXING:
+		new_section_data.set_track_knob_position(active_track, knob.global_position)
 	elif mode == ChaosPadMode.SONG_MIXING:
 		song_mixing_store_active_knob()
 
 func retrieve_active_knob(mode: ChaosPadMode) -> Vector2:
 	var pos: Vector2
-	if mode == ChaosPadMode.SAMPLE_MIXING:
-		pos = current_section.get_sample_knob_position(samples_mixing_active_ring)
-	elif mode == ChaosPadMode.SYNTH_MIXING:
-		pos = current_section.get_synth_knob_position(synth_mixing_active_synth)
+	
+	if mode == ChaosPadMode.SAMPLE_MIXING or mode == ChaosPadMode.SYNTH_MIXING:
+		pos = GameState.current_section.get_track_knob_position(active_track)
+
 	elif mode == ChaosPadMode.SONG_MIXING:
 		pos = song_mixing_retrieve_active_knob()
 	if pos == Vector2.ZERO:
 		pos = default_knob_position
 	return pos
 
-func _apply_stored_volumes():
+func _apply_stored_volumes(old_section_data: SectionData):
 	"""Re-apply remembered mixing volumes for all tracks"""
-	if current_section == null:
+	if old_section_data == null:
 		return
-	
-	for i in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
-		samples_mixing_update_volumes(i, current_section.sample_tracks[i].master_volume, current_section.sample_tracks[i].weights)
-
-	for i in range(SectionData.SYNTH_TRACKS_PER_SECTION):
-		synth_mixing_update_volumes(i, current_section.synth_tracks[i].master_volume, current_section.synth_tracks[i].weights)
-
+	for track_index in range(SectionData.TRACKS_PER_SECTION):
+		var old_track = old_section_data.tracks[track_index]
+		GameState.current_section.tracks[track_index].master_volume = old_track.master_volume
+		GameState.current_section.tracks[track_index].weights = old_track.weights
 		
 func samples_mixing_change_ring(new_ring: int):
 	# Save knob position
-	store_active_knob(chaos_pad_mode)
+	store_active_knob(chaos_pad_mode, GameState.current_section)
 	
 	# Switch ring
-	samples_mixing_active_ring = new_ring
+	active_track = new_ring
 	
 	# Retrieve knob position
 	var pos = retrieve_active_knob(chaos_pad_mode)
@@ -130,7 +120,7 @@ func samples_mixing_change_ring(new_ring: int):
 	knob.global_position = pos
 
 	# Set chaos pad color
-	samples_mixing_start_triangle_color_change(0.2)
+	track_mixing_start_triangle_color_change(0.2)
 	
 	# Update icons
 	if main_icon and new_ring < main_icons.size():
@@ -141,33 +131,30 @@ func samples_mixing_change_ring(new_ring: int):
 	# Set chaos pad mode
 	chaos_pad_mode = ChaosPadMode.SAMPLE_MIXING
 
-func samples_mixing_start_triangle_color_change(duration: float):
-	if not chaos_pad_triangle_sprite or samples_mixing_active_ring >= colors.size():
-		return
-	
-	var tween = create_tween()
-	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", colors[samples_mixing_active_ring], duration)
-
-func samples_mixing_update_volumes(ring: int, master_volume: float, given_weights: Vector3):
-	print("Updating volumes for ring %s with master volume %s and weights %s" % [ring, master_volume, given_weights])
+func track_mixing_update_volumes(track_index: int, master_volume: float, given_weights: Vector3):
+	"""Generalized volume update for any track type, currently unused but could be helpful if we add more track types"""
+	print("Updating volumes for track %s with master volume %s and weights %s" % [track_index, master_volume, given_weights])
 
 	var weights_to_use = given_weights if given_weights != Vector3.ZERO else weights
 
-	# Calculate individual volumes for main, alt, and rec based on weights and master volume
 	var new_volume = weights_to_use * master_volume
 
-	
-	EventBus.set_ring_volume_requested.emit(ring, new_volume)
+	# For synths, also update the bus volume
+	if track_index >= SectionData.SAMPLE_TRACKS_PER_SECTION:
+		var synth_index = track_index - SectionData.SAMPLE_TRACKS_PER_SECTION
+		EventBus.set_voice_volume_requested.emit(synth_index, new_volume)
+		var synth_bus = "Green" if synth_index == 0 else "Purple"
+		AudioServer.set_bus_volume_db(AudioServer.get_bus_index(synth_bus), linear_to_db(weights_to_use.z * master_volume))
 
 # SYNTH MIXING =============================================================
 func synth_mixing_apply_stored_volumes():
 	"""Re-apply remembered mixing volumes for both synths"""
-	if current_section == null:
+	if GameState.current_section == null:
 		return
 	
 	for i in range(SectionData.SYNTH_TRACKS_PER_SECTION):
-		var weights_to_use = current_section.synth_tracks[i].weights if current_section.synth_tracks[i].weights != Vector3.ZERO else weights
-		var master_volume = current_section.synth_tracks[i].master_volume
+		var weights_to_use = GameState.current_section.synth_tracks[i].weights if GameState.current_section.synth_tracks[i].weights != Vector3.ZERO else weights
+		var master_volume = GameState.current_section.synth_tracks[i].master_volume
 		synth_mixing_update_volumes(i, master_volume, weights_to_use)
 
 func synth_mixing_update_volumes(synth: int, master_volume: float, given_weights: Vector3):
@@ -181,16 +168,16 @@ func synth_mixing_update_volumes(synth: int, master_volume: float, given_weights
 
 func synth_mixing_change_synth(synth: int):
 	# Save knob position
-	store_active_knob(chaos_pad_mode)
+	store_active_knob(chaos_pad_mode, GameState.current_section)
 	
 	# Switch synth
-	synth_mixing_active_synth = synth
+	active_track = synth
 	
 	# Retrieve knob position
 	retrieve_active_knob(ChaosPadMode.SYNTH_MIXING)
 	
 	# Set chaos pad color
-	synth_mixing_start_triangle_color_change(0.2)
+	track_mixing_start_triangle_color_change(0.2)
 	
 	# Update icons
 	if main_icon and synth < main_icon_synths.size():
@@ -201,11 +188,8 @@ func synth_mixing_change_synth(synth: int):
 	# Set chaos pad mode
 	chaos_pad_mode = ChaosPadMode.SYNTH_MIXING
 
-func synth_mixing_start_triangle_color_change(duration: float):
-	if not chaos_pad_triangle_sprite or synth_mixing_active_synth + 4 >= colors.size():
-		return
-	
-	var color_index = 4 + synth_mixing_active_synth
+func track_mixing_start_triangle_color_change(duration: float):
+	var color_index = active_track
 	var tween = create_tween()
 	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", colors[color_index], duration)
 
@@ -220,13 +204,13 @@ func song_mixing_retrieve_active_knob():
 
 func song_mixing_change_to_song_mixer():
 	# Save knob position
-	store_active_knob(chaos_pad_mode)
+	store_active_knob(chaos_pad_mode, GameState.current_section)
 
 	# Retrieve knob position
 	retrieve_active_knob(ChaosPadMode.SONG_MIXING)
 	
 	# Set chaos pad color
-	song_mixing_start_triangle_color_change(0.2)
+	track_mixing_start_triangle_color_change(0.2)
 	
 	# Update icons
 	if main_icon and main_icon_song:
@@ -236,13 +220,6 @@ func song_mixing_change_to_song_mixer():
 	
 	# Set chaos pad mode
 	chaos_pad_mode = ChaosPadMode.SONG_MIXING
-
-func song_mixing_start_triangle_color_change(duration: float):
-	if not chaos_pad_triangle_sprite or colors.size() <= 6:
-		return
-	
-	var tween = create_tween()
-	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", colors[6], duration)
 
 func song_mixing_update_volumes_for_song(master_volume: float):
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SongVoice"), linear_to_db((weights.y + weights.x) * master_volume))
@@ -259,9 +236,7 @@ func on_update_mixing(master_volume: float, mixingWeights: Vector3):
 	if not knob:
 		return
 		
-	if chaos_pad_mode == ChaosPadMode.SAMPLE_MIXING:
-		samples_mixing_update_volumes(samples_mixing_active_ring, master_volume, mixingWeights)
-	elif chaos_pad_mode == ChaosPadMode.SYNTH_MIXING:
-		synth_mixing_update_volumes(synth_mixing_active_synth, master_volume, mixingWeights)
-	elif chaos_pad_mode == ChaosPadMode.SONG_MIXING:
+	if chaos_pad_mode != ChaosPadMode.SONG_MIXING:
+		track_mixing_update_volumes(active_track, master_volume, mixingWeights)
+	else:
 		song_mixing_update_volumes_for_song(master_volume)

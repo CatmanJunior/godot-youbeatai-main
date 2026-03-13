@@ -32,7 +32,7 @@ signal clap_triggered()
 signal stomp_triggered()
 
 # ── Sections ──
-signal section_changed(section_data: SectionData)
+signal section_changed(old_section_data : SectionData, section_data: SectionData)
 signal section_added(section_index: int, emoji: String)
 signal section_removed(section_index: int)
 signal section_cleared()
@@ -47,6 +47,7 @@ signal green_synth_set(font: Resource, instrument: int)
 signal purple_synth_set(font: Resource, instrument: int)
 
 # ── Mixing ──
+signal track
 signal ring_selected(ring: int)
 signal synth_selected(synth: int)
 signal mixing_weights_changed(master_volume: float, weights: Vector3)

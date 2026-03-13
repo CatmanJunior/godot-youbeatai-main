@@ -38,7 +38,7 @@ window/stretch/mode="canvas_items"
 
 [dotnet]
 
-project/assembly_name="youbeatai-godot"
+project/assembly_name="youbeatai-godot-web"
 
 [editor_plugins]
 

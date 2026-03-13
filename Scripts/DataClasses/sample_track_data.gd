@@ -8,9 +8,10 @@ extends TrackData
 var beats: Array[bool] = []
 
 
-func _init(beats_amount: int = GameState.BEATS_AMOUNT_DEFAULT, default_knob_pos: Vector2 = Vector2.ZERO) -> void:
+func _init(default_knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(default_knob_pos)
 	beats = []
+	var beats_amount = GameState.BEATS_AMOUNT_DEFAULT
 	for i in range(beats_amount):
 		beats.append(false)
 
@@ -28,7 +29,7 @@ func clear_beats() -> void:
 
 
 func duplicate_track() -> TrackData:
-	var copy := SampleTrackData.new(beats.size(), knob_position)
+	var copy : SampleTrackData = SampleTrackData.new(knob_position)
 	for i in range(beats.size()):
 		copy.beats[i] = beats[i]
 	copy.master_volume = master_volume

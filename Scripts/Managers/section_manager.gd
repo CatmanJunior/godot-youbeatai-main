@@ -63,7 +63,7 @@ func add_section(section: int, emoji: String = ""):
 	_new_section_button(section, emoji)
 	
 	# Create a new SectionData instance
-	var new_section := SectionData.new(beats_amount, Vector2.ZERO, emoji)
+	var new_section : SectionData = SectionData.new(section, emoji)
 	sections.insert(section, new_section)
 	
 	current_section = new_section

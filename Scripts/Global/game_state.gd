@@ -14,6 +14,11 @@ var recording_delay_seconds: float = 0.0
 
 var recording_volume_threshold: float = 0.1
 
+var track_button_add_beats : bool = false
+
+var button_is_clap: bool = false
+
+var clap_bias: float = 0.0
 # ── Sections ─────────────────────────────────────────────────────────────────
 
 var sections: Array[SectionData] = []
@@ -33,6 +38,7 @@ var swing: float = 0.05
 
 var selected_sample_track: int = 0
 var selected_synth_track: int = 0
+var selected_track: int = 0
 
 # ── Recording ────────────────────────────────────────────────────────────────
 

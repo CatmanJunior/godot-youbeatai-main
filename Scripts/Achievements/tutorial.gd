@@ -110,7 +110,7 @@ func _cond_clapped_enough() -> bool:
 	return beatManager.clapped_on_beat_amount >= _FIXED_AMOUNT
 
 func _cond_green_bear() -> bool:
-	_return_player(uiManager.activate_green_chaos_button).play("Bear_pulse")
+	_return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).play("Bear_pulse")
 	return mixingManager.chaos_pad_mode == mixingManager.ChaosPadMode.SYNTH_MIXING
 
 func _cond_green_record_or_tts() -> bool:
@@ -143,11 +143,11 @@ func _outcome_noop() -> void:
 	pass
 
 func _outcome_intro() -> void:
-	uiManager.pointer.visible = true
+	uiManager.transport_ui.pointer.visible = true
 	visabilityManager.set_ring_visibility(_INDEX_RED_RING, true)
 	uiManager.cross.visible = true
 	uiManager.klappy_continue.visible = false
-	uiManager.settings_button.visible = true
+	uiManager.audio_export_ui.settings_button.visible = true
 	uiManager.continue_button.emit_signal("animation_play")
 	play_achievement_sfx()
 
@@ -155,7 +155,7 @@ func _outcome_kick_place() -> void:
 	beatManager.set_beat_free(_INDEX_RED_RING, _RING_TOP, true)
 	beatManager.set_beat_free(_INDEX_RED_RING, _RING_RIGHT, true)
 	beatManager.set_beat_free(_INDEX_RED_RING, _RING_BOTTOM, true)
-	uiManager.play_pause_button.visible = true
+	uiManager.transport_ui.play_pause_button.visible = true
 	#TODO: HUH WHAT
 	# uiManager.set_stomp_visibility(true)
 
@@ -237,7 +237,7 @@ func _outcome_green_bear() -> void:
 	uiManager.knob.global_position = _top.global_position
 	_allowed = true
 	play_achievement_sfx()
-	_return_player(uiManager.activate_green_chaos_button).stop()
+	_return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).stop()
 
 func _outcome_green_record_pressed() -> void:
 	play_achievement_sfx()
@@ -340,10 +340,10 @@ func check_if_tutorial_was_chosen() -> void:
 func try_activate_tutorial() -> void:
 	if use_tutorial:
 		print("tutorial activated")
-		uiManager.pointer.visible = false
+		uiManager.transport_ui.pointer.visible = false
 		bpmManager.instance.bpm = 60
 		visabilityManager.set_entire_interface_visibility(false)
-		uiManager.settings_button.visible = true
+		uiManager.audio_export_ui.settings_button.visible = true
 		uiManager.achievements_panel.visible = true
 		uiManager.continue_button.pressed.connect(_tutorial_continue)
 		uiManager.piano_area.area_entered.connect(_body_continue)
@@ -469,7 +469,7 @@ func _correct_clap_play_sfx() -> void:
 func _speak_tutorial_instruction(instruction_index: int) -> void:
 	if not _text_allowed:
 		return
-	if uiManager.mute_speach.button_pressed:
+	if uiManager.audio_export_ui.mute_speach.button_pressed:
 		return
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return

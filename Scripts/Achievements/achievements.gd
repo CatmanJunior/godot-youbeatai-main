@@ -258,7 +258,7 @@ func _start_loop_to_check_if_tooltip_can_close():
 # ── TTS ──────────────────────────────────────────────────────────────────────
 
 func _speak_tooltip(index: int):
-	if ui_manager.mute_speach and ui_manager.mute_speach.button_pressed:
+	if ui_manager.audio_export_ui and ui_manager.audio_export_ui.mute_speach and ui_manager.audio_export_ui.mute_speach.button_pressed:
 		return
 	var achievements := _get_achievements()
 	if index < 0 or index >= achievements.size():

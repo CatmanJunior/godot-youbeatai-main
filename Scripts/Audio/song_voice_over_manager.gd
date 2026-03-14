@@ -177,7 +177,7 @@ func stop_recording():
 		langzamer_button.disabled = false
 	if game_manager:
 		game_manager.set_layer_switch_buttons_enabled(true)
-		uiManager.play_pause_button.disabled = false
+		uiManager.transport_ui.play_pause_button.disabled = false
 		record_song_button.disabled = false
 	
 	if layer_voice_over_0:

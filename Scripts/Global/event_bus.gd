@@ -73,6 +73,7 @@ signal buttons_disabled_changed(disabled: bool)
 signal copy_requested()
 signal paste_requested()
 signal section_clear_requested()
+signal track_select_button_pressed(ring: int)
 
 # ── Recording ──
 signal recording_started()

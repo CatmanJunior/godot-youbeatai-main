@@ -25,34 +25,34 @@ func set_entire_interface_visibility(visible: bool):
 	set_ring_visibility(2, visible)
 	set_ring_visibility(3, visible)
 	
-	if ui.play_pause_button:
-		ui.play_pause_button.visible = visible
-	if ui.settings_button:
-		ui.settings_button.visible = visible
+	if ui.transport_ui and ui.transport_ui.play_pause_button:
+		ui.transport_ui.play_pause_button.visible = visible
+	if ui.settings_ui and ui.settings_ui.settings_button:
+		ui.settings_ui.settings_button.visible = visible
 	if ui.layer_loop_toggle:
 		ui.layer_loop_toggle.visible = visible
-	if ui.mute_speach:
-		ui.mute_speach.visible = visible
+	if ui.settings_ui and ui.settings_ui.mute_speach:
+		ui.settings_ui.mute_speach.visible = visible
 	if ui.cross:
 		ui.cross.visible = visible
-	if ui.bpm_label:
-		ui.bpm_label.visible = visible
-	if ui.metronome:
-		ui.metronome.visible = visible
-	if ui.metronome_bg:
-		ui.metronome_bg.visible = visible
+	if ui.transport_ui and ui.transport_ui.bpm_label:
+		ui.transport_ui.bpm_label.visible = visible
+	if ui.transport_ui and ui.transport_ui.metronome:
+		ui.transport_ui.metronome.visible = visible
+	if ui.transport_ui and ui.transport_ui.metronome_bg:
+		ui.transport_ui.metronome_bg.visible = visible
 	if ui.chosen_emoticons_label:
 		ui.chosen_emoticons_label.visible = visible
 	if ui.achievements_panel:
 		ui.achievements_panel.visible = visible
-	if ui.activate_green_chaos_button:
-		ui.activate_green_chaos_button.visible = visible
-	if ui.activate_purple_chaos_button:
-		ui.activate_purple_chaos_button.visible = visible
+	if ui.chaos_pad_ui and ui.chaos_pad_ui.activate_green_chaos_button:
+		ui.chaos_pad_ui.activate_green_chaos_button.visible = visible
+	if ui.chaos_pad_ui and ui.chaos_pad_ui.activate_purple_chaos_button:
+		ui.chaos_pad_ui.activate_purple_chaos_button.visible = visible
 	if ui.layer_buttons_container:
 		ui.layer_buttons_container.visible = visible
-	if ui.progress_bar:
-		ui.progress_bar.visible = visible
+	if ui.transport_ui and ui.transport_ui.progress_bar:
+		ui.transport_ui.progress_bar.visible = visible
 	
 	set_main_buttons_visibility(visible)
 	set_recording_buttons_visibility(visible)
@@ -86,20 +86,20 @@ func set_bpm_controls_visibility(visible: bool):
 	if not ui:
 		return
 
-	if ui.bpm_up_button:
-		ui.bpm_up_button.visible = visible
-	if ui.bpm_down_button:
-		ui.bpm_down_button.visible = visible
-	if ui.bpm_label:
-		ui.bpm_label.visible = visible
-	if ui.swing_slider:
-		ui.swing_slider.visible = visible
-	if ui.swing_label:
-		ui.swing_label.visible = visible
-	if ui.metronome:
-		ui.metronome.visible = visible
-	if ui.metronome_bg:
-		ui.metronome_bg.visible = visible
+	if ui.transport_ui and ui.transport_ui.bpm_up_button:
+		ui.transport_ui.bpm_up_button.visible = visible
+	if ui.transport_ui and ui.transport_ui.bpm_down_button:
+		ui.transport_ui.bpm_down_button.visible = visible
+	if ui.transport_ui and ui.transport_ui.bpm_label:
+		ui.transport_ui.bpm_label.visible = visible
+	if ui.transport_ui and ui.transport_ui.swing_slider:
+		ui.transport_ui.swing_slider.visible = visible
+	if ui.transport_ui and ui.transport_ui.swing_label:
+		ui.transport_ui.swing_label.visible = visible
+	if ui.transport_ui and ui.transport_ui.metronome:
+		ui.transport_ui.metronome.visible = visible
+	if ui.transport_ui and ui.transport_ui.metronome_bg:
+		ui.transport_ui.metronome_bg.visible = visible
 
 func set_recording_buttons_visibility(visible: bool):
 	"""Set visibility of recording-related buttons"""
@@ -132,10 +132,7 @@ func set_green_layer_visibility(visible: bool):
 
 func set_purple_layer_visibility(visible: bool):
 	"""Set visibility of purple layer elements"""
-	if not ui:
-		return
-	if ui.activate_purple_chaos_button:
-		ui.activate_purple_chaos_button.visible = visible
+	ui.chaos_pad_ui.activate_purple_chaos_button.visible = visible
 
 func set_layer_switch_buttons_visibility(visible: bool):
 	"""Set visibility of layer switch buttons"""

@@ -80,8 +80,8 @@ func start_recording_master():
 	if song_voice_over:
 		song_voice_over.should_record = true
 
-	if ui_manager and ui_manager.metronome_toggle:
-		ui_manager.metronome_toggle.button_pressed = false
+	if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
+		ui_manager.transport_ui.metronome_toggle.button_pressed = false
 
 	if ui_manager and ui_manager.has_method("close_count_down"):
 		ui_manager.close_count_down()
@@ -101,9 +101,8 @@ func _on_button():
 		# Disable buttons during recording
 		_disable_buttons(true)
 
-		# Metronoom aan
-		if ui_manager and ui_manager.metronome_toggle:
-			ui_manager.metronome_toggle.button_pressed = true
+		if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
+			ui_manager.transport_ui.metronome_toggle.button_pressed = true
 
 		# 4 beats voor de eerste noot op eerste laag
 		if layer_manager:
@@ -131,9 +130,8 @@ func _on_button():
 		# Enable buttons
 		_disable_buttons(false)
 
-		# Stop tic sounds
-		if ui_manager and ui_manager.metronome_toggle:
-			ui_manager.metronome_toggle.button_pressed = false
+		if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
+			ui_manager.transport_ui.metronome_toggle.button_pressed = false
 
 		# Stop layer looping
 		if ui_manager and ui_manager.layer_loop_toggle:
@@ -156,8 +154,8 @@ func stop_recording_master():
 	finished = true
 
 	# Stop tic sounds
-	if ui_manager and ui_manager.metronome_toggle:
-		ui_manager.metronome_toggle.button_pressed = false
+	if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
+		ui_manager.transport_ui.metronome_toggle.button_pressed = false
 
 	# Re-enable buttons
 	_disable_buttons(false)
@@ -175,8 +173,8 @@ func _disable_buttons(disabled: bool):
 		layer_manager.set_layer_switch_buttons_enabled(not disabled)
 
 	if ui_manager:
-		if ui_manager.play_pause_button:
-			ui_manager.play_pause_button.disabled = disabled
+		if ui_manager.transport_ui and ui_manager.transport_ui.play_pause_button:
+			ui_manager.transport_ui.play_pause_button.disabled = disabled
 		if ui_manager.layer_loop_toggle:
 			ui_manager.layer_loop_toggle.disabled = disabled
 

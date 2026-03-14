@@ -34,7 +34,7 @@ func _ready() -> void:
 	section_button_prefab = %UiManager.layer_button_prefab
 	section_buttons_container = %UiManager.layer_buttons_container
 	section_outline_holder = %UiManager.layer_outline_holder
-	song_mode_back_panel = %UiManager.real_time_audio_recording_progress_bar
+	song_mode_back_panel = %UiManager.transport_ui.real_time_audio_recording_progress_bar
 	
 	# Connect to EventBus
 	EventBus.copy_requested.connect(_copy_section)

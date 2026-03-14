@@ -38,7 +38,7 @@ func _ready():
 	EventBus.stomp_triggered.connect(on_stomp)
 	EventBus.section_changed.connect(_on_section_changed)
 
-func _on_section_changed(section: SectionData):
+func _on_section_changed(_old: SectionData, section: SectionData):
 	"""Handle section change via EventBus"""
 	current_section = section
 

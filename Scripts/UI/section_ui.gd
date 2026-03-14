@@ -136,6 +136,6 @@ func _clear_section():
 func _play_extra_sfx():
 	pass
 
-func _on_switch_section(_section: SectionData):
+func _on_switch_section(_old: SectionData, _section: SectionData):
 	update_section_switch_buttons_colors()
 	set_copy_paste_clear_buttons_active(true)

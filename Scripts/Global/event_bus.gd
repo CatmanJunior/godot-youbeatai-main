@@ -52,7 +52,7 @@ signal ring_selected(ring: int)
 signal synth_selected(synth: int)
 signal mixing_weights_changed(master_volume: float, weights: Vector3)
 signal volume_changed(ring: int, volume_db: float)
-signal set_track_volume_requested(track: int, master_volume: float, weights: Vector3)
+signal set_track_volume_requested(track: int, weights: Vector3)
 
 # ── Chaos Pad ──
 signal chaos_pad_dragging(knob_position: Vector2, master_volume: float, weights: Vector3)

@@ -21,6 +21,22 @@ var tracks: Array[TrackData] = [] # Combined array of sample and synth tracks fo
 ## Emoji shown on the section button
 var emoji: String = ""
 
+## Computed view of the sample tracks (first SAMPLE_TRACKS_PER_SECTION entries)
+var sample_tracks: Array[SampleTrackData]:
+	get:
+		var result: Array[SampleTrackData] = []
+		for i in range(SAMPLE_TRACKS_PER_SECTION):
+			result.append(tracks[i] as SampleTrackData)
+		return result
+
+## Computed view of the synth tracks (last SYNTH_TRACKS_PER_SECTION entries)
+var synth_tracks: Array[SynthTrackData]:
+	get:
+		var result: Array[SynthTrackData] = []
+		for i in range(SYNTH_TRACKS_PER_SECTION):
+			result.append(tracks[SAMPLE_TRACKS_PER_SECTION + i] as SynthTrackData)
+		return result
+
 
 ## ── Initialization ───────────────────────────────────────────────────────────
 func _init(new_index: int = 0, section_emoji: String = "") -> void:
@@ -88,6 +104,16 @@ func get_track_knob_position(track_index: int) -> Vector2:
 		return tracks[track_index].knob_position
 	return Vector2.ZERO
 
+func get_sample_knob_positions() -> Array[Vector2]:
+	var positions: Array[Vector2] = []
+	for i in range(SAMPLE_TRACKS_PER_SECTION):
+		positions.append(tracks[i].knob_position)
+	return positions
+
+func set_sample_knob_positions(positions: Array[Vector2]) -> void:
+	for i in range(min(positions.size(), SAMPLE_TRACKS_PER_SECTION)):
+		tracks[i].knob_position = positions[i]
+
 func set_knob_positions(positions: Array[Vector2]) -> void:
 	for i in range(positions.size()):
 		set_track_knob_position(i, positions[i])
@@ -100,7 +126,10 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 # ── Duplicate ────────────────────────────────────────────────────────────────
 
 func duplicate_section() -> SectionData:
-	var copy := SectionData.new()
+	# Duplicated sections inherit the emoji but get a fresh id; index is
+	# set by the caller (section manager) if the copy is ever inserted.
+	var copy := SectionData.new(0, emoji)
+	copy.tracks.clear()  # remove the tracks already created by _init
 
 	for i in range(tracks.size()):
 		var track = tracks[i]

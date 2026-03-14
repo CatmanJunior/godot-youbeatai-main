@@ -94,7 +94,7 @@ func set_entire_interface_visibility(visible: bool):
 		node.visible = visible
 
 # Signal handlers
-func _on_switch_section(_section: SectionData):
+func _on_switch_section(_old: SectionData, _section: SectionData):
 	if section_ui:
 		section_ui.update_section_switch_buttons_colors()
 		section_ui.set_copy_paste_clear_buttons_active(true)

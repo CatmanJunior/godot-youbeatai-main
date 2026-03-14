@@ -34,6 +34,24 @@ var current_beat: int = 0
 var beats_amount: int = 16
 var swing: float = 0.05
 
+## Aliases used by UI scripts that prefer the "current_*" naming convention.
+var current_bpm: int:
+	get: return bpm
+var current_beats_amount: int:
+	get: return beats_amount
+var current_base_time_per_beat: float:
+	get: return base_time_per_beat
+
+## Per-beat timing from BpmManager — read-through so UI scripts can use GameState directly.
+var time_per_beat: float:
+	get:
+		var bpm_mgr = _get_bpm_manager()
+		return bpm_mgr.time_per_beat if bpm_mgr else base_time_per_beat
+var beat_timer: float:
+	get:
+		var bpm_mgr = _get_bpm_manager()
+		return bpm_mgr.beat_timer if bpm_mgr else 0.0
+
 # ── Mixing ───────────────────────────────────────────────────────────────────
 
 var selected_sample_track: int = 0
@@ -66,7 +84,7 @@ func _on_recording_volume_threshold_changed(threshold: float) -> void:
 
 # ── Section helpers ──────────────────────────────────────────────────────────
 
-func _on_section_changed(section: SectionData) -> void:
+func _on_section_changed(_old: SectionData, section: SectionData) -> void:
 	current_section = section
 
 func _on_section_added(section_index: int, _emoji: String) -> void:
@@ -88,6 +106,12 @@ func _get_section_manager():
 	if tree == null or tree.current_scene == null:
 		return null
 	return tree.current_scene.get_node_or_null("%LayerManager")
+
+func _get_bpm_manager():
+	var tree = get_tree()
+	if tree == null or tree.current_scene == null:
+		return null
+	return tree.current_scene.get_node_or_null("%BpmManager")
 
 
 # ── Convenience accessors ────────────────────────────────────────────────────

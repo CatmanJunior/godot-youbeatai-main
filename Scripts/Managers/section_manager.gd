@@ -145,7 +145,7 @@ func _paste_section():
 	for i in range(SectionData.SYNTH_TRACKS_PER_SECTION):
 		current_section.synth_tracks[i] = clipboard_section.synth_tracks[i].duplicate_track() as SynthTrackData
 	
-	EventBus.section_changed.emit(current_section)
+	EventBus.section_changed.emit(null, current_section)
 	update_section_buttons_user_interface()
 
 func clear_section():
@@ -242,17 +242,24 @@ func section_has_beats(section: int) -> bool:
 
 # ── Audio recording manipulation when sections change ────────────────────
 
-func _insert_silence_for_section(section: int) -> void:
+## Shared helper for _insert_silence_for_section and _remove_audio_for_section.
+## `callback` must match the signature:
+##   callback(rec: AudioStreamWAV, voice_over: AudioStreamWAV,
+##            section: int, beats_amount: int, base_time_per_beat: float) -> Dictionary
+## and must return a Dictionary with keys:
+##   "recording"  : AudioStreamWAV (or null if unchanged)
+##   "voice_over" : AudioStreamWAV (or null if unchanged)
+func _mutate_recording_audio(section: int, callback: Callable) -> void:
 	var song_vo = get_node_or_null("%SongVoiceOver")
 	if song_vo == null or song_vo.voice_over == null:
-		return # No active recording, nothing to do
+		return
 
 	var rec_node = get_node_or_null("%RealTimeAudioRecording")
 	var bpm_node = get_node_or_null("%BpmManager")
 	if rec_node == null or bpm_node == null:
 		return
 
-	var result := AudioSavingManager.insert_silent_layer_part_of_recordings(
+	var result: Dictionary = callback.call(
 		rec_node.recording_result, song_vo.voice_over,
 		section, bpm_node.beats_amount, bpm_node.base_time_per_beat)
 
@@ -267,30 +274,11 @@ func _insert_silence_for_section(section: int) -> void:
 			if was_playing:
 				song_vo.audio_player.play()
 		song_vo.recording_length = float(result.voice_over.get_length())
+
+
+func _insert_silence_for_section(section: int) -> void:
+	_mutate_recording_audio(section, AudioSavingManager.insert_silent_layer_part_of_recordings)
 
 
 func _remove_audio_for_section(section: int) -> void:
-	var song_vo = get_node_or_null("%SongVoiceOver")
-	if song_vo == null or song_vo.voice_over == null:
-		return
-
-	var rec_node = get_node_or_null("%RealTimeAudioRecording")
-	var bpm_node = get_node_or_null("%BpmManager")
-	if rec_node == null or bpm_node == null:
-		return
-
-	var result := AudioSavingManager.remove_layer_part_of_recordings(
-		rec_node.recording_result, song_vo.voice_over,
-		section, bpm_node.beats_amount, bpm_node.base_time_per_beat)
-
-	if result.recording:
-		rec_node.recording_result = result.recording
-		rec_node.recording_length = float(result.recording.get_length())
-	if result.voice_over:
-		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
-		song_vo.voice_over = result.voice_over
-		if song_vo.audio_player:
-			song_vo.audio_player.stream = song_vo.voice_over
-			if was_playing:
-				song_vo.audio_player.play()
-		song_vo.recording_length = float(result.voice_over.get_length())
+	_mutate_recording_audio(section, AudioSavingManager.remove_layer_part_of_recordings)

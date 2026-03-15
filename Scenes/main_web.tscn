@@ -6,11 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="4_snosd"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="5_8pi72"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="7_0dny5"]
+[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="7_2qaqg"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_3t5nw"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="10_pyso5"]
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_uqoqp"]
 [ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="11_hxd57"]
 [ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="15_8eq3q"]
+[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="15_8pi72"]
 [ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="16_8djmd"]
 [ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="17_jjn8x"]
 [ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="18_458pc"]
@@ -21,8 +23,10 @@
 [ext_resource type="Texture2D" uid="uid://6t1cscwpeyrn" path="res://Resources/Textures_New/Icons/_0001s_0009_Robot-test.png" id="24_3dyd7"]
 [ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="24_h0xuh"]
 [ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="25_scmae"]
+[ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="26_0dny5"]
 [ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/Audio/audio_player_manager.gd" id="26_pxq5n"]
 [ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="26_scmae"]
+[ext_resource type="Texture2D" uid="uid://h0nis3rbt2fe" path="res://Resources/Textures_New_Extra/MenuShapes128_0005_8_Purple.png" id="27_3t5nw"]
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="27_irepe"]
 [ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="28_mf0w8"]
 [ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="29_580qm"]
@@ -49,20 +53,20 @@
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="49_dll78"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_662co"]
 [ext_resource type="Script" uid="uid://cc7u261da7fff" path="res://Scripts/UI/section_ui.gd" id="56_0dny5"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="57_7pcuk"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="57_hxd57"]
-[ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="58_stq2o"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="59_4cism"]
+[ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="58_snosd"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="59_j7ciw"]
 [ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Scripts/UI/visibility_manager.gd" id="60_3jbv4"]
-[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="60_uwd3s"]
+[ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="61_8pi72"]
 [ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/UI/colors.gd" id="61_p5fwe"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="62_pyso5"]
+[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="63_2qaqg"]
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="64_hxd57"]
+[ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="65_0dny5"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
-[ext_resource type="Script" uid="uid://bu10sqehx57mi" path="res://Scripts/Audio/real_time_audio_recording.gd" id="67_hxd57"]
-[ext_resource type="Script" uid="uid://lhbt5nq2huw5" path="res://Scripts/Audio/song_voice_over_manager.gd" id="69_hxd57"]
+[ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="67_3t5nw"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="70_3tlvj"]
+[ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="70_cwyb6"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_vb5o2"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_rnt4q"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="73_autlv"]
@@ -77,170 +81,11 @@
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="83_g0gna"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="84_05f8y"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="85_hxd57"]
-[ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scripts/Achievements/unlock_achievements.gd" id="85_op1ei"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
-[ext_resource type="Script" uid="uid://d27k7c76lbtd5" path="res://Scripts/UI/volume_treshold_slider.gd" id="91_8eq3q"]
+[ext_resource type="Script" uid="uid://counqvtgqsxxw" path="res://Scripts/UI/saving_label.gd" id="91_2qaqg"]
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="92_brui1"]
 [ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/UI/chaos_pad_ui.gd" id="93_cpui1"]
 [ext_resource type="Script" uid="uid://d0v3v6vsn5vuu" path="res://Scripts/UI/transport_ui.gd" id="94_trui1"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
-font_size = 80
-
-[sub_resource type="GDScript" id="GDScript_3t5nw"]
-script/source = "extends Node
-
-@export var bpm: int = 120:
-	set(value):
-		bpm = value
-		EventBus.bpm_changed.emit(bpm)
-
-static var beats_amount: int = 16
-
-@export var amount_of_beats: int:
-	get:
-		return beats_amount
-
-var _playing: bool = false
-
-@export var playing: bool:
-	set(value):
-		if _playing != value:
-			EventBus.playing_changed.emit(value)
-		_playing = value
-	get:
-		return _playing
-
-@export var current_beat: int = beats_amount - 1
-var beat_timer: float = 0.0
-
-@export var swing: float = 0.05
-
-var base_time_per_beat: float
-var time_per_beat: float
-
-func _ready():
-	EventBus.bpm_up_requested.connect(func(value): bpm += value)
-	EventBus.bpm_down_requested.connect(func(value): bpm -= value)
-	EventBus.bpm_set_requested.connect(func(value): bpm = value)
-	EventBus.play_pause_toggled.connect(func(): playing = !playing)
-	EventBus.playing_change_requested.connect(_on_playing_change_requested)
-	EventBus.bpm_changed.emit(bpm)
-
-
-func _on_playing_change_requested(isplaying: bool):
-	playing = isplaying
-	
-
-func _process(delta: float):
-	if playing:
-		beat_timer += delta
-		var beats_per_bar = 4.0
-		base_time_per_beat = 60.0 / bpm / beats_per_bar
-		time_per_beat = base_time_per_beat + (base_time_per_beat * swing) if (current_beat % 2 == 1) else base_time_per_beat - (base_time_per_beat * swing)
-		
-		if beat_timer > time_per_beat:
-			beat_timer -= time_per_beat
-			current_beat = (current_beat + 1) % beats_amount
-			EventBus.beat_triggered.emit(current_beat)
-"
-
-[sub_resource type="CSharpScript" id="CSharpScript_3t1px"]
-script/source = "using Godot;
-using System;
-using System.Collections.Generic;
-
-partial class MidiManager : Node
-{
-    public override void _Ready()
-    {
-        try
-        {
-            OS.OpenMidiInputs();
-            GD.Print(OS.GetConnectedMidiInputs());
-        }
-        catch (Exception)
-        {
-
-        }
-    }
-
-    public override void _Process(double delta)
-    {
-    }
-
-    public override void _Input(InputEvent inputEvent)
-    {
-        if (inputEvent is InputEventMidi midiEvent)
-        {
-            /*
-			GD.Print($\"Channel {midiEvent.Channel}\");
-			GD.Print($\"Message {midiEvent.Message}\");
-			GD.Print($\"Pitch {midiEvent.Pitch}\");
-			GD.Print($\"Velocity {midiEvent.Velocity}\");
-			GD.Print($\"Instrument {midiEvent.Instrument}\");
-			GD.Print($\"Pressure {midiEvent.Pressure}\");
-			GD.Print($\"Controller number: {midiEvent.ControllerNumber}\");
-			GD.Print($\"Controller value: {midiEvent.ControllerValue}\");
-			*/
-
-            // bpm
-            if (midiEvent.Message == MidiMessage.ControlChange && midiEvent.ControllerNumber == 92)
-            {
-                GD.Print($\"BPM Change Detected: {midiEvent.ControllerValue}\");
-                BpmManager.instance.bpm = midiEvent.ControllerValue;
-            }
-
-            // notes
-            if (midiEvent.Message == MidiMessage.NoteOn && midiEvent.Velocity > 0)
-            {
-                int pitch = midiEvent.Pitch;
-                string noteName = GetNoteName(pitch);
-                GD.Print($\"Note Played: {noteName}\");
-            }
-
-            // pitch
-            if (midiEvent.Message == MidiMessage.PitchBend)
-            {
-                var scaled = Mathf.Clamp(Mathf.InverseLerp(0, 16000, midiEvent.Pitch), 0, 1);
-                GD.Print($\"Pitchblend: {scaled}\");
-            }
-        }
-    }
-
-    private string GetNoteName(int pitch)
-    {
-        var NoteNames = new Dictionary<int, string>
-        {
-            { 0, \"C\" },
-            { 1, \"C#\" },
-            { 2, \"D\" },
-            { 3, \"D#\" },
-            { 4, \"E\" },
-            { 5, \"F\" },
-            { 6, \"F#\" },
-            { 7, \"G\" },
-            { 8, \"G#\" },
-            { 9, \"A\" },
-            { 10, \"A#\" },
-            { 11, \"B\" }
-        };
-
-        int octave = (pitch / 12) - 1;
-        int noteIndex = pitch % 12;
-        string note = NoteNames.ContainsKey(noteIndex) ? NoteNames[noteIndex] : \"Unknown\";
-        return $\"{note}{octave}\";
-    }
-}
-"
-
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
-buffer_length = 0.1
-
-[sub_resource type="Resource" id="Resource_55jeb"]
-script = ExtResource("60_uwd3s")
-id = 48
-metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -334,53 +179,6 @@ _data = {
 &"record_pulse": SubResource("Animation_v2nl5")
 }
 
-[sub_resource type="CSharpScript" id="CSharpScript_p5fwe"]
-script/source = "using Godot;
-
-public partial class RecordButton : Sprite2D
-{
-    [Export] int id;
-
-    bool inside => IsPixelOpaque(GetLocalMousePosition());
-
-    Color original_c;
-    Color hover_c;
-    Color pressed_c;
-
-    public bool pressed = false;
-
-    public override void _Ready()
-    {
-        original_c = SelfModulate;
-        hover_c = original_c.Lightened(0.2f);
-        pressed_c = new Color(1, 0, 0, 1);
-    }
-
-    public override void _Input(InputEvent inputEvent)
-    {
-        if (inputEvent is InputEventMouseButton mouseEvent && mouseEvent.ButtonIndex == MouseButton.Left)
-        {
-            // on release
-            if (mouseEvent.IsReleased())
-            {
-                if (inside) OnPressed();
-            }
-        }
-    }
-
-    public override void _Process(double delta)
-    {
-        if (pressed) SelfModulate = pressed_c;
-        else if (inside) SelfModulate = hover_c;
-        else SelfModulate = original_c;
-    }
-
-    public void OnPressed()
-    {
-        // on click
-    }
-}"
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
@@ -409,6 +207,9 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
+font_size = 80
+
 [node name="scene" type="Node2D" unique_id=365765650]
 
 [node name="roland_layout" type="Sprite2D" parent="." unique_id=1453596469]
@@ -425,144 +226,6 @@ scale = Vector2(4.12, 1)
 current = true
 
 [node name="Managers" type="Node" parent="." unique_id=816526421]
-
-[node name="ProgressBar" type="ProgressBar" parent="Managers" unique_id=463124605]
-z_index = 6
-offset_left = 250.0
-offset_top = 311.0
-offset_right = 544.16504
-offset_bottom = 333.695
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_styles/background = ExtResource("7_0dny5")
-theme_override_styles/fill = ExtResource("8_3t5nw")
-rounded = true
-
-[node name="EnergyIcon" type="Label" parent="Managers/ProgressBar" unique_id=568368759]
-z_index = 4
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 4.0429454
-anchor_top = -36.296215
-anchor_right = 4.0429454
-anchor_bottom = -36.296215
-offset_left = -17.0
-offset_top = 615.0
-offset_right = 156.0
-offset_bottom = 787.0
-scale = Vector2(0.525, 0.525)
-theme = ExtResource("2_3e1b8")
-text = "⚡"
-label_settings = SubResource("LabelSettings_2x3a5")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Managers/ProgressBar" unique_id=1131922622]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 550.0
-offset_right = 67.95
-offset_bottom = 625.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="Managers/ProgressBar" unique_id=2126819936]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 464.0
-offset_right = 67.95
-offset_bottom = 539.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="Managers/ProgressBar" unique_id=1595023550]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 377.0
-offset_right = 67.95
-offset_bottom = 452.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label4" type="Label" parent="Managers/ProgressBar" unique_id=1424179947]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 250.0
-offset_right = 67.95
-offset_bottom = 325.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label5" type="Label" parent="Managers/ProgressBar" unique_id=1589698847]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 163.0
-offset_right = 67.95
-offset_bottom = 238.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label6" type="Label" parent="Managers/ProgressBar" unique_id=299383313]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 76.0
-offset_right = 67.95
-offset_bottom = 151.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ProgressBarAchievementNode" type="Node2D" parent="Managers/ProgressBar" unique_id=746619845]
-position = Vector2(1239.05, -302)
 
 [node name="GameManager" type="Node" parent="Managers" unique_id=261888489]
 unique_name_in_owner = true
@@ -588,32 +251,30 @@ set_template_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/Tem
 
 [node name="BpmManager" type="Node" parent="Managers/GameManager" unique_id=422395042]
 unique_name_in_owner = true
-script = SubResource("GDScript_3t5nw")
+script = ExtResource("7_2qaqg")
 
 [node name="KeyboardInput" type="Node" parent="Managers" unique_id=2017263538]
 unique_name_in_owner = true
 script = ExtResource("25_scmae")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("section_ui", "song_select_button", "cross", "chosen_emoticons_label", "achievements_panel", "instruction_label", "continue_button", "klappy_continue", "knob_area", "amount_left", "draganddropthing", "beat_ring_ui", "chaos_pad_ui", "transport_ui")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1059906841 node_paths=PackedStringArray("section_ui", "song_select_button", "cross", "chosen_emoticons_label", "instruction_panel", "beat_ring_ui", "chaos_pad_ui", "transport_ui", "settings_ui")]
 unique_name_in_owner = true
 script = ExtResource("26_scmae")
 section_ui = NodePath("SectionUi")
 song_select_button = NodePath("../../UserInterface/TrackButtons/SongSelectButton/SongSelectButton")
 cross = NodePath("../../BeatRingPivotPoint/Cross")
 chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
-achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
-instruction_label = NodePath("../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
-continue_button = NodePath("../../UserInterface/Robot/AchievementsPanel/Continue")
-klappy_continue = NodePath("../../UserInterface/Robot/AchievementsPanel/Button")
-knob_area = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite/Area2D")
-amount_left = NodePath("../../UserInterface/Robot/AchievementsPanel/AmountLef")
-draganddropthing = NodePath("")
+instruction_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 beat_ring_ui = NodePath("BeatRingUi")
 chaos_pad_ui = NodePath("ChaosPadUi")
 transport_ui = NodePath("TransportUi")
+settings_ui = NodePath("SettingsUi")
 
-[node name="ParticleManager" type="Node" parent="Managers/UiManager" unique_id=1448765172]
+[node name="ParticleManager" type="Node" parent="Managers/UiManager" unique_id=1448765172 node_paths=PackedStringArray("beat_particles", "pbar_particles", "achievement_particles")]
 script = ExtResource("59_j7ciw")
+beat_particles = NodePath("../../../UserInterface/ParticleSystems/BeatParticleSystem")
+pbar_particles = NodePath("../../../UserInterface/ParticleSystems/ProgressBarParticleSystem")
+achievement_particles = NodePath("../../../UserInterface/ParticleSystems/AchievementsParticleSystem")
 
 [node name="VisabilityManager" type="Node" parent="Managers/UiManager" unique_id=1739542982]
 script = ExtResource("60_3jbv4")
@@ -624,8 +285,9 @@ script = ExtResource("61_p5fwe")
 colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.516666, 0, 1, 1), Color(0.61960787, 0.6117647, 0.8980392, 1)])
 metadata/_edit_pinned_properties_ = [&"colors"]
 
-[node name="SectionUi" type="Node" parent="Managers/UiManager" unique_id=1840430508 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "load_section_button", "section_outline", "section_outline_holder", "copy_paste_clear_buttons_holder")]
+[node name="SectionUi" type="Node" parent="Managers/UiManager" unique_id=1840430508 node_paths=PackedStringArray("section_manager", "section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "load_section_button", "section_outline", "section_outline_holder", "copy_paste_clear_buttons_holder")]
 script = ExtResource("56_0dny5")
+section_manager = NodePath("../../GameManager/SectionManager")
 section_button_prefab = ExtResource("57_hxd57")
 section_buttons_container = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/SwitchLayerButtonsContainer")
 add_section_button = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton")
@@ -636,22 +298,63 @@ section_outline = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/Outli
 section_outline_holder = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder")
 copy_paste_clear_buttons_holder = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons")
 
-[node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=2130000001]
+[node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=2130000001 node_paths=PackedStringArray("bear_ring_pivot_point")]
 script = ExtResource("92_brui1")
+sprite_prefab = ExtResource("15_8pi72")
+bear_ring_pivot_point = NodePath("../../../BeatRingPivotPoint")
+filled_beat_textures = Array[Texture2D]([ExtResource("58_snosd"), ExtResource("61_8pi72"), ExtResource("63_2qaqg"), ExtResource("65_0dny5")])
+outline_beat_textures = Array[Texture2D]([ExtResource("40_e8hom"), ExtResource("41_jrm6x"), ExtResource("42_e22mk"), ExtResource("43_b7kng")])
+dot_beat_texture = ExtResource("44_7j40o")
+filled_song_texture = ExtResource("26_0dny5")
+outline_song_texture = ExtResource("27_3t5nw")
 
-[node name="ChaosPadUi" type="Node" parent="Managers/UiManager" unique_id=2130000002]
+[node name="ChaosPadUi" type="Node" parent="Managers/UiManager" unique_id=2130000002 node_paths=PackedStringArray("corners", "chaos_pad_triangle_sprite", "knob_area", "knob", "main_icon", "alt_icon")]
+unique_name_in_owner = true
 script = ExtResource("93_cpui1")
+corners = [NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight")]
+chaos_pad_triangle_sprite = NodePath("../../../UserInterface/ChaosPad/Triangle")
+knob_area = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite/Area2D")
+knob = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite")
+main_icons = Array[Texture2D]([ExtResource("22_irepe"), ExtResource("23_mf0w8"), ExtResource("24_h0xuh"), ExtResource("15_8eq3q")])
+alt_icons = Array[Texture2D]([ExtResource("16_8djmd"), ExtResource("17_jjn8x"), ExtResource("18_458pc"), ExtResource("29_580qm")])
+main_icon_synths = Array[Texture2D]([ExtResource("20_pem2i"), ExtResource("20_pem2i")])
+alt_icon_synths = Array[Texture2D]([ExtResource("31_xwqw4"), ExtResource("32_glyvh")])
+main_icon_song = ExtResource("33_2ikc6")
+alt_icon_song = ExtResource("24_3dyd7")
+main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
+alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 
-[node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=2130000003 node_paths=PackedStringArray("play_pause_button", "pointer")]
+[node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=2130000003 node_paths=PackedStringArray("play_pause_button", "pointer", "metronome", "section_loop_toggle", "real_time_audio_recording_progress_bar", "progress_bar")]
 script = ExtResource("94_trui1")
 play_pause_button = NodePath("../../../BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton")
 pointer = NodePath("../../../BeatRingPivotPoint/Pointer")
+metronome = NodePath("../../../UserInterface/metronome")
+section_loop_toggle = NodePath("../../../UserInterface/SettingsPanel/Buttons/SectionLoopToggle")
+real_time_audio_recording_progress_bar = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
+progress_bar = NodePath("../../../UserInterface/Klappy/Achievement_ProgressBar")
 
-[node name="SettingsUi" type="Node" parent="Managers/UiManager" unique_id=807219340]
+[node name="SettingsUi" type="Node" parent="Managers/UiManager" unique_id=807219340 node_paths=PackedStringArray("settings_panel", "settings_button", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "swing_slider", "swing_label", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
 script = ExtResource("20_e5bdk")
-
-[node name="MidiManager" type="Node" parent="Managers" unique_id=674668927]
-script = SubResource("CSharpScript_3t1px")
+settings_panel = NodePath("../../../UserInterface/SettingsPanel")
+settings_button = NodePath("../../../UserInterface/SettingsButton")
+settings_back_button = NodePath("../../../UserInterface/SettingsPanel/CloseSettingsButton")
+button_is_clap = NodePath("../../../UserInterface/SettingsPanel/Sliders/ButtonIsClap")
+button_add_beats = NodePath("../../../UserInterface/SettingsPanel/Sliders/ButtonAddsBeatsToggle")
+clap_bias_slider = NodePath("../../../UserInterface/SettingsPanel/Sliders/ClapStompBias")
+recording_volume_threshold_slider = NodePath("../../../UserInterface/SettingsPanel/Sliders/VolumeTreshold")
+microphone_volume_progress_bar = NodePath("../../../UserInterface/SettingsPanel/Sliders/VolumeTreshold/Mic_Volume_ProgressBar")
+recording_delay_slider = NodePath("../../../UserInterface/SettingsPanel/Sliders/RecordingDelaySlider")
+recording_delay_label = NodePath("../../../UserInterface/SettingsPanel/Sliders/RecordingDelaySlider/recordingDelayLabel")
+bpm_label = NodePath("../../../UserInterface/SettingsPanel/BpmLabel")
+bpm_up_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/BpmUpButton")
+bpm_down_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/BpmDownButton")
+swing_slider = NodePath("../../../UserInterface/SettingsPanel/Sliders/SwingSlider")
+swing_label = NodePath("../../../UserInterface/SettingsPanel/Sliders/SwingSlider/SwingLabel")
+all_sections_to_mp3 = NodePath("../../../UserInterface/SettingsPanel/Buttons/AllLayersToMp3")
+save_to_wav_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/SaveToWavButton")
+restart_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/RestartButton")
+metronome_toggle = NodePath("../../../UserInterface/SettingsPanel/Sliders/MetronomeToggle")
+mute_speech = NodePath("../../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=369344690]
 
@@ -665,38 +368,11 @@ script = SubResource("CSharpScript_3t1px")
 unique_name_in_owner = true
 script = ExtResource("62_pyso5")
 
-[node name="SongVoiceOver" type="Node" parent="Managers/AudioManagers" unique_id=1295732403]
-unique_name_in_owner = true
-script = ExtResource("69_hxd57")
-
-[node name="Chords" type="SoundFontPlayer" parent="Managers/AudioManagers/SongVoiceOver" unique_id=1577369002]
-soundfont = ExtResource("57_7pcuk")
-stream = SubResource("AudioStreamGenerator_54nrm")
-script = ExtResource("58_stq2o")
-chordString = "I-V-vi-IV"
-notes = ExtResource("59_4cism")
-base_note = SubResource("Resource_55jeb")
-metadata/_custom_type_script = "uid://bysoee7k07v3y"
-
-[node name="RealTimeAudioRecording" type="Node" parent="Managers/AudioManagers" unique_id=1028778843 node_paths=PackedStringArray("progress_bar")]
-script = ExtResource("67_hxd57")
-progress_bar = NodePath("../../../BeatRingPivotPoint/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
-
 [node name="ReverbDelayManager" type="Node" parent="Managers/AudioManagers" unique_id=11349349]
 
-[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=991830872 node_paths=PackedStringArray("knob", "chaos_pad_triangle_sprite", "main_icon", "alt_icon")]
+[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=991830872]
 unique_name_in_owner = true
 script = ExtResource("11_hxd57")
-knob = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite")
-chaos_pad_triangle_sprite = NodePath("../../../UserInterface/ChaosPad/Triangle")
-main_icons = Array[Texture2D]([ExtResource("22_irepe"), ExtResource("23_mf0w8"), ExtResource("24_h0xuh"), ExtResource("15_8eq3q")])
-alt_icons = Array[Texture2D]([ExtResource("16_8djmd"), ExtResource("17_jjn8x"), ExtResource("18_458pc"), ExtResource("29_580qm")])
-main_icon_synths = Array[Texture2D]([ExtResource("20_pem2i"), ExtResource("20_pem2i")])
-alt_icon_synths = Array[Texture2D]([ExtResource("31_xwqw4"), ExtResource("32_glyvh")])
-main_icon_song = ExtResource("33_2ikc6")
-alt_icon_song = ExtResource("24_3dyd7")
-main_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft/ChaosIconMain")
-alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIconAlt")
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/AudioManagers" unique_id=550979596]
 unique_name_in_owner = true
@@ -981,12 +657,12 @@ anchors_preset = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="TrackButtons" type="Node2D" parent="UserInterface" unique_id=629414707]
-position = Vector2(172, -101)
+position = Vector2(-600, -325)
 scale = Vector2(1.27546, 1.27546)
 
 [node name="SongSelectButton" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1624613720]
 z_index = -4
-position = Vector2(-554.91113, -152.53024)
+position = Vector2(34.94452, 31.024323)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("33_2ikc6")
 
@@ -1036,11 +712,13 @@ texture = ExtResource("49_dll78")
 
 [node name="SampleTrackButton_0" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1430746148 node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-554.91113, -77.53021)
+position = Vector2(34.94452, 106.02435)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("22_irepe")
 script = ExtResource("77_3t1px")
 button = NodePath("Button0")
+outline_texture = ExtResource("40_e8hom")
+filled_texture = ExtResource("58_snosd")
 
 [node name="Icon" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_0" unique_id=882232344]
 visible = false
@@ -1090,11 +768,14 @@ texture = ExtResource("50_662co")
 
 [node name="SampleTrackButton_1" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=2057671434 node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-554.91113, -2.5301971)
+position = Vector2(34.94452, 181.02437)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("23_mf0w8")
 script = ExtResource("77_3t1px")
+track_index = 1
 button = NodePath("Button1")
+outline_texture = ExtResource("41_jrm6x")
+filled_texture = ExtResource("61_8pi72")
 
 [node name="Icon2" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_1" unique_id=1892097510]
 visible = false
@@ -1144,11 +825,14 @@ texture = ExtResource("50_662co")
 
 [node name="SampleTrackButton_2" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=819907347 node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-554.91113, 72.46979)
+position = Vector2(34.94452, 256.02435)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("24_h0xuh")
 script = ExtResource("77_3t1px")
+track_index = 2
 button = NodePath("Button2")
+outline_texture = ExtResource("42_e22mk")
+filled_texture = ExtResource("63_2qaqg")
 
 [node name="Icon3" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_2" unique_id=400101627]
 visible = false
@@ -1199,11 +883,14 @@ texture = ExtResource("50_662co")
 
 [node name="SampleTrackButton_3" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1264262575 node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-554.91113, 147.4698)
+position = Vector2(34.94452, 331.02435)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("29_580qm")
 script = ExtResource("77_3t1px")
+track_index = 3
 button = NodePath("Button3")
+outline_texture = ExtResource("43_b7kng")
+filled_texture = ExtResource("65_0dny5")
 
 [node name="Icon4" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_3" unique_id=1692699775]
 visible = false
@@ -1254,12 +941,15 @@ texture = ExtResource("50_662co")
 
 [node name="SynthTrackButton_0" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1873215869 node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-554.91113, 222.46976)
+position = Vector2(34.94452, 406.02432)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("31_xwqw4")
 script = ExtResource("77_3t1px")
-track = 4
+track_index = 4
 button = NodePath("Button")
+is_synth_track = true
+outline_texture = ExtResource("44_7j40o")
+filled_texture = ExtResource("67_3t5nw")
 
 [node name="Icon5" type="Label" parent="UserInterface/TrackButtons/SynthTrackButton_0" unique_id=1802639549]
 visible = false
@@ -1319,12 +1009,15 @@ texture = ExtResource("70_3tlvj")
 
 [node name="SynthTrackButton_1" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=96933339 node_paths=PackedStringArray("button")]
 z_index = -4
-position = Vector2(-554.91113, 297.42776)
+position = Vector2(34.94452, 480.98233)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("32_glyvh")
 script = ExtResource("77_3t1px")
-track = 5
+track_index = 5
 button = NodePath("Button")
+is_synth_track = true
+outline_texture = ExtResource("45_dmvtp")
+filled_texture = ExtResource("70_cwyb6")
 
 [node name="Icon6" type="Label" parent="UserInterface/TrackButtons/SynthTrackButton_1" unique_id=1367815341]
 visible = false
@@ -1479,7 +1172,6 @@ z_index = -4
 position = Vector2(337, -932.75)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("65_tbynx")
-script = SubResource("CSharpScript_p5fwe")
 
 [node name="Button0" type="Button" parent="UserInterface/RecordSongButton" unique_id=1229890865]
 anchors_preset = 8
@@ -1617,27 +1309,18 @@ anchor_bottom = 18.5
 offset_top = -209.5
 offset_bottom = -21.5
 
-[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
+[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0" unique_id=1808126771]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.17973857
 
-[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
+[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1" unique_id=1544089489]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353
 anchor_bottom = -0.1882353
-
-[node name="Continue" parent="UserInterface/Robot/AchievementsPanel" index="3"]
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" parent="UserInterface/Robot/AchievementsPanel" index="4"]
-metadata/_edit_use_anchors_ = true
-
-[node name="AmountLef" parent="UserInterface/Robot/AchievementsPanel" index="5"]
-metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="UserInterface" unique_id=2094816852]
 layout_mode = 1
@@ -1683,7 +1366,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Back" type="Button" parent="UserInterface/SettingsPanel" unique_id=1526587907]
+[node name="CloseSettingsButton" type="Button" parent="UserInterface/SettingsPanel" unique_id=1526587907]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -1698,7 +1381,7 @@ alignment = 0
 position = Vector2(328, 136)
 scale = Vector2(1.8903, 1.8903)
 
-[node name="LayerLoopToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Buttons" unique_id=113633084]
+[node name="SectionLoopToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Buttons" unique_id=113633084]
 anchors_preset = -1
 anchor_left = 0.7140898
 anchor_top = 0.5296111
@@ -1907,7 +1590,7 @@ label_settings = SubResource("LabelSettings_x8qo7")
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=586658778]
+[node name="ButtonAddsBeatsToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=586658778]
 offset_left = -75.0
 offset_top = 21.1543
 offset_right = 75.0
@@ -1918,7 +1601,7 @@ theme_override_font_sizes/font_size = 12
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat" unique_id=1657261812]
+[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonAddsBeatsToggle" unique_id=1657261812]
 layout_mode = 0
 offset_left = -25.0
 offset_top = 4.0
@@ -1930,7 +1613,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat" unique_id=376942408]
+[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonAddsBeatsToggle" unique_id=376942408]
 layout_mode = 0
 offset_right = 87.0
 offset_bottom = 23.0
@@ -2018,7 +1701,6 @@ focus_mode = 0
 max_value = 1.0
 step = 0.001
 value = 0.1
-script = ExtResource("91_8eq3q")
 metadata/_edit_use_anchors_ = true
 
 [node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold" unique_id=1176903580]
@@ -2033,7 +1715,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ProgressBar" type="ProgressBar" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold" unique_id=190468051]
+[node name="Mic_Volume_ProgressBar" type="ProgressBar" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold" unique_id=190468051]
 z_index = 1001
 z_as_relative = false
 layout_mode = 0
@@ -2201,29 +1883,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="SavingLabel" type="Label" parent="UserInterface" unique_id=1221552974]
-visible = false
-layout_mode = 0
-offset_left = -449.0
-offset_top = -46.0
-offset_right = -294.0
-offset_bottom = 106.0
-theme = ExtResource("2_3e1b8")
-theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
-theme_override_font_sizes/font_size = 16
-text = "Opgeslagen naar:
-\"muziekbestand.mp3\""
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Panel" type="Panel" parent="UserInterface/SavingLabel" unique_id=1245544513]
-show_behind_parent = true
-layout_mode = 0
-offset_left = -8.0
-offset_top = 2.0
-offset_right = 166.0
-offset_bottom = 154.0
-
 [node name="CountDown" type="Panel" parent="UserInterface" unique_id=1384439720]
 top_level = true
 z_index = 20
@@ -2275,17 +1934,6 @@ texture_repeat = 1
 texture = ExtResource("83_g0gna")
 metadata/_edit_lock_ = true
 
-[node name="Unlock Achievements" type="Button" parent="UserInterface" unique_id=1951503100]
-visible = false
-layout_mode = 0
-offset_left = 394.0
-offset_top = -242.0
-offset_right = 552.0
-offset_bottom = -218.0
-disabled = true
-text = "Unlock achievements"
-script = ExtResource("85_op1ei")
-
 [node name="Klappy" type="Node" parent="UserInterface" unique_id=1477459548]
 
 [node name="Podium" type="Sprite2D" parent="UserInterface/Klappy" unique_id=1386549650]
@@ -2293,8 +1941,146 @@ position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("86_i7eoh")
 
-[node name="KlappyReaction" parent="UserInterface/Klappy" unique_id=1688376857 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("84_05f8y")]
-achievment_panel = NodePath("../../Robot/AchievementsPanel")
+[node name="KlappyReaction" parent="UserInterface/Klappy" unique_id=1688376857 instance=ExtResource("84_05f8y")]
+script = null
+
+[node name="Achievement_ProgressBar" type="ProgressBar" parent="UserInterface/Klappy" unique_id=463124605]
+z_index = 6
+offset_left = 250.0
+offset_top = 311.0
+offset_right = 544.16504
+offset_bottom = 333.695
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = ExtResource("7_0dny5")
+theme_override_styles/fill = ExtResource("8_3t5nw")
+rounded = true
+
+[node name="EnergyIcon" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=568368759]
+z_index = 4
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 4.0429454
+anchor_top = -36.296215
+anchor_right = 4.0429454
+anchor_bottom = -36.296215
+offset_left = -17.0
+offset_top = 615.0
+offset_right = 156.0
+offset_bottom = 787.0
+scale = Vector2(0.525, 0.525)
+theme = ExtResource("2_3e1b8")
+text = "⚡"
+label_settings = SubResource("LabelSettings_2x3a5")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=1131922622]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 550.0
+offset_right = 67.95
+offset_bottom = 625.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=2126819936]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 464.0
+offset_right = 67.95
+offset_bottom = 539.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=1595023550]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 377.0
+offset_right = 67.95
+offset_bottom = 452.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label4" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=1424179947]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 250.0
+offset_right = 67.95
+offset_bottom = 325.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label5" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=1589698847]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 163.0
+offset_right = 67.95
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label6" type="Label" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=299383313]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 76.0
+offset_right = 67.95
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBarAchievementNode" type="Node2D" parent="UserInterface/Klappy/Achievement_ProgressBar" unique_id=746619845]
+position = Vector2(1239.05, -302)
 
 [node name="ParticleSystems" type="Node" parent="UserInterface" unique_id=465416509]
 
@@ -2356,6 +2142,30 @@ angular_velocity_max = 8.8
 angle_min = 45.0
 angle_max = 90.0
 hue_variation_max = 0.55
+
+[node name="SavingLabel" type="Label" parent="UserInterface" unique_id=1221552974]
+visible = false
+layout_mode = 0
+offset_left = -186.0
+offset_top = 114.0
+offset_right = -31.0
+offset_bottom = 266.0
+theme = ExtResource("2_3e1b8")
+theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
+theme_override_font_sizes/font_size = 16
+text = "Opgeslagen naar:
+\"muziekbestand.mp3\""
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("91_2qaqg")
+
+[node name="Panel" type="Panel" parent="UserInterface/SavingLabel" unique_id=1245544513]
+show_behind_parent = true
+layout_mode = 0
+offset_left = -8.0
+offset_top = 2.0
+offset_right = 166.0
+offset_bottom = 154.0
 
 [editable path="UserInterface/ChaosPad"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]

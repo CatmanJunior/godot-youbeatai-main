@@ -1,6 +1,5 @@
 extends Node
 
-@export var instrument_buttons: Array[Sprite2D] = []
 @export var sprite_prefab: PackedScene
 @export var bear_ring_pivot_point: Node2D
 @export var filled_beat_textures: Array[Texture2D]
@@ -17,16 +16,10 @@ var _beat_scale_32: float = 1.0
 var _beat_scale_16: float = 1.6
 var _beat_scale_8: float = 1.6
 var _global_beat_sprite_scale_factor: float = 0.28
-var _original_instrument_button_scales: Array[float] = []
 
 func initialize() -> void:
-	_store_instrument_button_scales()
 	_initialize_sprite_positions()
 
-func _store_instrument_button_scales() -> void:
-	_original_instrument_button_scales = []
-	for btn in instrument_buttons:
-		_original_instrument_button_scales.append(btn.scale.x)
 
 func _initialize_sprite_positions() -> void:
 	var beats_amount = GameState.beats_amount
@@ -97,12 +90,6 @@ func update(delta: float) -> void:
 	_update_beat_sprites(delta)
 
 func _update_beat_sprites(delta: float) -> void:
-	# Animate instrument button scale back to its default
-	for i in range(instrument_buttons.size()):
-		if i < _original_instrument_button_scales.size():
-			if instrument_buttons[i].scale.x > _original_instrument_button_scales[i]:
-				instrument_buttons[i].scale -= Vector2.ONE * delta * 2
-
 	var beats_amount = GameState.beats_amount
 	var current_beat = GameState.current_beat
 

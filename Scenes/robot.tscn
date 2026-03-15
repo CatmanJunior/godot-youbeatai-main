@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://wpiofc8iuhrj"]
+[gd_scene format=3 uid="uid://wpiofc8iuhrj"]
 
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="1_ntbue"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_8s4wd"]

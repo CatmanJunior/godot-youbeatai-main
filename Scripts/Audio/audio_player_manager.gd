@@ -31,7 +31,7 @@ func _ready():
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
-	EventBus.play_ring_requested.connect(play_sample_track)
+	EventBus.play_sample_track_requested.connect(play_sample_track)
 	EventBus.set_track_volume_requested.connect(set_track_volume)
 	EventBus.play_sfx_requested.connect(play_sfx)
 	EventBus.beat_triggered.connect(_on_beat_pitch_randomization)
@@ -114,7 +114,7 @@ func is_track_playing(track_index: int) -> bool:
 func get_voice_playback_position(synth_index: int) -> float:
 	return voice_players[synth_index].get_playback_position()
 
-#TODO: ALSO UPDATE THE VOICE STREAM IN THE SECTIONDATA
+#TODO: ALSO UPDATE THE VOICE STREAM IN THE SECTIONDATA?
 func set_voice_stream(synth_index: int, audio: AudioStream):
 	var stream = audio if audio else _create_silent_stream()
 	voice_sync_streams[synth_index].set_sync_stream(0, stream)
@@ -130,7 +130,13 @@ func _on_beat_pitch_randomization(_beat: int):
 
 func _on_request_set_stream(track: int, audio_layer: int, audio: AudioStream):
 	if track >= 0 and track < sync_streams.size():
-		sync_streams[track].set_sync_stream(audio_layer, audio)
+		if GameState.current_section.tracks[track].track_type == TrackData.TrackType.SAMPLE:
+			# For sample tracks, set the recording layer stream
+			sync_streams[track].set_sync_stream(audio_layer, audio)
+		elif GameState.current_section.tracks[track].track_type == TrackData.TrackType.SYNTH:
+			# For synth tracks, set the voice-over stream
+			set_voice_stream(track - SAMPLE_TRACKS_COUNT, audio)
+
 
 
 func get_track_volume(track: int) -> float:
@@ -144,7 +150,8 @@ func get_track_volume(track: int) -> float:
 	var right = AudioServer.get_bus_peak_volume_right_db(bus_index, 0)
 	return db_to_linear((left + right) / 2.0)
 
-func set_track_volume(track: int, weights: Vector3):
+#TODO also update the volume
+func set_track_volume(track: int, _volume: float, weights: Vector3):
 	"""Set the volume for a specific track bus based on master volume and weights for main, alt, and rec"""
 	if track < 0 or track >= TRACK_COUNT:
 		return

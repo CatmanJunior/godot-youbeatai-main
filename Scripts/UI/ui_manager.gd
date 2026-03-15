@@ -11,13 +11,8 @@ extends Node
 @export var cross: Node2D
 @export var chosen_emoticons_label: Label
 
-@export var achievements_panel: Panel
-@export var instruction_label: Label
-@export var continue_button: Button
-@export var klappy_continue: Button
-@export var knob_area: Area2D
-@export var amount_left: Label
-@export var draganddropthing: Sprite2D
+@export var instruction_panel: Panel
+
 
 var colors: PackedColorArray = []
 var colors_override: PackedColorArray = []
@@ -40,14 +35,11 @@ func _ready():
 
 	EventBus.section_changed.connect(_on_switch_section)
 
-	settings_ui.initialize(self )
 	beat_ring_ui.initialize()
 	
 	transport_ui.initialize()
 
 	
-	chaos_pad_ui.initialize(self )
-
 	_init_song_select_button()
 
 func _process(delta: float) -> void:
@@ -55,15 +47,10 @@ func _process(delta: float) -> void:
 
 func update_ui(delta: float):
 	_update_interface_state()
-	_update_drag_and_drop()
 
 	transport_ui.update(delta)
 
-	settings_ui.update(delta)
-
 	beat_ring_ui.update(delta)
-
-	chaos_pad_ui.update(delta)
 
 	section_ui.update(delta)
 
@@ -77,15 +64,9 @@ func _init_song_select_button():
 func _update_interface_state():
 	if not interface_set_to_default_state:
 		set_entire_interface_visibility(true)
-		achievements_panel.visible = false
+		if instruction_panel:
+			instruction_panel.visible = false
 		interface_set_to_default_state = true
-
-func _update_drag_and_drop():
-	if dragginganddropping and holding_for_ring < colors.size():
-		draganddropthing.modulate = colors[holding_for_ring]
-		draganddropthing.position = get_viewport().get_mouse_position() - Vector2(1280, 720) / 2.0
-	else:
-		draganddropthing.modulate = Color(1, 1, 1, 0)
 
 func set_entire_interface_visibility(visible: bool):
 	if nodes_that_can_be_unlocked.size() == 0:
@@ -94,9 +75,9 @@ func set_entire_interface_visibility(visible: bool):
 		node.visible = visible
 
 # Signal handlers
-func _on_switch_section(_section: SectionData):
-	if section_ui:
-		section_ui.update_section_switch_buttons_colors()
-		section_ui.set_copy_paste_clear_buttons_active(true)
+func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
+	# if section_ui:
+	# 	section_ui.update_section_switch_buttons_colors()
+	# 	section_ui.set_copy_paste_clear_buttons_active(true)
 	if beat_ring_ui:
 		beat_ring_ui.reset_scales()

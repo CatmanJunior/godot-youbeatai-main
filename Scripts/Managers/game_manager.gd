@@ -11,6 +11,10 @@ func _exit_tree():
 
 func _ready():
 	# Setup
+	EventBus.restart_requested.connect(_on_restart_requested)
+	EventBus.save_to_wav_requested.connect(_on_save_to_wav_requested)
+	EventBus.save_to_mp3_requested.connect(_on_save_to_mp3)
+
 	read_json_from_previous_scene_and_set_values()
 
 
@@ -19,11 +23,59 @@ func _ready():
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
 	print(ProjectSettings.globalize_path("user://"))
 
+func _on_restart_requested():
+	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
+
+	var user_path = ProjectSettings.globalize_path("user://")
+	var files_to_reset = [
+		user_path + "/chosen_emoticons.json",
+		user_path + "/chosen_soundbank.json",
+		user_path + "/beats_amount.txt",
+		user_path + "/use_tutorial.txt",
+		user_path + "/use_achievements.txt"
+	]
+
+	for file_path in files_to_reset:
+		if FileAccess.file_exists(file_path):
+			DirAccess.remove_absolute(file_path)
+
+#TODO: Move to savings manager or similar
+func _on_save_to_wav_requested():
+	_export_beat_wav()
+
+func _on_save_to_mp3():
+	_export_song_wav()
+
+
+func _export_song_wav() -> void:
+	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
+	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
+	var bpm: int = GameState.current_bpm
+
+	var path: String = AudioSavingManager.save_realtime_recorded_song_as_file(
+		recording, voice_over, bpm)
+	if path != "":
+		EventBus.done_saving.emit(path)
+
+func _export_beat_wav() -> void:
+	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
+	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
+	var bpm: int = GameState.current_bpm
+	var section_index: int = GameState.current_section_index
+	var beats_amount: int = GameState.current_beats_amount
+	var base_time_per_beat: float = GameState.current_base_time_per_beat
+
+	var path: String = AudioSavingManager.save_realtime_recorded_beat_as_file(
+		recording, voice_over, bpm, section_index, beats_amount, base_time_per_beat)
+	if path != "":
+		EventBus.done_saving.emit(path)
+
+
 func deferred_setup():
 	# %MixingManager.samples_mixing_re_apply_remembered_volumes()
 	# %MixingManager.synth_mixing_re_apply_remembered_volumes()
 	# %Achievements.on_ready()
-	%UiManager.update_layer_buttons_delayed()
+	pass
 
 func utterance_end(utterance_id: int):
 	EventBus.utterance_ended.emit(utterance_id)

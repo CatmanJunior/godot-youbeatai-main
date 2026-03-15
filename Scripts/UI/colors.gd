@@ -37,7 +37,9 @@ func start_color_change(track_index: int, duration: float):
 	elapsed = 0.0
 	while elapsed < duration:
 		var t = elapsed / duration
-		var ct = %MixingManager.synth_mixing_line_color_curve.sample(t) if %MixingManager.synth_mixing_line_color_curve else t
+
+		#TODO, this is wrong
+		var ct = %ChaosPadUi.synth_mixing_line_color_curve.sample(t) if %ChaosPadUi.synth_mixing_line_color_curve else t
 		var lerped_color = new_color.lerp(old_color, ct)
 		%UiManager.colors_override[track_index] = lerped_color
 

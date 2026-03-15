@@ -27,7 +27,25 @@ var beat_timer: float = 0.0
 @export var swing: float = 0.05
 
 var base_time_per_beat: float
-var time_per_beat: float
+var time_per_beat: float = 60.0 / bpm
+
+var beat_progress: float = 0.0
+var bar_progress: float = 0.0
+
+func get_beat_progress() -> float:
+	var new_beat_progress = beat_timer / time_per_beat
+	if current_beat % 2 == 1:
+		# Swing the odd beats by adding the swing percentage to the beat progress
+		new_beat_progress += swing
+	else:
+		# Swing the even beats by subtracting the swing percentage from the beat progress
+		new_beat_progress -= swing
+	return clamp(new_beat_progress, 0.0, 1.0)
+
+func get_bar_progress() -> float:
+	var total_beats = beats_amount
+	var current_beat_with_progress = float(current_beat) + get_beat_progress()
+	return current_beat_with_progress / float(total_beats)
 
 func _ready():
 	EventBus.bpm_up_requested.connect(func(value): bpm += value)
@@ -43,6 +61,11 @@ func _on_playing_change_requested(isplaying: bool):
 	
 
 func _process(delta: float):
+	beat_progress = get_beat_progress()
+	bar_progress = get_bar_progress()
+	GameState.beat_progress = beat_progress
+	GameState.bar_progress = bar_progress
+	
 	if playing:
 		beat_timer += delta
 		var beats_per_bar = 4.0

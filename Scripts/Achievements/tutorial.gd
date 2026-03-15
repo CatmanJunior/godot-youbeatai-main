@@ -45,6 +45,7 @@ var mixingManager: Node
 var gameManager: Node
 
 func _ready():
+	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 	mixingManager = %MixingManager
 	bpmManager = %BpmManager
 	beatManager = %BeatManager
@@ -52,6 +53,14 @@ func _ready():
 	uiManager = %UiManager
 	visabilityManager = %VisabilityManager
 	gameManager = %GameManager
+
+
+func _on_skip_tutorial_requested():
+	GameState.use_tutorial = false
+	uiManager.set_entire_interface_visibility(true)
+	uiManager.achievements_panel.visible = false
+	if DisplayServer.tts_is_speaking():
+		DisplayServer.tts_stop()
 
 func play_achievement_sfx() -> void:
 	audioPlayerManager.play_extra_sfx(audioPlayerManager.achievement_sfx)
@@ -133,7 +142,7 @@ func _cond_voice_over_finished() -> bool:
 	return uiManager.layer_voice_over_0.finished
 
 func _cond_save_knob_and_tts() -> bool:
-	_knob_pos = uiManager.knob.global_position
+	_knob_pos = uiManager.chaos_pad_ui.knob.global_position
 	return not DisplayServer.tts_is_speaking()
 
 
@@ -234,7 +243,7 @@ func _outcome_show_green_layer() -> void:
 
 func _outcome_green_bear() -> void:
 	visabilityManager.set_mic_recorder_visibility(true)
-	uiManager.knob.global_position = _top.global_position
+	uiManager.chaos_pad_ui.knob.global_position = _top.global_position
 	_allowed = true
 	play_achievement_sfx()
 	_return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).stop()
@@ -250,7 +259,7 @@ func _outcome_voice_over_done() -> void:
 	_timer.start(3)
 
 func _outcome_show_triangle() -> void:
-	uiManager.chaos_pad_triangle_sprite.visible = true
+	uiManager.chaos_pad_ui.chaos_pad_triangle_sprite.visible = true
 
 func _outcome_show_piano_area() -> void:
 	uiManager.piano_area.monitoring = true

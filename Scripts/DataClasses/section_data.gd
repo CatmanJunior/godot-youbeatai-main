@@ -16,7 +16,8 @@ static func get_next_id() -> int:
 var id: int
 var index: int
 
-var tracks: Array[TrackData] = [] # Combined array of sample and synth tracks for easy access
+## Combined array of sample and synth tracks 
+var tracks: Array[TrackData] = [] 
 
 ## Emoji shown on the section button
 var emoji: String = ""
@@ -100,7 +101,7 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 # ── Duplicate ────────────────────────────────────────────────────────────────
 
 func duplicate_section() -> SectionData:
-	var copy := SectionData.new()
+	var copy : SectionData = SectionData.new()
 
 	for i in range(tracks.size()):
 		var track = tracks[i]

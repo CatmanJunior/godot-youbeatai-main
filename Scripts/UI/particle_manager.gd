@@ -1,26 +1,38 @@
 extends Node
 
+## Tracks per-emitter timing state to avoid nine separate scalar variables.
+class ParticleState:
+	var time: float = 0.0
+	var curtime: float = 0.0
+	var emitting: bool = false
+	var position: Vector2 = Vector2.ZERO
+	var color: Color = Color.WHITE
+
+	func start(duration: float, pos: Vector2 = Vector2.ZERO, col: Color = Color.WHITE) -> void:
+		curtime = 0.0
+		time = duration
+		position = pos
+		color = col
+		emitting = true
+
+	func tick(node: CPUParticles2D, delta: float) -> void:
+		if emitting and curtime < time:
+			if node:
+				node.emitting = true
+			curtime += delta
+		else:
+			if node:
+				node.emitting = false
+			emitting = false
+
 # Particle systems
 @export var beat_particles: CPUParticles2D
 @export var pbar_particles: CPUParticles2D
 @export var achievement_particles: CPUParticles2D
 
-# Beat particles state
-var beat_particles_position: Vector2
-var beat_particles_time: float = 0.0
-var beat_particles_curtime: float = 0.0
-var beat_particles_color: Color = Color.WHITE
-var beat_particles_emitting: bool = false
-
-# Progress bar particles state
-var pbar_particles_time: float = 0.0
-var pbar_particles_curtime: float = 0.0
-var pbar_particles_emitting: bool = false
-
-# Achievement particles state
-var achievement_particles_time: float = 0.0
-var achievement_particles_curtime: float = 0.0
-var achievement_particles_emitting: bool = false
+var _beat_state := ParticleState.new()
+var _pbar_state := ParticleState.new()
+var _achievement_state := ParticleState.new()
 
 func _ready():
 	# Connect to EventBus so other scripts don't need a direct reference
@@ -30,65 +42,25 @@ func _ready():
 
 func handle_particles(delta: float):
 	"""Update all particle systems"""
-	_handle_beat_particles(delta)
-	_handle_pbar_particles(delta)
-	_handle_achievement_particles(delta)
-
-func _handle_beat_particles(delta: float):
-	"""Handle beat particles emission"""
-	if beat_particles_emitting and beat_particles_curtime < beat_particles_time:
-		if beat_particles:
-			beat_particles.color = beat_particles_color
-			beat_particles.position = beat_particles_position
-			beat_particles.emitting = true
-		beat_particles_curtime += delta
-	else:
-		if beat_particles:
-			beat_particles.emitting = false
-		beat_particles_emitting = false
-
-func _handle_pbar_particles(delta: float):
-	"""Handle progress bar particles emission"""
-	if pbar_particles_emitting and pbar_particles_curtime < pbar_particles_time:
-		if pbar_particles:
-			pbar_particles.emitting = true
-		pbar_particles_curtime += delta
-	else:
-		if pbar_particles:
-			pbar_particles.emitting = false
-		pbar_particles_emitting = false
-
-func _handle_achievement_particles(delta: float):
-	"""Handle achievement particles emission"""
-	if achievement_particles_emitting and achievement_particles_curtime < achievement_particles_time:
-		if achievement_particles:
-			achievement_particles.emitting = true
-		achievement_particles_curtime += delta
-	else:
-		if achievement_particles:
-			achievement_particles.emitting = false
-		achievement_particles_emitting = false
+	if beat_particles and _beat_state.emitting:
+		beat_particles.color = _beat_state.color
+		beat_particles.position = _beat_state.position
+	_beat_state.tick(beat_particles, delta)
+	_pbar_state.tick(pbar_particles, delta)
+	_achievement_state.tick(achievement_particles, delta)
 
 func emit_beat_particles(position: Vector2, color: Color):
 	"""Emit particles at a beat position with a specific color"""
-	beat_particles_curtime = 0.0
-	beat_particles_time = 0.05
-	beat_particles_position = position
-	beat_particles_color = color.lightened(0.25)
-	beat_particles_emitting = true
+	_beat_state.start(0.05, position, color.lightened(0.25))
 
 func emit_progress_bar_particles():
 	"""Emit progress bar particles"""
 	return  # temp fix as in C# code
 	# Uncomment when ready:
-	# pbar_particles_curtime = 0.0
-	# pbar_particles_time = 0.4
-	# pbar_particles_emitting = true
+	# _pbar_state.start(0.4)
 
 func emit_achievement_particles():
 	"""Emit achievement particles"""
 	return  # temp fix as in C# code
 	# Uncomment when ready:
-	# achievement_particles_curtime = 0.0
-	# achievement_particles_time = 0.5
-	# achievement_particles_emitting = true
+	# _achievement_state.start(0.5)

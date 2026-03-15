@@ -42,7 +42,7 @@ project/assembly_name="youbeatai-godot-web"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/synth/plugin.cfg")
+enabled=PackedStringArray("res://addons/beat_buttons_inspector/plugin.cfg", "res://addons/csv-data-importer/plugin.cfg", "res://addons/synth/plugin.cfg")
 
 [gui]
 

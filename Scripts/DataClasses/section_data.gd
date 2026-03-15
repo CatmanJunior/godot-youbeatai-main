@@ -17,7 +17,7 @@ var id: int
 var index: int
 
 ## Combined array of sample and synth tracks 
-var tracks: Array[TrackData] = [] 
+var tracks: Array[TrackData] = []
 
 ## Emoji shown on the section button
 var emoji: String = ""
@@ -30,13 +30,11 @@ func _init(new_index: int = 0, section_emoji: String = "") -> void:
 
 	emoji = section_emoji
 
-	var default_knob_pos = Vector2(0.5, 0.5)
-	
 	for i in range(SAMPLE_TRACKS_PER_SECTION):
-		tracks.append(SampleTrackData.new(default_knob_pos))
+		tracks.append(SampleTrackData.new())
 
 	for i in range(SYNTH_TRACKS_PER_SECTION):
-		tracks.append(SynthTrackData.new(default_knob_pos))
+		tracks.append(SynthTrackData.new())
 
 
 # ── Beat access helpers ──────────────────────────────────────────────────────
@@ -89,7 +87,13 @@ func get_track_knob_position(track_index: int) -> Vector2:
 		return tracks[track_index].knob_position
 	return Vector2.ZERO
 
-func set_knob_positions(positions: Array[Vector2]) -> void:
+func get_section_knob_positions() -> Array[Vector2]:
+	var positions: Array[Vector2] = []
+	for track in tracks:
+		positions.append(track.knob_position)
+	return positions
+
+func set_section_knob_positions(positions: Array[Vector2]) -> void:
 	for i in range(positions.size()):
 		set_track_knob_position(i, positions[i])
 
@@ -101,16 +105,15 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 # ── Duplicate ────────────────────────────────────────────────────────────────
 
 func duplicate_section() -> SectionData:
-	var copy : SectionData = SectionData.new()
+	var copy: SectionData = SectionData.new()
 
 	for i in range(tracks.size()):
 		var track = tracks[i]
 		if track is SampleTrackData:
-			var track_copy = SampleTrackData.new(track.knob_position)
-			track_copy.beats = track.beats.duplicate()
-			copy.tracks.append(track_copy)
+			var track_copy : SampleTrackData = track.duplicate_track()
+			copy.tracks[i] = track_copy
 		elif track is SynthTrackData:
-			var track_copy = SynthTrackData.new(track.knob_position)
-			copy.tracks.append(track_copy)
+			var track_copy : SynthTrackData = track.duplicate_track()
+			copy.tracks[i] = track_copy
 
 	return copy

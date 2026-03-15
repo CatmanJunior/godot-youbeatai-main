@@ -33,11 +33,9 @@ func _ready():
 	colors = %Colors.colors.duplicate()
 	colors_override = colors.duplicate()
 
-	EventBus.section_changed.connect(_on_switch_section)
+	EventBus.section_switched.connect(_on_switch_section)
 
 	beat_ring_ui.initialize()
-	
-	transport_ui.initialize()
 
 	
 	_init_song_select_button()

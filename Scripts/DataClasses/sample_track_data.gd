@@ -10,10 +10,9 @@ var beats: Array[bool] = []
 var main_audio_stream: AudioStream = null
 var alt_audio_stream: AudioStream = null
 
-func _init(default_knob_pos: Vector2 = Vector2.ZERO) -> void:
-	super._init(default_knob_pos, TrackType.SAMPLE)
-	beats = []
-	var beats_amount = GameState.BEATS_AMOUNT_DEFAULT
+func _init(knob_pos: Vector2 = Vector2.ZERO) -> void:
+	super._init(knob_pos, TrackType.SAMPLE)
+	var beats_amount = GameState.beats_amount
 	for i in range(beats_amount):
 		beats.append(false)
 

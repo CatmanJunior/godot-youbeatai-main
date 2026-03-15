@@ -13,9 +13,10 @@ const SECTION_BUTTON_SIZE: int = 72
 @export var section_outline: Sprite2D
 @export var section_outline_holder: Node2D
 @export var copy_paste_clear_buttons_holder: Node2D
+@export var emoji_prompt: EmojiPrompt
+
 
 var section_buttons: Array[Button] = []
-var emoji_buttons: Array = []
 var emoji_prompt_cancel_button: Button
 
 var copy_paste_clear_button_holder_time_since_activation: float = 0.0
@@ -27,7 +28,7 @@ var song_mode_back_panel: ProgressBar
 func _ready():
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
-	EventBus.section_changed.connect(_on_switch_section)
+	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.section_cleared.connect(_on_section_cleared)
 
 	var transport_ui = get_node_or_null("transport_ui")
@@ -44,18 +45,16 @@ func update(delta: float):
 	_update_section_outline_sprite_rotation()
 	_update_copy_paste_buttons(delta)
 
+
+
 func init_section_button_actions():
 	# Emoji buttons
-	for button in emoji_buttons:
-		button.button_up.connect(func():
-			var current_section_index = section_manager.current_section_index
-			section_manager.add_section(current_section_index + 1, button.text)
-			close_emoji_prompt()
-			added_section = true
+	for button in emoji_prompt.emoji_buttons:
+		button.button_up.connect(func(emoji = button.text):
+			_on_emoji_button_pressed(emoji)
 		)
 
-	# TODO: Fix this
-	# emoji_prompt_cancel_button.button_up.connect(close_emoji_prompt)
+	emoji_prompt.cancel_button.button_up.connect(_close_emoji_prompt)
 
 	load_section_button.pressed.connect(func():
 		_paste_section()
@@ -73,7 +72,7 @@ func init_section_button_actions():
 	)
 
 	add_section_button.button_up.connect(func():
-		open_emoji_prompt()
+		_open_emoji_prompt()
 		_play_extra_sfx()
 
 		if not pressed_add_section_once:
@@ -86,6 +85,11 @@ func init_section_button_actions():
 			if section_manager:
 				section_manager.remove_section(section_manager.current_section_index)
 		)
+
+func _on_emoji_button_pressed(emoji: String):
+	_close_emoji_prompt()
+	added_section = true
+	EventBus.add_section_requested.emit(emoji)
 
 func _on_section_added(new_section_index: int, emoji: String) -> void:
 	_add_section_button(new_section_index, emoji)
@@ -132,7 +136,7 @@ func _update_section_ui() -> void:
 		return
 
 	section_buttons_container.size = Vector2(section_buttons.size() * SECTION_BUTTON_SIZE, SECTION_BUTTON_SIZE)
-	section_buttons_container.position.x = -section_buttons_container.size.x / 2
+	section_buttons_container.position.x = - section_buttons_container.size.x / 2
 
 	if section_outline_holder and section_manager and section_manager.current_section_index < section_buttons.size():
 		section_outline_holder.global_position = section_buttons[section_manager.current_section_index].global_position + Vector2(SECTION_BUTTON_SIZE, SECTION_BUTTON_SIZE) / 2
@@ -181,11 +185,12 @@ func set_copy_paste_clear_buttons_active(active: bool) -> void:
 func section_has_beats(section_index: int) -> bool:
 	return section_manager and section_manager.section_has_beats(section_index)
 
-func open_emoji_prompt():
-	pass
+func _open_emoji_prompt():
+	emoji_prompt.visible = true
 
-func close_emoji_prompt():
-	pass
+
+func _close_emoji_prompt():
+	emoji_prompt.visible = false
 
 func _copy_section() -> void:
 	EventBus.copy_requested.emit()

@@ -14,9 +14,8 @@ var _slow_beat_timer: float = 0.0
 var progress_bar_value: float = 25.0
 
 
-
-func initialize() -> void:
-	play_pause_button.button_up.connect(_on_play_pause)
+func _ready() -> void:
+	play_pause_button.pressed.connect(_on_play_pause)
 
 func update(delta: float) -> void:
 	_update_play_pause_button()
@@ -30,7 +29,6 @@ func _update_play_pause_button() -> void:
 
 func _update_pointer() -> void:
 	if GameState.playing:
-	
 		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
 
 func _update_metronome(delta: float) -> void:
@@ -40,7 +38,6 @@ func _update_metronome(delta: float) -> void:
 			_slow_beat_timer -= GameState.time_per_beat
 		var beat_progress = _slow_beat_timer / GameState.time_per_beat
 		metronome.position.y = lerp(-0.4, 0.4, beat_progress)
-
 
 
 func _update_progress_bar() -> void:

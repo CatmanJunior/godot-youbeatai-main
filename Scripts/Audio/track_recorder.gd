@@ -41,7 +41,7 @@ func _handle_recording(delta: float) -> void:
 
 	var beats_to_record = 1 if current_selected_track.track_type == TrackData.TrackType.SAMPLE else GameState.beats_amount
 
-	var percentage: float = actual_sound_length / (GameState.base_time_per_beat * beats_to_record)
+	var percentage: float = actual_sound_length / (GameState.time_per_beat * beats_to_record)
 	
 	if percentage > 1.0:
 		recording_sample_button.button_pressed = false

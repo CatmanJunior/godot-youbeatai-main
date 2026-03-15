@@ -52,18 +52,19 @@ func _init_sfx_player():
 
 func _init_audio_players():
 	for i in range(TRACK_COUNT):
+		var track_type : TrackData.TrackType = TrackData.TrackType.SAMPLE if i < SAMPLE_TRACKS_COUNT else TrackData.TrackType.SYNTH
 		# Check if we have enough audio files
-		if i >= main_audio_files.size() or i >= alt_audio_files.size():
-			printerr("Not enough main or alt audio files for track %d" % i)
-			continue
 		var sync_stream = AudioStreamSynchronized.new()
 		sync_stream.stream_count = 3
 		
-		if i >= SAMPLE_TRACKS_COUNT:
+		if track_type == TrackData.TrackType.SYNTH:
 			# For synth tracks, start with silent streams until set
 			sync_stream.set_sync_stream(0, _create_silent_stream())
 			sync_stream.set_sync_stream(1, _create_silent_stream())
-		else:
+		elif track_type == TrackData.TrackType.SAMPLE:
+			if i >= main_audio_files.size() or i >= alt_audio_files.size():
+				printerr("Not enough main or alt audio files for track %d" % i)
+				continue
 			sync_stream.set_sync_stream(0, main_audio_files[i])
 			sync_stream.set_sync_stream(1, alt_audio_files[i])
 	
@@ -82,10 +83,10 @@ func _init_audio_players():
 		audio_players.append(player)
 		sync_streams.append(sync_stream)
 
-		if i < SAMPLE_TRACKS_COUNT:
+		if track_type == TrackData.TrackType.SAMPLE:
 			sample_players.append(player)
 			sample_sync_streams.append(sync_stream)
-		else:
+		elif track_type == TrackData.TrackType.SYNTH:
 			voice_players.append(player)
 			voice_sync_streams.append(sync_stream)
 
@@ -136,7 +137,6 @@ func _on_request_set_stream(track: int, audio_layer: int, audio: AudioStream):
 		elif GameState.current_section.tracks[track].track_type == TrackData.TrackType.SYNTH:
 			# For synth tracks, set the voice-over stream
 			set_voice_stream(track - SAMPLE_TRACKS_COUNT, audio)
-
 
 
 func get_track_volume(track: int) -> float:

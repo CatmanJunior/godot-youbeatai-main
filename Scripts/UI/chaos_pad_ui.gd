@@ -22,13 +22,6 @@ extends Node
 
 # Visual state
 var outer_triangle_size: float = 60.0
-var default_knob_position: Vector2
-
-func _ready():
-	default_knob_position = get_default_knob_position()
-
-func get_default_knob_position() -> Vector2:
-	return chaos_pad_triangle_sprite.global_position if chaos_pad_triangle_sprite else Vector2.ZERO
 
 func start_triangle_color_change(color_index: int, duration: float):
 	var tween = create_tween()

@@ -8,7 +8,6 @@ const BEATS_AMOUNT_DEFAULT: int = 16
 
 
 # -- Settings --
-var base_time_per_beat: float = 0.5
 
 var microphone_volume: float = 0.0
 
@@ -26,29 +25,14 @@ var metronome_enabled: bool = false
 
 var mute_speech: bool = false
 
-# -- Sections --
+# -- Sections & Tracks --
 
 var sections: Array[SectionData] = []
 var current_section: SectionData = null
-var current_section_index: int = 0
-
-# -- Playback --
-var playing: bool = false
-var bpm: int = 120
-var current_beat: int = 0
-var beats_amount: int = 16
-var swing: float = 0.05
-var beat_progress: float = 0.0
-var bar_progress: float = 0.0
-
-var time_per_beat: float:
+var current_section_index: int:
 	get:
-		return 60.0 / bpm
+		return current_section.index
 
-# -- Mixing --
-
-var selected_sample_track: int = 0
-var selected_synth_track: int = 0
 var selected_track_index: int = 0
 var selected_track: TrackData:
 	get:
@@ -56,12 +40,33 @@ var selected_track: TrackData:
 			return current_section.tracks[selected_track_index]
 		return null
 
+# -- Playback --
+var playing: bool = false
+var bpm: int = 120
+var current_beat: int = 0
+var beats_amount: int = 16
+var swing: float = 0.05
+
+## This is a value from 0 to 1 representing how far along the current beat is.
+var beat_progress: float = 0.0
+
+## This is a value from 0 to 1 representing how far along the current bar is.
+var bar_progress: float = 0.0
+
+## time per beat in seconds, calculated from bpm
+var time_per_beat: float:
+	get:
+		return 60.0 / bpm
+
+
 # -- Recording --
 
 var is_recording: bool = false
 
+
+# -- Initialization --
 func _ready() -> void:
-	EventBus.section_changed.connect(_on_section_changed)
+	EventBus.section_switched.connect(_on_section_changed)
 
 	EventBus.playing_changed.connect(func(value: bool): playing = value)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
@@ -73,7 +78,6 @@ func _ready() -> void:
 
 func _on_bpm_changed(new_bpm: int) -> void:
 	bpm = new_bpm
-	base_time_per_beat = 60.0 / bpm
 	
 func _on_recording_volume_threshold_changed(threshold: float) -> void:
 	recording_volume_threshold = threshold
@@ -85,13 +89,6 @@ func _on_section_changed(_old_section: SectionData, section: SectionData) -> voi
 
 # ── Convenience accessors ────────────────────────────────────────────────────
 
-func get_section(index: int) -> SectionData:
-	if index >= 0 and index < sections.size():
-		return sections[index]
-	return null
-
-func get_current_track(track: int) -> SampleTrackData:
-	return current_section.tracks[track]
 
 func get_beat(track: int, beat: int) -> bool:
 	if current_section:
@@ -99,10 +96,7 @@ func get_beat(track: int, beat: int) -> bool:
 	return false
 
 func has_active_beats_on_section(section_index: int) -> bool:
-	var section = get_section(section_index)
-	if section:
-		return section.has_active_beats()
-	return false
+	return sections[section_index].has_active_beats()
 
 func is_last_section() -> bool:
 	return current_section_index == sections.size() - 1

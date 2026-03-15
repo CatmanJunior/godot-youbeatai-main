@@ -33,7 +33,8 @@ signal clap_triggered()
 signal stomp_triggered()
 
 # ── Sections ──
-signal section_changed(old_section_data: SectionData, section_data: SectionData)
+signal add_section_requested(emoji: String)
+signal section_switched(old_section_data: SectionData, section_data: SectionData)
 signal section_added(new_section_index: int, emoji: String)
 signal section_removed(section_index: int)
 signal section_cleared()

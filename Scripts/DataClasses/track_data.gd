@@ -23,8 +23,8 @@ var audio_player: AudioStreamPlayer = null
 var sync_stream: AudioStreamSynchronized = null
 
 
-func _init(default_knob_pos: Vector2 = Vector2.ZERO, type: TrackType = TrackType.SAMPLE) -> void:
-	knob_position = default_knob_pos
+func _init(knob_pos: Vector2 = Vector2.ZERO, type: TrackType = TrackType.SAMPLE) -> void:
+	knob_position = knob_pos
 	self.track_type = type
 
 

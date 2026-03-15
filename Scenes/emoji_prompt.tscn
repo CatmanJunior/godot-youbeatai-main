@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dmqr6dfu1dfjb"]
 
+[ext_resource type="Script" uid="uid://cjx5hltdcaljj" path="res://Scenes/emoji_prompt.gd" id="1_36svu"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_t1mia"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
@@ -19,7 +20,7 @@ corner_radius_top_right = 1000
 corner_radius_bottom_right = 1000
 corner_radius_bottom_left = 1000
 
-[node name="EmojiPrompt" type="Panel" unique_id=1565121311]
+[node name="EmojiPrompt" type="Panel" unique_id=1565121311 node_paths=PackedStringArray("emoji_buttons", "cancel_button")]
 top_level = true
 z_index = 20
 anchors_preset = 8
@@ -34,6 +35,9 @@ offset_bottom = -994.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+script = ExtResource("1_36svu")
+emoji_buttons = [NodePath("Emoji_0"), NodePath("Emoji_1"), NodePath("Emoji_2"), NodePath("Emoji_3"), NodePath("Emoji_4")]
+cancel_button = NodePath("Cancel")
 
 [node name="Title" type="Label" parent="." unique_id=1918219659]
 layout_mode = 1

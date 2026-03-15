@@ -4,8 +4,8 @@ extends TrackData
 ## Data class for a synth-based track within a section.
 ## Holds voice-over recordings in addition to the base track properties.
 
-func _init(default_knob_pos: Vector2 = Vector2.ZERO) -> void:
-	super._init(default_knob_pos, TrackType.SYNTH)
+func _init(knob_pos: Vector2 = Vector2.ZERO) -> void:
+	super._init(knob_pos, TrackType.SYNTH)
 
 
 

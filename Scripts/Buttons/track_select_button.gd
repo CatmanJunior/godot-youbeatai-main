@@ -52,3 +52,4 @@ func _on_press():
 	GameState.selected_track_index = track_index
 
 	EventBus.track_select_button_pressed.emit(track_index)
+	EventBus.track_selected.emit(track_index)

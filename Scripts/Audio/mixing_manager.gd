@@ -23,12 +23,12 @@ var layer_manager: Node
 @onready var chaos_pad_ui: Node = get_node("../../UiManager/ChaosPadUi")
 
 func _ready():
-	song_mixing_knob_position = chaos_pad_ui.chaos_pad_triangle_sprite.global_position if chaos_pad_ui and chaos_pad_ui.chaos_pad_triangle_sprite else Vector2.ZERO
+	song_mixing_knob_position = chaos_pad_ui.chaos_pad_triangle_sprite.position if chaos_pad_ui and chaos_pad_ui.chaos_pad_triangle_sprite else Vector2.ZERO
 
 	# Connect to EventBus so other scripts don't need a direct reference
 	EventBus.track_selected.connect(_on_track_selected)
 	EventBus.mixing_weights_changed.connect(on_update_mixing)
-	EventBus.section_changed.connect(_on_section_changed)
+	EventBus.section_switched.connect(_on_section_changed)
 
 func _on_track_selected(track: int):
 	_change_active_track(chaos_pad_mode, track)
@@ -40,10 +40,10 @@ func _on_section_changed(old_section_data: SectionData, new_section_data: Sectio
 	
 	# Retrieve knob position for new layer
 	var pos = _retrieve_knob(new_section_data, chaos_pad_mode)
-	chaos_pad_ui.knob.global_position = pos
+	chaos_pad_ui.knob.position = pos
 
+	
 	_apply_stored_volumes(old_section_data)
-
 
 
 func _change_active_track(mode: ChaosPadMode, new_index: int = 0):
@@ -54,7 +54,7 @@ func _change_active_track(mode: ChaosPadMode, new_index: int = 0):
 
 func _store_active_knob(mode: ChaosPadMode, new_section_data: SectionData):
 	if mode != ChaosPadMode.SONG_MIXING:
-		new_section_data.set_track_knob_position(active_track, chaos_pad_ui.knob.global_position)
+		new_section_data.set_track_knob_position(active_track, chaos_pad_ui.knob.position)
 	else:
 		song_mixing_store_active_knob()
 
@@ -65,9 +65,6 @@ func _retrieve_knob(section_data: SectionData, mode: ChaosPadMode) -> Vector2:
 		pos = section_data.get_track_knob_position(active_track)
 	else:
 		pos = song_mixing_retrieve_active_knob()
-
-	if pos == Vector2.ZERO:
-		pos = chaos_pad_ui.default_knob_position
 
 	return pos
 
@@ -86,7 +83,7 @@ func mixing_change_track(new_track_index: int):
 	active_track = new_track_index
 	
 	var pos = _retrieve_knob(GameState.current_section, chaos_pad_mode)
-	chaos_pad_ui.knob.global_position = pos
+	chaos_pad_ui.knob.position = pos
 
 	chaos_pad_ui.start_triangle_color_change(active_track, 0.2)
 	
@@ -127,7 +124,7 @@ func track_mixing_apply_stored_volumes():
 # SONG MIXING ==============================================================
 
 func song_mixing_store_active_knob():
-	song_mixing_knob_position = chaos_pad_ui.knob.global_position
+	song_mixing_knob_position = chaos_pad_ui.knob.position
 
 func song_mixing_retrieve_active_knob() -> Vector2:
 	return song_mixing_knob_position
@@ -138,7 +135,7 @@ func song_mixing_change_to_song_mixer():
 
 	# Retrieve knob position
 	var pos = _retrieve_knob(GameState.current_section, ChaosPadMode.SONG_MIXING)
-	chaos_pad_ui.knob.global_position = pos
+	chaos_pad_ui.knob.position = pos
 	
 	# Set chaos pad color
 	chaos_pad_ui.start_triangle_color_change(active_track, 0.2)

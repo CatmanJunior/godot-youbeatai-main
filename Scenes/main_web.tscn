@@ -263,7 +263,7 @@ unique_name_in_owner = true
 script = ExtResource("26_scmae")
 section_ui = NodePath("SectionUi")
 song_select_button = NodePath("../../UserInterface/TrackButtons/SongSelectButton/SongSelectButton")
-cross = NodePath("../../BeatRingPivotPoint/Cross")
+cross = NodePath("../../UserInterface/BeatRingPivotPoint/Cross")
 chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
 instruction_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 beat_ring_ui = NodePath("BeatRingUi")
@@ -303,19 +303,18 @@ emoji_prompt = NodePath("../../../UserInterface/EmojiPrompt")
 [node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=2130000001 node_paths=PackedStringArray("bear_ring_pivot_point")]
 script = ExtResource("92_brui1")
 sprite_prefab = ExtResource("15_8pi72")
-bear_ring_pivot_point = NodePath("../../../BeatRingPivotPoint")
+bear_ring_pivot_point = NodePath("../../../UserInterface/BeatRingPivotPoint")
 filled_beat_textures = Array[Texture2D]([ExtResource("58_snosd"), ExtResource("61_8pi72"), ExtResource("63_2qaqg"), ExtResource("65_0dny5")])
 outline_beat_textures = Array[Texture2D]([ExtResource("40_e8hom"), ExtResource("41_jrm6x"), ExtResource("42_e22mk"), ExtResource("43_b7kng")])
 dot_beat_texture = ExtResource("44_7j40o")
 filled_song_texture = ExtResource("26_0dny5")
 outline_song_texture = ExtResource("27_3t5nw")
 
-[node name="ChaosPadUi" type="Node" parent="Managers/UiManager" unique_id=2130000002 node_paths=PackedStringArray("corners", "chaos_pad_triangle_sprite", "knob_area", "knob", "main_icon", "alt_icon")]
+[node name="ChaosPadUi" type="Node" parent="Managers/UiManager" unique_id=2130000002 node_paths=PackedStringArray("corners", "chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon")]
 unique_name_in_owner = true
 script = ExtResource("93_cpui1")
-corners = [NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight")]
+corners = [NodePath("../../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight"), NodePath("../../../UserInterface/ChaosPad/Triangle/PointTop")]
 chaos_pad_triangle_sprite = NodePath("../../../UserInterface/ChaosPad/Triangle")
-knob_area = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite/Area2D")
 knob = NodePath("../../../UserInterface/ChaosPad/Triangle/KnobSprite")
 main_icons = Array[Texture2D]([ExtResource("22_irepe"), ExtResource("23_mf0w8"), ExtResource("24_h0xuh"), ExtResource("15_8eq3q")])
 alt_icons = Array[Texture2D]([ExtResource("16_8djmd"), ExtResource("17_jjn8x"), ExtResource("18_458pc"), ExtResource("29_580qm")])
@@ -329,7 +328,7 @@ alt_icon = NodePath("../../../UserInterface/ChaosPad/Triangle/PointRight/ChaosIc
 [node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=2130000003 node_paths=PackedStringArray("play_pause_button", "pointer", "metronome", "section_loop_toggle", "real_time_audio_recording_progress_bar", "progress_bar")]
 script = ExtResource("94_trui1")
 play_pause_button = NodePath("../../../UserInterface/PlayPauseButtonHolder/PlayPauseButton")
-pointer = NodePath("../../../BeatRingPivotPoint/Pointer")
+pointer = NodePath("../../../UserInterface/BeatRingPivotPoint/Pointer")
 metronome = NodePath("../../../UserInterface/metronome")
 section_loop_toggle = NodePath("../../../UserInterface/SettingsPanel/Buttons/SectionLoopToggle")
 real_time_audio_recording_progress_bar = NodePath("../../../UserInterface/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
@@ -390,44 +389,57 @@ unique_name_in_owner = true
 script = ExtResource("39_pyso5")
 recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosButtonMic")
 
-[node name="BeatRingPivotPoint" type="Node2D" parent="." unique_id=821308409]
-position = Vector2(-111, 46)
+[node name="UserInterface" type="Control" parent="." unique_id=1276878844]
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
+metadata/_edit_use_anchors_ = true
 
-[node name="Cross" type="Node2D" parent="BeatRingPivotPoint" unique_id=424861057]
+[node name="BeatRingPivotPoint" type="Control" parent="UserInterface" unique_id=1597657978]
+anchors_preset = 0
+offset_left = -111.0
+offset_top = 46.0
+offset_right = -111.0
+offset_bottom = 46.0
+mouse_filter = 1
 
-[node name="Vertical" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=1265927989]
+[node name="Cross" type="Node2D" parent="UserInterface/BeatRingPivotPoint" unique_id=424861057]
+
+[node name="Vertical" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=1265927989]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="Horizontal" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=956002503]
+[node name="Horizontal" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=956002503]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 1.5708
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="Vertical2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=133667257]
+[node name="Vertical2" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=133667257]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 0.785398
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="Horizontal2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=308333869]
+[node name="Horizontal2" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=308333869]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = -0.785398
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
-[node name="BigLine0" type="Line2D" parent="BeatRingPivotPoint" unique_id=1196447538]
+[node name="BigLine0" type="Line2D" parent="UserInterface/BeatRingPivotPoint" unique_id=1196447538]
 closed = true
 width = 4.0
 antialiased = true
 
-[node name="TextureProgressBar0" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=2069096729]
+[node name="TextureProgressBar0" type="TextureProgressBar" parent="UserInterface/BeatRingPivotPoint" unique_id=2069096729]
+layout_mode = 0
 offset_left = -265.0
 offset_top = -267.0
 offset_right = 247.0
@@ -440,12 +452,13 @@ texture_progress = ExtResource("3_ikay4")
 tint_progress = Color(1, 1, 0, 1)
 metadata/_edit_lock_ = true
 
-[node name="BigLine1" type="Line2D" parent="BeatRingPivotPoint" unique_id=206440121]
+[node name="BigLine1" type="Line2D" parent="UserInterface/BeatRingPivotPoint" unique_id=206440121]
 closed = true
 width = 5.0
 antialiased = true
 
-[node name="TextureProgressBar1" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=959956238]
+[node name="TextureProgressBar1" type="TextureProgressBar" parent="UserInterface/BeatRingPivotPoint" unique_id=959956238]
+layout_mode = 0
 offset_left = -256.0
 offset_top = -256.0
 offset_right = 256.0
@@ -459,24 +472,18 @@ texture_progress = ExtResource("3_ikay4")
 tint_progress = Color(0.516666, 0, 1, 1)
 metadata/_edit_use_anchors_ = true
 
-[node name="Pointer" type="Sprite2D" parent="BeatRingPivotPoint" unique_id=1556552632]
+[node name="Pointer" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint" unique_id=1556552632]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(0.6, 0.85)
 offset = Vector2(0, -150)
 
-[node name="PointLight2D" type="PointLight2D" parent="BeatRingPivotPoint/Pointer" unique_id=1161459888]
+[node name="PointLight2D" type="PointLight2D" parent="UserInterface/BeatRingPivotPoint/Pointer" unique_id=1161459888]
 color = Color(1, 1, 0.698039, 1)
 energy = 4.71
 range_z_max = 100
 texture = ExtResource("4_snosd")
 offset = Vector2(0, -150)
-
-[node name="UserInterface" type="Control" parent="." unique_id=1276878844]
-z_as_relative = false
-layout_mode = 3
-anchors_preset = 0
-metadata/_edit_use_anchors_ = true
 
 [node name="SwitchLayerButtons" type="Node2D" parent="UserInterface" unique_id=262273642]
 position = Vector2(-111, 46)

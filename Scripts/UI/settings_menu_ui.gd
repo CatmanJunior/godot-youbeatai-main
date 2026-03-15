@@ -1,4 +1,5 @@
 extends Node
+class_name SettingsUI
 
 ## Getter only property to check if the settings panel is currently visible
 var is_visible: bool:

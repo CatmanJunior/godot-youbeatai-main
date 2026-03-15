@@ -12,9 +12,6 @@ var current_section: SectionData
 # Section data — each entry is a SectionData instance
 var sections: Array[SectionData] = []
 
-# Color palette
-var colors: Array[Color] = []
-
 var beats_amount: int = 16
 
 # Clipboard for copy/paste

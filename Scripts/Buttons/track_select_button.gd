@@ -17,7 +17,7 @@ func _ready():
 	_background = find_child("BackSprite") as Sprite2D
 	_outline = find_child("OutlineSprite") as Sprite2D
 
-	var colors = %UiManager.colors
+	var colors = %Colors.colors
 
 	if is_synth_track:
 		self_modulate = colors[track_index]
@@ -44,10 +44,6 @@ func _on_press():
 
 	if GameState.track_button_add_beats:
 		EventBus.beat_set_requested.emit(track_index, GameState.current_beat, true)
-
-	#TODO do this with a event, or in the chaospad ui
-	if GameState.selected_track_index != track_index:
-		%Colors.start_color_change(track_index, 0.3)
 
 	GameState.selected_track_index = track_index
 

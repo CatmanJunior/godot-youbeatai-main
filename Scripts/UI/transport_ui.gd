@@ -1,4 +1,5 @@
 extends Node
+class_name TransportUI
 
 @export var play_pause_button: Button
 

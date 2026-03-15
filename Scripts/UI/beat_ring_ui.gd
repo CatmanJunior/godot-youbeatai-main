@@ -1,7 +1,8 @@
 extends Node
+class_name BeatRingUI
 
 @export var sprite_prefab: PackedScene
-@export var bear_ring_pivot_point: Node2D
+@export var bear_ring_pivot_point: Control
 @export var filled_beat_textures: Array[Texture2D]
 @export var outline_beat_textures: Array[Texture2D]
 @export var dot_beat_texture: Texture2D
@@ -17,9 +18,12 @@ var _beat_scale_16: float = 1.6
 var _beat_scale_8: float = 1.6
 var _global_beat_sprite_scale_factor: float = 0.28
 
-func initialize() -> void:
+func _ready() -> void:
 	_initialize_sprite_positions()
+	EventBus.section_switched.connect(_on_switch_section)
 
+func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
+	_reset_scales()
 
 func _initialize_sprite_positions() -> void:
 	var beats_amount = GameState.beats_amount
@@ -129,7 +133,7 @@ func _get_template_active(ring: int, beat: int) -> bool:
 	return false
 
 # Reset all beat sprite scales (called after a section switch)
-func reset_scales() -> void:
+func _reset_scales() -> void:
 	var beats_amount = GameState.beats_amount
 	for ring in range(min(4, beat_sprites.size())):
 		for beat in range(min(beats_amount, beat_sprites[ring].size())):

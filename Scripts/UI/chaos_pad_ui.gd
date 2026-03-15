@@ -1,9 +1,9 @@
 extends Node
+class_name ChaosPadUI
 
 @export var corners: Array[Node2D] = []
 @export var chaos_pad_triangle_sprite: Sprite2D
-@export var knob_area: Area2D
-@export var knob: Node2D
+@export var knob: Sprite2D
 
 # Icons
 @export var main_icons: Array[Texture2D] = [] # 4 for rings
@@ -28,17 +28,20 @@ func start_triangle_color_change(color_index: int, duration: float):
 	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", %Colors.colors[color_index], duration)
 
 func update_track_icons(track_index: int):
-	if main_icon and track_index < main_icons.size():
-		main_icon.texture = main_icons[track_index]
-	if alt_icon and track_index < alt_icons.size():
-		alt_icon.texture = alt_icons[track_index]
+	if track_index < GameState.sections[0].SAMPLE_TRACKS_PER_SECTION:
+		if main_icon and track_index < main_icons.size():
+			main_icon.texture = main_icons[track_index]
+		if alt_icon and track_index < alt_icons.size():
+			alt_icon.texture = alt_icons[track_index]
+	else:
+		var synth_index = track_index - GameState.sections[0].SAMPLE_TRACKS_PER_SECTION
+		if main_icon and synth_index < main_icon_synths.size():
+			main_icon.texture = main_icon_synths[synth_index]
+		if alt_icon and synth_index < alt_icon_synths.size():
+			alt_icon.texture = alt_icon_synths[synth_index]
 
 func update_song_icons():
 	if main_icon and main_icon_song:
 		main_icon.texture = main_icon_song
 	if alt_icon and alt_icon_song:
 		alt_icon.texture = alt_icon_song
-
-
-
-

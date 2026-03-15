@@ -13,10 +13,6 @@ extends Node
 
 @export var instruction_panel: Panel
 
-
-var colors: PackedColorArray = []
-var colors_override: PackedColorArray = []
-
 # State variables
 var interface_set_to_default_state: bool = false
 var email_prompt_open: bool = false
@@ -24,20 +20,12 @@ var dragginganddropping: bool = false
 var holding_for_ring: int = 0
 
 # ── Sub-manager child nodes ───────────────────────────────────────────────────
-@export var beat_ring_ui: Node
-@export var chaos_pad_ui: Node
-@export var transport_ui: Node
-@export var settings_ui: Node
+@export var beat_ring_ui: BeatRingUI
+@export var chaos_pad_ui: ChaosPadUI
+@export var transport_ui: TransportUI
+@export var settings_ui: SettingsUI
 
 func _ready():
-	colors = %Colors.colors.duplicate()
-	colors_override = colors.duplicate()
-
-	EventBus.section_switched.connect(_on_switch_section)
-
-	beat_ring_ui.initialize()
-
-	
 	_init_song_select_button()
 
 func _process(delta: float) -> void:
@@ -72,10 +60,5 @@ func set_entire_interface_visibility(visible: bool):
 	for node in nodes_that_can_be_unlocked:
 		node.visible = visible
 
-# Signal handlers
-func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
-	# if section_ui:
-	# 	section_ui.update_section_switch_buttons_colors()
-	# 	section_ui.set_copy_paste_clear_buttons_active(true)
-	if beat_ring_ui:
-		beat_ring_ui.reset_scales()
+
+		

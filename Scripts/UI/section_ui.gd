@@ -1,4 +1,5 @@
 extends Node
+class_name SectionUI
 
 const SECTION_BUTTON_SIZE: int = 72
 
@@ -15,13 +16,10 @@ const SECTION_BUTTON_SIZE: int = 72
 @export var copy_paste_clear_buttons_holder: Node2D
 @export var emoji_prompt: EmojiPrompt
 
-
 var section_buttons: Array[Button] = []
 var emoji_prompt_cancel_button: Button
 
 var copy_paste_clear_button_holder_time_since_activation: float = 0.0
-var pressed_add_section_once: bool = false
-var added_section: bool = false
 
 var song_mode_back_panel: ProgressBar
 
@@ -44,7 +42,6 @@ func _ready():
 func update(delta: float):
 	_update_section_outline_sprite_rotation()
 	_update_copy_paste_buttons(delta)
-
 
 
 func init_section_button_actions():
@@ -74,10 +71,6 @@ func init_section_button_actions():
 	add_section_button.button_up.connect(func():
 		_open_emoji_prompt()
 		_play_extra_sfx()
-
-		if not pressed_add_section_once:
-			# Show tooltip
-			pressed_add_section_once = true
 	)
 
 	if remove_section_button:
@@ -88,7 +81,6 @@ func init_section_button_actions():
 
 func _on_emoji_button_pressed(emoji: String):
 	_close_emoji_prompt()
-	added_section = true
 	EventBus.add_section_requested.emit(emoji)
 
 func _on_section_added(new_section_index: int, emoji: String) -> void:
@@ -153,13 +145,11 @@ func _update_section_outline_sprite_rotation():
 	section_outline.rotation_degrees = clock_rot * 360.0 - 7.0
 
 func _update_copy_paste_buttons(delta: float) -> void:
-	# TODO handle showing/hiding copy/paste/clear buttons when section buttons are pressed, and hiding them after a few seconds of inactivity
-	var any_section_button_pressed = false
+	copy_paste_clear_button_holder_time_since_activation += delta
 
 	if copy_paste_clear_button_holder_time_since_activation >= 3.5:
 		set_copy_paste_clear_buttons_active(false)
-	elif not any_section_button_pressed:
-		copy_paste_clear_button_holder_time_since_activation += delta
+
 
 func update_section_switch_buttons_colors() -> void:
 	for i in range(section_buttons.size()):

@@ -1,0 +1,283 @@
+[gd_scene format=3 uid="uid://bqky323kw7oj1"]
+
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_c7cwa"]
+[ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="2_7ufgw"]
+[ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/chaos_icon.tscn" id="3_ajioc"]
+[ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
+[ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/ChaosPad/ChaosPadKnob.gd" id="5_e7g83"]
+[ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/UI/play_star_animation.gd" id="6_xr1wk"]
+[ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="7_1pf8w"]
+[ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="8_685nt"]
+[ext_resource type="Animation" uid="uid://b0td231pq8k03" path="res://outside_star_animation.res" id="9_pd38u"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="10_6wcbh"]
+[ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
+[ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
+[ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sstgy"]
+radius = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kj5vy"]
+radius = 15.297058
+
+[sub_resource type="Animation" id="Animation_j4bys"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Piano/Piano_Star:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("in_between/in_between_star:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v6gb7"]
+_data = {
+&"RESET": SubResource("Animation_j4bys"),
+&"in_between_star_animation": ExtResource("8_685nt"),
+&"outside_star_animation": ExtResource("9_pd38u"),
+&"piano_star_animation": ExtResource("7_1pf8w")
+}
+
+[node name="ChaosPad" type="Control" unique_id=2043765558]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MicButtonLocation" type="Node2D" parent="." unique_id=1125788169]
+position = Vector2(133, 48)
+
+[node name="MicLight" type="PointLight2D" parent="MicButtonLocation" unique_id=1165301474]
+scale = Vector2(0.833333, 0.833333)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("1_c7cwa")
+texture_scale = 1.71
+
+[node name="Triangle" type="TextureRect" parent="." unique_id=2129523945]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 404.0
+offset_bottom = 392.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("2_7ufgw")
+
+[node name="PointLeft" type="Control" parent="Triangle" unique_id=1773935740]
+anchors_preset = 0
+offset_left = 63.07692
+offset_top = 312.3077
+offset_right = 63.07692
+offset_bottom = 312.3077
+
+[node name="ChaosIconMain" parent="Triangle/PointLeft" unique_id=371519950 instance=ExtResource("3_ajioc")]
+rotation = 3.1415925
+scale = Vector2(0.6, 0.6)
+
+[node name="PointTop" type="Control" parent="Triangle" unique_id=400839598]
+anchors_preset = 0
+offset_left = 203.0769
+offset_top = 43.076904
+offset_right = 203.0769
+offset_bottom = 43.076904
+
+[node name="PointRight" type="Control" parent="Triangle" unique_id=1203642698]
+anchors_preset = 0
+offset_left = 336.9231
+offset_top = 313.8462
+offset_right = 336.9231
+offset_bottom = 313.8462
+
+[node name="ChaosIconAlt" parent="Triangle/PointRight" unique_id=1470349372 instance=ExtResource("3_ajioc")]
+rotation = 3.1415925
+scale = Vector2(0.6, 0.6)
+
+[node name="KnobSprite" type="TextureRect" parent="Triangle" unique_id=817120454]
+z_index = 2
+layout_mode = 0
+offset_left = 266.15387
+offset_top = 278.46155
+offset_right = 394.15387
+offset_bottom = 406.46155
+rotation = 3.1415927
+texture = ExtResource("4_bd6tm")
+script = ExtResource("5_e7g83")
+
+[node name="Tutorial_interactpoints" type="Node2D" parent="." unique_id=47462908]
+
+[node name="Piano" type="Node2D" parent="Tutorial_interactpoints" unique_id=184544302]
+position = Vector2(116.00001, 76)
+scale = Vector2(1.5, 1.5)
+
+[node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano" unique_id=707280695 node_paths=PackedStringArray("anim_player")]
+scale = Vector2(0.7, 0.7)
+monitoring = false
+monitorable = false
+script = ExtResource("6_xr1wk")
+anim_player = NodePath("../../AnimationPlayer")
+animation_resource = ExtResource("7_1pf8w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Piano" unique_id=1652607334]
+shape = SubResource("CircleShape2D_sstgy")
+
+[node name="Piano_Star" type="Label" parent="Tutorial_interactpoints/Piano" unique_id=1626487380]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "🌟"
+
+[node name="in_between" type="Node2D" parent="Tutorial_interactpoints" unique_id=1890469072]
+position = Vector2(46, -25)
+scale = Vector2(1.3, 1.3)
+
+[node name="in_between" type="Area2D" parent="Tutorial_interactpoints/in_between" unique_id=801257543 node_paths=PackedStringArray("anim_player")]
+scale = Vector2(0.7, 0.7)
+monitoring = false
+monitorable = false
+script = ExtResource("6_xr1wk")
+anim_player = NodePath("../../AnimationPlayer")
+animation_resource = ExtResource("8_685nt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/in_between" unique_id=934587406]
+shape = SubResource("CircleShape2D_kj5vy")
+
+[node name="in_between_star" type="Label" parent="Tutorial_interactpoints/in_between" unique_id=1876185264]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "🌟"
+
+[node name="outside" type="Node2D" parent="Tutorial_interactpoints" unique_id=1584952393]
+position = Vector2(85.00001, -93)
+scale = Vector2(1.3, 1.3)
+
+[node name="outside" type="Area2D" parent="Tutorial_interactpoints/outside" unique_id=1507110494 node_paths=PackedStringArray("anim_player")]
+monitoring = false
+monitorable = false
+script = ExtResource("6_xr1wk")
+anim_player = NodePath("../../AnimationPlayer")
+animation_resource = ExtResource("9_pd38u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/outside/outside" unique_id=1798633322]
+shape = SubResource("CircleShape2D_kj5vy")
+
+[node name="outside2" type="Label" parent="Tutorial_interactpoints/outside" unique_id=1268337442]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.0
+offset_top = -8.0
+offset_right = 11.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "🌟"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial_interactpoints" unique_id=1143748511]
+libraries/ = SubResource("AnimationLibrary_v6gb7")
+
+[node name="ChaosButtonMic" type="Button" parent="." unique_id=2002827164 node_paths=PackedStringArray("fillTexture")]
+z_index = 3
+layout_mode = 0
+offset_left = 166.00002
+offset_top = 81.99999
+offset_right = 340.995
+offset_bottom = 256.935
+rotation = 3.1415925
+scale = Vector2(0.39000002, 0.39000002)
+flat = true
+script = ExtResource("10_6wcbh")
+fillTexture = NodePath("ChaosIconMicBg/Rec_mic_Fill")
+
+[node name="ChaosIconMicBg" type="Sprite2D" parent="ChaosButtonMic" unique_id=1839512900]
+show_behind_parent = true
+z_index = 1
+z_as_relative = false
+scale = Vector2(2, 2)
+texture = ExtResource("11_cfhpg")
+centered = false
+
+[node name="Rec_mic_Fill" type="TextureProgressBar" parent="ChaosButtonMic/ChaosIconMicBg" unique_id=802485121]
+z_index = 1
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.945
+offset_top = -41.042
+offset_right = -14.94499
+offset_bottom = -16.041796
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.22, 3.22)
+max_value = 1.0
+step = 0.05
+fill_mode = 5
+texture_progress = ExtResource("12_i2dwl")
+tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ChaosIconMic" type="Sprite2D" parent="ChaosButtonMic/ChaosIconMicBg" unique_id=1747814684]
+show_behind_parent = true
+z_index = 2
+z_as_relative = false
+position = Vector2(0, 4.455)
+scale = Vector2(0.5000001, 0.5000001)
+texture = ExtResource("13_objle")
+centered = false
+offset = Vector2(22.435, 19.34)

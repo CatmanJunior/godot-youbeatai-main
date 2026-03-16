@@ -10,6 +10,8 @@ signal onExportBeat(audio: AudioStreamWAV)
 @export var bpm_manager: BpmManager
 @export var loop_button: CheckButton
 
+@export var rec_button: Button
+
 @export var settings_panel: Control
 @export var mail_panel: Control
 @export var mail_button: Button
@@ -17,6 +19,7 @@ signal onExportBeat(audio: AudioStreamWAV)
 @export var name_field: LineEdit
 
 var recorder: AudioEffectRecord
+var is_recording: bool = false
 var cancelled = false
 var path: String
 var song_mode: bool = false
@@ -90,6 +93,9 @@ func validate_form() -> bool:
 	return true
 
 func start_beat_export():
+	if is_recording:
+		return;
+
 	var beat_time = 60.0 / bpm_manager.bpm / 4.0
 	var beat_length = beat_time * (bpm_manager.amount_of_beats)
 
@@ -104,6 +110,9 @@ func start_beat_export():
 		Mailer.SendWav(path, mail_field.text )
 
 func start_song_export():
+	if is_recording:
+		return;
+
 	var beat_time = 60.0 / bpm_manager.bpm / 4.0
 	var song_length = (manager.layersAmount * beat_time * bpm_manager.amount_of_beats)
 	
@@ -118,7 +127,7 @@ func start_song_export():
 		Mailer.SendWav(path, mail_field.text )
 
 func export_to_wav(length: float, song: bool):
-
+	is_recording = true
 	loading.open()
 
 	song_mode = song
@@ -158,9 +167,52 @@ func export_to_wav(length: float, song: bool):
 		name_field.text, date, time]
 
 	path = Mailer.GetDocumentspath() + formatted_file
-	recording.save_to_wav(path);
-
+	match OS.get_name():
+		"windows":	
+			recording.save_to_wav(path);
+		
 	loading.close()
 
 	export_mode = false
 	loop_button.button_pressed = cached_loop
+	is_recording = false
+
+
+func export_interactive():
+	print("try to start a recording");
+	if is_recording:
+		return
+
+	is_recording = true
+	# export_mode = true
+	song_mode = false
+
+	if bpm_manager.playing:
+		manager.OnPlayPauseButton()
+
+	await get_tree().create_timer(0.75).timeout
+	bpm_manager.currentBeat = bpm_manager.amount_of_beats -1 
+
+	await get_tree().process_frame
+
+	manager.OnPlayPauseButton()
+	recorder.set_recording_active(true);
+
+	await rec_button.pressed
+
+	manager.OnPlayPauseButton()
+	# include a small wait time to include the last note/sampling in the recording without cutting off the audio
+	await get_tree().create_timer(0.75).timeout
+
+	recorder.set_recording_active(false);
+	
+	var recording = recorder.get_recording()
+
+	if song_mode:
+		onExportSong.emit(recording)
+	else:
+		onExportBeat.emit(recording)
+
+
+	is_recording = false
+	# export_mode = false

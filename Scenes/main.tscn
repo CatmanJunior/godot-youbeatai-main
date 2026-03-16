@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=122 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -26,27 +26,27 @@
 [ext_resource type="Script" uid="uid://e8khqi61hvlh" path="res://Scripts/RecordSampleButton.cs" id="16_ngh84"]
 [ext_resource type="Script" uid="uid://camqi65nquk3i" path="res://Scripts/VoiceOverStuff/LayerVoiceOver.cs" id="18_tunoq"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
-[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="20_sasc4"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Icons/Icons-_28_0016_vHigh_Hat-.png" id="20_sasc4"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="21_my4ki"]
-[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="21_pfx1i"]
-[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="22_fg68e"]
+[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Icons/Icons-_28_0007_Kick_Drum.png" id="21_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Icons/Icons-_28_0017_Tamborine.png" id="22_fg68e"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
-[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="23_jekl6"]
+[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Icons/Icons-_28_0019_Snare_Drum.png" id="23_jekl6"]
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="24_cblf0"]
 [ext_resource type="Script" uid="uid://dmyd1rjout8wm" path="res://Scripts/RealTimeAudioRecording/RealTimeAudioRecording.cs" id="24_o1aky"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="25_nay3j"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="26_ovafv"]
-[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="26_v1mrv"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Icons/Icons-_28_0012_Robot.png" id="26_v1mrv"]
 [ext_resource type="Script" uid="uid://10oy7vnqrokk" path="res://Scripts/RecordButton.cs" id="27_jwpg7"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="27_owhal"]
-[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="28_1tvlp"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="28_1tvlp"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="28_uv6w5"]
@@ -65,19 +65,19 @@
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="42_tab3y"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
-[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
+[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Icons/Icons-_28_0004_Microphone.png" id="47_owhal"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="48_ihvwq"]
 [ext_resource type="Script" uid="uid://cc06mhc4gkej1" path="res://Scenes/unlock_achievements.gd" id="48_jut3y"]
-[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="48_uv6w5"]
-[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="50_r7bbj"]
-[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="51_e5peh"]
-[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="52_f6rfp"]
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Icons/Icons-_28_0006_Drum.png" id="48_uv6w5"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Icons/Icons-_28_0014_Clap.png" id="50_r7bbj"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Icons/Icons-_28_0013_Horn.png" id="51_e5peh"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Icons/Icons-_28_0015_Crash.png" id="52_f6rfp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="52_gsvbx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Icons/Icons-_28_0010_Bear.png" id="53_sasc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="53_uv6w5"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Icons/Icons-_28_0011_Bird.png" id="55_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
@@ -94,7 +94,12 @@
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
+[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Icons/Icons-_28_0029_Leaf.png" id="89_jrou0"]
+[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Icons/Icons-_28_0028_Verse.png" id="90_nb1ia"]
+[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Icons/Icons-_28_0025_Riser.png" id="91_3ahwd"]
+[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Icons/Icons-_28_0026_Blast.png" id="92_b4xsn"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/klappy_light_pad.tscn" id="92_p4gyq"]
+[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Icons/Icons-_28_0021_Flag.png" id="93_ot5ec"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -698,8 +703,9 @@ emailPrompt = NodePath("../../EmailPrompt")
 emailInput = NodePath("../../EmailPrompt/EmailField")
 emailEnter = NodePath("../../EmailPrompt/Enter")
 emojiPrompt = NodePath("../../EmojiPrompt")
-emojiButtons = [NodePath("../../EmojiPrompt/Emoji_0"), NodePath("../../EmojiPrompt/Emoji_1"), NodePath("../../EmojiPrompt/Emoji_2"), NodePath("../../EmojiPrompt/Emoji_3"), NodePath("../../EmojiPrompt/Emoji_4")]
+emojiButtons = [NodePath("../../EmojiPrompt/HBoxContainer/Emoji_0"), NodePath("../../EmojiPrompt/HBoxContainer/Emoji_1"), NodePath("../../EmojiPrompt/HBoxContainer/Emoji_2"), NodePath("../../EmojiPrompt/HBoxContainer/Emoji_3"), NodePath("../../EmojiPrompt/HBoxContainer/Emoji_4")]
 emojiPromptCancelButton = NodePath("../../EmojiPrompt/Cancel")
+DefaultLayerIcons = Array[Texture2D]([ExtResource("89_jrou0"), ExtResource("90_nb1ia"), ExtResource("92_b4xsn"), ExtResource("93_ot5ec")])
 corners = [NodePath("../../UserInterface/ChaosPad/Triangle/PointLeft"), NodePath("../../UserInterface/ChaosPad/Triangle/PointTop"), NodePath("../../UserInterface/ChaosPad/Triangle/PointRight")]
 knob = NodePath("../../UserInterface/ChaosPad/Triangle/KnobSprite")
 chaosPadTriangleSprite = NodePath("../../UserInterface/ChaosPad/Triangle")
@@ -2849,101 +2855,6 @@ text = "Wat voor een nieuwe laag wil je?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Emoji_0" type="Button" parent="EmojiPrompt"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = -176.0
-offset_top = 9.0
-offset_right = -112.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "🌱"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_1" type="Button" parent="EmojiPrompt"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = -103.0
-offset_top = 9.0
-offset_right = -39.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "📜"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_2" type="Button" parent="EmojiPrompt"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = -32.0
-offset_top = 9.0
-offset_right = 32.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "🤩"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_3" type="Button" parent="EmojiPrompt"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = 39.0
-offset_top = 9.0
-offset_right = 103.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "😀"
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_4" type="Button" parent="EmojiPrompt"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_top = 0.3263158
-anchor_right = 0.5
-anchor_bottom = 0.3263158
-offset_left = 110.0
-offset_top = 9.0
-offset_right = 174.0
-offset_bottom = 73.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-text = "🏁"
-metadata/_edit_use_anchors_ = true
-
 [node name="Cancel" type="Button" parent="EmojiPrompt"]
 layout_mode = 1
 anchors_preset = -1
@@ -2958,6 +2869,64 @@ theme = ExtResource("22_hpc6h")
 theme_override_fonts/font = ExtResource("84_33qc4")
 theme_override_font_sizes/font_size = 16
 text = "Sluiten"
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="EmojiPrompt"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 72.0
+offset_right = 450.0
+offset_bottom = 122.0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Emoji_0" type="Button" parent="EmojiPrompt/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/icon_max_width = 50
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+icon = ExtResource("89_jrou0")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_1" type="Button" parent="EmojiPrompt/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/icon_max_width = 50
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+icon = ExtResource("90_nb1ia")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_2" type="Button" parent="EmojiPrompt/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/icon_max_width = 50
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+icon = ExtResource("91_3ahwd")
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_3" type="Button" parent="EmojiPrompt/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/icon_max_width = 50
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+icon = ExtResource("92_b4xsn")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Emoji_4" type="Button" parent="EmojiPrompt/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_constants/icon_max_width = 50
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
+icon = ExtResource("93_ot5ec")
+icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="CountDown" type="Panel" parent="."]
@@ -3034,13 +3003,15 @@ position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("84_6h1fc")
 
-[node name="KlappyLightPad" parent="." node_paths=PackedStringArray("klappyLight", "KlappyEnergy") instance=ExtResource("92_p4gyq")]
+[node name="KlappyLightPad" parent="." node_paths=PackedStringArray("klappyLight", "KlappyEnergy", "_manager", "achievment_panel") instance=ExtResource("92_p4gyq")]
 offset_left = 360.0
 offset_top = 21.0
 offset_right = 460.0
 offset_bottom = 121.0
 klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
 KlappyEnergy = NodePath("../Managers/ProgressBar")
+_manager = NodePath("../Managers/Manager")
+achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [connection signal="value_changed" from="Managers/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
 [connection signal="OnBeatEvent" from="Managers/BPM" to="Managers/SongVoiceOver/Chords" method="on_bpm"]

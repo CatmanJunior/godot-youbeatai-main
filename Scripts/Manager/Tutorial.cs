@@ -508,15 +508,21 @@ public static class Tutorial
                 string path = "";
                 path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_achievements.txt");
                 if (File.Exists(path)) File.Delete(path);
-                File.WriteAllText(path, true.ToString());
+                File.WriteAllText(path, true.ToString()); //ja
+
+                Achievements.useAchievements = true; //dit
+                Achievements.OnReady();
 
                 DisplayServer.TtsStop();
                 manager.UtteranceEnd(0);
                 tutorial_level = -2;
 
-
                 manager.SetEntireInterfaceVisibility(true);
-                manager.achievementspanel.Visible = false;
+
+                manager.SetRingVisibility(2, false); //hier
+                manager.SetRingVisibility(3, false);
+
+                manager.achievementspanel.Visible = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 manager.ContinueButton.Pressed -= _tutorialContinue;
                 manager.PianoArea.AreaEntered -= _bodyContinue;

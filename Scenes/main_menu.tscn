@@ -88,9 +88,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -88.96871
-offset_top = -28.705307
+offset_top = -7.7120056
 offset_right = 111.03128
-offset_bottom = 3.294693
+offset_bottom = 24.287994
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -101,6 +101,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Uitleg ❓"
 
 [node name="SpelenButton" type="Button" parent="MainMenuPanel"]
+visible = false
 layout_mode = 0
 offset_left = 111.03129
 offset_top = 162.81479
@@ -121,9 +122,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -88.96871
-offset_top = -97.99994
+offset_top = -114.79236
 offset_right = 111.03128
-offset_bottom = -66.99994
+offset_bottom = -83.79236
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
@@ -153,7 +154,15 @@ scale = Vector2(0.5, 0.5)
 visible = false
 
 [node name="Skeleton3D" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
-bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
+bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
+bones/4/rotation = Quaternion(0.6664186, 0.0010095574, -0.0009971554, 0.7455765)
+bones/5/position = Vector3(3.4170494e-05, 0.016205063, 0.0067133754)
+bones/7/position = Vector3(3.4172117e-05, 0.01620506, 0.0067133736)
+bones/9/position = Vector3(0.0052915406, -0.0022284086, 0.004496879)
+bones/9/rotation = Quaternion(0.7068752, -0.012596929, 0.70709896, -0.013409111)
+bones/10/rotation = Quaternion(0.0049924124, -0.00026509096, 0.35862666, 0.9334677)
+bones/16/position = Vector3(-0.0069037513, -0.0019778507, 0.004023196)
+bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
 
 [node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" index="1"]
 energy = 1.71

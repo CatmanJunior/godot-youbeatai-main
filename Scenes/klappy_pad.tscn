@@ -8,8 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="4_or4m8"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="5_iy75h"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="6_65gdt"]
-[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="7_rht4q"]
-[ext_resource type="Script" uid="uid://dn71ojtwykqy4" path="res://Scripts/KlappyLight.cs" id="9_k64sy"]
+[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Icons/Icons-_28_0004_Microphone.png" id="7_rht4q"]
+[ext_resource type="Script" path="res://Scripts/KlappyLight.cs" id="9_k64sy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vpvc"]
 radius = 192.3508

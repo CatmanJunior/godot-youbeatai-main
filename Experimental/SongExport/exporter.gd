@@ -25,7 +25,7 @@ var do_mail: bool = true
 
 func _ready():
 	var bus = AudioServer.get_bus_index("SubMaster");
-	recorder = AudioServer.get_bus_effect(bus, 0);
+	recorder = AudioServer.get_bus_effect(bus, 4);
 
 	bpm_manager.OnBeatEvent.connect( on_beat )
 

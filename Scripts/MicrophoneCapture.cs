@@ -7,11 +7,6 @@ public partial class MicrophoneCapture : Node
 {
 	public static MicrophoneCapture instance = null;
 
-	public override void _ExitTree()
-	{
-		if (instance == this) instance = null;
-	}
-
 	[Export] string busName = "Microphone";
 
 	[Export] private float clapFreq = 7000.0f;
@@ -40,6 +35,8 @@ public partial class MicrophoneCapture : Node
 	private Godot.Mutex mutex;
 	private GodotThread thread;
 
+	private bool stop = false;
+
 	public override void _Ready()
 	{
 		instance ??= this;
@@ -62,9 +59,16 @@ public partial class MicrophoneCapture : Node
 		thread.Start(new Callable(this, nameof(ThreadedProcess)), GodotThread.Priority.Normal);
 	}
 
+	public override void _ExitTree()
+	{
+		if (instance == this) instance = null;
+
+		stop = true;
+	}
+
 	private void ThreadedProcess()
 	{
-		while(IsQueuedForDeletion() == false)
+		while(IsQueuedForDeletion() == false && !stop)
 		{
 			var frames = audioEffectCapture.GetFramesAvailable();
 			if (frames > 0)

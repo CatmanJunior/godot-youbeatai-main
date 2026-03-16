@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene load_steps=122 format=3 uid="uid://c78m8ijn10kwh"]
 
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="1_6vcvc"]
 [ext_resource type="Script" uid="uid://u2ta44dunhu5" path="res://Scripts/Manager/Manager.cs" id="1_rfd7i"]
@@ -211,6 +211,59 @@ shader_parameter/smooth_ = 0.005
 shader_parameter/width_in = 0.85
 shader_parameter/width_out = 0.95
 shader_parameter/border_width = 0.0
+
+[sub_resource type="FontVariation" id="FontVariation_jrou0"]
+base_font = ExtResource("84_33qc4")
+variation_embolden = 1.0
+spacing_top = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phube"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.91764706, 0.91764706, 0.91764706, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 16
+anti_aliasing_size = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j2g22"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.57, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 16
+anti_aliasing_size = 0.5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t014q"]
+content_margin_left = 15.0
+content_margin_right = 15.0
+draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.91764706, 0.91764706, 0.91764706, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+corner_detail = 16
+anti_aliasing_size = 0.5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -862,6 +915,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Chords" type="SoundFontPlayer" parent="Managers/SongVoiceOver" node_paths=PackedStringArray("bpm_manager", "manager", "bpmManager")]
 soundfont = ExtResource("28_54nrm")
 stream = SubResource("AudioStreamGenerator_54nrm")
+bus = &"SongSynth"
 script = ExtResource("28_v2nl5")
 chordString = "I-V-vi-IV"
 chordDuration = 8
@@ -925,12 +979,13 @@ octaveRange = Vector2i(4, 6)
 [node name="MidiHelper" type="Node" parent="Managers"]
 script = ExtResource("31_v2nl5")
 
-[node name="Exporter" type="Node" parent="Managers" node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "settings_panel", "mail_panel", "mail_button", "mail_field", "name_field")]
+[node name="Exporter" type="Node" parent="Managers" node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "rec_button", "settings_panel", "mail_panel", "mail_button", "mail_field", "name_field")]
 script = ExtResource("65_87bhu")
 loading = NodePath("../../UserInterface/CenterContainer")
 manager = NodePath("../Manager")
 bpm_manager = NodePath("../BPM")
 loop_button = NodePath("../../UserInterface/LayerLoopToggle")
+rec_button = NodePath("../../UserInterface/RecButton")
 settings_panel = NodePath("../../UserInterface/SettingsPanel")
 mail_panel = NodePath("../../EmailPrompt")
 mail_button = NodePath("../../EmailPrompt/Enter")
@@ -2638,6 +2693,38 @@ material = SubResource("ShaderMaterial_55idt")
 custom_minimum_size = Vector2(100, 100)
 layout_mode = 2
 
+[node name="RecButton" type="Button" parent="UserInterface"]
+layout_mode = 0
+offset_left = 183.0
+offset_top = 233.0
+offset_right = 283.0
+offset_bottom = 283.0
+focus_mode = 0
+focus_behavior_recursive = 1
+theme_override_colors/font_outline_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_colors/icon_normal_color = Color(0.9166399, 0.91663986, 0.9166398, 1)
+theme_override_colors/icon_focus_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/icon_pressed_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_colors/icon_hover_color = Color(0.91764706, 0.91764706, 0.91764706, 1)
+theme_override_colors/icon_hover_pressed_color = Color(1, 0.01999998, 0.01999998, 1)
+theme_override_constants/outline_size = 0
+theme_override_constants/icon_max_width = 18
+theme_override_constants/align_to_largest_stylebox = 0
+theme_override_constants/line_spacing = 0
+theme_override_fonts/font = SubResource("FontVariation_jrou0")
+theme_override_font_sizes/font_size = 21
+theme_override_icons/icon = ExtResource("53_uv6w5")
+theme_override_styles/normal = SubResource("StyleBoxFlat_phube")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_j2g22")
+theme_override_styles/hover = SubResource("StyleBoxFlat_t014q")
+toggle_mode = true
+action_mode = 0
+shortcut_feedback = false
+shortcut_in_tooltip = false
+text = "REC"
+icon_alignment = 2
+expand_icon = true
+
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="."]
 z_index = 2
 emitting = false
@@ -3077,10 +3164,13 @@ KlappyEnergy = NodePath("../Managers/ProgressBar")
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver0" to="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" method="stop_recording"]
 [connection signal="OnStartedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="start_recording"]
 [connection signal="OnStoppedRecording" from="Managers/LayerVoiceOver1" to="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" method="stop_recording"]
+[connection signal="onExportBeat" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_beat"]
+[connection signal="onExportSong" from="Managers/Exporter" to="Managers/Exporter/ListenToLastExport" method="on_export_song"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/SaveToWavButton" to="Managers/Exporter" method="setup_beat_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenSongExportButton" to="Managers/Exporter/ListenToLastExport" method="play_song"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenBeatExportButton" to="Managers/Exporter/ListenToLastExport" method="play_beat"]
+[connection signal="pressed" from="UserInterface/RecButton" to="Managers/Exporter" method="export_interactive"]
 [connection signal="toggled" from="EmailPrompt/CheckButton" to="Managers/Exporter" method="on_mail_toggle_changed"]
 [connection signal="toggled" from="EmailPrompt/CheckButton" to="EmailPrompt/EmailField" method="reset_from_toggle"]
 [connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]

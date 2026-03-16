@@ -2,7 +2,7 @@ extends Node
 class_name BeatRingUI
 
 @export var sprite_prefab: PackedScene
-@export var bear_ring_pivot_point: Control
+@export var beat_ring_pivot_point: Control
 @export var filled_beat_textures: Array[Texture2D]
 @export var outline_beat_textures: Array[Texture2D]
 @export var dot_beat_texture: Texture2D
@@ -33,7 +33,7 @@ func _initialize_sprite_positions() -> void:
 		beat_sprites.append([])
 		for beat in range(beats_amount):
 			var sprite = _create_sprite(beat, ring, beats_amount)
-			bear_ring_pivot_point.add_child(sprite)
+			beat_ring_pivot_point.add_child(sprite)
 			beat_sprites[ring].append(sprite)
 
 	template_sprites = []
@@ -41,7 +41,7 @@ func _initialize_sprite_positions() -> void:
 		template_sprites.append([])
 		for beat in range(beats_amount):
 			var sprite = _create_template_sprite(beat, ring, beats_amount)
-			bear_ring_pivot_point.add_child(sprite)
+			beat_ring_pivot_point.add_child(sprite)
 			template_sprites[ring].append(sprite)
 
 func _scale_factor_for_beats_amount(beats_amount: int) -> float:

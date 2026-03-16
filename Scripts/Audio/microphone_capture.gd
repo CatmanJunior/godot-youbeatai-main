@@ -5,9 +5,6 @@ extends Node
 ## volume level) AND audio recording via AudioEffectRecord.
 ## Lives in the scene tree as %MicrophoneCapture.
 
-signal recording_started
-signal recording_stopped(recorded_audio: AudioStream)
-
 @export var bus_name: String = "Microphone"
 @export var clap_freq_min: float = 7000.0
 @export var clap_threshold: float = 0.1
@@ -33,6 +30,8 @@ var is_stamping: bool:
 	get: return stamp_volume > stamp_threshold and stamp_volume > clap_volume
 
 func _ready():
+	EventBus.request_start_recording.connect(_start_recording)
+	EventBus.request_stop_recording.connect(_stop_recording)
 	microphone = AudioStreamMicrophone.new()
 	audio_stream_player = AudioStreamPlayer.new()
 	add_child(audio_stream_player)
@@ -74,22 +73,21 @@ func _process(_delta: float):
 
 # -- Recording -----------------------------------------------------------------
 
-func start_recording() -> void:
+func _start_recording() -> void:
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(true)
-	recording = true
-	recording_started.emit()
+		recording = true
+		EventBus.recording_started.emit()
+	else:
+		push_warning("Cannot start recording: no AudioEffectRecord found on %s bus, effect 1" % bus_name)
 
-
-func stop_recording() -> AudioStream:
+func _stop_recording() -> void:
 	var recorded_audio: AudioStream = null
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(false)
 		recorded_audio = audio_effect_record.get_recording()
 	recording = false
-	recording_stopped.emit(recorded_audio)
-	return recorded_audio
-
+	EventBus.recording_stopped.emit(recorded_audio)
 
 # -- Helpers -------------------------------------------------------------------
 
@@ -99,4 +97,3 @@ func _get_magnitude(freq_min: float, freq_max: float) -> float:
 
 func get_microphone_volume() -> float:
 	return _get_magnitude(0.0, 20000.0)
-	

@@ -51,7 +51,7 @@ public partial class SoundBankSelectionMenu : Panel
     Dictionary<string, string> offsetLookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/bpmoffset.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
     Dictionary<string, string> lookup = JsonSerializer.Deserialize<Dictionary<string, string>>(Godot.FileAccess.Open("res://Resources/SoundBankMatrix/elec.json", Godot.FileAccess.ModeFlags.Read).GetAsText());
 
-    void OnEmotionToggle(Button toggle, Label label, Label check)
+    void OnEmotionToggle(Button toggle, Label label, Sprite2D check)
     {
 
         if (chosenEmotions.Count >= 2 && !chosenEmotions.Contains(label.Text))
@@ -93,7 +93,7 @@ public partial class SoundBankSelectionMenu : Panel
 
     }
 
-    void OnThemeToggle(Button toggle, Label label, Label check)
+    void OnThemeToggle(Button toggle, Label label, Sprite2D check)
     {
         if (chosenThemes.Count >= 2 && !chosenThemes.Contains(label.Text))
             return;
@@ -163,7 +163,7 @@ public partial class SoundBankSelectionMenu : Panel
         {
             var label = emotionToggle.GetParent() as Label;
             var container = emotionToggle.GetParent();
-            var check = container.GetNode<Label>("Label");
+            var check = container.GetNode<Sprite2D>("Sprite2D");
             emotionToggle.Pressed += () =>
             {
                 OnEmotionToggle(emotionToggle, label, check);
@@ -182,7 +182,7 @@ public partial class SoundBankSelectionMenu : Panel
         {
             var label = themeToggle.GetParent() as Label;
             var container = themeToggle.GetParent();
-            var check = container.GetNode<Label>("Label");
+            var check = container.GetNode<Sprite2D>("Sprite2D");
 
             themeToggle.Pressed += () =>
             {
@@ -210,10 +210,8 @@ public partial class SoundBankSelectionMenu : Panel
 
         gebruikButton.Pressed += () =>
         {
-            GD.Print(MainMenu.PressedTutorial + "1");
             if (MainMenu.PressedTutorial == true)
             {
-                GD.Print(MainMenu.PressedTutorial + "2");
 
                 string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
                 if (File.Exists(path)) File.Delete(path);
@@ -225,7 +223,6 @@ public partial class SoundBankSelectionMenu : Panel
             }
             else if (MainMenu.PressedTutorial == false)
             {
-                GD.Print(MainMenu.PressedTutorial + "3");
 
                 if (DisplayServer.TtsIsSpeaking())
                 {
@@ -235,16 +232,13 @@ public partial class SoundBankSelectionMenu : Panel
                 {
                     path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
                     if (File.Exists(path)) File.Delete(path);
-                    // File.WriteAllText(path, hoeveelBeats.Text);
+                    // File.WriteAllText(path, hoeveelBeats.Text); //misschien moet dit niet uit??? uhhhhh
 
                     //BpmManager.beatsAmount = int.Parse(hoeveelBeats.Text);
                 }
 
                 // remember if tutorial should be enabled or not
                 {
-
-                    GD.Print(MainMenu.PressedTutorial + "4");
-
                     string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
                     if (File.Exists(path)) File.Delete(path);
                     File.WriteAllText(path, false.ToString());
@@ -252,8 +246,6 @@ public partial class SoundBankSelectionMenu : Panel
 
 
                 // load main scene
-                GD.Print(MainMenu.PressedTutorial + "5");
-
                 GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
             }
 

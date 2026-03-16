@@ -49,6 +49,7 @@
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="42_e22mk"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="43_b7kng"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="44_7j40o"]
+[ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="44_ikay4"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="45_dmvtp"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="49_dll78"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_662co"]
@@ -357,6 +358,11 @@ restart_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/RestartB
 metronome_toggle = NodePath("../../../UserInterface/SettingsPanel/Sliders/MetronomeToggle")
 mute_speech = NodePath("../../../UserInterface/SettingsPanel/Sliders/MuteSpeachToggle")
 
+[node name="TrackWaveformVisualizer" type="Node" parent="Managers/UiManager" unique_id=359909402 node_paths=PackedStringArray("progress_bars", "waveform_lines")]
+script = ExtResource("44_ikay4")
+progress_bars = [NodePath("../../../UserInterface/BeatRingPivotPoint/TextureProgressBar0"), NodePath("../../../UserInterface/BeatRingPivotPoint/TextureProgressBar1")]
+waveform_lines = [NodePath("../../../UserInterface/BeatRingPivotPoint/BigLine0"), NodePath("../../../UserInterface/BeatRingPivotPoint/BigLine1")]
+
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=369344690]
 
 [node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=2087930821]
@@ -384,10 +390,11 @@ metronome_sfx = ExtResource("35_dbt8u")
 metronome_alt_sfx = ExtResource("36_xwqw4")
 achievement_sfx = ExtResource("37_glyvh")
 
-[node name="AudioRecorder" type="Node" parent="Managers/AudioManagers" unique_id=1738535162 node_paths=PackedStringArray("recording_sample_button")]
+[node name="AudioRecorder" type="Node" parent="Managers/AudioManagers" unique_id=1738535162 node_paths=PackedStringArray("recording_sample_button", "waveform_visualizer")]
 unique_name_in_owner = true
 script = ExtResource("39_pyso5")
 recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosButtonMic")
+waveform_visualizer = NodePath("../../UiManager/TrackWaveformVisualizer")
 
 [node name="UserInterface" type="Control" parent="." unique_id=1276878844]
 z_as_relative = false
@@ -447,12 +454,14 @@ offset_bottom = 245.0
 scale = Vector2(1.05, 1.05)
 max_value = 1.0
 step = 0.01
+value = 0.16
 fill_mode = 4
 texture_progress = ExtResource("3_ikay4")
 tint_progress = Color(1, 1, 0, 1)
 metadata/_edit_lock_ = true
 
 [node name="BigLine1" type="Line2D" parent="UserInterface/BeatRingPivotPoint" unique_id=206440121]
+points = PackedVector2Array(0, 0)
 closed = true
 width = 5.0
 antialiased = true
@@ -467,6 +476,7 @@ scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(256, 256)
 max_value = 1.0
 step = 0.01
+value = 0.38
 fill_mode = 4
 texture_progress = ExtResource("3_ikay4")
 tint_progress = Color(0.516666, 0, 1, 1)

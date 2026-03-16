@@ -14,6 +14,7 @@ var current_recording_track: TrackData = null
 var track_type: TrackData.TrackType
 
 @export var recording_sample_button: Button
+@export var waveform_visualizer: TrackWaveformVisualizer
 
 func _ready():
 	EventBus.recording_sample_button_toggled.connect(_on_recording_sample_button_toggled)
@@ -38,6 +39,10 @@ func _handle_recording(delta: float) -> void:
 	var percentage: float = actual_sound_length / (GameState.time_per_beat * beats_to_record)
 
 	recording_sample_button.update_button(percentage)
+	
+	# Update progress bar (only for SYNTH tracks)
+	if track_type == TrackData.TrackType.SYNTH:
+		waveform_visualizer.update_progress(GameState.selected_track_index, percentage)
 
 	if percentage >= 1.0:
 		_stop_recording()
@@ -81,6 +86,11 @@ func _on_recording_stopped(audio: AudioStream) -> void:
 		trimmed_audio_stream = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
 	else:
 		trimmed_audio_stream = audio
+
+	# Update waveform visualization with the final recorded audio (only for SYNTH tracks)
+	if track_type == TrackData.TrackType.SYNTH:
+		waveform_visualizer.update_waveform(GameState.selected_track_index, trimmed_audio_stream)
+		waveform_visualizer.reset_progress(GameState.selected_track_index)
 
 	EventBus.request_set_stream.emit(GameState.selected_track_index, 2, trimmed_audio_stream)
 

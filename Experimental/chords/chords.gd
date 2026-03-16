@@ -59,7 +59,8 @@ func _ready():
 
 func on_bank_loaded(bank: AudioBank):
 	progressions = [bank.progressions[0]]
-
+	soundfont = bank.chord_soundfont
+	instrument = bank.chord_instrument_id
 
 func load_progression():
 	chord_song.clear()

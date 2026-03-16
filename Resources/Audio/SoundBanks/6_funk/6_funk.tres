@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://btbacjr6irux4" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Closed_Perc Am.wav" id="4_hgown"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_7xnpc"]
 [ext_resource type="Resource" uid="uid://d0vc5kasfpo5u" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile.tres" id="5_hgown"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_hgown"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_hgown"]
 [ext_resource type="Resource" uid="uid://bkw52bqhi76nt" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile_Bass.tres" id="6_loxld"]
 [ext_resource type="AudioStream" uid="uid://sefuiwp4k82o" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Snare Bling.wav" id="7_05f0b"]
 [ext_resource type="AudioStream" uid="uid://6m7uj6j1xdum" path="res://Resources/Audio/SoundBanks/6_funk/Snare Acidy.wav" id="7_loxld"]

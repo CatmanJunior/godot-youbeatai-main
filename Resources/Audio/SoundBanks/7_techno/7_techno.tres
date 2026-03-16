@@ -8,7 +8,7 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_iwmnv"]
 [ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="5_kmdtp"]
 [ext_resource type="Resource" uid="uid://dry8m7r2tj6dq" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile_Bass.tres" id="6_g7ebr"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_kmdtp"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_kmdtp"]
 [ext_resource type="AudioStream" uid="uid://c0vncoipende0" path="res://Resources/Audio/SoundBanks/7_techno/Snare Elektrocuted 2.wav" id="7_g7ebr"]
 [ext_resource type="AudioStream" uid="uid://c4jnqb0mi577" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Kick A LowLife.wav" id="7_rojp7"]
 [ext_resource type="AudioStream" uid="uid://d3x5of0xstwhn" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Snare AB 2.wav" id="11_cefoj"]

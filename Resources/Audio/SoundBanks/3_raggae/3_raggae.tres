@@ -8,7 +8,7 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_5i1t3"]
 [ext_resource type="AudioStream" uid="uid://be37oruasvm8u" path="res://Resources/Audio/SoundBanks/3_raggae/Kick Bandits.wav" id="6_ftxhs"]
 [ext_resource type="AudioStream" uid="uid://bspcfiukoeorw" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Kick Shapednoise 1.wav" id="7_f2swm"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="8_cp1vu"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="8_cp1vu"]
 [ext_resource type="AudioStream" uid="uid://dqbqtyunere7y" path="res://Resources/Audio/SoundBanks/3_raggae/Snare_Perc Gl.wav" id="9_bv348"]
 [ext_resource type="AudioStream" uid="uid://dq2137h5khh8b" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Snare Andromeda 5.wav" id="10_onkgs"]
 

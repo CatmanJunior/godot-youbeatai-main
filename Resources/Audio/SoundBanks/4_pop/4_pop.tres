@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c0ab64ar4pabh" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Kick TwoTone.wav" id="4_aqegv"]
 [ext_resource type="Resource" uid="uid://djshow0qurpom" path="res://Resources/Audio/SoundBanks/4_pop/EffectProfile.tres" id="5_527mg"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_rv86u"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_527mg"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_527mg"]
 [ext_resource type="AudioStream" uid="uid://tg3pcb8g1l68" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Snare_Rim Ask.wav" id="7_3h66m"]
 [ext_resource type="AudioStream" uid="uid://cpkr5gf62qq5c" path="res://Resources/Audio/SoundBanks/4_pop/Snare_Rim Ask.wav" id="7_5r2ij"]
 

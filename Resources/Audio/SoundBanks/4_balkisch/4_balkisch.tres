@@ -8,7 +8,7 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_2an5y"]
 [ext_resource type="Resource" uid="uid://k0dg58vddl4l" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile.tres" id="5_achl6"]
 [ext_resource type="Resource" uid="uid://65isouwqh4er" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile_Bass.tres" id="6_8lexy"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_achl6"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_achl6"]
 [ext_resource type="AudioStream" uid="uid://dp7rwu7lkypjn" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Kick Rainbow 1.wav" id="7_8lexy"]
 [ext_resource type="AudioStream" uid="uid://cyqs7v1jh8j15" path="res://Resources/Audio/SoundBanks/4_balkisch/Snare Cameleon.wav" id="7_fvvum"]
 [ext_resource type="SoundFont" uid="uid://c5dodwngr8aq" path="res://Experimental/soundfont/Monsoons Maple Neck 1974 Fender Jazz Bass.sfo" id="7_xq0bs"]

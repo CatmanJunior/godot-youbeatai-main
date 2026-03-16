@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://thas6t30mni3" path="res://Resources/Audio/SoundBanks/6_rock/EffectProfile.tres" id="5_5dk7e"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_oryav"]
 [ext_resource type="Resource" uid="uid://o1cld5bbq2y1" path="res://Resources/Audio/SoundBanks/6_rock/EffectProfile_bass.tres" id="6_4uiet"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_5dk7e"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_5dk7e"]
 [ext_resource type="AudioStream" uid="uid://c6recttco4teo" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Snare Butter 2.wav" id="7_4uiet"]
 [ext_resource type="AudioStream" uid="uid://qffta4dethj5" path="res://Resources/Audio/SoundBanks/6_rock/Snare Crystal 1.wav" id="7_x7f7w"]
 

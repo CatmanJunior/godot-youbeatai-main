@@ -1185,7 +1185,7 @@ metadata/_edit_use_anchors_ = true
 [node name="RecordSongButton" type="Sprite2D" parent="UserInterface" unique_id=730898878]
 self_modulate = Color(0.8, 0.8, 0.8, 1)
 z_index = -4
-position = Vector2(337, -932.75)
+position = Vector2(339, -934)
 scale = Vector2(2.5, 2.5)
 texture = ExtResource("65_tbynx")
 

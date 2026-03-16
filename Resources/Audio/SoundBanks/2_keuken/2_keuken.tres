@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://odobipxdwoem" path="res://Resources/Audio/SoundBanks/2_keuken/Kick Glory 1.wav" id="6_5bui3"]
 [ext_resource type="AudioStream" uid="uid://b2wvvwru36ift" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Kick Gnarly 2.wav" id="7_5bui3"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_th3op"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_n8rp0"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_n8rp0"]
 [ext_resource type="AudioStream" uid="uid://bkq6n8xf50qja" path="res://Resources/Audio/SoundBanks/2_keuken/Snare Phon_o 1.wav" id="10_fibcx"]
 [ext_resource type="AudioStream" uid="uid://cx1wjo8ba3h3v" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/Snare Phon_o 2.wav" id="11_fibcx"]
 

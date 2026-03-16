@@ -6,7 +6,6 @@ var result: AudioStreamWAV = null
 var recording: bool:
 	get: return GameState.is_recording
 
-var silence_length: float = 0.0
 var has_detected_sound: bool = false
 var actual_sound_length: float = 0.0
 
@@ -29,7 +28,6 @@ func _handle_recording(delta: float) -> void:
 		print("Detected sound with volume: %s" % get_recording_volume())
 		has_detected_sound = true
 	if not has_detected_sound:
-		silence_length += delta
 		return
 	
 	track_type = current_recording_track.track_type
@@ -45,14 +43,12 @@ func _handle_recording(delta: float) -> void:
 		_stop_recording()
 
 
-
 func _start_recording() -> void:
 	var cur_track_index = GameState.selected_track_index
 	current_recording_track = GameState.current_section.tracks[cur_track_index]
 
 	#Reset recording state
 	has_detected_sound = false
-	silence_length = 0.0
 	actual_sound_length = 0.0
 
 	#TODO maybe handle the muting in the audio manager instead of here based on starting/stopping recording
@@ -76,9 +72,13 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 
 
 func _on_recording_stopped(audio: AudioStream) -> void:
+	if not has_detected_sound:
+		print("No sound detected during recording.")
+		return
+
 	# Trim silence for sample tracks, keep full recording for loop tracks
 	if track_type == TrackData.TrackType.SAMPLE:
-		trimmed_audio_stream = AudioHelpers.trim_audio_stream(audio, silence_length)
+		trimmed_audio_stream = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
 	else:
 		trimmed_audio_stream = audio
 

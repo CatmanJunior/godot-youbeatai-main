@@ -53,6 +53,7 @@ public partial class SoundBankSelectionMenu : Panel
 
     void OnEmotionToggle(Button toggle, Label label, Label check)
     {
+
         if (chosenEmotions.Count >= 2 && !chosenEmotions.Contains(label.Text))
             return;
 
@@ -65,6 +66,7 @@ public partial class SoundBankSelectionMenu : Panel
                 emotie1.Text = label.Text;
                 check.Visible = true;
             }
+
 
             else if (emotie2.Text == ".")
             {
@@ -88,6 +90,7 @@ public partial class SoundBankSelectionMenu : Panel
                 check.Visible = false;
             }
         }
+
     }
 
     void OnThemeToggle(Button toggle, Label label, Label check)
@@ -145,6 +148,17 @@ public partial class SoundBankSelectionMenu : Panel
         chosenEmotions = new List<string>();
         chosenThemes = new List<string>();
 
+        if (MainMenu.PressedTutorial == true)
+        {
+            emotie1.Text = "😁";
+            thema1.Text = "💔";
+
+            chosenEmotions.Add("😁");
+            chosenThemes.Add("💔");
+        }
+
+
+
         foreach (var emotionToggle in emotionToggles)
         {
             var label = emotionToggle.GetParent() as Label;
@@ -196,28 +210,53 @@ public partial class SoundBankSelectionMenu : Panel
 
         gebruikButton.Pressed += () =>
         {
-            if (DisplayServer.TtsIsSpeaking())
+            GD.Print(MainMenu.PressedTutorial + "1");
+            if (MainMenu.PressedTutorial == true)
             {
-                DisplayServer.TtsStop();
-            }
-            // remember beat amount
-            {
-                path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
-                if (File.Exists(path)) File.Delete(path);
-                // File.WriteAllText(path, hoeveelBeats.Text);
+                GD.Print(MainMenu.PressedTutorial + "2");
 
-                //BpmManager.beatsAmount = int.Parse(hoeveelBeats.Text);
-            }
-
-            // remember if tutorial should be enabled or not
-            {
                 string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
                 if (File.Exists(path)) File.Delete(path);
-                File.WriteAllText(path, false.ToString());
+                File.WriteAllText(path, true.ToString());
+
+                //Tutorial.tutorialActivated = true;
+
+                GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
+            }
+            else if (MainMenu.PressedTutorial == false)
+            {
+                GD.Print(MainMenu.PressedTutorial + "3");
+
+                if (DisplayServer.TtsIsSpeaking())
+                {
+                    DisplayServer.TtsStop();
+                }
+                // remember beat amount
+                {
+                    path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "beats_amount.txt");
+                    if (File.Exists(path)) File.Delete(path);
+                    // File.WriteAllText(path, hoeveelBeats.Text);
+
+                    //BpmManager.beatsAmount = int.Parse(hoeveelBeats.Text);
+                }
+
+                // remember if tutorial should be enabled or not
+                {
+
+                    GD.Print(MainMenu.PressedTutorial + "4");
+
+                    string path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_tutorial.txt");
+                    if (File.Exists(path)) File.Delete(path);
+                    File.WriteAllText(path, false.ToString());
+                }
+
+
+                // load main scene
+                GD.Print(MainMenu.PressedTutorial + "5");
+
+                GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
             }
 
-            // load main scene
-            GetTree().ChangeSceneToFile("res://Scenes/loading.tscn");
         };
 
 

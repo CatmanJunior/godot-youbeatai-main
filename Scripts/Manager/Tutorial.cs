@@ -387,7 +387,7 @@ public static class Tutorial
             outcome: null
         ),
         (
-            instruction: "Super gedaan, het klinkt heel leuk",
+            instruction: "Super gedaan, het klinkt al leuk",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
@@ -505,9 +505,16 @@ public static class Tutorial
             condition: () => false,
             outcome: () =>
             {
+                string path = "";
+                path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_achievements.txt");
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, true.ToString());
+
                 DisplayServer.TtsStop();
                 manager.UtteranceEnd(0);
                 tutorial_level = -2;
+
+
                 manager.SetEntireInterfaceVisibility(true);
                 manager.achievementspanel.Visible = false;
                 manager.PlayExtraSFX(manager.achievement_sfx);

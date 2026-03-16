@@ -46,20 +46,43 @@ public static class Tutorial
     [
         // intro
         (
-            instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.",
-            condition: () => manager.clapped,
-            outcome: () =>
-            {
+        instruction: "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.",
 
-                manager.pointer.Visible = true;
-                manager.SetRingVisibility(_indexRedRing, true);
-                manager.cross.Visible = true;
-                manager.KlappyContinue.Visible = false;
-                manager.settingsButton.Visible = true;
-                manager.ContinueButton.EmitSignal("animation_play");
-                manager.PlayExtraSFX(manager.achievement_sfx);
+        condition: (() =>
+        {
+            if (!manager.HasNode("StepDelayTimer"))
+            {
+                Timer t = new Timer();
+                t.Name = "StepDelayTimer";
+                t.WaitTime = 8f;
+                t.OneShot = true;
+                t.Timeout += () => t.SetMeta("ready", true);
+                manager.AddChild(t);
+                t.Start();
             }
-        ),
+
+            Timer timer = manager.GetNode<Timer>("StepDelayTimer");
+            bool ready = timer.HasMeta("ready") && (bool)timer.GetMeta("ready");
+
+            return manager.clapped && ready;
+        }),
+
+        outcome: () =>
+        {
+            // outcome
+            manager.pointer.Visible = true;
+            manager.SetRingVisibility(_indexRedRing, true);
+            manager.cross.Visible = true;
+            manager.KlappyContinue.Visible = false;
+            manager.settingsButton.Visible = true;
+            manager.ContinueButton.EmitSignal("animation_play");
+            manager.PlayExtraSFX(manager.achievement_sfx);
+
+            // Timer opruimen zodat hij niet meerdere keren afgaat
+            if (manager.HasNode("StepDelayTimer"))
+                manager.GetNode<Timer>("StepDelayTimer").QueueFree();
+        }
+    ),
         // kick ring
         (
             instruction:     "Deze roze cirkels vormen een kick-ring",
@@ -364,7 +387,7 @@ public static class Tutorial
             outcome: null
         ),
         (
-            instruction: "Super gedaan, het klinkt heel leuk",
+            instruction: "Super gedaan, het klinkt al leuk",
             condition: () => !DisplayServer.TtsIsSpeaking(),
             outcome: () =>
             {
@@ -482,11 +505,24 @@ public static class Tutorial
             condition: () => false,
             outcome: () =>
             {
+                string path = "";
+                path = Path.Combine(ProjectSettings.GlobalizePath("user://"), "use_achievements.txt");
+                if (File.Exists(path)) File.Delete(path);
+                File.WriteAllText(path, true.ToString()); //ja
+
+                Achievements.useAchievements = true; //dit
+                Achievements.OnReady();
+
                 DisplayServer.TtsStop();
                 manager.UtteranceEnd(0);
                 tutorial_level = -2;
+
                 manager.SetEntireInterfaceVisibility(true);
-                manager.achievementspanel.Visible = false;
+
+                manager.SetRingVisibility(2, false); //hier
+                manager.SetRingVisibility(3, false);
+
+                manager.achievementspanel.Visible = true;
                 manager.PlayExtraSFX(manager.achievement_sfx);
                 manager.ContinueButton.Pressed -= _tutorialContinue;
                 manager.PianoArea.AreaEntered -= _bodyContinue;
@@ -601,6 +637,7 @@ public static class Tutorial
                 amount++;
         return amount;
     }
+
 
     private static void KlappyContinue()
     {

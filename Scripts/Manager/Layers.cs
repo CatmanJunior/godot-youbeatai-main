@@ -16,13 +16,15 @@ public partial class Manager : Node
     public List<AudioStream> layersVoiceOvers0 => layerVoiceOver0.layersVoiceOvers;
     public List<AudioStream> layersVoiceOvers1 => layerVoiceOver1.layersVoiceOvers;
 
+    [Export] public Texture2D[] DefaultLayerIcons;
+
     public void SpawnInitialLayerButtons()
     {
         for (int i = 0; i < layersAmountInitial; i++) AddLayer(i);
         SwitchLayerNextFrame(0);
     }
 
-    public void AddLayer(int layer, string emoji = null) // adds a layer at the end of the list of layers
+    public void AddLayer(int layer, Texture2D emoji = null) // adds a layer at the end of the list of layers
     {
         if (layersAmount == layersAmountMax) return;
 
@@ -80,17 +82,16 @@ public partial class Manager : Node
         if (layer == currentLayerIndex) SwitchLayer(0, false);
     }
 
-    public Button NewLayerButton(int layer, string emoji = null)
+    public Button NewLayerButton(int layer, Texture2D emoji = null)
     {
         var layerButton = (Button)layerButtonPrefab.Instantiate();
         LayerButtons.Insert(layer, layerButton);
         layerButtonsContainer.AddChild(layerButton);
 
-        if (emoji != null) layerButton.Text = emoji;
+        if (emoji != null) layerButton.Icon = emoji;
         else
         {
-            string[] options = ["🌱", "📜", "🤩", "🏁"];
-            layerButton.Text = options[layer];
+            layerButton.Icon = DefaultLayerIcons[layer];
         }
 
         layerButton.Pressed += () =>

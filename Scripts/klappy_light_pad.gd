@@ -14,7 +14,11 @@ var unlocked:= false
 var start_energy
 var flicker_done = false
 
-var colors = ["green", "red", "blue", "yellow"]
+var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
+
+var instruction_label:Label
+@export var _manager:Manager
+@export var achievment_panel:Panel
 
 func _ready() -> void:
 	bus_index = AudioServer.get_bus_index("SubMaster")
@@ -29,10 +33,10 @@ func _ready() -> void:
 	AudioServer.add_bus_effect(bus_index, highpass)
 	AudioServer.add_bus_effect(bus_index, lowpass)
 	
+	AudioServer.set_bus_effect_enabled(bus_index, 0, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 1, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
-	AudioServer.set_bus_effect_enabled(bus_index, 4, false)
 	
 	start_energy = klappyLight.energy
 	
@@ -40,6 +44,11 @@ func _ready() -> void:
 	
 	if KlappyEnergy != null:
 		KlappyEnergy.value_changed.connect(on_klappy_energy)
+		
+	assert(_manager!= null,"manger not found")
+	if not _manager.tutorialActivated():
+		_manager.OnUtteranceEnd.connect(_on_utterance_end)
+	_get_insrtuction_label()
 
 func _on_gui_input(event: InputEvent) -> void:
 	if unlocked == true:
@@ -66,10 +75,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
 			var y_percent = 1.0 - (pos.y / size.y)
 			
-			phaser.depth = 1.0 - x_percent 
-			distortion.drive = x_percent
-			highpass.cutoff_hz = lerp(20.0, 200.0, y_percent) #waardes moeten anders
-			lowpass.cutoff_hz = lerp(1000.0, 200.0, y_percent)
+			phaser.depth = clamp(1.0 - x_percent * 2.0, 0.0, 1.0)
+			distortion.drive = clamp((x_percent - 0.5) * 2.0, 0.0, 1.0)
+			highpass.resonance = 0.5
+			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
+			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
 			#print(pos)
 			
@@ -90,9 +100,10 @@ func _on_gui_input(event: InputEvent) -> void:
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
 func on_klappy_energy(value):
-	if value >= 28 and not flicker_done:  #bij de 90 ofzo en dan moet klappy wat zeggen over lampje
+	if value >= 100 and not flicker_done:  
 		unlocked = true
 		flicker_done = true
+		_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
 		lightFlicker()
 	
 func lightFlicker():
@@ -104,3 +115,31 @@ func lightFlicker():
 		
 	klappyLight.color = Color("#ffe8aa")
 	
+	
+func _fill_instruction_label(_name:String):
+	if instruction_label == null : push_error("Label not found")
+	instruction_label.text = _name
+	_achievement_panel_visibility(0)
+	_start_tts(_name)
+	
+func _achievement_panel_visibility(_utterance_id:int):
+	print("panel visibility yay")
+	if not achievment_panel.visible :
+		achievment_panel.visible = true
+		
+func _start_tts(message:String):
+	var voices = DisplayServer.tts_get_voices_for_language("nl")
+	if voices.size() == 0:
+		voices = DisplayServer.tts_get_voices_for_language("en")
+
+	if(voices.size() == 0): voices = DisplayServer.tts_get_voices_for_language("en")
+	if(DisplayServer.tts_is_speaking()):DisplayServer.tts_stop()
+	DisplayServer.tts_speak(_manager.Text_without_emoticons(message),voices[0],100)
+
+func _on_utterance_end(_utterance):
+	achievment_panel.visible = false
+
+func _get_insrtuction_label():
+	for c in achievment_panel.get_children():
+		if c.name == "InstructionLabel":
+			instruction_label = c

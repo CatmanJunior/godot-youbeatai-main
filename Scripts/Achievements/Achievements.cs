@@ -1,10 +1,8 @@
 using Godot;
-
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using System;
 using System.Globalization;
+using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 public static class Achievements
@@ -32,27 +30,28 @@ public static class Achievements
             result: () => { manager.SetRingVisibility(3, true); }
         ),
         Achievement(
-            condition: manager.layerVoiceOver0.GetCurrentLayerVoiceOver() != null && pauseBetweenSynthUnlock(),
-            tooltip: "Door de gele ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
-            result: () => { manager.layerVoiceOver1.bigLine.Visible = true; }
+            condition: pauseBetweenSynthUnlock(),
+            tooltip: "Door de gele ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.", //hier een andere zin, vogel moet meteen unlocken
+            result: () => { manager.layerVoiceOver1.smallLine.Visible = true; }
         ),
         Achievement(
             condition: manager.layerVoiceOver1.GetCurrentLayerVoiceOver() != null,
             tooltip: "Als je de paarse ring 🐦 op neemt kan je daarna hier nieuwe lagen toevoegen."
+            //result: () => { manager.layerVoiceOver1.smallLine.Visible = true; }
         ),
         Achievement(
             condition: manager.addedLayer,
             tooltip: "Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
         ),
         Achievement(
-            condition:manager.firstAudioPlayerRec.Stream != null, 
+            condition:manager.firstAudioPlayerRec.Stream != null,
             tooltip: "Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
         ),
         Achievement(
-            condition:manager.secondAudioPlayerRec.Stream != null, 
+            condition:manager.secondAudioPlayerRec.Stream != null,
             tooltip: "Kan je hier voor mij een kort gek geluid opnemen?"
         )
-        
+
     ];
 
     static void SetupDefaultUserInterfaceState()
@@ -72,12 +71,12 @@ public static class Achievements
                 timer = manager.GetTree().CreateTimer(3);
                 timer.Timeout += onTimeOut;
             }
-           
+
             if (!paused)
             {
                 return true;
             }
-            
+
         }
         return false;
     }
@@ -159,18 +158,18 @@ public static class Achievements
             {
                 var node = nodes[i];
                 var blocker = FindBlocker(node);
-              
-               
-             
+
+
+
 
                 blocker.GuiInput += (inputEvent) =>
                 {
                     if (inputEvent is InputEventMouseButton mouseEvent)
                     {
                         if (mouseEvent.Pressed && mouseEvent.ButtonIndex == MouseButton.Left)
-                        {   
-                         
-                           if (!allowedToSpeak(blocker)) return;
+                        {
+
+                            if (!allowedToSpeak(blocker)) return;
                             if (manager.achievementspanel.Visible) CloseTooltip();
 
                             OpenTooltip(node);
@@ -191,7 +190,7 @@ public static class Achievements
     {
         for (int i = 0; i < nodes.Length; i++)
         {
-           
+
             var node = nodes[i];
             var blocker = FindBlocker(node);
             var worth = achievements[i].worth;
@@ -229,7 +228,7 @@ public static class Achievements
         }
     }
 
-public static void SetBlockerState(Blocker blocker, bool enabled)
+    public static void SetBlockerState(Blocker blocker, bool enabled)
     {
         blocker.Visible = enabled;
         blocker.MouseFilter = enabled ? Control.MouseFilterEnum.Stop : Control.MouseFilterEnum.Ignore;
@@ -293,7 +292,7 @@ public static void SetBlockerState(Blocker blocker, bool enabled)
         }
 
         GD.Print("use achievements: " + use.ToString());
-        
+
         return use;
     }
 

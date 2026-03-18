@@ -47,4 +47,4 @@ func _update_progress_bar() -> void:
 
 func _on_play_pause() -> void:
 	if not play_pause_button.disabled:
-		EventBus.play_pause_toggled.emit()
+		EventBus.play_pause_toggle_requested.emit()

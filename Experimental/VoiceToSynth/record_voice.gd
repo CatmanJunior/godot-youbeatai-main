@@ -115,7 +115,7 @@ func stop_recording():
 			sample.x = closest.frequency
 			get_sample().push_back(sample)
 	
-	get_sample().resize(bpmManager.amount_of_beats / (4.0 / beats_per_bar))	
+	get_sample().resize(bpmManager.total_beat_count / (4.0 / beats_per_bar))	
 	print("samples(%d) \n %s" % [len(get_sample()), get_sample()])
 
 func play_recording():

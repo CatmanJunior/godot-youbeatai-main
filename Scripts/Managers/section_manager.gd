@@ -155,13 +155,12 @@ func _insert_silence_for_section(section: int) -> void:
 		return # No active recording, nothing to do
 
 	var rec_node = get_node_or_null("%RealTimeAudioRecording")
-	var bpm_node = get_node_or_null("%BpmManager")
-	if rec_node == null or bpm_node == null:
+	if rec_node == null:
 		return
 
 	var result := AudioSavingManager.insert_silent_layer_part_of_recordings(
 		rec_node.recording_result, song_vo.voice_over,
-		section, bpm_node.beats_amount, bpm_node.base_time_per_beat)
+		section, GameState.total_beats, GameState.beat_duration)
 
 	if result.recording:
 		rec_node.recording_result = result.recording
@@ -182,13 +181,12 @@ func _remove_audio_for_section(section: int) -> void:
 		return
 
 	var rec_node = get_node_or_null("%RealTimeAudioRecording")
-	var bpm_node = get_node_or_null("%BpmManager")
-	if rec_node == null or bpm_node == null:
+	if rec_node == null:
 		return
 
 	var result := AudioSavingManager.remove_layer_part_of_recordings(
 		rec_node.recording_result, song_vo.voice_over,
-		section, bpm_node.beats_amount, bpm_node.base_time_per_beat)
+		section, GameState.total_beats, GameState.beat_duration)
 
 	if result.recording:
 		rec_node.recording_result = result.recording

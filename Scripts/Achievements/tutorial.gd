@@ -36,7 +36,6 @@ var _increased_speed: bool = false
 var tutorial_steps: Array = []
 const TUTORIAL_STEPS_PATH: String = "res://Data/tutorial_steps.json"
 
-var bpmManager: Node
 var beatManager: Node
 var audioPlayerManager: Node
 var uiManager: Node
@@ -47,7 +46,6 @@ var gameManager: Node
 func _ready():
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 	mixingManager = %MixingManager
-	bpmManager = %BpmManager
 	beatManager = %BeatManager
 	audioPlayerManager = %AudioPlayerManager
 	uiManager = %UiManager
@@ -83,10 +81,10 @@ func _cond_tts_done() -> bool:
 	return not DisplayServer.tts_is_speaking()
 
 func _cond_playing() -> bool:
-	return bpmManager.playing
+	return GameState.playing
 
 func _cond_not_playing() -> bool:
-	return not bpmManager.playing
+	return not GameState.playing
 
 func _cond_timer_done() -> bool:
 	return _timer.time_left == 0
@@ -99,7 +97,7 @@ func _cond_red_ring_filled() -> bool:
 
 func _cond_update_red_and_playing() -> bool:
 	_beats_active_red_ring = _active_beats_per_ring(_INDEX_RED_RING)
-	return bpmManager.playing
+	return GameState.playing
 
 func _cond_stomped_enough() -> bool:
 	return beatManager.stomped_on_beat_amount >= _FIXED_AMOUNT
@@ -113,7 +111,7 @@ func _cond_circle_removed() -> bool:
 
 func _cond_update_orange_and_playing() -> bool:
 	_beats_active_orange_ring = _active_beats_per_ring(_INDEX_ORANGE_RING)
-	return bpmManager.playing
+	return GameState.playing
 
 func _cond_clapped_enough() -> bool:
 	return beatManager.clapped_on_beat_amount >= _FIXED_AMOUNT
@@ -193,7 +191,7 @@ func _outcome_stomp_done() -> void:
 	_stomping = false
 	uiManager.amount_left.visible = false
 	uiManager.amount_left.text = ""
-	bpmManager.instance.playing = false
+	EventBus.playing_change_requested.emit(false)
 	play_achievement_sfx()
 
 func _outcome_show_orange_ring() -> void:
@@ -211,7 +209,7 @@ func _outcome_clap_listen() -> void:
 	play_achievement_sfx()
 
 func _outcome_stop_playing() -> void:
-	bpmManager.instance.playing = false
+	EventBus.playing_change_requested.emit(false)
 
 func _outcome_orange_ring_filled() -> void:
 	_beats_active_orange_ring = _active_beats_per_ring(_INDEX_ORANGE_RING)
@@ -350,7 +348,7 @@ func try_activate_tutorial() -> void:
 	if use_tutorial:
 		print("tutorial activated")
 		uiManager.transport_ui.pointer.visible = false
-		bpmManager.instance.bpm = 60
+		EventBus.bpm_set_requested.emit(60)
 		visabilityManager.set_entire_interface_visibility(false)
 		uiManager.audio_export_ui.settings_button.visible = true
 		uiManager.achievements_panel.visible = true
@@ -414,7 +412,7 @@ func _read_use_tutorial() -> bool:
 
 func _active_beats_per_ring(index_ring: int) -> int:
 	var amount: int = 0
-	for beat in range(bpmManager.beats_amount):
+	for beat in range(GameState.total_beats):
 		if beatManager.current_section.get_beat(index_ring, beat):
 			amount += 1
 	return amount
@@ -442,7 +440,7 @@ func _body_continue(body: Area2D) -> void:
 
 
 func _next_line() -> void:
-	print(bpmManager.bpm)
+	print(GameState.bpm)
 	if _outcome.is_valid():
 		_outcome.call()
 	if tutorial_level >= tutorial_steps.size():
@@ -499,7 +497,7 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 
 
 func _skip_play() -> bool:
-	if bpmManager.playing:
+	if GameState.playing:
 		_text_allowed = false
 		return true
 	else:

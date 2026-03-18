@@ -1,49 +1,44 @@
 extends Node
+var beats_per_bar = 4.0
 
 @export var bpm: int = 120:
 	set(value):
 		bpm = value
 		EventBus.bpm_changed.emit(bpm)
 
-static var beats_amount: int = 16
+static var total_beats: int = 16
 
-@export var amount_of_beats: int:
+@export var total_beat_count: int:
 	get:
-		return beats_amount
+		return total_beats
 
-var _playing: bool = false
+var _is_playing: bool = false
 
 @export var playing: bool:
 	set(value):
-		if _playing != value:
+		if _is_playing != value:
 			EventBus.playing_changed.emit(value)
-		_playing = value
+		_is_playing = value
 	get:
-		return _playing
+		return _is_playing
 
-@export var current_beat: int = beats_amount - 1
-var beat_timer: float = 0.0
+@export var current_beat: int = total_beats - 1
+var beat_elapsed: float = 0.0
 
 @export var swing: float = 0.05
 
-var base_time_per_beat: float
-var time_per_beat: float = 60.0 / bpm
+var beat_duration: float
+
 
 var beat_progress: float = 0.0
 var bar_progress: float = 0.0
 
 func get_beat_progress() -> float:
-	var new_beat_progress = beat_timer / time_per_beat
-	if current_beat % 2 == 1:
-		# Swing the odd beats by adding the swing percentage to the beat progress
-		new_beat_progress += swing
-	else:
-		# Swing the even beats by subtracting the swing percentage from the beat progress
-		new_beat_progress -= swing
-	return clamp(new_beat_progress, 0.0, 1.0)
+	var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
+	var progress = beat_elapsed / swing_adjusted_duration
+	return clamp(progress, 0.0, 1.0)
 
 func get_bar_progress() -> float:
-	var total_beats = beats_amount
 	var current_beat_with_progress = float(current_beat) + get_beat_progress()
 	return current_beat_with_progress / float(total_beats)
 
@@ -51,28 +46,44 @@ func _ready():
 	EventBus.bpm_up_requested.connect(func(value): bpm += value)
 	EventBus.bpm_down_requested.connect(func(value): bpm -= value)
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
-	EventBus.play_pause_toggled.connect(func(): playing = !playing)
+	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
+	EventBus.beat_seek_requested.connect(func(beat): current_beat = beat)
 	EventBus.bpm_changed.emit(bpm)
 
+func _on_play_pause_toggled():
+	playing = not playing
+	if not playing:
+		EventBus.all_players_stop_requested.emit()
 
-func _on_playing_change_requested(isplaying: bool):
-	playing = isplaying
+func _on_playing_change_requested(is_playing: bool):
+	playing = is_playing
 	
+	if not playing:
+		EventBus.all_players_stop_requested.emit()
 
 func _process(delta: float):
+	beat_duration = 60.0 / bpm / beats_per_bar
 	beat_progress = get_beat_progress()
 	bar_progress = get_bar_progress()
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
+	GameState.total_beats = total_beats
+	GameState.beat_duration = beat_duration
 	
 	if playing:
-		beat_timer += delta
-		var beats_per_bar = 4.0
-		base_time_per_beat = 60.0 / bpm / beats_per_bar
-		time_per_beat = base_time_per_beat + (base_time_per_beat * swing) if (current_beat % 2 == 1) else base_time_per_beat - (base_time_per_beat * swing)
+		beat_elapsed += delta
 		
-		if beat_timer > time_per_beat:
-			beat_timer -= time_per_beat
-			current_beat = (current_beat + 1) % beats_amount
+		var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
+		
+		if beat_elapsed > swing_adjusted_duration:
+			beat_elapsed -= swing_adjusted_duration
+			current_beat = (current_beat + 1) % total_beats
 			EventBus.beat_triggered.emit(current_beat)
+
+
+func _get_swing_offset() -> float:
+	if current_beat % 2 == 1:
+		return swing
+	else:
+		return -swing

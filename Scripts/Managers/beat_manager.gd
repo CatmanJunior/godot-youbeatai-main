@@ -119,7 +119,10 @@ func on_beat():
 	for track_index in range(GameState.current_section.SAMPLE_TRACKS_PER_SECTION):
 		if GameState.current_section.get_beat(track_index, current_beat):
 			EventBus.play_sample_track_requested.emit(track_index)
-		
+	if current_beat == 0:
+		for track_index in range(GameState.current_section.SYNTH_TRACKS_PER_SECTION):
+			EventBus.play_track_requested.emit(track_index + GameState.current_section.SAMPLE_TRACKS_PER_SECTION)
+
 	# Update progress bar value
 	if current_beat == 0:
 		if progress_bar_value < 50.0:
@@ -136,11 +139,11 @@ func on_beat():
 	
 	var clap_active = GameState.current_section.get_beat(1, next_beat)
 	if clap_active:
-		EventBus.should_clap.emit()
+		EventBus.clap_triggered.emit()
 	
 	var stomp_active = GameState.current_section.get_beat(0, next_beat)
 	if stomp_active:
-		EventBus.should_stomp.emit()
+		EventBus.stomp_triggered.emit()
 
 func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""

@@ -3,7 +3,6 @@ extends Node
 @export var count_down_panel: Panel
 @export var count_down_label: Label
 @export var mic_button_location: Node2D
-var bpm_manager: Node
 
 var is_showing_count_down: bool = false
 
@@ -12,7 +11,6 @@ func _ready():
     EventBus.countdown_show_requested.connect(show_count_down)
     EventBus.countdown_close_requested.connect(close_count_down)
 
-    bpm_manager = %BpmManager
     var mixing_manager = %MixingManager
     if mixing_manager:
         mic_button_location = mixing_manager.mic_button_location
@@ -38,9 +36,7 @@ func update_count_down_label():
 
 
 func calculate_time_until_top() -> float:
-    if not bpm_manager:
-        return 0.0
-    var cur_beat: int = bpm_manager.current_beat
-    var beats_until_top: int = bpm_manager.amount_of_beats - cur_beat - 1
+    var cur_beat: int = GameState.current_beat
+    var beats_until_top: int = GameState.total_beats - cur_beat - 1
     var four_beats_until_top: int = beats_until_top / 4
     return four_beats_until_top + 1

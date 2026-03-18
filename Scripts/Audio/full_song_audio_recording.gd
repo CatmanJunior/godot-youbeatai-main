@@ -20,7 +20,6 @@ var finished: bool = false
 
 # Manager references
 var song_voice_over: Node
-var bpm_manager: Node
 var layer_manager: Node
 var ui_manager: Node
 
@@ -28,7 +27,6 @@ func _ready():
 
 	# Get manager references
 	song_voice_over = %SongVoiceOver
-	bpm_manager = %BpmManager
 	layer_manager = %LayerManager
 	ui_manager = %UiManager
 
@@ -55,11 +53,9 @@ func _process(delta: float):
 		recording_timer = 0.0
 
 	# Set progress bar value
-	if recording and progress_bar and layer_manager and bpm_manager:
+	if recording and progress_bar and layer_manager:
 		var layers_amount = layer_manager.sections_amount
-		var beats_amount = bpm_manager.beats_amount
-		var base_time_per_beat = bpm_manager.base_time_per_beat
-		var total_time = layers_amount * beats_amount * base_time_per_beat
+		var total_time = layers_amount * GameState.total_beats * GameState.beat_duration
 		if total_time > 0:
 			progress_bar.value = recording_timer / total_time
 
@@ -109,11 +105,8 @@ func _on_button():
 			var last_layer = layer_manager.sections_amount - 1
 			layer_manager.switch_layer(last_layer)
 
-		if bpm_manager:
-			bpm_manager.current_beat = bpm_manager.beats_amount / 2
-
-			# Playing true
-			bpm_manager.playing = true
+		EventBus.beat_seek_requested.emit(GameState.total_beats / 2)
+		EventBus.playing_change_requested.emit(true)
 
 		# Also play metronome sound on first beat
 		var game_manager = get_node_or_null("%GameManager")

@@ -23,7 +23,6 @@ var finished: bool = false
 
 # References
 var game_manager: Node
-var bpm_manager: Node
 var layer_manager: Node
 var layer_voice_over_0: Node
 var layer_voice_over_1: Node
@@ -31,7 +30,6 @@ var uiManager: Node
 
 func _ready():
 	game_manager = %GameManager
-	bpm_manager = %BpmManager
 	layer_manager = %LayerManager
 	layer_voice_over_0 = %LayerVoiceOver0
 	layer_voice_over_1 = %LayerVoiceOver1
@@ -67,10 +65,7 @@ func _process(delta: float):
 	# Update progress bar
 	if recording and progress_bar and game_manager and layer_manager:
 		var layers_amount = layer_manager.sections_amount if layer_manager.has("sections_amount") else 4
-		var beats_amount = bpm_manager.beats_amount if bpm_manager and bpm_manager.has("beats_amount") else 16
-		var base_time_per_beat = bpm_manager.base_time_per_beat if bpm_manager and bpm_manager.has("base_time_per_beat") else 0.5
-		
-		var total_time = layers_amount * beats_amount * base_time_per_beat
+		var total_time = layers_amount * GameState.total_beats * GameState.beat_duration
 		progress_bar.value = recording_timer / total_time if total_time > 0 else 0.0
 	
 	# Set audio volume
@@ -105,9 +100,8 @@ func _on_record_button_pressed():
 		game_manager.switch_layer(last_layer)
 	
 	# Set beat position
-	if bpm_manager:
-		bpm_manager.current_beat = bpm_manager.beats_amount / 2
-		bpm_manager.playing = true
+	EventBus.beat_seek_requested.emit(GameState.total_beats / 2)
+	EventBus.playing_change_requested.emit(true)
 	
 	# Play metronome sound
 	if game_manager and game_manager.has_method("play_extra_sfx"):

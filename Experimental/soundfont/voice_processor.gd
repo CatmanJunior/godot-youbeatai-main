@@ -12,7 +12,7 @@ signal on_processed(data: Array[SequenceNote])
 
 func filter_time(data: Vector3):
 	var beatDuration = 60.0/bpmManager.bpm /4.0
-	return data.z <= bpmManager.amount_of_beats * beatDuration
+	return data.z <= bpmManager.total_beat_count * beatDuration
 
 func reduce_to_average(group: Array): 
 	# filter low volume samples
@@ -35,7 +35,7 @@ func start_processing(data: PackedVector3Array):
 	var data_array: Array = Array(data)
 	data_array = data_array.filter(filter_time)
 	
-	var length = bpmManager.amount_of_beats * beats_amount_scaler
+	var length = bpmManager.total_beat_count * beats_amount_scaler
 	var group_size = (len(data_array) / length)
 	if group_size == 0:
 		printerr("not enought data received got: %d" % len(data_array))

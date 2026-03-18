@@ -3,7 +3,7 @@ extends Label
 var _saving_label_timer: float = 0.0
 
 func _ready() -> void:
-	EventBus.done_saving.connect(_on_done_saving)
+	EventBus.saving_completed.connect(_on_saving_completed)
 	visible = false
 
 func _process(delta: float) -> void:
@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 			visible = false
 			_saving_label_timer = 0.0
 
-func _on_done_saving(path: String) -> void:
+func _on_saving_completed(path: String) -> void:
 	text = "Saved to: " + path.get_file()
 	visible = true
 	_saving_label_timer = 0.0

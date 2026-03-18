@@ -72,7 +72,7 @@ func _to_actives(content: String) -> Array:
 		push_error("Invalid number of lines: %d. Expected 4." % lines.size())
 		return []
 
-	var beats_amount: int = %BpmManager.beats_amount
+	var beats_amount: int = GameState.total_beats
 	var bool_array: Array = []
 
 	for i in range(4):

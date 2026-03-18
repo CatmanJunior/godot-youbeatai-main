@@ -31,10 +31,10 @@ func _init(new_index: int = 0, section_emoji: String = "") -> void:
 	emoji = section_emoji
 
 	for i in range(SAMPLE_TRACKS_PER_SECTION):
-		tracks.append(SampleTrackData.new())
+		tracks.append(SampleTrackData.new(i))
 
 	for i in range(SYNTH_TRACKS_PER_SECTION):
-		tracks.append(SynthTrackData.new())
+		tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION))
 
 
 # ── Beat access helpers ──────────────────────────────────────────────────────

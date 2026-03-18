@@ -1,8 +1,5 @@
 extends Node
 
-var trimmed_audio_stream: AudioStream = null
-var result: AudioStreamWAV = null
-
 var recording: bool:
 	get: return GameState.is_recording
 
@@ -31,11 +28,9 @@ func _handle_recording(delta: float) -> void:
 	if not has_detected_sound:
 		return
 	
-	track_type = current_recording_track.track_type
-
 	actual_sound_length += delta
 
-	var beats_to_record = 1 if track_type == TrackData.TrackType.SAMPLE else GameState.beats_amount
+	var beats_to_record = 1 if track_type == TrackData.TrackType.SAMPLE else GameState.total_beats
 	var percentage: float = actual_sound_length / (GameState.time_per_beat * beats_to_record)
 
 	recording_sample_button.update_button(percentage)
@@ -51,18 +46,19 @@ func _handle_recording(delta: float) -> void:
 func _start_recording() -> void:
 	var cur_track_index = GameState.selected_track_index
 	current_recording_track = GameState.current_section.tracks[cur_track_index]
+	track_type = current_recording_track.track_type
 
 	#Reset recording state
 	has_detected_sound = false
 	actual_sound_length = 0.0
 
 	#TODO maybe handle the muting in the audio manager instead of here based on starting/stopping recording
-	EventBus.request_mute_all.emit(true)
-	EventBus.request_start_recording.emit()
+	EventBus.mute_all_requested.emit(true)
+	EventBus.start_recording_requested.emit()
 
 func _stop_recording() -> void:
-	EventBus.request_mute_all.emit(false)
-	EventBus.request_stop_recording.emit()
+	EventBus.mute_all_requested.emit(false)
+	EventBus.stop_recording_requested.emit()
 
 #------------------Event Handlers----------------------
 func _on_recording_sample_button_toggled(toggled: bool) -> void:
@@ -73,7 +69,7 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 		_stop_recording()
 	elif not toggled:
 		# If button is toggled off but we're not recording, ensure everything is reset
-		EventBus.request_mute_all.emit(false)
+		EventBus.mute_all_requested.emit(false)
 
 
 func _on_recording_stopped(audio: AudioStream) -> void:
@@ -83,16 +79,14 @@ func _on_recording_stopped(audio: AudioStream) -> void:
 
 	# Trim silence for sample tracks, keep full recording for loop tracks
 	if track_type == TrackData.TrackType.SAMPLE:
-		trimmed_audio_stream = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
-	else:
-		trimmed_audio_stream = audio
+		audio = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
 
 	# Update waveform visualization with the final recorded audio (only for SYNTH tracks)
 	if track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_waveform(GameState.selected_track_index, trimmed_audio_stream)
-		waveform_visualizer.reset_progress(GameState.selected_track_index)
+		waveform_visualizer.update_waveform(current_recording_track.index, audio)
+		waveform_visualizer.reset_progress(current_recording_track.index)
 
-	EventBus.request_set_stream.emit(GameState.selected_track_index, 2, trimmed_audio_stream)
+	EventBus.set_recorded_stream_requested.emit(current_recording_track.index, audio)
 
 
 func get_recording_volume() -> float:

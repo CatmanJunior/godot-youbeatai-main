@@ -42,7 +42,7 @@ func _handle_arrow_keys():
 func _handle_space_key():
 	var space_pressed = Input.is_key_pressed(KEY_SPACE)
 	if space_pressed and not space_pressed_lastframe:
-		EventBus.play_pause_toggled.emit()
+		EventBus.play_pause_toggle_requested.emit()
 	space_pressed_lastframe = space_pressed
 
 func _handle_enter_key():

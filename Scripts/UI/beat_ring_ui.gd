@@ -26,7 +26,7 @@ func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
 	_reset_scales()
 
 func _initialize_sprite_positions() -> void:
-	var beats_amount = GameState.beats_amount
+	var beats_amount = GameState.total_beats
 
 	beat_sprites = []
 	for ring in range(4):
@@ -94,7 +94,7 @@ func update(delta: float) -> void:
 	_update_beat_sprites(delta)
 
 func _update_beat_sprites(delta: float) -> void:
-	var beats_amount = GameState.beats_amount
+	var beats_amount = GameState.total_beats
 	var current_beat = GameState.current_beat
 
 	for ring in range(min(4, beat_sprites.size())):
@@ -134,7 +134,7 @@ func _get_template_active(ring: int, beat: int) -> bool:
 
 # Reset all beat sprite scales (called after a section switch)
 func _reset_scales() -> void:
-	var beats_amount = GameState.beats_amount
+	var beats_amount = GameState.total_beats
 	for ring in range(min(4, beat_sprites.size())):
 		for beat in range(min(beats_amount, beat_sprites[ring].size())):
 			var sprite = beat_sprites[ring][beat] as Sprite2D

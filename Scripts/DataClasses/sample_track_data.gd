@@ -10,9 +10,9 @@ var beats: Array[bool] = []
 var main_audio_stream: AudioStream = null
 var alt_audio_stream: AudioStream = null
 
-func _init(knob_pos: Vector2 = Vector2.ZERO) -> void:
-	super._init(knob_pos, TrackType.SAMPLE)
-	var beats_amount = GameState.beats_amount
+func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
+	super._init(track_index, knob_pos, TrackType.SAMPLE)
+	var beats_amount = GameState.total_beats
 	for i in range(beats_amount):
 		beats.append(false)
 
@@ -30,7 +30,7 @@ func clear_beats() -> void:
 
 
 func duplicate_track() -> TrackData:
-	var copy: SampleTrackData = SampleTrackData.new(knob_position)
+	var copy: SampleTrackData = SampleTrackData.new(index, knob_position)
 	for i in range(beats.size()):
 		copy.beats[i] = beats[i]
 	copy.master_volume = master_volume

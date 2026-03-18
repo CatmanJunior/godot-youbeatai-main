@@ -30,8 +30,8 @@ var is_stamping: bool:
 	get: return stamp_volume > stamp_threshold and stamp_volume > clap_volume
 
 func _ready():
-	EventBus.request_start_recording.connect(_start_recording)
-	EventBus.request_stop_recording.connect(_stop_recording)
+	EventBus.start_recording_requested.connect(_start_recording)
+	EventBus.stop_recording_requested.connect(_stop_recording)
 	microphone = AudioStreamMicrophone.new()
 	audio_stream_player = AudioStreamPlayer.new()
 	add_child(audio_stream_player)

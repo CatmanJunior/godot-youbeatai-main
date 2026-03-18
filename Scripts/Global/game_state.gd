@@ -44,7 +44,7 @@ var selected_track: TrackData:
 var playing: bool = false
 var bpm: int = 120
 var current_beat: int = 0
-var beats_amount: int = 16
+var total_beats: int = 16
 var swing: float = 0.05
 
 ## This is a value from 0 to 1 representing how far along the current beat is.
@@ -53,7 +53,10 @@ var beat_progress: float = 0.0
 ## This is a value from 0 to 1 representing how far along the current bar is.
 var bar_progress: float = 0.0
 
-## time per beat in seconds, calculated from bpm
+## Duration of one beat subdivision in seconds (60 / bpm / beats_per_bar).
+var beat_duration: float = 0.5
+
+## time per quarter note in seconds, calculated from bpm
 var time_per_beat: float:
 	get:
 		return 60.0 / bpm
@@ -74,14 +77,10 @@ func _ready() -> void:
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 	EventBus.recording_started.connect(func(): is_recording = true)
 	EventBus.recording_stopped.connect(func(_audio): is_recording = false)
-	EventBus.recording_volume_threshold_changed.connect(_on_recording_volume_threshold_changed)
 
 func _on_bpm_changed(new_bpm: int) -> void:
 	bpm = new_bpm
 	
-func _on_recording_volume_threshold_changed(threshold: float) -> void:
-	recording_volume_threshold = threshold
-
 # ── Section helpers ──────────────────────────────────────────────────────────
 
 func _on_section_changed(_old_section: SectionData, section: SectionData) -> void:

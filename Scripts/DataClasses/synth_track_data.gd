@@ -4,13 +4,13 @@ extends TrackData
 ## Data class for a synth-based track within a section.
 ## Holds voice-over recordings in addition to the base track properties.
 
-func _init(knob_pos: Vector2 = Vector2.ZERO) -> void:
-	super._init(knob_pos, TrackType.SYNTH)
+func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
+	super._init(track_index, knob_pos, TrackType.SYNTH)
 
 
 
 func duplicate_track() -> TrackData:
-	var copy : SynthTrackData = SynthTrackData.new(knob_position)
+	var copy : SynthTrackData = SynthTrackData.new(index, knob_position)
 	copy.recorded_audio_stream = recorded_audio_stream
 	copy.master_volume = master_volume
 	copy.weights = weights

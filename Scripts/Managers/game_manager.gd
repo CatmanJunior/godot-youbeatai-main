@@ -50,25 +50,25 @@ func _on_save_to_mp3():
 func _export_song_wav() -> void:
 	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
 	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
-	var bpm: int = GameState.current_bpm
+	var bpm: int = GameState.bpm
 
 	var path: String = AudioSavingManager.save_realtime_recorded_song_as_file(
 		recording, voice_over, bpm)
 	if path != "":
-		EventBus.done_saving.emit(path)
+		EventBus.saving_completed.emit(path)
 
 func _export_beat_wav() -> void:
 	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
 	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
-	var bpm: int = GameState.current_bpm
+	var bpm: int = GameState.bpm
 	var section_index: int = GameState.current_section_index
-	var beats_amount: int = GameState.current_beats_amount
-	var base_time_per_beat: float = GameState.current_base_time_per_beat
+	var beats_amount: int = GameState.total_beats
+	var base_time_per_beat: float = GameState.beat_duration
 
 	var path: String = AudioSavingManager.save_realtime_recorded_beat_as_file(
 		recording, voice_over, bpm, section_index, beats_amount, base_time_per_beat)
 	if path != "":
-		EventBus.done_saving.emit(path)
+		EventBus.saving_completed.emit(path)
 
 
 func deferred_setup():

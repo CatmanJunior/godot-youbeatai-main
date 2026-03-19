@@ -1,0 +1,6 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://bn1s5vrvsafmc"]
+
+[ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="1_vssjg"]
+
+[resource]
+texture = ExtResource("1_vssjg")

@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 [gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://c7fndsac7jjs0"]
+=======
+[gd_resource type="Resource" script_class="AudioBank" load_steps=31 format=3 uid="uid://c7fndsac7jjs0"]
+>>>>>>> original/jesse
 
 [ext_resource type="AudioStream" uid="uid://dgbl8wu1v4lqi" path="res://Resources/Audio/SoundBanks/7_techno/Clap War.wav" id="1_nkqdq"]
 [ext_resource type="AudioStream" uid="uid://c0qmg2guj5x5c" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Clap Fakesch.wav" id="2_iwmnv"]
 [ext_resource type="AudioStream" uid="uid://dfe2o2axnli7g" path="res://Resources/Audio/SoundBanks/7_techno/ClosedHH Bandits 2.wav" id="2_n5lsl"]
 [ext_resource type="AudioStream" uid="uid://xmh8mieolg8w" path="res://Resources/Audio/SoundBanks/7_techno/Kick Elektrocuted 2.wav" id="4_470u0"]
 [ext_resource type="AudioStream" uid="uid://cqno1pepig43l" path="res://Resources/Audio/SoundBanks/7_techno/mineur/ClosedHH BackOut.wav" id="4_kmdtp"]
+<<<<<<< HEAD
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_iwmnv"]
 [ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="5_kmdtp"]
 [ext_resource type="Resource" uid="uid://dry8m7r2tj6dq" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile_Bass.tres" id="6_g7ebr"]
@@ -12,6 +17,98 @@
 [ext_resource type="AudioStream" uid="uid://c0vncoipende0" path="res://Resources/Audio/SoundBanks/7_techno/Snare Elektrocuted 2.wav" id="7_g7ebr"]
 [ext_resource type="AudioStream" uid="uid://c4jnqb0mi577" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Kick A LowLife.wav" id="7_rojp7"]
 [ext_resource type="AudioStream" uid="uid://d3x5of0xstwhn" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Snare AB 2.wav" id="11_cefoj"]
+=======
+[ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="5_kmdtp"]
+[ext_resource type="Resource" uid="uid://dry8m7r2tj6dq" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile_Bass.tres" id="6_g7ebr"]
+[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="6_kmdtp"]
+[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Experimental/soundfont/tencho.sfo" id="7_cefoj"]
+[ext_resource type="AudioStream" uid="uid://c0vncoipende0" path="res://Resources/Audio/SoundBanks/7_techno/Snare Elektrocuted 2.wav" id="7_g7ebr"]
+[ext_resource type="AudioStream" uid="uid://c4jnqb0mi577" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Kick A LowLife.wav" id="7_rojp7"]
+[ext_resource type="SoundFont" uid="uid://ccn5x8go2teo" path="res://Experimental/soundfont/Jellyfish Jam V1.sf2" id="10_g7ebr"]
+[ext_resource type="AudioStream" uid="uid://d3x5of0xstwhn" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Snare AB 2.wav" id="11_cefoj"]
+[ext_resource type="Script" uid="uid://h8sdae8gbqea" path="res://Scripts/AudioBanks/Chord.cs" id="11_ufgf2"]
+[ext_resource type="Script" uid="uid://28mxlysh26rg" path="res://Scripts/AudioBanks/ChordProgression.cs" id="12_t37bf"]
+
+[sub_resource type="Resource" id="Resource_i4a2t"]
+script = ExtResource("11_ufgf2")
+base_note = 69
+type = 1
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_0ds2n"]
+script = ExtResource("11_ufgf2")
+base_note = 67
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_ksd7x"]
+script = ExtResource("11_ufgf2")
+base_note = 65
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_1yego"]
+script = ExtResource("11_ufgf2")
+base_note = 64
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_7tuiu"]
+script = ExtResource("12_t37bf")
+progression = Array[Object]([SubResource("Resource_i4a2t"), SubResource("Resource_0ds2n"), SubResource("Resource_ksd7x"), SubResource("Resource_1yego")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"
+
+[sub_resource type="Resource" id="Resource_cefoj"]
+script = ExtResource("11_ufgf2")
+base_note = 64
+type = 1
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_ufgf2"]
+script = ExtResource("11_ufgf2")
+base_note = 60
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_t37bf"]
+script = ExtResource("11_ufgf2")
+base_note = 59
+type = 1
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_oopka"]
+script = ExtResource("11_ufgf2")
+base_note = 69
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_ytr3c"]
+script = ExtResource("12_t37bf")
+progression = Array[Object]([SubResource("Resource_cefoj"), SubResource("Resource_ufgf2"), SubResource("Resource_t37bf"), SubResource("Resource_oopka")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"
+
+[sub_resource type="Resource" id="Resource_lffaf"]
+script = ExtResource("11_ufgf2")
+base_note = 65
+type = 1
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_pgbkg"]
+script = ExtResource("11_ufgf2")
+base_note = 61
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_06uos"]
+script = ExtResource("11_ufgf2")
+base_note = 63
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_1ype2"]
+script = ExtResource("11_ufgf2")
+base_note = 58
+type = 1
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_8u3ne"]
+script = ExtResource("12_t37bf")
+progression = Array[Object]([SubResource("Resource_lffaf"), SubResource("Resource_pgbkg"), SubResource("Resource_06uos"), SubResource("Resource_1ype2")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"
+>>>>>>> original/jesse
 
 [resource]
 script = ExtResource("6_kmdtp")
@@ -23,10 +120,24 @@ clap = ExtResource("1_nkqdq")
 clap_alt = ExtResource("2_iwmnv")
 closed = ExtResource("2_n5lsl")
 closed_alt = ExtResource("4_kmdtp")
+<<<<<<< HEAD
 green_soundfont = ExtResource("5_iwmnv")
 green_instrument_id = 4
 green_effectProfile = ExtResource("6_g7ebr")
 purple_soundfont = ExtResource("5_iwmnv")
 purple_instrument_id = 12
 effectProfile = ExtResource("5_kmdtp")
+=======
+green_soundfont = ExtResource("7_cefoj")
+green_instrument_id = 4
+green_beats = 0.5
+green_effectProfile = ExtResource("6_g7ebr")
+purple_soundfont = ExtResource("10_g7ebr")
+purple_instrument_id = 2
+purple_beats = 1.0
+effectProfile = ExtResource("5_kmdtp")
+progressions = Array[Object]([SubResource("Resource_7tuiu"), SubResource("Resource_ytr3c"), SubResource("Resource_8u3ne")])
+chord_soundfont = ExtResource("10_g7ebr")
+chord_instrument_id = 2
+>>>>>>> original/jesse
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

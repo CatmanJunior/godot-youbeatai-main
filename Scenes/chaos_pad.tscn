@@ -1,18 +1,43 @@
+<<<<<<< HEAD
 [gd_scene format=3 uid="uid://b0bl4lm384p2n"]
+=======
+[gd_scene load_steps=19 format=3 uid="uid://b0bl4lm384p2n"]
+>>>>>>> original/jesse
 
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_sstgy"]
 [ext_resource type="Texture2D" uid="uid://lmpsycd0viao" path="res://Resources/Textures/kaosalfa.png" id="2_kj5vy"]
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/chaos_icon.tscn" id="3_j4bys"]
+<<<<<<< HEAD
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="4_j4bys"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/ChaosPad/ChaosPadKnob.gd" id="5_j4bys"]
 [ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/UI/play_star_animation.gd" id="5_kj5vy"]
 [ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="6_asl8d"]
 [ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="7_2cxvc"]
+=======
+[ext_resource type="Script" uid="uid://dy4ij5rgc25b5" path="res://Scripts/ChaosPadKnob.cs" id="4_2cxvc"]
+[ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="4_j4bys"]
+[ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/Manager/play_star_animation.gd" id="5_kj5vy"]
+[ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="6_asl8d"]
+[ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scenes/trail.gd" id="6_frwko"]
+[ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="7_2cxvc"]
+[ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="7_v6gb7"]
+>>>>>>> original/jesse
 [ext_resource type="Animation" uid="uid://b0td231pq8k03" path="res://outside_star_animation.res" id="8_2cxvc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rq0eu"]
 radius = 192.3508
 
+<<<<<<< HEAD
+=======
+[sub_resource type="Curve" id="Curve_frwko"]
+_data = [Vector2(0.02173914, 0.011235952), 0.0, 0.0, 0, 0, Vector2(0.826087, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_v6gb7"]
+offsets = PackedFloat32Array(0, 0.98630136)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.5372549)
+
+>>>>>>> original/jesse
 [sub_resource type="CircleShape2D" id="CircleShape2D_sstgy"]
 radius = 16.0
 
@@ -54,18 +79,28 @@ _data = {
 &"piano_star_animation": ExtResource("6_asl8d")
 }
 
+<<<<<<< HEAD
 [node name="ChaosPad" type="Node2D" unique_id=415524557]
 
 [node name="MicButtonLocation" type="Node2D" parent="." unique_id=1125788169]
 position = Vector2(0, -216.72)
 
 [node name="MicLight" type="PointLight2D" parent="MicButtonLocation" unique_id=1165301474]
+=======
+[node name="ChaosPad" type="Node2D"]
+
+[node name="MicButtonLocation" type="Node2D" parent="."]
+position = Vector2(0, -216.72)
+
+[node name="MicLight" type="PointLight2D" parent="MicButtonLocation"]
+>>>>>>> original/jesse
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
 energy = 0.0
 texture = ExtResource("1_sstgy")
 texture_scale = 1.71
 
+<<<<<<< HEAD
 [node name="Triangle" type="Sprite2D" parent="." unique_id=237899624]
 scale = Vector2(0.65, 0.65)
 texture = ExtResource("2_kj5vy")
@@ -88,10 +123,35 @@ rotation = -3.1415927
 scale = Vector2(0.6, 0.6)
 
 [node name="KnobSprite" type="Sprite2D" parent="Triangle" unique_id=2001326944]
+=======
+[node name="Triangle" type="Sprite2D" parent="."]
+scale = Vector2(0.65, 0.65)
+texture = ExtResource("2_kj5vy")
+
+[node name="PointLeft" type="Node2D" parent="Triangle"]
+position = Vector2(-145.09805, 98.039215)
+
+[node name="ChaosIconMain" parent="Triangle/PointLeft" instance=ExtResource("3_j4bys")]
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+
+[node name="PointTop" type="Node2D" parent="Triangle"]
+position = Vector2(-1.9607735, -152.94118)
+
+[node name="PointRight" type="Node2D" parent="Triangle"]
+position = Vector2(145.09804, 96.078445)
+
+[node name="ChaosIconAlt" parent="Triangle/PointRight" instance=ExtResource("3_j4bys")]
+rotation = -3.1415927
+scale = Vector2(0.6, 0.6)
+
+[node name="KnobSprite" type="Sprite2D" parent="Triangle"]
+>>>>>>> original/jesse
 z_index = 2
 rotation = 3.1415927
 scale = Vector2(1.2, 1.2)
 texture = ExtResource("4_j4bys")
+<<<<<<< HEAD
 script = ExtResource("5_j4bys")
 
 [node name="Area2D" type="Area2D" parent="Triangle/KnobSprite" unique_id=317530432]
@@ -108,6 +168,41 @@ position = Vector2(116.00001, 76)
 scale = Vector2(1.5, 1.5)
 
 [node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano" unique_id=707280695 node_paths=PackedStringArray("anim_player")]
+=======
+script = ExtResource("4_2cxvc")
+
+[node name="Area2D" type="Area2D" parent="Triangle/KnobSprite"]
+scale = Vector2(0.225, 0.225)
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Triangle/KnobSprite/Area2D"]
+shape = SubResource("CircleShape2D_rq0eu")
+
+[node name="Trail" type="Line2D" parent="Triangle/KnobSprite"]
+top_level = true
+texture_repeat = 2
+width = 35.0
+width_curve = SubResource("Curve_frwko")
+default_color = Color(0.9490196, 0.9490196, 0.9490196, 1)
+gradient = SubResource("Gradient_v6gb7")
+texture_mode = 2
+script = ExtResource("6_frwko")
+
+[node name="PointLight2D" type="PointLight2D" parent="Triangle/KnobSprite/Trail"]
+visible = false
+position = Vector2(0, 66.00001)
+scale = Vector2(0.39000002, 0.39000002)
+texture = ExtResource("7_v6gb7")
+
+[node name="Tutorial_interactpoints" type="Node2D" parent="."]
+
+[node name="Piano" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(94.00001, 64)
+scale = Vector2(1.5, 1.5)
+
+[node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano" node_paths=PackedStringArray("anim_player")]
+position = Vector2(5.9999957, 6.000001)
+>>>>>>> original/jesse
 scale = Vector2(0.7, 0.7)
 monitoring = false
 monitorable = false
@@ -115,24 +210,38 @@ script = ExtResource("5_kj5vy")
 anim_player = NodePath("../../AnimationPlayer")
 animation_resource = ExtResource("6_asl8d")
 
+<<<<<<< HEAD
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Piano" unique_id=1652607334]
 shape = SubResource("CircleShape2D_sstgy")
 
 [node name="Piano_Star" type="Label" parent="Tutorial_interactpoints/Piano" unique_id=1626487380]
+=======
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Piano"]
+shape = SubResource("CircleShape2D_sstgy")
+
+[node name="Piano_Star" type="Label" parent="Tutorial_interactpoints/Piano"]
+>>>>>>> original/jesse
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -11.0
 offset_top = -8.0
 offset_right = 11.0
 offset_bottom = 8.0
+=======
+offset_top = -1.3333306
+offset_right = 22.0
+offset_bottom = 14.66667
+>>>>>>> original/jesse
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
 pivot_offset = Vector2(9, 6)
+<<<<<<< HEAD
 text = "🌟"
 
 [node name="in_between" type="Node2D" parent="Tutorial_interactpoints" unique_id=1890469072]
@@ -140,6 +249,15 @@ position = Vector2(46, -25)
 scale = Vector2(1.3, 1.3)
 
 [node name="in_between" type="Area2D" parent="Tutorial_interactpoints/in_between" unique_id=801257543 node_paths=PackedStringArray("anim_player")]
+=======
+text = "💎"
+
+[node name="in_between" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(38.000004, -9)
+scale = Vector2(1.3, 1.3)
+
+[node name="in_between" type="Area2D" parent="Tutorial_interactpoints/in_between" node_paths=PackedStringArray("anim_player")]
+>>>>>>> original/jesse
 scale = Vector2(0.7, 0.7)
 monitoring = false
 monitorable = false
@@ -147,24 +265,39 @@ script = ExtResource("5_kj5vy")
 anim_player = NodePath("../../AnimationPlayer")
 animation_resource = ExtResource("7_2cxvc")
 
+<<<<<<< HEAD
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/in_between" unique_id=934587406]
 shape = SubResource("CircleShape2D_kj5vy")
 
 [node name="in_between_star" type="Label" parent="Tutorial_interactpoints/in_between" unique_id=1876185264]
+=======
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/in_between"]
+shape = SubResource("CircleShape2D_kj5vy")
+
+[node name="in_between_star" type="Label" parent="Tutorial_interactpoints/in_between"]
+>>>>>>> original/jesse
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -11.0
 offset_top = -8.0
 offset_right = 11.0
 offset_bottom = 8.0
+=======
+offset_left = -7.692314
+offset_top = -6.153845
+offset_right = 14.307686
+offset_bottom = 9.846155
+>>>>>>> original/jesse
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2, 2)
 pivot_offset = Vector2(9, 6)
+<<<<<<< HEAD
 text = "🌟"
 
 [node name="outside" type="Node2D" parent="Tutorial_interactpoints" unique_id=1584952393]
@@ -172,22 +305,39 @@ position = Vector2(85.00001, -93)
 scale = Vector2(1.3, 1.3)
 
 [node name="outside" type="Area2D" parent="Tutorial_interactpoints/outside" unique_id=1507110494 node_paths=PackedStringArray("anim_player")]
+=======
+text = "💎"
+
+[node name="outside" type="Node2D" parent="Tutorial_interactpoints"]
+position = Vector2(46.000008, -58.000008)
+scale = Vector2(1.3, 1.3)
+
+[node name="outside" type="Area2D" parent="Tutorial_interactpoints/outside" node_paths=PackedStringArray("anim_player")]
+>>>>>>> original/jesse
 monitoring = false
 monitorable = false
 script = ExtResource("5_kj5vy")
 anim_player = NodePath("../../AnimationPlayer")
 animation_resource = ExtResource("8_2cxvc")
 
+<<<<<<< HEAD
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/outside/outside" unique_id=1798633322]
 shape = SubResource("CircleShape2D_kj5vy")
 
 [node name="outside2" type="Label" parent="Tutorial_interactpoints/outside" unique_id=1268337442]
+=======
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/outside/outside"]
+shape = SubResource("CircleShape2D_kj5vy")
+
+[node name="outside2" type="Label" parent="Tutorial_interactpoints/outside"]
+>>>>>>> original/jesse
 visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -11.0
 offset_top = -8.0
 offset_right = 11.0
@@ -200,3 +350,19 @@ text = "🌟"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial_interactpoints" unique_id=1143748511]
 libraries/ = SubResource("AnimationLibrary_v6gb7")
+=======
+offset_left = -6.153852
+offset_right = 15.846148
+offset_bottom = 16.000008
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 3.1415927
+scale = Vector2(2, 2)
+pivot_offset = Vector2(9, 6)
+text = "💎"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial_interactpoints"]
+libraries = {
+&"": SubResource("AnimationLibrary_v6gb7")
+}
+>>>>>>> original/jesse

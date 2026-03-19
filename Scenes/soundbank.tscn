@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [gd_scene format=3 uid="uid://b8n1g4l4jrv6d"]
 
 [ext_resource type="Script" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
@@ -10,24 +11,89 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmhht"]
 bg_color = Color(0.2, 0.2, 0.2, 1)
+=======
+[gd_scene load_steps=29 format=3 uid="uid://b8n1g4l4jrv6d"]
+
+[ext_resource type="Script" uid="uid://c30dmndaoiemd" path="res://Scripts/SoundBankSelectionMenu.cs" id="1_l0fe3"]
+[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_avjdi"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ie3tb"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="3_a7rio"]
+[ext_resource type="Script" uid="uid://c5vs4vrlg2bwg" path="res://Scenes/beatsbutton.gd" id="4_k1x81"]
+[ext_resource type="Texture2D" uid="uid://b6tuxknqbe7q8" path="res://Resources/Icons/SelectedEmoticion128.png" id="4_k11aq"]
+[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="4_saqfl"]
+[ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy_soundbank_screen.gd" id="5_pd2wx"]
+[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="6_lmhht"]
+[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
+[ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_bt16w"]
+[ext_resource type="Texture2D" uid="uid://h0nis3rbt2fe" path="res://Resources/Textures_New_Extra/MenuShapes128_0005_8_Purple.png" id="11_8jt4r"]
+[ext_resource type="Texture2D" uid="uid://c5gdkspinjfqe" path="res://Resources/Textures_New_Extra/MenuShapes128_0004_16_Purple.png" id="12_k1x81"]
+[ext_resource type="Texture2D" uid="uid://b5e8xiymsptlh" path="res://Resources/Textures_New_Extra/MenuShapes128_0003_32_Purple.png" id="13_k11aq"]
+[ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
+[ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
+[ext_resource type="Texture2D" uid="uid://bndvo0vsvj7ns" path="res://Resources/Textures_New_Extra/MenuShapes128_0008_8_Green.png" id="16_grpai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8jt4r"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lmhht"]
+bg_color = Color(0.2, 0.2, 0.2, 0)
+>>>>>>> original/jesse
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
+<<<<<<< HEAD
 border_color = Color(0.87654406, 0.4330934, 1, 1)
+=======
+border_color = Color(0.60784316, 0.6, 0.8862745, 1)
+>>>>>>> original/jesse
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+<<<<<<< HEAD
 [node name="scene" type="Node2D"]
 
 [node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "gebruikButton", "gevondenSoundBankLabel", "hoeveelBeats")]
+=======
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_grpai"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18n7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1x81"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k11aq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dsbnb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7sjhg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2pn6"]
+bg_color = Color(0.6, 0.6, 0.6, 0.25882354)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+
+[sub_resource type="Theme" id="Theme_7oxff"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h74sy"]
+
+[node name="scene2" type="Node2D"]
+
+[node name="SoundBankSelectionMenu" type="Panel" parent="." node_paths=PackedStringArray("emotionToggles", "themeToggles", "emotie1", "emotie2", "thema1", "thema2", "gebruikButton", "gevondenSoundBankLabel", "button8", "button16", "button32")]
+>>>>>>> original/jesse
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -222.00006
 offset_top = -327.00003
 offset_right = 117.99994
@@ -44,12 +110,45 @@ gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
 hoeveelBeats = NodePath("../OtherSelectionMenu/OptionButton")
 
 [node name="GebruikButton" type="Button" parent="SoundBankSelectionMenu"]
+=======
+offset_left = -576.0
+offset_top = -327.0
+offset_right = -236.0
+offset_bottom = 171.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.29699, 1.29699)
+theme_override_styles/panel = SubResource("StyleBoxEmpty_8jt4r")
+script = ExtResource("1_l0fe3")
+emotionToggles = [NodePath("emoties/emotion1/Button"), NodePath("emoties/emotion2/Button"), NodePath("emoties/emotion3/Button"), NodePath("emoties/emotion4/Button"), NodePath("emoties/emotion5/Button"), NodePath("emoties/emotion6/Button"), NodePath("emoties/emotion7/Button")]
+themeToggles = [NodePath("themas/theme1/Button"), NodePath("themas/theme2/Button"), NodePath("themas/theme3/Button"), NodePath("themas/theme4/Button"), NodePath("themas/theme5/Button"), NodePath("themas/theme6/Button"), NodePath("themas/theme7/Button"), NodePath("themas/theme8/Button"), NodePath("themas/theme9/Button"), NodePath("themas/theme10/Button"), NodePath("themas/theme11/Button"), NodePath("themas/theme12/Button")]
+emotie1 = NodePath("../Label")
+emotie2 = NodePath("../Label2")
+thema1 = NodePath("../Label3")
+thema2 = NodePath("../Label4")
+gebruikButton = NodePath("Ready/Ready")
+gevondenSoundBankLabel = NodePath("SelectieLabelTitle/SelectionLabel")
+button8 = NodePath("beats/8/Button")
+button16 = NodePath("beats/16/Button2")
+button32 = NodePath("beats/32/Button3")
+
+[node name="emoties" type="Panel" parent="SoundBankSelectionMenu"]
+layout_mode = 0
+offset_left = 20.046406
+offset_top = 44.718918
+offset_right = 356.9804
+offset_bottom = 144.71892
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
+
+[node name="Emoties text" type="Label" parent="SoundBankSelectionMenu/emoties"]
+>>>>>>> original/jesse
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -94.0
 offset_top = 99.0
 offset_right = 85.0
@@ -94,17 +193,37 @@ offset_bottom = -134.009
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ie3tb")
+=======
+offset_left = -150.73364
+offset_top = -97.03199
+offset_right = 149.19157
+offset_bottom = -52.03199
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_colors/font_color = Color(0.8745098, 0.43137255, 1, 1)
+theme_override_fonts/font = ExtResource("2_avjdi")
+>>>>>>> original/jesse
 theme_override_font_sizes/font_size = 25
 text = "Emoties"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="emotion1" type="Label" parent="SoundBankSelectionMenu/Emoties"]
 layout_mode = 0
 offset_left = -41.5
 offset_top = 37.0
 offset_right = -0.5
 offset_bottom = 79.0
+=======
+[node name="emotion1" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 13.878293
+offset_top = 33.924694
+offset_right = 54.878292
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -112,6 +231,7 @@ text = "🤔"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion1"]
 layout_mode = 0
 offset_left = -1.0
@@ -126,6 +246,30 @@ offset_left = 3.5
 offset_top = 37.0
 offset_right = 44.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion1"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+toggle_mode = true
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion1"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="emotion2" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 58.878292
+offset_top = 33.924694
+offset_right = 99.878296
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -133,6 +277,7 @@ text = "😢"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion2"]
 layout_mode = 0
 offset_left = -2.0
@@ -147,6 +292,29 @@ offset_left = 49.5
 offset_top = 37.0
 offset_right = 90.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion2"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion2"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="emotion3" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 104.878265
+offset_top = 33.924694
+offset_right = 145.87827
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -154,6 +322,7 @@ text = "😁"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion3"]
 layout_mode = 0
 offset_left = -2.0
@@ -168,6 +337,29 @@ offset_left = 95.5
 offset_top = 37.0
 offset_right = 136.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion3"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion3"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="emotion4" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 150.8783
+offset_top = 33.924694
+offset_right = 191.8783
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -175,6 +367,7 @@ text = "😍"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion4"]
 layout_mode = 0
 offset_left = -2.0
@@ -189,6 +382,29 @@ offset_left = 141.5
 offset_top = 37.0
 offset_right = 182.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion4"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion4"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="emotion5" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 196.87831
+offset_top = 33.924694
+offset_right = 237.87831
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -196,6 +412,7 @@ text = "😵‍💫"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion5"]
 layout_mode = 0
 offset_left = -3.0
@@ -210,6 +427,29 @@ offset_left = 187.5
 offset_top = 37.0
 offset_right = 228.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion5"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion5"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="emotion6" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 242.87831
+offset_top = 33.924694
+offset_right = 283.87833
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -217,6 +457,7 @@ text = "😳"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion6"]
 layout_mode = 0
 offset_left = -3.0
@@ -231,6 +472,29 @@ offset_left = 231.5
 offset_top = 37.0
 offset_right = 272.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion6"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion6"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="emotion7" type="Label" parent="SoundBankSelectionMenu/emoties"]
+layout_mode = 0
+offset_left = 286.87833
+offset_top = 33.924694
+offset_right = 327.87833
+offset_bottom = 75.9247
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -238,6 +502,7 @@ text = "😡"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Emoties/emotion7"]
 layout_mode = 0
 offset_left = -3.0
@@ -247,12 +512,39 @@ offset_bottom = 55.0
 focus_mode = 0
 
 [node name="Themas" type="Label" parent="SoundBankSelectionMenu"]
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/emoties/emotion7"]
+layout_mode = 0
+offset_left = 3.85508
+offset_top = 1.5420437
+offset_right = 38.85508
+offset_bottom = 36.542046
+theme_override_styles/focus = SubResource("StyleBoxEmpty_grpai")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/emoties/emotion7"]
+visible = false
+position = Vector2(20.742043, 17.657978)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="themas" type="Panel" parent="SoundBankSelectionMenu"]
+layout_mode = 0
+offset_left = 20.046417
+offset_top = 202.77719
+offset_right = 357.75143
+offset_bottom = 324.9046
+theme_override_styles/panel = SubResource("StyleBoxFlat_lmhht")
+
+[node name="Themas text" type="Label" parent="SoundBankSelectionMenu/themas"]
+>>>>>>> original/jesse
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
+<<<<<<< HEAD
 offset_left = -115.5
 offset_top = -65.5044
 offset_right = 105.5
@@ -260,17 +552,37 @@ offset_bottom = -20.5044
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_ie3tb")
+=======
+offset_left = -153.43219
+offset_top = -106.553635
+offset_right = 148.80609
+offset_bottom = -61.553635
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_colors/font_color = Color(0.8745098, 0.43137255, 1, 1)
+theme_override_fonts/font = ExtResource("2_avjdi")
+>>>>>>> original/jesse
 theme_override_font_sizes/font_size = 25
 text = "Themas"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="theme1" type="Label" parent="SoundBankSelectionMenu/Themas"]
 layout_mode = 0
 offset_left = -20.5
 offset_top = 37.0
 offset_right = 20.5
 offset_bottom = 79.0
+=======
+[node name="theme1" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 39.3218
+offset_top = 16.191334
+offset_right = 80.3218
+offset_bottom = 58.191334
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -278,6 +590,7 @@ text = "🫶"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme1"]
 layout_mode = 0
 offset_left = -1.0
@@ -292,6 +605,29 @@ offset_left = 24.5
 offset_top = 37.0
 offset_right = 65.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme1"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme1"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme2" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 84.3218
+offset_top = 16.191334
+offset_right = 125.3218
+offset_bottom = 58.191334
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -299,6 +635,7 @@ text = "🎂"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme2"]
 layout_mode = 0
 offset_left = -2.0
@@ -313,6 +650,29 @@ offset_left = 70.5
 offset_top = 37.0
 offset_right = 111.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme2"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme2"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme3" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 130.32181
+offset_top = 16.191334
+offset_right = 171.32181
+offset_bottom = 58.191334
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -320,6 +680,7 @@ text = "🦄"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme3"]
 layout_mode = 0
 offset_left = -2.0
@@ -334,6 +695,29 @@ offset_left = 116.5
 offset_top = 37.0
 offset_right = 157.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme3"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme3"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme4" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 176.56265
+offset_top = 16.191334
+offset_right = 217.56265
+offset_bottom = 58.191334
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -341,6 +725,7 @@ text = "🍽"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme4"]
 layout_mode = 0
 offset_left = -2.0
@@ -355,6 +740,29 @@ offset_left = 162.5
 offset_top = 37.0
 offset_right = 203.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme4"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme4"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme5" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 222.3218
+offset_top = 16.191334
+offset_right = 263.3218
+offset_bottom = 58.191334
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -362,6 +770,7 @@ text = "🌍"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme5"]
 layout_mode = 0
 offset_left = -3.0
@@ -376,6 +785,29 @@ offset_left = 208.5
 offset_top = 37.0
 offset_right = 249.5
 offset_bottom = 79.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme5"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme5"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme6" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 268.3218
+offset_top = 16.191334
+offset_right = 309.3218
+offset_bottom = 58.191334
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -383,6 +815,7 @@ text = "🌴"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme6"]
 layout_mode = 0
 offset_left = -3.0
@@ -397,6 +830,29 @@ offset_left = -20.5
 offset_top = 88.0
 offset_right = 20.5
 offset_bottom = 130.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme6"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme6"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme7" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 39.3218
+offset_top = 67.191345
+offset_right = 80.3218
+offset_bottom = 109.191345
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -404,6 +860,7 @@ text = "💔"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme7"]
 layout_mode = 0
 offset_left = -1.0
@@ -418,6 +875,29 @@ offset_left = 24.5
 offset_top = 88.0
 offset_right = 65.5
 offset_bottom = 130.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme7"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme7"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme8" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 84.3218
+offset_top = 67.191345
+offset_right = 125.3218
+offset_bottom = 109.191345
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -425,6 +905,7 @@ text = "🪦"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme8"]
 layout_mode = 0
 offset_left = -2.0
@@ -439,6 +920,29 @@ offset_left = 70.5
 offset_top = 88.0
 offset_right = 111.5
 offset_bottom = 130.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme8"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme8"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme9" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 130.32181
+offset_top = 67.191345
+offset_right = 171.32181
+offset_bottom = 109.191345
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -446,6 +950,7 @@ text = "🐾"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme9"]
 layout_mode = 0
 offset_left = -2.0
@@ -460,6 +965,29 @@ offset_left = 116.5
 offset_top = 88.0
 offset_right = 157.5
 offset_bottom = 130.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme9"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme9"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme10" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 176.32181
+offset_top = 67.191345
+offset_right = 217.32181
+offset_bottom = 109.191345
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -467,6 +995,7 @@ text = "⏳️"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme10"]
 layout_mode = 0
 offset_left = -2.0
@@ -481,6 +1010,29 @@ offset_left = 162.5
 offset_top = 88.0
 offset_right = 203.5
 offset_bottom = 130.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme10"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme10"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme11" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 222.3218
+offset_top = 67.191345
+offset_right = 263.3218
+offset_bottom = 109.191345
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -488,6 +1040,7 @@ text = "🏆"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme11"]
 layout_mode = 0
 offset_left = -3.0
@@ -502,6 +1055,29 @@ offset_left = 208.5
 offset_top = 88.0
 offset_right = 249.5
 offset_bottom = 130.0
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme11"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme11"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="theme12" type="Label" parent="SoundBankSelectionMenu/themas"]
+layout_mode = 0
+offset_left = 268.3218
+offset_top = 67.191345
+offset_right = 309.3218
+offset_bottom = 109.191345
+>>>>>>> original/jesse
 mouse_filter = 0
 theme = ExtResource("2_ie3tb")
 theme_override_font_sizes/font_size = 28
@@ -509,6 +1085,7 @@ text = "🎮"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="toggle" type="CheckButton" parent="SoundBankSelectionMenu/Themas/theme12"]
 layout_mode = 0
 offset_left = -3.0
@@ -524,6 +1101,157 @@ offset_top = 406.664
 offset_right = 324.0
 offset_bottom = 444.664
 theme = ExtResource("2_ie3tb")
+=======
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/themas/theme12"]
+layout_mode = 0
+offset_left = 1.542032
+offset_top = 1.5420334
+offset_right = 36.54203
+offset_bottom = 36.542034
+theme_override_styles/focus = SubResource("StyleBoxEmpty_18n7q")
+flat = true
+
+[node name="Sprite2D" type="Sprite2D" parent="SoundBankSelectionMenu/themas/theme12"]
+visible = false
+position = Vector2(20.742043, 18.428986)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_k11aq")
+
+[node name="beats" type="Panel" parent="SoundBankSelectionMenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -106.00567
+offset_top = 119.54562
+offset_right = 241.11035
+offset_bottom = 336.54565
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_k1x81")
+script = ExtResource("4_k1x81")
+
+[node name="beats text" type="Label" parent="SoundBankSelectionMenu/beats"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -198.2305
+offset_top = -133.0
+offset_right = 105.549774
+offset_bottom = -73.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_ie3tb")
+theme_override_colors/font_color = Color(0.8745098, 0.43137255, 1, 1)
+theme_override_fonts/font = ExtResource("2_avjdi")
+theme_override_font_sizes/font_size = 25
+text = "Beats"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="8" type="Sprite2D" parent="SoundBankSelectionMenu/beats"]
+position = Vector2(2.394132, 84.81176)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("11_8jt4r")
+
+[node name="pressed" type="Sprite2D" parent="SoundBankSelectionMenu/beats/8"]
+visible = false
+scale = Vector2(0.99999964, 0.99999964)
+texture = ExtResource("16_grpai")
+
+[node name="Button" type="Button" parent="SoundBankSelectionMenu/beats/8"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -133.50002
+offset_right = 10.0
+offset_bottom = 5.4999847
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_avjdi")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_k11aq")
+toggle_mode = true
+text = "8"
+flat = true
+
+[node name="16" type="Sprite2D" parent="SoundBankSelectionMenu/beats"]
+position = Vector2(127.29872, 84.04075)
+scale = Vector2(0.771016, 0.771016)
+texture = ExtResource("12_k1x81")
+
+[node name="pressed" type="Sprite2D" parent="SoundBankSelectionMenu/beats/16"]
+position = Vector2(-4.7683716e-07, 1.5258789e-05)
+texture = ExtResource("14_dsbnb")
+
+[node name="Button2" type="Button" parent="SoundBankSelectionMenu/beats/16"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -137.99998
+offset_top = -136.0
+offset_right = 10.000015
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_avjdi")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dsbnb")
+toggle_mode = true
+text = "16"
+flat = true
+
+[node name="32" type="Sprite2D" parent="SoundBankSelectionMenu/beats"]
+position = Vector2(252.9743, 83.26973)
+scale = Vector2(0.771, 0.771)
+texture = ExtResource("13_k11aq")
+
+[node name="pressed" type="Sprite2D" parent="SoundBankSelectionMenu/beats/32"]
+visible = false
+position = Vector2(-0.99999976, 0)
+texture = ExtResource("15_7sjhg")
+
+[node name="Button3" type="Button" parent="SoundBankSelectionMenu/beats/32"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -138.0
+offset_top = -134.0
+offset_right = 10.0
+offset_bottom = 5.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_avjdi")
+theme_override_font_sizes/font_size = 50
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7sjhg")
+toggle_mode = true
+text = "32"
+flat = true
+
+[node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu"]
+visible = false
+layout_mode = 0
+offset_left = 538.9402
+offset_top = -13.1073
+offset_right = 848.9402
+offset_bottom = 24.8927
+theme = ExtResource("2_ie3tb")
+theme_override_fonts/font = ExtResource("2_avjdi")
+>>>>>>> original/jesse
 text = "Gevonden Soundbank:"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -539,6 +1267,7 @@ text = "....."
 horizontal_alignment = 1
 vertical_alignment = 1
 
+<<<<<<< HEAD
 [node name="OtherSelectionMenu" type="Panel" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -611,15 +1340,85 @@ popup/item_2/id = 2
 
 [node name="Robot" parent="." instance=ExtResource("3_a7rio")]
 position = Vector2(547, 200)
+=======
+[node name="Ready" type="Panel" parent="SoundBankSelectionMenu"]
+layout_mode = 0
+offset_left = 593.68225
+offset_top = 67.8494
+offset_right = 793.6823
+offset_bottom = 146.49304
+theme_override_styles/panel = SubResource("StyleBoxFlat_g2pn6")
+
+[node name="Ready" type="Button" parent="SoundBankSelectionMenu/Ready"]
+modulate = Color(0.5254902, 0.8509804, 0.47058824, 1)
+layout_mode = 0
+offset_left = 35.466736
+offset_top = -8.481178
+offset_right = 171.46674
+offset_bottom = 83.51882
+theme = SubResource("Theme_7oxff")
+theme_type_variation = &"FlatButton"
+theme_override_constants/line_spacing = -10
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h74sy")
+disabled = true
+text = "Start "
+flat = true
+icon_alignment = 1
+
+[node name="Label" type="Label" parent="SoundBankSelectionMenu"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 16.0
+
+[node name="Robot" parent="." instance=ExtResource("3_a7rio")]
+position = Vector2(474, 152)
+>>>>>>> original/jesse
 
 [node name="AchievementsPanel" parent="Robot" index="0"]
 visible = false
 
+<<<<<<< HEAD
 [node name="Skeleton3D" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
 bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
 
 [node name="Klappy respons bubble" parent="." instance=ExtResource("4_saqfl")]
 position = Vector2(237, 30)
+=======
+[node name="SubViewportContainer" parent="Robot" index="1"]
+light_mask = 2
+offset_top = -133.5
+offset_bottom = 155.5
+
+[node name="Skeleton3D" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
+bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
+bones/4/rotation = Quaternion(0.6664186, 0.0010095574, -0.0009971554, 0.7455765)
+bones/5/position = Vector3(3.4170494e-05, 0.016205063, 0.0067133754)
+bones/7/position = Vector3(3.4172117e-05, 0.01620506, 0.0067133736)
+bones/9/position = Vector3(0.0052915406, -0.0022284086, 0.004496879)
+bones/9/rotation = Quaternion(0.7068752, -0.012596929, 0.70709896, -0.013409111)
+bones/10/rotation = Quaternion(0.0049924124, -0.00026509096, 0.35862666, 0.9334677)
+bones/16/position = Vector3(-0.0069037513, -0.0019778507, 0.004023196)
+bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
+
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" index="0"]
+transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
+
+[node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" index="2"]
+transform = Transform3D(0.98480767, 0.0030305798, 0.1736215, -0.17144132, -0.14190595, 0.9749207, 0.027592069, -0.9898756, -0.13923067, 0, -3.29693, 0)
+
+[node name="KlappyLight" parent="Robot/SubViewportContainer" index="1"]
+light_mask = 2
+position = Vector2(202.5, 57.499996)
+scale = Vector2(0.6, 0.6)
+color = Color(1, 0.654902, 0.34117648, 1)
+energy = 2.66
+range_item_cull_mask = 2
+texture_scale = 2.41
+
+[node name="Klappy respons bubble" parent="." instance=ExtResource("4_saqfl")]
+position = Vector2(85, -27)
+>>>>>>> original/jesse
 
 [node name="Continue" parent="Klappy respons bubble/Panel" index="1"]
 visible = false
@@ -632,6 +1431,10 @@ message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emot
 
 [node name="WorldBackPanel" type="Sprite2D" parent="."]
 modulate = Color(0.85, 0.85, 0.85, 1)
+<<<<<<< HEAD
+=======
+light_mask = 2
+>>>>>>> original/jesse
 z_index = -2
 texture_filter = 2
 texture_repeat = 1
@@ -646,6 +1449,65 @@ texture_repeat = 1
 texture = ExtResource("7_avjdi")
 metadata/_edit_lock_ = true
 
+<<<<<<< HEAD
+=======
+[node name="MenuShapes1280002KlappyBg" type="Sprite2D" parent="."]
+position = Vector2(477, 215)
+scale = Vector2(2, 2)
+texture = ExtResource("10_bt16w")
+
+[node name="Screenshot20251218At15_00_06" type="Sprite2D" parent="."]
+position = Vector2(1742, -219)
+
+[node name="Label" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -112.0
+offset_top = -246.0
+offset_right = -12.0
+offset_bottom = -146.0
+theme_override_font_sizes/font_size = 40
+text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -51.0
+offset_top = -246.0
+offset_right = 49.0
+offset_bottom = -146.0
+theme_override_font_sizes/font_size = 40
+text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -112.0
+offset_top = -12.0
+offset_right = -12.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 40
+text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label4" type="Label" parent="."]
+custom_minimum_size = Vector2(100, 100)
+offset_left = -51.0
+offset_top = -12.0
+offset_right = 49.0
+offset_bottom = 88.0
+theme_override_font_sizes/font_size = 40
+text = "."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="SoundBankSelectionMenu/beats/8/Button" to="SoundBankSelectionMenu/beats" method="_on_button_pressed"]
+[connection signal="pressed" from="SoundBankSelectionMenu/beats/16/Button2" to="SoundBankSelectionMenu/beats" method="_on_button_2_pressed"]
+[connection signal="pressed" from="SoundBankSelectionMenu/beats/32/Button3" to="SoundBankSelectionMenu/beats" method="_on_button_3_pressed"]
+
+>>>>>>> original/jesse
 [editable path="Robot"]
 [editable path="Robot/AchievementsPanel"]
 [editable path="Robot/SubViewportContainer/SubViewport/Klappy"]

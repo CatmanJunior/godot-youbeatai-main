@@ -1,0 +1,230 @@
+[gd_scene format=3 uid="uid://88rxelg1bo3"]
+
+[ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
+[ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
+[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="4_16hvj"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_ce3w2"]
+[ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
+[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="6_opfnp"]
+[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
+[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.87654406, 0.4330934, 1, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.4745098)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
+bg_color = Color(0.2, 0.2, 0.2, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1.3907979, 0.69834554, 1.5790963, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.8901961)
+
+[node name="scene" type="Node2D"]
+
+[node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton", "ProButton", "KlappyResponse")]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -449.0
+offset_top = -336.0
+offset_right = -49.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2.14354, 2.14354)
+script = ExtResource("1_48xlc")
+freeButton = NodePath("SpelenButton")
+tutorialButton = NodePath("TutorialButton")
+ProButton = NodePath("ProButton")
+KlappyResponse = NodePath("../Klappy respons bubble")
+
+[node name="TitleLabel" type="Label" parent="MainMenuPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 229.0
+offset_bottom = -43.000107
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_1ehe0")
+theme_override_fonts/font = ExtResource("3_trj04")
+theme_override_font_sizes/font_size = 30
+text = "Klappy de
+Ritme Robot"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TutorialButton" type="Button" parent="MainMenuPanel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -88.96871
+offset_top = -7.7120056
+offset_right = 111.03128
+offset_bottom = 24.287994
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
+text = "Uitleg ❓"
+
+[node name="SpelenButton" type="Button" parent="MainMenuPanel"]
+visible = false
+layout_mode = 0
+offset_left = 111.03129
+offset_top = 162.81479
+offset_right = 311.03128
+offset_bottom = 193.81483
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
+text = "Muziek maken 🎶"
+
+[node name="ProButton" type="Button" parent="MainMenuPanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -88.96871
+offset_top = -114.79236
+offset_right = 111.03128
+offset_bottom = -83.79236
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
+text = "Pro 👑"
+
+[node name="PermissionButton" type="Button" parent="MainMenuPanel"]
+visible = false
+layout_mode = 0
+offset_left = 50.0
+offset_top = 610.60724
+offset_right = 348.0
+offset_bottom = 649.60724
+focus_mode = 0
+disabled = true
+text = "🎙️ Microfoon Toegang Verlenen"
+script = ExtResource("3_1ehe0")
+
+[node name="Robot" parent="MainMenuPanel" instance=ExtResource("4_ce3w2")]
+position = Vector2(399.80594, 242.58937)
+scale = Vector2(0.5, 0.5)
+
+[node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0"]
+visible = false
+
+[node name="Skeleton3D" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
+bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
+bones/4/rotation = Quaternion(0.6664186, 0.0010095574, -0.0009971554, 0.7455765)
+bones/5/position = Vector3(3.4170494e-05, 0.016205063, 0.0067133754)
+bones/7/position = Vector3(3.4172117e-05, 0.01620506, 0.0067133736)
+bones/9/position = Vector3(0.0052915406, -0.0022284086, 0.004496879)
+bones/9/rotation = Quaternion(0.7068752, -0.012596929, 0.70709896, -0.013409111)
+bones/10/rotation = Quaternion(0.0049924124, -0.00026509096, 0.35862666, 0.9334677)
+bones/16/position = Vector3(-0.0069037513, -0.0019778507, 0.004023196)
+bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
+
+[node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" index="1"]
+energy = 1.71
+texture_scale = 2.41
+
+[node name="Tutorial explanition" type="Button" parent="MainMenuPanel"]
+visible = false
+layout_mode = 0
+offset_left = 361.08496
+offset_top = 140.88844
+offset_right = 881.08496
+offset_bottom = 660.8884
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("5_n45e2")
+
+[node name="Muziek explanation" type="Button" parent="MainMenuPanel"]
+visible = false
+layout_mode = 0
+offset_left = 361.085
+offset_top = 195.47105
+offset_right = 881.08496
+offset_bottom = 715.47107
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("5_n45e2")
+
+[node name="Pro Explanation" type="Button" parent="MainMenuPanel"]
+visible = false
+layout_mode = 0
+offset_left = 361.085
+offset_top = 242.58937
+offset_right = 881.08496
+offset_bottom = 762.58936
+scale = Vector2(0.05, 0.05)
+icon = ExtResource("5_n45e2")
+
+[node name="Klappy respons bubble" parent="." instance=ExtResource("6_opfnp")]
+position = Vector2(276, -134)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="WorldBackPanel" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("7_yhxw7")
+metadata/_edit_lock_ = true
+
+[node name="Gradient" type="Sprite2D" parent="."]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -2
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("8_trj04")
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="MainMenuPanel/Tutorial explanition" to="MainMenuPanel" method="OnTutorialExplanitionPressed"]
+[connection signal="pressed" from="MainMenuPanel/Muziek explanation" to="MainMenuPanel" method="OnMuziekExplanation"]
+[connection signal="pressed" from="MainMenuPanel/Pro Explanation" to="MainMenuPanel" method="OnProExplanationa"]
+[connection signal="continue_pressed" from="Klappy respons bubble" to="MainMenuPanel" method="_on_klappy_respons_bubble_continue_pressed"]
+
+[editable path="MainMenuPanel/Robot"]
+[editable path="MainMenuPanel/Robot/AchievementsPanel"]
+[editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model"]

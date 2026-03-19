@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="ChordProgression" format=3 uid="uid://b4cdfaxc0vc0s"]
+
+[ext_resource type="Script" uid="uid://h8sdae8gbqea" path="res://Scripts/AudioBanks/Chord.cs" id="1_lnapc"]
+[ext_resource type="Script" uid="uid://28mxlysh26rg" path="res://Scripts/AudioBanks/ChordProgression.cs" id="2_603r4"]
+
+[sub_resource type="Resource" id="Resource_5fy3c"]
+script = ExtResource("1_lnapc")
+base_note = 69
+type = 1
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_133fl"]
+script = ExtResource("1_lnapc")
+base_note = 65
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_ohdxi"]
+script = ExtResource("1_lnapc")
+base_note = 60
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[sub_resource type="Resource" id="Resource_ajb1i"]
+script = ExtResource("1_lnapc")
+base_note = 67
+metadata/_custom_type_script = "uid://h8sdae8gbqea"
+
+[resource]
+script = ExtResource("2_603r4")
+progression = Array[Object]([SubResource("Resource_5fy3c"), SubResource("Resource_133fl"), SubResource("Resource_ohdxi"), SubResource("Resource_ajb1i")])
+metadata/_custom_type_script = "uid://28mxlysh26rg"

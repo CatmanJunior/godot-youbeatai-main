@@ -1,0 +1,78 @@
+[gd_scene load_steps=14 format=3 uid="uid://chi4h4rjl1h4g"]
+
+[ext_resource type="Script" uid="uid://7b7r1wquyehf" path="res://Experimental/sequencer/sequencer.gd" id="1_2f38y"]
+[ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="2_oq1gc"]
+[ext_resource type="Script" uid="uid://ecp6peljwcrv" path="res://Experimental/sequencer/sequence_element.gd" id="2_qxcef"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="3_68vis"]
+[ext_resource type="Script" uid="uid://cba7br5eya7n1" path="res://Experimental/sequencer/midi_feedback.gd" id="4_s4nss"]
+[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="5_j1wqv"]
+[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="6_pngps"]
+
+[sub_resource type="Resource" id="Resource_u685e"]
+script = ExtResource("2_qxcef")
+start = 1
+duration = 1
+note = 48
+metadata/_custom_type_script = "uid://ecp6peljwcrv"
+
+[sub_resource type="Resource" id="Resource_bh0l2"]
+script = ExtResource("2_qxcef")
+start = 2
+duration = 4
+note = 52
+metadata/_custom_type_script = "uid://ecp6peljwcrv"
+
+[sub_resource type="Resource" id="Resource_68vis"]
+script = ExtResource("2_qxcef")
+start = 7
+duration = 1
+note = 60
+metadata/_custom_type_script = "uid://ecp6peljwcrv"
+
+[sub_resource type="Resource" id="Resource_s4nss"]
+script = ExtResource("2_qxcef")
+start = 10
+duration = 1
+note = 55
+metadata/_custom_type_script = "uid://ecp6peljwcrv"
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_ygcbl"]
+buffer_length = 0.1
+
+[sub_resource type="Resource" id="Resource_ecds7"]
+script = ExtResource("6_pngps")
+id = 48
+metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
+
+[node name="Test" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sequencer" type="Node" parent="." node_paths=PackedStringArray("bpmManager")]
+script = ExtResource("1_2f38y")
+elements = Array[ExtResource("2_qxcef")]([SubResource("Resource_u685e"), SubResource("Resource_bh0l2"), SubResource("Resource_68vis"), SubResource("Resource_s4nss")])
+bpmManager = NodePath("../BpmManager")
+debug = true
+metadata/_custom_type_script = "uid://7b7r1wquyehf"
+
+[node name="MidiFeedback" type="SoundFontPlayer" parent="Sequencer" node_paths=PackedStringArray("bpmManager")]
+soundfont = ExtResource("3_68vis")
+stream = SubResource("AudioStreamGenerator_ygcbl")
+script = ExtResource("4_s4nss")
+bpmManager = NodePath("../../BpmManager")
+notes = ExtResource("5_j1wqv")
+base_note = SubResource("Resource_ecds7")
+metadata/_custom_type_script = "uid://cba7br5eya7n1"
+
+[node name="BpmManager" type="Node" parent="."]
+script = ExtResource("2_oq1gc")
+bpm = 50
+playing = true
+swing = 0.0
+metadata/_custom_type_script = "uid://cg4g587k3seew"
+
+[connection signal="on_note" from="Sequencer" to="Sequencer/MidiFeedback" method="_on_note"]

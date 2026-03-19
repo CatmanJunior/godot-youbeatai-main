@@ -9,6 +9,10 @@ builds/
 # vscode
 .vscode/
 *.apk
+<<<<<<< HEAD
+=======
+.vs/
+>>>>>>> original/jesse
 
 # rider
 .idea/

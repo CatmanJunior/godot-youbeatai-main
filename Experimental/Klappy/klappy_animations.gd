@@ -6,19 +6,32 @@ extends Node3D
 var first_talk = false
 var talking = false
 var beat_time = 0.0
+@export var manager:Manager
+
+@export var energy: ProgressBar
+var animtriggered = false
 
 func _ready():
-	
 	# set animation to end to prevent playing on start
 	animation_tree.set("parameters/ClapTrigger/seek_request", 10000.0)
 	animation_tree.set("parameters/StampTrigger/seek_request", 10000.0)
 	animation_tree.set("parameters/talkingTrigger/seek_request", 10000.0)
-	EventBus.utterance_ended.connect(_on_utterance_end)
-	EventBus.bpm_changed.connect(on_bpm_changed)
+	animation_tree.set("parameters/sadTrigger/seek_request", 10000.0)
+	animation_tree.set("parameters/happyTrigger/seek_request", 10000.0)
 	
+	if energy != null:
+		energy.value_changed.connect(on_klappy_energy)
+
+	if manager != null:
+		manager.OnUtteranceEnd.connect(_on_utterance_end)
+	else:
+		DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED,_on_utterance_end)
+	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_STARTED,_on_callback_)
 	# default speed for 120 bpm
 	if beat_time == 0:
 		on_bpm_changed(120.0)
+		
+	
 	
 func init():
 	animation_tree = $model/AnimationTree
@@ -66,3 +79,15 @@ func on_bpm_changed(bpm:float):
 	# animation duration is made for 2 beats
 	beat_time = (60.0 / bpm / 2.0)
 	animation_tree.set("parameters/TimeScale/scale", 1.0 / beat_time )
+	
+func on_klappy_energy(value):
+	if energy == null:
+		return
+	if value <= 0 and !animtriggered:
+		animation_tree.set("parameters/sadTrigger/seek_request", 0)
+		animtriggered = true
+	elif value >= 100 and !animtriggered:
+		animation_tree.set("parameters/happyTrigger/seek_request", 0)
+		animtriggered = true
+	elif value > 0  and value < 100:
+		animtriggered = false

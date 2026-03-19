@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 [gd_scene format=3 uid="uid://cwuewtnywilyk"]
+=======
+[gd_scene load_steps=10 format=3 uid="uid://cwuewtnywilyk"]
+>>>>>>> original/jesse
 
 [ext_resource type="Script" uid="uid://bjciburqxb3yk" path="res://Experimental/VoiceToSynth/test.gd" id="1_a0dxq"]
 [ext_resource type="Script" uid="uid://dvv3dfiv882jo" path="res://Scripts/MicrophoneCapture.cs" id="1_kki6v"]
@@ -27,6 +31,10 @@ bpm = NodePath("BPMManager")
 
 [node name="BPMManager" type="Node" parent="."]
 script = ExtResource("6_k0mxu")
+<<<<<<< HEAD
+=======
+playing = true
+>>>>>>> original/jesse
 swing = 0.0
 
 [node name="MicrophoneCapture" type="Node" parent="."]
@@ -102,9 +110,17 @@ bus = &"Microphone"
 bpmManager = NodePath("../BPMManager")
 instrument = 6
 allow_key_input = true
+<<<<<<< HEAD
 
 [node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../BPMManager")
+=======
+gate = 0.0
+
+[node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
+bpmManager = NodePath("../../../BPMManager")
+combine_threshold = 0.0
+>>>>>>> original/jesse
 
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]

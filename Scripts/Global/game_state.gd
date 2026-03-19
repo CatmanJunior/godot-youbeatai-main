@@ -25,6 +25,9 @@ var metronome_enabled: bool = false
 
 var mute_speech: bool = false
 
+# -- Players and buses --
+var audio_players: Array[TrackPlayerBase] = []
+
 # -- Sections & Tracks --
 
 var sections: Array[SectionData] = []

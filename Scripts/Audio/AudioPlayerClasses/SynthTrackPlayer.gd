@@ -3,7 +3,7 @@ extends TrackPlayerBase
 
 var BUS_SUFFIXES : Array[String] = ["Dry", "Alt1", "Alt2"]
 
-var BUS_PREFIX : String = "Synth"
+var BUS_PREFIX : String = "Track"
 
 func _get_bus_suffixes() -> Array[String]:
 	return BUS_SUFFIXES

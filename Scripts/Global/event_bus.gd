@@ -39,6 +39,7 @@ signal section_cleared()
 signal copy_requested()
 signal paste_requested()
 signal section_clear_requested()
+signal section_switch_requested(section_index: int)
 
 # ── Audio Playback ──
 signal play_sample_track_requested(track: int)

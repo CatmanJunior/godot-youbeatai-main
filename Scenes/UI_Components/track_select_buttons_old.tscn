@@ -1,0 +1,407 @@
+[gd_scene format=3 uid="uid://cxt3bdhb1oqlp"]
+
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="1_6xuhq"]
+[ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="2_hmube"]
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_ijmd3"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="4_5tfu2"]
+[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="5_0x6yr"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="6_denfu"]
+[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/UI_Components/blocker.tscn" id="7_ym7vx"]
+[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="8_6c4gk"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="9_wu6vn"]
+[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="10_trd0h"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="11_neum6"]
+[ext_resource type="Animation" uid="uid://fpshbmdajq3r" path="res://Other/Bear_pulse.res" id="12_gfcaf"]
+[ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="13_6rja0"]
+[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="14_pph4t"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="15_gr7xi"]
+[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="16_o4p43"]
+
+[sub_resource type="Animation" id="Animation_v2nl5"]
+resource_name = "record_pulse"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(2, 2), Vector2(3, 3), Vector2(2, 2)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u6oq3"]
+_data = {
+&"Bear_pulse": ExtResource("12_gfcaf"),
+&"record_pulse": SubResource("Animation_v2nl5")
+}
+
+[node name="TrackSelectButtonsOld" type="Control" unique_id=1250432405]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DragAndDropButton0" type="Sprite2D" parent="." unique_id=1520807016]
+z_index = -4
+position = Vector2(54.399998, 41.399998)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("1_6xuhq")
+
+[node name="Icon" type="Label" parent="DragAndDropButton0" unique_id=1713773164]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.5
+offset_top = -30.931938
+offset_right = 7.5
+offset_bottom = 9.068062
+grow_horizontal = 2
+grow_vertical = 2
+text = "👟"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="DragAndDropButton0" unique_id=465235512]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -85.83238
+offset_top = -81.7338
+offset_right = -85.83238
+offset_bottom = -81.7338
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.445, 1.445)
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="DragAndDropButton0" unique_id=1075427745]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("2_hmube")
+
+[node name="Glow" type="Sprite2D" parent="DragAndDropButton0" unique_id=1967941548]
+self_modulate = Color(1, 1, 1, 0)
+z_index = -2
+scale = Vector2(2, 2)
+texture = ExtResource("3_ijmd3")
+
+[node name="DragAndDropButton1" type="Sprite2D" parent="." unique_id=272952162]
+z_index = -4
+position = Vector2(54.399998, 116.40002)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("4_5tfu2")
+
+[node name="Icon2" type="Label" parent="DragAndDropButton1" unique_id=1494179097]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.284
+offset_top = -30.5399
+offset_right = 6.71596
+offset_bottom = 9.46008
+grow_horizontal = 2
+grow_vertical = 2
+text = "👏"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="DragAndDropButton1" unique_id=1088399679]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -94.79274
+offset_top = -85.4513
+offset_right = -94.79274
+offset_bottom = -85.4513
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5353229, 1.5353229)
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="DragAndDropButton1" unique_id=249144867]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("5_0x6yr")
+
+[node name="Glow" type="Sprite2D" parent="DragAndDropButton1" unique_id=1666579433]
+self_modulate = Color(1, 1, 1, 0)
+z_index = -2
+scale = Vector2(2, 2)
+texture = ExtResource("3_ijmd3")
+
+[node name="DragAndDropButton2" type="Sprite2D" parent="." unique_id=1118568136]
+z_index = -4
+position = Vector2(54.399998, 191.4)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("6_denfu")
+
+[node name="Icon3" type="Label" parent="DragAndDropButton2" unique_id=1240329136]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.892
+offset_top = -30.1479
+offset_right = 7.10797
+offset_bottom = 9.8521
+grow_horizontal = 2
+grow_vertical = 2
+text = "📣"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Blocker" parent="DragAndDropButton2" unique_id=107003756 instance=ExtResource("7_ym7vx")]
+offset_left = 26.0
+offset_top = 6.000019
+offset_right = 125.06839
+offset_bottom = 95.06671
+scale = Vector2(0.835, 0.835)
+script = null
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="DragAndDropButton2" unique_id=361814970]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -92.55265
+offset_top = -82.44841
+offset_right = -92.55265
+offset_bottom = -82.44841
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.6205204, 1.6205204)
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="DragAndDropButton2" unique_id=603827157]
+z_index = -1
+position = Vector2(0, 6.7202654)
+scale = Vector2(2, 2)
+texture = ExtResource("8_6c4gk")
+
+[node name="Glow" type="Sprite2D" parent="DragAndDropButton2" unique_id=33743568]
+self_modulate = Color(1, 1, 1, 0)
+z_index = -2
+scale = Vector2(2, 2)
+texture = ExtResource("3_ijmd3")
+
+[node name="DragAndDropButton3" type="Sprite2D" parent="." unique_id=25045890]
+z_index = -4
+position = Vector2(54.399998, 266.40002)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("9_wu6vn")
+
+[node name="Icon4" type="Label" parent="DragAndDropButton3" unique_id=2069999905]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.892
+offset_top = -30.1479
+offset_right = 7.10797
+offset_bottom = 9.8521
+grow_horizontal = 2
+grow_vertical = 2
+text = "⌚"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Blocker" parent="DragAndDropButton3" unique_id=1228267973 instance=ExtResource("7_ym7vx")]
+offset_left = 19.000061
+offset_top = 87.0
+offset_right = 118.419586
+offset_bottom = 175.48398
+scale = Vector2(0.835, 0.835)
+script = null
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="DragAndDropButton3" unique_id=1735399694]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -94.79274
+offset_top = -92.886154
+offset_right = -94.79274
+offset_bottom = -92.886154
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.6409695, 1.6409695)
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="DragAndDropButton3" unique_id=1409650813]
+z_index = -1
+position = Vector2(2.2401123, -11.200439)
+scale = Vector2(2, 2)
+texture = ExtResource("10_trd0h")
+
+[node name="Glow" type="Sprite2D" parent="DragAndDropButton3" unique_id=1872992594]
+self_modulate = Color(1, 1, 1, 0)
+z_index = -2
+scale = Vector2(2, 2)
+texture = ExtResource("3_ijmd3")
+
+[node name="GreenSelectButton" type="Sprite2D" parent="." unique_id=283847959]
+z_index = -4
+position = Vector2(54.399998, 341.39996)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("11_neum6")
+
+[node name="Icon5" type="Label" parent="GreenSelectButton" unique_id=24106399]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.108
+offset_top = -22.0399
+offset_right = -1.10798
+offset_bottom = 0.960068
+grow_horizontal = 2
+grow_vertical = 2
+text = "🐻"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RingVolumeLight" type="PointLight2D" parent="GreenSelectButton" unique_id=999757043]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("3_ijmd3")
+texture_scale = 1.71
+
+[node name="GreenAim" type="AnimationPlayer" parent="GreenSelectButton" unique_id=1578381800]
+libraries/ = SubResource("AnimationLibrary_u6oq3")
+
+[node name="Button" type="Button" parent="GreenSelectButton" unique_id=1232275910]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -94.79274
+offset_top = -87.64309
+offset_right = -94.79274
+offset_bottom = -87.64309
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.601768, 1.601768)
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="GreenSelectButton" unique_id=1011221810]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("13_6rja0")
+
+[node name="BackSprite" type="Sprite2D" parent="GreenSelectButton" unique_id=55643712]
+visible = false
+modulate = Color(1, 1, 1, 0.3137255)
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("14_pph4t")
+
+[node name="PurpleSelectButton" type="Sprite2D" parent="." unique_id=739214796]
+z_index = -4
+position = Vector2(54.399998, 416.35797)
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("15_gr7xi")
+
+[node name="Icon6" type="Label" parent="PurpleSelectButton" unique_id=1958013153]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.108
+offset_top = -22.0399
+offset_right = -1.10798
+offset_bottom = 0.960068
+grow_horizontal = 2
+grow_vertical = 2
+text = "🐦"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RingVolumeLight" type="PointLight2D" parent="PurpleSelectButton" unique_id=1802330023]
+scale = Vector2(0.158, 0.158)
+color = Color(1, 0.911449, 0.665059, 1)
+energy = 0.0
+texture = ExtResource("3_ijmd3")
+texture_scale = 1.71
+
+[node name="Blocker" parent="PurpleSelectButton" unique_id=1698185861 instance=ExtResource("7_ym7vx")]
+offset_left = 19.000011
+offset_top = 397.99997
+offset_right = 112.634964
+offset_bottom = 490.64407
+scale = Vector2(0.835, 0.835)
+pivot_offset = Vector2(50, 35)
+script = null
+metadata/_edit_use_anchors_ = true
+
+[node name="Button" type="Button" parent="PurpleSelectButton" unique_id=1696720821]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = -1
+anchor_left = 0.106461525
+anchor_top = 0.12904227
+anchor_right = 0.8935385
+anchor_bottom = 0.87095773
+offset_left = -94.79274
+offset_top = -93.48059
+offset_right = -94.79274
+offset_bottom = -93.48059
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5861195, 1.5861195)
+focus_mode = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="OutlineSprite" type="Sprite2D" parent="PurpleSelectButton" unique_id=416584402]
+z_index = -1
+scale = Vector2(2, 2)
+texture = ExtResource("16_o4p43")
+
+[node name="BackSprite" type="Sprite2D" parent="PurpleSelectButton" unique_id=1971430559]
+visible = false
+modulate = Color(1, 1, 1, 0.3137255)
+scale = Vector2(1.35, 1.35)
+texture = ExtResource("14_pph4t")

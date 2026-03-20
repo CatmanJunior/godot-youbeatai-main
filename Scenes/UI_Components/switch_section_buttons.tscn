@@ -1,0 +1,227 @@
+[gd_scene format=3 uid="uid://d22yi3f65pq4g"]
+
+[ext_resource type="Script" uid="uid://cc7u261da7fff" path="res://Scripts/UI/section_ui.gd" id="1_3bcou"]
+[ext_resource type="PackedScene" path="res://Scenes/layerButtonPrefab.tscn" id="2_3b4f3"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="2_mka03"]
+[ext_resource type="PackedScene" uid="uid://ckwwv0pdx8e2c" path="res://Scenes/UI_Components/addLayerButtonPrefab.tscn" id="3_3b4f3"]
+[ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="5_8duxt"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8duxt"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ivto"]
+bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r0nxd"]
+bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0g022"]
+bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="SwitchSectionButtons" type="Control" unique_id=1068760052 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "load_section_button", "copy_paste_clear_buttons_holder", "emoji_prompt", "song_recording_progress_bar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3bcou")
+section_button_prefab = ExtResource("2_3b4f3")
+section_buttons_container = NodePath("SwitchLayerButtonsContainer")
+add_section_button = NodePath("CopyPasteClearButtons/AddLayerButton")
+clear_section_button = NodePath("CopyPasteClearButtons/ClearLayerButton")
+save_section_button = NodePath("CopyPasteClearButtons/SaveLayerButton")
+load_section_button = NodePath("CopyPasteClearButtons/LoadLayerButton")
+copy_paste_clear_buttons_holder = NodePath("CopyPasteClearButtons")
+emoji_prompt = NodePath("EmojiPrompt")
+song_recording_progress_bar = NodePath("RealTimeAudioRecordingProgressBar")
+
+[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="." unique_id=179776166]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3109375
+anchor_top = 0.8333333
+anchor_right = 0.3109375
+anchor_bottom = 0.8333333
+offset_left = -32.0
+offset_top = -380.0
+offset_right = 32.0
+offset_bottom = -316.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="layerButton2" parent="SwitchLayerButtonsContainer" unique_id=1555544334 instance=ExtResource("3_3b4f3")]
+layout_mode = 2
+
+[node name="CopyPasteClearButtons" type="Control" parent="." unique_id=2032541506]
+visible = false
+anchors_preset = 0
+offset_left = 215.0
+offset_top = 101.45422
+offset_right = 215.0
+offset_bottom = 101.45422
+
+[node name="SaveLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=886923601]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.0
+offset_top = 45.0
+offset_right = -3.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
+action_mode = 0
+text = "💾
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="ClearLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=2008335968]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -129.0
+offset_top = 45.0
+offset_right = -69.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
+action_mode = 0
+text = "🗑️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="LoadLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=1172480617]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 3.0
+offset_top = 44.0
+offset_right = 63.0
+offset_bottom = 104.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
+action_mode = 0
+text = "♻️
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="AddLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 69.0
+offset_top = 45.0
+offset_right = 129.0
+offset_bottom = 105.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
+action_mode = 0
+text = "+"
+metadata/_edit_use_anchors_ = true
+
+[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="." unique_id=798254824]
+visible = false
+z_index = -2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75845164
+anchor_top = 1.9611111
+anchor_right = 0.76640666
+anchor_bottom = 1.9611111
+offset_left = -644.99994
+offset_top = -1355.0
+offset_right = -303.1823
+offset_bottom = -1178.6367
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_r0nxd")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0g022")
+max_value = 1.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="EmojiPrompt" parent="." unique_id=569761149 instance=ExtResource("5_8duxt")]
+visible = false
+layout_mode = 1
+offset_left = -303.0
+offset_top = -69.0
+offset_right = 145.0
+offset_bottom = 121.0

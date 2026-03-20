@@ -26,6 +26,8 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 
+	spawn_initial_sections()
+
 func spawn_initial_sections():
 	"""Spawn the initial set of sections (data only)."""
 	if _sections_initialized:

@@ -5,20 +5,16 @@
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="9_nnqde"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="10_t1q83"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
+[ext_resource type="PackedScene" uid="uid://cxt3bdhb1oqlp" path="res://Scenes/UI_Components/track_select_buttons_old.tscn" id="19_v2nl5"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Theme" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
-[ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="25_nay3j"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
-[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="26_ovafv"]
-[ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="27_neg2b"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
-[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="27_owhal"]
 [ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="28_1tvlp"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
-[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="28_uv6w5"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="28_v2nl5"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="30_55jeb"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
@@ -31,21 +27,13 @@
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
-[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="48_uv6w5"]
-[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="50_r7bbj"]
-[ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="51_2daye"]
-[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="51_e5peh"]
+[ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
 [ext_resource type="PackedScene" uid="uid://jsbttb3fa3uy" path="res://Scenes/UI_Components/email_prompt.tscn" id="52_1semv"]
 [ext_resource type="PackedScene" uid="uid://caqcrls6ynrlt" path="res://Scenes/UI_Components/count_down.tscn" id="52_6ml46"]
-[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="52_f6rfp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="52_gsvbx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="53_uv6w5"]
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
-[ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
-[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="66_vxl7x"]
@@ -69,51 +57,6 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nwwfm"]
-bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s8vy0"]
-bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa8k8"]
-bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-draw_center = false
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jekl6"]
-bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-corner_radius_top_left = 100
-corner_radius_top_right = 100
-corner_radius_bottom_right = 100
-corner_radius_bottom_left = 100
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
 buffer_length = 0.1
@@ -378,160 +321,6 @@ range_z_max = 100
 texture = ExtResource("26_7k868")
 offset = Vector2(0, -150)
 
-[node name="SwitchLayerButtons" type="Node2D" parent="BeatRingPivotPoint" unique_id=1688423132]
-
-[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=207254664]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.0
-offset_top = -380.0
-offset_right = 32.0
-offset_bottom = -316.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=317281947]
-position = Vector2(-130, -1074)
-
-[node name="Outline" type="Sprite2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder" unique_id=363171599]
-scale = Vector2(0.135, 0.135)
-texture = ExtResource("27_neg2b")
-
-[node name="CopyPasteClearButtons" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder" unique_id=761343139]
-position = Vector2(-1, 1)
-
-[node name="SaveLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=1966178016]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -63.0
-offset_top = 45.0
-offset_right = -3.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "💾
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="ClearLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=938247505]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -129.0
-offset_top = 45.0
-offset_right = -69.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "🗑️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="LoadLayoutButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=268241636]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 3.0
-offset_top = 45.0
-offset_right = 63.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "♻️
-"
-metadata/_edit_use_anchors_ = true
-
-[node name="AddLayerButton" type="Button" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons" unique_id=1375259267]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 69.0
-offset_top = 45.0
-offset_right = 129.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_nwwfm")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_s8vy0")
-theme_override_styles/hover = SubResource("StyleBoxFlat_nwwfm")
-action_mode = 0
-text = "+"
-metadata/_edit_use_anchors_ = true
-
-[node name="BlockerHolder" type="Node2D" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton" unique_id=323069952]
-position = Vector2(35, 33)
-
-[node name="Blocker" parent="BeatRingPivotPoint/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton/BlockerHolder" unique_id=70424126 instance=ExtResource("32_aa8k8")]
-top_level = false
-offset_left = -50.99999
-offset_top = -45.0
-offset_right = 59.00001
-offset_bottom = 115.0
-scale = Vector2(0.7174814, 0.7174814)
-script = null
-
-[node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="BeatRingPivotPoint/SwitchLayerButtons" unique_id=660755010]
-z_index = -2
-anchors_preset = -1
-anchor_left = 0.48892045
-anchor_top = 0.3285358
-anchor_right = 0.49687538
-anchor_bottom = 0.3285358
-offset_left = -644.99994
-offset_top = -1355.0
-offset_right = -303.1823
-offset_bottom = -1178.6367
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_aa8k8")
-theme_override_styles/fill = SubResource("StyleBoxFlat_jekl6")
-max_value = 1.0
-show_percentage = false
-metadata/_edit_use_anchors_ = true
-
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="BeatRingPivotPoint" unique_id=1172764783]
 z_index = 2
 emitting = false
@@ -639,16 +428,16 @@ script = ExtResource("31_v2nl5")
 
 [node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "rec_button", "settings_panel")]
 script = ExtResource("65_87bhu")
+mail_panel = null
+mail_button = null
+mail_field = null
+name_field = null
 loading = NodePath("../../UserInterface/CenterContainer")
 manager = NodePath("../Manager")
 bpm_manager = NodePath("../BPM")
 loop_button = NodePath("../../UserInterface/LayerLoopToggle")
 rec_button = NodePath("../../UserInterface/RecButton")
 settings_panel = NodePath("../../UserInterface/SettingsPanel")
-mail_panel = null
-mail_button = null
-mail_field = null
-name_field = null
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player", "play_song_button", "play_beat_button")]
@@ -666,6 +455,13 @@ z_as_relative = false
 layout_mode = 3
 anchors_preset = 0
 metadata/_edit_use_anchors_ = true
+
+[node name="TrackSelectButtonsOld" parent="UserInterface" unique_id=1250432405 instance=ExtResource("19_v2nl5")]
+layout_mode = 1
+offset_left = -584.0
+offset_top = -220.0
+offset_right = -584.0
+offset_bottom = -220.0
 
 [node name="Buttons" type="Node2D" parent="UserInterface" unique_id=367959140]
 position = Vector2(172, -101)
@@ -1134,365 +930,6 @@ self_modulate = Color(0.61960787, 0.6117647, 0.8980392, 1)
 position = Vector2(642.94885, -0.8874006)
 scale = Vector2(1109.9528, 13.182272)
 mesh = SubResource("BoxMesh_55idt")
-
-[node name="DragAndDropButton0" type="Sprite2D" parent="UserInterface/Buttons" unique_id=241081030]
-z_index = -4
-position = Vector2(-554.91113, -77.53021)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("48_uv6w5")
-
-[node name="Icon" type="Label" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=1630293298]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.5
-offset_top = -30.931938
-offset_right = 7.5
-offset_bottom = 9.068062
-grow_horizontal = 2
-grow_vertical = 2
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=35818142]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
-anchor_left = 0.106461525
-anchor_top = 0.12904227
-anchor_right = 0.8935385
-anchor_bottom = 0.87095773
-offset_left = -85.83238
-offset_top = -81.7338
-offset_right = -85.83238
-offset_bottom = -81.7338
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.445, 1.445)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=841711437]
-z_index = -1
-scale = Vector2(2, 2)
-texture = ExtResource("25_nay3j")
-
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton0" unique_id=819076319]
-self_modulate = Color(1, 1, 1, 0)
-z_index = -2
-scale = Vector2(2, 2)
-texture = ExtResource("22_sb4d6")
-
-[node name="DragAndDropButton1" type="Sprite2D" parent="UserInterface/Buttons" unique_id=932974684]
-z_index = -4
-position = Vector2(-554.91113, -2.5301971)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("50_r7bbj")
-
-[node name="Icon2" type="Label" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=909551119]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -33.284
-offset_top = -30.5399
-offset_right = 6.71596
-offset_bottom = 9.46008
-grow_horizontal = 2
-grow_vertical = 2
-text = "👏"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1623936649]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
-anchor_left = 0.106461525
-anchor_top = 0.12904227
-anchor_right = 0.8935385
-anchor_bottom = 0.87095773
-offset_left = -94.79274
-offset_top = -85.4513
-offset_right = -94.79274
-offset_bottom = -85.4513
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.5353229, 1.5353229)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1722989510]
-z_index = -1
-scale = Vector2(2, 2)
-texture = ExtResource("26_ovafv")
-
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton1" unique_id=1255733850]
-self_modulate = Color(1, 1, 1, 0)
-z_index = -2
-scale = Vector2(2, 2)
-texture = ExtResource("22_sb4d6")
-
-[node name="DragAndDropButton2" type="Sprite2D" parent="UserInterface/Buttons" unique_id=39722064]
-z_index = -4
-position = Vector2(-554.91113, 72.46979)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("51_e5peh")
-
-[node name="Icon3" type="Label" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1166407971]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.892
-offset_top = -30.1479
-offset_right = 7.10797
-offset_bottom = 9.8521
-grow_horizontal = 2
-grow_vertical = 2
-text = "📣"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1283103458 instance=ExtResource("32_aa8k8")]
-offset_left = -567.0
-offset_top = -44.0
-offset_right = -467.9316
-offset_bottom = 45.06669
-scale = Vector2(0.835, 0.835)
-script = null
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=12908199]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
-anchor_left = 0.106461525
-anchor_top = 0.12904227
-anchor_right = 0.8935385
-anchor_bottom = 0.87095773
-offset_left = -92.55265
-offset_top = -82.44841
-offset_right = -92.55265
-offset_bottom = -82.44841
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.6205204, 1.6205204)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1780027407]
-z_index = -1
-position = Vector2(0, 6.7202654)
-scale = Vector2(2, 2)
-texture = ExtResource("27_owhal")
-
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton2" unique_id=1043908912]
-self_modulate = Color(1, 1, 1, 0)
-z_index = -2
-scale = Vector2(2, 2)
-texture = ExtResource("22_sb4d6")
-
-[node name="DragAndDropButton3" type="Sprite2D" parent="UserInterface/Buttons" unique_id=361082560]
-z_index = -4
-position = Vector2(-554.91113, 147.4698)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("52_f6rfp")
-
-[node name="Icon4" type="Label" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1775008277]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -32.892
-offset_top = -30.1479
-offset_right = 7.10797
-offset_bottom = 9.8521
-grow_horizontal = 2
-grow_vertical = 2
-text = "⌚"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Blocker" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=246877486 instance=ExtResource("32_aa8k8")]
-offset_left = -572.0
-offset_top = 53.000015
-offset_right = -472.58047
-offset_bottom = 141.484
-scale = Vector2(0.835, 0.835)
-script = null
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1396723126]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
-anchor_left = 0.106461525
-anchor_top = 0.12904227
-anchor_right = 0.8935385
-anchor_bottom = 0.87095773
-offset_left = -94.79274
-offset_top = -92.886154
-offset_right = -94.79274
-offset_bottom = -92.886154
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.6409695, 1.6409695)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=1903458890]
-z_index = -1
-position = Vector2(2.2401123, -11.200439)
-scale = Vector2(2, 2)
-texture = ExtResource("28_uv6w5")
-
-[node name="Glow" type="Sprite2D" parent="UserInterface/Buttons/DragAndDropButton3" unique_id=848671017]
-self_modulate = Color(1, 1, 1, 0)
-z_index = -2
-scale = Vector2(2, 2)
-texture = ExtResource("22_sb4d6")
-
-[node name="GreenSelectButton" type="Sprite2D" parent="UserInterface/Buttons" unique_id=411785685]
-z_index = -4
-position = Vector2(-554.91113, 222.46976)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("53_sasc4")
-
-[node name="Icon5" type="Label" parent="UserInterface/Buttons/GreenSelectButton" unique_id=848688578]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.108
-offset_top = -22.0399
-offset_right = -1.10798
-offset_bottom = 0.960068
-grow_horizontal = 2
-grow_vertical = 2
-text = "🐻"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/Buttons/GreenSelectButton" unique_id=1907393850]
-scale = Vector2(0.158, 0.158)
-color = Color(1, 0.911449, 0.665059, 1)
-energy = 0.0
-texture = ExtResource("22_sb4d6")
-texture_scale = 1.71
-
-[node name="GreenAim" type="AnimationPlayer" parent="UserInterface/Buttons/GreenSelectButton" unique_id=1343489425]
-libraries/ = SubResource("AnimationLibrary_dmskm")
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/GreenSelectButton" unique_id=1514526632]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
-anchor_left = 0.106461525
-anchor_top = 0.12904227
-anchor_right = 0.8935385
-anchor_bottom = 0.87095773
-offset_left = -94.79274
-offset_top = -87.64309
-offset_right = -94.79274
-offset_bottom = -87.64309
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.601768, 1.601768)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/GreenSelectButton" unique_id=809725005]
-z_index = -1
-scale = Vector2(2, 2)
-texture = ExtResource("61_jekl6")
-
-[node name="BackSprite" type="Sprite2D" parent="UserInterface/Buttons/GreenSelectButton" unique_id=116205658]
-visible = false
-modulate = Color(1, 1, 1, 0.3137255)
-scale = Vector2(1.35, 1.35)
-texture = ExtResource("53_uv6w5")
-
-[node name="PurpleSelectButton" type="Sprite2D" parent="UserInterface/Buttons" unique_id=947823535]
-z_index = -4
-position = Vector2(-554.91113, 297.42776)
-scale = Vector2(0.35, 0.35)
-texture = ExtResource("55_pfx1i")
-
-[node name="Icon6" type="Label" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=1039153831]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -23.108
-offset_top = -22.0399
-offset_right = -1.10798
-offset_bottom = 0.960068
-grow_horizontal = 2
-grow_vertical = 2
-text = "🐦"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="RingVolumeLight" type="PointLight2D" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=364418658]
-scale = Vector2(0.158, 0.158)
-color = Color(1, 0.911449, 0.665059, 1)
-energy = 0.0
-texture = ExtResource("22_sb4d6")
-texture_scale = 1.71
-
-[node name="Blocker" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=1258860749 instance=ExtResource("32_aa8k8")]
-offset_left = -575.0
-offset_top = 237.00003
-offset_right = -481.36505
-offset_bottom = 329.64413
-scale = Vector2(0.835, 0.835)
-pivot_offset = Vector2(50, 35)
-script = null
-metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=1614267618]
-self_modulate = Color(1, 1, 1, 0)
-anchors_preset = -1
-anchor_left = 0.106461525
-anchor_top = 0.12904227
-anchor_right = 0.8935385
-anchor_bottom = 0.87095773
-offset_left = -94.79274
-offset_top = -93.48059
-offset_right = -94.79274
-offset_bottom = -93.48059
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1.5861195, 1.5861195)
-focus_mode = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=112941163]
-z_index = -1
-scale = Vector2(2, 2)
-texture = ExtResource("62_v1mrv")
-
-[node name="BackSprite" type="Sprite2D" parent="UserInterface/Buttons/PurpleSelectButton" unique_id=1254905050]
-visible = false
-modulate = Color(1, 1, 1, 0.3137255)
-scale = Vector2(1.35, 1.35)
-texture = ExtResource("53_uv6w5")
 
 [node name="ChaosPad" parent="UserInterface" unique_id=2003164050 instance=ExtResource("31_kwxat")]
 position = Vector2(403, -201)
@@ -2497,14 +1934,6 @@ text = "REC"
 icon_alignment = 2
 expand_icon = true
 
-[node name="EmojiPrompt" parent="UserInterface" unique_id=569761149 instance=ExtResource("51_2daye")]
-visible = false
-layout_mode = 1
-offset_left = -894.0
-offset_top = -598.0
-offset_right = -446.0
-offset_bottom = -408.0
-
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false
 layout_mode = 1
@@ -2649,6 +2078,12 @@ offset_bottom = 121.0
 klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
 KlappyEnergy = NodePath("../UserInterface/Robot/ProgressBar")
 achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
+
+[node name="SwitchSectionButtons" parent="." unique_id=1068760052 instance=ExtResource("49_v2nl5")]
+offset_left = -257.0
+offset_top = 57.0
+offset_right = -257.0
+offset_bottom = 57.0
 
 [connection signal="value_changed" from="UserInterface/Robot/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]

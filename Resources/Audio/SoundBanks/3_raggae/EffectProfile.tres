@@ -1,10 +1,6 @@
 [gd_resource type="Resource" script_class="EffectProfile" load_steps=2 format=3 uid="uid://v8ueoeyarkdk"]
 
-<<<<<<< HEAD
 [ext_resource type="Script" uid="uid://b1ymetkpj7tbs" path="res://Scripts/AudioBanks/EffectProfile.gd" id="1_tx14t"]
-=======
-[ext_resource type="Script" uid="uid://b1ymetkpj7tbs" path="res://Scripts/AudioBanks/EffectProfile.cs" id="1_tx14t"]
->>>>>>> original/jesse
 
 [resource]
 script = ExtResource("1_tx14t")

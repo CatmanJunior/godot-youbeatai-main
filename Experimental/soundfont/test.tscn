@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-[gd_scene format=3 uid="uid://br4od8trqfgr4"]
-
-[ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="1_a6tcu"]
-[ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="1_x42kv"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="2_a6tcu"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="2_dn6mc"]
-[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="3_a6tcu"]
-=======
 [gd_scene load_steps=10 format=3 uid="uid://br4od8trqfgr4"]
 
 [ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="1_a6tcu"]
@@ -14,20 +5,15 @@
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="2_dn6mc"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="3_a6tcu"]
 [ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Experimental/soundfont/tencho.sfo" id="3_oj4hq"]
->>>>>>> original/jesse
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="4_oj4hq"]
 
 [sub_resource type="GDScript" id="GDScript_dn6mc"]
 resource_name = "load"
 script/source = "extends Control
 
-<<<<<<< HEAD
-@export var bankData : EffectProfile;
-=======
 @export var bankData : EffectProfile:
 	set(v):
 		bankData.Apply(AudioServer.get_bus_index(\"Purple\"))	
->>>>>>> original/jesse
 
 func _ready():
 	bankData.Apply(AudioServer.get_bus_index(\"Purple\"))
@@ -78,20 +64,12 @@ script = ExtResource("4_oj4hq")
 metadata/_custom_type_script = "uid://cg4g587k3seew"
 
 [node name="notePlayer" type="SoundFontPlayer" parent="." node_paths=PackedStringArray("bpmManager")]
-<<<<<<< HEAD
-soundfont = ExtResource("2_a6tcu")
-=======
 soundfont = ExtResource("3_oj4hq")
->>>>>>> original/jesse
 stream = SubResource("AudioStreamGenerator_x42kv")
 bus = &"Purple"
 script = ExtResource("1_x42kv")
 bpmManager = NodePath("../BpmManager")
 notes = ExtResource("2_dn6mc")
-<<<<<<< HEAD
-instrument = 12
-=======
->>>>>>> original/jesse
 base_note = SubResource("Resource_dn6mc")
 allow_key_input = true
 metadata/_custom_type_script = "uid://bvcmfyc0eqv7e"

@@ -1306,18 +1306,6 @@ autowrap_mode = 1
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
 
-[node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0" unique_id=305392375]
-bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009995494)
-bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869257, 0.7947603)
-bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
-bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/9/position = Vector3(0.00529154, -0.0022284095, 0.0044968794)
-bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
-bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
-bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
-bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
-
 [node name="AnimationPlayer" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model" index="1" unique_id=337097326]
 libraries/animations = ExtResource("78_ikay4")
 

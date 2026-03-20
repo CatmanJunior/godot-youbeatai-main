@@ -1,6 +1,5 @@
-[gd_scene load_steps=6 format=3 uid="uid://boh0od1y4wa8p"]
+[gd_scene format=3 uid="uid://boh0od1y4wa8p"]
 
-[ext_resource type="Script" uid="uid://rwgnwuwj70i1" path="res://Scripts/Loading.cs" id="1_fim2r"]
 [ext_resource type="SpriteFrames" uid="uid://1mictkronqdo" path="res://loadanim.tres" id="2_k66n3"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="3_xrc7h"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="4_4tbtc"]
@@ -8,14 +7,12 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dlcsm"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[node name="LaadScherm" type="Panel" node_paths=PackedStringArray("animation")]
+[node name="LaadScherm" type="Panel" unique_id=1169867407]
 offset_right = 1280.0
 offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_dlcsm")
-script = ExtResource("1_fim2r")
-animation = NodePath("AnimatedSprite2D")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=620954094]
 layout_mode = 0
 offset_left = 290.0
 offset_top = 219.0
@@ -27,13 +24,13 @@ text = "Nog even geduld....."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1536751435]
 position = Vector2(640, 422)
 sprite_frames = ExtResource("2_k66n3")
 frame = 39
 frame_progress = 0.371644
 
-[node name="WorldBackPanel" type="Sprite2D" parent="."]
+[node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=1994884478]
 modulate = Color(0.85, 0.85, 0.85, 1)
 z_index = -30
 texture_filter = 2
@@ -42,7 +39,7 @@ texture = ExtResource("3_xrc7h")
 centered = false
 metadata/_edit_lock_ = true
 
-[node name="Gradient" type="Sprite2D" parent="."]
+[node name="Gradient" type="Sprite2D" parent="." unique_id=73973692]
 modulate = Color(0.85, 0.85, 0.85, 1)
 z_index = -30
 texture_filter = 2

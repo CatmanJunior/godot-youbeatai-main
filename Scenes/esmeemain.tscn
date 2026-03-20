@@ -10,13 +10,13 @@
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_plxj5"]
 [ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="9_vp66f"]
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_ywy4v"]
-[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Icons/Icons-_28_0006_Drum.png" id="22_3jhgx"]
-[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Icons/Icons-_28_0014_Clap.png" id="23_5if8y"]
-[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Icons/Icons-_28_0013_Horn.png" id="24_ydaxn"]
-[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Icons/Icons-_28_0015_Crash.png" id="29_7821k"]
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Icons/Icons-_28_0010_Bear.png" id="31_c8kgu"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Icons/Icons-_28_0011_Bird.png" id="32_3vwjn"]
-[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="33_6yg4s"]
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="22_3jhgx"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="23_5if8y"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="24_ydaxn"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="29_7821k"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="31_c8kgu"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="32_3vwjn"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="33_6yg4s"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="40_g5kne"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="41_bgw7n"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="42_53ekd"]
@@ -42,7 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_8gvn6"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_6ryut"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="73_pmy2e"]
-[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Icons/Icons-_28_0004_Microphone.png" id="74_nc21j"]
+[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="74_nc21j"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_5ivby"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="76_gmaje"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="77_48peo"]
@@ -682,7 +682,7 @@ metadata/_custom_type_script = "uid://bysoee7k07v3y"
 [node name="bass_line" parent="Managers/LayerVoiceOver0" unique_id=1196147182 instance=ExtResource("62_b6wjm")]
 soundfont = ExtResource("63_tqfde")
 volume_db = -7.0
-bus = &"Green"
+bus = &"Master"
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../../BPM")
@@ -694,7 +694,7 @@ beats_amount_scaler = 0.5
 
 [node name="synth_line" parent="Managers/LayerVoiceOver1" unique_id=1157305088 instance=ExtResource("62_b6wjm")]
 volume_db = -7.0
-bus = &"Purple"
+bus = &"Master"
 instrument = 6
 
 [node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
@@ -1709,18 +1709,6 @@ manager = NodePath("../../../../../Managers/Manager")
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
-
-[node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0" unique_id=305392375]
-bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009995494)
-bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869257, 0.7947603)
-bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
-bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
-bones/9/position = Vector3(0.00529154, -0.0022284095, 0.0044968794)
-bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
-bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
-bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
-bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
 
 [node name="AnimationPlayer" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model" index="1" unique_id=337097326]
 libraries/animations = ExtResource("46_q0n6x")

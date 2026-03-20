@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-[gd_resource type="AudioBusLayout" format=3 uid="uid://cbsvq6wm8s4ny"]
-=======
 [gd_resource type="AudioBusLayout" load_steps=40 format=3 uid="uid://cbsvq6wm8s4ny"]
 
 [sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_4l2b1"]
@@ -14,7 +11,6 @@ resource_name = "HighPassFilter"
 
 [sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_6n6ik"]
 resource_name = "LowPassFilter"
->>>>>>> original/jesse
 
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
@@ -139,10 +135,6 @@ bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = 0.0
 bus/1/send = &"Master"
-<<<<<<< HEAD
-bus/1/effect/0/effect = SubResource("AudioEffectRecord_6n6ik")
-bus/1/effect/0/enabled = true
-=======
 bus/1/effect/0/effect = SubResource("AudioEffectPhaser_4l2b1")
 bus/1/effect/0/enabled = true
 bus/1/effect/1/effect = SubResource("AudioEffectDistortion_6n6ik")
@@ -153,7 +145,6 @@ bus/1/effect/3/effect = SubResource("AudioEffectLowPassFilter_6n6ik")
 bus/1/effect/3/enabled = true
 bus/1/effect/4/effect = SubResource("AudioEffectRecord_6n6ik")
 bus/1/effect/4/enabled = true
->>>>>>> original/jesse
 bus/2/name = &"Beats"
 bus/2/solo = false
 bus/2/mute = false
@@ -265,11 +256,7 @@ bus/13/solo = false
 bus/13/mute = false
 bus/13/bypass_fx = false
 bus/13/volume_db = 0.0
-<<<<<<< HEAD
-bus/13/send = &"PurpleVoice"
-=======
 bus/13/send = &"Voice"
->>>>>>> original/jesse
 bus/13/effect/0/effect = SubResource("AudioEffectPitchShift_se50o")
 bus/13/effect/0/enabled = false
 bus/13/effect/1/effect = SubResource("AudioEffectDistortion_se50o")
@@ -311,11 +298,7 @@ bus/17/solo = false
 bus/17/mute = false
 bus/17/bypass_fx = false
 bus/17/volume_db = 0.0
-<<<<<<< HEAD
-bus/17/send = &"GreenVoice"
-=======
 bus/17/send = &"Voice"
->>>>>>> original/jesse
 bus/17/effect/0/effect = SubResource("AudioEffectPitchShift_u8yxa")
 bus/17/effect/0/enabled = false
 bus/17/effect/1/effect = SubResource("AudioEffectDistortion_u8yxa")

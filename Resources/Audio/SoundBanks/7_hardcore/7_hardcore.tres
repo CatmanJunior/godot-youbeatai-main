@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 [gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://dyy8617ukyptm"]
 
 [ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="1_qlc07"]
-=======
-[gd_resource type="Resource" script_class="AudioBank" load_steps=31 format=3 uid="uid://dyy8617ukyptm"]
-
-[ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="1_qlc07"]
->>>>>>> original/jesse
 [ext_resource type="AudioStream" uid="uid://b70b3353jtpvd" path="res://Resources/Audio/SoundBanks/7_hardcore/ClosedHH Bandits 1.wav" id="2_120gr"]
 [ext_resource type="AudioStream" uid="uid://cna7wbhdje4fl" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Clap Denim.wav" id="2_ytapi"]
 [ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]
@@ -17,95 +10,8 @@
 [ext_resource type="Resource" uid="uid://pgoewkr5e6g2" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile.tres" id="5_tm1gk"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_ytapi"]
 [ext_resource type="Resource" uid="uid://d4c5jcrp0ty32" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile_bass.tres" id="6_tm1gk"]
-<<<<<<< HEAD
 [ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://b7ycvuoy7t3tc" path="res://Resources/Audio/SoundBanks/7_hardcore/Snare Fakesch.wav" id="7_tm1gk"]
-=======
-[ext_resource type="SoundFont" uid="uid://c2kol6oi2ukwu" path="res://Experimental/soundfont/Hardy-Boy.sf2" id="7_6simi"]
-[ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
-[ext_resource type="AudioStream" uid="uid://b7ycvuoy7t3tc" path="res://Resources/Audio/SoundBanks/7_hardcore/Snare Fakesch.wav" id="7_tm1gk"]
-[ext_resource type="Script" uid="uid://h8sdae8gbqea" path="res://Scripts/AudioBanks/Chord.cs" id="11_fvbv0"]
-[ext_resource type="Script" uid="uid://28mxlysh26rg" path="res://Scripts/AudioBanks/ChordProgression.cs" id="12_53qwe"]
-
-[sub_resource type="Resource" id="Resource_jwx7j"]
-script = ExtResource("11_fvbv0")
-base_note = 69
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_fjs6r"]
-script = ExtResource("11_fvbv0")
-base_note = 67
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_fgo6n"]
-script = ExtResource("11_fvbv0")
-base_note = 65
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_67gow"]
-script = ExtResource("11_fvbv0")
-base_note = 64
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_mady3"]
-script = ExtResource("12_53qwe")
-progression = Array[Object]([SubResource("Resource_jwx7j"), SubResource("Resource_fjs6r"), SubResource("Resource_fgo6n"), SubResource("Resource_67gow")])
-metadata/_custom_type_script = "uid://28mxlysh26rg"
-
-[sub_resource type="Resource" id="Resource_5u6nl"]
-script = ExtResource("11_fvbv0")
-base_note = 62
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_3wmod"]
-script = ExtResource("11_fvbv0")
-base_note = 62
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_8d077"]
-script = ExtResource("11_fvbv0")
-base_note = 65
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_0s06s"]
-script = ExtResource("11_fvbv0")
-base_note = 59
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_woqdi"]
-script = ExtResource("12_53qwe")
-progression = Array[Object]([SubResource("Resource_5u6nl"), SubResource("Resource_3wmod"), SubResource("Resource_8d077"), SubResource("Resource_0s06s")])
-metadata/_custom_type_script = "uid://28mxlysh26rg"
-
-[sub_resource type="Resource" id="Resource_jtvtw"]
-script = ExtResource("11_fvbv0")
-base_note = 65
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_u8cvk"]
-script = ExtResource("11_fvbv0")
-base_note = 67
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_tv2oh"]
-script = ExtResource("11_fvbv0")
-base_note = 69
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_71rld"]
-script = ExtResource("11_fvbv0")
-base_note = 64
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_fm07l"]
-script = ExtResource("12_53qwe")
-progression = Array[Object]([SubResource("Resource_jtvtw"), SubResource("Resource_u8cvk"), SubResource("Resource_tv2oh"), SubResource("Resource_71rld")])
-metadata/_custom_type_script = "uid://28mxlysh26rg"
->>>>>>> original/jesse
 
 [resource]
 script = ExtResource("1_qlc07")
@@ -117,21 +23,10 @@ clap = ExtResource("1_7jbdn")
 clap_alt = ExtResource("2_ytapi")
 closed = ExtResource("2_120gr")
 closed_alt = ExtResource("4_tm1gk")
-<<<<<<< HEAD
 green_soundfont = ExtResource("5_ytapi")
 green_instrument_id = 12
-=======
-green_soundfont = ExtResource("7_6simi")
-green_instrument_id = 2
->>>>>>> original/jesse
 green_effectProfile = ExtResource("6_tm1gk")
 purple_soundfont = ExtResource("5_ytapi")
 purple_instrument_id = 9
 effectProfile = ExtResource("5_tm1gk")
-<<<<<<< HEAD
-=======
-progressions = Array[Object]([SubResource("Resource_mady3"), SubResource("Resource_woqdi"), SubResource("Resource_fm07l")])
-chord_soundfont = ExtResource("5_ytapi")
-chord_instrument_id = 9
->>>>>>> original/jesse
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

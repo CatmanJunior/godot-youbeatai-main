@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 [gd_resource type="Animation" format=3 uid="uid://7l8u52acw2a8"]
-=======
-[gd_resource type="Animation" load_steps=0 format=3 uid="uid://7l8u52acw2a8"]
->>>>>>> original/jesse
 
 [resource]
 resource_name = "Robot|RobotAction"

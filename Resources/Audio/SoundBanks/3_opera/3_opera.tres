@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 [gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://bxpfkfkt30afd"]
-=======
-[gd_resource type="Resource" script_class="AudioBank" load_steps=29 format=3 uid="uid://bxpfkfkt30afd"]
->>>>>>> original/jesse
 
 [ext_resource type="AudioStream" uid="uid://cdumen0pc2a7g" path="res://Resources/Audio/SoundBanks/3_aziatisch/Clap VibeOffering.wav" id="1_0asfo"]
 [ext_resource type="AudioStream" uid="uid://1k6o6vnas7f5" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Clap Bandits.wav" id="2_0asfo"]
@@ -12,101 +8,10 @@
 [ext_resource type="AudioStream" uid="uid://e33tqgukvqje" path="res://Resources/Audio/SoundBanks/3_aziatisch/Kick Omg 2.wav" id="6_0qa84"]
 [ext_resource type="AudioStream" uid="uid://lslyglmsdtsj" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Kick Orion 2.wav" id="7_0qa84"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_g2grn"]
-<<<<<<< HEAD
 [ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_p52u0"]
 [ext_resource type="AudioStream" uid="uid://d31iun8fy2345" path="res://Resources/Audio/SoundBanks/3_aziatisch/Snare Starlight 2.wav" id="10_amqpo"]
 [ext_resource type="AudioStream" uid="uid://cqh8q6i3xg6s4" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Snare_Tamb Gl.wav" id="11_amqpo"]
 
-=======
-[ext_resource type="Script" uid="uid://h8sdae8gbqea" path="res://Scripts/AudioBanks/Chord.cs" id="9_0qa84"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.cs" id="9_p52u0"]
-[ext_resource type="Script" uid="uid://28mxlysh26rg" path="res://Scripts/AudioBanks/ChordProgression.cs" id="10_1hnid"]
-[ext_resource type="AudioStream" uid="uid://d31iun8fy2345" path="res://Resources/Audio/SoundBanks/3_aziatisch/Snare Starlight 2.wav" id="10_amqpo"]
-[ext_resource type="AudioStream" uid="uid://cqh8q6i3xg6s4" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Snare_Tamb Gl.wav" id="11_amqpo"]
-
-[sub_resource type="Resource" id="Resource_qrk8t"]
-script = ExtResource("9_0qa84")
-base_note = 69
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_6uwul"]
-script = ExtResource("9_0qa84")
-base_note = 65
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_ykdsy"]
-script = ExtResource("9_0qa84")
-base_note = 64
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_na6o5"]
-script = ExtResource("9_0qa84")
-base_note = 69
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_4culb"]
-script = ExtResource("10_1hnid")
-progression = Array[Object]([SubResource("Resource_qrk8t"), SubResource("Resource_6uwul"), SubResource("Resource_ykdsy"), SubResource("Resource_na6o5")])
-metadata/_custom_type_script = "uid://28mxlysh26rg"
-
-[sub_resource type="Resource" id="Resource_0qa84"]
-script = ExtResource("9_0qa84")
-base_note = 62
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_amqpo"]
-script = ExtResource("9_0qa84")
-base_note = 67
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_1hnid"]
-script = ExtResource("9_0qa84")
-base_note = 60
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_ljvo7"]
-script = ExtResource("9_0qa84")
-base_note = 69
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_y3pd6"]
-script = ExtResource("10_1hnid")
-progression = Array[Object]([SubResource("Resource_0qa84"), SubResource("Resource_amqpo"), SubResource("Resource_1hnid"), SubResource("Resource_ljvo7")])
-metadata/_custom_type_script = "uid://28mxlysh26rg"
-
-[sub_resource type="Resource" id="Resource_i67ug"]
-script = ExtResource("9_0qa84")
-base_note = 64
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_dyw2u"]
-script = ExtResource("9_0qa84")
-base_note = 59
-type = 2
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_q782x"]
-script = ExtResource("9_0qa84")
-base_note = 64
-type = 1
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_13rnu"]
-script = ExtResource("9_0qa84")
-base_note = 60
-metadata/_custom_type_script = "uid://h8sdae8gbqea"
-
-[sub_resource type="Resource" id="Resource_57ubc"]
-script = ExtResource("10_1hnid")
-progression = Array[Object]([SubResource("Resource_i67ug"), SubResource("Resource_dyw2u"), SubResource("Resource_q782x"), SubResource("Resource_13rnu")])
-metadata/_custom_type_script = "uid://28mxlysh26rg"
-
->>>>>>> original/jesse
 [resource]
 script = ExtResource("9_p52u0")
 kick = ExtResource("6_0qa84")
@@ -123,10 +28,4 @@ green_effectProfile = ExtResource("5_0asfo")
 purple_soundfont = ExtResource("8_g2grn")
 purple_instrument_id = 9
 effectProfile = ExtResource("5_0asfo")
-<<<<<<< HEAD
-=======
-progressions = Array[Object]([SubResource("Resource_4culb"), SubResource("Resource_y3pd6"), SubResource("Resource_57ubc")])
-chord_soundfont = ExtResource("8_g2grn")
-chord_instrument_id = 9
->>>>>>> original/jesse
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

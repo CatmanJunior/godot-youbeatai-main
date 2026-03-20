@@ -1,0 +1,42 @@
+[gd_scene format=3 uid="uid://caqcrls6ynrlt"]
+
+[ext_resource type="Theme" path="res://default_theme.tres" id="1_5480e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="CountDown" type="Panel" unique_id=2019424404]
+top_level = true
+z_index = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -560.0
+offset_bottom = -280.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Label" type="Label" parent="." unique_id=1909179598]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5480e")
+theme_override_font_sizes/font_size = 50
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1

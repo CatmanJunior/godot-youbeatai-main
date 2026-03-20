@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbc3oy34ccrd8"]
+[gd_scene format=3 uid="uid://bbc3oy34ccrd8"]
 
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_d8lm4"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="1_d8lm4"]
 [ext_resource type="Script" uid="uid://j1230pjek5xd" path="res://Scripts/UI/ConfirmationPrompt.gd" id="1_u3del"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
@@ -21,10 +21,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -864.0
-offset_top = -1736.0
-offset_right = -416.0
-offset_bottom = -1546.0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -192.0
+offset_bottom = -170.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")

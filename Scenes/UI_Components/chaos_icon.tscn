@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c2pg35cd8uvsv"]
+
+[ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="1_nil27"]
+[ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="2_i8wtc"]
+
+[node name="ChaosIcon" type="Sprite2D" unique_id=561622033]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_nil27")
+
+[node name="ChaosIconBack" type="Sprite2D" parent="." unique_id=466245850]
+show_behind_parent = true
+scale = Vector2(2, 2)
+texture = ExtResource("2_i8wtc")

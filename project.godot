@@ -24,7 +24,7 @@ config/features=PackedStringArray("4.6", "Mobile")
 
 [audio]
 
-buses/default_bus_layout="res://Other/default_bus_layout.tres"
+buses/default_bus_layout="uid://cbsvq6wm8s4ny"
 general/text_to_speech=true
 driver/enable_input=true
 

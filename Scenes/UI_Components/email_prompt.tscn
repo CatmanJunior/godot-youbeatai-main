@@ -1,0 +1,113 @@
+[gd_scene format=3 uid="uid://jsbttb3fa3uy"]
+
+[ext_resource type="Theme" path="res://default_theme.tres" id="1_jeaa2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="EmailPrompt" type="Panel" unique_id=958757390]
+top_level = true
+z_index = 20
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 632.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+
+[node name="Title" type="Label" parent="." unique_id=1338360888]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -135.5
+offset_right = 135.5
+offset_bottom = 79.0
+grow_horizontal = 2
+theme = ExtResource("1_jeaa2")
+theme_override_font_sizes/font_size = 30
+text = "Jouw Email Adress:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EmailField" type="LineEdit" parent="." unique_id=36543817]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = 25.0
+offset_right = 250.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+placeholder_text = "jouwemailadress@gmail.com"
+alignment = 1
+emoji_menu_enabled = false
+
+[node name="Enter" type="Button" parent="." unique_id=1252579344]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -119.5
+offset_top = -60.0
+offset_right = 119.5
+offset_bottom = -11.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Doorgaan"
+
+[node name="Naam" type="LineEdit" parent="." unique_id=1212393333]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -75.0
+offset_right = 250.0
+offset_bottom = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 28
+placeholder_text = "Wat is je naam?"
+alignment = 1
+
+[node name="CheckButton" type="CheckButton" parent="." unique_id=376458185]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 258.0
+offset_top = 38.0
+offset_right = 302.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+button_pressed = true
+
+[connection signal="toggled" from="CheckButton" to="EmailField" method="reset_from_toggle"]

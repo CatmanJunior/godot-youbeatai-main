@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_uqoqp"]
 [ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="11_hxd57"]
 [ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="15_8eq3q"]
-[ext_resource type="PackedScene" path="res://Scenes/beat.tscn" id="15_8pi72"]
+[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="15_8pi72"]
 [ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="16_8djmd"]
 [ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="17_jjn8x"]
 [ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="18_458pc"]
@@ -65,10 +65,8 @@
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="64_hxd57"]
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="65_0dny5"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="65_tbynx"]
-[ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="67_3t5nw"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="70_3tlvj"]
-[ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="70_cwyb6"]
-[ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="71_vb5o2"]
+[ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/UI_Components/chaos_pad_old.tscn" id="71_vb5o2"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="72_rnt4q"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="73_autlv"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_wgwc4"]
@@ -76,14 +74,14 @@
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="77_bcfhr"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="77_hxd57"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="78_ikay4"]
-[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="78_j5x8m"]
+[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="78_j5x8m"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="80_hb2vt"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="82_crcsx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="83_g0gna"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="84_05f8y"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="85_hxd57"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="86_i7eoh"]
-[ext_resource type="PackedScene" uid="uid://dmqr6dfu1dfjb" path="res://Scenes/emoji_prompt.tscn" id="87_ikay4"]
+[ext_resource type="PackedScene" uid="uid://dmqr6dfu1dfjb" path="res://Scenes/emoji_prompt_old.tscn" id="87_ikay4"]
 [ext_resource type="Script" uid="uid://counqvtgqsxxw" path="res://Scripts/UI/saving_label.gd" id="91_2qaqg"]
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="92_brui1"]
 [ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/UI/chaos_pad_ui.gd" id="93_cpui1"]
@@ -736,15 +734,12 @@ z_index = -1
 scale = Vector2(1.7, 1.7)
 texture = ExtResource("49_dll78")
 
-[node name="SampleTrackButton_0" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1430746148 node_paths=PackedStringArray("button")]
+[node name="SampleTrackButton_0" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1430746148]
 z_index = -4
 position = Vector2(34.94452, 106.02435)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("22_irepe")
 script = ExtResource("77_3t1px")
-button = NodePath("Button0")
-outline_texture = ExtResource("40_e8hom")
-filled_texture = ExtResource("58_snosd")
 
 [node name="Icon" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_0" unique_id=882232344]
 visible = false
@@ -792,16 +787,13 @@ z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="SampleTrackButton_1" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=2057671434 node_paths=PackedStringArray("button")]
+[node name="SampleTrackButton_1" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=2057671434]
 z_index = -4
 position = Vector2(34.94452, 181.02437)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("23_mf0w8")
 script = ExtResource("77_3t1px")
 track_index = 1
-button = NodePath("Button1")
-outline_texture = ExtResource("41_jrm6x")
-filled_texture = ExtResource("61_8pi72")
 
 [node name="Icon2" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_1" unique_id=1892097510]
 visible = false
@@ -849,16 +841,13 @@ z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="SampleTrackButton_2" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=819907347 node_paths=PackedStringArray("button")]
+[node name="SampleTrackButton_2" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=819907347]
 z_index = -4
 position = Vector2(34.94452, 256.02435)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("24_h0xuh")
 script = ExtResource("77_3t1px")
 track_index = 2
-button = NodePath("Button2")
-outline_texture = ExtResource("42_e22mk")
-filled_texture = ExtResource("63_2qaqg")
 
 [node name="Icon3" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_2" unique_id=400101627]
 visible = false
@@ -907,16 +896,13 @@ z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="SampleTrackButton_3" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1264262575 node_paths=PackedStringArray("button")]
+[node name="SampleTrackButton_3" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1264262575]
 z_index = -4
 position = Vector2(34.94452, 331.02435)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("29_580qm")
 script = ExtResource("77_3t1px")
 track_index = 3
-button = NodePath("Button3")
-outline_texture = ExtResource("43_b7kng")
-filled_texture = ExtResource("65_0dny5")
 
 [node name="Icon4" type="Label" parent="UserInterface/TrackButtons/SampleTrackButton_3" unique_id=1692699775]
 visible = false
@@ -965,17 +951,14 @@ z_index = -2
 scale = Vector2(2, 2)
 texture = ExtResource("50_662co")
 
-[node name="SynthTrackButton_0" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1873215869 node_paths=PackedStringArray("button")]
+[node name="SynthTrackButton_0" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=1873215869]
 z_index = -4
 position = Vector2(34.94452, 406.02432)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("31_xwqw4")
 script = ExtResource("77_3t1px")
-track_index = 4
-button = NodePath("Button")
 is_synth_track = true
-outline_texture = ExtResource("44_7j40o")
-filled_texture = ExtResource("67_3t5nw")
+track_index = 4
 
 [node name="Icon5" type="Label" parent="UserInterface/TrackButtons/SynthTrackButton_0" unique_id=1802639549]
 visible = false
@@ -1033,17 +1016,14 @@ modulate = Color(1, 1, 1, 0.3137255)
 scale = Vector2(1.35, 1.35)
 texture = ExtResource("70_3tlvj")
 
-[node name="SynthTrackButton_1" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=96933339 node_paths=PackedStringArray("button")]
+[node name="SynthTrackButton_1" type="Sprite2D" parent="UserInterface/TrackButtons" unique_id=96933339]
 z_index = -4
 position = Vector2(34.94452, 480.98233)
 scale = Vector2(0.35, 0.35)
 texture = ExtResource("32_glyvh")
 script = ExtResource("77_3t1px")
-track_index = 5
-button = NodePath("Button")
 is_synth_track = true
-outline_texture = ExtResource("45_dmvtp")
-filled_texture = ExtResource("70_cwyb6")
+track_index = 5
 
 [node name="Icon6" type="Label" parent="UserInterface/TrackButtons/SynthTrackButton_1" unique_id=1367815341]
 visible = false

@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://dqixdjcbb7wep"]
 
-[ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="1_ibmku"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_ou6ib"]
+[ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/UI_Components/chaos_pad_old.tscn" id="1_ibmku"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="2_ou6ib"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="3_02u7u"]
-[ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/chaos_icon.tscn" id="3_7l3ro"]
+[ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/UI_Components/chaos_icon.tscn" id="3_7l3ro"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_iy75h"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="4_or4m8"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="5_iy75h"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="6_65gdt"]
-[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Icons/Icons-_28_0004_Microphone.png" id="7_rht4q"]
+[ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="7_rht4q"]
 [ext_resource type="Script" path="res://Scripts/KlappyLight.cs" id="9_k64sy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3vpvc"]

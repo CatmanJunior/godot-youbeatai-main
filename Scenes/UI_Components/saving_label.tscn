@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://nj873e6ibi15"]
+
+[ext_resource type="Theme" path="res://default_theme.tres" id="1_a1hq5"]
+
+[node name="SavingLabel" type="Label" unique_id=945421672]
+offset_right = 155.0
+offset_bottom = 152.0
+theme = ExtResource("1_a1hq5")
+theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
+theme_override_font_sizes/font_size = 16
+text = "Opgeslagen naar:
+\"muziekbestand.mp3\""
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Panel" type="Panel" parent="." unique_id=1403458071]
+show_behind_parent = true
+layout_mode = 0
+offset_left = -11.0
+offset_top = -2.0
+offset_right = 163.0
+offset_bottom = 150.0

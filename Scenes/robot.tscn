@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://wpiofc8iuhrj"]
+[gd_scene format=3 uid="uid://wpiofc8iuhrj"]
 
-[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="1_ntbue"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_8s4wd"]
+[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="1_ntbue"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="2_8s4wd"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="3_7cjo4"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_dcvsp"]
 [ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="5_m0m82"]

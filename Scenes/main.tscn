@@ -23,22 +23,26 @@
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="30_55jeb"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="31_gsvbx"]
-[ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/chaos_pad.tscn" id="31_kwxat"]
+[ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/UI_Components/chaos_pad_old.tscn" id="31_kwxat"]
 [ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scripts/midi_helper.gd" id="31_v2nl5"]
-[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/blocker.tscn" id="32_aa8k8"]
-[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/achievements_panel.tscn" id="44_kqrg6"]
+[ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/UI_Components/blocker.tscn" id="32_aa8k8"]
+[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="44_y86h7"]
-[ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/confirmation_prompt.tscn" id="45_kqrg6"]
+[ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="48_uv6w5"]
 [ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="50_r7bbj"]
+[ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="51_2daye"]
 [ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="51_e5peh"]
+[ext_resource type="PackedScene" uid="uid://jsbttb3fa3uy" path="res://Scenes/UI_Components/email_prompt.tscn" id="52_1semv"]
+[ext_resource type="PackedScene" uid="uid://caqcrls6ynrlt" path="res://Scenes/UI_Components/count_down.tscn" id="52_6ml46"]
 [ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="52_f6rfp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="52_gsvbx"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
 [ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="53_sasc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="53_uv6w5"]
+[ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="55_pfx1i"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="61_jekl6"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="62_v1mrv"]
@@ -55,12 +59,7 @@
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
-[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="89_jrou0"]
-[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Textures_New_Correct/Icons-_28_0028_Verse.png" id="90_nb1ia"]
-[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Textures_New_Correct/Icons-_28_0025_Riser.png" id="91_3ahwd"]
-[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Textures_New_Correct/Icons-_28_0026_Blast.png" id="92_b4xsn"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/klappy_light_pad.tscn" id="92_p4gyq"]
-[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Textures_New_Correct/Icons-_28_0021_Flag.png" id="93_ot5ec"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -116,9 +115,6 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
-font_size = 80
-
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
 buffer_length = 0.1
 
@@ -154,6 +150,9 @@ _data = {
 [sub_resource type="BoxMesh" id="BoxMesh_55idt"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_6dn85"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
+font_size = 80
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
 texture = ExtResource("82_e6rcu")
@@ -225,23 +224,6 @@ corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 corner_detail = 16
 anti_aliasing_size = 0.5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwxat"]
-bg_color = Color(0.12941177, 0.12941177, 0.12941177, 1)
-corner_radius_top_left = 1000
-corner_radius_top_right = 1000
-corner_radius_bottom_right = 1000
-corner_radius_bottom_left = 1000
 
 [node name="scene" type="Node2D" unique_id=260053861]
 
@@ -570,145 +552,6 @@ hue_variation_max = 0.55
 
 [node name="Managers" type="Node" parent="." unique_id=581885246]
 
-[node name="ProgressBar" type="ProgressBar" parent="Managers" unique_id=432011914]
-z_index = 6
-offset_left = 250.0
-offset_top = 316.0
-offset_right = 544.16504
-offset_bottom = 350.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_styles/background = ExtResource("9_nnqde")
-theme_override_styles/fill = ExtResource("10_t1q83")
-rounded = true
-metadata/_edit_use_anchors_ = true
-
-[node name="EnergyIcon" type="Label" parent="Managers/ProgressBar" unique_id=1460703728]
-z_index = 4
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 4.0429454
-anchor_top = -36.296215
-anchor_right = 4.0429454
-anchor_bottom = -36.296215
-offset_left = -17.0
-offset_top = 615.0
-offset_right = 156.0
-offset_bottom = 787.0
-scale = Vector2(0.525, 0.525)
-theme = ExtResource("22_hpc6h")
-text = "⚡"
-label_settings = SubResource("LabelSettings_2x3a5")
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Managers/ProgressBar" unique_id=669620865]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 550.0
-offset_right = 67.95
-offset_bottom = 625.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="Managers/ProgressBar" unique_id=309277186]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 464.0
-offset_right = 67.95
-offset_bottom = 539.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="Managers/ProgressBar" unique_id=1787904395]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 377.0
-offset_right = 67.95
-offset_bottom = 452.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label4" type="Label" parent="Managers/ProgressBar" unique_id=1989833577]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 250.0
-offset_right = 67.95
-offset_bottom = 325.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label5" type="Label" parent="Managers/ProgressBar" unique_id=1803031907]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 163.0
-offset_right = 67.95
-offset_bottom = 238.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label6" type="Label" parent="Managers/ProgressBar" unique_id=1180702013]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 76.0
-offset_right = 67.95
-offset_bottom = 151.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ProgressBarAchievementNode" type="Node2D" parent="Managers/ProgressBar" unique_id=771329744]
-position = Vector2(1239.05, -302)
-
 [node name="BPM" type="Node" parent="Managers" unique_id=1943136794]
 unique_name_in_owner = true
 
@@ -794,7 +637,7 @@ octaveRange = Vector2i(4, 6)
 [node name="MidiHelper" type="Node" parent="Managers" unique_id=41444354]
 script = ExtResource("31_v2nl5")
 
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "rec_button", "settings_panel", "mail_panel", "mail_button", "mail_field", "name_field")]
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "rec_button", "settings_panel")]
 script = ExtResource("65_87bhu")
 loading = NodePath("../../UserInterface/CenterContainer")
 manager = NodePath("../Manager")
@@ -802,10 +645,10 @@ bpm_manager = NodePath("../BPM")
 loop_button = NodePath("../../UserInterface/LayerLoopToggle")
 rec_button = NodePath("../../UserInterface/RecButton")
 settings_panel = NodePath("../../UserInterface/SettingsPanel")
-mail_panel = NodePath("../../EmailPrompt")
-mail_button = NodePath("../../EmailPrompt/Enter")
-mail_field = NodePath("../../EmailPrompt/EmailField")
-name_field = NodePath("../../EmailPrompt/Naam")
+mail_panel = null
+mail_button = null
+mail_field = null
+name_field = null
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player", "play_song_button", "play_beat_button")]
@@ -946,7 +789,7 @@ scale = Vector2(0.35, 0.35)
 script = null
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker" index="0"]
+[node name="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker" index="0" unique_id=1568868485]
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=656703345]
@@ -1816,7 +1659,7 @@ autowrap_mode = 1
 
 [node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=2004821384 node_paths=PackedStringArray("manager", "energy") instance=ExtResource("30_hpc6h")]
 manager = NodePath("../../../../../Managers/Manager")
-energy = NodePath("../../../../../Managers/ProgressBar")
+energy = NodePath("../../../ProgressBar")
 
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
@@ -1844,25 +1687,164 @@ offset_top = -226.5
 offset_right = 50.5
 offset_bottom = -38.5
 
-[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
+[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0" unique_id=914827527]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.17973857
 
-[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
+[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1" unique_id=813716848]
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353
 anchor_bottom = -0.1882353
 
-[node name="Continue" parent="UserInterface/Robot/AchievementsPanel" index="3"]
+[node name="Continue" parent="UserInterface/Robot/AchievementsPanel" index="3" unique_id=1432263596]
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" parent="UserInterface/Robot/AchievementsPanel" index="4"]
+[node name="Button" parent="UserInterface/Robot/AchievementsPanel" index="4" unique_id=734105471]
 metadata/_edit_use_anchors_ = true
 
-[node name="AmountLef" parent="UserInterface/Robot/AchievementsPanel" index="5"]
+[node name="AmountLef" parent="UserInterface/Robot/AchievementsPanel" index="5" unique_id=389681954]
 metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBar" type="ProgressBar" parent="UserInterface/Robot" unique_id=432011914]
+z_index = 6
+offset_left = -156.0
+offset_top = 177.0
+offset_right = 138.16504
+offset_bottom = 211.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = ExtResource("9_nnqde")
+theme_override_styles/fill = ExtResource("10_t1q83")
+rounded = true
+metadata/_edit_use_anchors_ = true
+
+[node name="EnergyIcon" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=1460703728]
+z_index = 4
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 4.0429454
+anchor_top = -36.296215
+anchor_right = 4.0429454
+anchor_bottom = -36.296215
+offset_left = -17.0
+offset_top = 615.0
+offset_right = 156.0
+offset_bottom = 787.0
+scale = Vector2(0.525, 0.525)
+theme = ExtResource("22_hpc6h")
+text = "⚡"
+label_settings = SubResource("LabelSettings_2x3a5")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=669620865]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 550.0
+offset_right = 67.95
+offset_bottom = 625.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label2" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=309277186]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 464.0
+offset_right = 67.95
+offset_bottom = 539.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label3" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=1787904395]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 377.0
+offset_right = 67.95
+offset_bottom = 452.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label4" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=1989833577]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 250.0
+offset_right = 67.95
+offset_bottom = 325.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label5" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=1803031907]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 163.0
+offset_right = 67.95
+offset_bottom = 238.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Label6" type="Label" parent="UserInterface/Robot/ProgressBar" unique_id=1180702013]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 3.7179449
+anchor_top = -23.92587
+anchor_right = 3.7179449
+anchor_bottom = -23.92587
+offset_left = -15.05
+offset_top = 76.0
+offset_right = 67.95
+offset_bottom = 151.0
+theme_override_font_sizes/font_size = 30
+text = "🔒"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBarAchievementNode" type="Node2D" parent="UserInterface/Robot/ProgressBar" unique_id=771329744]
+position = Vector2(1239.05, -302)
 
 [node name="SettingsButton" type="Button" parent="UserInterface" unique_id=652234252]
 layout_mode = 1
@@ -2515,7 +2497,75 @@ text = "REC"
 icon_alignment = 2
 expand_icon = true
 
-[node name="BeatParticleSystem" type="CPUParticles2D" parent="." unique_id=830678190]
+[node name="EmojiPrompt" parent="UserInterface" unique_id=569761149 instance=ExtResource("51_2daye")]
+visible = false
+layout_mode = 1
+offset_left = -894.0
+offset_top = -598.0
+offset_right = -446.0
+offset_bottom = -408.0
+
+[node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
+visible = false
+layout_mode = 1
+offset_left = -1278.0
+offset_top = -560.0
+offset_right = -6.0
+offset_bottom = -210.0
+
+[node name="CountDown" parent="UserInterface" unique_id=2019424404 instance=ExtResource("52_6ml46")]
+visible = false
+layout_mode = 1
+offset_left = -276.0
+offset_top = -500.0
+offset_right = -196.0
+offset_bottom = -420.0
+
+[node name="ConfirmationPrompt" parent="UserInterface" unique_id=111843129 instance=ExtResource("45_kqrg6")]
+visible = false
+layout_mode = 1
+offset_left = -974.0
+offset_top = -319.0
+offset_right = -526.0
+offset_bottom = -129.0
+
+[node name="SavingLabel" parent="UserInterface" unique_id=945421672 instance=ExtResource("54_qax2n")]
+visible = false
+layout_mode = 0
+offset_left = -187.0
+offset_top = -27.0
+offset_right = -32.0
+offset_bottom = 125.0
+
+[node name="BackGround" type="Control" parent="UserInterface" unique_id=441152465]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BackGroundGlow" type="Sprite2D" parent="UserInterface/BackGround" unique_id=693730587]
+modulate = Color(1, 1, 1, 0.21568628)
+z_index = -20
+scale = Vector2(5.88, 5.88)
+texture = ExtResource("22_sb4d6")
+metadata/_edit_lock_ = true
+
+[node name="WorldBackPanel" type="Sprite2D" parent="UserInterface/BackGround" unique_id=1942330097]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("52_gsvbx")
+metadata/_edit_lock_ = true
+
+[node name="BackGroundGradient" type="Sprite2D" parent="UserInterface/BackGround" unique_id=1449420760]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("53_bv80c")
+metadata/_edit_lock_ = true
+
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=830678190]
 z_index = 2
 emitting = false
 amount = 128
@@ -2533,7 +2583,7 @@ scale_amount_min = 8.0
 scale_amount_max = 12.0
 hue_variation_max = 0.55
 
-[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="." unique_id=1250804351]
+[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=1250804351]
 z_index = 2
 position = Vector2(279, 337)
 rotation = 1.5708
@@ -2555,7 +2605,7 @@ scale_amount_max = 12.0
 color = Color(0, 1, 0, 1)
 hue_variation_max = 0.55
 
-[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="." unique_id=354766483]
+[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=354766483]
 z_index = 2
 position = Vector2(303, -332)
 emitting = false
@@ -2573,291 +2623,6 @@ angular_velocity_max = 8.8
 angle_min = 45.0
 angle_max = 90.0
 hue_variation_max = 0.55
-
-[node name="SavingLabel" type="Label" parent="." unique_id=29013714]
-visible = false
-offset_left = -449.0
-offset_top = -46.0
-offset_right = -294.0
-offset_bottom = 106.0
-theme = ExtResource("22_hpc6h")
-theme_override_colors/font_color = Color(0.588235, 1, 0.603922, 1)
-theme_override_font_sizes/font_size = 16
-text = "Opgeslagen naar:
-\"muziekbestand.mp3\""
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Panel" type="Panel" parent="SavingLabel" unique_id=193084396]
-show_behind_parent = true
-layout_mode = 0
-offset_left = -8.0
-offset_top = 2.0
-offset_right = 166.0
-offset_bottom = 154.0
-
-[node name="EmailPrompt" type="Panel" parent="." unique_id=1686518710]
-top_level = true
-z_index = 20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -636.0
-offset_top = -2000.0
-offset_right = 636.0
-offset_bottom = -1650.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
-
-[node name="Title" type="Label" parent="EmailPrompt" unique_id=2111969547]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -135.5
-offset_right = 135.5
-offset_bottom = 79.0
-grow_horizontal = 2
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 30
-text = "Jouw Email Adress:"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="EmailField" type="LineEdit" parent="EmailPrompt" unique_id=1204817829]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = 25.0
-offset_right = 250.0
-offset_bottom = 75.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 28
-placeholder_text = "jouwemailadress@gmail.com"
-alignment = 1
-emoji_menu_enabled = false
-
-[node name="Enter" type="Button" parent="EmailPrompt" unique_id=1921491359]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -119.5
-offset_top = -60.0
-offset_right = 119.5
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-text = "Doorgaan"
-
-[node name="Naam" type="LineEdit" parent="EmailPrompt" unique_id=1165240365]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -75.0
-offset_right = 250.0
-offset_bottom = -25.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 28
-placeholder_text = "Wat is je naam?"
-alignment = 1
-
-[node name="CheckButton" type="CheckButton" parent="EmailPrompt" unique_id=1937542145]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 258.0
-offset_top = 38.0
-offset_right = 302.0
-offset_bottom = 62.0
-grow_horizontal = 2
-grow_vertical = 2
-button_pressed = true
-
-[node name="EmojiPrompt" type="Panel" parent="." unique_id=833012967]
-top_level = true
-z_index = 20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -864.0
-offset_top = -1184.0
-offset_right = -416.0
-offset_bottom = -994.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
-
-[node name="Title" type="Label" parent="EmojiPrompt" unique_id=1075269855]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -218.0
-offset_top = -99.0
-offset_right = 220.0
-offset_bottom = -20.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(1, 1.0232327)
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 24
-text = "Wat voor een nieuwe laag wil je?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Cancel" type="Button" parent="EmojiPrompt" unique_id=1139049288]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.41517857
-anchor_top = 0.8
-anchor_right = 0.41517857
-anchor_bottom = 0.8
-offset_right = 76.56
-offset_bottom = 30.62
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 16
-text = "Sluiten"
-metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="EmojiPrompt" unique_id=1867899007]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 72.0
-offset_right = 450.0
-offset_bottom = 122.0
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="Emoji_0" type="Button" parent="EmojiPrompt/HBoxContainer" unique_id=1055478622]
-layout_mode = 2
-focus_mode = 0
-theme_override_constants/icon_max_width = 50
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-icon = ExtResource("89_jrou0")
-icon_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_1" type="Button" parent="EmojiPrompt/HBoxContainer" unique_id=1846597814]
-layout_mode = 2
-focus_mode = 0
-theme_override_constants/icon_max_width = 50
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-icon = ExtResource("90_nb1ia")
-icon_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_2" type="Button" parent="EmojiPrompt/HBoxContainer" unique_id=502302757]
-layout_mode = 2
-focus_mode = 0
-theme_override_constants/icon_max_width = 50
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-icon = ExtResource("91_3ahwd")
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_3" type="Button" parent="EmojiPrompt/HBoxContainer" unique_id=1221553280]
-layout_mode = 2
-focus_mode = 0
-theme_override_constants/icon_max_width = 50
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-icon = ExtResource("92_b4xsn")
-icon_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Emoji_4" type="Button" parent="EmojiPrompt/HBoxContainer" unique_id=1977006270]
-layout_mode = 2
-focus_mode = 0
-theme_override_constants/icon_max_width = 50
-theme_override_font_sizes/font_size = 24
-theme_override_styles/normal = SubResource("StyleBoxFlat_kwxat")
-icon = ExtResource("93_ot5ec")
-icon_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="CountDown" type="Panel" parent="." unique_id=61516651]
-top_level = true
-z_index = 20
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -680.0
-offset_top = 640.0
-offset_right = -600.0
-offset_bottom = 720.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
-
-[node name="Label" type="Label" parent="CountDown" unique_id=712317249]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 50
-text = "0"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ConfirmationPrompt" parent="." unique_id=111843129 instance=ExtResource("45_kqrg6")]
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=693730587]
-modulate = Color(1, 1, 1, 0.21568628)
-z_index = -20
-scale = Vector2(5.88, 5.88)
-texture = ExtResource("22_sb4d6")
-metadata/_edit_lock_ = true
-
-[node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=1942330097]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -30
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("52_gsvbx")
-metadata/_edit_lock_ = true
-
-[node name="Gradient" type="Sprite2D" parent="." unique_id=1449420760]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -30
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("53_bv80c")
-metadata/_edit_lock_ = true
 
 [node name="KlappyReaction" parent="." unique_id=1521628326 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("47_s8vy0")]
 achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
@@ -2882,17 +2647,15 @@ offset_top = 21.0
 offset_right = 460.0
 offset_bottom = 121.0
 klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
-KlappyEnergy = NodePath("../Managers/ProgressBar")
+KlappyEnergy = NodePath("../UserInterface/Robot/ProgressBar")
 achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
-[connection signal="value_changed" from="Managers/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
+[connection signal="value_changed" from="UserInterface/Robot/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/SaveToWavButton" to="Managers/Exporter" method="setup_beat_export_dialog"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenSongExportButton" to="Managers/Exporter/ListenToLastExport" method="play_song"]
 [connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenBeatExportButton" to="Managers/Exporter/ListenToLastExport" method="play_beat"]
 [connection signal="pressed" from="UserInterface/RecButton" to="Managers/Exporter" method="export_interactive"]
-[connection signal="toggled" from="EmailPrompt/CheckButton" to="Managers/Exporter" method="on_mail_toggle_changed"]
-[connection signal="toggled" from="EmailPrompt/CheckButton" to="EmailPrompt/EmailField" method="reset_from_toggle"]
 [connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]

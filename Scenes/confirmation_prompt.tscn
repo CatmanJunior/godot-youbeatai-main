@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-[gd_scene format=3 uid="uid://bbc3oy34ccrd8"]
-
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_d8lm4"]
-[ext_resource type="Script" uid="uid://j1230pjek5xd" path="res://Scripts/UI/ConfirmationPrompt.gd" id="1_u3del"]
-=======
 [gd_scene load_steps=4 format=3 uid="uid://bbc3oy34ccrd8"]
 
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="1_d8lm4"]
-[ext_resource type="Script" uid="uid://dk4aisxxowdu4" path="res://Scripts/Manager/ConfirmationPrompt.cs" id="1_u3del"]
->>>>>>> original/jesse
+[ext_resource type="Script" uid="uid://j1230pjek5xd" path="res://Scripts/UI/ConfirmationPrompt.gd" id="1_u3del"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -20,11 +13,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-<<<<<<< HEAD
 [node name="ConfirmationPrompt" type="Panel" unique_id=503791552 node_paths=PackedStringArray("confirmation_button_agree", "confirmation_button_cancel")]
-=======
-[node name="ConfirmationPrompt" type="Panel" node_paths=PackedStringArray("confirmationButtonAgree", "confirmationButtonCancel")]
->>>>>>> original/jesse
 top_level = true
 z_index = 20
 anchors_preset = 8
@@ -40,17 +29,10 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
 script = ExtResource("1_u3del")
-<<<<<<< HEAD
 confirmation_button_agree = NodePath("Agree")
 confirmation_button_cancel = NodePath("Cancel")
 
 [node name="Title" type="Label" parent="." unique_id=1863483705]
-=======
-confirmationButtonAgree = NodePath("Agree")
-confirmationButtonCancel = NodePath("Cancel")
-
-[node name="Title" type="Label" parent="."]
->>>>>>> original/jesse
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -69,11 +51,7 @@ text = "Weet je het zeker?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-<<<<<<< HEAD
 [node name="Agree" type="Button" parent="." unique_id=1298690498]
-=======
-[node name="Agree" type="Button" parent="."]
->>>>>>> original/jesse
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.15178572
@@ -88,11 +66,7 @@ theme_override_font_sizes/font_size = 28
 text = "✅  Ja"
 metadata/_edit_use_anchors_ = true
 
-<<<<<<< HEAD
 [node name="Cancel" type="Button" parent="." unique_id=608239696]
-=======
-[node name="Cancel" type="Button" parent="."]
->>>>>>> original/jesse
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5625

@@ -1,13 +1,12 @@
 extends SoundFontPlayer
 class_name notePlayer
 
-@export var bpmManager: BpmManager
 @export var notes: Notes
-@export var instrument: int :
+@export var instrument: int:
 	set(v):
 		instrument = v
 		channel_set_presetindex(0, 0, v)
-@export var base_note : Note
+@export var base_note: Note
 @export var allow_key_input: bool = false
 @export_range(0, 1, 0.05) var gate: float = 0.5
 
@@ -21,15 +20,12 @@ var current_layer: int = 0
 #$Beat.text = '%d  %d / %d' % [current_beat_i, current_beat_frac, beat_subdivision]
 
 func _ready():
-	if not bpmManager:
-		bpmManager = %BPM
-	
 	songs.resize(11) # resize to max layers hardcoded? TODO: load max from somewhere
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
 	
 	for preset in get_presetcount():
-		print( "%s - %s" %[preset, get_presetname(preset)])
+		print("%s - %s" % [preset, get_presetname(preset)])
 	
 
 func set_font(font: SoundFont, instr: int):
@@ -48,21 +44,21 @@ func _process_key_input(event: InputEventKey):
 	if not allow_key_input:
 		return
 	var map = {
-		KEY_A:0,
-		KEY_S:2,
-		KEY_D:4,
-		KEY_F:5,
-		KEY_G:7,
-		KEY_H:9,
-		KEY_J:11,
-		KEY_K:12,
-		KEY_L:14,
+		KEY_A: 0,
+		KEY_S: 2,
+		KEY_D: 4,
+		KEY_F: 5,
+		KEY_G: 7,
+		KEY_H: 9,
+		KEY_J: 11,
+		KEY_K: 12,
+		KEY_L: 14,
 	}
 
 	if event.keycode not in map:
 		return
 
-	if event.is_pressed() and not event.is_echo() :
+	if event.is_pressed() and not event.is_echo():
 		channel_note_on(0, 0, base_note.id + map[event.keycode], 1.0)
 	if event.is_released():
 		channel_note_off(0, 0, base_note.id + map[event.keycode])
@@ -74,14 +70,14 @@ func _process_midi_input(event: InputEventMIDI):
 
 func on_bpm():
 	var song: Sequence = get_song()
-	if song == null or len(song.sequence) == 0 or bpmManager.currentBeat >= len(song.sequence):
+	if song == null or len(song.sequence) == 0 or GameState.currentBeat >= len(song.sequence):
 		return
 
-	if bpmManager.currentBeat != 0:
+	if GameState.currentBeat != 0:
 		return
 
 	# queue song
-	queue_song(bpmManager.currentBeat, song)
+	queue_song(GameState.currentBeat, song)
 
 func _on_current_layer_changed(layer: int):
 	current_layer = layer
@@ -104,7 +100,7 @@ func on_song_clear() -> void:
 
 func set_song(data: Sequence) -> void:
 	songs[current_layer] = data
-	queue_song(bpmManager.currentBeat, data)
+	queue_song(GameState.currentBeat, data)
 
 func get_song() -> Sequence:
 	if current_layer >= len(songs):
@@ -117,7 +113,7 @@ func queue_song(start: int, song: Sequence):
 	for i in range(start, len(song.sequence), 1):
 		var note: SequenceNote = song.sequence[i]
 		var rms_value = note.velocity
-		var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
+		var log_value = 20.0 * (log(sqrt(rms_value) / 0.1) / log(10))
 
 		# convert to value around 0-1
 		# capped becasue soundfont does not play well with higher values
@@ -127,11 +123,11 @@ func queue_song(start: int, song: Sequence):
 		if log_value <= gate:
 			return
 
-		var beatDuration = (60.0/bpmManager.bpm /4.0)
+		var beatDuration = (60.0 / GameState.bpm / 4.0)
 		var start_time: float = float(note.beat) * beatDuration
 		var stop_time: float = start_time + float(note.duration) * beatDuration
 		print("%f - %f, %f" % [start_time, stop_time, beatDuration])
-		channel_note_on( get_time() + start_time, 0, round(note.note), log_value)
+		channel_note_on(get_time() + start_time, 0, round(note.note), log_value)
 		channel_note_off(get_time() + stop_time, 0, round(note.note))
 
 func play_note(note: Note, duration: float) -> void:

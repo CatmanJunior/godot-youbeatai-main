@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/chaos_icon.tscn" id="3_ajioc"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/ChaosPad/ChaosPadKnob.gd" id="5_e7g83"]
-[ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/UI/play_star_animation.gd" id="6_xr1wk"]
+[ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/Manager/play_star_animation.gd" id="6_xr1wk"]
 [ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="7_1pf8w"]
 [ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="8_685nt"]
 [ext_resource type="Animation" uid="uid://b0td231pq8k03" path="res://outside_star_animation.res" id="9_pd38u"]

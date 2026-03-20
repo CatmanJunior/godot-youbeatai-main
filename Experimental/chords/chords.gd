@@ -6,8 +6,6 @@ class_name Chords
 @export var chordDuration: int = 4
 @export var progressions: Array[ChordProgression]
 
-@export var bpm_manager: BpmManager
-@export var manager: Manager
 
 enum ChordType {
 	MAJOR,
@@ -76,10 +74,10 @@ func on_bpm():
 	if current % chordDuration != 0:
 		return
 
-	var beatDuration = 60.0/bpmManager.bpm /4.0
+	var beatDuration = 60.0/GameState.bpm /4.0
 	var duration = chordDuration * beatDuration
 
-	var current_beat = (bpm_manager.amount_of_beats * manager.currentLayerIndex) + bpm_manager.currentBeat
+	var current_beat = (GameState.amount_of_beats * GameState.currentLayerIndex) + GameState.currentBeat
 	song_cursor = (current_beat / chordDuration) % len(chord_song)
 	chord_song[song_cursor].call(duration)
 

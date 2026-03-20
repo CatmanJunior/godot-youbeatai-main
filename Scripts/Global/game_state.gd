@@ -6,6 +6,16 @@ extends Node
 
 const BEATS_AMOUNT_DEFAULT: int = 16
 
+# -- TO BE IMPLEMENTED --
+var songModeActive: bool = false
+var tutorialActivated: bool = false
+
+##Not Tested
+func Text_without_emoticons(text: String) -> String:
+	var regex = RegEx.new()
+	regex.compile(r":[^:\s]+:")
+	return regex.sub(text, "")
+
 
 # -- Settings --
 

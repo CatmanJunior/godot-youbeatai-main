@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 [gd_resource type="Resource" script_class="Notes" format=3 uid="uid://c0la6lq62g4pv"]
-=======
-[gd_resource type="Resource" script_class="Notes" load_steps=143 format=3 uid="uid://c0la6lq62g4pv"]
->>>>>>> original/jesse
 
 [ext_resource type="Script" uid="uid://cga5k43vl7kxt" path="res://Experimental/VoiceToSynth/notes.gd" id="1_etwnv"]
 [ext_resource type="Script" uid="uid://du6imj65cyna5" path="res://Experimental/VoiceToSynth/Octave.gd" id="1_h5r0s"]

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dgasrvuad4323"]
 
 [ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="1_xy80w"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_3e1b8"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="2_3e1b8"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="3_ikay4"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="4_snosd"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="5_8pi72"]
@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_uqoqp"]
 [ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="11_hxd57"]
 [ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="15_8eq3q"]
-[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="15_8pi72"]
+[ext_resource type="PackedScene" path="res://Scenes/beat.tscn" id="15_8pi72"]
 [ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="16_8djmd"]
 [ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="17_jjn8x"]
 [ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="18_458pc"]
@@ -54,7 +54,7 @@
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="49_dll78"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_662co"]
 [ext_resource type="Script" uid="uid://cc7u261da7fff" path="res://Scripts/UI/section_ui.gd" id="56_0dny5"]
-[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/layerButtonPrefab.tscn" id="57_hxd57"]
+[ext_resource type="PackedScene" path="res://Scenes/layerButtonPrefab.tscn" id="57_hxd57"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="58_snosd"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="59_j7ciw"]
 [ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Scripts/UI/visibility_manager.gd" id="60_3jbv4"]
@@ -1102,18 +1102,18 @@ texture = ExtResource("70_3tlvj")
 position = Vector2(403, -201)
 rotation = 3.1415927
 
-[node name="MicButtonLocation" parent="UserInterface/ChaosPad" index="0" unique_id=1125788169]
+[node name="MicButtonLocation" parent="UserInterface/ChaosPad" index="0" unique_id=760324441]
 position = Vector2(-0.999997, -99)
 
-[node name="Triangle" parent="UserInterface/ChaosPad" index="1" unique_id=237899624]
+[node name="Triangle" parent="UserInterface/ChaosPad" index="1" unique_id=63480796]
 texture = ExtResource("72_rnt4q")
 offset = Vector2(0, -25)
 
-[node name="KnobSprite" parent="UserInterface/ChaosPad/Triangle" index="3" unique_id=2001326944]
+[node name="KnobSprite" parent="UserInterface/ChaosPad/Triangle" index="3" unique_id=1603175696]
 scale = Vector2(1, 1)
 texture = ExtResource("73_autlv")
 
-[node name="Area2D" parent="UserInterface/ChaosPad/Triangle/KnobSprite" index="0" unique_id=317530432]
+[node name="Area2D" parent="UserInterface/ChaosPad/Triangle/KnobSprite" index="0" unique_id=1923573825]
 scale = Vector2(0.25, 0.25)
 
 [node name="ChaosButtonMic" type="Button" parent="UserInterface/ChaosPad" unique_id=1367204768 node_paths=PackedStringArray("fillTexture")]
@@ -1307,14 +1307,14 @@ transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 
 current = true
 
 [node name="Skeleton3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0" unique_id=305392375]
+bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009995494)
 bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869257, 0.7947603)
-bones/2/position = Vector3(5.6829363e-10, 0.00522447, -1.0098351e-09)
-bones/2/rotation = Quaternion(0.16030091, 0.008637974, -0.46690783, 0.86961263)
 bones/4/rotation = Quaternion(0.66641855, 0.0010095572, -0.0009971554, 0.74557644)
+bones/5/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
+bones/7/position = Vector3(3.4170465e-05, 0.016205067, 0.0067133727)
 bones/9/position = Vector3(0.00529154, -0.0022284095, 0.0044968794)
 bones/9/rotation = Quaternion(0.70678097, 0.01710584, 0.70703715, 0.0163275)
-bones/14/position = Vector3(-6.6628947e-10, 0.00522447, 8.150752e-10)
-bones/14/rotation = Quaternion(0.16030091, -0.008637771, 0.46690783, 0.8696127)
+bones/10/rotation = Quaternion(0.0049924105, -0.00026509122, 0.3586265, 0.93346775)
 bones/16/position = Vector3(-0.0050785053, -0.0021669813, 0.004023494)
 bones/16/rotation = Quaternion(0.70703703, -0.016327508, -0.7067811, 0.017105753)
 
@@ -1337,14 +1337,12 @@ anchor_bottom = 18.5
 offset_top = -209.5
 offset_bottom = -21.5
 
-[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0" unique_id=1808126771]
+[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.17973857
 
-[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1" unique_id=1544089489]
-layout_mode = 1
-anchors_preset = -1
+[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353

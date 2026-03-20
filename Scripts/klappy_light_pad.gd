@@ -17,10 +17,11 @@ var flicker_done = false
 var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
 
 var instruction_label:Label
-@export var _manager:Manager
+
 @export var achievment_panel:Panel
 
 func _ready() -> void:
+	# TODO: GET THIS THE HELL OUT OF HERE
 	bus_index = AudioServer.get_bus_index("SubMaster")
 
 	phaser = AudioEffectPhaser.new()
@@ -45,9 +46,9 @@ func _ready() -> void:
 	if KlappyEnergy != null:
 		KlappyEnergy.value_changed.connect(on_klappy_energy)
 		
-	assert(_manager!= null,"manger not found")
-	if not _manager.tutorialActivated():
-		_manager.OnUtteranceEnd.connect(_on_utterance_end)
+	assert(GameState!= null,"manger not found")
+	if not GameState.tutorialActivated:
+		EventBus.utterance_ended.connect(_on_utterance_end)
 	_get_insrtuction_label()
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -134,7 +135,7 @@ func _start_tts(message:String):
 
 	if(voices.size() == 0): voices = DisplayServer.tts_get_voices_for_language("en")
 	if(DisplayServer.tts_is_speaking()):DisplayServer.tts_stop()
-	DisplayServer.tts_speak(_manager.Text_without_emoticons(message),voices[0],100)
+	DisplayServer.tts_speak(GameState.Text_without_emoticons(message),voices[0],100)
 
 func _on_utterance_end(_utterance):
 	achievment_panel.visible = false

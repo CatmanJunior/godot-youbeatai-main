@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-[gd_scene format=3 uid="uid://bkqjwj0b55t7n"]
-
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="1_qhdw1"]
-[ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="1_x0ko1"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="3_sgsy2"]
-=======
 [gd_scene load_steps=9 format=3 uid="uid://bkqjwj0b55t7n"]
 
 [ext_resource type="SoundFont" uid="uid://bku54wgk62esj" path="res://Experimental/soundfont/Emu Funky Guitars.sf2" id="1_k0lqs"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="1_x0ko1"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="3_sgsy2"]
 [ext_resource type="Resource" uid="uid://b4cdfaxc0vc0s" path="res://Experimental/chords/progression.tres" id="4_3fgag"]
->>>>>>> original/jesse
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="4_k0lqs"]
 [ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="5_3fgag"]
 
@@ -20,25 +12,11 @@ buffer_length = 0.1
 
 [sub_resource type="Resource" id="Resource_0utxd"]
 script = ExtResource("4_k0lqs")
-<<<<<<< HEAD
-id = 48
-=======
->>>>>>> original/jesse
 metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [node name="Test" type="Node2D"]
 
 [node name="Chords" type="SoundFontPlayer" parent="." node_paths=PackedStringArray("bpmManager")]
-<<<<<<< HEAD
-soundfont = ExtResource("1_qhdw1")
-gain = 10.3
-stream = SubResource("AudioStreamGenerator_y5mie")
-script = ExtResource("1_x0ko1")
-chordString = "I-V-vi-IV"
-chordDuration = 8
-bpmManager = NodePath("../BpmManager")
-notes = ExtResource("3_sgsy2")
-=======
 soundfont = ExtResource("1_k0lqs")
 gain = 10.3
 stream = SubResource("AudioStreamGenerator_y5mie")
@@ -50,7 +28,6 @@ progressions = ExtResource("4_3fgag")
 bpmManager = NodePath("../BpmManager")
 notes = ExtResource("3_sgsy2")
 instrument = 17
->>>>>>> original/jesse
 base_note = SubResource("Resource_0utxd")
 allow_key_input = true
 metadata/_custom_type_script = "uid://bysoee7k07v3y"

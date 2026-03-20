@@ -1,51 +1,41 @@
-extends Sprite2D
+extends TextureButton
+class_name TrackSelectButton
 
-@export var track_index: int = 0
-@export var button: Button
+@export_category("Components")
+@export var outline_rect: TextureRect
+@export var glow_rect: TextureRect
+@export var icon_label: Label
+
+@export_category("Synth Only")
+@export var background: TextureRect
 @export var is_synth_track: bool = false
 
-@export var outline_texture: Texture2D
-@export var filled_texture: Texture2D
+@export_category("Track Info")
+@export var track_index: int = 0
+
+var outline_texture: Texture2D
+var filled_texture: Texture2D
 
 var color_is_changing: bool = false
 
-var _background: Sprite2D
-var _outline: Sprite2D
+
+signal track_button_pressed(track_index: int)
 
 func _ready():
-	button.button_up.connect(_on_press)
-	_background = find_child("BackSprite") as Sprite2D
-	_outline = find_child("OutlineSprite") as Sprite2D
+	self.button_up.connect(_on_press)
 
-	var colors = %Colors.colors
+func update_outline(progression:float) -> void:
+	if is_synth_track:
+		outline_rect.rotation_degrees = progression * 360.0 + 30.0
+
+func set_button_selected(active: bool) -> void:
+	if active:
+		outline_rect.texture = filled_texture
+	else:
+		outline_rect.texture = outline_texture
 
 	if is_synth_track:
-		self_modulate = colors[track_index]
-		_background.self_modulate = colors[track_index]
-
-func _process(_delta: float) -> void:
-	_update_outline()
-
-func _update_outline() -> void:
-	var progression = GameState.bar_progress
-	if GameState.selected_track_index == track_index:
-		_outline.texture = filled_texture
-		if is_synth_track:
-			_background.visible = true
-			_outline.rotation_degrees = progression * 360.0 + 30.0
-	else:
-		if is_synth_track:
-			_background.visible = false
-		_outline.texture = outline_texture
+		background.visible = active
 
 func _on_press():
-	if not is_synth_track:
-		EventBus.play_sample_track_requested.emit(track_index)
-
-	if GameState.track_button_add_beats:
-		EventBus.beat_set_requested.emit(track_index, GameState.current_beat, true)
-
-	GameState.selected_track_index = track_index
-
-	EventBus.track_select_button_pressed.emit(track_index)
-	EventBus.track_selected.emit(track_index)
+	emit_signal("track_button_pressed", track_index)

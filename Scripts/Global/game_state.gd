@@ -17,6 +17,18 @@ func Text_without_emoticons(text: String) -> String:
 	return regex.sub(text, "")
 
 
+var colors: Array[Color] = [
+	Color(0.9019608, 0.29411766, 0.5568628, 1),
+	Color(0.972549, 0.52156866, 0.17254902, 1),
+	Color(0.2627451, 0.79607844, 0.5294118, 1),
+	Color(0.011764706, 0.8235294, 0.93333334, 1),
+	Color(1, 1, 0, 1),
+	Color(0.516666, 0, 1, 1),
+	Color(0.61960787, 0.6117647, 0.8980392, 1)
+]
+
+
+
 # -- Settings --
 
 var microphone_volume: float = 0.0

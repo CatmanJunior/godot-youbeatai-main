@@ -155,8 +155,9 @@ func _insert_silence_for_section(section: int) -> void:
 func _remove_audio_for_section(section: int) -> void:
 	_manipulate_recording(section, AudioSavingManager.remove_layer_part_of_recordings)
 
-## Shared helper for insert/remove recording operations that follow the same
-## pattern: get nodes, call an AudioSavingManager method, apply results.
+## Shared helper for insert/remove recording operations.
+## `operation` must accept (recording, voice_over, section, total_beats, beat_duration)
+## and return a result with `.recording` and `.voice_over` fields.
 func _manipulate_recording(section: int, operation: Callable) -> void:
 	var song_vo = get_node_or_null("%SongVoiceOver")
 	if song_vo == null or song_vo.voice_over == null:

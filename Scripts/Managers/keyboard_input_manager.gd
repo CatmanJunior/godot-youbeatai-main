@@ -24,9 +24,10 @@ func _ready() -> void:
 		KEY_F: func(): EventBus.ring_key_pressed.emit(3),
 	}
 
-	# Initialize state tracking for all managed keys
+	# Initialize state tracking for all managed keys with current state
+	# to avoid false key-down events on the first frame
 	for key in _key_actions:
-		_key_states[key] = false
+		_key_states[key] = Input.is_key_pressed(key)
 
 func _process(_delta: float) -> void:
 	_poll_keys()

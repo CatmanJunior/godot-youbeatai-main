@@ -18,8 +18,7 @@ func _ready():
 	ui = get_node("%UiManager")
 
 
-## Helper: safely set .visible on a node, handling nulls and chained access.
-## Accepts a Callable that returns the target node, catching nulls gracefully.
+## Helper: safely set .visible on a node, handling nulls gracefully.
 static func _set_visible_safe(node: Node, value: bool) -> void:
 	if node != null:
 		node.visible = value

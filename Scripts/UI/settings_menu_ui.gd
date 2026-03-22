@@ -38,6 +38,8 @@ var is_visible: bool:
 @export var swing_slider: Slider
 @export var swing_label: Label
 
+@export_category("Templates")
+@export var template_button: Button
 
 @export_category("Other")
 @export var all_sections_to_mp3: Button
@@ -64,6 +66,7 @@ func _ready():
 	all_sections_to_mp3.button_up.connect(_on_export_beat_pressed)
 	mute_speech.toggled.connect(_on_mute_speech_toggled)
 	EventBus.toggle_settings_menu_requested.connect(_on_settings_button_pressed)
+
 
 func _process(_delta: float) -> void:
 	_update_labels()
@@ -123,3 +126,5 @@ func _on_restart_button() -> void:
 
 func _on_metronome_toggle_toggled(button_pressed: bool):
 	GameState.metronome_enabled = button_pressed
+
+

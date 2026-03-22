@@ -18,7 +18,7 @@ var progress_bar_value: float = 25.0
 func _ready() -> void:
 	play_pause_button.pressed.connect(_on_play_pause)
 
-func update(delta: float) -> void:
+func _process(delta: float) -> void:
 	_update_play_pause_button()
 	_update_pointer()
 	_update_metronome(delta)

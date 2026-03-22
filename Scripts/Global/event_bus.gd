@@ -25,6 +25,7 @@ signal beat_sprite_clicked(track: int, beat: int)
 signal beat_state_changed(track: int, beat: int, active: bool)
 signal beat_set_requested(track: int, beat: int, active: bool)
 signal template_set(actives: Array)
+signal template_set_requested(template_index: int)
 
 # ── Beat Interaction ──
 signal clap_triggered()
@@ -73,6 +74,7 @@ signal buttons_disabled_changed(disabled: bool)
 # -- Buttons --
 signal track_select_button_pressed(track: int)
 signal recording_sample_button_toggled(toggled: bool)
+signal song_select_button_toggled(toggled: bool)
 
 # ── Recording ──
 signal start_recording_requested()

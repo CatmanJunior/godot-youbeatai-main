@@ -6,8 +6,7 @@ class_name BeatRingUI
 @export var filled_beat_textures: Array[Texture2D]
 @export var outline_beat_textures: Array[Texture2D]
 @export var dot_beat_texture: Texture2D
-@export var filled_song_texture: Texture2D
-@export var outline_song_texture: Texture2D
+
 
 var beat_sprites: Array = [] # 2D array [ring][beat]
 var template_sprites: Array = [] # 2D array [ring][beat]
@@ -90,7 +89,7 @@ func _create_template_sprite(beat: int, ring: int, beats_amount: int) -> Sprite2
 	sprite.modulate = Color(0, 0, 0, 1)
 	return sprite
 
-func update(delta: float) -> void:
+func _process(delta: float) -> void:
 	_update_beat_sprites(delta)
 
 func _update_beat_sprites(delta: float) -> void:

@@ -240,14 +240,9 @@ unique_name_in_owner = true
 script = ExtResource("38_2ikc6")
 metronome_sfx = ExtResource("35_dbt8u")
 
-[node name="TemplateManager" type="Node" parent="Managers/GameManager" unique_id=612415882 node_paths=PackedStringArray("template_button", "left_template_button", "right_template_button", "show_template_button", "set_template_button")]
+[node name="TemplateManager" type="Node" parent="Managers/GameManager" unique_id=612415882]
 unique_name_in_owner = true
 script = ExtResource("64_hxd57")
-template_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/TemplateButton")
-left_template_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/TemplateButton/TemplateLeftButton")
-right_template_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/TemplateButton/TemplateRightButton")
-show_template_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/TemplateButton/ShowTemplateButton")
-set_template_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/TemplateButton/SetTemplateButton")
 
 [node name="BpmManager" type="Node" parent="Managers/GameManager" unique_id=422395042]
 unique_name_in_owner = true
@@ -285,17 +280,14 @@ script = ExtResource("61_p5fwe")
 colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.516666, 0, 1, 1), Color(0.61960787, 0.6117647, 0.8980392, 1)])
 metadata/_edit_pinned_properties_ = [&"colors"]
 
-[node name="SectionUi" type="Node" parent="Managers/UiManager" unique_id=1840430508 node_paths=PackedStringArray("section_manager", "section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "load_section_button", "section_outline", "section_outline_holder", "copy_paste_clear_buttons_holder", "emoji_prompt")]
+[node name="SectionUi" type="Node" parent="Managers/UiManager" unique_id=1840430508 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "load_section_button", "copy_paste_clear_buttons_holder", "emoji_prompt")]
 script = ExtResource("56_0dny5")
-section_manager = NodePath("../../GameManager/SectionManager")
 section_button_prefab = ExtResource("57_hxd57")
 section_buttons_container = NodePath("../../../UserInterface/SwitchLayerButtons/SwitchLayerButtonsContainer")
 add_section_button = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/AddLayerButton")
 clear_section_button = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/ClearLayerButton")
 save_section_button = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/SaveLayerButton")
 load_section_button = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons/LoadLayerButton")
-section_outline = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder/Outline")
-section_outline_holder = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder")
 copy_paste_clear_buttons_holder = NodePath("../../../UserInterface/SwitchLayerButtons/OutlineHolder/CopyPasteClearButtons")
 emoji_prompt = NodePath("../../../UserInterface/EmojiPrompt")
 
@@ -333,10 +325,9 @@ section_loop_toggle = NodePath("../../../UserInterface/SettingsPanel/Buttons/Sec
 real_time_audio_recording_progress_bar = NodePath("../../../UserInterface/SwitchLayerButtons/RealTimeAudioRecordingProgressBar")
 progress_bar = NodePath("../../../UserInterface/Klappy/Achievement_ProgressBar")
 
-[node name="SettingsUi" type="Node" parent="Managers/UiManager" unique_id=807219340 node_paths=PackedStringArray("settings_panel", "settings_button", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "swing_slider", "swing_label", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsUi" type="Node" parent="Managers/UiManager" unique_id=807219340 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "swing_slider", "swing_label", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
 script = ExtResource("20_e5bdk")
 settings_panel = NodePath("../../../UserInterface/SettingsPanel")
-settings_button = NodePath("../../../UserInterface/SettingsButton")
 settings_back_button = NodePath("../../../UserInterface/SettingsPanel/CloseSettingsButton")
 button_is_clap = NodePath("../../../UserInterface/SettingsPanel/Sliders/ButtonIsClap")
 button_add_beats = NodePath("../../../UserInterface/SettingsPanel/Sliders/ButtonAddsBeatsToggle")
@@ -1305,12 +1296,12 @@ anchor_bottom = 18.5
 offset_top = -209.5
 offset_bottom = -21.5
 
-[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
+[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0" unique_id=914827527]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.17973857
 
-[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
+[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1" unique_id=813716848]
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353

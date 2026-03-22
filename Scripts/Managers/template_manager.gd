@@ -1,36 +1,27 @@
 extends Node
 
-@export var template_button: Button
-@export var left_template_button: Button
-@export var right_template_button: Button
-@export var show_template_button: Button
-@export var set_template_button: Button
+@export var settings_ui: SettingsUI
+var template_button: TemplateButton
 
 var names: Array[String] = []
 var contents: Array[String] = []
-var actives: Array = []  # Array of Array[bool] (row per ring)
+var actives: Array = []  # Array of Array[bool] (row per sample track)
 
 var current_template: int = 4
 var show_template: bool = false
 
 func _ready():
-	left_template_button.pressed.connect(_previous_template)
-	right_template_button.pressed.connect(_next_template)
-	show_template_button.pressed.connect(_toggle_show_template)
-	set_template_button.pressed.connect(_set_template)
+	template_button = settings_ui.template_button
 
-	read_templates()
+	template_button.names = read_templates()
+	EventBus.template_set_requested.connect(_set_template)
 
-func _process(_delta: float) -> void:
-	if current_template >= 0 and current_template < names.size():
-		var file_name = names[current_template]
-		template_button.text = file_name.left(file_name.length() - 4)  # Strip ".txt"
-
-func read_templates():
+func read_templates() -> Array[String]:
 	var result = _load_text_files_in_directory("Resources/Templates")
 	names = result.names
 	contents = result.contents
 	actives = result.actives
+	return names
 
 func _load_text_files_in_directory(folder: String) -> Dictionary:
 	var folder_path = "res://%s/" % folder
@@ -52,7 +43,8 @@ func _load_text_files_in_directory(folder: String) -> Dictionary:
 			var file_path = folder_path + file_name
 			var file = FileAccess.open(file_path, FileAccess.ModeFlags.READ)
 			if file:
-				temp_names.append(file_name)
+				var template_name = file_name.left(file_name.length() - 4) # Strip ".txt"
+				temp_names.append(template_name)
 				var content = file.get_as_text()
 				temp_contents.append(content)
 				temp_actives.append(_to_actives(content))
@@ -84,21 +76,10 @@ func _to_actives(content: String) -> Array:
 
 	return bool_array
 
-func _previous_template():
-	current_template -= 1
-	if current_template < 0:
-		current_template = names.size() - 1
-
-func _next_template():
-	current_template += 1
-	if current_template >= names.size():
-		current_template = 0
-
-func _set_template():
-	EventBus.template_set.emit(get_current_actives())
+func _set_template(template_index: int):
+	current_template = template_index
+	EventBus.template_set.emit(actives[current_template])
 
 func _toggle_show_template():
 	show_template = !show_template
 
-func get_current_actives() -> Array:
-	return actives[current_template]

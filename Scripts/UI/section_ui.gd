@@ -27,10 +27,9 @@ func _ready():
 	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.section_cleared.connect(_on_section_cleared)
 
-
 	init_section_button_actions()
 
-func update(delta: float):
+func _process(delta: float) -> void:
 	_update_section_outline_sprite_rotation()
 	_update_copy_paste_buttons(delta)
 

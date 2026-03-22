@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://jsbttb3fa3uy"]
 
-[ext_resource type="Script" uid="uid://b3s2s16qvthd8" path="res://Scenes/UI_Components/email_prompt.gd" id="1_8j0pk"]
+[ext_resource type="Script" uid="uid://b3s2s16qvthd8" path="res://Scripts/UI/email_prompt.gd" id="1_8j0pk"]
 [ext_resource type="Theme" path="res://default_theme.tres" id="1_jeaa2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]

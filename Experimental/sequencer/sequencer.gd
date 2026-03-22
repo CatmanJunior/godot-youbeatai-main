@@ -5,27 +5,15 @@ signal on_note(element: SequenceElement)
 signal off_note(element: SequenceElement)
 
 @export var elements: Array[SequenceElement] = []
-@export var bpmManager: BpmManager
 
 @export var debug: bool = false
 
 @export var current: SequenceElement
 
 func _ready():
-	if not bpmManager:
-		return
 
-	bpmManager.OnBeatEvent.connect(_on_bpm)
-	bpmManager.OnBpmChanged.connect(_on_bpm_change)
-	bpmManager.OnPlayingChanged.connect(_on_playing_change)
-
-func _exit_tree():
-	if not bpmManager:
-		return
-
-	bpmManager.OnBeatEvent.disconnect(_on_bpm)
-	bpmManager.OnBpmChanged.disconnect(_on_bpm_change)
-	bpmManager.OnPlayingChanged.disconnect(_on_playing_change)
+	EventBus.beat_triggered.connect(_on_bpm)
+	EventBus.playing_changed.connect(_on_playing_change)
 
 func _on_playing_change(state: bool):
 	if state:
@@ -33,8 +21,7 @@ func _on_playing_change(state: bool):
 
 	off_note.emit(current)
 
-func _on_bpm():
-	var currentBeat = bpmManager.currentBeat
+func _on_bpm(currentBeat: int):
 
 	if debug:
 		print("beat: %s" % currentBeat)
@@ -52,8 +39,6 @@ func _on_bpm():
 		print("note: %s for %s" % [current.start, current.duration])
 
 
-func _on_bpm_change(_bpm: int):
-	pass
 
 func set_note(note: SequenceElement) -> void:
 	elements[note.start] = note

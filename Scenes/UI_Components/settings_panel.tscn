@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://v62uubacsyqx" path="res://Scripts/UI/settings_menu_ui.gd" id="2_17eq1"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_igr4l"]
 [ext_resource type="Theme" path="res://default_theme.tres" id="3_17eq1"]
+[ext_resource type="Script" uid="uid://cwhmhfr83v837" path="res://Scripts/UI/template_button.gd" id="5_17eq1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
 texture = ExtResource("1_f7oq6")
@@ -12,7 +13,7 @@ texture = ExtResource("1_f7oq6")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
 
-[node name="SettingsPanel" type="Panel" unique_id=1609891462 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "swing_slider", "swing_label", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsPanel" type="Panel" unique_id=1609891462 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "swing_slider", "swing_label", "template_button", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
 top_level = true
 z_index = 1000
 z_as_relative = false
@@ -36,6 +37,7 @@ bpm_up_button = NodePath("Buttons/BpmUpButton")
 bpm_down_button = NodePath("Buttons/BpmDownButton")
 swing_slider = NodePath("Sliders/SwingSlider")
 swing_label = NodePath("Sliders/SwingSlider/SwingLabel")
+template_button = NodePath("Buttons/TemplateButton")
 all_sections_to_mp3 = NodePath("Buttons/ExportSongButton")
 save_to_wav_button = NodePath("Buttons/ExportBeatSectionButton")
 restart_button = NodePath("Buttons/RestartButton")
@@ -90,7 +92,7 @@ focus_mode = 0
 theme = ExtResource("3_17eq1")
 text = "🐢"
 
-[node name="TemplateButton" type="Button" parent="Buttons" unique_id=1890445174]
+[node name="TemplateButton" type="Button" parent="Buttons" unique_id=1890445174 node_paths=PackedStringArray("previous_template_button", "next_template_button", "tip_template_button", "set_template_button")]
 offset_left = -75.0
 offset_top = 47.0
 offset_right = 75.0
@@ -99,6 +101,11 @@ focus_mode = 0
 theme = ExtResource("3_17eq1")
 theme_override_fonts/font = ExtResource("2_igr4l")
 text = ".........."
+script = ExtResource("5_17eq1")
+previous_template_button = NodePath("TemplateLeftButton")
+next_template_button = NodePath("TemplateRightButton")
+tip_template_button = NodePath("ShowTemplateButton")
+set_template_button = NodePath("SetTemplateButton")
 
 [node name="TemplateLeftButton" type="Button" parent="Buttons/TemplateButton" unique_id=302347013]
 layout_mode = 0

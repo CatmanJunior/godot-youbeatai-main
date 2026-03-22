@@ -2,51 +2,104 @@
 
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="2_1ig4u"]
+[ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="6_64lof"]
+[ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
+[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
+[ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="9_5vy51"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="9_nnqde"]
+[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="10_o2owy"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="10_t1q83"]
+[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="11_ylsbi"]
+[ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="12_ceghn"]
+[ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="13_3h4bx"]
+[ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
+[ext_resource type="Script" uid="uid://csf3yhocwdnmi" path="res://Scripts/UI/visibility_manager.gd" id="15_rlvxq"]
+[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/UI/colors.gd" id="16_0fjpc"]
+[ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="19_7t1gx"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
 [ext_resource type="PackedScene" uid="uid://cxt3bdhb1oqlp" path="res://Scenes/UI_Components/track_select_buttons_old.tscn" id="19_v2nl5"]
+[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="20_mfvrx"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
+[ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="21_ilwxp"]
 [ext_resource type="Theme" path="res://default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
+[ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_xjjvj"]
+[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="23_jab21"]
+[ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="24_8dylv"]
+[ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="25_qv1an"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="26_7k868"]
+[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="26_ja2pg"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
+[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="27_0wopu"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
 [ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="28_1tvlp"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
+[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="28_na2ur"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="28_v2nl5"]
+[ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="29_rlvdk"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="30_55jeb"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
+[ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="30_t6wb6"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="31_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://b0bl4lm384p2n" path="res://Scenes/UI_Components/chaos_pad_old.tscn" id="31_kwxat"]
 [ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scripts/midi_helper.gd" id="31_v2nl5"]
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/UI_Components/blocker.tscn" id="32_aa8k8"]
+[ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/UI/chaos_pad_ui.gd" id="32_b05pg"]
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="33_bdqux"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="34_e1jjv"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="35_stool"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="36_ci23i"]
+[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="37_myryv"]
+[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="38_bpr0e"]
+[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="39_14mkc"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="40_l78ku"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="41_hfu3o"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="42_adgm5"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="43_qxkn4"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="44_y86h7"]
+[ext_resource type="Texture2D" uid="uid://6t1cscwpeyrn" path="res://Resources/Textures_New/Icons/_0001s_0009_Robot-test.png" id="45_130ps"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
+[ext_resource type="Script" uid="uid://d0v3v6vsn5vuu" path="res://Scripts/UI/transport_ui.gd" id="46_odn5n"]
 [ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
+[ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="48_gf7g1"]
+[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
+[ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="50_rtmaq"]
+[ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/Audio/audio_player_manager.gd" id="51_eqnci"]
 [ext_resource type="PackedScene" uid="uid://jsbttb3fa3uy" path="res://Scenes/UI_Components/email_prompt.tscn" id="52_1semv"]
 [ext_resource type="PackedScene" uid="uid://caqcrls6ynrlt" path="res://Scenes/UI_Components/count_down.tscn" id="52_6ml46"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="52_gsvbx"]
+[ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="52_ojylq"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="53_bv80c"]
+[ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="53_fle1e"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="53_uv6w5"]
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
+[ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
+[ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
+[ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
+[ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
+[ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
+[ext_resource type="AudioStream" uid="uid://dftnqqs3hjppb" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Closed_Tam.wav" id="59_0w4wg"]
+[ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="60_dllok"]
+[ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="61_0t4jf"]
+[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="66_vxl7x"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Animation" uid="uid://fpshbmdajq3r" path="res://Other/Bear_pulse.res" id="68_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
+[ext_resource type="Script" uid="uid://bx801a1b0kfin" path="res://Scenes/song_select_button.gd" id="73_b4xsn"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 [ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="80_55idt"]
 [ext_resource type="Shader" uid="uid://b6ylrcyr2mrhf" path="res://Shaders/FillCircle.gdshader" id="80_k8rh3"]
-[ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="82_e6rcu"]
-[ext_resource type="Texture2D" uid="uid://g83tctgn7fwq" path="res://Resources/Textures_New_Extra/Layout 06_01_2026.png" id="83_wl4bb"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
+[ext_resource type="Script" uid="uid://dp4jos1u8tmxv" path="res://Scenes/open_settings_button.gd" id="89_fnc5k"]
+[ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/klappy_light_pad.tscn" id="92_p4gyq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
@@ -96,13 +149,6 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
-texture = ExtResource("82_e6rcu")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_55idt"]
 shader = ExtResource("80_k8rh3")
@@ -182,13 +228,6 @@ offset_bottom = 362.0
 [node name="TrackSelectButtons" parent="UI" unique_id=2075389560 node_paths=PackedStringArray("track_buttons") instance=ExtResource("1_qax2n")]
 layout_mode = 1
 track_buttons = [NodePath("VBoxContainer/TrackSelectButton_0"), null, null, null, null, null]
-
-[node name="roland_layout" type="Sprite2D" parent="." unique_id=1914151895]
-visible = false
-self_modulate = Color(1, 1, 1, 0.32156864)
-position = Vector2(-4.0000324, -7.499963)
-scale = Vector2(0.66700506, 0.66519046)
-texture = ExtResource("83_wl4bb")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=980598397]
 scale = Vector2(4.12, 1)
@@ -339,22 +378,122 @@ scale_amount_min = 8.0
 scale_amount_max = 12.0
 hue_variation_max = 0.55
 
-[node name="Managers" type="Node" parent="." unique_id=581885246]
+[node name="Managers" type="Node" parent="." unique_id=205411252]
 
-[node name="BPM" type="Node" parent="Managers" unique_id=1943136794]
+[node name="GameManager" type="Node" parent="Managers" unique_id=874834820]
 unique_name_in_owner = true
+script = ExtResource("6_64lof")
 
-[node name="Manager" type="Node" parent="Managers" unique_id=54823261]
+[node name="SectionManager" type="Node" parent="Managers/GameManager" unique_id=710188850]
+unique_name_in_owner = true
+script = ExtResource("7_b4mik")
 
-[node name="MicrophoneCapture" type="Node" parent="Managers" unique_id=1954219126]
+[node name="BeatManager" type="Node" parent="Managers/GameManager" unique_id=540173422]
+unique_name_in_owner = true
+script = ExtResource("8_urine")
+metronome_sfx = ExtResource("9_5vy51")
 
-[node name="TemplateManager" type="Node" parent="Managers" unique_id=1876780461]
+[node name="TemplateManager" type="Node" parent="Managers/GameManager" unique_id=1447662219 node_paths=PackedStringArray("settings_ui")]
+unique_name_in_owner = true
+script = ExtResource("10_o2owy")
+settings_ui = NodePath("../../../UserInterface/SettingsPanel")
 
-[node name="ReverbDelayManager" type="Node" parent="Managers" unique_id=1058157005]
+[node name="BpmManager" type="Node" parent="Managers/GameManager" unique_id=1162706801]
+unique_name_in_owner = true
+script = ExtResource("11_ylsbi")
 
-[node name="MidiManager" type="Node" parent="Managers" unique_id=2092524830]
+[node name="Exporter" type="Node" parent="Managers/GameManager" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
+script = ExtResource("65_87bhu")
+loading = NodePath("../../../UserInterface/CenterContainer")
+rec_button = NodePath("../../../UserInterface/RecButton")
+metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
-[node name="RealTimeAudioRecording" type="Node" parent="Managers" unique_id=90466441]
+[node name="ListenToLastExport" type="Node" parent="Managers/GameManager/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
+script = ExtResource("66_33qc4")
+player = NodePath("lastExportPlayer")
+metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
+
+[node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/ListenToLastExport" unique_id=723625077]
+playback_type = 1
+
+[node name="KeyboardInput" type="Node" parent="Managers" unique_id=537541957]
+unique_name_in_owner = true
+script = ExtResource("12_ceghn")
+
+[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chaos_pad_ui", "transport_ui", "settings_ui")]
+unique_name_in_owner = true
+script = ExtResource("13_3h4bx")
+section_ui = NodePath("../../SwitchSectionButtons")
+chaos_pad_ui = NodePath("ChaosPadUi")
+transport_ui = NodePath("TransportUi")
+settings_ui = NodePath("")
+
+[node name="VisabilityManager" type="Node" parent="Managers/UiManager" unique_id=1546121222]
+script = ExtResource("15_rlvxq")
+
+[node name="Colors" type="Node" parent="Managers/UiManager" unique_id=1092165387]
+unique_name_in_owner = true
+script = ExtResource("16_0fjpc")
+colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.516666, 0, 1, 1), Color(0.61960787, 0.6117647, 0.8980392, 1)])
+metadata/_edit_pinned_properties_ = [&"colors"]
+
+[node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=1776851779]
+script = ExtResource("19_7t1gx")
+sprite_prefab = ExtResource("20_mfvrx")
+filled_beat_textures = Array[Texture2D]([ExtResource("21_ilwxp"), ExtResource("22_xjjvj"), ExtResource("23_jab21"), ExtResource("24_8dylv")])
+outline_beat_textures = Array[Texture2D]([ExtResource("25_qv1an"), ExtResource("26_ja2pg"), ExtResource("27_0wopu"), ExtResource("28_na2ur")])
+dot_beat_texture = ExtResource("29_rlvdk")
+
+[node name="ChaosPadUi" type="Node" parent="Managers/UiManager" unique_id=1462364624 node_paths=PackedStringArray("corners")]
+unique_name_in_owner = true
+script = ExtResource("32_b05pg")
+corners = [null, null, null]
+main_icons = Array[Texture2D]([ExtResource("33_bdqux"), ExtResource("34_e1jjv"), ExtResource("35_stool"), ExtResource("36_ci23i")])
+alt_icons = Array[Texture2D]([ExtResource("37_myryv"), ExtResource("38_bpr0e"), ExtResource("39_14mkc"), ExtResource("40_l78ku")])
+main_icon_synths = Array[Texture2D]([ExtResource("41_hfu3o"), ExtResource("41_hfu3o")])
+alt_icon_synths = Array[Texture2D]([ExtResource("42_adgm5"), ExtResource("43_qxkn4")])
+main_icon_song = ExtResource("28_1tvlp")
+alt_icon_song = ExtResource("45_130ps")
+
+[node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=620800697]
+script = ExtResource("46_odn5n")
+
+[node name="TrackWaveformVisualizer" type="Node" parent="Managers/UiManager" unique_id=1928051775 node_paths=PackedStringArray("progress_bars", "waveform_lines")]
+script = ExtResource("48_gf7g1")
+progress_bars = [null, null]
+waveform_lines = [null, null]
+
+[node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]
+
+[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1270233026]
+
+[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1661558996]
+
+[node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
+
+[node name="MicrophoneCapture" type="Node" parent="Managers/AudioManagers" unique_id=1923883284]
+unique_name_in_owner = true
+script = ExtResource("49_102yd")
+
+[node name="ReverbDelayManager" type="Node" parent="Managers/AudioManagers" unique_id=1472393777]
+
+[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=841610021]
+unique_name_in_owner = true
+script = ExtResource("50_rtmaq")
+
+[node name="AudioPlayerManager" type="Node" parent="Managers/AudioManagers" unique_id=904688926]
+unique_name_in_owner = true
+script = ExtResource("51_eqnci")
+main_audio_files = Array[AudioStream]([ExtResource("52_ojylq"), ExtResource("53_fle1e"), ExtResource("54_r1tr8"), ExtResource("55_vlivj")])
+alt_audio_files = Array[AudioStream]([ExtResource("56_wt5iu"), ExtResource("57_pmnrr"), ExtResource("58_s8cid"), ExtResource("59_0w4wg")])
+metronome_sfx = ExtResource("9_5vy51")
+metronome_alt_sfx = ExtResource("60_dllok")
+achievement_sfx = ExtResource("61_0t4jf")
+
+[node name="AudioRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("waveform_visualizer")]
+unique_name_in_owner = true
+script = ExtResource("62_daoo8")
+waveform_visualizer = NodePath("../../UiManager/TrackWaveformVisualizer")
 
 [node name="SongVoiceOver" type="Node" parent="Managers" unique_id=1421521907]
 
@@ -381,7 +520,7 @@ fill_mode = 3
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="Chords" type="SoundFontPlayer" parent="Managers/SongVoiceOver" unique_id=238898848 node_paths=PackedStringArray("bpm_manager", "manager", "bpmManager")]
+[node name="Chords" type="SoundFontPlayer" parent="Managers/SongVoiceOver" unique_id=238898848]
 soundfont = ExtResource("28_54nrm")
 stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("28_v2nl5")
@@ -391,9 +530,9 @@ progressions = [null]
 notes = ExtResource("30_55jeb")
 base_note = SubResource("Resource_55jeb")
 gate = 0.1
-bpm_manager = NodePath("../../BPM")
-manager = NodePath("../../Manager")
-bpmManager = NodePath("../../BPM")
+bpm_manager = null
+manager = null
+bpmManager = null
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" unique_id=470563626]
@@ -404,8 +543,7 @@ volume_db = -7.0
 bus = &"Master"
 gate = 0.0
 
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
-bpmManager = NodePath("../../../../BPM")
+[node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0"]
 combine_threshold = 0.0
 octaveRange = Vector2i(2, 8)
 beats_amount_scaler = 0.5
@@ -418,29 +556,12 @@ bus = &"Master"
 instrument = 6
 gate = 0.0
 
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
-bpmManager = NodePath("../../../../BPM")
+[node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0"]
 combine_threshold = 1.0
 octaveRange = Vector2i(4, 6)
 
 [node name="MidiHelper" type="Node" parent="Managers" unique_id=41444354]
 script = ExtResource("31_v2nl5")
-
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
-script = ExtResource("65_87bhu")
-loading = NodePath("../../UserInterface/CenterContainer")
-rec_button = NodePath("../../UserInterface/RecButton")
-metadata/_custom_type_script = "uid://c6xnic6xfnewu"
-
-[node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player", "play_song_button", "play_beat_button")]
-script = ExtResource("66_33qc4")
-player = NodePath("lastExportPlayer")
-play_song_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/ListenSongExportButton")
-play_beat_button = NodePath("../../../UserInterface/SettingsPanel/Buttons/ListenBeatExportButton")
-metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
-
-[node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/Exporter/ListenToLastExport" unique_id=723625077]
-playback_type = 1
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false
@@ -449,6 +570,7 @@ anchors_preset = 0
 metadata/_edit_use_anchors_ = true
 
 [node name="TrackSelectButtonsOld" parent="UserInterface" unique_id=1250432405 instance=ExtResource("19_v2nl5")]
+visible = false
 layout_mode = 1
 offset_left = -584.0
 offset_top = -220.0
@@ -910,6 +1032,9 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.8518367, 1.8518367)
 focus_mode = 0
+script = ExtResource("73_b4xsn")
+filled_song_texture = ExtResource("30_t6wb6")
+outline_song_texture = ExtResource("66_vxl7x")
 metadata/_edit_use_anchors_ = true
 
 [node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/SongSelectButton" unique_id=889015169]
@@ -1086,8 +1211,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
 
-[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=2004821384 node_paths=PackedStringArray("manager", "energy") instance=ExtResource("30_hpc6h")]
-manager = NodePath("../../../../../Managers/Manager")
+[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=2004821384 node_paths=PackedStringArray("energy") instance=ExtResource("30_hpc6h")]
+manager = null
 energy = NodePath("../../../ProgressBar")
 
 [node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
@@ -1292,583 +1417,16 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
 text = "⚙"
+script = ExtResource("89_fnc5k")
 metadata/_edit_use_anchors_ = true
 
-[node name="SettingsPanel" type="Panel" parent="UserInterface" unique_id=2064373706]
+[node name="SettingsPanel" parent="UserInterface" unique_id=1609891462 instance=ExtResource("90_658pa")]
 visible = false
-top_level = true
-z_index = 1000
-z_as_relative = false
 layout_mode = 0
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
-
-[node name="Title" type="Label" parent="UserInterface/SettingsPanel" unique_id=115984490]
-layout_mode = 0
-offset_left = 514.0
-offset_top = 20.0
-offset_right = 766.0
-offset_bottom = 76.0
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "Instellingen"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Back" type="Button" parent="UserInterface/SettingsPanel" unique_id=1575579516]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 158.0
-offset_bottom = 48.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 30
-text = "↩️ Terug
-"
-alignment = 0
-
-[node name="Buttons" type="Node2D" parent="UserInterface/SettingsPanel" unique_id=2057745538]
-position = Vector2(328, 136)
-scale = Vector2(1.8903, 1.8903)
-
-[node name="BpmUpButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=144367912]
-offset_left = 34.0
-offset_top = 3.0
-offset_right = 75.0
-offset_bottom = 43.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🐇"
-
-[node name="BpmDownButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=1710071765]
-offset_left = -75.0
-offset_top = 3.0
-offset_right = -32.0
-offset_bottom = 43.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "🐢"
-
-[node name="TemplateButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=384950340]
-offset_left = -75.0
-offset_top = 47.0
-offset_right = 75.0
-offset_bottom = 87.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-text = ".........."
-
-[node name="TemplateLeftButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton" unique_id=1893299910]
-layout_mode = 0
-offset_left = -44.0
-offset_right = -4.0
-offset_bottom = 40.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "<"
-
-[node name="TemplateRightButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton" unique_id=434538143]
-layout_mode = 0
-offset_left = 154.0
-offset_right = 194.0
-offset_bottom = 40.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = ">"
-
-[node name="ShowTemplateButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton" unique_id=1853299063]
-layout_mode = 0
-offset_top = 44.0
-offset_right = 73.0
-offset_bottom = 84.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-text = "Tip🔮"
-
-[node name="SetTemplateButton" type="Button" parent="UserInterface/SettingsPanel/Buttons/TemplateButton" unique_id=513216872]
-layout_mode = 0
-offset_left = 77.0
-offset_top = 44.0
-offset_right = 150.0
-offset_bottom = 84.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-text = "Doe 🤖
-"
-
-[node name="AllLayersToMp3" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=1147214150]
-offset_left = -75.0
-offset_top = 135.0
-offset_right = 75.0
-offset_bottom = 175.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-text = "🎼 Liedje opslaan"
-alignment = 0
-
-[node name="SaveToWavButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=942391969]
-offset_left = -75.0
-offset_top = 179.0
-offset_right = 75.0
-offset_bottom = 219.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "📥 Beat ring opslaan"
-alignment = 0
-
-[node name="ListenSongExportButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=10641744]
-offset_left = 78.29445
-offset_top = 134.8992
-offset_right = 118.29445
-offset_bottom = 174.8992
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "▶️"
-
-[node name="ListenBeatExportButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=783637609]
-offset_left = 78.294
-offset_top = 179.0
-offset_right = 118.294
-offset_bottom = 219.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-text = "▶️"
-
-[node name="RestartButton" type="Button" parent="UserInterface/SettingsPanel/Buttons" unique_id=1808180068]
-offset_left = -75.0
-offset_top = 223.0
-offset_right = 75.0
-offset_bottom = 263.0
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-text = "🔄 Herstart"
-alignment = 0
-
-[node name="Sliders" type="Node2D" parent="UserInterface/SettingsPanel" unique_id=1611620344]
-position = Vector2(911, 144)
-scale = Vector2(2.52787, 2.52787)
-
-[node name="MetronomeToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=920023660]
-offset_left = -75.0
-offset_top = -18.1089
-offset_right = 75.0
-offset_bottom = 5.89106
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 2
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle" unique_id=80130724]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🫀"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MetronomeToggle" unique_id=910894029]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.0037179312
-anchor_top = 0.12818654
-anchor_right = 0.93628204
-anchor_bottom = 1.2948532
-offset_right = 95.0
-offset_bottom = 20.0
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "metronoom"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Knop adds beat" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=149562635]
-offset_left = -75.0
-offset_top = 21.1543
-offset_right = 75.0
-offset_bottom = 45.1543
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat" unique_id=366668622]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🔘"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/Knop adds beat" unique_id=1686960642]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.001080645
-anchor_top = 0.05809625
-anchor_right = -0.0010806274
-anchor_bottom = 0.05809625
-offset_top = -17.80156
-offset_right = 224.0
-offset_bottom = 30.19844
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "knop is klap"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonIsClap" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=520183076]
-offset_left = -75.0
-offset_top = 3.35274
-offset_right = 75.0
-offset_bottom = 27.3527
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-button_pressed = true
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap" unique_id=1300783511]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "👏"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ButtonIsClap" unique_id=359414963]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.0037179312
-anchor_top = 0.10754522
-anchor_right = 1.4296155
-anchor_bottom = 1.3575453
-offset_top = 17.801556
-offset_right = 117.0
-offset_bottom = 35.80156
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "knop maakt beat"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="AddBeatsToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=1732193049]
-offset_left = -75.0
-offset_top = 41.3294
-offset_right = 75.0
-offset_bottom = 65.3294
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle" unique_id=1397999561]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "👂🏼"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/AddBeatsToggle" unique_id=2094200398]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "klap maakt beat"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="MuteSpeachToggle" type="CheckButton" parent="UserInterface/SettingsPanel/Sliders" unique_id=177147461]
-offset_left = -75.0
-offset_top = 61.3735
-offset_right = 75.0
-offset_bottom = 85.3735
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/MuteSpeachToggle" unique_id=14895223]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-mouse_filter = 0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🔇"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="UserInterface/SettingsPanel/Sliders/MuteSpeachToggle" unique_id=1961165412]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "klappy stil"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="VolumeTreshold" type="HSlider" parent="UserInterface/SettingsPanel/Sliders" unique_id=1064478052]
-z_index = 4096
-z_as_relative = false
-offset_left = -75.0
-offset_top = 84.0
-offset_right = 75.0
-offset_bottom = 108.0
-focus_mode = 0
-max_value = 1.0
-step = 0.001
-value = 0.1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold" unique_id=429396891]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ProgressBar" type="ProgressBar" parent="UserInterface/SettingsPanel/Sliders/VolumeTreshold" unique_id=1886574357]
-z_index = 1001
-z_as_relative = false
-layout_mode = 0
-offset_top = 4.216562
-offset_right = 151.34888
-offset_bottom = 20.0
-mouse_filter = 2
-max_value = 1.0
-value = 0.1
-show_percentage = false
-
-[node name="ClapStompBias" type="HSlider" parent="UserInterface/SettingsPanel/Sliders" unique_id=420818265]
-offset_left = -75.0
-offset_top = 104.0
-offset_right = 75.0
-offset_bottom = 128.0
-focus_mode = 0
-theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_y8yhq")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_2m8tu")
-min_value = 100.0
-max_value = 1400.0
-step = 50.0
-value = 800.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ClapStompBias" unique_id=235998265]
-layout_mode = 0
-offset_left = 151.0
-offset_right = 176.0
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="UserInterface/SettingsPanel/Sliders/ClapStompBias" unique_id=82507549]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🖐🏼"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="SwingSlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders" unique_id=1745914322]
-offset_left = -75.0
-offset_top = 124.0
-offset_right = 75.0
-offset_bottom = 148.0
-max_value = 0.4
-step = 0.01
-metadata/_edit_use_anchors_ = true
-
-[node name="SwingLabel" type="Label" parent="UserInterface/SettingsPanel/Sliders/SwingSlider" unique_id=83228085]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🌀"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ReverbSlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders" unique_id=879067532]
-offset_left = -75.0
-offset_top = 144.0
-offset_right = 75.0
-offset_bottom = 168.0
-max_value = 0.5
-step = 0.01
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/ReverbSlider" unique_id=2099546586]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "🏛️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="DelaySlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders" unique_id=1641641932]
-offset_left = -75.0
-offset_top = 164.0
-offset_right = 75.0
-offset_bottom = 188.0
-max_value = 0.5
-step = 0.01
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/DelaySlider" unique_id=1418725759]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "⛰️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="RecordingDelaySlider" type="HSlider" parent="UserInterface/SettingsPanel/Sliders" unique_id=1869251894]
-offset_left = -75.0
-offset_top = 186.15298
-offset_right = 75.0
-offset_bottom = 210.15298
-max_value = 0.8
-step = 0.01
-value = 0.45
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="UserInterface/SettingsPanel/Sliders/RecordingDelaySlider" unique_id=1868143439]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.13186264
-anchor_bottom = 0.13186264
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 15
-text = "⏱️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="recordingDelayLabel" type="Label" parent="UserInterface/SettingsPanel/Sliders/RecordingDelaySlider" unique_id=1289026302]
-layout_mode = 0
-offset_left = 153.48897
-offset_top = -0.7911835
-offset_right = 246.29051
-offset_bottom = 75.72757
-scale = Vector2(0.375, 0.375)
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 40
-text = "0.4s"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BpmLabel" type="Label" parent="UserInterface/SettingsPanel" unique_id=1175622067]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.674133
-anchor_top = -0.725
-anchor_right = -0.626477
-anchor_bottom = -0.694444
-offset_left = 1138.89
-offset_top = 659.0
-offset_right = 1183.89
-offset_bottom = 726.0
-theme = ExtResource("22_hpc6h")
-theme_override_fonts/font = ExtResource("84_33qc4")
-theme_override_font_sizes/font_size = 32
-text = "bpm"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="soundtesttext" type="Label" parent="UserInterface/SettingsPanel" unique_id=1073673206]
-layout_mode = 0
-offset_left = 88.0
-offset_top = 86.0
-offset_right = 139.0
-offset_bottom = 111.0
-theme_override_font_sizes/font_size = 25
+offset_left = -638.0
+offset_top = -358.0
+offset_right = 642.0
+offset_bottom = 362.0
 
 [node name="CenterContainer" type="CenterContainer" parent="UserInterface" unique_id=452113778 node_paths=PackedStringArray("progress")]
 visible = false
@@ -1986,7 +1544,16 @@ texture_repeat = 1
 texture = ExtResource("53_bv80c")
 metadata/_edit_lock_ = true
 
-[node name="BeatParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=830678190]
+[node name="ParticleSystems" type="Control" parent="UserInterface" unique_id=2112743489 node_paths=PackedStringArray("beat_particles", "pbar_particles", "achievement_particles")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("14_xg142")
+beat_particles = NodePath("BeatParticleSystem")
+pbar_particles = NodePath("ProgressBarParticleSystem")
+achievement_particles = NodePath("AchievementsParticleSystem")
+
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="UserInterface/ParticleSystems" unique_id=830678190]
 z_index = 2
 emitting = false
 amount = 128
@@ -2004,7 +1571,7 @@ scale_amount_min = 8.0
 scale_amount_max = 12.0
 hue_variation_max = 0.55
 
-[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=1250804351]
+[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="UserInterface/ParticleSystems" unique_id=1250804351]
 z_index = 2
 position = Vector2(279, 337)
 rotation = 1.5708
@@ -2026,7 +1593,7 @@ scale_amount_max = 12.0
 color = Color(0, 1, 0, 1)
 hue_variation_max = 0.55
 
-[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="UserInterface" unique_id=354766483]
+[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="UserInterface/ParticleSystems" unique_id=354766483]
 z_index = 2
 position = Vector2(303, -332)
 emitting = false
@@ -2078,11 +1645,6 @@ offset_right = -257.0
 offset_bottom = 57.0
 
 [connection signal="value_changed" from="UserInterface/Robot/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
-[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/AllLayersToMp3" to="Managers/Exporter" method="setup_song_export_dialog"]
-[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/SaveToWavButton" to="Managers/Exporter" method="setup_beat_export_dialog"]
-[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenSongExportButton" to="Managers/Exporter/ListenToLastExport" method="play_song"]
-[connection signal="pressed" from="UserInterface/SettingsPanel/Buttons/ListenBeatExportButton" to="Managers/Exporter/ListenToLastExport" method="play_beat"]
-[connection signal="pressed" from="UserInterface/RecButton" to="Managers/Exporter" method="export_interactive"]
 [connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]

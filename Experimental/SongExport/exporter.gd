@@ -25,16 +25,17 @@ func _ready():
 
 func _on_export_requested(mail: bool, song: bool):
 	do_mail = mail
-	start_export(ExportMode.SONG if song else ExportMode.BEAT)
+	_start_export(ExportMode.SONG if song else ExportMode.BEAT)
 
 func _on_rec_button_pressed():
-	start_export(ExportMode.INTERACTIVE)
-
-func start_export(mode: ExportMode):
 	# Interactive toggles: pressing again stops the recording.
+	if is_recording and export_mode == ExportMode.INTERACTIVE:
+		_stop_recording()
+		return
+	_start_export(ExportMode.INTERACTIVE)
+
+func _start_export(mode: ExportMode):
 	if is_recording:
-		if mode == ExportMode.INTERACTIVE:
-			_stop_recording()
 		return
 
 	is_recording = true
@@ -45,24 +46,22 @@ func start_export(mode: ExportMode):
 	if mode != ExportMode.INTERACTIVE:
 		loading.open()
 
-	match mode:
-		ExportMode.SONG:
-			_target_section_count = GameState.sections.size()
-		_:
-			_target_section_count = 1
+	if mode == ExportMode.SONG:
+		_target_section_count = GameState.sections.size()
+	else:
+		_target_section_count = 1
+
+	var start_section: int
+	if mode == ExportMode.SONG:
+		start_section = 0
+	else:
+		start_section = GameState.current_section_index
 
 	# Stop playback, wait briefly for audio to settle, then begin.
 	if GameState.playing:
 		EventBus.playing_change_requested.emit(false)
 
 	await get_tree().create_timer(0.75).timeout
-
-	var start_section: int
-	match mode:
-		ExportMode.SONG:
-			start_section = 0
-		_:
-			start_section = GameState.current_section_index
 
 	EventBus.section_switch_requested.emit(start_section)
 	GameState.current_beat = GameState.total_beats - 1
@@ -113,7 +112,7 @@ func _on_recording_stopped(recording: AudioStream):
 	if not is_recording:
 		return
 
-	var filename = get_file_name()
+	var filename = _get_file_name()
 	#TODO mail export
 	# var path = Mailer.GetDocumentspath().path_join(filename)
 	
@@ -125,7 +124,7 @@ func _on_recording_stopped(recording: AudioStream):
 	export_mode = ExportMode.NONE
 	is_recording = false
 
-func get_file_name() -> String:
+func _get_file_name() -> String:
 	var date = Time.get_date_string_from_system()
 	var time = Time.get_time_string_from_system().replace(":", "-")
 	var filename = "%s %s_%s.wav" % [GameState.export_name, date, time]

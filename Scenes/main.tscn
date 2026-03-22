@@ -18,10 +18,10 @@
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="19_7t1gx"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
 [ext_resource type="PackedScene" uid="uid://cxt3bdhb1oqlp" path="res://Scenes/UI_Components/track_select_buttons_old.tscn" id="19_v2nl5"]
-[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/beat.tscn" id="20_mfvrx"]
+[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/Prefab/beat.tscn" id="20_mfvrx"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="21_ilwxp"]
-[ext_resource type="Theme" path="res://default_theme.tres" id="22_hpc6h"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="22_xjjvj"]
 [ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="23_jab21"]
@@ -58,12 +58,11 @@
 [ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="42_adgm5"]
 [ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="43_qxkn4"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="44_kqrg6"]
-[ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="44_y86h7"]
 [ext_resource type="Texture2D" uid="uid://6t1cscwpeyrn" path="res://Resources/Textures_New/Icons/_0001s_0009_Robot-test.png" id="45_130ps"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="Script" uid="uid://d0v3v6vsn5vuu" path="res://Scripts/UI/transport_ui.gd" id="46_odn5n"]
 [ext_resource type="Texture2D" uid="uid://dr7eqmf1rliki" path="res://Resources/Textures_New_Correct/Icons-_28_0004_Microphone.png" id="47_owhal"]
-[ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/klappy_reaction.tscn" id="47_s8vy0"]
+[ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/Klappy_components/klappy_reaction.tscn" id="47_s8vy0"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="48_gf7g1"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
@@ -85,6 +84,7 @@
 [ext_resource type="AudioStream" uid="uid://dftnqqs3hjppb" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Closed_Tam.wav" id="59_0w4wg"]
 [ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="60_dllok"]
 [ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="61_0t4jf"]
+[ext_resource type="Script" uid="uid://cyxcyx8tjnle4" path="res://Experimental/chords/chord_progression.gd" id="62_3ahwd"]
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
@@ -92,15 +92,15 @@
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="67_qnggo"]
 [ext_resource type="Animation" uid="uid://fpshbmdajq3r" path="res://Other/Bear_pulse.res" id="68_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="68_tab3y"]
-[ext_resource type="Script" uid="uid://bx801a1b0kfin" path="res://Scenes/song_select_button.gd" id="73_b4xsn"]
+[ext_resource type="Script" uid="uid://bx801a1b0kfin" path="res://Scripts/Buttons/song_select_button.gd" id="73_b4xsn"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="75_pfx1i"]
 [ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="80_55idt"]
 [ext_resource type="Shader" uid="uid://b6ylrcyr2mrhf" path="res://Shaders/FillCircle.gdshader" id="80_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
-[ext_resource type="Script" uid="uid://dp4jos1u8tmxv" path="res://Scenes/open_settings_button.gd" id="89_fnc5k"]
+[ext_resource type="Script" uid="uid://dp4jos1u8tmxv" path="res://Scripts/Buttons/open_settings_button.gd" id="89_fnc5k"]
 [ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/klappy_light_pad.tscn" id="92_p4gyq"]
+[ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/Klappy_components/klappy_light_pad.tscn" id="92_p4gyq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -420,13 +420,12 @@ playback_type = 1
 unique_name_in_owner = true
 script = ExtResource("12_ceghn")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chaos_pad_ui", "transport_ui", "settings_ui")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chaos_pad_ui", "transport_ui")]
 unique_name_in_owner = true
 script = ExtResource("13_3h4bx")
 section_ui = NodePath("../../SwitchSectionButtons")
 chaos_pad_ui = NodePath("ChaosPadUi")
 transport_ui = NodePath("TransportUi")
-settings_ui = NodePath("")
 
 [node name="VisabilityManager" type="Node" parent="Managers/UiManager" unique_id=1546121222]
 script = ExtResource("15_rlvxq")
@@ -526,13 +525,10 @@ stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("28_v2nl5")
 chordString = "I-V-vi-IV"
 chordDuration = 8
-progressions = [null]
+progressions = Array[ExtResource("62_3ahwd")]([null])
 notes = ExtResource("30_55jeb")
 base_note = SubResource("Resource_55jeb")
 gate = 0.1
-bpm_manager = null
-manager = null
-bpmManager = null
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" unique_id=470563626]
@@ -1212,15 +1208,11 @@ vertical_alignment = 1
 autowrap_mode = 1
 
 [node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=2004821384 node_paths=PackedStringArray("energy") instance=ExtResource("30_hpc6h")]
-manager = null
 energy = NodePath("../../../ProgressBar")
 
-[node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
+[node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0" unique_id=948296298]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
-
-[node name="AnimationPlayer" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model" index="1" unique_id=337097326]
-libraries/animations = ExtResource("44_y86h7")
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer" unique_id=491584962]
 position = Vector2(202.49997, 89.166664)

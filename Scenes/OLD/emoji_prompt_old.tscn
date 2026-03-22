@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dmqr6dfu1dfjb"]
 
-[ext_resource type="Script" uid="uid://cjx5hltdcaljj" path="res://Scenes/emoji_prompt.gd" id="1_36svu"]
-[ext_resource type="Theme" path="res://default_theme.tres" id="1_t1mia"]
+[ext_resource type="Script" uid="uid://cjx5hltdcaljj" path="res://Scripts/UI/emoji_prompt.gd" id="1_36svu"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_t1mia"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)

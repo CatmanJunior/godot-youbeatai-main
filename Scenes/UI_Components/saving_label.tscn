@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://nj873e6ibi15"]
 
-[ext_resource type="Theme" path="res://default_theme.tres" id="1_a1hq5"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_a1hq5"]
 
 [node name="SavingLabel" type="Label" unique_id=945421672]
 offset_right = 155.0

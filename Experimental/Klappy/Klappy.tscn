@@ -1,9 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://cawoo3gsyyym5"]
+[gd_scene format=3 uid="uid://cawoo3gsyyym5"]
 
 [ext_resource type="Script" uid="uid://bpoaf8o2cncdd" path="res://Experimental/Klappy/klappy_animations.gd" id="2_d4ajq"]
 [ext_resource type="Material" uid="uid://dnd3ulqwmqteq" path="res://Experimental/Klappy/Materials/M_Klappy_body.tres" id="3_n8s16"]
 [ext_resource type="Material" uid="uid://c421qn87d0g6f" path="res://Experimental/Klappy/Materials/M_Klappy_Lamp.tres" id="4_1ku2n"]
-[ext_resource type="Material" uid="uid://bb4e4ihd57qm" path="res://Experimental/Klappy/Materials/M_Klappy_Transparant.tres" id="4_haj43"]
+[ext_resource type="Material" path="res://Experimental/Klappy/Materials/M_Klappy_Transparant.tres" id="4_haj43"]
 [ext_resource type="Material" uid="uid://b4ov3m707x820" path="res://Experimental/Klappy/Materials/M_Klappy_Arms.tres" id="5_8c4xi"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="8_rv124"]
 [ext_resource type="PackedScene" uid="uid://qoagtgg3tv3g" path="res://Experimental/Klappy/Robot_UV_LampFix.fbx" id="17_8c4xi"]
@@ -100,20 +100,20 @@ nodes/happyTrigger/position = Vector2(100, 760)
 "nodes/Add2 5/position" = Vector2(980, 720)
 node_connections = [&"output", 0, &"TimeScale", &"Add2", 0, &"Idle", &"Add2", 1, &"ClapTrigger", &"Add2 2", 0, &"Add2", &"Add2 2", 1, &"StampTrigger", &"ClapTrigger", 0, &"Clap", &"StampTrigger", 0, &"Stamp", &"TimeScale", 0, &"Add2 5", &"talkingTrigger", 0, &"talking", &"Add2 3", 0, &"Add2 2", &"Add2 3", 1, &"talkingTrigger", &"sadTrigger", 0, &"Sad", &"Add2 4", 0, &"Add2 3", &"Add2 4", 1, &"sadTrigger", &"happyTrigger", 0, &"Happy", &"Add2 5", 0, &"Add2 4", &"Add2 5", 1, &"happyTrigger"]
 
-[node name="Klappy" type="Node3D"]
+[node name="Klappy" type="Node3D" unique_id=1959861321]
 script = ExtResource("2_d4ajq")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=948296298]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.72152, 4.92963)
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera3D"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera3D" unique_id=202307391]
 environment = SubResource("Environment_vxk86")
 camera_attributes = SubResource("CameraAttributesPractical_d4ajq")
 compositor = SubResource("Compositor_igk12")
 
-[node name="model" parent="." instance=ExtResource("17_8c4xi")]
+[node name="model" parent="." unique_id=386737351 instance=ExtResource("17_8c4xi")]
 
-[node name="Skeleton3D" parent="model/Robot" index="0"]
+[node name="Skeleton3D" parent="model/Robot" parent_id_path=PackedInt32Array(386737351, 632722266) index="0" unique_id=305392375]
 bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009747797)
 bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
 bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
@@ -156,19 +156,17 @@ bones/18/position = Vector3(-4.31259e-10, 0.00449158, 3.9602e-10)
 bones/18/rotation = Quaternion(-0.0010216191, 0.0006269256, 0.82169485, 0.56992644)
 bones/18/scale = Vector3(1, 1, 1)
 
-[node name="DNT_001" parent="model/Robot/Skeleton3D" index="0"]
+[node name="DNT_001" parent="model/Robot/Skeleton3D" index="0" unique_id=2042247694]
 surface_material_override/0 = ExtResource("3_n8s16")
 surface_material_override/1 = ExtResource("4_1ku2n")
 surface_material_override/2 = ExtResource("19_phjtk")
 surface_material_override/3 = ExtResource("5_8c4xi")
 surface_material_override/4 = ExtResource("4_haj43")
 
-[node name="AnimationPlayer" parent="model" index="1"]
-libraries = {
-&"animations": ExtResource("8_rv124")
-}
+[node name="AnimationPlayer" parent="model" index="1" unique_id=337097326]
+libraries/animations = ExtResource("8_rv124")
 
-[node name="AnimationTree" type="AnimationTree" parent="model"]
+[node name="AnimationTree" type="AnimationTree" parent="model" unique_id=935396953]
 tree_root = SubResource("AnimationNodeBlendTree_igk12")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Add2/add_amount = 1.0
@@ -183,7 +181,7 @@ parameters/sadTrigger/seek_request = -1.0
 parameters/happyTrigger/seek_request = -1.0
 "parameters/Add2 5/add_amount" = 1.0
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1731684434]
 transform = Transform3D(0.984808, 0.00303058, 0.173622, 0, 0.999848, -0.0174524, -0.173648, 0.0171873, 0.984658, 0, -3.29693, 0)
 light_energy = 0.1
 

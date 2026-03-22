@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DualSelectButtonGroup" format=3 uid="uid://bfv1qc8vipcip"]
+
+[ext_resource type="Script" uid="uid://dywejflc5qipm" path="res://Scripts/Buttons/dual_select_button_group.gd" id="1_cw4ml"]
+
+[resource]
+script = ExtResource("1_cw4ml")
+metadata/_custom_type_script = "uid://dywejflc5qipm"

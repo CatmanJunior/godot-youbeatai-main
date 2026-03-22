@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://838r2e366gu0"]
 
-[ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_e3r6k"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_uyyk0"]
-[ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_fyalm"]
-[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_pjskt"]
+[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_e3r6k"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_uyyk0"]
+[ext_resource type="Script" path="res://Scripts/PermissionButton.cs" id="3_fyalm"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="4_pjskt"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_naeit"]
-[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="6_8dgso"]
+[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_8dgso"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_gwanm"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_xl1lg"]
 

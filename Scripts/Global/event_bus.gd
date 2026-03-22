@@ -1,10 +1,9 @@
 extends Node
 
-
 @warning_ignore_start("unused_signal")
 
 signal restart_requested()
-
+signal soundbank_selected(themes: Array[String], emotions: Array[String])
 # ── Playback ──
 signal playing_changed(playing: bool)
 signal playing_change_requested(playing: bool)
@@ -115,4 +114,4 @@ signal countdown_close_requested()
 signal export_requested(mail: bool, mode_export_song: bool)
 
 ## false for beat, true for song
-signal open_export_dialog_requested(mode_export_song: bool) 
+signal open_export_dialog_requested(mode_export_song: bool)

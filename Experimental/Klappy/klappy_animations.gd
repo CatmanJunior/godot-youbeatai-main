@@ -1,12 +1,12 @@
 extends Node3D
 
-@onready var animation_tree:AnimationTree = $model/AnimationTree
-@onready var animation_player:AnimationPlayer = $model/AnimationPlayer
+@onready var animation_tree: AnimationTree = $model/AnimationTree
+@onready var animation_player: AnimationPlayer = $model/AnimationPlayer
 
 var first_talk = false
 var talking = false
 var beat_time = 0.0
-@export var manager:Manager
+
 
 @export var energy: ProgressBar
 var animtriggered = false
@@ -22,16 +22,12 @@ func _ready():
 	if energy != null:
 		energy.value_changed.connect(on_klappy_energy)
 
-	if manager != null:
-		manager.OnUtteranceEnd.connect(_on_utterance_end)
-	else:
-		DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED,_on_utterance_end)
-	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_STARTED,_on_callback_)
+	EventBus.bpm_changed.connect(on_bpm_changed)
+	EventBus.utterance_ended.connect(_on_utterance_end)
 	# default speed for 120 bpm
 	if beat_time == 0:
 		on_bpm_changed(120.0)
 		
-	
 	
 func init():
 	animation_tree = $model/AnimationTree
@@ -53,24 +49,24 @@ func on_clap():
 func on_stamp():
 	animation_tree.set("parameters/StampTrigger/seek_request", 0)
 
-func _on_callback_(_i:int):
+func _on_callback_(_i: int):
 	if !first_talk:
 			talking = true
 			first_talk = true
-			animation_tree.set("parameters/talkingTrigger/seek_request",0)
+			animation_tree.set("parameters/talkingTrigger/seek_request", 0)
 
 func on_talking():
-	if !talking: 
+	if !talking:
 		return
-	animation_tree.set("parameters/talkingTrigger/seek_request",0)
+	animation_tree.set("parameters/talkingTrigger/seek_request", 0)
 
-func _on_utterance_end(_utterance:int):
+func _on_utterance_end(_utterance: int):
 	talking = false
 	first_talk = false
 	animation_tree.advance(100)
 
 # adjust animation speed to match bpm
-func on_bpm_changed(bpm:float):
+func on_bpm_changed(bpm: float):
 	# catch for when bpm change is called before onready
 	if not animation_tree:
 		init()
@@ -78,7 +74,7 @@ func on_bpm_changed(bpm:float):
 	# beat duration for 2 beats (/4.0) for 1 beat
 	# animation duration is made for 2 beats
 	beat_time = (60.0 / bpm / 2.0)
-	animation_tree.set("parameters/TimeScale/scale", 1.0 / beat_time )
+	animation_tree.set("parameters/TimeScale/scale", 1.0 / beat_time)
 	
 func on_klappy_energy(value):
 	if energy == null:
@@ -89,5 +85,5 @@ func on_klappy_energy(value):
 	elif value >= 100 and !animtriggered:
 		animation_tree.set("parameters/happyTrigger/seek_request", 0)
 		animtriggered = true
-	elif value > 0  and value < 100:
+	elif value > 0 and value < 100:
 		animtriggered = false

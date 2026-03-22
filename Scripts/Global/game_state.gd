@@ -10,6 +10,7 @@ const BEATS_AMOUNT_DEFAULT: int = 16
 var songModeActive: bool = false
 var tutorialActivated: bool = false
 var loop_sections: bool = false
+var selected_soundbank: Dictionary = {}
 
 ##Not Tested
 func Text_without_emoticons(text: String) -> String:

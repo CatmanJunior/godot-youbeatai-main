@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b6map0f7l4emx"]
 
 [ext_resource type="Script" uid="uid://cjx5hltdcaljj" path="res://Scripts/UI/emoji_prompt.gd" id="1_tssnp"]
-[ext_resource type="Theme" path="res://default_theme.tres" id="2_1pkca"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_1pkca"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_tlq35"]
 [ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="4_56yf2"]
 [ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Textures_New_Correct/Icons-_28_0028_Verse.png" id="5_rgnj4"]

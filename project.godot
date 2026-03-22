@@ -8,10 +8,6 @@
 
 config_version=5
 
-[<<<<<<<HEAD[animation]
-
-"compatibility]default_parent_skeleton_in_mesh_instance_3d"=true
-
 [animation]
 
 compatibility/default_parent_skeleton_in_mesh_instance_3d=true
@@ -33,7 +29,6 @@ driver/enable_input=true
 FFT="*res://fft/Fft.gd"
 EventBus="*uid://bj8qgtrwxpsxm"
 GameState="*res://Scripts/Global/game_state.gd"
-Mailer="*res://Scripts/Mailer.cs"
 
 [display]
 
@@ -51,7 +46,7 @@ enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://ad
 
 [gui]
 
-theme/custom="uid://c0bwj08madm3f"
+theme/custom="uid://bcft5y5bq2s2m"
 theme/custom_font="uid://d1cp3vkc5el5b"
 
 [input]

@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="1_f7oq6"]
 [ext_resource type="Script" uid="uid://v62uubacsyqx" path="res://Scripts/UI/settings_menu_ui.gd" id="2_17eq1"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_igr4l"]
-[ext_resource type="Theme" path="res://default_theme.tres" id="3_17eq1"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="3_17eq1"]
 [ext_resource type="Script" uid="uid://cwhmhfr83v837" path="res://Scripts/UI/template_button.gd" id="5_17eq1"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]

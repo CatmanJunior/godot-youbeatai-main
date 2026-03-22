@@ -6,14 +6,14 @@
 
 extends Node
 
-const Complex = preload("Complex.gd")
+const ComplexType = preload("Complex.gd")
 
 static func ensure_complex(maybe_complexes: Array) -> Array:
 	var to_return = []
 
 	for item in maybe_complexes:
-		if not item is Complex:
-			item = Complex.new(item)
+		if not item is ComplexType:
+			item = ComplexType.new(item)
 
 		to_return.append(item)
 
@@ -23,7 +23,7 @@ static func ensure_complex(maybe_complexes: Array) -> Array:
 static func conjugate(amplitudes: Array) -> Array:
 	# conjugate if imaginary part is not 0
 	for i in range(0, len(amplitudes)):
-		if amplitudes[i] is Complex:
+		if amplitudes[i] is ComplexType:
 			amplitudes[i].im = -amplitudes[i].im
 
 	return amplitudes
@@ -33,8 +33,8 @@ static func keyed(amplitudes: Array, key: String) -> Array:
 	var to_return = []
 
 	for item in amplitudes:
-		if not item is Complex:
-			item = Complex.new(item)
+		if not item is ComplexType:
+			item = ComplexType.new(item)
 
 		to_return.append(item[key])
 
@@ -61,7 +61,7 @@ static func ifft(amplitudes: Array) -> Array:
 	conjugate(amplitudes)
 
 	for i in range(0, N):
-		if not amplitudes[i] is Complex:
+		if not amplitudes[i] is ComplexType:
 			continue
 
 		# scale
@@ -76,6 +76,7 @@ static func fft(amplitudes: Array) -> Array:
 	if N <= 1:
 		return amplitudes
 
+	@warning_ignore("integer_division")
 	var hN = N / 2
 	var even = []
 	var odd = []
@@ -95,14 +96,14 @@ static func fft(amplitudes: Array) -> Array:
 	var a := -2.0 * PI
 
 	for k in range(0, hN):
-		if not even[k] is Complex:
-			even[k] = Complex.new(even[k], 0)
+		if not even[k] is ComplexType:
+			even[k] = ComplexType.new(even[k], 0)
 
-		if not odd[k] is Complex:
-			odd[k] = Complex.new(odd[k], 0)
+		if not odd[k] is ComplexType:
+			odd[k] = ComplexType.new(odd[k], 0)
 
 		var p = k / float(N)
-		var t = Complex.new(0, a * p)
+		var t = ComplexType.new(0, a * p)
 
 		t.cexp(t).mul(odd[k], t)
 

@@ -5,9 +5,9 @@ var re := 0.0
 var im := 0.0
 
 
-func _init(re, im := 0.0):
-	self.re = re
-	self.im = im
+func _init(real: float, imag := 0.0):
+	self.re = real
+	self.im = imag
 
 
 func add(other, dst):

@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://88rxelg1bo3"]
 
-[ext_resource type="Script" uid="uid://d2f5v637jkqnm" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_1ehe0"]
-[ext_resource type="Script" uid="uid://x7b0bpprjoq3" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
+[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_1ehe0"]
+[ext_resource type="Script" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
 [ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="4_16hvj"]
-[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/robot.tscn" id="4_ce3w2"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="4_ce3w2"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
-[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/klappy_respons_bubble.tscn" id="6_opfnp"]
+[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_opfnp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
 

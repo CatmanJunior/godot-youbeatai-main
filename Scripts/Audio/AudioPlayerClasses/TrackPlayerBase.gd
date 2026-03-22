@@ -15,6 +15,7 @@ var players: Array[AudioStreamPlayer] = [] # players for main, alt, recording
 
 var _weights: Vector3 = Vector3(1.0, 0.0, 0.0)
 
+@warning_ignore("unused_private_class_variable")
 var _has_recording: bool = false
 
 
@@ -64,7 +65,7 @@ func _apply_layer_effects(layer: int, bus_idx: int) -> void:
 			pass
 
 
-func set_streams(_a: AudioStream, _b: AudioStream, rec: AudioStream = null) -> void: pass
+func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> void: pass
 func set_recorded_stream(_rec: AudioStream) -> void: pass
 
 func set_stream(audio_layer: int, stream: AudioStream) -> void:

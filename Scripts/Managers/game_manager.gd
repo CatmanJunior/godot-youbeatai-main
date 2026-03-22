@@ -5,23 +5,14 @@ var time: float = 0.0
 
 var first_tts_done: bool = false
 
-func _exit_tree():
-	# $Achievements.reset()
-	pass
-
 func _ready():
-	# Setup
 	EventBus.restart_requested.connect(_on_restart_requested)
 	EventBus.export_requested.connect(_on_save_to_wav_requested)
 	EventBus.save_to_mp3_requested.connect(_on_save_to_mp3)
 
 	read_json_from_previous_scene_and_set_values()
 
-
-	call_deferred("deferred_setup")
-	
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
-	print(ProjectSettings.globalize_path("user://"))
 
 func _on_restart_requested():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")
@@ -39,7 +30,6 @@ func _on_restart_requested():
 		if FileAccess.file_exists(file_path):
 			DirAccess.remove_absolute(file_path)
 
-#TODO: Move to savings manager or similar
 func _on_save_to_wav_requested():
 	_export_beat_wav()
 
@@ -70,13 +60,6 @@ func _export_beat_wav() -> void:
 	if path != "":
 		EventBus.saving_completed.emit(path)
 
-
-func deferred_setup():
-	# %MixingManager.samples_mixing_re_apply_remembered_volumes()
-	# %MixingManager.synth_mixing_re_apply_remembered_volumes()
-	# %Achievements.on_ready()
-	pass
-
 func utterance_end(utterance_id: int):
 	EventBus.utterance_ended.emit(utterance_id)
 
@@ -92,21 +75,6 @@ func show_countdown():
 
 func _process(delta: float):
 	time += delta
-	# %VisualEffects.update_effects(delta)
-	# %AudioPlayerManager.update_audio(delta)
-	# %MixingManager.on_update_mixing(delta)
-	# %LayerManager.update_layers(delta)
-	# $Tutorial.update_tutorial()
-	# $Achievements.on_update()
-
-# Beat events now flow through EventBus — no need for game_manager to forward them
-# func on_beat(_beat: int):
-# 	%LayerManager.on_beat()
-
-func tutorialActivated() -> bool:
-	# return $Tutorial.tutorial_activated
-	return false
 
 func read_json_from_previous_scene_and_set_values():
-	# Implementation here
 	pass

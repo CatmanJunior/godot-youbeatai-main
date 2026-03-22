@@ -218,8 +218,6 @@ func _allowed_to_speak(target_blocker: Control) -> bool:
 		var enough_worth: bool = beat_manager.progress_bar_value > worth if beat_manager else false
 		if blocker == target_blocker:
 			if use_worth and enough_worth:
-				print(target_blocker.name)
-				print("Not allowed to speak")
 				return false
 	return true
 
@@ -318,7 +316,6 @@ func _setup_default_ui_state():
 func _pause_between_synth_unlock() -> bool:
 	if layer_voice_over_0 and layer_voice_over_0.get_current_layer_voice_over() != null:
 		if _timer == null:
-			print("create timer pausing")
 			_timer = get_tree().create_timer(3.0)
 			_timer.timeout.connect(_on_pause_timeout)
 		if not _paused:

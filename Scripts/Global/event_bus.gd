@@ -115,3 +115,14 @@ signal export_requested(mail: bool, mode_export_song: bool)
 
 ## false for beat, true for song
 signal open_export_dialog_requested(mode_export_song: bool)
+
+# ── Keyboard ──
+signal enter_pressed()
+signal fullscreen_toggle_requested()
+signal ring_0_pressed()
+signal ring_1_pressed()
+signal ring_2_pressed()
+signal ring_3_pressed()
+
+# ── Song Export ──
+signal save_to_mp3_requested()

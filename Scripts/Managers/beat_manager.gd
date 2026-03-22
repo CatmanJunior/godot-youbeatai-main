@@ -147,8 +147,6 @@ func on_beat():
 
 func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""
-	print("Toggling beat - Ring: ", ring, " Beat: ", beat) # Debug print
-	
 	GameState.current_section.toggle_beat(ring, beat)
 	
 	var is_active = GameState.current_section.get_beat(ring, beat)

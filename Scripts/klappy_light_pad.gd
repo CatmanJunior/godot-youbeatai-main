@@ -18,7 +18,7 @@ var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
 
 var instruction_label:Label
 
-@export var achievment_panel:Panel
+@export var achievement_panel:Panel
 
 func _ready() -> void:
 	# TODO: GET THIS THE HELL OUT OF HERE
@@ -124,9 +124,8 @@ func _fill_instruction_label(_name:String):
 	_start_tts(_name)
 	
 func _achievement_panel_visibility(_utterance_id:int):
-	print("panel visibility yay")
-	if not achievment_panel.visible :
-		achievment_panel.visible = true
+	if not achievement_panel.visible :
+		achievement_panel.visible = true
 		
 func _start_tts(message:String):
 	var voices = DisplayServer.tts_get_voices_for_language("nl")
@@ -138,9 +137,9 @@ func _start_tts(message:String):
 	DisplayServer.tts_speak(GameState.Text_without_emoticons(message),voices[0],100)
 
 func _on_utterance_end(_utterance):
-	achievment_panel.visible = false
+	achievement_panel.visible = false
 
 func _get_insrtuction_label():
-	for c in achievment_panel.get_children():
+	for c in achievement_panel.get_children():
 		if c.name == "InstructionLabel":
 			instruction_label = c

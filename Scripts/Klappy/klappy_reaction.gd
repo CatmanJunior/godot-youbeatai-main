@@ -1,18 +1,13 @@
 extends Node
 
-@export var achievment_panel:Panel
+@export var achievement_panel:Panel
 var instruction_label:Label
 
-var _manager: Node
-
 func _ready() -> void:
-	_manager = %GameManager
-
-	# if not _manager.tutorialActivated():
-		# _manager.OnAchievementDone.connect(_on_achievement_done)
-		# _manager.OnUtteranceEnd.connect(_on_utterance_end)
-	_get_insrtuction_label()
-
+	if not GameState.tutorialActivated:
+		EventBus.achievement_done.connect(_on_achievement_done)
+		EventBus.utterance_ended.connect(_on_utterance_end)
+	_get_instruction_label()
 
 func _on_achievement_done(i):
 	match i:
@@ -31,9 +26,8 @@ func _fill_instruction_label(_name:String):
 	_start_tts(_name)
 
 func _achievement_panel_visibility(_utterance_id:int):
-	print("panel visibility yay")
-	if not achievment_panel.visible :
-		achievment_panel.visible = true
+	if not achievement_panel.visible :
+		achievement_panel.visible = true
 
 
 
@@ -44,12 +38,12 @@ func _start_tts(message:String):
 
 	if(voices.size() == 0): voices = DisplayServer.tts_get_voices_for_language("en")
 	if(DisplayServer.tts_is_speaking()):DisplayServer.tts_stop()
-	DisplayServer.tts_speak(_manager.Text_without_emoticons(message),voices[0],100)
+	DisplayServer.tts_speak(GameState.Text_without_emoticons(message),voices[0],100)
 
 func _on_utterance_end(_utterance):
-	achievment_panel.visible = false
+	achievement_panel.visible = false
 
-func _get_insrtuction_label():
-	for c in achievment_panel.get_children():
+func _get_instruction_label():
+	for c in achievement_panel.get_children():
 		if c.name == "InstructionLabel":
 			instruction_label = c

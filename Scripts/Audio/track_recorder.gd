@@ -23,7 +23,6 @@ func _process(delta: float):
 
 func _handle_recording(delta: float) -> void:
 	if get_recording_volume() > GameState.recording_volume_threshold:
-		print("Detected sound with volume: %s" % get_recording_volume())
 		has_detected_sound = true
 	if not has_detected_sound:
 		return
@@ -62,7 +61,6 @@ func _stop_recording() -> void:
 
 #------------------Event Handlers----------------------
 func _on_recording_sample_button_toggled(toggled: bool) -> void:
-	print("Recording sample button toggled: %s" % toggled)
 	if toggled and not recording:
 		_start_recording()
 	elif recording:

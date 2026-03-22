@@ -21,7 +21,6 @@ func set_recorded_stream(stream: AudioStream) -> void:
 
 ## Playback control
 func play(offset: float = 0.0) -> void:
-	print("Playing synth track %d with offset %.2f" % [track_index, offset])
 	if not _has_recording:
 		return
 	for p in players:

@@ -87,14 +87,12 @@ func remove_section(section: int):
 func _copy_section():
 	"""Copy the current section to the clipboard"""
 	clipboard_section = current_section.duplicate_section()
-	print("Section copied to clipboard: " + str(clipboard_section))
 
 func _paste_section():
 	"""Paste the clipboard into the current section"""
 	if clipboard_section == null:
 		return
 	
-	print("Pasting section from clipboard: " + str(clipboard_section))
 	# Copy beat and knob data from clipboard into current section
 	current_section.set_beat_actives(clipboard_section.get_beat_actives())
 	current_section.set_section_knob_positions(clipboard_section.get_section_knob_positions())
@@ -114,7 +112,6 @@ func clear_section():
 
 func switch_section(section_index: int):
 	"""Switch to a different section"""
-	print("Switching to section " + str(section_index)) # Debug print
 	var old_section = current_section
 	# Switch to new section
 	current_section_index = section_index

@@ -58,7 +58,7 @@ func _ready():
 
 	audio_stream_player.play()
 
-func _process(_delta: float):
+func _process(delta: float):
 	# Live volume analysis
 	stamp_volume = _get_magnitude(0.0, stamp_freq_max)
 	clap_volume = _get_magnitude(clap_freq_min, 20000.0)
@@ -66,7 +66,7 @@ func _process(_delta: float):
 
 	# Recording timer
 	if recording:
-		recording_timer += _delta
+		recording_timer += delta
 	else:
 		recording_timer = 0.0
 

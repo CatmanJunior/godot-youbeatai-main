@@ -21,16 +21,11 @@ var finished: bool = false
 # Manager references
 var song_voice_over: Node
 var layer_manager: Node
-var ui_manager: Node
 
 func _ready():
-
-	# Get manager references
 	song_voice_over = %SongVoiceOver
 	layer_manager = %LayerManager
-	ui_manager = %UiManager
 
-	# Init record button
 	if record_song_button:
 		record_song_button.pressed.connect(_on_button)
 
@@ -59,28 +54,16 @@ func _process(delta: float):
 		if total_time > 0:
 			progress_bar.value = recording_timer / total_time
 
-	# Debug
-	if Input.is_action_just_pressed("f1"):
-		if not recording:
-			start_recording_master()
-		else:
-			stop_recording_master()
-
 func start_recording_master():
-	print("Starting Recording")
 	recording = true
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(true)
 
-	# Also record voice over
 	if song_voice_over:
 		song_voice_over.should_record = true
 
-	if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
-		ui_manager.transport_ui.metronome_toggle.button_pressed = false
-
-	if ui_manager and ui_manager.has_method("close_count_down"):
-		ui_manager.close_count_down()
+	EventBus.buttons_disabled_requested.emit(true)
+	EventBus.countdown_close_requested.emit()
 
 func on_top():
 	if recording:
@@ -90,53 +73,25 @@ func on_top():
 
 func _on_button():
 	if not recording and not should_record:
-		if ui_manager and ui_manager.layer_loop_toggle:
-			ui_manager.layer_loop_toggle.button_pressed = true
-		should_record = not should_record
+		should_record = true
+		EventBus.buttons_disabled_requested.emit(true)
 
-		# Disable buttons during recording
-		_disable_buttons(true)
-
-		if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
-			ui_manager.transport_ui.metronome_toggle.button_pressed = true
-
-		# 4 beats voor de eerste noot op eerste laag
+		# Start from last layer
 		if layer_manager:
 			var last_layer = layer_manager.sections_amount - 1
 			layer_manager.switch_layer(last_layer)
 
 		EventBus.beat_seek_requested.emit(GameState.total_beats / 2)
 		EventBus.playing_change_requested.emit(true)
-
-		# Also play metronome sound on first beat
-		var game_manager = get_node_or_null("%GameManager")
-		if game_manager and game_manager.has_method("play_extra_sfx") and game_manager.has("metronome_sfx"):
-			game_manager.play_extra_sfx(game_manager.metronome_sfx)
-
-		if game_manager and game_manager.has_method("show_count_down"):
-			game_manager.show_count_down()
+		EventBus.countdown_show_requested.emit()
 
 	elif not recording and should_record:
-		# Cancel should record
-		should_record = not should_record
-
-		# Enable buttons
-		_disable_buttons(false)
-
-		if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
-			ui_manager.transport_ui.metronome_toggle.button_pressed = false
-
-		# Stop layer looping
-		if ui_manager and ui_manager.layer_loop_toggle:
-			ui_manager.layer_loop_toggle.button_pressed = false
-
-		# Close countdown
-		var game_manager = get_node_or_null("%GameManager")
-		if game_manager and game_manager.has_method("close_count_down"):
-			game_manager.close_count_down()
+		# Cancel should-record
+		should_record = false
+		EventBus.buttons_disabled_requested.emit(false)
+		EventBus.countdown_close_requested.emit()
 
 func stop_recording_master():
-	print("Stopping Recording")
 	recording = false
 	should_record = false
 	if audio_effect_record:
@@ -146,34 +101,4 @@ func stop_recording_master():
 	recording_length = recording_timer
 	finished = true
 
-	# Stop tic sounds
-	if ui_manager and ui_manager.transport_ui and ui_manager.transport_ui.metronome_toggle:
-		ui_manager.transport_ui.metronome_toggle.button_pressed = false
-
-	# Re-enable buttons
-	_disable_buttons(false)
-
-func _disable_buttons(disabled: bool):
-	if song_voice_over:
-		if song_voice_over.sneller_button:
-			song_voice_over.sneller_button.disabled = disabled
-		if song_voice_over.langzamer_button:
-			song_voice_over.langzamer_button.disabled = disabled
-		if song_voice_over.record_song_button:
-			song_voice_over.record_song_button.disabled = disabled
-
-	if layer_manager and layer_manager.has_method("set_layer_switch_buttons_enabled"):
-		layer_manager.set_layer_switch_buttons_enabled(not disabled)
-
-	if ui_manager:
-		if ui_manager.transport_ui and ui_manager.transport_ui.play_pause_button:
-			ui_manager.transport_ui.play_pause_button.disabled = disabled
-		if ui_manager.layer_loop_toggle:
-			ui_manager.layer_loop_toggle.disabled = disabled
-
-	var layer_voice_over_0 = get_node_or_null("%LayerVoiceOver0")
-	var layer_voice_over_1 = get_node_or_null("%LayerVoiceOver1")
-	if layer_voice_over_0 and "record_layer_button" in layer_voice_over_0:
-		layer_voice_over_0.record_layer_button.disabled = disabled
-	if layer_voice_over_1 and "record_layer_button" in layer_voice_over_1:
-		layer_voice_over_1.record_layer_button.disabled = disabled
+	EventBus.buttons_disabled_requested.emit(false)

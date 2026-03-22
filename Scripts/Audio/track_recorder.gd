@@ -72,7 +72,6 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 
 func _on_recording_stopped(audio: AudioStream) -> void:
 	if not has_detected_sound:
-		print("No sound detected during recording.")
 		return
 
 	# Trim silence for sample tracks, keep full recording for loop tracks

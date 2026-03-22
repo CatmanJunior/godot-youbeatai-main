@@ -11,7 +11,7 @@ var is_visible: bool:
 
 @export_category("Settings Panel")
 @export var settings_panel: Panel
-@export var settings_button: Button
+# @export var settings_button: Button
 @export var settings_back_button: Button
 
 # --- clap and add beats---
@@ -57,13 +57,13 @@ func _ready():
 	bpm_down_button.pressed.connect(_on_bpm_down_pressed)
 	swing_slider.value_changed.connect(_on_swing_changed)
 	recording_delay_slider.value_changed.connect(_on_recording_delay_changed)
-	save_to_wav_button.pressed.connect(_on_save_to_wav_pressed)
+	save_to_wav_button.pressed.connect(_on_export_song_pressed)
 	restart_button.pressed.connect(_on_restart_button)
-	settings_button.pressed.connect(_on_settings_button_pressed)
+	# settings_button.pressed.connect(_on_settings_button_pressed)
 	settings_back_button.pressed.connect(_on_settings_button_pressed)
-	all_sections_to_mp3.button_up.connect(_on_save_to_mp3_pressed)
+	all_sections_to_mp3.button_up.connect(_on_export_beat_pressed)
 	mute_speech.toggled.connect(_on_mute_speech_toggled)
-
+	EventBus.toggle_settings_menu_requested.connect(_on_settings_button_pressed)
 
 func _process(_delta: float) -> void:
 	_update_labels()
@@ -110,13 +110,13 @@ func _on_bpm_down_pressed():
 func _on_swing_changed(value: float):
 	GameState.swing = value
 
-func _on_save_to_mp3_pressed():
-	EventBus.save_to_mp3_requested.emit()
+func _on_export_beat_pressed():
+	EventBus.open_export_dialog_requested.emit(false) # false for beat export, true for song export
 	settings_panel.visible = false
 
-func _on_save_to_wav_pressed():
+func _on_export_song_pressed():
+	EventBus.open_export_dialog_requested.emit(true) # false for beat export, true for song export
 	settings_panel.visible = false
-	EventBus.save_to_wav_requested.emit()
 	
 func _on_restart_button() -> void:
 	EventBus.restart_requested.emit()

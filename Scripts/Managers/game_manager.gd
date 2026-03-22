@@ -12,7 +12,7 @@ func _exit_tree():
 func _ready():
 	# Setup
 	EventBus.restart_requested.connect(_on_restart_requested)
-	EventBus.save_to_wav_requested.connect(_on_save_to_wav_requested)
+	EventBus.export_requested.connect(_on_save_to_wav_requested)
 	EventBus.save_to_mp3_requested.connect(_on_save_to_mp3)
 
 	read_json_from_previous_scene_and_set_values()

@@ -66,6 +66,7 @@ signal ui_mode_changed(mode: String)
 signal visibility_changed(element_name: String, visible: bool)
 signal emoji_prompt_requested()
 signal settings_toggled()
+signal toggle_settings_menu_requested()
 signal interface_visibility_changed(visible: bool)
 signal buttons_disabled_changed(disabled: bool)
 
@@ -88,8 +89,7 @@ signal mute_all_requested(mute: bool)
 # ── Saving / Loading ──
 signal save_requested()
 signal load_completed(data: Dictionary)
-signal save_to_wav_requested()
-signal save_to_mp3_requested()
+
 signal saving_completed(path: String)
 
 # ── Voice Over ──

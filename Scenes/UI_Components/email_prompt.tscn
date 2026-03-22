@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://jsbttb3fa3uy"]
 
+[ext_resource type="Script" uid="uid://b3s2s16qvthd8" path="res://Scenes/UI_Components/email_prompt.gd" id="1_8j0pk"]
 [ext_resource type="Theme" path="res://default_theme.tres" id="1_jeaa2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
@@ -12,7 +13,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="EmailPrompt" type="Panel" unique_id=958757390]
+[node name="EmailPrompt" type="Panel" unique_id=958757390 node_paths=PackedStringArray("name_field", "mail_field", "mail_toggle", "mail_button")]
 top_level = true
 z_index = 20
 anchors_preset = 8
@@ -27,6 +28,11 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+script = ExtResource("1_8j0pk")
+name_field = NodePath("Naam")
+mail_field = NodePath("EmailField")
+mail_toggle = NodePath("CheckButton")
+mail_button = NodePath("Enter")
 
 [node name="Title" type="Label" parent="." unique_id=1338360888]
 layout_mode = 1

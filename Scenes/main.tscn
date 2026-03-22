@@ -426,18 +426,10 @@ octaveRange = Vector2i(4, 6)
 [node name="MidiHelper" type="Node" parent="Managers" unique_id=41444354]
 script = ExtResource("31_v2nl5")
 
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "rec_button", "settings_panel")]
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
 script = ExtResource("65_87bhu")
-mail_panel = null
-mail_button = null
-mail_field = null
-name_field = null
 loading = NodePath("../../UserInterface/CenterContainer")
-manager = NodePath("../Manager")
-bpm_manager = NodePath("../BPM")
-loop_button = NodePath("../../UserInterface/LayerLoopToggle")
 rec_button = NodePath("../../UserInterface/RecButton")
-settings_panel = NodePath("../../UserInterface/SettingsPanel")
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player", "play_song_button", "play_beat_button")]

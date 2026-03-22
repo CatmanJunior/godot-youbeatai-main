@@ -107,3 +107,10 @@ signal utterance_ended(utterance_id: int)
 # ── Countdown ──
 signal countdown_show_requested()
 signal countdown_close_requested()
+
+#  ─ Exporting ──
+## song: false for beat, true for song
+signal export_requested(mail: bool, mode_export_song: bool)
+
+## false for beat, true for song
+signal open_export_dialog_requested(mode_export_song: bool) 

@@ -49,7 +49,7 @@ func _ready() -> void:
 	assert(GameState!= null,"manger not found")
 	if not GameState.tutorialActivated:
 		EventBus.utterance_ended.connect(_on_utterance_end)
-	_get_insrtuction_label()
+	_get_instruction_label()
 
 func _on_gui_input(event: InputEvent) -> void:
 	if unlocked == true:
@@ -139,7 +139,7 @@ func _start_tts(message:String):
 func _on_utterance_end(_utterance):
 	achievement_panel.visible = false
 
-func _get_insrtuction_label():
+func _get_instruction_label():
 	for c in achievement_panel.get_children():
 		if c.name == "InstructionLabel":
 			instruction_label = c

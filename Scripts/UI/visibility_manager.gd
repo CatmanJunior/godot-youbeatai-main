@@ -37,32 +37,7 @@ func set_entire_interface_visibility(visible: bool) -> void:
 	for ring in range(4):
 		set_ring_visibility(ring, visible)
 
-	# Transport UI elements
-	var transport := ui.transport_ui if ui.get("transport_ui") else null
-	if transport:
-		_set_visible_batch([
-			transport.get("play_pause_button"),
-			transport.get("bpm_label"),
-			transport.get("metronome"),
-			transport.get("metronome_bg"),
-			transport.get("progress_bar"),
-		], visible)
 
-	# Settings UI elements
-	var settings := ui.settings_ui if ui.get("settings_ui") else null
-	if settings:
-		_set_visible_batch([
-			settings.get("settings_button"),
-			settings.get("mute_speach"),
-		], visible)
-
-	# Chaos pad elements
-	var chaos := ui.chaos_pad_ui if ui.get("chaos_pad_ui") else null
-	if chaos:
-		_set_visible_batch([
-			chaos.get("activate_green_chaos_button"),
-			chaos.get("activate_purple_chaos_button"),
-		], visible)
 
 	# Top-level UI elements
 	_set_visible_batch([
@@ -103,19 +78,6 @@ func set_main_buttons_visibility(visible: bool) -> void:
 func set_bpm_controls_visibility(visible: bool) -> void:
 	if not ui:
 		return
-
-	var transport := ui.transport_ui if ui.get("transport_ui") else null
-	if transport:
-		_set_visible_batch([
-			transport.get("bpm_up_button"),
-			transport.get("bpm_down_button"),
-			transport.get("bpm_label"),
-			transport.get("swing_slider"),
-			transport.get("swing_label"),
-			transport.get("metronome"),
-			transport.get("metronome_bg"),
-		], visible)
-
 
 func set_recording_buttons_visibility(visible: bool) -> void:
 	if not ui:

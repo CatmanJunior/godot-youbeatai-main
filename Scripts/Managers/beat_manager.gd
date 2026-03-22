@@ -58,52 +58,35 @@ func _on_template_set(actives: Array):
 		GameState.current_section.set_beat_actives(actives)
 
 func on_clap():
-	"""Handle clap detection"""
-	if time_after_play < 0.2:
-		return
-	
-	var ring = 1
-	var active = GameState.current_section.get_beat(ring, current_beat)
-	
-	if active:
-		# Hit on beat - reward player
-		progress_bar_value += 2.0
-		EventBus.progress_bar_particles_requested.emit()
-		if ring < colors.size():
-			EventBus.particles_requested.emit(Vector2.ZERO, colors[ring])
-		clapped_on_beat_amount += 1
-	else:
-		# Missed beat - penalize player
-		progress_bar_value -= 1.0
-	
-	clapped_amount += 1
-	
-	# Add beat if enabled
-	if add_beats_enabled:
-		toggle_beat(ring, current_beat)
+	_handle_beat_interaction(1)
 
 func on_stomp():
-	"""Handle stomp detection"""
+	_handle_beat_interaction(0)
+
+func _handle_beat_interaction(ring: int) -> void:
+	"""Shared logic for clap (ring 1) and stomp (ring 0) interactions."""
 	if time_after_play < 0.2:
 		return
-	
-	var ring = 0
+
 	var active = GameState.current_section.get_beat(ring, current_beat)
-	
+
 	if active:
-		# Hit on beat - reward player
 		progress_bar_value += 2.0
 		EventBus.progress_bar_particles_requested.emit()
 		if ring < colors.size():
 			EventBus.particles_requested.emit(Vector2.ZERO, colors[ring])
-		stomped_on_beat_amount += 1
+		if ring == 0:
+			stomped_on_beat_amount += 1
+		else:
+			clapped_on_beat_amount += 1
 	else:
-		# Missed beat - penalize player
 		progress_bar_value -= 1.0
-	
-	stomped_amount += 1
-	
-	# Add beat if enabled
+
+	if ring == 0:
+		stomped_amount += 1
+	else:
+		clapped_amount += 1
+
 	if add_beats_enabled:
 		toggle_beat(ring, current_beat)
 
@@ -147,8 +130,6 @@ func on_beat():
 
 func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""
-	print("Toggling beat - Ring: ", ring, " Beat: ", beat) # Debug print
-	
 	GameState.current_section.toggle_beat(ring, beat)
 	
 	var is_active = GameState.current_section.get_beat(ring, beat)

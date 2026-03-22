@@ -22,18 +22,10 @@ var recording_length: float = 0.0
 var finished: bool = false
 
 # References
-var game_manager: Node
 var layer_manager: Node
-var layer_voice_over_0: Node
-var layer_voice_over_1: Node
-var uiManager: Node
 
 func _ready():
-	game_manager = %GameManager
 	layer_manager = %LayerManager
-	layer_voice_over_0 = %LayerVoiceOver0
-	layer_voice_over_1 = %LayerVoiceOver1
-	uiManager = %UiManager
 	
 	# Setup record button
 	if record_song_button:
@@ -63,7 +55,7 @@ func _process(delta: float):
 		recording_timer = 0.0
 	
 	# Update progress bar
-	if recording and progress_bar and game_manager and layer_manager:
+	if recording and progress_bar and layer_manager:
 		var layers_amount = layer_manager.sections_amount if layer_manager.has("sections_amount") else 4
 		var total_time = layers_amount * GameState.total_beats * GameState.beat_duration
 		progress_bar.value = recording_timer / total_time if total_time > 0 else 0.0
@@ -73,46 +65,21 @@ func _process(delta: float):
 		audio_player.volume_linear = 6.0
 
 func _on_record_button_pressed():
-	"""Handle record button press"""
-	# Enable layer loop mode
-	if game_manager and game_manager.has("layer_loop_toggle"):
-		game_manager.layer_loop_toggle.button_pressed = true
-	
 	should_record = not should_record
 	
-	# Disable other buttons
-	if sneller_button:
-		sneller_button.disabled = true
-	if langzamer_button:
-		langzamer_button.disabled = true
-	if game_manager:
-		game_manager.set_layer_switch_buttons_enabled(false)
-		game_manager.play_pause_button.disabled = true
-		record_song_button.disabled = true
-	
-	# Enable metronome
-	if game_manager and game_manager.has("metronome_toggle"):
-		game_manager.metronome_toggle.button_pressed = true
+	EventBus.buttons_disabled_requested.emit(true)
 	
 	# Start from last layer
-	if layer_manager and game_manager:
+	if layer_manager:
 		var last_layer = layer_manager.sections_amount - 1
-		game_manager.switch_layer(last_layer)
+		EventBus.section_switch_requested.emit(last_layer)
 	
 	# Set beat position
 	EventBus.beat_seek_requested.emit(GameState.total_beats / 2)
 	EventBus.playing_change_requested.emit(true)
-	
-	# Play metronome sound
-	if game_manager and game_manager.has_method("play_extra_sfx"):
-		game_manager.play_extra_sfx(game_manager.metronome_sfx)
-	
-	# Show countdown
-	if game_manager and game_manager.has_method("show_count_down"):
-		game_manager.show_count_down()
+	EventBus.countdown_show_requested.emit()
 
 func on_top():
-	"""Called when this comes to the top in the loop"""
 	if recording:
 		stop_recording()
 		if voice_over:
@@ -124,38 +91,23 @@ func on_top():
 			audio_player.play()
 
 func start_recording():
-	"""Start recording"""
 	recording = true
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(true)
 	
-	print("recording started")
-	
-	# Disable layer recording buttons
-	if layer_voice_over_0:
-		layer_voice_over_0.record_layer_button.disabled = true
-	if layer_voice_over_1:
-		layer_voice_over_1.record_layer_button.disabled = true
+	EventBus.buttons_disabled_requested.emit(true)
 	
 	# Reduce volume
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
 	
-	# Disable metronome
-	if game_manager and game_manager.has("metronome_toggle"):
-		game_manager.metronome_toggle.button_pressed = false
-	
-	# Close countdown
-	if game_manager and game_manager.has_method("close_count_down"):
-		game_manager.close_count_down()
+	EventBus.countdown_close_requested.emit()
 	
 	started_recording.emit()
 
 func stop_recording():
-	"""Stop recording"""
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(false)
 	
-	print("recording stopped")
 	recording_length = recording_timer
 	recording = false
 	should_record = false
@@ -164,20 +116,7 @@ func stop_recording():
 	if voice_over:
 		audio_player.stream = voice_over
 	
-	# Re-enable buttons
-	if sneller_button:
-		sneller_button.disabled = false
-	if langzamer_button:
-		langzamer_button.disabled = false
-	if game_manager:
-		game_manager.set_layer_switch_buttons_enabled(true)
-		uiManager.transport_ui.play_pause_button.disabled = false
-		record_song_button.disabled = false
-	
-	if layer_voice_over_0:
-		layer_voice_over_0.record_layer_button.disabled = false
-	if layer_voice_over_1:
-		layer_voice_over_1.record_layer_button.disabled = false
+	EventBus.buttons_disabled_requested.emit(false)
 	
 	# Restore volume
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), 0.0)

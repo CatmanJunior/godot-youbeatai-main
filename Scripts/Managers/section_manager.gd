@@ -25,6 +25,7 @@ func _ready() -> void:
 	EventBus.paste_requested.connect(_paste_section)
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
+	EventBus.section_switch_requested.connect(switch_section)
 
 	spawn_initial_sections()
 
@@ -42,7 +43,7 @@ func spawn_initial_sections():
 func add_section(section: int, emoji: String = ""):
 	"""Add a new section at the specified index"""
 	if sections.size() == SECTIONS_AMOUNT_MAX:
-		print("Maximum sections reached, cannot add more.")
+		push_warning("Maximum sections reached, cannot add more.")
 		return
 
 	# Insert silence into active recordings for the new section
@@ -87,14 +88,12 @@ func remove_section(section: int):
 func _copy_section():
 	"""Copy the current section to the clipboard"""
 	clipboard_section = current_section.duplicate_section()
-	print("Section copied to clipboard: " + str(clipboard_section))
 
 func _paste_section():
 	"""Paste the clipboard into the current section"""
 	if clipboard_section == null:
 		return
 	
-	print("Pasting section from clipboard: " + str(clipboard_section))
 	# Copy beat and knob data from clipboard into current section
 	current_section.set_beat_actives(clipboard_section.get_beat_actives())
 	current_section.set_section_knob_positions(clipboard_section.get_section_knob_positions())
@@ -114,7 +113,6 @@ func clear_section():
 
 func switch_section(section_index: int):
 	"""Switch to a different section"""
-	print("Switching to section " + str(section_index)) # Debug print
 	var old_section = current_section
 	# Switch to new section
 	current_section_index = section_index
@@ -152,32 +150,15 @@ func section_has_beats(section: int) -> bool:
 # ── Audio recording manipulation when sections change ────────────────────
 
 func _insert_silence_for_section(section: int) -> void:
-	var song_vo = get_node_or_null("%SongVoiceOver")
-	if song_vo == null or song_vo.voice_over == null:
-		return # No active recording, nothing to do
-
-	var rec_node = get_node_or_null("%RealTimeAudioRecording")
-	if rec_node == null:
-		return
-
-	var result := AudioSavingManager.insert_silent_layer_part_of_recordings(
-		rec_node.recording_result, song_vo.voice_over,
-		section, GameState.total_beats, GameState.beat_duration)
-
-	if result.recording:
-		rec_node.recording_result = result.recording
-		rec_node.recording_length = float(result.recording.get_length())
-	if result.voice_over:
-		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
-		song_vo.voice_over = result.voice_over
-		if song_vo.audio_player:
-			song_vo.audio_player.stream = song_vo.voice_over
-			if was_playing:
-				song_vo.audio_player.play()
-		song_vo.recording_length = float(result.voice_over.get_length())
-
+	_manipulate_recording(section, AudioSavingManager.insert_silent_layer_part_of_recordings)
 
 func _remove_audio_for_section(section: int) -> void:
+	_manipulate_recording(section, AudioSavingManager.remove_layer_part_of_recordings)
+
+## Shared helper for insert/remove recording operations.
+## `operation` must accept (recording, voice_over, section, total_beats, beat_duration)
+## and return a result with `.recording` and `.voice_over` fields.
+func _manipulate_recording(section: int, operation: Callable) -> void:
 	var song_vo = get_node_or_null("%SongVoiceOver")
 	if song_vo == null or song_vo.voice_over == null:
 		return
@@ -186,7 +167,7 @@ func _remove_audio_for_section(section: int) -> void:
 	if rec_node == null:
 		return
 
-	var result := AudioSavingManager.remove_layer_part_of_recordings(
+	var result = operation.call(
 		rec_node.recording_result, song_vo.voice_over,
 		section, GameState.total_beats, GameState.beat_duration)
 

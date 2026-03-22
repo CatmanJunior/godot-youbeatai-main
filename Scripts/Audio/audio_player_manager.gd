@@ -77,12 +77,8 @@ func set_recorded_stream(track_index: int, stream: AudioStream):
 
 #Signal handlers
 func _on_beat_pitch_randomization(_beat: int):
-	if track_players.size() > 3:
-		var strength = 0.2
-		var pitch = 1.0 + (randf() - 0.5) * strength
-		#TODO Implement this in the track players. For now, just print the intended pitch change.
-		# print("Randomizing pitch of voice tracks to %f. Not implemented yet." % pitch)
-		# track_players[3].pitch_scale = pitch
+	# TODO: Implement pitch randomization in the track players
+	pass
 
 func _on_request_set_stream(trackIndex: int, audio_layer: int, audio: AudioStream):
 	if trackIndex < 0 or trackIndex >= track_players.size():

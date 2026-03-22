@@ -6,8 +6,8 @@ var is_visible: bool:
 	get: return settings_panel.visible
 	set(value): printerr("Settings Menu UI: Nuh-uh, can't do that here")
 
-##Howmuch the BPM changes when pressing the BPM up/down buttons
-@export var bmp_modifier: int = 5
+##How much the BPM changes when pressing the BPM up/down buttons
+@export var bpm_modifier: int = 5
 
 @export_category("Settings Panel")
 @export var settings_panel: Panel
@@ -105,10 +105,10 @@ func _on_clap_bias_changed(value: float):
 	GameState.clap_bias = value
 
 func _on_bpm_up_pressed():
-	EventBus.bpm_up_requested.emit(bmp_modifier)
+	EventBus.bpm_up_requested.emit(bpm_modifier)
 
 func _on_bpm_down_pressed():
-	EventBus.bpm_down_requested.emit(bmp_modifier)
+	EventBus.bpm_down_requested.emit(bpm_modifier)
 
 func _on_swing_changed(value: float):
 	GameState.swing = value

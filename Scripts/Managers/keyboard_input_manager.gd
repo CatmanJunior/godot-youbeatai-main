@@ -1,102 +1,60 @@
 extends Node
 
-var up_pressed: bool = false
-var up_pressed_lastframe: bool = false
-var dn_pressed: bool = false
-var dn_pressed_lastframe: bool = false
-var space_pressed_lastframe: bool = false
-var enter_pressed_lastframe: bool = false
-var f11_pressed: bool = false
-var f11_pressed_lastframe: bool = false
+## Tracks key state across frames and emits EventBus signals on key-down edges.
+## Uses a dictionary to eliminate the repetitive per-key boolean tracking pattern.
 
-# Ring key tracking (A, S, D, F)
-var a_pressed: bool = false
-var a_pressed_lastframe: bool = false
-var s_pressed: bool = false
-var s_pressed_lastframe: bool = false
-var d_pressed: bool = false
-var d_pressed_lastframe: bool = false
-var f_pressed: bool = false
-var f_pressed_lastframe: bool = false
+# Maps Godot key constants to a dictionary of {pressed, last_frame}
+var _key_states: Dictionary = {}
 
+# Key → callable mapping for single-fire key-down actions
+var _key_actions: Dictionary = {}
 
-func _process(_delta: float):
-	_handle_arrow_keys()
-	_handle_space_key()
-	_handle_enter_key()
-	_handle_fullscreen_toggle()
-	_handle_ring_keys()
+func _ready() -> void:
+	_key_actions = {
+		KEY_UP: func(): EventBus.bpm_up_requested.emit(5),
+		KEY_DOWN: func(): EventBus.bpm_down_requested.emit(5),
+		KEY_SPACE: func(): EventBus.play_pause_toggle_requested.emit(),
+		KEY_ENTER: func(): EventBus.enter_pressed.emit(),
+		KEY_F11: func():
+			EventBus.fullscreen_toggle_requested.emit()
+			_toggle_fullscreen(),
+		KEY_A: func(): EventBus.ring_key_pressed.emit(0),
+		KEY_S: func(): EventBus.ring_key_pressed.emit(1),
+		KEY_D: func(): EventBus.ring_key_pressed.emit(2),
+		KEY_F: func(): EventBus.ring_key_pressed.emit(3),
+	}
+
+	# Initialize state tracking for all managed keys with current state
+	# to avoid false key-down events on the first frame
+	for key in _key_actions:
+		_key_states[key] = Input.is_key_pressed(key)
+
+func _process(_delta: float) -> void:
+	_poll_keys()
 	_handle_debug_shortcuts()
 
-func _handle_arrow_keys():
-	up_pressed_lastframe = up_pressed
-	up_pressed = Input.is_key_pressed(KEY_UP)
-	if up_pressed and up_pressed != up_pressed_lastframe:
-		EventBus.bpm_up_requested.emit(5)
-	
-	dn_pressed_lastframe = dn_pressed
-	dn_pressed = Input.is_key_pressed(KEY_DOWN)
-	if dn_pressed and dn_pressed != dn_pressed_lastframe:
-		EventBus.bpm_down_requested.emit(5)
+func _poll_keys() -> void:
+	for key in _key_actions:
+		var was_pressed: bool = _key_states[key]
+		var is_pressed: bool = Input.is_key_pressed(key)
+		_key_states[key] = is_pressed
 
-func _handle_space_key():
-	var space_pressed = Input.is_key_pressed(KEY_SPACE)
-	if space_pressed and not space_pressed_lastframe:
-		EventBus.play_pause_toggle_requested.emit()
-	space_pressed_lastframe = space_pressed
+		if is_pressed and not was_pressed:
+			_key_actions[key].call()
 
-func _handle_enter_key():
-	var is_enter_key_pressed = Input.is_key_pressed(KEY_ENTER)
-	if is_enter_key_pressed and not enter_pressed_lastframe:
-		EventBus.enter_pressed.emit()
-	enter_pressed_lastframe = is_enter_key_pressed
-
-func _handle_fullscreen_toggle():
-	f11_pressed_lastframe = f11_pressed
-	f11_pressed = Input.is_key_pressed(KEY_F11)
-	if f11_pressed and f11_pressed != f11_pressed_lastframe:
-		EventBus.fullscreen_toggle_requested.emit()
-		_toggle_fullscreen()
-
-func _toggle_fullscreen():
-	var window = get_window()
+func _toggle_fullscreen() -> void:
+	var window := get_window()
 	if window.mode == Window.MODE_FULLSCREEN:
 		window.mode = Window.MODE_WINDOWED
 	else:
 		window.mode = Window.MODE_FULLSCREEN
 
-func _handle_ring_keys():
-	# A key - Ring 0
-	a_pressed_lastframe = a_pressed
-	a_pressed = Input.is_key_pressed(KEY_A)
-	if a_pressed and a_pressed != a_pressed_lastframe:
-		EventBus.ring_0_pressed.emit()
-	
-	# S key - Ring 1
-	s_pressed_lastframe = s_pressed
-	s_pressed = Input.is_key_pressed(KEY_S)
-	if s_pressed and s_pressed != s_pressed_lastframe:
-		EventBus.ring_1_pressed.emit()
-	
-	# D key - Ring 2
-	d_pressed_lastframe = d_pressed
-	d_pressed = Input.is_key_pressed(KEY_D)
-	if d_pressed and d_pressed != d_pressed_lastframe:
-		EventBus.ring_2_pressed.emit()
-	
-	# F key - Ring 3
-	f_pressed_lastframe = f_pressed
-	f_pressed = Input.is_key_pressed(KEY_F)
-	if f_pressed and f_pressed != f_pressed_lastframe:
-		EventBus.ring_3_pressed.emit()
-
-func _handle_debug_shortcuts():
-	# Debug BPM shortcuts
+func _handle_debug_shortcuts() -> void:
 	if not Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_F6):
 		EventBus.bpm_set_requested.emit(900)
-	
+
 	if Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_F6):
 		EventBus.bpm_set_requested.emit(4000)
-	
+
 	if Input.is_key_pressed(KEY_CTRL) and Input.is_key_pressed(KEY_F6):
 		EventBus.bpm_set_requested.emit(90)

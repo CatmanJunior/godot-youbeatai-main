@@ -2662,8 +2662,8 @@ texture_repeat = 1
 texture = ExtResource("83_58sgt")
 metadata/_edit_lock_ = true
 
-[node name="KlappyReaction" parent="." unique_id=481983223 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("84_0n8wt")]
-achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
+[node name="KlappyReaction" parent="." unique_id=481983223 node_paths=PackedStringArray("achievement_panel") instance=ExtResource("84_0n8wt")]
+achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [node name="Unlock Achievements" type="Button" parent="." unique_id=1635874404]
 visible = false

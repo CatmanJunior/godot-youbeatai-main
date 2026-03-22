@@ -97,18 +97,13 @@ func mixing_change_track(new_track_index: int):
 		chaos_pad_mode = ChaosPadMode.SYNTH_MIXING
 
 func track_mixing_update_volumes(track_index: int, master_volume: float, given_weights: Vector3):
-	"""Generalized volume update for any track type, currently unused but could be helpful if we add more track types"""
-	print("Updating volumes for track %s with master volume %s and weights %s" % [track_index, master_volume, given_weights])
-
+	"""Generalized volume update for any track type"""
 	var weights_to_use = given_weights if given_weights != Vector3.ZERO else weights
 
 	var new_volume_weights = weights_to_use * master_volume
 
 	# For synths, also update the bus volume
 	EventBus.set_track_volume_requested.emit(track_index, master_volume, new_volume_weights)
-
-	#TODO: MOVE THIS TO AUDIO_PLAYER_MANAGER AND MAKE IT PER-TRACK INSTEAD OF PER-BUS
-	# AudioServer.set_bus_volume_db(AudioServer.get_bus_index(synth_bus), linear_to_db(weights_to_use.z * master_volume))
 
 func track_mixing_apply_stored_volumes():
 	"""Re-apply remembered mixing volumes for both synths"""

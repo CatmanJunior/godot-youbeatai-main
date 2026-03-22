@@ -12,6 +12,7 @@ builds/
 
 # rider
 .idea/
+*.sln.DotSettings.user
 
 # libs
 addons/soundfont/lib/~libgd*

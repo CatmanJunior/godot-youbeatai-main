@@ -84,7 +84,6 @@ func set_weights(weights: Vector3) -> void:
 func play(_offset: float = 0.0) -> void: pass
 
 func stop() -> void:
-	print("Stopping track %d" % track_index)
 	for p in players:
 		p.stop()
 

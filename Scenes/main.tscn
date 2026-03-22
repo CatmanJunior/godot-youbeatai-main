@@ -1604,8 +1604,8 @@ angle_min = 45.0
 angle_max = 90.0
 hue_variation_max = 0.55
 
-[node name="KlappyReaction" parent="." unique_id=1521628326 node_paths=PackedStringArray("achievment_panel") instance=ExtResource("47_s8vy0")]
-achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
+[node name="KlappyReaction" parent="." unique_id=1521628326 node_paths=PackedStringArray("achievement_panel") instance=ExtResource("47_s8vy0")]
+achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [node name="Unlock Achievements" type="Button" parent="." unique_id=1519070133]
 visible = false
@@ -1621,14 +1621,14 @@ position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("84_6h1fc")
 
-[node name="KlappyLightPad" parent="." unique_id=1982735639 node_paths=PackedStringArray("klappyLight", "KlappyEnergy", "achievment_panel") instance=ExtResource("92_p4gyq")]
+[node name="KlappyLightPad" parent="." unique_id=1982735639 node_paths=PackedStringArray("klappyLight", "KlappyEnergy", "achievement_panel") instance=ExtResource("92_p4gyq")]
 offset_left = 360.0
 offset_top = 21.0
 offset_right = 460.0
 offset_bottom = 121.0
 klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
 KlappyEnergy = NodePath("../UserInterface/Robot/ProgressBar")
-achievment_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
+achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [node name="SwitchSectionButtons" parent="." unique_id=1068760052 instance=ExtResource("49_v2nl5")]
 offset_left = -257.0

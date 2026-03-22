@@ -1,7 +1,7 @@
 extends Panel
 class_name SoundBankSelectionMenu
 
-var amount_emtions_selected: int = 0
+var amount_emotions_selected: int = 0
 var amount_themes_selected: int = 0
 
 var chosen_emotions_emojis: Array[String] = []
@@ -39,7 +39,7 @@ func _on_beat_button_group_pressed(button: BaseButton) -> void:
 	_set_beats(beats)
 
 func _on_emotion_toggle(buttons: Array[BaseButton]) -> void:
-	amount_emtions_selected = buttons.size()
+	amount_emotions_selected = buttons.size()
 	chosen_emotions_emojis.clear()
 	for btn in buttons:
 		chosen_emotions_emojis.append(get_label_text(btn))
@@ -58,7 +58,7 @@ func _on_theme_toggle(buttons: Array[BaseButton]) -> void:
 	check_ready_condition()
 
 func check_ready_condition() -> bool:
-	if amount_emtions_selected == 2 and amount_themes_selected == 2:
+	if amount_emotions_selected == 2 and amount_themes_selected == 2:
 		gebruik_button.disabled = false
 		return false
 	else:

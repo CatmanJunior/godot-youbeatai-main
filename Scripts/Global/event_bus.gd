@@ -4,12 +4,13 @@ extends Node
 
 signal restart_requested()
 signal soundbank_selected(themes: Array[String], emotions: Array[String])
+
 # ── Playback ──
 signal playing_changed(playing: bool)
 signal playing_change_requested(playing: bool)
 signal play_pause_toggle_requested()
 
-#-- BPM --
+# ── BPM ──
 signal bpm_changed(new_bpm: float)
 signal bpm_up_requested(value: int)
 signal bpm_down_requested(value: int)
@@ -32,6 +33,7 @@ signal stomp_triggered()
 
 # ── Sections ──
 signal add_section_requested(emoji: String)
+signal section_switch_requested(section_index: int)
 signal section_switched(old_section_data: SectionData, section_data: SectionData)
 signal section_added(new_section_index: int, emoji: String)
 signal section_removed(section_index: int)
@@ -39,7 +41,6 @@ signal section_cleared()
 signal copy_requested()
 signal paste_requested()
 signal section_clear_requested()
-signal section_switch_requested(section_index: int)
 
 # ── Audio Playback ──
 signal play_sample_track_requested(track: int)
@@ -62,16 +63,9 @@ signal progress_bar_particles_requested()
 signal achievement_particles_requested()
 
 # ── UI ──
-signal ui_mode_changed(mode: String)
-signal visibility_changed(element_name: String, visible: bool)
-signal emoji_prompt_requested()
-signal settings_toggled()
 signal toggle_settings_menu_requested()
-signal interface_visibility_changed(visible: bool)
-signal buttons_disabled_changed(disabled: bool)
 
-# -- Buttons --
-signal track_select_button_pressed(track: int)
+# ── Buttons ──
 signal recording_sample_button_toggled(toggled: bool)
 signal song_select_button_toggled(toggled: bool)
 
@@ -81,21 +75,18 @@ signal stop_recording_requested()
 signal recording_started()
 signal recording_stopped(audio: AudioStream)
 
-# -- Set Audio Streams --
+# ── Set Audio Streams ──
 signal set_stream_requested(track: int, audio_layer: int, audio: AudioStream)
 signal set_recorded_stream_requested(track_index: int, audio: AudioStream)
-
 signal mute_all_requested(mute: bool)
 
-# ── Saving / Loading ──
-signal save_requested()
-signal load_completed(data: Dictionary)
-
+# ── Saving / Exporting ──
 signal saving_completed(path: String)
-
-# ── Voice Over ──
-signal voice_over_started()
-signal voice_over_stopped()
+signal save_to_mp3_requested()
+## song: false for beat, true for song
+signal export_requested(mail: bool, mode_export_song: bool)
+## false for beat, true for song
+signal open_export_dialog_requested(mode_export_song: bool)
 
 # ── Achievements ──
 signal achievement_done(achievement_id: int)
@@ -109,9 +100,12 @@ signal utterance_ended(utterance_id: int)
 signal countdown_show_requested()
 signal countdown_close_requested()
 
-#  ─ Exporting ──
-## song: false for beat, true for song
-signal export_requested(mail: bool, mode_export_song: bool)
+# ── Keyboard ──
+signal enter_pressed()
+signal fullscreen_toggle_requested()
+## Emitted when a ring key is pressed (A=0, S=1, D=2, F=3)
+signal ring_key_pressed(ring: int)
 
-## false for beat, true for song
-signal open_export_dialog_requested(mode_export_song: bool)
+# ── Recording UI ──
+## Emitted to disable/enable buttons during recording workflows
+signal buttons_disabled_requested(disabled: bool)

@@ -15,9 +15,7 @@ func _ready() -> void:
 		KEY_DOWN: func(): EventBus.bpm_down_requested.emit(5),
 		KEY_SPACE: func(): EventBus.play_pause_toggle_requested.emit(),
 		KEY_ENTER: func(): EventBus.enter_pressed.emit(),
-		KEY_F11: func():
-			EventBus.fullscreen_toggle_requested.emit()
-			_toggle_fullscreen(),
+		KEY_F11: func(): EventBus.fullscreen_toggle_requested.emit(),
 		KEY_A: func(): EventBus.ring_key_pressed.emit(0),
 		KEY_S: func(): EventBus.ring_key_pressed.emit(1),
 		KEY_D: func(): EventBus.ring_key_pressed.emit(2),
@@ -42,12 +40,6 @@ func _poll_keys() -> void:
 		if is_pressed and not was_pressed:
 			_key_actions[key].call()
 
-func _toggle_fullscreen() -> void:
-	var window := get_window()
-	if window.mode == Window.MODE_FULLSCREEN:
-		window.mode = Window.MODE_WINDOWED
-	else:
-		window.mode = Window.MODE_FULLSCREEN
 
 func _handle_debug_shortcuts() -> void:
 	if not Input.is_key_pressed(KEY_SHIFT) and Input.is_key_pressed(KEY_F6):

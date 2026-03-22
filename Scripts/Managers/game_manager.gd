@@ -7,11 +7,7 @@ var first_tts_done: bool = false
 
 func _ready():
 	EventBus.restart_requested.connect(_on_restart_requested)
-	EventBus.export_requested.connect(_on_save_to_wav_requested)
-	EventBus.save_to_mp3_requested.connect(_on_save_to_mp3)
-
-	read_json_from_previous_scene_and_set_values()
-
+	EventBus.fullscreen_toggle_requested.connect(_toggle_fullscreen)
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
 
 func _on_restart_requested():
@@ -30,39 +26,8 @@ func _on_restart_requested():
 		if FileAccess.file_exists(file_path):
 			DirAccess.remove_absolute(file_path)
 
-func _on_save_to_wav_requested():
-	_export_beat_wav()
-
-func _on_save_to_mp3():
-	_export_song_wav()
-
-
-func _export_song_wav() -> void:
-	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
-	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
-	var bpm: int = GameState.bpm
-
-	var path: String = AudioSavingManager.save_realtime_recorded_song_as_file(
-		recording, voice_over, bpm)
-	if path != "":
-		EventBus.saving_completed.emit(path)
-
-func _export_beat_wav() -> void:
-	var recording: AudioStreamWAV = %RealTimeAudioRecording.recording_result
-	var voice_over: AudioStreamWAV = %SongVoiceOver.voice_over
-	var bpm: int = GameState.bpm
-	var section_index: int = GameState.current_section_index
-	var beats_amount: int = GameState.total_beats
-	var base_time_per_beat: float = GameState.beat_duration
-
-	var path: String = AudioSavingManager.save_realtime_recorded_beat_as_file(
-		recording, voice_over, bpm, section_index, beats_amount, base_time_per_beat)
-	if path != "":
-		EventBus.saving_completed.emit(path)
-
 func utterance_end(utterance_id: int):
 	EventBus.utterance_ended.emit(utterance_id)
-
 
 func text_without_emoticons(text: String) -> String:
 	var emoticon_pattern = r"(:\)|:\(|:D|:P|;\)|<3|:\*|:\|)"
@@ -70,11 +35,12 @@ func text_without_emoticons(text: String) -> String:
 	regex.compile(emoticon_pattern)
 	return regex.sub(text, "")
 
-func show_countdown():
-	EventBus.countdown_show_requested.emit()
-
 func _process(delta: float):
 	time += delta
 
-func read_json_from_previous_scene_and_set_values():
-	pass
+func _toggle_fullscreen() -> void:
+	var window := get_window()
+	if window.mode == Window.MODE_FULLSCREEN:
+		window.mode = Window.MODE_WINDOWED
+	else:
+		window.mode = Window.MODE_FULLSCREEN

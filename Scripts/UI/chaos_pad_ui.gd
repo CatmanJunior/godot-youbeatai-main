@@ -1,9 +1,9 @@
-extends Node
+extends Control
 class_name ChaosPadUI
 
-@export var corners: Array[Node2D] = []
-@export var chaos_pad_triangle_sprite: Sprite2D
-@export var knob: Sprite2D
+@export var corners: Array[Control] = []
+@export var chaos_pad_triangle_sprite: TextureRect
+@export var knob: TextureRect
 
 # Icons
 @export var main_icons: Array[Texture2D] = [] # 4 for rings
@@ -13,8 +13,8 @@ class_name ChaosPadUI
 @export var main_icon_song: Texture2D
 @export var alt_icon_song: Texture2D
 
-@export var main_icon: Sprite2D
-@export var alt_icon: Sprite2D
+@export var main_icon: TextureRect
+@export var alt_icon: TextureRect
 
 # Curves for visual feedback
 @export var synth_mixing_line_scale_curve: Curve

@@ -1,18 +1,32 @@
 [gd_scene format=3 uid="uid://bqky323kw7oj1"]
 
+[ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/UI/chaos_pad_ui.gd" id="1_43llw"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_c7cwa"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="2_7ufgw"]
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Icons/Icons-_28_0006_Drum.png" id="2_gu6ag"]
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/UI_Components/chaos_icon.tscn" id="3_ajioc"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Icons/Icons-_28_0014_Clap.png" id="3_i83dk"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Icons/Icons-_28_0013_Horn.png" id="4_66ppk"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Icons/Icons-_28_0016_vHigh_Hat-.png" id="5_btbfp"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/ChaosPad/ChaosPadKnob.gd" id="5_e7g83"]
+[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Icons/Icons-_28_0007_Kick_Drum.png" id="6_3f0a6"]
 [ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/UI/play_star_animation.gd" id="6_xr1wk"]
 [ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="7_1pf8w"]
+[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Icons/Icons-_28_0017_Tamborine.png" id="7_123v6"]
 [ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="8_685nt"]
+[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Icons/Icons-_28_0019_Snare_Drum.png" id="8_isvop"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Icons/Icons-_28_0015_Crash.png" id="9_os8df"]
 [ext_resource type="Animation" uid="uid://b0td231pq8k03" path="res://outside_star_animation.res" id="9_pd38u"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="10_6wcbh"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Icons/Icons-_28_0012_Robot.png" id="10_40qe7"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Icons/Icons-_28_0010_Bear.png" id="11_6tvyw"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Icons/Icons-_28_0011_Bird.png" id="12_h3tcp"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="13_unoer"]
+[ext_resource type="Texture2D" uid="uid://6t1cscwpeyrn" path="res://Resources/Textures_New/Icons/_0001s_0009_Robot-test.png" id="14_d86ak"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sstgy"]
 radius = 16.0
@@ -55,7 +69,8 @@ _data = {
 &"piano_star_animation": ExtResource("7_1pf8w")
 }
 
-[node name="ChaosPad" type="Control" unique_id=2043765558]
+[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("corners", "chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon")]
+physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -64,6 +79,18 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_43llw")
+corners = [NodePath("Triangle/PointLeft"), NodePath("Triangle/PointRight"), NodePath("Triangle/PointTop")]
+chaos_pad_triangle_sprite = NodePath("Triangle")
+knob = NodePath("Triangle/KnobSprite")
+main_icons = Array[Texture2D]([ExtResource("2_gu6ag"), ExtResource("3_i83dk"), ExtResource("4_66ppk"), ExtResource("5_btbfp")])
+alt_icons = Array[Texture2D]([ExtResource("6_3f0a6"), ExtResource("7_123v6"), ExtResource("8_isvop"), ExtResource("9_os8df")])
+main_icon_synths = Array[Texture2D]([ExtResource("10_40qe7"), ExtResource("10_40qe7")])
+alt_icon_synths = Array[Texture2D]([ExtResource("11_6tvyw"), ExtResource("12_h3tcp")])
+main_icon_song = ExtResource("13_unoer")
+alt_icon_song = ExtResource("14_d86ak")
+main_icon = NodePath("Triangle/PointLeft/ChaosIconMain/ChaosIconBack")
+alt_icon = NodePath("Triangle/PointRight/ChaosIconAlt/ChaosIconBack")
 
 [node name="MicButtonLocation" type="Node2D" parent="." unique_id=1125788169]
 position = Vector2(133, 48)
@@ -97,6 +124,11 @@ offset_right = 63.07692
 offset_bottom = 312.3077
 
 [node name="ChaosIconMain" parent="Triangle/PointLeft" unique_id=371519950 instance=ExtResource("3_ajioc")]
+layout_mode = 0
+offset_left = -84.615234
+offset_top = -87.69238
+offset_right = 91.384766
+offset_bottom = 88.30762
 rotation = 3.1415925
 scale = Vector2(0.6, 0.6)
 
@@ -115,6 +147,11 @@ offset_right = 336.9231
 offset_bottom = 313.8462
 
 [node name="ChaosIconAlt" parent="Triangle/PointRight" unique_id=1470349372 instance=ExtResource("3_ajioc")]
+layout_mode = 0
+offset_left = -87.69238
+offset_top = -90.76953
+offset_right = 88.30762
+offset_bottom = 85.23047
 rotation = 3.1415925
 scale = Vector2(0.6, 0.6)
 
@@ -281,3 +318,6 @@ scale = Vector2(0.5000001, 0.5000001)
 texture = ExtResource("13_objle")
 centered = false
 offset = Vector2(22.435, 19.34)
+
+[editable path="Triangle/PointLeft/ChaosIconMain"]
+[editable path="Triangle/PointRight/ChaosIconAlt"]

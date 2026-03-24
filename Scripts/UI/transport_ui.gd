@@ -1,11 +1,7 @@
 extends Node
 class_name TransportUI
 
-@export var play_pause_button: Button
-
-@export var pointer: Sprite2D
 @export var metronome: Sprite2D
-
 @export var section_loop_toggle: CheckButton
 @export var real_time_audio_recording_progress_bar: ProgressBar
 @export var progress_bar: ProgressBar
@@ -15,22 +11,16 @@ var _slow_beat_timer: float = 0.0
 var progress_bar_value: float = 25.0
 
 
-func _ready() -> void:
-	play_pause_button.pressed.connect(_on_play_pause)
+
 
 func _process(delta: float) -> void:
-	_update_play_pause_button()
-	_update_pointer()
-	_update_metronome(delta)
 
-	_update_progress_bar()
+	# _update_metronome(delta)
 
-func _update_play_pause_button() -> void:
-	play_pause_button.text = "⏸️" if GameState.playing else "▶️"
+	# _update_progress_bar()
 
-func _update_pointer() -> void:
-	if GameState.playing:
-		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
+	pass
+
 
 func _update_metronome(delta: float) -> void:
 	if GameState.playing:
@@ -44,7 +34,3 @@ func _update_metronome(delta: float) -> void:
 func _update_progress_bar() -> void:
 	progress_bar_value = clamp(progress_bar_value, 0.0, 100.0)
 	progress_bar.value = progress_bar_value
-
-func _on_play_pause() -> void:
-	if not play_pause_button.disabled:
-		EventBus.play_pause_toggle_requested.emit()

@@ -7,6 +7,9 @@ class_name BeatRingUI
 @export var outline_beat_textures: Array[Texture2D]
 @export var dot_beat_texture: Texture2D
 
+@export var play_pause_button: Button
+
+@export var pointer: Sprite2D
 
 
 var beat_buttons: Array = [] # 2D array [ring][beat]
@@ -22,7 +25,22 @@ func _ready() -> void:
 	_initialize_sprite_positions()
 	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
-	
+	EventBus.playing_changed.connect(_update_play_pause_button)
+	play_pause_button.pressed.connect(_on_play_pause_toggled)
+
+func _process(_delta: float) -> void:
+	_update_pointer()
+
+func _update_pointer() -> void:
+	if GameState.playing:
+		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
+
+func _on_play_pause_toggled() -> void:
+	if not play_pause_button.disabled:
+		EventBus.play_pause_toggle_requested.emit()
+
+func _update_play_pause_button(is_playing: bool) -> void:
+	play_pause_button.text = "⏸️" if is_playing else "▶️"
 
 func _on_beat_triggered(track: int, beat: int):
 	_update_beat_sprites(track, beat)

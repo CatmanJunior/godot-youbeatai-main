@@ -484,16 +484,11 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 	var text: String = tutorial_steps[instruction_index]["instruction"]
 	var clean_text: String = gameManager.text_without_emoticons(text)
 
-	var voices: PackedStringArray = DisplayServer.tts_get_voices_for_language("nl")
-	if voices.size() == 0:
-		voices = DisplayServer.tts_get_voices_for_language("en")
-	if DisplayServer.tts_is_speaking():
-		DisplayServer.tts_stop()
 	if _increased_speed:
 		print("Increase the speed")
-		DisplayServer.tts_speak(clean_text, voices[0], 100, 1.0, 2.5)
+		TTSHelper.speak(clean_text, 2.5)
 	else:
-		DisplayServer.tts_speak(clean_text, voices[0], 100)
+		TTSHelper.speak(clean_text)
 
 
 func _skip_play() -> bool:

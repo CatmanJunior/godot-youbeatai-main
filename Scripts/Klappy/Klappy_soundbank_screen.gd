@@ -8,12 +8,7 @@ func _ready() -> void:
 	speak()
 
 func speak():
-	var voices = DisplayServer.tts_get_voices_for_language("nl")
-	if voices.size() == 0:
-		voices = DisplayServer.tts_get_voices_for_language("en")
-	if(voices.size() == 0): voices = DisplayServer.tts_get_voices_for_language("en")
-	if(DisplayServer.tts_is_speaking()):DisplayServer.tts_stop()
-	DisplayServer.tts_speak(message,voices[0],100)
+	TTSHelper.speak(message)
 
 func _process(_delta: float) -> void:
 	if not DisplayServer.tts_is_speaking():

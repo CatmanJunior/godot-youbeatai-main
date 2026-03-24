@@ -3,7 +3,7 @@ class_name ChaosPadUI
 
 @export var corners: Array[Control] = []
 @export var chaos_pad_triangle_sprite: TextureRect
-@export var knob: TextureRect
+@export var knob: Sprite2D
 
 # Icons
 @export var main_icons: Array[Texture2D] = [] # 4 for rings
@@ -25,7 +25,7 @@ var outer_triangle_size: float = 60.0
 
 func start_triangle_color_change(color_index: int, duration: float):
 	var tween = create_tween()
-	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", %Colors.colors[color_index], duration)
+	tween.tween_property(chaos_pad_triangle_sprite, "self_modulate", GameState.colors[color_index], duration)
 
 func update_track_icons(track_index: int):
 	if track_index < GameState.sections[0].SAMPLE_TRACKS_PER_SECTION:

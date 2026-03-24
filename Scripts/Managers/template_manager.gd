@@ -83,3 +83,5 @@ func _set_template(template_index: int):
 func _toggle_show_template():
 	show_template = !show_template
 
+
+

@@ -109,3 +109,6 @@ signal ring_key_pressed(ring: int)
 # ── Recording UI ──
 ## Emitted to disable/enable buttons during recording workflows
 signal buttons_disabled_requested(disabled: bool)
+
+
+signal export_button_pressed(mode_export_song: bool)

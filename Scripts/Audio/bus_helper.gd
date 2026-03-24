@@ -1,6 +1,19 @@
 class_name BusHelper
 
+
+static func save_layout() -> void:
+    var layout = AudioServer.generate_bus_layout()
+    var path = "user://runtime_bus_layout.tres"
+    var result = ResourceSaver.save(layout, path)
+
+    if result == OK:
+        print("Runtime bus layout saved to: %s" % path)
+        print("Full path: %s" % ProjectSettings.globalize_path(path))
+    else:
+        push_error("Failed to save layout. Error: %d" % result)
+
 static func create_bus(bus_name: String, send_to: String) -> int:
+    
     var existing := AudioServer.get_bus_index(bus_name)
     if existing != -1:
         return existing

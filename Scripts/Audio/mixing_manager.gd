@@ -19,8 +19,7 @@ var song_mixing_knob_position: Vector2
 # Reference to layer manager for SectionData access
 var layer_manager: Node
 
-# Reference to chaos pad UI
-@onready var chaos_pad_ui: Node = get_node("../../UiManager/ChaosPadUi")
+@export var chaos_pad_ui: ChaosPadUI
 
 func _ready():
 	song_mixing_knob_position = chaos_pad_ui.chaos_pad_triangle_sprite.position if chaos_pad_ui and chaos_pad_ui.chaos_pad_triangle_sprite else Vector2.ZERO

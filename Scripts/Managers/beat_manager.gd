@@ -27,8 +27,7 @@ var colors: Array[Color] = []
 func _ready():
 	GameState.current_section = SectionData.new(beats_amount)
 	
-	colors = %Colors.colors.duplicate()
-
+	colors = GameState.colors
 	# Connect to EventBus
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_triggered.connect(_on_beat_triggered)

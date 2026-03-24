@@ -22,6 +22,7 @@ var emoji_prompt_cancel_button: Button
 var copy_paste_clear_button_holder_time_since_activation: float = 0.0
 
 func _ready():
+	print("SectionUI ready")
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.section_switched.connect(_on_switch_section)
@@ -76,6 +77,7 @@ func _on_emoji_button_pressed(emoji: String):
 	EventBus.add_section_requested.emit(emoji)
 
 func _on_section_added(new_section_index: int, emoji: String) -> void:
+	print("Section added at index %d with emoji %s" % [new_section_index, emoji])
 	_add_section_button(new_section_index, emoji)
 	_update_section_ui()
 
@@ -186,3 +188,5 @@ func _play_extra_sfx() -> void:
 func _on_switch_section(_old_section: SectionData, _new_section: SectionData) -> void:
 	_update_section_ui()
 	set_copy_paste_clear_buttons_active(true)
+	var i = _new_section.index
+	copy_paste_clear_buttons_holder.global_position.x = section_buttons[i].global_position.x 

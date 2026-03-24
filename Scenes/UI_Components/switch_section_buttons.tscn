@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://d22yi3f65pq4g"]
 
 [ext_resource type="Script" uid="uid://cc7u261da7fff" path="res://Scripts/UI/section_ui.gd" id="1_3bcou"]
-[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/layerButtonPrefab.tscn" id="2_3b4f3"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_mka03"]
 [ext_resource type="PackedScene" uid="uid://ckwwv0pdx8e2c" path="res://Scenes/UI_Components/addLayerButtonPrefab.tscn" id="3_3b4f3"]
 [ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="5_8duxt"]
@@ -59,7 +58,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3bcou")
-section_button_prefab = ExtResource("2_3b4f3")
+section_button_prefab = ExtResource("3_3b4f3")
 section_buttons_container = NodePath("SwitchLayerButtonsContainer")
 add_section_button = NodePath("CopyPasteClearButtons/AddLayerButton")
 clear_section_button = NodePath("CopyPasteClearButtons/ClearLayerButton")
@@ -72,9 +71,9 @@ song_recording_progress_bar = NodePath("RealTimeAudioRecordingProgressBar")
 [node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="." unique_id=179776166]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.3109375
+anchor_left = 0.19609375
 anchor_top = 0.8333333
-anchor_right = 0.3109375
+anchor_right = 0.19609375
 anchor_bottom = 0.8333333
 offset_left = -32.0
 offset_top = -380.0
@@ -87,11 +86,7 @@ theme_override_constants/separation = 12
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="layerButton2" parent="SwitchLayerButtonsContainer" unique_id=1555544334 instance=ExtResource("3_3b4f3")]
-layout_mode = 2
-
 [node name="CopyPasteClearButtons" type="Control" parent="." unique_id=2032541506]
-visible = false
 anchors_preset = 0
 offset_left = 215.0
 offset_top = 101.45422

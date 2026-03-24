@@ -27,6 +27,7 @@ func _ready() -> void:
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)
 
+func _process(_delta: float) -> void:
 	spawn_initial_sections()
 
 func spawn_initial_sections():
@@ -58,10 +59,12 @@ func add_section(section: int, emoji: String = ""):
 	current_section = new_section
 
 	# Notify other managers about new section via EventBus
+	print("Section added at index %d with emoji %s" % [section, emoji])
+	GameState.sections = sections
 	EventBus.section_added.emit(section, emoji)
 	EventBus.section_switched.emit(old_section, current_section)
 
-	GameState.sections = sections
+
 
 func _on_add_section_requested(emoji: String):
 	add_section(sections.size(), emoji)

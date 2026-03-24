@@ -1,7 +1,8 @@
 extends Node
 
 @export var achievement_panel:Panel
-var instruction_label:Label
+
+@export var instruction_label:Label
 
 func _ready() -> void:
 	if not GameState.tutorialActivated:

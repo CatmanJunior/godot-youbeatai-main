@@ -117,7 +117,7 @@ func _on_section_changed(_old_section: SectionData, section: SectionData) -> voi
 # ── Convenience accessors ────────────────────────────────────────────────────
 
 
-func get_beat(track: int, beat: int) -> bool:
+func is_beat_active(track: int, beat: int) -> bool:
 	if current_section:
 		return current_section.get_beat(track, beat)
 	return false

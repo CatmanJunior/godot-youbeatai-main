@@ -11,11 +11,11 @@
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="10_t1q83"]
 [ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="11_ylsbi"]
 [ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="12_ceghn"]
+[ext_resource type="PackedScene" uid="uid://chblk160rw0iy" path="res://Scenes/Prefab/BeatButton.tscn" id="12_f6rfp"]
 [ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="13_3h4bx"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="19_7t1gx"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="19_mlc13"]
-[ext_resource type="PackedScene" uid="uid://cqsvcw13b83yp" path="res://Scenes/Prefab/beat.tscn" id="20_mfvrx"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="21_ilwxp"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="22_hpc6h"]
@@ -29,14 +29,13 @@
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="27_0wopu"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
-[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="28_1tvlp"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="28_1tvlp"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="28_na2ur"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="28_v2nl5"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="29_rlvdk"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
-[ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="30_t6wb6"]
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/UI_Components/blocker.tscn" id="32_aa8k8"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
@@ -68,14 +67,15 @@
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="66_vxl7x"]
-[ext_resource type="Script" uid="uid://bx801a1b0kfin" path="res://Scripts/Buttons/song_select_button.gd" id="73_b4xsn"]
 [ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="80_55idt"]
 [ext_resource type="Shader" uid="uid://b6ylrcyr2mrhf" path="res://Shaders/FillCircle.gdshader" id="80_k8rh3"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="84_6h1fc"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="84_33qc4"]
-[ext_resource type="Script" uid="uid://dp4jos1u8tmxv" path="res://Scripts/Buttons/open_settings_button.gd" id="89_fnc5k"]
 [ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/Klappy_components/klappy_light_pad.tscn" id="92_p4gyq"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
+buffer_length = 0.1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -86,9 +86,6 @@ corner_radius_bottom_left = 4
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
-[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
-buffer_length = 0.1
-
 [sub_resource type="BoxMesh" id="BoxMesh_55idt"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
@@ -98,6 +95,15 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
 font_size = 80
+
+[sub_resource type="GDScript" id="GDScript_pfx1i"]
+script/source = "extends Button
+
+func _ready():
+    pressed.connect(_on_pressed)
+
+func _on_pressed():
+    EventBus.toggle_settings_menu_requested.emit()"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_55idt"]
 shader = ExtResource("80_k8rh3")
@@ -171,149 +177,6 @@ scale = Vector2(4.12, 1)
 [node name="AudioListener" type="AudioListener2D" parent="Camera" unique_id=394841198]
 current = true
 
-[node name="BeatRingPivotPoint" type="Node2D" parent="." unique_id=1788954561]
-position = Vector2(-111, 46)
-
-[node name="PlayPauseButtonHolder" type="Node2D" parent="BeatRingPivotPoint" unique_id=1218338913]
-
-[node name="PlayPauseButton" type="Button" parent="BeatRingPivotPoint/PlayPauseButtonHolder" unique_id=1256408352]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -30.0
-offset_top = -30.0
-offset_right = 30.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme = ExtResource("22_hpc6h")
-theme_override_font_sizes/font_size = 34
-text = "⏯️
-"
-flat = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton" unique_id=342552779]
-visible = false
-show_behind_parent = true
-z_index = -1
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -35.0
-offset_top = -35.0
-offset_right = 35.0
-offset_bottom = 35.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
-metadata/_edit_use_anchors_ = true
-
-[node name="Cross" type="Node2D" parent="BeatRingPivotPoint" unique_id=781759132]
-
-[node name="Vertical" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=435981051]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=223380223]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 1.5708
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Vertical2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=1476426228]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal2" type="Sprite2D" parent="BeatRingPivotPoint/Cross" unique_id=2075784006]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = -0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="BigLine0" type="Line2D" parent="BeatRingPivotPoint" unique_id=464924114]
-closed = true
-width = 4.0
-antialiased = true
-
-[node name="TextureProgressBar0" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=2099137744]
-offset_left = -265.0
-offset_top = -267.0
-offset_right = 247.0
-offset_bottom = 245.0
-scale = Vector2(1.05, 1.05)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("19_mlc13")
-tint_progress = Color(1, 1, 0, 1)
-metadata/_edit_lock_ = true
-
-[node name="BigLine1" type="Line2D" parent="BeatRingPivotPoint" unique_id=1283858942]
-closed = true
-width = 5.0
-antialiased = true
-
-[node name="TextureProgressBar1" type="TextureProgressBar" parent="BeatRingPivotPoint" unique_id=1638263083]
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(256, 256)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("19_mlc13")
-tint_progress = Color(0.516666, 0, 1, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="Pointer" type="Sprite2D" parent="BeatRingPivotPoint" unique_id=319541856]
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(0.6, 0.85)
-offset = Vector2(0, -150)
-
-[node name="PointLight2D" type="PointLight2D" parent="BeatRingPivotPoint/Pointer" unique_id=1786868768]
-color = Color(1, 1, 0.698039, 1)
-energy = 4.71
-range_z_max = 100
-texture = ExtResource("26_7k868")
-offset = Vector2(0, -150)
-
-[node name="BeatParticleSystem" type="CPUParticles2D" parent="BeatRingPivotPoint" unique_id=1172764783]
-z_index = 2
-emitting = false
-amount = 128
-emission_shape = 2
-emission_sphere_radius = 16.0
-direction = Vector2(0, 0)
-spread = 90.0
-gravity = Vector2(0, 100)
-initial_velocity_min = 67.42
-initial_velocity_max = 67.42
-angular_velocity_max = 8.8
-angle_min = 45.0
-angle_max = 90.0
-scale_amount_min = 8.0
-scale_amount_max = 12.0
-hue_variation_max = 0.55
-
 [node name="Managers" type="Node" parent="." unique_id=205411252]
 
 [node name="GameManager" type="Node" parent="Managers" unique_id=874834820]
@@ -356,27 +219,39 @@ playback_type = 1
 unique_name_in_owner = true
 script = ExtResource("12_ceghn")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chaos_pad_ui", "transport_ui")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "song_select_button", "cross", "chosen_emoticons_label", "instruction_panel", "chaos_pad_ui", "transport_ui", "settings_ui")]
 unique_name_in_owner = true
 script = ExtResource("13_3h4bx")
 section_ui = NodePath("../../SwitchSectionButtons")
-chaos_pad_ui = NodePath("")
+song_select_button = NodePath("../../UserInterface/Buttons/SongSelectButton/Button")
+cross = NodePath("../../UserInterface/BeatRingPivotPoint/Cross")
+chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
+instruction_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
+chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
 transport_ui = NodePath("TransportUi")
+settings_ui = NodePath("../../UserInterface/SettingsPanel")
 
-[node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=1776851779]
+[node name="BeatRingUi" type="Node" parent="Managers/UiManager" unique_id=1776851779 node_paths=PackedStringArray("beat_ring_pivot_point")]
 script = ExtResource("19_7t1gx")
-sprite_prefab = ExtResource("20_mfvrx")
+sprite_prefab = ExtResource("12_f6rfp")
+beat_ring_pivot_point = NodePath("../../../UserInterface/BeatRingPivotPoint")
 filled_beat_textures = Array[Texture2D]([ExtResource("21_ilwxp"), ExtResource("22_xjjvj"), ExtResource("23_jab21"), ExtResource("24_8dylv")])
 outline_beat_textures = Array[Texture2D]([ExtResource("25_qv1an"), ExtResource("26_ja2pg"), ExtResource("27_0wopu"), ExtResource("28_na2ur")])
 dot_beat_texture = ExtResource("29_rlvdk")
 
-[node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=620800697]
+[node name="TransportUi" type="Node" parent="Managers/UiManager" unique_id=620800697 node_paths=PackedStringArray("play_pause_button", "pointer", "metronome", "section_loop_toggle", "real_time_audio_recording_progress_bar", "progress_bar")]
 script = ExtResource("46_odn5n")
+play_pause_button = NodePath("../../../UserInterface/BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton")
+pointer = NodePath("../../../UserInterface/BeatRingPivotPoint/Pointer")
+metronome = NodePath("../../../UserInterface/metronome")
+section_loop_toggle = NodePath("../../../UserInterface/LayerLoopToggle")
+real_time_audio_recording_progress_bar = NodePath("../../SongVoiceOver/SongVoiceOverProgressBar")
+progress_bar = NodePath("../../../UserInterface/Robot/ProgressBar")
 
 [node name="TrackWaveformVisualizer" type="Node" parent="Managers/UiManager" unique_id=1928051775 node_paths=PackedStringArray("progress_bars", "waveform_lines")]
 script = ExtResource("48_gf7g1")
-progress_bars = [null, null]
-waveform_lines = [null, null]
+progress_bars = [NodePath("../../../UserInterface/BeatRingPivotPoint/TextureProgressBar0"), NodePath("../../../UserInterface/BeatRingPivotPoint/TextureProgressBar1")]
+waveform_lines = [NodePath("../../../UserInterface/BeatRingPivotPoint/BigLine0"), NodePath("../../../UserInterface/BeatRingPivotPoint/BigLine1")]
 
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]
 
@@ -392,9 +267,10 @@ script = ExtResource("49_102yd")
 
 [node name="ReverbDelayManager" type="Node" parent="Managers/AudioManagers" unique_id=1472393777]
 
-[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=841610021]
+[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=841610021 node_paths=PackedStringArray("chaos_pad_ui")]
 unique_name_in_owner = true
 script = ExtResource("50_rtmaq")
+chaos_pad_ui = NodePath("../../../UserInterface/ChaosPad")
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/AudioManagers" unique_id=904688926]
 unique_name_in_owner = true
@@ -475,13 +351,167 @@ layout_mode = 3
 anchors_preset = 0
 metadata/_edit_use_anchors_ = true
 
+[node name="BeatRingPivotPoint" type="Control" parent="UserInterface" unique_id=1789842302]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayPauseButtonHolder" type="Node2D" parent="UserInterface/BeatRingPivotPoint" unique_id=1218338913]
+
+[node name="PlayPauseButton" type="Button" parent="UserInterface/BeatRingPivotPoint/PlayPauseButtonHolder" unique_id=1256408352]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme = ExtResource("22_hpc6h")
+theme_override_font_sizes/font_size = 34
+text = "⏯️
+"
+flat = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Panel" type="Panel" parent="UserInterface/BeatRingPivotPoint/PlayPauseButtonHolder/PlayPauseButton" unique_id=342552779]
+visible = false
+show_behind_parent = true
+z_index = -1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Cross" type="Node2D" parent="UserInterface/BeatRingPivotPoint" unique_id=781759132]
+
+[node name="Vertical" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=435981051]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=223380223]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 1.5708
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Vertical2" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=1476426228]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = 0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="Horizontal2" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint/Cross" unique_id=2075784006]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+rotation = -0.785398
+scale = Vector2(4, 484)
+texture = SubResource("CanvasTexture_b5jd4")
+
+[node name="BigLine0" type="Line2D" parent="UserInterface/BeatRingPivotPoint" unique_id=464924114]
+closed = true
+width = 4.0
+antialiased = true
+
+[node name="TextureProgressBar0" type="TextureProgressBar" parent="UserInterface/BeatRingPivotPoint" unique_id=2099137744]
+layout_mode = 0
+offset_left = -265.0
+offset_top = -267.0
+offset_right = 247.0
+offset_bottom = 245.0
+scale = Vector2(1.05, 1.05)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("19_mlc13")
+tint_progress = Color(1, 1, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="BigLine1" type="Line2D" parent="UserInterface/BeatRingPivotPoint" unique_id=1283858942]
+closed = true
+width = 5.0
+antialiased = true
+
+[node name="TextureProgressBar1" type="TextureProgressBar" parent="UserInterface/BeatRingPivotPoint" unique_id=1638263083]
+layout_mode = 0
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(256, 256)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("19_mlc13")
+tint_progress = Color(0.516666, 0, 1, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Pointer" type="Sprite2D" parent="UserInterface/BeatRingPivotPoint" unique_id=319541856]
+modulate = Color(0.78, 0.78, 0.78, 1)
+z_index = -1
+scale = Vector2(0.6, 0.85)
+offset = Vector2(0, -150)
+
+[node name="PointLight2D" type="PointLight2D" parent="UserInterface/BeatRingPivotPoint/Pointer" unique_id=1786868768]
+color = Color(1, 1, 0.698039, 1)
+energy = 4.71
+range_z_max = 100
+texture = ExtResource("26_7k868")
+offset = Vector2(0, -150)
+
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="UserInterface/BeatRingPivotPoint" unique_id=1172764783]
+z_index = 2
+emitting = false
+amount = 128
+emission_shape = 2
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 90.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+scale_amount_min = 8.0
+scale_amount_max = 12.0
+hue_variation_max = 0.55
+
 [node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
 layout_mode = 1
-offset_left = 582.0
-offset_top = -81.0
-offset_right = 582.0
-offset_bottom = -81.0
-rotation = 3.1415927
+anchors_preset = -1
+anchor_top = 0.0
+offset_left = 306.0
+offset_top = -341.0
+offset_right = 306.0
+offset_bottom = -341.0
+scale = Vector2(0.505, 0.505)
 
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
@@ -551,9 +581,6 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.8518367, 1.8518367)
 focus_mode = 0
-script = ExtResource("73_b4xsn")
-filled_song_texture = ExtResource("30_t6wb6")
-outline_song_texture = ExtResource("66_vxl7x")
 metadata/_edit_use_anchors_ = true
 
 [node name="OutlineSprite" type="Sprite2D" parent="UserInterface/Buttons/SongSelectButton" unique_id=889015169]
@@ -896,7 +923,7 @@ focus_mode = 0
 theme = ExtResource("22_hpc6h")
 theme_override_font_sizes/font_size = 25
 text = "⚙"
-script = ExtResource("89_fnc5k")
+script = SubResource("GDScript_pfx1i")
 metadata/_edit_use_anchors_ = true
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=1609891462 instance=ExtResource("90_658pa")]
@@ -1091,14 +1118,9 @@ angle_min = 45.0
 angle_max = 90.0
 hue_variation_max = 0.55
 
-[node name="UI" type="Control" parent="UserInterface" unique_id=1017992247]
-anchors_preset = 0
-offset_left = -640.0
-offset_top = -356.0
-offset_right = 642.0
-offset_bottom = 362.0
-
-[node name="KlappyReaction" parent="." unique_id=1521628326 instance=ExtResource("47_s8vy0")]
+[node name="KlappyReaction" parent="." unique_id=1521628326 node_paths=PackedStringArray("achievement_panel", "instruction_label") instance=ExtResource("47_s8vy0")]
+achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
+instruction_label = NodePath("../UserInterface/Robot/AchievementsPanel/InstructionLabel")
 
 [node name="Unlock Achievements" type="Button" parent="." unique_id=1519070133]
 visible = false
@@ -1114,19 +1136,34 @@ position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("84_6h1fc")
 
-[node name="KlappyLightPad" parent="." unique_id=1982735639 node_paths=PackedStringArray("klappyLight", "KlappyEnergy") instance=ExtResource("92_p4gyq")]
+[node name="KlappyLightPad" parent="." unique_id=1982735639 node_paths=PackedStringArray("klappyLight", "KlappyEnergy", "instruction_label", "achievement_panel") instance=ExtResource("92_p4gyq")]
 offset_left = 360.0
 offset_top = 21.0
 offset_right = 460.0
 offset_bottom = 121.0
 klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
 KlappyEnergy = NodePath("../UserInterface/Robot/ProgressBar")
+instruction_label = NodePath("../UserInterface/Robot/AchievementsPanel/InstructionLabel")
+achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
 
 [node name="SwitchSectionButtons" parent="." unique_id=1068760052 instance=ExtResource("49_v2nl5")]
 offset_left = -257.0
 offset_top = 57.0
 offset_right = -257.0
 offset_bottom = 57.0
+
+[node name="CopyPasteClearButtons" parent="SwitchSectionButtons" index="1" unique_id=2032541506]
+visible = false
+offset_left = 2.0
+offset_top = -349.0
+offset_right = 2.0
+offset_bottom = -349.0
+
+[node name="EmojiPrompt" parent="SwitchSectionButtons" index="3" unique_id=569761149]
+offset_left = -1002.0
+offset_top = -605.0
+offset_right = -554.0
+offset_bottom = -415.0
 
 [connection signal="value_changed" from="UserInterface/Robot/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]
@@ -1136,3 +1173,4 @@ offset_bottom = 57.0
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/Robot/AchievementsPanel"]
+[editable path="SwitchSectionButtons"]

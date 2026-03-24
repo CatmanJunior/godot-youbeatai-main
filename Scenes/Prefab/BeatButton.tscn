@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://chblk160rw0iy"]
+
+[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="1_40pej"]
+[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="2_c86x6"]
+[ext_resource type="Script" uid="uid://b1g7nwjqognfg" path="res://Scenes/Prefab/beat_button.gd" id="3_r17hn"]
+
+[node name="BeatButton" type="TextureButton" unique_id=1956853531]
+offset_left = -44.0
+offset_top = -47.0
+offset_right = 43.0
+offset_bottom = 42.0
+toggle_mode = true
+texture_normal = ExtResource("1_40pej")
+texture_pressed = ExtResource("2_c86x6")
+script = ExtResource("3_r17hn")

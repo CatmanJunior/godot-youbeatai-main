@@ -20,7 +20,7 @@ config/features=PackedStringArray("4.6", "Mobile")
 
 [audio]
 
-buses/default_bus_layout="uid://cbsvq6wm8s4ny"
+buses/default_bus_layout="uid://cc7g4ekfye5tq"
 general/text_to_speech=true
 driver/enable_input=true
 

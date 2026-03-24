@@ -261,14 +261,7 @@ func _speak_tooltip(index: int):
 	var achievements := _get_achievements()
 	if index < 0 or index >= achievements.size():
 		return
-	var voices := DisplayServer.tts_get_voices_for_language("nl")
-	if voices.is_empty():
-		voices = DisplayServer.tts_get_voices_for_language("en")
-	if voices.is_empty():
-		return
-	if DisplayServer.tts_is_speaking():
-		DisplayServer.tts_stop()
-	DisplayServer.tts_speak(_extract_emoticons(achievements[index].tooltip), voices[0], 100)
+	TTSHelper.speak(_extract_emoticons(achievements[index].tooltip))
 
 
 func _extract_emoticons(input: String) -> String:

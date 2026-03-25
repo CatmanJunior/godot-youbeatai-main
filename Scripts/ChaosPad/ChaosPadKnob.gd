@@ -1,55 +1,59 @@
-extends Sprite2D
-@export var corners: Array[Control] = [] # left, top, right
-@export var chaos_pad_ui: ChaosPadUI
-var outer_triangle_size: float = 60.0
+extends Control
+class_name ChaosPadKnob
+const DRAG_THRESHOLD := 6.0
 
-var dragging: bool = false
-var drag_offset: Vector2 = Vector2.ZERO
+# How far outside the triangle edges the knob can travel (matches ChaosPadKnob)
+@export var outer_triangle_size: float = 60.0
 
-var mixing_manager: Node
+var _dragging := false
+var _mouse_down := false
+var _press_pos := Vector2.ZERO
 
-func _ready():
-	pass
+@onready var container: TriangleContainer = get_parent()
 
+func _ready() -> void:
+	mouse_filter = Control.MOUSE_FILTER_STOP
 
+func _gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_mouse_down = true
+			_press_pos = get_global_mouse_position()
+		else:
+			if _dragging:
+				accept_event()
+			_dragging = false
+			_mouse_down = false
 
+	elif event is InputEventMouseMotion and _mouse_down:
+		var delta := get_global_mouse_position() - _press_pos
+		if not _dragging and delta.length() > DRAG_THRESHOLD:
+			_dragging = true
+		if _dragging:
+			accept_event()
+			_move_handle_constrained()
 
-func _get_corner_positions() -> Array[Vector2]:
-	var positions: Array[Vector2] = []
-	for c in corners:
-		positions.append(c.global_position)
-	return positions
+func _move_handle_constrained() -> void:
+	var local_mouse := container.get_local_mouse_position()
 
+	# Build local-space corner array for the calculator
+	var tri := container.tri
+	var corners: Array[Vector2] = [tri[0], tri[1], tri[2]]
 
-func _input(input_event: InputEvent) -> void:
+	var clamped := ChaosPadCalculator.clamp_to_triangle_area(
+		local_mouse,
+		corners,
+		outer_triangle_size
+	)
 
+	position = clamped - size / 2.0
+	_get_weights_and_emit()
 
-	if input_event is InputEventMouseMotion and dragging:
-		var mouse_motion_event = input_event as InputEventMouseMotion
-		var new_pos = mouse_motion_event.position + drag_offset
-		var max_dist: float = chaos_pad_ui.outer_triangle_size
-		var pos = ChaosPadCalculator.clamp_to_triangle_area(new_pos, _get_corner_positions(), max_dist)
-		global_position = pos
-		# Emit dragging data via EventBus
-		var result = ChaosPadCalculator.calc_weights(global_position, _get_corner_positions(), outer_triangle_size)
-		EventBus.chaos_pad_dragging.emit(global_position, result.master_volume, result.weights)
+func _get_weights_and_emit() -> void:
+	var local_pos := container.get_local_mouse_position()
+	var tri := container.tri
+	var corners: Array[Vector2] = [tri[0], tri[1], tri[2]]
 
-	if input_event is not InputEventMouseButton:
-		return
-
-	var mouse_button_event = input_event as InputEventMouseButton
-	if mouse_button_event.button_index != MOUSE_BUTTON_LEFT:
-		return
-
-	var chaospad_opaque = chaos_pad_ui.chaos_pad_triangle_sprite.is_pixel_opaque(chaos_pad_ui.chaos_pad_triangle_sprite.get_local_mouse_position())
-	var knob_opaque = is_pixel_opaque(get_local_mouse_position())
-	if mouse_button_event.pressed:
-		if knob_opaque or chaospad_opaque:
-			dragging = true
-			drag_offset = global_position - mouse_button_event.position
-	else:
-		dragging = false
-		if knob_opaque or chaospad_opaque:
-			var result = ChaosPadCalculator.calc_weights(global_position, _get_corner_positions(), outer_triangle_size)
-			EventBus.chaos_pad_released.emit(result.master_volume, result.weights)
-			EventBus.mixing_weights_changed.emit(result.master_volume, result.weights)
+	var result = ChaosPadCalculator.calc_weights(local_pos, corners, outer_triangle_size)
+	# EventBus.chaos_pad_dragging.emit(local_pos, result.master_volume, result.weights)
+	EventBus.mixing_weights_changed.emit(result.master_volume, result.weights)

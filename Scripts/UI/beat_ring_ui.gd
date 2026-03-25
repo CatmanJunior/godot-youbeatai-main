@@ -1,19 +1,16 @@
 extends Node
 class_name BeatRingUI
 
-@export var sprite_prefab: PackedScene
+@export var beat_button_prefab: PackedScene
 @export var beat_ring_pivot_point: Control
-@export var filled_beat_textures: Array[Texture2D]
-@export var outline_beat_textures: Array[Texture2D]
-@export var dot_beat_texture: Texture2D
+@export var track_settings: TrackSettingsRegistry
+
 
 @export var play_pause_button: Button
 
 @export var pointer: Sprite2D
 
-
 var beat_buttons: Array = [] # 2D array [ring][beat]
-var template_sprites: Array = [] # 2D array [ring][beat]
 
 # Private state – sprite scale factors
 var _beat_scale_32: float = 1.0
@@ -22,7 +19,7 @@ var _beat_scale_8: float = 1.6
 var _global_beat_sprite_scale_factor: float = 0.28
 
 func _ready() -> void:
-	_initialize_sprite_positions()
+	_init_beat_but_positions()
 	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.playing_changed.connect(_update_play_pause_button)
@@ -42,30 +39,41 @@ func _on_play_pause_toggled() -> void:
 func _update_play_pause_button(is_playing: bool) -> void:
 	play_pause_button.text = "⏸️" if is_playing else "▶️"
 
-func _on_beat_triggered(track: int, beat: int):
-	_update_beat_sprites(track, beat)
+func _on_beat_triggered(beat: int):
+	_update_beat_sprites(beat)
 
 func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
 	_reset_scales()
 
-func _initialize_sprite_positions() -> void:
+func _init_beat_but_positions() -> void:
 	var beats_amount = GameState.total_beats
 
 	beat_buttons = []
 	for ring in range(4):
 		beat_buttons.append([])
 		for beat in range(beats_amount):
-			var sprite = _create_sprite(beat, ring, beats_amount)
-			beat_ring_pivot_point.add_child(sprite)
-			beat_buttons[ring].append(sprite)
+			var beat_button = _create_sprite(beat, ring, beats_amount)
+			beat_buttons[ring].append(beat_button)
 
-	# template_sprites = []
-	# for ring in range(4):
-	# 	template_sprites.append([])
-	# 	for beat in range(beats_amount):
-	# 		var sprite = _create_template_sprite(beat, ring, beats_amount)
-	# 		beat_ring_pivot_point.add_child(sprite)
-	# 		template_sprites[ring].append(sprite)
+func _create_sprite(beat: int, ring: int, beats_amount: int) -> BeatButton:
+	var s := track_settings.get_sample_track(ring)
+	var tex_outline := s.beat_outline_texture
+	var tex_filled  := s.beat_filled_texture
+
+	var beat_but: BeatButton = beat_button_prefab.instantiate() as BeatButton
+	beat_but.init(beat, ring, tex_outline, tex_filled)
+
+	beat_ring_pivot_point.add_child(beat_but)
+
+	var scale_factor = _scale_factor_for_beats_amount(beats_amount)
+	beat_but.scale = Vector2.ONE * scale_factor * _global_beat_sprite_scale_factor
+
+	# Offset position so the visual center lands on the ring point
+	beat_but.pivot_offset = beat_but.size / 2.0
+	beat_but.position = _sprite_position(beat, ring, beats_amount) - beat_but.size / 2.0
+	beat_but.rotation = _sprite_rotation(beat, ring, beats_amount)
+
+	return beat_but
 
 func _scale_factor_for_beats_amount(beats_amount: int) -> float:
 	if beats_amount == 32:
@@ -90,63 +98,35 @@ func _sprite_position(beat: int, ring: int, beats_amount: int) -> Vector2:
 func _sprite_rotation(beat: int, _ring: int, beats_amount: int) -> float:
 	return PI * 2.0 * beat / beats_amount
 
-func _create_sprite(beat: int, ring: int, beats_amount: int) -> BeatButton:
-	var beat_but: BeatButton = sprite_prefab.instantiate() as BeatButton
-	beat_but.init(beat, ring, outline_beat_textures[ring], filled_beat_textures[ring])
-
-	var scale_factor = _scale_factor_for_beats_amount(beats_amount)
-	beat_but.scale = Vector2.ONE * scale_factor * _global_beat_sprite_scale_factor
-
-	# Offset position so the visual center lands on the ring point
-	beat_but.position = _sprite_position(beat, ring, beats_amount) - (beat_but.size * scale_factor * _global_beat_sprite_scale_factor) / 2.0
-	beat_but.rotation = _sprite_rotation(beat, ring, beats_amount)
-	beat_but.pivot_offset_ratio = Vector2(0.5, 0.5) * beat_but.scale
-
-	return beat_but
 
 func _create_template_sprite(beat: int, ring: int, beats_amount: int) -> Sprite2D:
 	var sprite = Sprite2D.new()
 	sprite.position = _sprite_position(beat, ring, beats_amount)
 	sprite.rotation = _sprite_rotation(beat, ring, beats_amount)
-	sprite.texture = dot_beat_texture
 	sprite.modulate = Color(0, 0, 0, 1)
 	return sprite
 
 
-func _update_beat_sprites(_track: int, _beat: int) -> void:
+func _update_beat_sprites(current_beat: int) -> void:
 	var beats_amount = GameState.total_beats
 
 	for ring in range(min(4, beat_buttons.size())):
 		for beat in range(min(beats_amount, beat_buttons[ring].size())):
-			var beatButton : BeatButton = beat_buttons[ring][beat] as BeatButton
-			var active : bool = GameState.is_beat_active(ring, beat)
-
-
-			beatButton.set_pressed_no_signal(active)
-			var color = GameState.colors[ring]
+			var active = (beat == current_beat)
+			var beatButton : BeatButton = beat_buttons[ring][beat]
+			
+			var color = track_settings.get_sample_track(ring).track_color
 			if active:
-				color.a = 1.0
 				beatButton.modulate = color
 			else:
 				color = color.lightened(0.75)
 				beatButton.modulate = color
 
-			#TODO do this in process and make it smooth
+			#TODO tween this
 			var scale_factor = _scale_factor_for_beats_amount(beats_amount)
 			if beatButton.scale.x > scale_factor * _global_beat_sprite_scale_factor:
 				var delta = beatButton.scale.x - scale_factor * _global_beat_sprite_scale_factor
 				beatButton.scale -= Vector2.ONE * delta * 0.3
-
-	#todo SHOW TEMPLATE SPRITES BASED ON TEMPLATE MANAGER
-	# Update template sprites
-	# var show_template = false
-	for ring in range(min(4, template_sprites.size())):
-		for beat in range(min(beats_amount, template_sprites[ring].size())):
-			var sprite = template_sprites[ring][beat] as Sprite2D
-			# var template_active = _get_template_active(ring, beat)
-			sprite.modulate = Color(0, 0, 0, 0)
-			# if template_active and show_template:
-				# sprite.modulate = Color(0, 0, 0, 1)
 
 func _get_template_active(ring: int, beat: int) -> bool:
 	var current_actives = %TemplateManager.get_current_actives()

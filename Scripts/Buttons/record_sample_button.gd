@@ -1,5 +1,5 @@
 extends Button
-
+class_name RecordSampleButton
 @export var fillTexture: TextureProgressBar
 
 var toggled_on: bool = false

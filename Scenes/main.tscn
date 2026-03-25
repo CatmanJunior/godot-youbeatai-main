@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="11_ylsbi"]
 [ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="12_ceghn"]
 [ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="13_3h4bx"]
+[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/UI/colors.gd" id="13_6ml46"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="22_hpc6h"]
@@ -22,6 +23,8 @@
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="28_v2nl5"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="30_hpc6h"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="36_qax2n"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="36_y86h7"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="44_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
@@ -215,6 +218,10 @@ script = ExtResource("48_gf7g1")
 progress_bars = [null, null]
 waveform_lines = [null, null]
 
+[node name="Node" type="Node" parent="Managers/UiManager" unique_id=1967191325]
+script = ExtResource("13_6ml46")
+colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.5176471, 0, 1, 1), Color(0.61960787, 0.6117647, 0.89411765, 0.99607843)])
+
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]
 
 [node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1270233026]
@@ -243,9 +250,10 @@ metronome_sfx = ExtResource("9_5vy51")
 metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
 
-[node name="AudioRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("waveform_visualizer")]
+[node name="AudioRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("recording_sample_button", "waveform_visualizer")]
 unique_name_in_owner = true
 script = ExtResource("62_daoo8")
+recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/PointTop/ChaosButtonMic")
 waveform_visualizer = NodePath("../../UiManager/TrackWaveformVisualizer")
 
 [node name="SongVoiceOver" type="Node" parent="Managers" unique_id=1421521907]
@@ -323,6 +331,10 @@ offset_right = 306.0
 offset_bottom = -341.0
 scale = Vector2(0.505, 0.505)
 
+[node name="ChaosButtonMic" parent="UserInterface/ChaosPad/ChaosPadTriangle/PointTop" parent_id_path=PackedInt32Array(2043765558, 400839598) index="0" unique_id=2002827164]
+focus_mode = 0
+script = ExtResource("36_y86h7")
+
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
 offset_left = -615.0
@@ -330,6 +342,7 @@ offset_top = -335.0
 offset_right = -523.0
 offset_bottom = -335.0
 scale = Vector2(0.91453314, 0.91453314)
+track_settings = ExtResource("36_qax2n")
 
 [node name="LayerLoopToggle" type="CheckButton" parent="UserInterface" unique_id=1865417305]
 self_modulate = Color(1, 1, 1, 0)
@@ -857,10 +870,12 @@ hue_variation_max = 0.55
 
 [node name="BeatRing" parent="UserInterface" unique_id=192422746 instance=ExtResource("45_owhal")]
 layout_mode = 1
+anchors_preset = 15
 offset_left = -125.0
 offset_top = 1.0
 offset_right = -125.0
 offset_bottom = 1.0
+track_settings = ExtResource("36_qax2n")
 
 [node name="KlappyReaction" parent="." unique_id=1521628326 node_paths=PackedStringArray("achievement_panel", "instruction_label") instance=ExtResource("47_s8vy0")]
 achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
@@ -914,6 +929,9 @@ offset_bottom = -415.0
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]
 [editable path="Managers/LayerVoiceOver1/synth_line"]
+[editable path="UserInterface/ChaosPad"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/Robot/AchievementsPanel"]

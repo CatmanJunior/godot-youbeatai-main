@@ -1,73 +1,16 @@
 [gd_scene format=3 uid="uid://bqky323kw7oj1"]
 
-[ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/UI/chaos_pad_ui.gd" id="1_43llw"]
+[ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/ChaosPad/chaos_pad_ui.gd" id="1_43llw"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_c7cwa"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="2_7ufgw"]
-[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="2_gu6ag"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="2_a3b2x"]
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/UI_Components/chaos_icon.tscn" id="3_ajioc"]
-[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="3_i83dk"]
-[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="4_66ppk"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
-[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="5_btbfp"]
-[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="6_3f0a6"]
-[ext_resource type="Script" uid="uid://b1vay2y11n5th" path="res://Scripts/UI/play_star_animation.gd" id="6_xr1wk"]
-[ext_resource type="Animation" uid="uid://b68r041wwgdth" path="res://piano_star_animation.res" id="7_1pf8w"]
-[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="7_123v6"]
-[ext_resource type="Animation" uid="uid://sghpmr2f0s0k" path="res://in_between_star_animation.res" id="8_685nt"]
-[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="8_isvop"]
-[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="9_os8df"]
-[ext_resource type="Animation" uid="uid://b0td231pq8k03" path="res://outside_star_animation.res" id="9_pd38u"]
-[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="10_40qe7"]
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="11_6tvyw"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="12_h3tcp"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
-[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="13_unoer"]
-[ext_resource type="Texture2D" uid="uid://6t1cscwpeyrn" path="res://Resources/Textures_New/Icons/_0001s_0009_Robot-test.png" id="14_d86ak"]
-[ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/test_chaos.gd" id="25_gu6ag"]
-[ext_resource type="Script" uid="uid://b8k8klh6scv16" path="res://Scripts/test_knob.gd" id="27_i83dk"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_sstgy"]
-radius = 16.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_kj5vy"]
-radius = 15.297058
-
-[sub_resource type="Animation" id="Animation_j4bys"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Piano/Piano_Star:rotation")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("in_between/in_between_star:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_v6gb7"]
-_data = {
-&"RESET": SubResource("Animation_j4bys"),
-&"in_between_star_animation": ExtResource("8_685nt"),
-&"outside_star_animation": ExtResource("9_pd38u"),
-&"piano_star_animation": ExtResource("7_1pf8w")
-}
+[ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/ChaosPad/ChaosPadKnob.gd" id="22_ds0f1"]
+[ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/ChaosPad/ChaosTriangleContainer.gd" id="25_gu6ag"]
 
 [sub_resource type="GDScript" id="GDScript_43llw"]
 script/source = "extends Button
@@ -89,7 +32,7 @@ func update_button(percentage: float) -> void:
 		fillTexture.value = 1 - percentage
 "
 
-[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("corners", "chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon")]
+[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon")]
 physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 8
@@ -104,127 +47,19 @@ offset_bottom = -360.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_43llw")
-corners = [NodePath("ChaosPadTriangle/PointLeft"), NodePath("ChaosPadTriangle/PointRight"), NodePath("ChaosPadTriangle/PointTop")]
-chaos_pad_triangle_sprite = NodePath("ChaosPadTriangle/Triangle")
-knob = NodePath("ChaosPadTriangle/Knob/KnobSprite")
-main_icons = Array[Texture2D]([ExtResource("2_gu6ag"), ExtResource("3_i83dk"), ExtResource("4_66ppk"), ExtResource("5_btbfp")])
-alt_icons = Array[Texture2D]([ExtResource("6_3f0a6"), ExtResource("7_123v6"), ExtResource("8_isvop"), ExtResource("9_os8df")])
-main_icon_synths = Array[Texture2D]([ExtResource("10_40qe7"), ExtResource("10_40qe7")])
-alt_icon_synths = Array[Texture2D]([ExtResource("11_6tvyw"), ExtResource("12_h3tcp")])
-main_icon_song = ExtResource("13_unoer")
-alt_icon_song = ExtResource("14_d86ak")
+chaos_pad_triangle_sprite = NodePath("ChaosPadTriangle/TriangleSprite")
+knob = NodePath("ChaosPadTriangle/Knob")
+track_settings = ExtResource("2_a3b2x")
 main_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconMain/ChaosIconBack")
 alt_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconAlt/ChaosIconBack")
 
-[node name="MicButtonLocation" type="Node2D" parent="." unique_id=1125788169]
-position = Vector2(133, 48)
-
-[node name="MicLight" type="PointLight2D" parent="MicButtonLocation" unique_id=1165301474]
+[node name="MicLight" type="PointLight2D" parent="." unique_id=1165301474]
+position = Vector2(255, 401.99997)
 scale = Vector2(0.833333, 0.833333)
 color = Color(1, 0.911449, 0.665059, 1)
 energy = 0.0
 texture = ExtResource("1_c7cwa")
 texture_scale = 1.71
-
-[node name="Tutorial_interactpoints" type="Node2D" parent="." unique_id=47462908]
-
-[node name="Piano" type="Node2D" parent="Tutorial_interactpoints" unique_id=184544302]
-position = Vector2(116.00001, 76)
-scale = Vector2(1.5, 1.5)
-
-[node name="Piano" type="Area2D" parent="Tutorial_interactpoints/Piano" unique_id=707280695 node_paths=PackedStringArray("anim_player")]
-scale = Vector2(0.7, 0.7)
-monitoring = false
-monitorable = false
-script = ExtResource("6_xr1wk")
-anim_player = NodePath("../../AnimationPlayer")
-animation_resource = ExtResource("7_1pf8w")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/Piano/Piano" unique_id=1652607334]
-shape = SubResource("CircleShape2D_sstgy")
-
-[node name="Piano_Star" type="Label" parent="Tutorial_interactpoints/Piano" unique_id=1626487380]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -11.0
-offset_top = -8.0
-offset_right = 11.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2, 2)
-pivot_offset = Vector2(9, 6)
-text = "🌟"
-
-[node name="in_between" type="Node2D" parent="Tutorial_interactpoints" unique_id=1890469072]
-position = Vector2(46, -25)
-scale = Vector2(1.3, 1.3)
-
-[node name="in_between" type="Area2D" parent="Tutorial_interactpoints/in_between" unique_id=801257543 node_paths=PackedStringArray("anim_player")]
-scale = Vector2(0.7, 0.7)
-monitoring = false
-monitorable = false
-script = ExtResource("6_xr1wk")
-anim_player = NodePath("../../AnimationPlayer")
-animation_resource = ExtResource("8_685nt")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/in_between/in_between" unique_id=934587406]
-shape = SubResource("CircleShape2D_kj5vy")
-
-[node name="in_between_star" type="Label" parent="Tutorial_interactpoints/in_between" unique_id=1876185264]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -11.0
-offset_top = -8.0
-offset_right = 11.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2, 2)
-pivot_offset = Vector2(9, 6)
-text = "🌟"
-
-[node name="outside" type="Node2D" parent="Tutorial_interactpoints" unique_id=1584952393]
-position = Vector2(85.00001, -93)
-scale = Vector2(1.3, 1.3)
-
-[node name="outside" type="Area2D" parent="Tutorial_interactpoints/outside" unique_id=1507110494 node_paths=PackedStringArray("anim_player")]
-monitoring = false
-monitorable = false
-script = ExtResource("6_xr1wk")
-anim_player = NodePath("../../AnimationPlayer")
-animation_resource = ExtResource("9_pd38u")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Tutorial_interactpoints/outside/outside" unique_id=1798633322]
-shape = SubResource("CircleShape2D_kj5vy")
-
-[node name="outside2" type="Label" parent="Tutorial_interactpoints/outside" unique_id=1268337442]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -11.0
-offset_top = -8.0
-offset_right = 11.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(2, 2)
-pivot_offset = Vector2(9, 6)
-text = "🌟"
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tutorial_interactpoints" unique_id=1143748511]
-libraries/ = SubResource("AnimationLibrary_v6gb7")
 
 [node name="ChaosPadTriangle" type="Control" parent="." unique_id=316722474 node_paths=PackedStringArray("corners")]
 layout_mode = 1
@@ -235,7 +70,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("25_gu6ag")
 corners = [NodePath("PointLeft"), NodePath("PointRight"), NodePath("PointTop")]
 
-[node name="Triangle" type="TextureRect" parent="ChaosPadTriangle" unique_id=2129523945]
+[node name="TriangleSprite" type="TextureRect" parent="ChaosPadTriangle" unique_id=2129523945]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -368,7 +203,7 @@ offset_bottom = -162.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-script = ExtResource("27_i83dk")
+script = ExtResource("22_ds0f1")
 
 [node name="KnobSprite" type="Sprite2D" parent="ChaosPadTriangle/Knob" unique_id=329933470]
 z_index = 2

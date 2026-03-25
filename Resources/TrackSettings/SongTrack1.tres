@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="SongTrackSettings" format=3 uid="uid://biemtifmxe5a2"]
+
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="1_iwp5f"]
+[ext_resource type="Script" uid="uid://bu5i3rdo8kh1l" path="res://Scripts/TrackSettingsRes/song_track_settings.gd" id="1_j6hrw"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="2_uicwd"]
+
+[resource]
+script = ExtResource("1_j6hrw")
+chaos_pad_main_icon = ExtResource("2_uicwd")
+chaos_pad_alt_icon = ExtResource("1_iwp5f")
+track_color = Color(0.61960787, 0.6117647, 0.89411765, 0.99607843)
+metadata/_custom_type_script = "uid://bu5i3rdo8kh1l"

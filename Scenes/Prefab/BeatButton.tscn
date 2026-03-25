@@ -5,10 +5,18 @@
 [ext_resource type="Script" uid="uid://b1g7nwjqognfg" path="res://Scenes/Prefab/beat_button.gd" id="3_r17hn"]
 
 [node name="BeatButton" type="TextureButton" unique_id=1956853531]
-offset_left = -44.0
-offset_top = -47.0
-offset_right = 43.0
-offset_bottom = 42.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -553.0
+offset_bottom = -271.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
 toggle_mode = true
 texture_normal = ExtResource("1_40pej")
 texture_pressed = ExtResource("2_c86x6")

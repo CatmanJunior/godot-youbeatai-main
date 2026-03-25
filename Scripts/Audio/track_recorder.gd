@@ -10,7 +10,7 @@ var current_recording_track: TrackData = null
 
 var track_type: TrackData.TrackType
 
-@export var recording_sample_button: Button
+@export var recording_sample_button: RecordSampleButton
 @export var waveform_visualizer: TrackWaveformVisualizer
 
 func _ready():

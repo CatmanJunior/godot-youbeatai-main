@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="TrackSettingsRegistry" format=3 uid="uid://ls60qcnce7vy"]
+
+[ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/TrackSettingsRes/sample_track_settings.gd" id="1_tub5q"]
+[ext_resource type="Resource" uid="uid://d3u2fw2qxnssq" path="res://Resources/TrackSettings/SampleTrack1.tres" id="2_hsjoj"]
+[ext_resource type="Script" uid="uid://41f22lph8iqe" path="res://Scripts/TrackSettingsRes/track_settings_registry.gd" id="2_jk32k"]
+[ext_resource type="Resource" uid="uid://cqira1oxlci5i" path="res://Resources/TrackSettings/SampleTrack2.tres" id="3_d5pjn"]
+[ext_resource type="Script" uid="uid://c8a4ts2urwcjm" path="res://Scripts/TrackSettingsRes/synth_track_settings.gd" id="3_rie1u"]
+[ext_resource type="Resource" uid="uid://coeoloe70pd2y" path="res://Resources/TrackSettings/SampleTrack3.tres" id="4_340uc"]
+[ext_resource type="Resource" uid="uid://dl6vvjusql8q7" path="res://Resources/TrackSettings/SampleTrack4.tres" id="5_yaudt"]
+[ext_resource type="Resource" uid="uid://b2vj4tsil3dmu" path="res://Resources/TrackSettings/SynthTrack1.tres" id="8_lekba"]
+[ext_resource type="Resource" uid="uid://b4kjw1gmbbkj6" path="res://Resources/TrackSettings/SynthTrack2.tres" id="9_1srrv"]
+
+[resource]
+script = ExtResource("2_jk32k")
+sample_tracks = Array[ExtResource("1_tub5q")]([ExtResource("2_hsjoj"), ExtResource("3_d5pjn"), ExtResource("4_340uc"), ExtResource("5_yaudt")])
+synth_tracks = Array[ExtResource("3_rie1u")]([ExtResource("8_lekba"), ExtResource("9_1srrv")])
+metadata/_custom_type_script = "uid://41f22lph8iqe"

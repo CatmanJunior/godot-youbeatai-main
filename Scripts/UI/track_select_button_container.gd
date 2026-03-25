@@ -1,19 +1,19 @@
 extends Control
 class_name TrackSelectButtonContainer
 
-@export var outline_textures: Array[Texture2D]
-@export var filled_textures: Array[Texture2D]
-@export var icon_textures: Array[Texture2D]
+@export var track_settings: TrackSettingsRegistry
 @export var track_buttons: Array[TrackSelectButton]
 
 
 
 func _ready():
 	for button in track_buttons:
-		button.texture_normal = icon_textures[button.track_index]
-		button.outline_texture = outline_textures[button.track_index]
-		button.filled_texture = filled_textures[button.track_index]
-		button.outline_rect.texture = button.outline_texture
+		var settings := track_settings.get_track(button.track_index)
+		if settings != null:
+			button.texture_normal = settings.button_icon_texture
+			button.outline_texture = settings.button_outline_texture
+			button.filled_texture = settings.button_filled_texture
+			button.outline_rect.texture = button.outline_texture
 
 		button.track_button_pressed.connect(_on_track_button_pressed)
 		if button.is_synth_track:

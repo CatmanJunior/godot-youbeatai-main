@@ -30,7 +30,7 @@ func _handle_recording(delta: float) -> void:
 	actual_sound_length += delta
 
 	var beats_to_record = 1 if track_type == TrackData.TrackType.SAMPLE else GameState.total_beats
-	var percentage: float = actual_sound_length / (GameState.time_per_beat * beats_to_record)
+	var percentage: float = actual_sound_length / (GameState.beat_duration * beats_to_record)
 
 	recording_sample_button.update_button(percentage)
 	
@@ -84,7 +84,6 @@ func _on_recording_stopped(audio: AudioStream) -> void:
 		waveform_visualizer.reset_progress(current_recording_track.index)
 
 	EventBus.set_recorded_stream_requested.emit(current_recording_track.index, audio)
-
 
 func get_recording_volume() -> float:
 	return GameState.microphone_volume

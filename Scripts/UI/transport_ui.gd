@@ -25,9 +25,9 @@ func _process(delta: float) -> void:
 func _update_metronome(delta: float) -> void:
 	if GameState.playing:
 		_slow_beat_timer += delta / 4.0
-		if _slow_beat_timer > GameState.time_per_beat:
-			_slow_beat_timer -= GameState.time_per_beat
-		var beat_progress = _slow_beat_timer / GameState.time_per_beat
+		if _slow_beat_timer > GameState.beat_duration:
+			_slow_beat_timer -= GameState.beat_duration
+		var beat_progress = _slow_beat_timer / GameState.beat_duration
 		metronome.position.y = lerp(-0.4, 0.4, beat_progress)
 
 

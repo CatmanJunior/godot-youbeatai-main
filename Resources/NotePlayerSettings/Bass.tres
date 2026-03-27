@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="NotePlayerSettings" format=3 uid="uid://b51nkex63uhjh"]
+
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="1_fj85l"]
+[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="1_ngqxe"]
+[ext_resource type="SoundFont" uid="uid://c0ncqrlqb7blj" path="res://Experimental/soundfont/Jvbass.sf2" id="3_t7g2r"]
+
+[resource]
+script = ExtResource("1_fj85l")
+soundfont = ExtResource("3_t7g2r")
+notes = ExtResource("1_ngqxe")
+instrument = 1
+gate = 0.0
+volume_db = -7.0
+metadata/_custom_type_script = "uid://cx6op5amucrek"

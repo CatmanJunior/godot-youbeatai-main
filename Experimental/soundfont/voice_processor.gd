@@ -1,89 +1,170 @@
-extends Node
 class_name VoiceProcessor
 
-@export var bpmManager: Node
-@export var notes: Notes
-@export var combine_threshold: float = -1 # -1 is off
-@export var octaveRange: Vector2i
+const Fft = preload("res://fft/Fft.gd")
 
-@export var beats_amount_scaler: float = 1.0
+const combine_threshold: float = -1 # -1 is off
+const octaveRange: Vector2i = Vector2i(3, 5) # inclusive
 
-signal on_processed(data: Array[SequenceNote])
+## Extract PCM samples from an AudioStreamWAV as an Array of floats in [-1, 1].
+static func _get_samples(audio: AudioStreamWAV) -> PackedFloat32Array:
+	var samples := PackedFloat32Array()
+	var raw := audio.data
+	var channels := 2 if audio.stereo else 1
+	var is_16bit := audio.format == AudioStreamWAV.FORMAT_16_BITS
+	var byte_step := 2 if is_16bit else 1
+	var total_bytes := raw.size()
+	var i := 0
 
-func filter_time(data: Vector3):
-	var beatDuration = 60.0/bpmManager.bpm /4.0
-	return data.z <= bpmManager.amount_of_beats * beatDuration
+	while i < total_bytes:
+		var value := 0.0
+		if is_16bit:
+			if i + 1 >= total_bytes:
+				break
+			value = raw.decode_s16(i) / 32768.0
+		else:
+			var v := raw[i] as int
+			if v > 127:
+				v -= 256
+			value = v / 128.0
+		# For stereo, average L+R
+		if channels == 2:
+			var right := 0.0
+			if is_16bit:
+				if i + 3 < total_bytes:
+					right = raw.decode_s16(i + 2) / 32768.0
+			else:
+				if i + 1 < total_bytes:
+					var rv := raw[i + 1] as int
+					if rv > 127:
+						rv -= 256
+					right = rv / 128.0
+			value = (value + right) * 0.5
+			i += byte_step * channels
+		else:
+			i += byte_step
+		samples.append(value)
 
-func reduce_to_average(group: Array): 
-	# filter low volume samples
-	var base = group[0]
-	group = group.filter(func(e): return e.y > 0.000505)
-	if len(group) == 0:
-		return base
-	var reduced_group = group.reduce(func(accum, e): return accum + e)
-	
-	return reduced_group  / float(len(group))
+	return samples
 
-func start_processing(data: PackedVector3Array):
-	if len(data) == 0:
-		printerr("no data received")
-		return
-		
+
+## Compute RMS volume of a chunk of samples.
+static func _rms(chunk: PackedFloat32Array) -> float:
+	if chunk.size() == 0:
+		return 0.0
+	var sum := 0.0
+	for s in chunk:
+		sum += s * s
+	return sqrt(sum / chunk.size())
+
+
+## Round up to the next power of 2.
+static func _next_power_of_2(n: int) -> int:
+	var p := 1
+	while p < n:
+		p *= 2
+	return p
+
+
+## Find the dominant frequency in a chunk of samples using FFT.
+static func _dominant_frequency(chunk: PackedFloat32Array, sample_rate: float) -> float:
+	var n := _next_power_of_2(chunk.size())
+	var fft_input: Array = []
+	fft_input.resize(n)
+	for i in range(chunk.size()):
+		fft_input[i] = float(chunk[i])
+	for i in range(chunk.size(), n):
+		fft_input[i] = 0.0
+
+	var spectrum: Array = Fft.fft(fft_input)
+
+	# Only look at the first half (positive frequencies)
+	@warning_ignore("integer_division")
+	var half := n / 2
+	var max_magnitude := 0.0
+	var max_bin := 0
+
+	for i in range(1, half): # skip DC bin (i=0)
+		var re: float = spectrum[i].re
+		var im: float = spectrum[i].im
+		var magnitude := sqrt(re * re + im * im)
+		if magnitude > max_magnitude:
+			max_magnitude = magnitude
+			max_bin = i
+
+	return float(max_bin) * sample_rate / float(n)
+
+
+static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
+	if audio == null or not audio is AudioStreamWAV:
+		printerr("VoiceProcessor: expected AudioStreamWAV, got %s" % str(type_string(typeof(audio))))
+		return null
+
+	var wav := audio as AudioStreamWAV
+	var samples: PackedFloat32Array = _get_samples(wav)
+	if samples.size() == 0:
+		printerr("no sample data in audio stream")
+		return null
+
+	var sample_rate := float(wav.mix_rate)
+
+	var length: int = int(GameState.total_beats)
+
+	if length <= 0:
+		printerr("invalid beat length")
+		return null
+	@warning_ignore("integer_division")
+	var samples_per_beat := int(samples.size() / length)
+	if samples_per_beat == 0:
+		printerr("not enough samples received, got: %d" % samples.size())
+		return null
+
+	# Analyze each beat window: extract dominant frequency and volume
 	var result: PackedVector3Array = []
-	var groups: Array[Array] = []
-	
-	var data_array: Array = Array(data)
-	data_array = data_array.filter(filter_time)
-	
-	var length = bpmManager.amount_of_beats * beats_amount_scaler
-	var group_size = (len(data_array) / length)
-	if group_size == 0:
-		printerr("not enought data received got: %d" % len(data_array))
-		return
-	
-	for i in range(len(data_array) / group_size):
-		groups.append(data_array.slice( i * group_size, (i+1) * group_size ) )
+	for i in range(length):
+		var start_idx := i * samples_per_beat
+		var end_idx := mini((i + 1) * samples_per_beat, samples.size())
+		var chunk := samples.slice(start_idx, end_idx)
 
-	var beats = groups.map(reduce_to_average)
-	beats.resize(length)
-	
-	for sample in beats:	
-		# clamp frequency to octave range closests note
+		var freq := _dominant_frequency(chunk, sample_rate)
+		var vol := _rms(chunk)
+		var time := float(i) * GameState.beat_duration
+
+		# Clamp frequency to closest note in octave range
 		var closest_diff: float = 9999
 		var closest: Note = notes.get_octave(octaveRange.x).notes[0]
-		
+
 		for octaveNumber in range(octaveRange.x, octaveRange.y + 1):
 			var octave = notes.get_octave(octaveNumber)
 			for note in octave.notes:
-				var diff: float = abs(sample.x - note.frequency)
+				var diff: float = abs(freq - note.frequency)
 				if diff < closest_diff:
 					closest_diff = diff
 					closest = note
-			
-		sample.x = closest.id
-		result.push_back(sample)
-		
+
+		result.push_back(Vector3(closest.id, vol, time))
+
+	# Build sequence notes with optional combining
 	var sequence_notes: Array[SequenceNote] = []
 	for i in range(len(result)):
 		var current = result[i]
 		var last: SequenceNote = null
-		
+
 		if len(sequence_notes) > 0:
 			last = sequence_notes.back()
-		
+
 		if last == null or abs(last.note - current.x) > combine_threshold:
 			last = SequenceNote.new()
-			last.beat = round(i / beats_amount_scaler)
+			last.beat = round(i / GameState.beats_amount_scaler)
 			last.note = current.x
-			last.duration = round(1.0 / beats_amount_scaler)
+			last.duration = round(1.0 / GameState.beats_amount_scaler)
 			last.velocity = current.y
 			sequence_notes.append(last)
 		else:
-			last.duration += round(1.0 / beats_amount_scaler)
-	
+			last.duration += round(1.0 / GameState.beats_amount_scaler)
+
 	for index in range(len(sequence_notes)):
-		print("beat: %d, note: %d, duration: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration])	
-	
+		print("beat: %d, note: %d, duration: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration])
+
 	var sequence = Sequence.new()
 	sequence.sequence = sequence_notes
-	on_processed.emit(sequence)
+	return sequence

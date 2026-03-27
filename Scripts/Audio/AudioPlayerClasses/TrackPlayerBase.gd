@@ -3,7 +3,7 @@ class_name TrackPlayerBase
 extends Node
 
 const SILENT_DB: float = -80.0
-const TRACK_PLAYER_COUNT = 3
+const SUB_TRACK_PLAYER_COUNT = 3
 
 var track_index: int
 var bus_name: String # the root bus for this track
@@ -12,12 +12,10 @@ var sub_bus_names: Array[String] = [] # bus names for this track
 
 var players: Array[AudioStreamPlayer] = [] # players for main, alt, recording
 
-
 var _weights: Vector3 = Vector3(1.0, 0.0, 0.0)
 
 @warning_ignore("unused_private_class_variable")
 var _has_recording: bool = false
-
 
 func _get_bus_suffixes() -> Array[String]:
 	return []
@@ -35,15 +33,15 @@ func _create_buses(parent_bus: String) -> void:
 	bus_name = "%s%d" % [_get_bus_prefix(), track_index]
 	BusHelper.create_bus(bus_name, parent_bus)
 
-	for i in range(TRACK_PLAYER_COUNT):
+	for i in range(SUB_TRACK_PLAYER_COUNT):
 		sub_bus_names.append(bus_name + "_" + _get_bus_suffixes()[i])
-		BusHelper.create_bus(sub_bus_names[i], bus_name)
-		_apply_layer_effects(i, AudioServer.get_bus_index(sub_bus_names[i]))
+		var new_bus_index = BusHelper.create_bus(sub_bus_names[i], bus_name)
+		_apply_layer_effects(i, new_bus_index)
 
 	set_weights(_weights) # initialize volumes based on default weights
 
 func _setup_players() -> void:
-	for i in range(TRACK_PLAYER_COUNT):
+	for i in range(SUB_TRACK_PLAYER_COUNT):
 		players.append(_make_player(sub_bus_names[i]))
 
 func _make_player(bus: String) -> AudioStreamPlayer:
@@ -69,7 +67,7 @@ func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> 
 func set_recorded_stream(_rec: AudioStream) -> void: pass
 
 func set_stream(audio_layer: int, stream: AudioStream) -> void:
-	if audio_layer < 0 or audio_layer >= TRACK_PLAYER_COUNT:
+	if audio_layer < 0 or audio_layer >= SUB_TRACK_PLAYER_COUNT:
 		printerr("Invalid audio layer %d for set_stream" % audio_layer)
 		return
 	if audio_layer == 2:

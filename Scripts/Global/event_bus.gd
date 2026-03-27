@@ -120,6 +120,8 @@ signal stop_recording_requested()
 signal recording_started()
 ## Emitted when audio recording has stopped, carrying the recorded audio stream.
 signal recording_stopped(audio: AudioStream)
+## Emitted when voice recording processing has completed, carrying the resulting sequence data.
+signal voice_recording_processing_done(sequence: Sequence)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.

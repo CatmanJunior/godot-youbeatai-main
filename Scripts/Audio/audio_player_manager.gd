@@ -17,6 +17,8 @@ var sfx_player: AudioStreamPlayer
 @export var metronome_alt_sfx: AudioStream
 @export var achievement_sfx: AudioStream
 
+@export var note_player_settings: Array[NotePlayerSettings] = []
+
 func _ready():
 	_init_audio_players()
 	_init_sfx_player()
@@ -54,6 +56,13 @@ func _init_audio_players():
 	for i in range(SYNTH_TRACKS_COUNT):
 		var player = SynthTrackPlayer.new()
 		player.setup(i + SAMPLE_TRACKS_COUNT, "Master")
+		if i < note_player_settings.size():
+			var np = notePlayer.new()
+			np.stream = AudioStreamGenerator.new()
+			np.stream.buffer_length = 0.1
+			np.apply_settings(note_player_settings[i])
+			player.note_player = np
+			player.add_child(np)
 		track_players.append(player)
 		add_child(player)
 

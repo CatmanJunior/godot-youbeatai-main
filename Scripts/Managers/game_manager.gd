@@ -1,6 +1,7 @@
 extends Node
 
 
+@export var notes: Notes
 var time: float = 0.0
 
 var first_tts_done: bool = false
@@ -9,6 +10,7 @@ func _ready():
 	EventBus.restart_requested.connect(_on_restart_requested)
 	EventBus.fullscreen_toggle_requested.connect(_toggle_fullscreen)
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
+	GameState.notes = notes
 
 func _on_restart_requested():
 	get_tree().change_scene_to_file("res://Scenes/main_menu.tscn")

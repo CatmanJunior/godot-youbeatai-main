@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://chblk160rw0iy" path="res://Scenes/Prefab/BeatButton.tscn" id="2_5lvir"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
@@ -31,6 +32,7 @@ grow_vertical = 2
 script = ExtResource("1_wrqyy")
 beat_button_prefab = ExtResource("2_5lvir")
 beat_ring_pivot_point = NodePath("PivotPoint")
+track_settings = ExtResource("3_mgl8v")
 play_pause_button = NodePath("PlayPauseButton")
 pointer = NodePath("Pointer")
 
@@ -139,6 +141,7 @@ metadata/_edit_use_anchors_ = true
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("5_wuuqw")
 progress_bars = [NodePath("TextureProgressBar0"), NodePath("TextureProgressBar1")]
 waveform_lines = [NodePath("BigLine0"), NodePath("BigLine1")]
@@ -160,6 +163,7 @@ offset_top = -267.0
 offset_right = 247.0
 offset_bottom = 245.0
 scale = Vector2(1.05, 1.05)
+mouse_filter = 2
 max_value = 1.0
 step = 0.01
 fill_mode = 4
@@ -182,6 +186,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.3, 0.3)
 pivot_offset = Vector2(256, 256)
+mouse_filter = 2
 max_value = 1.0
 step = 0.01
 fill_mode = 4

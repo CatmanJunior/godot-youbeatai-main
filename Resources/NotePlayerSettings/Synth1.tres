@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="NotePlayerSettings" format=3 uid="uid://ckr0c8qx1pxod"]
+
+[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="1_wbn16"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="2_gh2ix"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="3_wbn16"]
+
+[resource]
+script = ExtResource("2_gh2ix")
+soundfont = ExtResource("3_wbn16")
+notes = ExtResource("1_wbn16")
+instrument = 7
+gate = 1.0
+metadata/_custom_type_script = "uid://cx6op5amucrek"

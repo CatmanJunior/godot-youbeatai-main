@@ -2,11 +2,12 @@ class_name SynthTrackData
 extends TrackData
 
 ## Data class for a synth-based track within a section.
-## Holds voice-over recordings in addition to the base track properties.
+## Holds voice-over recordings and note sequence in addition to the base track properties.
+
+var sequence: Sequence = null
 
 func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, knob_pos, TrackType.SYNTH)
-
 
 
 func duplicate_track() -> TrackData:
@@ -14,4 +15,5 @@ func duplicate_track() -> TrackData:
 	copy.recorded_audio_stream = recorded_audio_stream
 	copy.master_volume = master_volume
 	copy.weights = weights
+	copy.sequence = sequence
 	return copy

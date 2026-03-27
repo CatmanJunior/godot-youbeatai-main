@@ -1,11 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cifubqpkkn5tn"]
+[gd_scene format=3 uid="uid://cifubqpkkn5tn"]
 
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="1_oee6b"]
 [ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="2_u2smf"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="3_l38x5"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="4_juivb"]
-[ext_resource type="Script" uid="uid://vmqb3hufwjk" path="res://Experimental/soundfont/voice_recorder.gd" id="5_wli5q"]
-[ext_resource type="Script" uid="uid://dp10dlnr4fp07" path="res://Experimental/soundfont/voice_processor.gd" id="6_1dg2o"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fw2ei"]
 buffer_length = 0.1
@@ -17,26 +15,10 @@ id = 60
 frequency = 261.63
 metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
-[node name="notePlayer" type="SoundFontPlayer" node_paths=PackedStringArray("bpmManager")]
+[node name="notePlayer" type="SoundFontPlayer" unique_id=2092406935]
 soundfont = ExtResource("1_oee6b")
 stream = SubResource("AudioStreamGenerator_fw2ei")
-bus = &"Synth"
 script = ExtResource("2_u2smf")
-bpmManager = NodePath("")
 notes = ExtResource("3_l38x5")
 base_note = SubResource("Resource_u1rjn")
 metadata/_custom_type_script = "uid://bvcmfyc0eqv7e"
-
-[node name="VoiceRecorder2" type="Node" parent="."]
-script = ExtResource("5_wli5q")
-metadata/_custom_type_script = "uid://vmqb3hufwjk"
-
-[node name="VoiceProcessor" type="Node" parent="VoiceRecorder2" node_paths=PackedStringArray("bpmManager")]
-script = ExtResource("6_1dg2o")
-bpmManager = NodePath("")
-notes = ExtResource("3_l38x5")
-octaveRange = Vector2i(0, 6)
-metadata/_custom_type_script = "uid://dp10dlnr4fp07"
-
-[connection signal="done_recording" from="VoiceRecorder2" to="VoiceRecorder2/VoiceProcessor" method="start_processing"]
-[connection signal="on_processed" from="VoiceRecorder2/VoiceProcessor" to="." method="set_song"]

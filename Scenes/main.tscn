@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
+[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="2_my4ki"]
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="6_64lof"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
 [ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
@@ -16,7 +17,10 @@
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="22_hpc6h"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="22_sb4d6"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="25_y86h7"]
+[ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_my4ki"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="26_o1aky"]
+[ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="27_o1aky"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="28_54nrm"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="28_r33sp"]
@@ -157,6 +161,7 @@ current = true
 [node name="GameManager" type="Node" parent="Managers" unique_id=874834820]
 unique_name_in_owner = true
 script = ExtResource("6_64lof")
+notes = ExtResource("2_my4ki")
 
 [node name="SectionManager" type="Node" parent="Managers/GameManager" unique_id=710188850]
 unique_name_in_owner = true
@@ -173,7 +178,6 @@ script = ExtResource("10_o2owy")
 settings_ui = NodePath("../../../UserInterface/SettingsPanel")
 
 [node name="BpmManager" type="Node" parent="Managers/GameManager" unique_id=1162706801]
-unique_name_in_owner = true
 script = ExtResource("11_ylsbi")
 
 [node name="Exporter" type="Node" parent="Managers/GameManager" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
@@ -211,10 +215,6 @@ section_loop_toggle = NodePath("../../../UserInterface/LayerLoopToggle")
 real_time_audio_recording_progress_bar = NodePath("../../SongVoiceOver/SongVoiceOverProgressBar")
 progress_bar = NodePath("../../../UserInterface/Robot/ProgressBar")
 
-[node name="Node" type="Node" parent="Managers/UiManager" unique_id=1967191325]
-script = ExtResource("13_6ml46")
-colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.5176471, 0, 1, 1), Color(0.61960787, 0.6117647, 0.89411765, 0.99607843)])
-
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]
 
 [node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1270233026]
@@ -242,6 +242,7 @@ alt_audio_files = Array[AudioStream]([ExtResource("56_wt5iu"), ExtResource("57_p
 metronome_sfx = ExtResource("9_5vy51")
 metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
+note_player_settings = Array[ExtResource("25_y86h7")]([ExtResource("26_my4ki"), ExtResource("27_lx3vj")])
 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("recording_sample_button", "waveform_visualizer")]
 unique_name_in_owner = true
@@ -288,25 +289,11 @@ metadata/_custom_type_script = "uid://bysoee7k07v3y"
 [node name="bass_line" parent="Managers/LayerVoiceOver0" unique_id=1096032728 instance=ExtResource("26_o1aky")]
 soundfont = ExtResource("27_o1aky")
 volume_db = -7.0
-bus = &"Master"
-gate = 0.0
-
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0"]
-combine_threshold = 0.0
-octaveRange = Vector2i(2, 8)
-beats_amount_scaler = 0.5
 
 [node name="LayerVoiceOver1" type="Node" parent="Managers" unique_id=1343330546]
 
 [node name="synth_line" parent="Managers/LayerVoiceOver1" unique_id=1995946905 instance=ExtResource("26_o1aky")]
 volume_db = -7.0
-bus = &"Master"
-instrument = 6
-gate = 0.0
-
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0"]
-combine_threshold = 1.0
-octaveRange = Vector2i(4, 6)
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false
@@ -765,34 +752,6 @@ offset_top = -27.0
 offset_right = -32.0
 offset_bottom = 125.0
 
-[node name="BackGround" type="Control" parent="UserInterface" unique_id=441152465]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="BackGroundGlow" type="Sprite2D" parent="UserInterface/BackGround" unique_id=693730587]
-modulate = Color(1, 1, 1, 0.21568628)
-z_index = -20
-scale = Vector2(5.88, 5.88)
-texture = ExtResource("22_sb4d6")
-metadata/_edit_lock_ = true
-
-[node name="WorldBackPanel" type="Sprite2D" parent="UserInterface/BackGround" unique_id=1942330097]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -30
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("52_gsvbx")
-metadata/_edit_lock_ = true
-
-[node name="BackGroundGradient" type="Sprite2D" parent="UserInterface/BackGround" unique_id=1449420760]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -30
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("53_bv80c")
-metadata/_edit_lock_ = true
-
 [node name="ParticleSystems" type="Control" parent="UserInterface" unique_id=2112743489 node_paths=PackedStringArray("beat_particles", "pbar_particles", "achievement_particles")]
 anchors_preset = 0
 offset_right = 40.0
@@ -867,7 +826,6 @@ offset_left = -125.0
 offset_top = 1.0
 offset_right = -125.0
 offset_bottom = 1.0
-track_settings = ExtResource("36_qax2n")
 
 [node name="Waveform_visualisers" parent="UserInterface/BeatRing" index="5" unique_id=1117100626]
 track_settings = ExtResource("36_qax2n")
@@ -921,6 +879,34 @@ klappyLight = NodePath("../Robot/SubViewportContainer/KlappyLight")
 KlappyEnergy = NodePath("../Robot/ProgressBar")
 instruction_label = NodePath("../Robot/AchievementsPanel/InstructionLabel")
 achievement_panel = NodePath("../Robot/AchievementsPanel")
+
+[node name="BackGround" type="Control" parent="UserInterface" unique_id=441152465]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BackGroundGlow" type="Sprite2D" parent="UserInterface/BackGround" unique_id=693730587]
+modulate = Color(1, 1, 1, 0.21568628)
+z_index = -20
+scale = Vector2(5.88, 5.88)
+texture = ExtResource("22_sb4d6")
+metadata/_edit_lock_ = true
+
+[node name="WorldBackPanel" type="Sprite2D" parent="UserInterface/BackGround" unique_id=1942330097]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("52_gsvbx")
+metadata/_edit_lock_ = true
+
+[node name="BackGroundGradient" type="Sprite2D" parent="UserInterface/BackGround" unique_id=1449420760]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("53_bv80c")
+metadata/_edit_lock_ = true
 
 [connection signal="value_changed" from="UserInterface/Robot/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
 [connection signal="pressed" from="UserInterface/Unlock Achievements" to="UserInterface/Unlock Achievements" method="_on_pressed"]

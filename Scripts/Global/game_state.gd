@@ -4,6 +4,8 @@ extends Node
 ## Provides easy access to sections, playback state, and common data
 ## without needing %UniqueNode references everywhere.
 
+var notes: Notes
+
 const BEATS_AMOUNT_DEFAULT: int = 16
 
 # -- TO BE IMPLEMENTED --
@@ -84,11 +86,7 @@ var bar_progress: float = 0.0
 ## Duration of one beat subdivision in seconds (60 / bpm / beats_per_bar).
 var beat_duration: float = 0.5
 
-## time per quarter note in seconds, calculated from bpm
-var time_per_beat: float:
-	get:
-		return 60.0 / bpm
-
+var beats_amount_scaler	: float = 1.0
 
 # -- Recording --
 

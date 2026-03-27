@@ -105,17 +105,14 @@ instrument = 6
 allow_key_input = true
 gate = 0.0
 
-[node name="VoiceProcessor" parent="notePlayer/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
+[node name="VoiceProcessor" parent="notePlayer" index="0" node_paths=PackedStringArray("bpmManager")]
 bpmManager = NodePath("../../../BPMManager")
 combine_threshold = 0.0
 
 [connection signal="OnBeatEvent" from="BPMManager" to="HSplitContainer/Actions/ColorRect" method="_on_beat"]
 [connection signal="OnBeatEvent" from="BPMManager" to="notePlayer" method="on_bpm"]
-[connection signal="OnMicrophoneInput" from="MicrophoneCapture" to="notePlayer/VoiceRecorder2" method="on_microphone_input"]
 [connection signal="button_down" from="HSplitContainer/Actions/Record" to="." method="start"]
-[connection signal="button_down" from="HSplitContainer/Actions/Record" to="notePlayer/VoiceRecorder2" method="start_recording"]
 [connection signal="button_up" from="HSplitContainer/Actions/Record" to="." method="stop"]
-[connection signal="button_up" from="HSplitContainer/Actions/Record" to="notePlayer/VoiceRecorder2" method="stop_recording"]
 [connection signal="pressed" from="HSplitContainer/Actions/Play" to="." method="start_playing"]
 [connection signal="pressed" from="HSplitContainer/Actions/Stop" to="." method="stop_playing"]
 [connection signal="timeout" from="HSplitContainer/Actions/ColorRect/Timer" to="HSplitContainer/Actions/ColorRect" method="_on_reset"]

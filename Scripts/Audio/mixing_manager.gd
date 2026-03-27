@@ -22,7 +22,7 @@ var layer_manager: Node
 @export var chaos_pad_ui: ChaosPadUI
 
 func _ready():
-	song_mixing_knob_position = chaos_pad_ui.chaos_pad_triangle_sprite.position if chaos_pad_ui and chaos_pad_ui.chaos_pad_triangle_sprite else Vector2.ZERO
+	song_mixing_knob_position = chaos_pad_ui.chaos_pad_triangle_sprite.position
 
 	# Connect to EventBus so other scripts don't need a direct reference
 	EventBus.track_selected.connect(_on_track_selected)
@@ -32,15 +32,10 @@ func _ready():
 func _on_track_selected(track: int):
 	_change_active_track(chaos_pad_mode, track)
 
-func _on_section_changed(old_section_data: SectionData, new_section_data: SectionData):
+func _on_section_changed(old_section_data: SectionData, _new_section_data: SectionData):
 	"""Store current knob, switch section, retrieve new knob"""
 	if old_section_data != null:
 		_store_active_knob(chaos_pad_mode, old_section_data)
-	
-	# Retrieve knob position for new layer
-	var pos = _retrieve_knob(new_section_data, chaos_pad_mode)
-	chaos_pad_ui.knob.position = pos
-
 	
 	_apply_stored_volumes(old_section_data)
 

@@ -12,7 +12,6 @@
 [ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="11_ylsbi"]
 [ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="12_ceghn"]
 [ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="13_3h4bx"]
-[ext_resource type="Script" uid="uid://b0e5au5h1yv8c" path="res://Scripts/UI/colors.gd" id="13_6ml46"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="22_hpc6h"]
@@ -217,10 +216,6 @@ progress_bar = NodePath("../../../UserInterface/Robot/ProgressBar")
 script = ExtResource("48_gf7g1")
 progress_bars = [null, null]
 waveform_lines = [null, null]
-
-[node name="Node" type="Node" parent="Managers/UiManager" unique_id=1967191325]
-script = ExtResource("13_6ml46")
-colors = Array[Color]([Color(0.9019608, 0.29411766, 0.5568628, 1), Color(0.972549, 0.52156866, 0.17254902, 1), Color(0.2627451, 0.79607844, 0.5294118, 1), Color(0.011764706, 0.8235294, 0.93333334, 1), Color(1, 1, 0, 1), Color(0.5176471, 0, 1, 1), Color(0.61960787, 0.6117647, 0.89411765, 0.99607843)])
 
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]
 

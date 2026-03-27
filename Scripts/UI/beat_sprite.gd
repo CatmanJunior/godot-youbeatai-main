@@ -42,7 +42,6 @@ func _on_click():
 	"""Handle beat sprite click — emit event, let managers handle the rest"""
 	EventBus.beat_sprite_clicked.emit(ring, sprite_index)
 
-
 func set_sprite_index(beat: int) -> void:
 	sprite_index = beat
 

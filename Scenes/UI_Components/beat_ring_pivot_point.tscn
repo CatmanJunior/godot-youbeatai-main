@@ -5,15 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://chblk160rw0iy" path="res://Scenes/Prefab/BeatButton.tscn" id="2_5lvir"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
-[ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="3_dn46h"]
-[ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="4_24ovn"]
-[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="5_0ra3y"]
-[ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="6_sqhmv"]
-[ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="7_hya8c"]
-[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="8_g2wgs"]
-[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="9_b4lxn"]
-[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="10_tregb"]
-[ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="11_45jq7"]
+[ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
@@ -27,6 +19,7 @@ corner_radius_bottom_left = 4
 [node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "play_pause_button", "pointer")]
 physics_interpolation_mode = 0
 layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 640.0
@@ -38,9 +31,6 @@ grow_vertical = 2
 script = ExtResource("1_wrqyy")
 beat_button_prefab = ExtResource("2_5lvir")
 beat_ring_pivot_point = NodePath("PivotPoint")
-filled_beat_textures = Array[Texture2D]([ExtResource("3_dn46h"), ExtResource("4_24ovn"), ExtResource("5_0ra3y"), ExtResource("6_sqhmv")])
-outline_beat_textures = Array[Texture2D]([ExtResource("7_hya8c"), ExtResource("8_g2wgs"), ExtResource("9_b4lxn"), ExtResource("10_tregb")])
-dot_beat_texture = ExtResource("11_45jq7")
 play_pause_button = NodePath("PlayPauseButton")
 pointer = NodePath("Pointer")
 
@@ -80,52 +70,6 @@ z_index = -1
 rotation = -0.785398
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="BigLine0" type="Line2D" parent="." unique_id=866994840]
-closed = true
-width = 4.0
-antialiased = true
-
-[node name="BigLine1" type="Line2D" parent="." unique_id=916269959]
-closed = true
-width = 5.0
-antialiased = true
-
-[node name="TextureProgressBar0" type="TextureProgressBar" parent="." unique_id=1277010803]
-layout_mode = 0
-offset_left = -265.0
-offset_top = -267.0
-offset_right = 247.0
-offset_bottom = 245.0
-scale = Vector2(1.05, 1.05)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("2_bt3xi")
-tint_progress = Color(1, 1, 0, 1)
-metadata/_edit_lock_ = true
-
-[node name="TextureProgressBar1" type="TextureProgressBar" parent="." unique_id=1981743700]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.3, 0.3)
-pivot_offset = Vector2(256, 256)
-max_value = 1.0
-step = 0.01
-fill_mode = 4
-texture_progress = ExtResource("2_bt3xi")
-tint_progress = Color(0.516666, 0, 1, 1)
-metadata/_edit_use_anchors_ = true
 
 [node name="Pointer" type="Sprite2D" parent="." unique_id=57170616]
 modulate = Color(0.78, 0.78, 0.78, 1)
@@ -189,4 +133,58 @@ offset_right = 62.5
 offset_bottom = 52.5
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
+metadata/_edit_use_anchors_ = true
+
+[node name="Waveform_visualisers" type="Control" parent="." unique_id=1117100626 node_paths=PackedStringArray("progress_bars", "waveform_lines")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_wuuqw")
+progress_bars = [NodePath("TextureProgressBar0"), NodePath("TextureProgressBar1")]
+waveform_lines = [NodePath("BigLine0"), NodePath("BigLine1")]
+
+[node name="BigLine0" type="Line2D" parent="Waveform_visualisers" unique_id=866994840]
+closed = true
+width = 4.0
+antialiased = true
+
+[node name="BigLine1" type="Line2D" parent="Waveform_visualisers" unique_id=916269959]
+closed = true
+width = 5.0
+antialiased = true
+
+[node name="TextureProgressBar0" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1277010803]
+layout_mode = 0
+offset_left = -265.0
+offset_top = -267.0
+offset_right = 247.0
+offset_bottom = 245.0
+scale = Vector2(1.05, 1.05)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("2_bt3xi")
+tint_progress = Color(1, 1, 0, 1)
+metadata/_edit_lock_ = true
+
+[node name="TextureProgressBar1" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1981743700]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -276.0
+offset_right = 236.0
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.3, 0.3)
+pivot_offset = Vector2(256, 256)
+max_value = 1.0
+step = 0.01
+fill_mode = 4
+texture_progress = ExtResource("2_bt3xi")
+tint_progress = Color(0.516666, 0, 1, 1)
 metadata/_edit_use_anchors_ = true

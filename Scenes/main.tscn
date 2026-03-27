@@ -30,7 +30,6 @@
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
 [ext_resource type="Script" uid="uid://d0v3v6vsn5vuu" path="res://Scripts/UI/transport_ui.gd" id="46_odn5n"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/Klappy_components/klappy_reaction.tscn" id="47_s8vy0"]
-[ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="48_gf7g1"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
 [ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="50_rtmaq"]
@@ -199,7 +198,7 @@ script = ExtResource("12_ceghn")
 [node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chosen_emoticons_label", "instruction_panel", "chaos_pad_ui", "transport_ui", "settings_ui")]
 unique_name_in_owner = true
 script = ExtResource("13_3h4bx")
-section_ui = NodePath("../../SwitchSectionButtons")
+section_ui = NodePath("../../UserInterface/SwitchSectionButtons")
 chosen_emoticons_label = NodePath("../../UserInterface/Robot/SubViewportContainer/SubViewport/chosen_emoticons_label")
 instruction_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
@@ -212,11 +211,6 @@ metronome = NodePath("../../../UserInterface/metronome")
 section_loop_toggle = NodePath("../../../UserInterface/LayerLoopToggle")
 real_time_audio_recording_progress_bar = NodePath("../../SongVoiceOver/SongVoiceOverProgressBar")
 progress_bar = NodePath("../../../UserInterface/Robot/ProgressBar")
-
-[node name="TrackWaveformVisualizer" type="Node" parent="Managers/UiManager" unique_id=1928051775 node_paths=PackedStringArray("progress_bars", "waveform_lines")]
-script = ExtResource("48_gf7g1")
-progress_bars = [null, null]
-waveform_lines = [null, null]
 
 [node name="Node" type="Node" parent="Managers/UiManager" unique_id=1967191325]
 script = ExtResource("13_6ml46")
@@ -250,11 +244,11 @@ metronome_sfx = ExtResource("9_5vy51")
 metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
 
-[node name="AudioRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("recording_sample_button", "waveform_visualizer")]
+[node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("recording_sample_button", "waveform_visualizer")]
 unique_name_in_owner = true
 script = ExtResource("62_daoo8")
 recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/PointTop/ChaosButtonMic")
-waveform_visualizer = NodePath("../../UiManager/TrackWaveformVisualizer")
+waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
 
 [node name="SongVoiceOver" type="Node" parent="Managers" unique_id=1421521907]
 
@@ -870,19 +864,38 @@ hue_variation_max = 0.55
 
 [node name="BeatRing" parent="UserInterface" unique_id=192422746 instance=ExtResource("45_owhal")]
 layout_mode = 1
-anchors_preset = 15
 offset_left = -125.0
 offset_top = 1.0
 offset_right = -125.0
 offset_bottom = 1.0
 track_settings = ExtResource("36_qax2n")
 
-[node name="KlappyReaction" parent="." unique_id=1521628326 node_paths=PackedStringArray("achievement_panel", "instruction_label") instance=ExtResource("47_s8vy0")]
-achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
-instruction_label = NodePath("../UserInterface/Robot/AchievementsPanel/InstructionLabel")
+[node name="Waveform_visualisers" parent="UserInterface/BeatRing" index="5" unique_id=1117100626]
+track_settings = ExtResource("36_qax2n")
 
-[node name="Unlock Achievements" type="Button" parent="." unique_id=1519070133]
+[node name="SwitchSectionButtons" parent="UserInterface" unique_id=1068760052 instance=ExtResource("49_v2nl5")]
+layout_mode = 1
+offset_left = -257.0
+offset_top = 57.0
+offset_right = -257.0
+offset_bottom = 57.0
+
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2032541506]
 visible = false
+offset_left = 2.0
+offset_top = -349.0
+offset_right = 2.0
+offset_bottom = -349.0
+
+[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=569761149]
+offset_left = -1002.0
+offset_top = -605.0
+offset_right = -554.0
+offset_bottom = -415.0
+
+[node name="Unlock Achievements" type="Button" parent="UserInterface" unique_id=1519070133]
+visible = false
+layout_mode = 0
 offset_left = 394.0
 offset_top = -242.0
 offset_right = 552.0
@@ -890,42 +903,28 @@ offset_bottom = -218.0
 disabled = true
 text = "Unlock achievements"
 
-[node name="Podium" type="Sprite2D" parent="." unique_id=2005103988]
+[node name="KlappyReaction" parent="UserInterface" unique_id=1521628326 node_paths=PackedStringArray("achievement_panel", "instruction_label") instance=ExtResource("47_s8vy0")]
+achievement_panel = NodePath("../Robot/AchievementsPanel")
+instruction_label = NodePath("../Robot/AchievementsPanel/InstructionLabel")
+
+[node name="Podium" type="Sprite2D" parent="UserInterface" unique_id=2005103988]
 position = Vector2(398, 315.00003)
 scale = Vector2(0.90207714, 1.215)
 texture = ExtResource("84_6h1fc")
 
-[node name="KlappyLightPad" parent="." unique_id=1982735639 node_paths=PackedStringArray("klappyLight", "KlappyEnergy", "instruction_label", "achievement_panel") instance=ExtResource("92_p4gyq")]
-offset_left = 360.0
-offset_top = 21.0
-offset_right = 460.0
-offset_bottom = 121.0
-klappyLight = NodePath("../UserInterface/Robot/SubViewportContainer/KlappyLight")
-KlappyEnergy = NodePath("../UserInterface/Robot/ProgressBar")
-instruction_label = NodePath("../UserInterface/Robot/AchievementsPanel/InstructionLabel")
-achievement_panel = NodePath("../UserInterface/Robot/AchievementsPanel")
-
-[node name="SwitchSectionButtons" parent="." unique_id=1068760052 instance=ExtResource("49_v2nl5")]
-offset_left = -257.0
-offset_top = 57.0
-offset_right = -257.0
-offset_bottom = 57.0
-
-[node name="CopyPasteClearButtons" parent="SwitchSectionButtons" index="1" unique_id=2032541506]
-visible = false
-offset_left = 2.0
-offset_top = -349.0
-offset_right = 2.0
-offset_bottom = -349.0
-
-[node name="EmojiPrompt" parent="SwitchSectionButtons" index="3" unique_id=569761149]
-offset_left = -1002.0
-offset_top = -605.0
-offset_right = -554.0
-offset_bottom = -415.0
+[node name="KlappyLightPad" parent="UserInterface" unique_id=1982735639 node_paths=PackedStringArray("klappyLight", "KlappyEnergy", "instruction_label", "achievement_panel") instance=ExtResource("92_p4gyq")]
+layout_mode = 1
+offset_left = 310.0
+offset_top = -29.0
+offset_right = 510.0
+offset_bottom = 171.0
+klappyLight = NodePath("../Robot/SubViewportContainer/KlappyLight")
+KlappyEnergy = NodePath("../Robot/ProgressBar")
+instruction_label = NodePath("../Robot/AchievementsPanel/InstructionLabel")
+achievement_panel = NodePath("../Robot/AchievementsPanel")
 
 [connection signal="value_changed" from="UserInterface/Robot/ProgressBar" to="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
-[connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]
+[connection signal="pressed" from="UserInterface/Unlock Achievements" to="UserInterface/Unlock Achievements" method="_on_pressed"]
 
 [editable path="Managers/LayerVoiceOver0/bass_line"]
 [editable path="Managers/LayerVoiceOver1/synth_line"]
@@ -935,4 +934,5 @@ offset_bottom = -415.0
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/Robot/AchievementsPanel"]
-[editable path="SwitchSectionButtons"]
+[editable path="UserInterface/BeatRing"]
+[editable path="UserInterface/SwitchSectionButtons"]

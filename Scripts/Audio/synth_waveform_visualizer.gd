@@ -1,5 +1,5 @@
 class_name SynthWaveformVisualizer
-
+extends RefCounted
 ## Draws circular waveform lines from AudioStreamWAV data onto Line2D nodes.
 
 var small_line: Line2D

@@ -6,7 +6,7 @@ extends Node
 
 @export var progress_bars: Array[TextureProgressBar]
 @export var waveform_lines: Array[Line2D]
-
+@export var track_settings: TrackSettingsRegistry
 var waveform_visualizers: Array[SynthWaveformVisualizer]
 
 
@@ -30,6 +30,8 @@ func update_waveform(track_index: int, audio: AudioStream) -> void:
 	if track_index >= 0 and track_index < waveform_visualizers.size() and waveform_visualizers[track_index]:
 		if audio:
 			waveform_visualizers[track_index].update_lines(audio)
+			print("Updated waveform for track ", track_index + 4)
+			waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
 
 
 func reset_progress(track_index: int) -> void:

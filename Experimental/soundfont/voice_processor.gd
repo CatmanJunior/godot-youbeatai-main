@@ -165,6 +165,5 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 	for index in range(len(sequence_notes)):
 		print("beat: %d, note: %d, duration: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration])
 
-	var sequence = Sequence.new()
-	sequence.sequence = sequence_notes
+	var sequence = Sequence.new(sequence_notes)
 	return sequence

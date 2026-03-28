@@ -66,8 +66,8 @@ func _process_midi_input(event: InputEventMIDI):
 func queue_song(start: int, song: Sequence):
 	note_off_all(get_time()) # clear all current notes
 	# queue song
-	for i in range(start, len(song.sequence), 1):
-		var note: SequenceNote = song.sequence[i]
+	for i in range(start, len(song.notes), 1):
+		var note: SequenceNote = song.notes[i]
 		var rms_value = note.velocity
 		var log_value = 20.0 * (log(sqrt(rms_value) / 0.1) / log(10))
 
@@ -77,7 +77,7 @@ func queue_song(start: int, song: Sequence):
 
 		# gate quiet notes
 		if log_value <= gate:
-			return
+			continue
 
 		var beatDuration = (60.0 / GameState.bpm / 4.0)
 		var start_time: float = float(note.beat) * beatDuration
@@ -89,7 +89,8 @@ func queue_song(start: int, song: Sequence):
 func play_note(sequence_note: SequenceNote) -> void:
 	var t = get_time()
 	channel_note_on(t, 0, sequence_note.note, 1.0)
-	channel_note_off(t + sequence_note.duration, 0, sequence_note.note)
+	print("playing note: %d, beat: %d, duration: %d" % [sequence_note.note, sequence_note.beat, sequence_note.duration])
+	# channel_note_off(t + sequence_note.duration, 0, sequence_note.note)
 
 
 func play_note_raw(note: int, duration: float) -> void:

@@ -122,6 +122,8 @@ signal recording_started()
 signal recording_stopped(audio: AudioStream)
 ## Emitted when voice recording processing has completed, carrying the resulting sequence data.
 signal voice_recording_processing_done(sequence: Sequence)
+## Emitted to announce processing a recorded audio stream into a note sequence.
+signal synth_sequence_ready(track_index: int)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.

@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://dj5d5qtuj66sk"]
+
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="1_k2vll"]
+[ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="2_cpaey"]
+[ext_resource type="Script" path="res://Experimental/chords/chord_progression.gd" id="3_d1evk"]
+
+[sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
+buffer_length = 0.1
+
+[node name="Chords" type="SoundFontPlayer" unique_id=1217694171]
+soundfont = ExtResource("1_k2vll")
+stream = SubResource("AudioStreamGenerator_54nrm")
+script = ExtResource("2_cpaey")
+chordString = "I-V-vi-IV"
+chordDuration = 8
+progressions = Array[ExtResource("3_d1evk")]([null])
+metadata/_custom_type_script = "uid://bysoee7k07v3y"

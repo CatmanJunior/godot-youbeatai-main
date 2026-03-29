@@ -83,8 +83,7 @@ func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
 
 ##Overrides the base method to also update the note player stream
 func _setup_players() -> void:
-	for i in [0,2]:
-		players.append(_make_player(sub_bus_names[i]))
+	players.append(_make_player(sub_bus_names[0]))
 
 	var new_note_player := NotePlayer.new()
 	new_note_player.bus = sub_bus_names[1]
@@ -95,6 +94,7 @@ func _setup_players() -> void:
 	
 	players.append(note_player) # add the note player as the last player for weights
 
-
+	players.append(_make_player(sub_bus_names[2]))
+	
 
 	

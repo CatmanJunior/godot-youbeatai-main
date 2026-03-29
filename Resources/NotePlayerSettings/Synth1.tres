@@ -1,22 +1,15 @@
 [gd_resource type="Resource" script_class="NotePlayerSettings" format=3 uid="uid://ckr0c8qx1pxod"]
 
-[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="1_gh2ix"]
+[ext_resource type="Resource" uid="uid://i4koqv6xf3fh" path="res://Resources/NotePlayerSettings/basenote.tres" id="1_gh2ix"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="1_wbn16"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="2_gh2ix"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="3_wbn16"]
-
-[sub_resource type="Resource" id="Resource_3y2ng"]
-script = ExtResource("1_gh2ix")
-name = "C4"
-id = 60
-frequency = 440.0
-metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [resource]
 script = ExtResource("2_gh2ix")
 soundfont = ExtResource("3_wbn16")
 notes = ExtResource("1_wbn16")
 instrument = 7
-base_note = SubResource("Resource_3y2ng")
+base_note = ExtResource("1_gh2ix")
 gate = 0.3
 metadata/_custom_type_script = "uid://cx6op5amucrek"

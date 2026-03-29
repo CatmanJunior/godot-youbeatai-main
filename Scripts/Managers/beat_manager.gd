@@ -1,40 +1,11 @@
 extends Node
 
-# Clap and stomp detection
-var stomped: bool = false
-var clapped: bool = false
-var clapped_amount: int = 0
-var clapped_on_beat_amount: int = 0
-var stomped_amount: int = 0
-var stomped_on_beat_amount: int = 0
-
-# Progress bar value
-var progress_bar_value: float = 0.0
-var time_after_play: float = 0.0
-
-# Settings
-var metronome_sfx_enabled: bool = false
-var add_beats_enabled: bool = false
-
-# References
-var current_beat: int = 0
-var beats_amount: int = 16
-var colors: Array[Color] = []
-
-# Metronome
-@export var metronome_sfx: AudioStream
-
-func _ready():
-	GameState.current_section = SectionData.new(beats_amount)
-	
-	colors = GameState.colors
+func _ready():	
 	# Connect to EventBus
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.beat_set_requested.connect(set_beat)
 	EventBus.template_set.connect(_on_template_set)
-	EventBus.clap_triggered.connect(on_clap)
-	EventBus.stomp_triggered.connect(on_stomp)
 
 func _on_beat_sprite_clicked(p_ring: int, beat: int):
 	"""Handle beat sprite click via EventBus"""
@@ -42,61 +13,12 @@ func _on_beat_sprite_clicked(p_ring: int, beat: int):
 	var is_active = get_beat(p_ring, beat)
 	if is_active:
 		EventBus.play_sample_track_requested.emit(p_ring)
-	if p_ring < colors.size():
-		EventBus.particles_requested.emit(Vector2.ZERO, colors[p_ring])
+	if p_ring < GameState.colors.size():
+		EventBus.particles_requested.emit(Vector2.ZERO, GameState.colors[p_ring])
 	EventBus.track_selected.emit(p_ring)
 
-func _on_beat_triggered(beat: int):
-	"""Called each beat via EventBus"""
-	current_beat = beat
-	on_beat()
-
-func _on_template_set(actives: Array):
-	"""Apply template beat actives"""
-	if GameState.current_section:
-		GameState.current_section.set_beat_actives(actives)
-
-func on_clap():
-	_handle_beat_interaction(1)
-
-func on_stomp():
-	_handle_beat_interaction(0)
-
-func _handle_beat_interaction(ring: int) -> void:
-	"""Shared logic for clap (ring 1) and stomp (ring 0) interactions."""
-	if time_after_play < 0.2:
-		return
-
-	var active = GameState.current_section.get_beat(ring, current_beat)
-
-	if active:
-		progress_bar_value += 2.0
-		EventBus.progress_bar_particles_requested.emit()
-		if ring < colors.size():
-			EventBus.particles_requested.emit(Vector2.ZERO, colors[ring])
-		if ring == 0:
-			stomped_on_beat_amount += 1
-		else:
-			clapped_on_beat_amount += 1
-	else:
-		progress_bar_value -= 1.0
-
-	if ring == 0:
-		stomped_amount += 1
-	else:
-		clapped_amount += 1
-
-	if add_beats_enabled:
-		toggle_beat(ring, current_beat)
-
-func on_beat():
+func _on_beat_triggered(current_beat: int):
 	"""Called when a beat occurs"""
-	# Play metronome if enabled
-	if metronome_sfx_enabled:
-		var beats_per_quarter = beats_amount / 4
-		if current_beat % beats_per_quarter == 0:
-			play_metronome_sfx()
-	
 	# Play audio for active beats via EventBus
 	for track_index in range(GameState.current_section.SAMPLE_TRACKS_PER_SECTION):
 		if GameState.current_section.get_beat(track_index, current_beat):
@@ -105,27 +27,10 @@ func on_beat():
 		for track_index in range(GameState.current_section.SYNTH_TRACKS_PER_SECTION):
 			EventBus.play_track_requested.emit(track_index + GameState.current_section.SAMPLE_TRACKS_PER_SECTION)
 
-	# Update progress bar value
-	if current_beat == 0:
-		if progress_bar_value < 50.0:
-			progress_bar_value += 2.0
-		elif progress_bar_value < 75.0:
-			progress_bar_value += 1.0
-		elif progress_bar_value < 90.0:
-			progress_bar_value += 0.5
-		elif progress_bar_value <= 999:
-			progress_bar_value -= 0.5
-	
-	# Emit signals for next beat
-	var next_beat = (current_beat + 1) % beats_amount
-	
-	var clap_active = GameState.current_section.get_beat(1, next_beat)
-	if clap_active:
-		EventBus.clap_triggered.emit()
-	
-	var stomp_active = GameState.current_section.get_beat(0, next_beat)
-	if stomp_active:
-		EventBus.stomp_triggered.emit()
+func _on_template_set(actives: Array):
+	"""Apply template beat actives"""
+	if GameState.current_section:
+		GameState.current_section.set_beat_actives(actives)
 
 func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""
@@ -142,8 +47,3 @@ func set_beat(ring: int, beat: int, active: bool):
 func get_beat(ring: int, beat: int) -> bool:
 	"""Get whether a beat is active"""
 	return GameState.current_section.get_beat(ring, beat)
-
-func play_metronome_sfx():
-	"""Play metronome sound effect"""
-	if metronome_sfx:
-		EventBus.play_sfx_requested.emit(metronome_sfx)

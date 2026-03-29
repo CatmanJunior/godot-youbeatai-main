@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Note" format=3 uid="uid://i4koqv6xf3fh"]
+
+[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="1_h33nk"]
+
+[resource]
+script = ExtResource("1_h33nk")
+name = "C4"
+id = 60
+frequency = 261.63
+metadata/_custom_type_script = "uid://cyuhg2bs4hq83"

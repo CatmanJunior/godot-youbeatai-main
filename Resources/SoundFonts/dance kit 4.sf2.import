@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://bgmnx8658sq53"
+path="res://.godot/imported/dance kit 4.sf2-051a2f0e1621f0e0ce2291f3a713deaa.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/dance kit 4.sf2"
+dest_files=["res://.godot/imported/dance kit 4.sf2-051a2f0e1621f0e0ce2291f3a713deaa.res"]
+
+[params]
+

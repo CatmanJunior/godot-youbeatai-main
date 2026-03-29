@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_h33nk")
-name = "C4"
-id = 60
-frequency = 261.63
+name = "C3"
+id = 48
+frequency = 130.845
 metadata/_custom_type_script = "uid://cyuhg2bs4hq83"

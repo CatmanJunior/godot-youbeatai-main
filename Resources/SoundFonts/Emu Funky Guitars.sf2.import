@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://bku54wgk62esj"
+path="res://.godot/imported/Emu Funky Guitars.sf2-af68234b5775b6afb54f8d7f220eb6c8.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/Emu Funky Guitars.sf2"
+dest_files=["res://.godot/imported/Emu Funky Guitars.sf2-af68234b5775b6afb54f8d7f220eb6c8.res"]
+
+[params]
+

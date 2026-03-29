@@ -6,44 +6,32 @@ const combine_threshold: float = -1 # -1 is off
 const octaveRange: Vector2i = Vector2i(3, 5) # inclusive
 
 ## Extract PCM samples from an AudioStreamWAV as an Array of floats in [-1, 1].
-static func _get_samples(audio: AudioStreamWAV) -> PackedFloat32Array:
-	var samples := PackedFloat32Array()
+static func _get_samples(audio: AudioStreamWAV, downsample_factor: int = 4) -> PackedFloat32Array:
 	var raw := audio.data
 	var channels := 2 if audio.stereo else 1
 	var is_16bit := audio.format == AudioStreamWAV.FORMAT_16_BITS
-	var byte_step := 2 if is_16bit else 1
-	var total_bytes := raw.size()
-	var i := 0
+	var byte_step := (2 if is_16bit else 1) * channels * downsample_factor
 
-	while i < total_bytes:
+	var total_bytes := raw.size()
+	@warning_ignore("integer_division")
+	var num_samples := total_bytes / byte_step
+	var samples := PackedFloat32Array()
+	samples.resize(num_samples)  # pre-allocate!
+
+	var i := 0
+	var out := 0
+	while i < total_bytes and out < num_samples:
 		var value := 0.0
 		if is_16bit:
-			if i + 1 >= total_bytes:
-				break
+			if i + 1 >= total_bytes: break
 			value = raw.decode_s16(i) / 32768.0
 		else:
 			var v := raw[i] as int
-			if v > 127:
-				v -= 256
-			value = v / 128.0
-		# For stereo, average L+R
-		if channels == 2:
-			var right := 0.0
-			if is_16bit:
-				if i + 3 < total_bytes:
-					right = raw.decode_s16(i + 2) / 32768.0
-			else:
-				if i + 1 < total_bytes:
-					var rv := raw[i + 1] as int
-					if rv > 127:
-						rv -= 256
-					right = rv / 128.0
-			value = (value + right) * 0.5
-			i += byte_step * channels
-		else:
-			i += byte_step
-		samples.append(value)
-
+			value = (v - 256 if v > 127 else v) / 128.0
+		samples[out] = value
+		out += 1
+		i += byte_step
+	samples.resize(out)
 	return samples
 
 
@@ -67,13 +55,14 @@ static func _next_power_of_2(n: int) -> int:
 
 ## Find the dominant frequency in a chunk of samples using FFT.
 static func _dominant_frequency(chunk: PackedFloat32Array, sample_rate: float) -> float:
-	var n := _next_power_of_2(chunk.size())
+	const MAX_FFT_SIZE := 2048
+	var n := mini(_next_power_of_2(chunk.size()), MAX_FFT_SIZE)
 	var fft_input: Array = []
 	fft_input.resize(n)
-	for i in range(chunk.size()):
-		fft_input[i] = float(chunk[i])
-	for i in range(chunk.size(), n):
-		fft_input[i] = 0.0
+	# Downsample: take evenly-spaced samples from the chunk
+	var step: float = float(chunk.size()) / float(n)
+	for i in range(n):
+		fft_input[i] = float(chunk[int(i * step)])
 
 	var spectrum: Array = Fft.fft(fft_input)
 

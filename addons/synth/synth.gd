@@ -68,7 +68,7 @@ func start():
 	audio_stream_player.stream_paused = true
 	audio_stream_player.seek(0.0)
 
-#	await get_tree().process_frame # needed?
+	await get_tree().process_frame # needed?
 
 	audio_stream_generator = audio_stream_player.get_stream_playback()
 	# prefill, do before play() to avoid delay.

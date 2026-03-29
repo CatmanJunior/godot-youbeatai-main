@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://c0ncqrlqb7blj"
+path="res://.godot/imported/Jvbass.sf2-11a3a476494be3a48d622ff6ad058bd9.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/Jvbass.sf2"
+dest_files=["res://.godot/imported/Jvbass.sf2-11a3a476494be3a48d622ff6ad058bd9.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://bdkkd0bm8nmvw"
+path="res://.godot/imported/Emu Rockgtr.sf2-a6021854232cfe9ca27e3c5fc9b3010a.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/Emu Rockgtr.sf2"
+dest_files=["res://.godot/imported/Emu Rockgtr.sf2-a6021854232cfe9ca27e3c5fc9b3010a.res"]
+
+[params]
+

@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://40le457a68am"
+path="res://.godot/imported/tencho.sfo-23158007eca3e78afa0765831d885637.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/tencho.sfo"
+dest_files=["res://.godot/imported/tencho.sfo-23158007eca3e78afa0765831d885637.res"]
+
+[params]
+

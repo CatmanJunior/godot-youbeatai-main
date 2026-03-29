@@ -90,7 +90,7 @@ func play_note(sequence_note: SequenceNote) -> void:
 	var t = get_time()
 	channel_note_on(t, 0, sequence_note.note, 1.0)
 	print("playing note: %d, beat: %d, duration: %d" % [sequence_note.note, sequence_note.beat, sequence_note.duration])
-	channel_note_off(t + sequence_note.duration, 0, sequence_note.note)
+	channel_note_off(t + gate, 0, sequence_note.note)
 
 
 func play_note_raw(note: int, duration: float) -> void:

@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://b6o6djweyrncj"
+path="res://.godot/imported/RubberBandBass.sf2-5d20f1dd58f68e72f901f4cf4b9e16da.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/RubberBandBass.sf2"
+dest_files=["res://.godot/imported/RubberBandBass.sf2-5d20f1dd58f68e72f901f4cf4b9e16da.res"]
+
+[params]
+

@@ -66,6 +66,12 @@ func play_note(beat: int) -> void:
 	if note and note_player:
 		note_player.play_note(note)
 
+func stop() -> void:
+	for p in [players[0], players[2]]: # stop all non-note player layers
+		p.stop()
+	# Also stop all currently playing notes immediately
+	if note_player:
+		note_player.note_off_all(note_player.get_time())
 
 # -- Voice Processing ---
 func _process_voice_threaded(stream: AudioStream, thread: Thread) -> void:

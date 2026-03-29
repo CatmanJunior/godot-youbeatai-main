@@ -1,0 +1,14 @@
+[remap]
+
+importer="SoundFont"
+type="SoundFont"
+uid="uid://c0k8oh2drb7b3"
+path="res://.godot/imported/Jellyfish Jam V1.sf2-c8ec3c7b8e8d1a03d493a18551596d1a.res"
+
+[deps]
+
+source_file="res://Resources/SoundFonts/Jellyfish Jam V1.sf2"
+dest_files=["res://.godot/imported/Jellyfish Jam V1.sf2-c8ec3c7b8e8d1a03d493a18551596d1a.res"]
+
+[params]
+

@@ -3,15 +3,15 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="1_fj85l"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="1_ngqxe"]
 [ext_resource type="Resource" uid="uid://i4koqv6xf3fh" path="res://Resources/NotePlayerSettings/basenote.tres" id="1_t7g2r"]
-[ext_resource type="SoundFont" uid="uid://c0ncqrlqb7blj" path="res://Experimental/soundfont/Jvbass.sf2" id="3_t7g2r"]
+[ext_resource type="SoundFont" uid="uid://bdkkd0bm8nmvw" path="res://Resources/SoundFonts/Emu Rockgtr.sf2" id="4_t7g2r"]
 
 [resource]
 script = ExtResource("1_fj85l")
-soundfont = ExtResource("3_t7g2r")
+soundfont = ExtResource("4_t7g2r")
 notes = ExtResource("1_ngqxe")
 instrument = 1
 base_note = ExtResource("1_t7g2r")
 allow_key_input = true
-gate = 0.0
+gate = 0.39999999999999997
 volume_db = -7.0
 metadata/_custom_type_script = "uid://cx6op5amucrek"

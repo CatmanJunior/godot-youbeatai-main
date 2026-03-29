@@ -1,4 +1,4 @@
-extends notePlayer
+extends NotePlayer
 class_name Chords
 
 @export var use_override = true

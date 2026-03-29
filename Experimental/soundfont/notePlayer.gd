@@ -1,5 +1,5 @@
 extends SoundFontPlayer
-class_name notePlayer
+class_name NotePlayer
 
 var notes: Notes
 var instrument: int:

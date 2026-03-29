@@ -1,4 +1,4 @@
-extends notePlayer
+extends NotePlayer
 class_name MidiFeedback
 
 func _on_note(element: SequenceElement):

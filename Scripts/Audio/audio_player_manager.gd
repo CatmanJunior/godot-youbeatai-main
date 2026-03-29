@@ -9,6 +9,8 @@ var track_players: Array[TrackPlayerBase] = []
 
 var sfx_player: AudioStreamPlayer
 
+
+var current_volume: Dictionary= {} 
 # Audio files
 @export var main_audio_files: Array[AudioStream] = []
 @export var alt_audio_files: Array[AudioStream] = []
@@ -34,6 +36,17 @@ func _ready():
 	EventBus.mute_all_requested.connect(_mute_all)
 	EventBus.all_players_stop_requested.connect(_on_all_players_stop)
 
+func _process(delta):
+	for i in range(TRACK_COUNT):
+		var t = track_players[i]
+		for p in t.players:
+			if p.playing:
+				var volume = BusHelper.get_volume(p.bus)
+				current_volume[p.bus] = volume
+			
+			else:
+				current_volume[p.bus] = -80.0 # effectively silent when not playing
+
 func _on_all_players_stop():
 	for player in track_players:
 		player.stop()
@@ -54,15 +67,8 @@ func _init_audio_players():
 
 	# Create synth track players
 	for i in range(SYNTH_TRACKS_COUNT):
-		var player = SynthTrackPlayer.new()
-		player.setup(i + SAMPLE_TRACKS_COUNT, "Master")
-		if i < note_player_settings.size():
-			var np = notePlayer.new()
-			np.stream = AudioStreamGenerator.new()
-			np.stream.buffer_length = 0.1
-			np.apply_settings(note_player_settings[i])
-			player.note_player = np
-			player.add_child(np)
+		var player : SynthTrackPlayer = SynthTrackPlayer.new()
+		player.setup(i + SAMPLE_TRACKS_COUNT, "Master", note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)
 

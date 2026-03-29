@@ -1,4 +1,4 @@
-extends notePlayer
+extends NotePlayer
 class_name  ChordFeedback
 
 var chordLookup = {

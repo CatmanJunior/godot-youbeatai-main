@@ -23,8 +23,9 @@ func _get_bus_suffixes() -> Array[String]:
 func _get_bus_prefix() -> String:
 	return ""
 
-func setup(index: int, parent_bus: String) -> void:
+func setup(index: int, parent_bus: String, _settings = null) -> void:
 	track_index = index
+	name = "%sTrack%d" % [_get_bus_prefix(), track_index]
 	_create_buses(parent_bus)
 	_setup_players()
 
@@ -43,6 +44,7 @@ func _create_buses(parent_bus: String) -> void:
 func _setup_players() -> void:
 	for i in range(SUB_TRACK_PLAYER_COUNT):
 		players.append(_make_player(sub_bus_names[i]))
+		players[i].name = "%s_Track_%s" % [_get_bus_prefix(),sub_bus_names[i]]
 
 func _make_player(bus: String) -> AudioStreamPlayer:
 	var p := AudioStreamPlayer.new()
@@ -77,6 +79,7 @@ func set_stream(audio_layer: int, stream: AudioStream) -> void:
 		players[audio_layer].stream = stream
 
 func set_weights(weights: Vector3) -> void:
+	print("Setting weights for track %d: %s" % [track_index, str(weights)])
 	_weights = BusHelper.crossfade3(sub_bus_names, weights)
 
 func play(_offset: float = 0.0) -> void: pass

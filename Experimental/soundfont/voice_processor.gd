@@ -4,9 +4,10 @@ const Fft = preload("res://fft/Fft.gd")
 
 const combine_threshold: float = -1 # -1 is off
 const octaveRange: Vector2i = Vector2i(3, 5) # inclusive
+const silence_threshold: float = 0.01  # RMS below this = silence/rest
 
 ## Extract PCM samples from an AudioStreamWAV as an Array of floats in [-1, 1].
-static func _get_samples(audio: AudioStreamWAV, downsample_factor: int = 4) -> PackedFloat32Array:
+static func _get_samples(audio: AudioStreamWAV, downsample_factor: int = 1) -> PackedFloat32Array:
 	var raw := audio.data
 	var channels := 2 if audio.stereo else 1
 	var is_16bit := audio.format == AudioStreamWAV.FORMAT_16_BITS
@@ -55,7 +56,7 @@ static func _next_power_of_2(n: int) -> int:
 
 ## Find the dominant frequency in a chunk of samples using FFT.
 static func _dominant_frequency(chunk: PackedFloat32Array, sample_rate: float) -> float:
-	const MAX_FFT_SIZE := 2048
+	const MAX_FFT_SIZE := 2048*4
 	var n := mini(_next_power_of_2(chunk.size()), MAX_FFT_SIZE)
 	var fft_input: Array = []
 	fft_input.resize(n)
@@ -116,6 +117,12 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 
 		var freq := _dominant_frequency(chunk, sample_rate)
 		var vol := _rms(chunk)
+
+		# Skip silent beats — push a sentinel with note id -1
+		if vol < silence_threshold:
+			result.push_back(Vector3(-1, 0.0, float(i) * GameState.beat_duration))
+			continue
+
 		var time := float(i) * GameState.beat_duration
 
 		# Clamp frequency to closest note in octave range

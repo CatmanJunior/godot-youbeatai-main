@@ -258,7 +258,17 @@ KlappyEnergy = NodePath("../ProgressBar")
 instruction_label = NodePath("../AchievementsPanel/InstructionLabel")
 achievement_panel = NodePath("../AchievementsPanel")
 
+[node name="Unlock Achievements" type="Button" parent="." unique_id=1964303893]
+visible = false
+offset_left = 394.0
+offset_top = -242.0
+offset_right = 552.0
+offset_bottom = -218.0
+disabled = true
+text = "Unlock achievements"
+
 [connection signal="value_changed" from="ProgressBar" to="SubViewportContainer/SubViewport/Klappy" method="_on_progress_bar_value_changed"]
+[connection signal="pressed" from="Unlock Achievements" to="Unlock Achievements" method="_on_pressed"]
 
 [editable path="SubViewportContainer/SubViewport/Klappy"]
 [editable path="SubViewportContainer/SubViewport/Klappy/model"]

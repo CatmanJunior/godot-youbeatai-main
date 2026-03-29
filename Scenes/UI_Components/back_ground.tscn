@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://1drhlix6kj7f"]
+
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_ko2a8"]
+[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="2_8y37b"]
+[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="3_g8u14"]
+
+[node name="BackGround" type="Control" unique_id=615418117]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BackGroundGlow" type="Sprite2D" parent="." unique_id=17014368]
+modulate = Color(1, 1, 1, 0.21568628)
+z_index = -20
+scale = Vector2(5.88, 5.88)
+texture = ExtResource("1_ko2a8")
+metadata/_edit_lock_ = true
+
+[node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=529632251]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("2_8y37b")
+metadata/_edit_lock_ = true
+
+[node name="BackGroundGradient" type="Sprite2D" parent="." unique_id=469696893]
+modulate = Color(0.85, 0.85, 0.85, 1)
+z_index = -30
+texture_filter = 2
+texture_repeat = 1
+texture = ExtResource("3_g8u14")
+metadata/_edit_lock_ = true

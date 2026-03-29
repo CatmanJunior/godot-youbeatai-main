@@ -24,6 +24,7 @@ func _ready() -> void:
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.playing_changed.connect(_update_play_pause_button)
 	EventBus.beat_state_changed.connect(set_beat_active)
+	play_pause_button.pressed.connect(_on_play_pause_toggled)
 
 func set_beat_active(ring: int, beat: int, active: bool):
 	if ring < beat_buttons.size() and beat < beat_buttons[ring].size():

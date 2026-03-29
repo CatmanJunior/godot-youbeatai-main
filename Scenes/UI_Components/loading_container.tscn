@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://br1pesld3l8lf"]
+
+[ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="1_suqhk"]
+[ext_resource type="Shader" uid="uid://b6ylrcyr2mrhf" path="res://Shaders/FillCircle.gdshader" id="2_cdsnb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55idt"]
+shader = ExtResource("2_cdsnb")
+shader_parameter/primary_color = Color(1, 1, 1, 1)
+shader_parameter/outline_color = Color(0, 0, 0, 1)
+shader_parameter/unfilled_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+shader_parameter/value = 0.33999999240032
+shader_parameter/smooth_ = 0.005
+shader_parameter/width_in = 0.85
+shader_parameter/width_out = 0.95
+shader_parameter/border_width = 0.0
+
+[node name="LoadingContainer" type="CenterContainer" unique_id=617797876 node_paths=PackedStringArray("progress")]
+visible = false
+z_index = 1000
+z_as_relative = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+script = ExtResource("1_suqhk")
+progress = NodePath("ColorRect")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1230609200]
+custom_minimum_size = Vector2(1280, 720)
+layout_mode = 2
+color = Color(0, 0, 0, 0.11764706)
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1560699019]
+material = SubResource("ShaderMaterial_55idt")
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2

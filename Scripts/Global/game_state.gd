@@ -61,8 +61,10 @@ var sections: Array[SectionData] = []
 var current_section: SectionData = null
 var current_section_index: int:
 	get:
-		return current_section.index
-
+		if current_section:
+			return current_section.index
+		else:
+			return -1
 var selected_track_index: int = 0
 var selected_track: TrackData:
 	get:

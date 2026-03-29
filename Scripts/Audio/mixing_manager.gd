@@ -72,6 +72,8 @@ func _apply_stored_volumes(old_section_data: SectionData):
 		GameState.current_section.tracks[track_index].weights = old_track.weights
 		
 func mixing_change_track(new_track_index: int):
+	if GameState.current_section == null:
+		return
 	_store_active_knob(chaos_pad_mode, GameState.current_section)
 
 	active_track = new_track_index

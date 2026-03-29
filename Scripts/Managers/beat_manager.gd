@@ -31,7 +31,10 @@ func _on_template_set(actives: Array):
 	"""Apply template beat actives"""
 	if GameState.current_section:
 		GameState.current_section.set_beat_actives(actives)
-
+	for track in actives.size():
+		for beat in actives[track].size():
+			EventBus.beat_state_changed.emit(track, beat, actives[track][beat])
+		
 func toggle_beat(ring: int, beat: int):
 	"""Toggle a beat on or off"""
 	GameState.current_section.toggle_beat(ring, beat)

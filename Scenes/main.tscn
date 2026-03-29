@@ -172,14 +172,11 @@ playback_type = 1
 unique_name_in_owner = true
 script = ExtResource("12_ceghn")
 
-[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chosen_emoticons_label", "instruction_panel", "chaos_pad_ui", "transport_ui", "settings_ui")]
+[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chaos_pad_ui", "settings_ui")]
 unique_name_in_owner = true
 script = ExtResource("13_3h4bx")
 section_ui = NodePath("../../UserInterface/SwitchSectionButtons")
-chosen_emoticons_label = NodePath("")
-instruction_panel = NodePath("")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
-transport_ui = NodePath("")
 settings_ui = NodePath("../../UserInterface/SettingsPanel")
 
 [node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]

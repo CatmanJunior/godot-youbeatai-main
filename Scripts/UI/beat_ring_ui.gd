@@ -23,7 +23,12 @@ func _ready() -> void:
 	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.playing_changed.connect(_update_play_pause_button)
-	play_pause_button.pressed.connect(_on_play_pause_toggled)
+	EventBus.beat_state_changed.connect(set_beat_active)
+
+func set_beat_active(ring: int, beat: int, active: bool):
+	if ring < beat_buttons.size() and beat < beat_buttons[ring].size():
+		var beat_button : BeatButton = beat_buttons[ring][beat]
+		beat_button.set_pressed_no_signal(active)
 
 func _process(_delta: float) -> void:
 	_update_pointer()

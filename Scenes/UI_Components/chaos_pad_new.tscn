@@ -102,7 +102,6 @@ offset_left = -84.615234
 offset_top = -87.69238
 offset_right = 91.384766
 offset_bottom = 88.30762
-rotation = 3.1415925
 scale = Vector2(0.6, 0.6)
 
 [node name="PointTop" type="Control" parent="ChaosPadTriangle" unique_id=400839598]
@@ -188,7 +187,6 @@ offset_left = -87.69238
 offset_top = -90.76953
 offset_right = 88.30762
 offset_bottom = 85.23047
-rotation = 3.1415925
 scale = Vector2(0.6, 0.6)
 
 [node name="Knob" type="Control" parent="ChaosPadTriangle" unique_id=1796748661]

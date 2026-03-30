@@ -6,6 +6,9 @@ extends Node
 signal restart_requested()
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
 signal soundbank_selected(themes: Array[String], emotions: Array[String])
+## Emitted when note player settings have changed, carrying the new settings for each synth track.
+signal note_player_settings_changed(new_settings: Array[NotePlayerSettings])
+
 
 # ── Playback ──
 ## Emitted when the playback state has changed (playing or stopped).

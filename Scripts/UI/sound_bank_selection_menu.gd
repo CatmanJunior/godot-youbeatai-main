@@ -77,9 +77,12 @@ func end_soundbank_selection() -> void:
 		DisplayServer.tts_stop()
 	
 	EventBus.soundbank_selected.emit(chosen_emotions_emojis, chosen_themes_emojis)
-	get_tree().change_scene_to_file("res://Scenes/loading.tscn")
+	await get_tree().create_timer(0.5).timeout
+	change_to_main()
 	
-
+func change_to_main() -> void:
+	SceneChanger.go_to_main()
+	
 func _set_beats(beats: int) -> void:
 	GameState.total_beats = beats
 

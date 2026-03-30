@@ -1,12 +1,11 @@
 [gd_scene format=3 uid="uid://b8n1g4l4jrv6d"]
 
-[ext_resource type="Script" uid="uid://1f8481edq5sv" path="res://Scripts/sound_bank_selector.gd" id="1_h74sy"]
+[ext_resource type="Script" path="res://Scripts/sound_bank_selector.gd" id="1_h74sy"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_avjdi"]
 [ext_resource type="Script" uid="uid://7wcck2o43vy5" path="res://Scripts/UI/sound_bank_selection_menu.gd" id="2_h74sy"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_ie3tb"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="3_a7rio"]
 [ext_resource type="Resource" uid="uid://bfv1qc8vipcip" path="res://Resources/ButtonGroups/ThemeSelectionButtonGroup.tres" id="3_grpai"]
-[ext_resource type="Script" uid="uid://c5vs4vrlg2bwg" path="res://Scripts/UI/beatsbutton.gd" id="4_k1x81"]
 [ext_resource type="Texture2D" uid="uid://b6tuxknqbe7q8" path="res://Resources/Icons/SelectedEmoticion128.png" id="4_k11aq"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="4_saqfl"]
 [ext_resource type="Script" uid="uid://dymf0ccqr3c14" path="res://Scripts/Buttons/dual_select_button.gd" id="5_7sjhg"]
@@ -17,7 +16,6 @@
 [ext_resource type="ButtonGroup" uid="uid://bnx6ah57t5lrt" path="res://Resources/ButtonGroups/BeatAmountSelectionGroup.tres" id="8_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_bt16w"]
 [ext_resource type="Texture2D" uid="uid://c5gdkspinjfqe" path="res://Resources/Textures_New_Extra/MenuShapes128_0004_16_Purple.png" id="12_k1x81"]
-[ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="12_k11aq"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="13_grpai"]
 [ext_resource type="Texture2D" uid="uid://b5e8xiymsptlh" path="res://Resources/Textures_New_Extra/MenuShapes128_0003_32_Purple.png" id="13_k11aq"]
 [ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
@@ -734,7 +732,6 @@ offset_bottom = 336.54565
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_k1x81")
-script = ExtResource("4_k1x81")
 
 [node name="beats text" type="Label" parent="SoundBankSelectionMenu/beats" unique_id=497965979]
 layout_mode = 1
@@ -921,10 +918,7 @@ bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
 [node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" index="0" unique_id=2042247694]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
-[node name="AnimationPlayer" parent="Robot/SubViewportContainer/SubViewport/Klappy/model" index="1" unique_id=337097326]
-libraries/animations = ExtResource("12_k11aq")
-
-[node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" index="2"]
+[node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" index="2" unique_id=1731684434]
 transform = Transform3D(0.98480767, 0.0030305798, 0.1736215, -0.17144132, -0.14190595, 0.9749207, 0.027592069, -0.9898756, -0.13923067, 0, -3.29693, 0)
 
 [node name="KlappyLight" parent="Robot/SubViewportContainer" index="1"]
@@ -939,7 +933,7 @@ texture_scale = 2.41
 [node name="Klappy respons bubble" parent="." unique_id=532752049 instance=ExtResource("4_saqfl")]
 position = Vector2(85, -27)
 
-[node name="Continue" parent="Klappy respons bubble/Panel" index="1"]
+[node name="Continue" parent="Klappy respons bubble/Panel" parent_id_path=PackedInt32Array(532752049, 1355785928) index="1" unique_id=1713570990]
 visible = false
 
 [node name="Node" type="Node" parent="." unique_id=676744060]

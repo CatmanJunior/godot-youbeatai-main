@@ -4,6 +4,9 @@ extends Node
 ## Provides easy access to sections, playback state, and common data
 ## without needing %UniqueNode references everywhere.
 
+
+
+
 var notes: Notes
 
 const BEATS_AMOUNT_DEFAULT: int = 16
@@ -98,13 +101,14 @@ var is_recording: bool = false
 # -- Initialization --
 func _ready() -> void:
 	EventBus.section_switched.connect(_on_section_changed)
-
 	EventBus.playing_changed.connect(func(value: bool): playing = value)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
 	EventBus.beat_triggered.connect(func(beat: int): current_beat = beat)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 	EventBus.recording_started.connect(func(): is_recording = true)
 	EventBus.recording_stopped.connect(func(_audio): is_recording = false)
+
+
 
 func _on_bpm_changed(new_bpm: int) -> void:
 	bpm = new_bpm

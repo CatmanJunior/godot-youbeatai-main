@@ -103,4 +103,6 @@ func _setup_players() -> void:
 	players.append(_make_player(sub_bus_names[2]))
 	
 
-	
+func update_note_player_settings(new_settings: NotePlayerSettings) -> void:
+	note_player_settings = new_settings
+	note_player.apply_settings(note_player_settings)

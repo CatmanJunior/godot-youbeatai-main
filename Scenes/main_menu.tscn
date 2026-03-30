@@ -1,8 +1,7 @@
 [gd_scene format=3 uid="uid://88rxelg1bo3"]
 
-[ext_resource type="Script" path="res://Scripts/MainMenu.cs" id="1_48xlc"]
+[ext_resource type="Script" uid="uid://bnxxorr3ahw75" path="res://Scenes/main_menu_panel.gd" id="1_trj04"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_1ehe0"]
-[ext_resource type="Script" path="res://Scripts/PermissionButton.cs" id="3_1ehe0"]
 [ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="4_16hvj"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="4_ce3w2"]
@@ -37,9 +36,9 @@ corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 shadow_color = Color(0, 0, 0, 0.8901961)
 
-[node name="scene" type="Node2D"]
+[node name="scene" type="Node2D" unique_id=451630034]
 
-[node name="MainMenuPanel" type="Panel" parent="." node_paths=PackedStringArray("freeButton", "tutorialButton", "ProButton", "KlappyResponse")]
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -53,13 +52,9 @@ offset_bottom = -36.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2.14354, 2.14354)
-script = ExtResource("1_48xlc")
-freeButton = NodePath("SpelenButton")
-tutorialButton = NodePath("TutorialButton")
-ProButton = NodePath("ProButton")
-KlappyResponse = NodePath("../Klappy respons bubble")
+script = ExtResource("1_trj04")
 
-[node name="TitleLabel" type="Label" parent="MainMenuPanel"]
+[node name="TitleLabel" type="Label" parent="MainMenuPanel" unique_id=1650576418]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -80,7 +75,8 @@ Ritme Robot"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TutorialButton" type="Button" parent="MainMenuPanel"]
+[node name="TutorialButton" type="Button" parent="MainMenuPanel" unique_id=1542674455]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -100,7 +96,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Uitleg ❓"
 
-[node name="SpelenButton" type="Button" parent="MainMenuPanel"]
+[node name="SpelenButton" type="Button" parent="MainMenuPanel" unique_id=1461700594]
 visible = false
 layout_mode = 0
 offset_left = 111.03129
@@ -114,7 +110,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Muziek maken 🎶"
 
-[node name="ProButton" type="Button" parent="MainMenuPanel"]
+[node name="ProButton" type="Button" parent="MainMenuPanel" unique_id=658627251]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -134,7 +130,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Pro 👑"
 
-[node name="PermissionButton" type="Button" parent="MainMenuPanel"]
+[node name="PermissionButton" type="Button" parent="MainMenuPanel" unique_id=1692853427]
 visible = false
 layout_mode = 0
 offset_left = 50.0
@@ -144,16 +140,15 @@ offset_bottom = 649.60724
 focus_mode = 0
 disabled = true
 text = "🎙️ Microfoon Toegang Verlenen"
-script = ExtResource("3_1ehe0")
 
-[node name="Robot" parent="MainMenuPanel" instance=ExtResource("4_ce3w2")]
+[node name="Robot" parent="MainMenuPanel" unique_id=1062863753 instance=ExtResource("4_ce3w2")]
 position = Vector2(399.80594, 242.58937)
 scale = Vector2(0.5, 0.5)
 
 [node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0"]
 visible = false
 
-[node name="Skeleton3D" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0"]
+[node name="Skeleton3D" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0" unique_id=305392375]
 bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
 bones/4/rotation = Quaternion(0.6664186, 0.0010095574, -0.0009971554, 0.7455765)
 bones/5/position = Vector3(3.4170494e-05, 0.016205063, 0.0067133754)
@@ -168,7 +163,7 @@ bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
 energy = 1.71
 texture_scale = 2.41
 
-[node name="Tutorial explanition" type="Button" parent="MainMenuPanel"]
+[node name="Tutorial explanition" type="Button" parent="MainMenuPanel" unique_id=340569872]
 visible = false
 layout_mode = 0
 offset_left = 361.08496
@@ -178,7 +173,7 @@ offset_bottom = 660.8884
 scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
 
-[node name="Muziek explanation" type="Button" parent="MainMenuPanel"]
+[node name="Muziek explanation" type="Button" parent="MainMenuPanel" unique_id=2055680309]
 visible = false
 layout_mode = 0
 offset_left = 361.085
@@ -188,7 +183,7 @@ offset_bottom = 715.47107
 scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
 
-[node name="Pro Explanation" type="Button" parent="MainMenuPanel"]
+[node name="Pro Explanation" type="Button" parent="MainMenuPanel" unique_id=1563316689]
 visible = false
 layout_mode = 0
 offset_left = 361.085
@@ -198,12 +193,13 @@ offset_bottom = 762.58936
 scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
 
-[node name="Klappy respons bubble" parent="." instance=ExtResource("6_opfnp")]
+[node name="Klappy respons bubble" parent="." unique_id=73255284 instance=ExtResource("6_opfnp")]
+visible = false
 position = Vector2(276, -134)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1478547768]
 
-[node name="WorldBackPanel" type="Sprite2D" parent="."]
+[node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=962112855]
 modulate = Color(0.85, 0.85, 0.85, 1)
 z_index = -2
 texture_filter = 2
@@ -211,7 +207,7 @@ texture_repeat = 1
 texture = ExtResource("7_yhxw7")
 metadata/_edit_lock_ = true
 
-[node name="Gradient" type="Sprite2D" parent="."]
+[node name="Gradient" type="Sprite2D" parent="." unique_id=1446900614]
 modulate = Color(0.85, 0.85, 0.85, 1)
 z_index = -2
 texture_filter = 2

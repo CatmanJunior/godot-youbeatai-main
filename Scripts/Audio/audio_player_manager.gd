@@ -1,5 +1,10 @@
 extends Node
-# Audio Player Manager — manages audio players for rings and sound effects, and handles audio-related events.
+class_name AudioPlayerManager
+## Manages audio players for rings and sound effects, and handles audio-related events.
+## track_players: array of TrackPlayerBase instances for each track (kick, clap, snare, closed, synth1, synth2)
+## sfx_player: single AudioStreamPlayer for sound effects (metronome, achievement, etc.)
+## Listens to EventBus for play/stop/volume events and updates players accordingly.
+
 
 const TRACK_COUNT = 6
 const SYNTH_TRACKS_COUNT = 2
@@ -35,6 +40,12 @@ func _ready():
 	EventBus.set_recorded_stream_requested.connect(_on_request_set_recorded_stream)
 	EventBus.mute_all_requested.connect(_mute_all)
 	EventBus.all_players_stop_requested.connect(_on_all_players_stop)
+	EventBus.note_player_settings_changed.connect(_on_note_player_settings_changed)
+
+func _on_note_player_settings_changed(new_settings: Array[NotePlayerSettings]) -> void:
+	for i in range(SYNTH_TRACKS_COUNT):
+		var synth_player = track_players[SAMPLE_TRACKS_COUNT + i] as SynthTrackPlayer
+		synth_player.update_note_player_settings(new_settings[i])
 
 func _process(delta):
 	for i in range(TRACK_COUNT):

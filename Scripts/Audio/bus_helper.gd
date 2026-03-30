@@ -73,3 +73,4 @@ static func get_volume(bus_name: String) -> float:
     var left = AudioServer.get_bus_peak_volume_left_db(bus_index, 0)
     var right = AudioServer.get_bus_peak_volume_right_db(bus_index, 0)
     return db_to_linear((left + right) / 2.0)
+

@@ -64,6 +64,12 @@ func _apply_layer_effects(layer: int, bus_idx: int) -> void:
 		2: # Alt2 — no effects
 			pass
 
+func apply_effect_profile(effect_profile: EffectProfile) -> void:
+	var bus_idx = AudioServer.get_bus_index(bus_name)
+	if bus_idx == -1:
+		push_error("Bus '%s' not found for applying effect profile." % bus_name)
+		return
+	effect_profile.apply_effects(bus_idx)
 
 func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> void: pass
 func set_recorded_stream(_rec: AudioStream) -> void: pass

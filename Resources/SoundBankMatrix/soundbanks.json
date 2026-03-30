@@ -1,353 +1,353 @@
 [
-    {
-        "name": "1_kampvuur",
-        "themes": [
-            "💔",
-            "🌴",
-            "⏳️",
-            "🌍",
-            "🐾",
+	{
+		"name": "1_kampvuur",
+		"themes": [
+			"💔",
+			"🌴",
+			"⏳️",
+			"🌍",
+			"🐾",
             "🫶"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "🤔"
-        ],
-        "bpm": 70,
-        "swing": 10,
-        "electronic": 0
-    },
-    {
-        "name": "1_lo-fi",
-        "themes": [
-            "🪦",
-            "🎮",
-            "🦄",
+		],
+		"bpm": 70,
+		"swing": 10,
+		"electronic": 0
+	},
+	{
+		"name": "1_lo-fi",
+		"themes": [
+			"🪦",
+			"🎮",
+			"🦄",
             "⏳️"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "🤔"
-        ],
-        "bpm": 60,
-        "swing": 50,
-        "electronic": 1
-    },
-    {
-        "name": "1_new-age",
-        "themes": [
-            "💔",
-            "🌴",
-            "🦄",
-            "🫶",
+		],
+		"bpm": 60,
+		"swing": 50,
+		"electronic": 1
+	},
+	{
+		"name": "1_new-age",
+		"themes": [
+			"💔",
+			"🌴",
+			"🦄",
+			"🫶",
             "🌍"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "🤔"
-        ],
-        "bpm": 75,
-        "swing": 15,
-        "electronic": 2
-    },
-    {
-        "name": "2_acoustisch",
-        "themes": [
-            "💔",
-            "🎂",
-            "🏆",
-            "🍽",
-            "🌍",
-            "🐾",
+		],
+		"bpm": 75,
+		"swing": 15,
+		"electronic": 2
+	},
+	{
+		"name": "2_acoustisch",
+		"themes": [
+			"💔",
+			"🎂",
+			"🏆",
+			"🍽",
+			"🌍",
+			"🐾",
             "🫶"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😢"
-        ],
-        "bpm": 70,
-        "swing": 20,
-        "electronic": 0
-    },
-    {
-        "name": "2_keuken",
-        "themes": [
-            "🌴",
-            "🫶",
-            "🍽",
+		],
+		"bpm": 70,
+		"swing": 20,
+		"electronic": 0
+	},
+	{
+		"name": "2_keuken",
+		"themes": [
+			"🌴",
+			"🫶",
+			"🍽",
             "🐾"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😢"
-        ],
-        "bpm": 80,
-        "swing": 25,
-        "electronic": 1
-    },
-    {
-        "name": "2_tango",
-        "themes": [
-            "💔",
-            "🪦",
-            "🦄",
-            "🫶",
-            "🌍",
+		],
+		"bpm": 80,
+		"swing": 25,
+		"electronic": 1
+	},
+	{
+		"name": "2_tango",
+		"themes": [
+			"💔",
+			"🪦",
+			"🦄",
+			"🫶",
+			"🌍",
             "🌴"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😢"
-        ],
-        "bpm": 85,
-        "swing": 40,
-        "electronic": 2
-    },
-    {
-        "name": "3_aziatisch",
-        "themes": [
-            "💔",
-            "🪦",
-            "🏆",
-            "🍽",
-            "🐾",
+		],
+		"bpm": 85,
+		"swing": 40,
+		"electronic": 2
+	},
+	{
+		"name": "3_aziatisch",
+		"themes": [
+			"💔",
+			"🪦",
+			"🏆",
+			"🍽",
+			"🐾",
             "🎮"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😁"
-        ],
-        "bpm": 90,
-        "swing": 50,
-        "electronic": 2
-    },
-    {
-        "name": "3_opera",
-        "themes": [
-            "💔",
-            "🪦",
-            "⏳️",
+		],
+		"bpm": 90,
+		"swing": 50,
+		"electronic": 2
+	},
+	{
+		"name": "3_opera",
+		"themes": [
+			"💔",
+			"🪦",
+			"⏳️",
             "🫶"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😁"
-        ],
-        "bpm": 70,
-        "swing": 10,
-        "electronic": 1
-    },
-    {
-        "name": "3_raggae",
-        "themes": [
-            "💔",
-            "🌴",
-            "🪦",
-            "🫶",
-            "🌍",
+		],
+		"bpm": 70,
+		"swing": 10,
+		"electronic": 1
+	},
+	{
+		"name": "3_raggae",
+		"themes": [
+			"💔",
+			"🌴",
+			"🪦",
+			"🫶",
+			"🌍",
             "🐾"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😁"
-        ],
-        "bpm": 70,
-        "swing": 70,
-        "electronic": 0
-    },
-    {
-        "name": "3_soul",
-        "themes": [
-            "🎂",
-            "🫶",
-            "🍽",
+		],
+		"bpm": 70,
+		"swing": 70,
+		"electronic": 0
+	},
+	{
+		"name": "3_soul",
+		"themes": [
+			"🎂",
+			"🫶",
+			"🍽",
             "⏳️"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😁"
-        ],
-        "bpm": 80,
-        "swing": 65,
-        "electronic": 1
-    },
-    {
-        "name": "4_balkisch",
-        "themes": [
-            "🎂",
-            "🦄",
-            "🏆",
-            "🪦",
+		],
+		"bpm": 80,
+		"swing": 65,
+		"electronic": 1
+	},
+	{
+		"name": "4_balkisch",
+		"themes": [
+			"🎂",
+			"🦄",
+			"🏆",
+			"🪦",
             "🐾"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😍"
-        ],
-        "bpm": 90,
-        "swing": 60,
-        "electronic": 0
-    },
-    {
-        "name": "4_k-pop",
-        "themes": [
-            "💔",
-            "🦄",
-            "🎮",
-            "🫶",
+		],
+		"bpm": 90,
+		"swing": 60,
+		"electronic": 0
+	},
+	{
+		"name": "4_k-pop",
+		"themes": [
+			"💔",
+			"🦄",
+			"🎮",
+			"🫶",
             "🏆"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😍"
-        ],
-        "bpm": 100,
-        "swing": 10,
-        "electronic": 2
-    },
-    {
-        "name": "4_pop",
-        "themes": [
-            "🎂",
-            "🦄",
-            "🍽",
-            "🌍",
+		],
+		"bpm": 100,
+		"swing": 10,
+		"electronic": 2
+	},
+	{
+		"name": "4_pop",
+		"themes": [
+			"🎂",
+			"🦄",
+			"🍽",
+			"🌍",
             "🫶"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😍"
-        ],
-        "bpm": 110,
-        "swing": 25,
-        "electronic": 1
-    },
-    {
-        "name": "5_afrikaans",
-        "themes": [
-            "🌴",
-            "🎂",
-            "🫶",
-            "🍽",
-            "🌍",
+		],
+		"bpm": 110,
+		"swing": 25,
+		"electronic": 1
+	},
+	{
+		"name": "5_afrikaans",
+		"themes": [
+			"🌴",
+			"🎂",
+			"🫶",
+			"🍽",
+			"🌍",
             "🐾"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😵‍💫"
-        ],
-        "bpm": 115,
-        "swing": 55,
-        "electronic": 0
-    },
-    {
-        "name": "5_dance",
-        "themes": [
-            "🫶",
-            "🏆",
-            "🎂",
+		],
+		"bpm": 115,
+		"swing": 55,
+		"electronic": 0
+	},
+	{
+		"name": "5_dance",
+		"themes": [
+			"🫶",
+			"🏆",
+			"🎂",
             "🎮"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😵‍💫"
-        ],
-        "bpm": 120,
-        "swing": 5,
-        "electronic": 2
-    },
-    {
-        "name": "5_zuid-ame",
-        "themes": [
-            "💔",
-            "🫶",
-            "🏆",
-            "🍽",
-            "🌍",
+		],
+		"bpm": 120,
+		"swing": 5,
+		"electronic": 2
+	},
+	{
+		"name": "5_zuid-ame",
+		"themes": [
+			"💔",
+			"🫶",
+			"🏆",
+			"🍽",
+			"🌍",
             "🐾"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😵‍💫"
-        ],
-        "bpm": 110,
-        "swing": 55,
-        "electronic": 0
-    },
-    {
-        "name": "6_funk",
-        "themes": [
-            "🌴",
-            "🏆",
-            "🌍",
+		],
+		"bpm": 110,
+		"swing": 55,
+		"electronic": 0
+	},
+	{
+		"name": "6_funk",
+		"themes": [
+			"🌴",
+			"🏆",
+			"🌍",
             "🫶"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😳"
-        ],
-        "bpm": 90,
-        "swing": 60,
-        "electronic": 1
-    },
-    {
-        "name": "6_hiphop",
-        "themes": [
-            "🌴",
-            "🪦",
+		],
+		"bpm": 90,
+		"swing": 60,
+		"electronic": 1
+	},
+	{
+		"name": "6_hiphop",
+		"themes": [
+			"🌴",
+			"🪦",
             "🍽"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😳"
-        ],
-        "bpm": 85,
-        "swing": 70,
-        "electronic": 2
-    },
-    {
-        "name": "6_rock",
-        "themes": [
-            "🎂",
-            "🏆",
-            "🪦",
+		],
+		"bpm": 85,
+		"swing": 70,
+		"electronic": 2
+	},
+	{
+		"name": "6_rock",
+		"themes": [
+			"🎂",
+			"🏆",
+			"🪦",
             "🌍"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😳"
-        ],
-        "bpm": 110,
-        "swing": 15,
-        "electronic": 0
-    },
-    {
-        "name": "7_hardcore",
-        "themes": [
-            "💔",
-            "🪦",
-            "🦄",
-            "🎂",
+		],
+		"bpm": 110,
+		"swing": 15,
+		"electronic": 0
+	},
+	{
+		"name": "7_hardcore",
+		"themes": [
+			"💔",
+			"🪦",
+			"🦄",
+			"🎂",
             "🎮"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😡"
-        ],
-        "bpm": 160,
-        "swing": 0,
-        "electronic": 1
-    },
-    {
-        "name": "7_metal",
-        "themes": [
-            "🌴",
-            "🦄",
-            "🫶",
-            "🏆",
-            "🪦",
-            "🍽",
+		],
+		"bpm": 160,
+		"swing": 0,
+		"electronic": 1
+	},
+	{
+		"name": "7_metal",
+		"themes": [
+			"🌴",
+			"🦄",
+			"🫶",
+			"🏆",
+			"🪦",
+			"🍽",
             "🐾"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😡"
-        ],
-        "bpm": 130,
-        "swing": 0,
-        "electronic": 2
-    },
-    {
-        "name": "7_techno",
-        "themes": [
-            "🎂",
-            "🦄",
+		],
+		"bpm": 130,
+		"swing": 0,
+		"electronic": 2
+	},
+	{
+		"name": "7_techno",
+		"themes": [
+			"🎂",
+			"🦄",
             "🌍"
-        ],
-        "emotions": [
+		],
+		"emotions": [
             "😡"
-        ],
-        "bpm": 140,
-        "swing": 5,
-        "electronic": 2
-    }
+		],
+		"bpm": 140,
+		"swing": 5,
+		"electronic": 2
+	}
 ]

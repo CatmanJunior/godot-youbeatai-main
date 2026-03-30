@@ -16,6 +16,7 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="25_y86h7"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
+[ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://dfremkccddsox" path="res://Scenes/UI_Components/settings_button.tscn" id="34_nwwfm"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
@@ -133,6 +134,11 @@ unique_name_in_owner = true
 script = ExtResource("62_daoo8")
 recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/PointTop/ChaosButtonMic")
 waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
+
+[node name="SoundBankLoader" type="Node" parent="Managers" unique_id=1437890393 node_paths=PackedStringArray("audio_player_manager")]
+script = ExtResource("29_s8vy0")
+base_noteplayer_settings = Array[ExtResource("25_y86h7")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
+audio_player_manager = NodePath("../AudioManagers/AudioPlayerManager")
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false

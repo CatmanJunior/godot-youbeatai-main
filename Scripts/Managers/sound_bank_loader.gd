@@ -10,35 +10,41 @@ const BANK_PATH_TEMPLATE := "res://Resources/Audio/SoundBanks/%s/AudioBank.tres"
 # Fallback bank name used when nothing has been selected yet (e.g. during dev).
 const FALLBACK_BANK_NAME := "2_acoustisch"
 
+@export var fallback_bank: AudioBank
+
 @export var base_noteplayer_settings: Array[NotePlayerSettings]
 
 @export var audio_player_manager: AudioPlayerManager
 
 func _ready() -> void:
 	var bank_dict: Dictionary = GameState.selected_soundbank
-
+	var bank : AudioBank
 	# Determine which bank to load
 	var bank_name: String = bank_dict.get("name", "")
 	if bank_name.is_empty():
 		push_warning("SoundBankLoader: no soundbank selected, falling back to '%s'." % FALLBACK_BANK_NAME)
 		bank_name = FALLBACK_BANK_NAME
+		bank = fallback_bank
+	else:
+		var bank_path := BANK_PATH_TEMPLATE % bank_name
 
-	var bank_path := BANK_PATH_TEMPLATE % bank_name
+		# Load the AudioBank resource
+		if not ResourceLoader.exists(bank_path):
+			push_error("SoundBankLoader: AudioBank not found at '%s'." % bank_path)
+			return
 
-	# Load the AudioBank resource
-	if not ResourceLoader.exists(bank_path):
-		push_error("SoundBankLoader: AudioBank not found at '%s'." % bank_path)
-		return
-
-	var bank := ResourceLoader.load(bank_path) as AudioBank
-	if bank == null:
-		push_error("SoundBankLoader: Failed to cast resource at '%s' to AudioBank." % bank_path)
-		return
+		bank = ResourceLoader.load(bank_path)
+		if bank == null:
+			push_error("SoundBankLoader: Failed to cast resource at '%s' to AudioBank." % bank_path)
+			return
 
 	_apply_streams(bank)
 	_apply_bpm_swing(bank_dict)
 	_apply_effect_profile(bank)
-	apply_soundfont_and_instrument(bank)
+	_apply_soundfont_and_instrument(bank)
+
+	EventBus.soundbank_loaded.emit(bank_name)
+
 
 	print("SoundBankLoader: loaded '%s' (bpm=%d, swing=%d%%)" % [
 		bank_name,
@@ -83,7 +89,7 @@ func _apply_effect_profile(bank: AudioBank) -> void:
 	audio_player_manager.track_players[4].apply_effect_profile(bank.effectProfile)
 	audio_player_manager.track_players[5].apply_effect_profile(bank.effectProfile)
 
-func apply_soundfont_and_instrument(bank: AudioBank) -> void:
+func _apply_soundfont_and_instrument(bank: AudioBank) -> void:
 	
 	var new_noteplayer_settings := [
 		NotePlayerSettings.new(bank.synth1_soundfont, base_noteplayer_settings[0].notes, bank.synth1_instrument_id, base_noteplayer_settings[0].base_note, base_noteplayer_settings[0].allow_key_input, base_noteplayer_settings[0].gate, base_noteplayer_settings[0].volume_db),

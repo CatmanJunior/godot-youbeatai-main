@@ -8,7 +8,8 @@ signal restart_requested()
 signal soundbank_selected(themes: Array[String], emotions: Array[String])
 ## Emitted when note player settings have changed, carrying the new settings for each synth track.
 signal note_player_settings_changed(new_settings: Array[NotePlayerSettings])
-
+## Emitted when a soundbank has been fully loaded and applied.
+signal soundbank_loaded(bank_name: String)
 
 # ── Playback ──
 ## Emitted when the playback state has changed (playing or stopped).
@@ -18,7 +19,7 @@ signal playing_change_requested(playing: bool)
 ## Emitted to request toggling between play and pause.
 signal play_pause_toggle_requested()
 
-# ── BPM ──
+# ── BPM & Swing ──
 ## Emitted when the BPM value has changed.
 signal bpm_changed(new_bpm: float)
 ## Emitted to request increasing the BPM by the given value.
@@ -27,6 +28,9 @@ signal bpm_up_requested(value: int)
 signal bpm_down_requested(value: int)
 ## Emitted to request setting the BPM to an exact value.
 signal bpm_set_requested(value: int)
+## Emitted to request setting the swing value (0.0 – 1.0).
+signal swing_set_requested(value: float)
+
 
 # ── Beat Clock ──
 ## Emitted on every beat tick with the current beat index.

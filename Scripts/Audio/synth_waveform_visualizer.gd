@@ -1,40 +1,27 @@
-class_name SynthWaveformVisualizer
+class_name SynthWaveform
 extends RefCounted
-## Draws circular waveform lines from AudioStreamWAV data onto Line2D nodes.
+## Draws a circular waveform line from AudioStreamWAV data onto a Line2D node.
 
-var small_line: Line2D
-var big_line: Line2D
-var big_line_base_dist: int
-var big_line_volume_dist: int
-var big_line_reversed: bool
+var line: Line2D
+var points: int
+var base_dist: int
+var volume_dist: int
+var reversed: bool
+var offsets: Array = []
 
-
-func _init(p_small_line: Line2D, p_big_line: Line2D, p_base_dist: int = 280, p_volume_dist: int = 28, p_reversed: bool = false):
-	small_line = p_small_line
-	big_line = p_big_line
-	big_line_base_dist = p_base_dist
-	big_line_volume_dist = p_volume_dist
-	big_line_reversed = p_reversed
-
-
-func update_lines(audio: AudioStream) -> void:
-	_set_small_volume_line(audio)
-	_set_big_volume_line(audio)
+func _init(p_line: Line2D, p_points: int = 100, p_base_dist: int = 280, p_volume_dist: int = 28, p_reversed: bool = false):
+	line = p_line
+	points = p_points
+	base_dist = p_base_dist
+	volume_dist = p_volume_dist
+	reversed = p_reversed
 
 
-func _set_small_volume_line(audio: AudioStream) -> void:
-	_set_volume_line(small_line, audio, 40, 15, 15)
-
-
-func _set_big_volume_line(audio: AudioStream) -> void:
-	_set_volume_line(big_line, audio, 100, big_line_base_dist, big_line_volume_dist, big_line_reversed)
-
-
-func _set_volume_line(line: Line2D, audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool = false) -> void:
+func update_line(audio: AudioStream) -> void:
 	if not line:
 		return
 
-	var offsets = _calculate_volume_offsets(audio, points, base_dist, volume_dist, reversed)
+	offsets = _calculate_volume_offsets(audio, points, base_dist, volume_dist, reversed)
 
 	line.clear_points()
 	for offset in offsets:
@@ -42,7 +29,7 @@ func _set_volume_line(line: Line2D, audio: AudioStream, points: int, base_dist: 
 
 
 func _calculate_volume_offsets(audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool) -> Array:
-	var offsets: Array = []
+	var new_offsets: Array = []
 
 	for i in range(points):
 		var volume_offset := 0.0
@@ -56,9 +43,9 @@ func _calculate_volume_offsets(audio: AudioStream, points: int, base_dist: int, 
 		var angle := -PI / 2.0 + TAU * i / points
 		var final_dist := (base_dist - volume_offset) if reversed else (base_dist + volume_offset)
 
-		offsets.append(Vector2(cos(angle), sin(angle)) * final_dist)
+		new_offsets.append(Vector2(cos(angle), sin(angle)) * final_dist)
 
-	return offsets
+	return new_offsets
 
 
 static func get_volume_at_time(audio: AudioStreamWAV, time: float) -> float:

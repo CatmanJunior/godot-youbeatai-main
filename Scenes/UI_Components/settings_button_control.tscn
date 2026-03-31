@@ -13,14 +13,23 @@ func _on_pressed():
 
 [node name="SettingsButtonControl" type="Control" unique_id=641439858]
 layout_mode = 3
-anchors_preset = 0
-offset_left = 561.0
-offset_top = 282.0
-offset_right = 601.0
-offset_bottom = 322.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1242.0
+offset_top = 678.0
+offset_right = 2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="SettingsButton" type="Button" parent="." unique_id=754926829]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -1.1
+anchor_top = -1.05
+anchor_right = -1.0999998
+anchor_bottom = -1.05
 offset_right = 59.999992
 offset_bottom = 60.0
 focus_mode = 0

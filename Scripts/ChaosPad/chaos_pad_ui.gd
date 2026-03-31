@@ -26,9 +26,8 @@ func set_knob_position(pos: Vector2):
 	knob.position = pos
 
 func _on_track_selected(track: int):
-	if GameState.current_section == null:
-		return
-	set_knob_position(GameState.current_section.get_track_knob_position(track))
+	if GameState.current_section != null:
+		set_knob_position(GameState.current_section.get_track_knob_position(track))
 	update_track_icons(track)
 	start_triangle_color_change(track_settings.get_track(track).track_color, 0.2)
 

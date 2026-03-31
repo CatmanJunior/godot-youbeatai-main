@@ -21,8 +21,8 @@ func _ready():
 	call_deferred("_set_initial_track")
 
 func _set_initial_track():
-	track_buttons[GameState.selected_track_index].set_button_selected(true)
-	EventBus.track_selected.emit(GameState.selected_track_index)
+	track_buttons[0].set_button_selected(true)
+	EventBus.track_selected.emit(0)
 
 func _process(_delta: float) -> void:
 	var progression = GameState.bar_progress
@@ -35,7 +35,7 @@ func _on_track_button_pressed(track_index: int):
 	track_buttons[track_index].set_button_selected(true)
 
 	if track_buttons[track_index].is_synth_track:
-		track_buttons[track_index].background.modulate = GameState.colors[track_index]
+		track_buttons[track_index].background.modulate = track_settings.get_track(track_index).track_color
 
 	if not track_buttons[track_index].is_synth_track:
 		EventBus.play_track_requested.emit(track_index)

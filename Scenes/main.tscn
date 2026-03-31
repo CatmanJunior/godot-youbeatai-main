@@ -8,9 +8,7 @@
 [ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="9_5vy51"]
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="10_o2owy"]
-[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="11_ylsbi"]
 [ext_resource type="Script" uid="uid://5vj36sb75hp8" path="res://Scripts/Managers/keyboard_input_manager.gd" id="12_ceghn"]
-[ext_resource type="Script" uid="uid://bqlh3mvdlftmn" path="res://Scripts/UI/ui_manager.gd" id="13_3h4bx"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="25_y86h7"]
@@ -78,9 +76,6 @@ unique_name_in_owner = true
 script = ExtResource("10_o2owy")
 settings_ui = NodePath("../../../UserInterface/SettingsPanel")
 
-[node name="BpmManager" type="Node" parent="Managers/GameManager" unique_id=1162706801]
-script = ExtResource("11_ylsbi")
-
 [node name="Exporter" type="Node" parent="Managers/GameManager" unique_id=944798366]
 script = ExtResource("65_87bhu")
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
@@ -93,22 +88,15 @@ metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
 [node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/ListenToLastExport" unique_id=723625077]
 playback_type = 1
 
+[node name="PreviewExportsManager" type="Node2D" parent="Managers/GameManager/Exporter" unique_id=1232035288]
+
+[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/PreviewExportsManager" unique_id=1270233026]
+
+[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/PreviewExportsManager" unique_id=1661558996]
+
 [node name="KeyboardInput" type="Node" parent="Managers" unique_id=537541957]
 unique_name_in_owner = true
 script = ExtResource("12_ceghn")
-
-[node name="UiManager" type="Node" parent="Managers" unique_id=1762454188 node_paths=PackedStringArray("section_ui", "chaos_pad_ui", "settings_ui")]
-unique_name_in_owner = true
-script = ExtResource("13_3h4bx")
-section_ui = NodePath("../../UserInterface/SwitchSectionButtons")
-chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
-settings_ui = NodePath("../../UserInterface/SettingsPanel")
-
-[node name="PreviewExportsManager" type="Node2D" parent="Managers" unique_id=1232035288]
-
-[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1270233026]
-
-[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/PreviewExportsManager" unique_id=1661558996]
 
 [node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
 
@@ -337,6 +325,15 @@ metadata/_edit_lock_ = true
 
 [node name="SettingsButtonControl" parent="UserInterface" unique_id=641439858 instance=ExtResource("48_jut3y")]
 layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 561.0
+offset_top = 282.0
+offset_right = 561.0
+offset_bottom = 282.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [editable path="UserInterface/BeatRing"]
 [editable path="UserInterface/ChaosPad"]

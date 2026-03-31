@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="4_snosd"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="5_8pi72"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="7_0dny5"]
-[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="7_2qaqg"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_3t5nw"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="10_pyso5"]
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_uqoqp"]
@@ -244,9 +243,6 @@ metronome_sfx = ExtResource("35_dbt8u")
 unique_name_in_owner = true
 script = ExtResource("64_hxd57")
 
-[node name="BpmManager" type="Node" parent="Managers/GameManager" unique_id=422395042]
-unique_name_in_owner = true
-script = ExtResource("7_2qaqg")
 
 [node name="KeyboardInput" type="Node" parent="Managers" unique_id=2017263538]
 unique_name_in_owner = true

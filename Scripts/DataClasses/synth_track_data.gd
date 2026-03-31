@@ -6,6 +6,8 @@ extends TrackData
 
 var sequence: Sequence = null
 
+var synth_waveform_visualizer: SynthWaveform = null
+
 func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, knob_pos, TrackType.SYNTH)
 
@@ -16,4 +18,5 @@ func duplicate_track() -> TrackData:
 	copy.master_volume = master_volume
 	copy.weights = weights
 	copy.sequence = sequence
+	copy.synth_waveform_visualizer = synth_waveform_visualizer
 	return copy

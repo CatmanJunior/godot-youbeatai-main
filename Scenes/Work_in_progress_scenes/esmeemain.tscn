@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/UI_Components/blocker.tscn" id="6_dabjm"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="7_ss7o7"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="8_plxj5"]
-[ext_resource type="Script" uid="uid://carkwc1x5p3w1" path="res://Scripts/Managers/bpm.gd" id="9_vp66f"]
+[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="9_vp66f"]
 [ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="10_ywy4v"]
 [ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="22_3jhgx"]
 [ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="23_5if8y"]

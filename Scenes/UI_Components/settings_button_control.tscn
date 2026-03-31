@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bx31iyxqitumv"]
+
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_q3fpn"]
+
+[sub_resource type="GDScript" id="GDScript_pfx1i"]
+script/source = "extends Button
+
+func _ready():
+    pressed.connect(_on_pressed)
+
+func _on_pressed():
+    EventBus.toggle_settings_menu_requested.emit()"
+
+[node name="SettingsButtonControl" type="Control" unique_id=641439858]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 561.0
+offset_top = 282.0
+offset_right = 601.0
+offset_bottom = 322.0
+
+[node name="SettingsButton" type="Button" parent="." unique_id=754926829]
+layout_mode = 0
+offset_right = 59.999992
+offset_bottom = 60.0
+focus_mode = 0
+theme = ExtResource("1_q3fpn")
+theme_override_font_sizes/font_size = 25
+text = "⚙"
+script = SubResource("GDScript_pfx1i")
+metadata/_edit_use_anchors_ = true

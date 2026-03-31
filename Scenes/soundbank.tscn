@@ -904,7 +904,7 @@ light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="Skeleton3D" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0" unique_id=305392375]
+[node name="Skeleton3D" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot" index="0" unique_id=685798890]
 bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
 bones/4/rotation = Quaternion(0.6664186, 0.0010095574, -0.0009971554, 0.7455765)
 bones/5/position = Vector3(3.4170494e-05, 0.016205063, 0.0067133754)
@@ -915,7 +915,7 @@ bones/10/rotation = Quaternion(0.0049924124, -0.00026509096, 0.35862666, 0.93346
 bones/16/position = Vector3(-0.0069037513, -0.0019778507, 0.004023196)
 bones/16/rotation = Quaternion(0.70709825, 0.013363976, -0.706876, -0.012642261)
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" index="0" unique_id=2042247694]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" index="0" unique_id=150000404]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" index="2" unique_id=1731684434]

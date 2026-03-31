@@ -1,13 +1,13 @@
 [gd_scene format=3 uid="uid://dkd4xm6dcj43i"]
 
 [ext_resource type="Script" uid="uid://dm7r5d1s47gmy" path="res://Scripts/klappy_light_pad.gd" id="1_omcsf"]
-[ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scenes/trail.gd" id="3_cwede"]
+[ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="3_cwede"]
 
 [sub_resource type="Curve" id="Curve_fob3f"]
 _data = [Vector2(0, 0.014961481), 0.0, 0.0, 0, 0, Vector2(0.9922482, 0.20945948), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="KlappyLightPad" type="Control"]
+[node name="KlappyLightPad" type="Control" unique_id=736149553]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 8
@@ -23,14 +23,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_omcsf")
 
-[node name="cursor" type="TextureRect" parent="."]
+[node name="cursor" type="TextureRect" parent="." unique_id=112955615]
 layout_mode = 0
 offset_left = 32.0
 offset_top = 35.0
 offset_right = 57.0
 offset_bottom = 60.0
 
-[node name="Trail" type="Line2D" parent="cursor"]
+[node name="Trail" type="Line2D" parent="cursor" unique_id=2109696148]
 top_level = true
 texture_repeat = 2
 points = PackedVector2Array(504, -263, 333, -259)

@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=7 format=3 uid="uid://bd57mrnx7ghq1"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bd57mrnx7ghq1"]
 
 [ext_resource type="Texture2D" uid="uid://jbpje324htlf" path="res://Experimental/Klappy/Textures/TKleppy_Legs_Base_color.png" id="1_0rlnf"]
 [ext_resource type="Texture2D" uid="uid://bpl1bhywuvit4" path="res://Experimental/Klappy/Textures/TKleppy_Legs_Mixed_AO.png" id="2_avtkx"]

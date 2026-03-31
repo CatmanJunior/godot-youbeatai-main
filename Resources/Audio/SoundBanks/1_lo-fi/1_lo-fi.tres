@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://dxq08e1mga327" path="res://Resources/Audio/SoundBanks/1_lo-fi/EffectProfile.tres" id="5_81lb8"]
 [ext_resource type="AudioStream" uid="uid://n4ahyv3pyc4j" path="res://Resources/Audio/SoundBanks/1_lo-fi/Kick Blossom 1.wav" id="6_w75j6"]
 [ext_resource type="AudioStream" uid="uid://dsvwgyu3cdkb" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Kick Bazzazian 2.wav" id="7_qsyax"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_qyjr2"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_qyjr2"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_q1ehn"]
 [ext_resource type="AudioStream" uid="uid://duc4jv7w5emho" path="res://Resources/Audio/SoundBanks/1_lo-fi/Snare CandyClub.wav" id="10_7ulmg"]
 [ext_resource type="AudioStream" uid="uid://6phiwinlbqwv" path="res://Resources/Audio/SoundBanks/1_lo-fi/mineur/Snare Cosmos 1.wav" id="11_dr1sr"]
@@ -29,4 +29,3 @@ green_effectProfile = ExtResource("5_81lb8")
 purple_soundfont = ExtResource("8_qyjr2")
 purple_instrument_id = 14
 purple_beats = 1.0
-effectProfile = ExtResource("5_81lb8")

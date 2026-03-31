@@ -17,34 +17,41 @@ func apply_effects(bus_index: int) -> void:
 	apply_reverb(bus_index, 5, reverb)
 
 func apply_pitch_shift(bus_index: int, effect_index: int, value: float) -> void:
-	var pitch: AudioEffectPitchShift = AudioServer.get_bus_effect(bus_index, effect_index)
+	var pitch: AudioEffectPitchShift = AudioEffectPitchShift.new()
+	AudioServer.add_bus_effect(bus_index, AudioEffectPitchShift.new())
+	
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 	pitch.pitch_scale = value if value > 0 else 1.0
 
 func apply_distortion(bus_index: int, effect_index: int, value: float) -> void:
-	var distortion: AudioEffectDistortion = AudioServer.get_bus_effect(bus_index, effect_index)
+	var distortion: AudioEffectDistortion = AudioEffectDistortion.new()
+	AudioServer.add_bus_effect(bus_index, distortion)	
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 	distortion.pre_gain = value
 
 func apply_phaser(bus_index: int, effect_index: int, value: float) -> void:
-	var phaser_effect: AudioEffectPhaser = AudioServer.get_bus_effect(bus_index, effect_index)
+	var phaser_effect: AudioEffectPhaser = AudioEffectPhaser.new()
+	AudioServer.add_bus_effect(bus_index, phaser_effect)
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 	if value > 0:
 		phaser_effect.rate_hz = value
 
 func apply_chorus(bus_index: int, effect_index: int, enabled: bool) -> void:
+	var chorus_effect: AudioEffectChorus = AudioEffectChorus.new()
+	AudioServer.add_bus_effect(bus_index, chorus_effect)
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, enabled)
 
 func apply_delay(bus_index: int, effect_index: int, value: float) -> void:
-	var delay_effect: AudioEffectDelay = AudioServer.get_bus_effect(bus_index, effect_index)
+	var delay_effect: AudioEffectDelay = AudioEffectDelay.new()
+	AudioServer.add_bus_effect(bus_index, delay_effect)
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 	if value > 0:
 		delay_effect.tap1_delay_ms = value
 		delay_effect.tap2_delay_ms = value * 2
 
 func apply_reverb(bus_index: int, effect_index: int, value: float) -> void:
-	var reverb_effect: AudioEffectReverb = AudioServer.get_bus_effect(bus_index, effect_index)
+	var reverb_effect: AudioEffectReverb = AudioEffectReverb.new()
+	AudioServer.add_bus_effect(bus_index, reverb_effect)
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 	if value > 0:
 		reverb_effect.room_size = value
-

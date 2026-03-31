@@ -1,24 +1,13 @@
 [gd_scene format=3 uid="uid://cifubqpkkn5tn"]
 
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="1_oee6b"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="1_oee6b"]
 [ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="2_u2smf"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="3_l38x5"]
-[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="4_juivb"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fw2ei"]
 buffer_length = 0.1
-
-[sub_resource type="Resource" id="Resource_u1rjn"]
-script = ExtResource("4_juivb")
-name = "c4"
-id = 60
-frequency = 261.63
-metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [node name="notePlayer" type="SoundFontPlayer" unique_id=2092406935]
 soundfont = ExtResource("1_oee6b")
 stream = SubResource("AudioStreamGenerator_fw2ei")
 script = ExtResource("2_u2smf")
-notes = ExtResource("3_l38x5")
-base_note = SubResource("Resource_u1rjn")
 metadata/_custom_type_script = "uid://bvcmfyc0eqv7e"

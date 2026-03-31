@@ -43,6 +43,7 @@ func _ready():
 	EventBus.note_player_settings_changed.connect(_on_note_player_settings_changed)
 
 func _on_note_player_settings_changed(new_settings: Array[NotePlayerSettings]) -> void:
+	note_player_settings = new_settings
 	for i in range(SYNTH_TRACKS_COUNT):
 		var synth_player = track_players[SAMPLE_TRACKS_COUNT + i] as SynthTrackPlayer
 		synth_player.update_note_player_settings(new_settings[i])

@@ -4,29 +4,18 @@
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="2_pe0j6"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_au716"]
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="6_0b0kd"]
-[ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="8_5cwwp"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="8_76su3"]
-[ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="9_jofxs"]
-[ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="10_tarfr"]
-[ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="11_caa38"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="11_tarfr"]
-[ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="12_4x7ow"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="12_caa38"]
-[ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="13_wh76t"]
 [ext_resource type="Texture2D" uid="uid://cg3avji2owvlu" path="res://Resources/Textures_New/Icons/_0001s_0011_Drum-Loud.png" id="14_tyigl"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="14_wh76t"]
-[ext_resource type="Texture2D" uid="uid://crt2x1wnsgqdm" path="res://Resources/Textures_New/Icons/_0001s_0008_Clap.png" id="15_0b0kd"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="15_dgjlp"]
-[ext_resource type="Texture2D" uid="uid://owbntq2pda8v" path="res://Resources/Textures_New/Icons/_0001s_0007_Horn.png" id="16_egu1i"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/Buttons/track_select_button.gd" id="16_tyigl"]
-[ext_resource type="Texture2D" uid="uid://ca8p08ht6ogq" path="res://Resources/Textures_New/Icons/_0001s_0006_Crash.png" id="17_lcgmo"]
-[ext_resource type="Texture2D" uid="uid://dcutt8vbgv0ku" path="res://Resources/Textures_New/Icons/Icons-_28_0010_Bear.png" id="18_0b0kd"]
-[ext_resource type="Texture2D" uid="uid://636ogogq7njv" path="res://Resources/Textures_New/Icons/_0001s_0003_Bird.png" id="19_aqvs6"]
-[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Icons/Icons-_28_0014_Clap.png" id="22_caa38"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="22_caa38"]
 [ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="23_4x7ow"]
-[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Icons/Icons-_28_0016_vHigh_Hat-.png" id="24_wh76t"]
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Icons/Icons-_28_0010_Bear.png" id="25_dgjlp"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Icons/Icons-_28_0011_Bird.png" id="27_tm8l3"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="24_wh76t"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="25_dgjlp"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="27_tm8l3"]
 
 [node name="TrackSelectButtons" type="Control" unique_id=2075389560 node_paths=PackedStringArray("track_buttons")]
 layout_mode = 3
@@ -37,9 +26,6 @@ offset_right = 166.0
 offset_bottom = -27.0
 grow_vertical = 2
 script = ExtResource("1_pe0j6")
-outline_textures = Array[Texture2D]([ExtResource("15_dgjlp"), ExtResource("2_pe0j6"), ExtResource("6_0b0kd"), ExtResource("8_76su3"), ExtResource("11_tarfr"), ExtResource("14_wh76t")])
-filled_textures = Array[Texture2D]([ExtResource("11_caa38"), ExtResource("10_tarfr"), ExtResource("9_jofxs"), ExtResource("8_5cwwp"), ExtResource("13_wh76t"), ExtResource("12_4x7ow")])
-icon_textures = Array[Texture2D]([ExtResource("14_tyigl"), ExtResource("15_0b0kd"), ExtResource("16_egu1i"), ExtResource("17_lcgmo"), ExtResource("18_0b0kd"), ExtResource("19_aqvs6")])
 track_buttons = [NodePath("VBoxContainer/TrackSelectButton_0"), NodePath("VBoxContainer/TrackSelectButton_1"), NodePath("VBoxContainer/TrackSelectButton_2"), NodePath("VBoxContainer/TrackSelectButton_3"), NodePath("VBoxContainer/TrackSelectButton_4"), NodePath("VBoxContainer/TrackSelectButton_5")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=154923035]

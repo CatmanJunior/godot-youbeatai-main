@@ -1,18 +1,18 @@
-[gd_scene load_steps=5 format=3 uid="uid://bfroto1jhb10b"]
+[gd_scene format=3 uid="uid://bfroto1jhb10b"]
 
 [ext_resource type="Script" uid="uid://dmvorc4lk1tjf" path="res://Experimental/VoiceToSynth/record_voice.gd" id="1_xctr7"]
 [ext_resource type="Script" uid="uid://c1afydyq3gb80" path="res://Experimental/VoiceToSynth/envelope.gd" id="2_a82c1"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="2_lagtm"]
 [ext_resource type="Script" uid="uid://bocy4ptrkjlbp" path="res://addons/synth/synth.gd" id="3_lagtm"]
 
-[node name="VoiceRecorder" type="Node" node_paths=PackedStringArray("envelope", "_synth")]
+[node name="VoiceRecorder" type="Node" unique_id=918440287 node_paths=PackedStringArray("envelope", "_synth")]
 script = ExtResource("1_xctr7")
 envelope = NodePath("Envelope")
 _synth = NodePath("Synth")
 notes = ExtResource("2_lagtm")
 octaveRange = Vector2i(3, 4)
 
-[node name="Envelope" type="Node" parent="."]
+[node name="Envelope" type="Node" parent="." unique_id=107460474]
 script = ExtResource("2_a82c1")
 attack_time = 0.05
 decay_time = 0.301
@@ -21,7 +21,7 @@ sustain_time = 0.05
 release_time = 0.15
 metadata/_custom_type_script = "uid://c1afydyq3gb80"
 
-[node name="Synth" type="Node" parent="."]
+[node name="Synth" type="Node" parent="." unique_id=380910127]
 script = ExtResource("3_lagtm")
 waveform = 1
 filter = 1

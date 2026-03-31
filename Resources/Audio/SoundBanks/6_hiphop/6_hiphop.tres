@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://c5wyakgxhrbo1"]
+[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://c5wyakgxhrbo1"]
 
 [ext_resource type="AudioStream" uid="uid://bq2vnpgu8f5wx" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Clap Overflow 1.wav" id="1_xyvau"]
 [ext_resource type="AudioStream" uid="uid://drykqrtsdnryh" path="res://Resources/Audio/SoundBanks/6_hiphop/Clap Hacker.wav" id="2_gnqcb"]
@@ -7,8 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://b55ui1xkr4v5i" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Kick AB 2.wav" id="4_fg5wx"]
 [ext_resource type="AudioStream" uid="uid://c075vuhpv2t4w" path="res://Resources/Audio/SoundBanks/6_hiphop/Kick Rainbow 2.wav" id="4_rphxq"]
 [ext_resource type="Resource" uid="uid://bidpnhoo3m1xr" path="res://Resources/Audio/SoundBanks/6_hiphop/EffectProfile.tres" id="5_aj41f"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_gnqcb"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_aj41f"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_gnqcb"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_aj41f"]
 [ext_resource type="AudioStream" uid="uid://cbrym1dck8n1a" path="res://Resources/Audio/SoundBanks/6_hiphop/Snare Bling.wav" id="7_q0w1p"]
 [ext_resource type="AudioStream" uid="uid://dpf2gbxtjafbj" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Snare Bazzazian 3.wav" id="7_rphxq"]
 
@@ -27,5 +27,4 @@ green_instrument_id = 12
 green_effectProfile = ExtResource("5_aj41f")
 purple_soundfont = ExtResource("5_gnqcb")
 purple_instrument_id = 14
-effectProfile = ExtResource("5_aj41f")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

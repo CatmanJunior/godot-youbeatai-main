@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="1_3kvy2"]
 [ext_resource type="Script" uid="uid://c8a4ts2urwcjm" path="res://Scripts/TrackSettingsRes/synth_track_settings.gd" id="1_mqs16"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="2_cab6j"]
-[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Icons/Icons-_28_0012_Robot.png" id="3_qj05e"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="3_qj05e"]
 [ext_resource type="Texture2D" uid="uid://636ogogq7njv" path="res://Resources/Textures_New/Icons/_0001s_0003_Bird.png" id="4_3yoxf"]
 
 [resource]

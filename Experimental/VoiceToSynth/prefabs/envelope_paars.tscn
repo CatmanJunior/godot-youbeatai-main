@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://doagabsb3x4kq"]
+[gd_scene format=3 uid="uid://doagabsb3x4kq"]
 
 [ext_resource type="Script" uid="uid://c1afydyq3gb80" path="res://Experimental/VoiceToSynth/envelope.gd" id="1_d2s6a"]
 
-[node name="Envelope_paars" type="Node"]
+[node name="Envelope_paars" type="Node" unique_id=644961739]
 script = ExtResource("1_d2s6a")
 attack_time = 0.401
 decay_time = 0.041

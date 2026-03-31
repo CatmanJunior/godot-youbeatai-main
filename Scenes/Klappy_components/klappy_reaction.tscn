@@ -2,5 +2,5 @@
 
 [ext_resource type="Script" uid="uid://d4gpt5imqk7y0" path="res://Scripts/Klappy/klappy_reaction.gd" id="1_msxu7"]
 
-[node name="KlappyReaction" type="Node"]
+[node name="KlappyReaction" type="Node" unique_id=1209812512]
 script = ExtResource("1_msxu7")

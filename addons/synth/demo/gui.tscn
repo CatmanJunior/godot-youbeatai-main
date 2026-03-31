@@ -1,10 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://n8ug64vrn286"]
+[gd_scene format=3 uid="uid://n8ug64vrn286"]
 
 [ext_resource type="Script" uid="uid://dx87ql0054jng" path="res://addons/synth/demo/gui.gd" id="1_vmfw1"]
 [ext_resource type="PackedScene" uid="uid://cfuy6m1ob8e7n" path="res://addons/synth/demo/ui/slider.tscn" id="2_560pd"]
 [ext_resource type="PackedScene" uid="uid://t4jyo3xi7apn" path="res://addons/synth/demo/ui/waveform_visualizer.tscn" id="3_2m81f"]
+[ext_resource type="Script" uid="uid://bocy4ptrkjlbp" path="res://addons/synth/synth.gd" id="4_qokuo"]
 
-[node name="GUI" type="Control"]
+[node name="GUI" type="Control" unique_id=1262008045]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -13,41 +14,46 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_vmfw1")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1841513844]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Pitch" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Pitch" parent="VBoxContainer" unique_id=2109838053 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Waveform" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Waveform" parent="VBoxContainer" unique_id=1343924839 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Width" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Width" parent="VBoxContainer" unique_id=1644864380 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Volume" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Volume" parent="VBoxContainer" unique_id=1204857870 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="HSeparator" type="HSeparator" parent="VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1421768051]
 layout_mode = 2
 
-[node name="Filter" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Filter" parent="VBoxContainer" unique_id=1055542441 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Cutoff" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Cutoff" parent="VBoxContainer" unique_id=1104333610 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Resonance" parent="VBoxContainer" instance=ExtResource("2_560pd")]
+[node name="Resonance" parent="VBoxContainer" unique_id=1250859726 instance=ExtResource("2_560pd")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Waveform" parent="." instance=ExtResource("3_2m81f")]
+[node name="Waveform" parent="." unique_id=585664954 node_paths=PackedStringArray("_synth") instance=ExtResource("3_2m81f")]
 position = Vector2(450, 250)
+_synth = NodePath("../Synth")
+
+[node name="Synth" type="Node" parent="." unique_id=1051378328]
+script = ExtResource("4_qokuo")
+metadata/_custom_type_script = "uid://bocy4ptrkjlbp"

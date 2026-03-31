@@ -29,4 +29,3 @@ green_effectProfile = ExtResource("5_atnbr")
 purple_soundfont = ExtResource("8_pi2h2")
 purple_instrument_id = 8
 purple_beats = 1.0
-purple_effectProfile = ExtResource("5_atnbr")

@@ -9,13 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://b4ymx6c628da8" path="res://Scenes/UI_Components/blocker.tscn" id="7_2304t"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="8_ta0vu"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="9_mdndp"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="10_6i0iu"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="10_6i0iu"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="11_mvr4h"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="12_3vyhs"]
-[ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="13_vrng3"]
+[ext_resource type="Script" path="res://Experimental/chords/chord_progression.gd" id="12_8upxj"]
 [ext_resource type="PackedScene" uid="uid://cifubqpkkn5tn" path="res://addons/soundfont/templates/note_player.tscn" id="14_7ghki"]
-[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Experimental/soundfont/Jvbass.sfo" id="15_1kaoa"]
-[ext_resource type="Script" uid="uid://vil0im8ttsll" path="res://Scripts/midi_helper.gd" id="16_lpe66"]
+[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Resources/SoundFonts/Jvbass.sfo" id="15_1kaoa"]
+[ext_resource type="Script" path="res://Scripts/midi_helper.gd" id="16_lpe66"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="17_r551m"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="18_rqh3a"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="19_y37b2"]
@@ -43,7 +42,6 @@
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="41_stdpq"]
 [ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="42_vkjbm"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="43_hqpty"]
-[ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Experimental/Klappy/Animations/animations.res" id="44_gr8k8"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="45_am7yp"]
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="46_f01q8"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="47_c3q08"]
@@ -121,10 +119,6 @@ font_size = 80
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_54nrm"]
 buffer_length = 0.1
-
-[sub_resource type="Resource" id="Resource_55jeb"]
-script = ExtResource("13_vrng3")
-metadata/_custom_type_script = "uid://cyuhg2bs4hq83"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k2e45"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -749,19 +743,13 @@ fill_mode = 3
 show_percentage = false
 metadata/_edit_use_anchors_ = true
 
-[node name="Chords" type="SoundFontPlayer" parent="Managers/SongVoiceOver" unique_id=238898848 node_paths=PackedStringArray("bpm_manager", "manager", "bpmManager")]
+[node name="Chords" type="SoundFontPlayer" parent="Managers/SongVoiceOver" unique_id=238898848]
 soundfont = ExtResource("10_6i0iu")
 stream = SubResource("AudioStreamGenerator_54nrm")
 script = ExtResource("11_mvr4h")
 chordString = "I-V-vi-IV"
 chordDuration = 8
-progressions = [null]
-notes = ExtResource("12_3vyhs")
-base_note = SubResource("Resource_55jeb")
-gate = 0.1
-bpm_manager = NodePath("../../BPM")
-manager = NodePath("../../Manager")
-bpmManager = NodePath("../../BPM")
+progressions = Array[ExtResource("12_8upxj")]([null])
 metadata/_custom_type_script = "uid://bysoee7k07v3y"
 
 [node name="LayerVoiceOver0" type="Node" parent="Managers" unique_id=470563626]
@@ -769,43 +757,19 @@ metadata/_custom_type_script = "uid://bysoee7k07v3y"
 [node name="bass_line" parent="Managers/LayerVoiceOver0" unique_id=1096032728 instance=ExtResource("14_7ghki")]
 soundfont = ExtResource("15_1kaoa")
 volume_db = -7.0
-bus = &"Master"
-gate = 0.0
-
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver0/bass_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
-bpmManager = NodePath("../../../../BPM")
-combine_threshold = 0.0
-octaveRange = Vector2i(2, 8)
-beats_amount_scaler = 0.5
 
 [node name="LayerVoiceOver1" type="Node" parent="Managers" unique_id=1343330546]
 
 [node name="synth_line" parent="Managers/LayerVoiceOver1" unique_id=1995946905 instance=ExtResource("14_7ghki")]
 volume_db = -7.0
-bus = &"Master"
-instrument = 6
-gate = 0.0
-
-[node name="VoiceProcessor" parent="Managers/LayerVoiceOver1/synth_line/VoiceRecorder2" index="0" node_paths=PackedStringArray("bpmManager")]
-bpmManager = NodePath("../../../../BPM")
-combine_threshold = 1.0
-octaveRange = Vector2i(4, 6)
 
 [node name="MidiHelper" type="Node" parent="Managers" unique_id=41444354]
 script = ExtResource("16_lpe66")
 
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "manager", "bpm_manager", "loop_button", "rec_button", "settings_panel", "mail_panel", "mail_button", "mail_field", "name_field")]
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
 script = ExtResource("17_r551m")
 loading = NodePath("../../UserInterface/CenterContainer")
-manager = NodePath("../Manager")
-bpm_manager = NodePath("../BPM")
-loop_button = NodePath("../../UserInterface/LayerLoopToggle")
 rec_button = NodePath("../../UserInterface/RecButton")
-settings_panel = NodePath("../../UserInterface/SettingsPanel")
-mail_panel = NodePath("../../EmailPrompt")
-mail_button = NodePath("../../EmailPrompt/Enter")
-mail_field = NodePath("../../EmailPrompt/EmailField")
-name_field = NodePath("../../EmailPrompt/Naam")
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player", "play_song_button", "play_beat_button")]
@@ -946,7 +910,7 @@ scale = Vector2(0.35, 0.35)
 script = null
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker" index="0"]
+[node name="Label" parent="UserInterface/Buttons/MicButtons/SampleRecordingButton1/Blocker" index="0" unique_id=1568868485]
 metadata/_edit_use_anchors_ = true
 
 [node name="SampleRecordingButton2" type="Sprite2D" parent="UserInterface/Buttons/MicButtons" unique_id=656703345]
@@ -1814,16 +1778,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 1
 
-[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=2004821384 node_paths=PackedStringArray("manager", "energy") instance=ExtResource("43_hqpty")]
-manager = NodePath("../../../../../Managers/Manager")
+[node name="Klappy" parent="UserInterface/Robot/SubViewportContainer/SubViewport" unique_id=2004821384 node_paths=PackedStringArray("energy") instance=ExtResource("43_hqpty")]
 energy = NodePath("../../../../../Managers/ProgressBar")
 
-[node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0"]
+[node name="Camera3D" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy" index="0" unique_id=948296298]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
-
-[node name="AnimationPlayer" parent="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model" index="1" unique_id=337097326]
-libraries/animations = ExtResource("44_gr8k8")
 
 [node name="KlappyLight" type="PointLight2D" parent="UserInterface/Robot/SubViewportContainer" unique_id=491584962]
 position = Vector2(202.49997, 89.166664)
@@ -1844,24 +1804,24 @@ offset_top = -226.5
 offset_right = 50.5
 offset_bottom = -38.5
 
-[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0"]
+[node name="Title" parent="UserInterface/Robot/AchievementsPanel" index="0" unique_id=914827527]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.17973857
 
-[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1"]
+[node name="InstructionLabel" parent="UserInterface/Robot/AchievementsPanel" index="1" unique_id=813716848]
 anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353
 anchor_bottom = -0.1882353
 
-[node name="Continue" parent="UserInterface/Robot/AchievementsPanel" index="3"]
+[node name="Continue" parent="UserInterface/Robot/AchievementsPanel" index="3" unique_id=1432263596]
 metadata/_edit_use_anchors_ = true
 
-[node name="Button" parent="UserInterface/Robot/AchievementsPanel" index="4"]
+[node name="Button" parent="UserInterface/Robot/AchievementsPanel" index="4" unique_id=734105471]
 metadata/_edit_use_anchors_ = true
 
-[node name="AmountLef" parent="UserInterface/Robot/AchievementsPanel" index="5"]
+[node name="AmountLef" parent="UserInterface/Robot/AchievementsPanel" index="5" unique_id=389681954]
 metadata/_edit_use_anchors_ = true
 
 [node name="SettingsButton" type="Button" parent="UserInterface" unique_id=652234252]

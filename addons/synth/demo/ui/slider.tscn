@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://cfuy6m1ob8e7n"]
+[gd_scene format=3 uid="uid://cfuy6m1ob8e7n"]
 
-[ext_resource type="Script" uid="uid://j1th2nnee2ck" path="res://demo/ui/slider.gd" id="1_4vxkx"]
+[ext_resource type="Script" uid="uid://j1th2nnee2ck" path="res://addons/synth/demo/ui/slider.gd" id="1_4vxkx"]
 
-[node name="Slider" type="HBoxContainer"]
+[node name="Slider" type="HBoxContainer" unique_id=477651860]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -16,25 +16,25 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4vxkx")
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=595706530]
 layout_mode = 2
 text = "Label:"
 
-[node name="HSlider" type="HSlider" parent="."]
+[node name="HSlider" type="HSlider" parent="." unique_id=854124131]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Value" type="Label" parent="."]
+[node name="Value" type="Label" parent="." unique_id=735829965]
 visible = false
 layout_mode = 2
 text = "100"
 
-[node name="LineEdit" type="LineEdit" parent="."]
+[node name="LineEdit" type="LineEdit" parent="." unique_id=1507782275]
 visible = false
 layout_mode = 2
 
-[node name="SpinBox" type="SpinBox" parent="."]
+[node name="SpinBox" type="SpinBox" parent="." unique_id=999579830]
 layout_mode = 2
 
 [connection signal="value_changed" from="HSlider" to="." method="_on_h_slider_value_changed"]

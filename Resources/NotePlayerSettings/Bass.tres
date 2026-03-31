@@ -12,6 +12,6 @@ notes = ExtResource("1_ngqxe")
 instrument = 1
 base_note = ExtResource("1_t7g2r")
 allow_key_input = true
-gate = 0.39999999999999997
+gate = 0.4
 volume_db = -7.0
 metadata/_custom_type_script = "uid://cx6op5amucrek"

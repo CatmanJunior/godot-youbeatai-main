@@ -1,14 +1,13 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://dyy8617ukyptm"]
+[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://dyy8617ukyptm"]
 
 [ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="1_qlc07"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="1_qlc07"]
 [ext_resource type="AudioStream" uid="uid://b70b3353jtpvd" path="res://Resources/Audio/SoundBanks/7_hardcore/ClosedHH Bandits 1.wav" id="2_120gr"]
 [ext_resource type="AudioStream" uid="uid://cna7wbhdje4fl" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Clap Denim.wav" id="2_ytapi"]
 [ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://d2t6q8lum30iv" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Kick Fm LowLife.wav" id="4_nomca"]
 [ext_resource type="AudioStream" uid="uid://8rxdspna22wi" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/ClosedHH Acidy.wav" id="4_tm1gk"]
-[ext_resource type="Resource" uid="uid://pgoewkr5e6g2" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile.tres" id="5_tm1gk"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_ytapi"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_ytapi"]
 [ext_resource type="Resource" uid="uid://d4c5jcrp0ty32" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile_bass.tres" id="6_tm1gk"]
 [ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://b7ycvuoy7t3tc" path="res://Resources/Audio/SoundBanks/7_hardcore/Snare Fakesch.wav" id="7_tm1gk"]
@@ -28,5 +27,4 @@ green_instrument_id = 12
 green_effectProfile = ExtResource("6_tm1gk")
 purple_soundfont = ExtResource("5_ytapi")
 purple_instrument_id = 9
-effectProfile = ExtResource("5_tm1gk")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bkqjwj0b55t7n"]
 
-[ext_resource type="SoundFont" uid="uid://bku54wgk62esj" path="res://Experimental/soundfont/Emu Funky Guitars.sf2" id="1_k0lqs"]
+[ext_resource type="SoundFont" uid="uid://bku54wgk62esj" path="res://Resources/SoundFonts/Emu Funky Guitars.sf2" id="1_k0lqs"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="1_x0ko1"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_y5mie"]

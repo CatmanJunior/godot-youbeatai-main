@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://yqlugev118t2"]
+[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://yqlugev118t2"]
 
 [ext_resource type="AudioStream" uid="uid://deffdhswfkqr8" path="res://Resources/Audio/SoundBanks/2_acoustisch/Clap AlphaCentauri 2.wav" id="1_l8cde"]
 [ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="2_l8cde"]
@@ -7,8 +7,8 @@
 [ext_resource type="Resource" uid="uid://d1gqo8nvqbqtp" path="res://Resources/Audio/SoundBanks/2_acoustisch/EffectProfile.tres" id="5_l8cde"]
 [ext_resource type="AudioStream" uid="uid://co7i5xf384x1j" path="res://Resources/Audio/SoundBanks/2_acoustisch/Kick Forest 1.wav" id="6_hey0b"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="7_hey0b"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_h0r5k"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_nx8i2"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_h0r5k"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_nx8i2"]
 [ext_resource type="AudioStream" uid="uid://doay675bckxms" path="res://Resources/Audio/SoundBanks/2_acoustisch/Snare Lusine 1.wav" id="10_2nf2g"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="11_2nf2g"]
 
@@ -27,5 +27,4 @@ green_instrument_id = 5
 green_effectProfile = ExtResource("5_l8cde")
 purple_soundfont = ExtResource("8_h0r5k")
 purple_instrument_id = 2
-effectProfile = ExtResource("5_l8cde")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

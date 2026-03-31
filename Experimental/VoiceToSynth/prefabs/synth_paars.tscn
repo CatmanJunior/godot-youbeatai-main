@@ -1,8 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3mkb7tbfmhpf"]
+[gd_scene format=3 uid="uid://c3mkb7tbfmhpf"]
 
 [ext_resource type="Script" uid="uid://bocy4ptrkjlbp" path="res://addons/synth/synth.gd" id="1_je2xd"]
 
-[node name="Synth_paars" type="Node"]
+[node name="Synth_paars" type="Node" unique_id=442971039]
 script = ExtResource("1_je2xd")
 waveform = 1
 cutoff = 1000.0

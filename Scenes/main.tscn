@@ -17,7 +17,7 @@
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
-[ext_resource type="PackedScene" uid="uid://dfremkccddsox" path="res://Scenes/UI_Components/settings_button.tscn" id="34_nwwfm"]
+[ext_resource type="Resource" uid="uid://duu4xfosamul2" path="res://Resources/Audio/SoundBanks/4_pop/4_pop.tres" id="30_jut3y"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="36_y86h7"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
 [ext_resource type="PackedScene" uid="uid://1drhlix6kj7f" path="res://Scenes/UI_Components/back_ground.tscn" id="47_jut3y"]
+[ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
 [ext_resource type="Script" uid="uid://mt43g2le6v5q" path="res://Scripts/Audio/mixing_manager.gd" id="50_rtmaq"]
@@ -49,6 +50,7 @@
 [ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
+metadata/_edit_horizontal_guides_ = [-545.0]
 
 [node name="Camera" type="Camera2D" parent="." unique_id=980598397]
 scale = Vector2(4.12, 1)
@@ -137,6 +139,7 @@ waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visuali
 
 [node name="SoundBankLoader" type="Node" parent="Managers" unique_id=1437890393 node_paths=PackedStringArray("audio_player_manager")]
 script = ExtResource("29_s8vy0")
+fallback_bank = ExtResource("30_jut3y")
 base_noteplayer_settings = Array[ExtResource("25_y86h7")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
 audio_player_manager = NodePath("../AudioManagers/AudioPlayerManager")
 
@@ -182,20 +185,6 @@ track_settings = ExtResource("36_qax2n")
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
-
-[node name="SettingsButton" parent="UserInterface" unique_id=1234210137 instance=ExtResource("34_nwwfm")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 60.0
-offset_bottom = 60.0
-grow_horizontal = 1
-grow_vertical = 1
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=1609891462 instance=ExtResource("90_658pa")]
 visible = false
@@ -342,6 +331,11 @@ offset_right = -554.0
 offset_bottom = -415.0
 
 [node name="BackGround" parent="UserInterface" unique_id=615418117 instance=ExtResource("47_jut3y")]
+layout_mode = 0
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="SettingsButtonControl" parent="UserInterface" unique_id=641439858 instance=ExtResource("48_jut3y")]
 layout_mode = 0
 
 [editable path="UserInterface/BeatRing"]

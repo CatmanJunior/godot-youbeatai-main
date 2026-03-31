@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=12 format=3 uid="uid://bxpfkfkt30afd"]
+[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://bxpfkfkt30afd"]
 
 [ext_resource type="AudioStream" uid="uid://cdumen0pc2a7g" path="res://Resources/Audio/SoundBanks/3_aziatisch/Clap VibeOffering.wav" id="1_0asfo"]
 [ext_resource type="AudioStream" uid="uid://1k6o6vnas7f5" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Clap Bandits.wav" id="2_0asfo"]
@@ -7,8 +7,8 @@
 [ext_resource type="Resource" uid="uid://hepd2nqvjuhu" path="res://Resources/Audio/SoundBanks/3_opera/EffectProfile.tres" id="5_0asfo"]
 [ext_resource type="AudioStream" uid="uid://e33tqgukvqje" path="res://Resources/Audio/SoundBanks/3_aziatisch/Kick Omg 2.wav" id="6_0qa84"]
 [ext_resource type="AudioStream" uid="uid://lslyglmsdtsj" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Kick Orion 2.wav" id="7_0qa84"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="8_g2grn"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_p52u0"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_g2grn"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_p52u0"]
 [ext_resource type="AudioStream" uid="uid://d31iun8fy2345" path="res://Resources/Audio/SoundBanks/3_aziatisch/Snare Starlight 2.wav" id="10_amqpo"]
 [ext_resource type="AudioStream" uid="uid://cqh8q6i3xg6s4" path="res://Resources/Audio/SoundBanks/3_aziatisch/mineur/Snare_Tamb Gl.wav" id="11_amqpo"]
 
@@ -27,5 +27,4 @@ green_instrument_id = 3
 green_effectProfile = ExtResource("5_0asfo")
 purple_soundfont = ExtResource("8_g2grn")
 purple_instrument_id = 9
-effectProfile = ExtResource("5_0asfo")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

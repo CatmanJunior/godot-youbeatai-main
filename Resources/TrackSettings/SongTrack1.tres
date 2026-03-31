@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="1_iwp5f"]
 [ext_resource type="Script" uid="uid://bu5i3rdo8kh1l" path="res://Scripts/TrackSettingsRes/song_track_settings.gd" id="1_j6hrw"]
-[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="2_uicwd"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="2_uicwd"]
 
 [resource]
 script = ExtResource("1_j6hrw")

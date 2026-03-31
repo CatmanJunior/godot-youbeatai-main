@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://cy5s83us67eqq"]
+[gd_scene format=3 uid="uid://cy5s83us67eqq"]
 
 [ext_resource type="Script" uid="uid://bmtvlbrqpm3x5" path="res://Experimental/SongExport/loading_container..gd" id="1_ypxum"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="2_3c4k5"]
 
-[node name="Control" type="Control"]
+[node name="Control" type="Control" unique_id=427735904]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +12,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ypxum")
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1288597559]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,15 +20,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="PanelContainer"]
+[node name="ColorRect" type="ColorRect" parent="PanelContainer" unique_id=605031134]
 layout_mode = 2
 
-[node name="FileDialog" type="FileDialog" parent="."]
+[node name="FileDialog" type="FileDialog" parent="." unique_id=1903892911]
 initial_position = 4
 access = 2
 filters = PackedStringArray("*.wav")
 use_native_dialog = true
 
-[node name="Node" type="Node" parent="." node_paths=PackedStringArray("exporter_ui")]
+[node name="Node" type="Node" parent="." unique_id=189991182]
 script = ExtResource("2_3c4k5")
-exporter_ui = NodePath("../FileDialog")

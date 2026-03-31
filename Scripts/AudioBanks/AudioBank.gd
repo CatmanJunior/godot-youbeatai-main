@@ -59,3 +59,8 @@ var synth2_beats: float = 0.0:
 var synth2_effectProfile: EffectProfile = null:
     get:
         return green_effectProfile
+
+var effectProfile: EffectProfile = null:
+    get:
+        # If the synths have their own effect profile, use that. Otherwise fall back to the main one.
+        return green_effectProfile

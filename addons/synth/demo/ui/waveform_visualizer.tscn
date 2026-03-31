@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://t4jyo3xi7apn"]
+[gd_scene format=3 uid="uid://t4jyo3xi7apn"]
 
-[ext_resource type="Script" uid="uid://b2s3da4cin0e1" path="res://demo/ui/waveform_visualizer.gd" id="1_yxs60"]
+[ext_resource type="Script" uid="uid://b2s3da4cin0e1" path="res://addons/synth/demo/ui/waveform_visualizer.gd" id="1_yxs60"]
 
-[node name="Waveform" type="Node2D"]
+[node name="Waveform" type="Node2D" unique_id=1895392768]
 position = Vector2(378, 263)
 script = ExtResource("1_yxs60")

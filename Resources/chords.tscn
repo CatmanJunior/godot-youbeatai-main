@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dj5d5qtuj66sk"]
 
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="1_k2vll"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="1_k2vll"]
 [ext_resource type="Script" uid="uid://bysoee7k07v3y" path="res://Experimental/chords/chords.gd" id="2_cpaey"]
 [ext_resource type="Script" path="res://Experimental/chords/chord_progression.gd" id="3_d1evk"]
 

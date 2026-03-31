@@ -1,4 +1,4 @@
-[gd_resource type="StandardMaterial3D" load_steps=8 format=3 uid="uid://c421qn87d0g6f"]
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://c421qn87d0g6f"]
 
 [ext_resource type="Texture2D" uid="uid://6sq868geon1o" path="res://Experimental/Klappy/Textures/TKleppy_TransparantLamp_Base_color.png" id="1_vmv8e"]
 [ext_resource type="Texture2D" uid="uid://c6861iv1h71u0" path="res://Experimental/Klappy/Textures/TKleppy_Transparant_Mixed_AO.png" id="2_vmv8e"]

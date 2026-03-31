@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" load_steps=13 format=3 uid="uid://bgisjm38j67en"]
+[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://bgisjm38j67en"]
 
 [ext_resource type="AudioStream" uid="uid://bs1dce42fqla5" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Clap Lusine 1.wav" id="1_lyvmd"]
 [ext_resource type="AudioStream" uid="uid://2mli5as68hek" path="res://Resources/Audio/SoundBanks/5_zuid-ame/ClosedHH Sinister 2.wav" id="2_4yojl"]
@@ -6,9 +6,8 @@
 [ext_resource type="AudioStream" uid="uid://c4ef4rtejwsy0" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/ClosedHH Rooftop.wav" id="4_1d0q0"]
 [ext_resource type="AudioStream" uid="uid://teg462nl7r6b" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Kick Aurora.wav" id="4_872mg"]
 [ext_resource type="AudioStream" uid="uid://cm5io7pphghwk" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Kick Elegance 2.wav" id="4_ph0eh"]
-[ext_resource type="Resource" uid="uid://ga2k8m16s5xh" path="res://Resources/Audio/SoundBanks/5_zuid-ame/EffectProfile.tres" id="5_1d0q0"]
-[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Experimental/soundfont/florestan-subset.sfo" id="5_xcqui"]
-[ext_resource type="Script" uid="uid://d0cv5il7l6laj" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_1d0q0"]
+[ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_xcqui"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_1d0q0"]
 [ext_resource type="Resource" uid="uid://cpm50u1ocghef" path="res://Resources/Audio/SoundBanks/5_zuid-ame/EffectProfile_bass.tres" id="6_d27c3"]
 [ext_resource type="AudioStream" uid="uid://7cda032xv3gf" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Snare Crystal 1.wav" id="7_d27c3"]
 [ext_resource type="AudioStream" uid="uid://bumn8a50plb2w" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Snare Crystal 2.wav" id="7_ph0eh"]
@@ -28,5 +27,4 @@ green_instrument_id = 8
 green_effectProfile = ExtResource("6_d27c3")
 purple_soundfont = ExtResource("5_xcqui")
 purple_instrument_id = 2
-effectProfile = ExtResource("5_1d0q0")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

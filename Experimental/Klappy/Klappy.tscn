@@ -113,7 +113,7 @@ compositor = SubResource("Compositor_igk12")
 
 [node name="model" parent="." unique_id=386737351 instance=ExtResource("17_8c4xi")]
 
-[node name="Skeleton3D" parent="model/Robot" parent_id_path=PackedInt32Array(386737351, 632722266) index="0" unique_id=305392375]
+[node name="Skeleton3D" parent="model/Robot" parent_id_path=PackedInt32Array(386737351, 1785667763) index="0" unique_id=685798890]
 bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009747797)
 bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
 bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
@@ -156,14 +156,14 @@ bones/18/position = Vector3(-4.31259e-10, 0.00449158, 3.9602e-10)
 bones/18/rotation = Quaternion(-0.0010216191, 0.0006269256, 0.82169485, 0.56992644)
 bones/18/scale = Vector3(1, 1, 1)
 
-[node name="DNT_001" parent="model/Robot/Skeleton3D" index="0" unique_id=2042247694]
+[node name="DNT_001" parent="model/Robot/Skeleton3D" index="0" unique_id=150000404]
 surface_material_override/0 = ExtResource("3_n8s16")
 surface_material_override/1 = ExtResource("4_1ku2n")
 surface_material_override/2 = ExtResource("19_phjtk")
 surface_material_override/3 = ExtResource("5_8c4xi")
 surface_material_override/4 = ExtResource("4_haj43")
 
-[node name="AnimationPlayer" parent="model" index="1" unique_id=337097326]
+[node name="AnimationPlayer" parent="model" index="1" unique_id=1402067119]
 libraries/animations = ExtResource("8_rv124")
 
 [node name="AnimationTree" type="AnimationTree" parent="model" unique_id=935396953]

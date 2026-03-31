@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://dyy8617ukyptm"]
 
 [ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="1_qlc07"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="1_qlc07"]
 [ext_resource type="AudioStream" uid="uid://b70b3353jtpvd" path="res://Resources/Audio/SoundBanks/7_hardcore/ClosedHH Bandits 1.wav" id="2_120gr"]
 [ext_resource type="AudioStream" uid="uid://cna7wbhdje4fl" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Clap Denim.wav" id="2_ytapi"]
 [ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]

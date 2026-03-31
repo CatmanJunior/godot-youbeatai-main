@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://insrngoq1f13" path="res://Resources/Audio/SoundBanks/5_afrikaans/Kick Daydreaming 1.wav" id="4_xbbyl"]
 [ext_resource type="Resource" uid="uid://bmtl35xx2cb3o" path="res://Resources/Audio/SoundBanks/5_afrikaans/EffectProfile.tres" id="5_a4xo8"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_gk18y"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_a4xo8"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_a4xo8"]
 [ext_resource type="AudioStream" uid="uid://sg7hwbuvgnme" path="res://Resources/Audio/SoundBanks/5_afrikaans/Snare Askari.wav" id="7_gc85r"]
 [ext_resource type="AudioStream" uid="uid://16i0hx50xlsn" path="res://Resources/Audio/SoundBanks/5_afrikaans/mineur/Snare Anorac.wav" id="7_xbbyl"]
 

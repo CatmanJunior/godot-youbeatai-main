@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://dsf1y2droce3o" path="res://Resources/Audio/SoundBanks/2_tango/Kick BB 2.wav" id="6_i3r8b"]
 [ext_resource type="AudioStream" uid="uid://bqfufsfbjqp5f" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Kick Hoba.wav" id="7_i3r8b"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_iytk1"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_5nsoi"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="9_5nsoi"]
 [ext_resource type="AudioStream" uid="uid://fj0dr8xiycw6" path="res://Resources/Audio/SoundBanks/2_tango/Snare Rooftop.wav" id="10_y331p"]
 [ext_resource type="AudioStream" uid="uid://bu72168x3ptw4" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Snare_Perc Smoky.wav" id="11_y331p"]
 

@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://co7i5xf384x1j" path="res://Resources/Audio/SoundBanks/2_acoustisch/Kick Forest 1.wav" id="6_hey0b"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="7_hey0b"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_h0r5k"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="9_nx8i2"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="9_nx8i2"]
 [ext_resource type="AudioStream" uid="uid://doay675bckxms" path="res://Resources/Audio/SoundBanks/2_acoustisch/Snare Lusine 1.wav" id="10_2nf2g"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="11_2nf2g"]
 

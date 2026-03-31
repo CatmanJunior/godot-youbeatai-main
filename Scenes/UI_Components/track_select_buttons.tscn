@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://cg3avji2owvlu" path="res://Resources/Textures_New/Icons/_0001s_0011_Drum-Loud.png" id="14_tyigl"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="14_wh76t"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="15_dgjlp"]
-[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/Buttons/track_select_button.gd" id="16_tyigl"]
+[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="16_tyigl"]
 [ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="22_caa38"]
 [ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="23_4x7ow"]
 [ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="24_wh76t"]

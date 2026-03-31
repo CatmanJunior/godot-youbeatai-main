@@ -1,11 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://br4od8trqfgr4"]
+[gd_scene format=3 uid="uid://br4od8trqfgr4"]
 
 [ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="1_a6tcu"]
-[ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="1_x42kv"]
+[ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Scripts/soundfont/notePlayer.gd" id="1_x42kv"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="2_dn6mc"]
 [ext_resource type="Script" uid="uid://cyuhg2bs4hq83" path="res://Experimental/VoiceToSynth/Note.gd" id="3_a6tcu"]
-[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Experimental/soundfont/tencho.sfo" id="3_oj4hq"]
-[ext_resource type="Script" uid="uid://cg4g587k3seew" path="res://Scripts/BpmManager.cs" id="4_oj4hq"]
+[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Resources/SoundFonts/tencho.sfo" id="3_oj4hq"]
+[ext_resource type="Script" path="res://Scripts/BpmManager.cs" id="4_oj4hq"]
 
 [sub_resource type="GDScript" id="GDScript_dn6mc"]
 resource_name = "load"

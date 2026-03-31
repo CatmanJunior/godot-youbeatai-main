@@ -18,7 +18,7 @@
 [ext_resource type="Resource" uid="uid://duu4xfosamul2" path="res://Resources/Audio/SoundBanks/4_pop/4_pop.tres" id="30_jut3y"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
-[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/Buttons/record_sample_button.gd" id="36_y86h7"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
 [ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]

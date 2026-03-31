@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cifubqpkkn5tn"]
 
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="1_oee6b"]
-[ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Experimental/soundfont/notePlayer.gd" id="2_u2smf"]
+[ext_resource type="Script" uid="uid://bvcmfyc0eqv7e" path="res://Scripts/soundfont/notePlayer.gd" id="2_u2smf"]
 
 [sub_resource type="AudioStreamGenerator" id="AudioStreamGenerator_fw2ei"]
 buffer_length = 0.1

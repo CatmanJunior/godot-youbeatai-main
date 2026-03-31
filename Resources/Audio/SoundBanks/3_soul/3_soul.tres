@@ -7,7 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://b5rpk86xknwjs" path="res://Resources/Audio/SoundBanks/3_soul/mineur/ClosedHH Hoba 2.wav" id="4_qgh1d"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_b8dx6"]
 [ext_resource type="Resource" uid="uid://bluf8p6d8fagd" path="res://Resources/Audio/SoundBanks/3_soul/EffectProfile.tres" id="5_qgh1d"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_qgh1d"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_qgh1d"]
 [ext_resource type="AudioStream" uid="uid://bgkgd7isxdqq8" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Kick Flowdown 2.wav" id="7_ald5y"]
 [ext_resource type="AudioStream" uid="uid://ck0ivmwkcp6lp" path="res://Resources/Audio/SoundBanks/3_soul/Snare TwoTone.wav" id="7_hfg1u"]
 [ext_resource type="AudioStream" uid="uid://ccfr5pef3o6bk" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Snare_Perc Pueblo.wav" id="11_ns1ub"]

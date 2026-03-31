@@ -8,7 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://c8ekvl7815v4i" path="res://Resources/Audio/SoundBanks/5_dance/Kick Acidy 2.wav" id="4_lcnh7"]
 [ext_resource type="AudioStream" uid="uid://dsbv88j5iiama" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Kick VibeOffering 2.wav" id="4_ofjox"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_w2ik1"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/AudioBanks/AudioBank.gd" id="6_0u368"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_0u368"]
 [ext_resource type="Resource" uid="uid://cymydehmu2oqg" path="res://Resources/Audio/SoundBanks/5_dance/EffectProfile_bass.tres" id="6_6veg5"]
 [ext_resource type="AudioStream" uid="uid://cm8tcwxjl6e5k" path="res://Resources/Audio/SoundBanks/5_dance/Snare BackOut.wav" id="7_6veg5"]
 [ext_resource type="AudioStream" uid="uid://bg8k54f7k527" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Snare Acidy.wav" id="7_lcnh7"]

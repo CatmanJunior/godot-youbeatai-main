@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b8n1g4l4jrv6d"]
 
-[ext_resource type="Script" path="res://Scripts/sound_bank_selector.gd" id="1_h74sy"]
+[ext_resource type="Script" uid="uid://1f8481edq5sv" path="res://Scripts/Managers/sound_bank_selector.gd" id="1_h74sy"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_avjdi"]
 [ext_resource type="Script" uid="uid://7wcck2o43vy5" path="res://Scripts/UI/sound_bank_selection_menu.gd" id="2_h74sy"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_ie3tb"]
@@ -8,7 +8,7 @@
 [ext_resource type="Resource" uid="uid://bfv1qc8vipcip" path="res://Resources/ButtonGroups/ThemeSelectionButtonGroup.tres" id="3_grpai"]
 [ext_resource type="Texture2D" uid="uid://b6tuxknqbe7q8" path="res://Resources/Icons/SelectedEmoticion128.png" id="4_k11aq"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="4_saqfl"]
-[ext_resource type="Script" uid="uid://dymf0ccqr3c14" path="res://Scripts/Buttons/dual_select_button.gd" id="5_7sjhg"]
+[ext_resource type="Script" uid="uid://dymf0ccqr3c14" path="res://Scripts/UI/Buttons/dual_select_button.gd" id="5_7sjhg"]
 [ext_resource type="Resource" uid="uid://dr07qidpgsf71" path="res://Resources/ButtonGroups/EmotionSelectionButtonGroup.tres" id="5_dsbnb"]
 [ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy/Klappy_soundbank_screen.gd" id="5_pd2wx"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="6_lmhht"]

@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c8a4ts2urwcjm" path="res://Scripts/TrackSettingsRes/synth_track_settings.gd" id="3_rie1u"]
 [ext_resource type="Resource" uid="uid://coeoloe70pd2y" path="res://Resources/TrackSettings/SampleTrack3.tres" id="4_340uc"]
 [ext_resource type="Resource" uid="uid://dl6vvjusql8q7" path="res://Resources/TrackSettings/SampleTrack4.tres" id="5_yaudt"]
+[ext_resource type="Resource" uid="uid://biemtifmxe5a2" path="res://Resources/TrackSettings/SongTrack1.tres" id="7_d5pjn"]
 [ext_resource type="Resource" uid="uid://b2vj4tsil3dmu" path="res://Resources/TrackSettings/SynthTrack1.tres" id="8_lekba"]
 [ext_resource type="Resource" uid="uid://b4kjw1gmbbkj6" path="res://Resources/TrackSettings/SynthTrack2.tres" id="9_1srrv"]
 
@@ -14,4 +15,5 @@
 script = ExtResource("2_jk32k")
 sample_tracks = Array[ExtResource("1_tub5q")]([ExtResource("2_hsjoj"), ExtResource("3_d5pjn"), ExtResource("4_340uc"), ExtResource("5_yaudt")])
 synth_tracks = Array[ExtResource("3_rie1u")]([ExtResource("8_lekba"), ExtResource("9_1srrv")])
+song_track = ExtResource("7_d5pjn")
 metadata/_custom_type_script = "uid://41f22lph8iqe"

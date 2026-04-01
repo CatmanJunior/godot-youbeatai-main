@@ -20,11 +20,22 @@ func _init(p_line: Line2D, p_points: int = 100, p_base_dist: int = 280, p_volume
 func update_line(audio: AudioStream) -> void:
 	if not line:
 		return
-
 	offsets = _calculate_volume_offsets(audio, points, base_dist, volume_dist, reversed)
+	_apply_offsets(offsets)
 
+
+func update_line_from_recording(rec_data: RecordingData) -> void:
+	if not line:
+		return
+	if rec_data == null:
+		return
+	offsets = rec_data.get_circular_waveform_offsets(points, base_dist, volume_dist, reversed)
+	_apply_offsets(offsets)
+
+
+func _apply_offsets(new_offsets) -> void:
 	line.clear_points()
-	for offset in offsets:
+	for offset in new_offsets:
 		line.add_point(offset)
 
 

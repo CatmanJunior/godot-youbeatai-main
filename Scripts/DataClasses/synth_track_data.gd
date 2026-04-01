@@ -15,6 +15,7 @@ func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
 func duplicate_track() -> TrackData:
 	var copy : SynthTrackData = SynthTrackData.new(index, knob_position)
 	copy.recorded_audio_stream = recorded_audio_stream
+	copy.recording_data = recording_data
 	copy.master_volume = master_volume
 	copy.weights = weights
 	copy.sequence = sequence

@@ -78,9 +78,12 @@ func _on_recording_stopped(audio: AudioStream) -> void:
 	if track_type == TrackData.TrackType.SAMPLE:
 		audio = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
 
-	# Update waveform visualization with the final recorded audio (only for SYNTH tracks)
+	# Store RecordingData on the track
+	current_recording_track.set_recording_audio_stream(audio)
+
+	# Update waveform visualization using RecordingData (only for SYNTH tracks)
 	if track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_waveform(current_recording_track.index, audio)
+		waveform_visualizer.update_waveform(current_recording_track.index, current_recording_track.recording_data)
 		waveform_visualizer.reset_progress(current_recording_track.index)
 
 	EventBus.set_recorded_stream_requested.emit(current_recording_track.index, audio)

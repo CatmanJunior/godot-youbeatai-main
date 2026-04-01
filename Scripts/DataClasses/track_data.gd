@@ -12,6 +12,7 @@ var index: int = -1
 ## Contains chaos pad knob position, mixing state, and audio player references.
 
 var recorded_audio_stream: AudioStream = null
+var recording_data: RecordingData = null
 
 ## Chaos pad knob position for mixing on this track
 var knob_position: Vector2 = Vector2.ZERO
@@ -36,7 +37,15 @@ func duplicate_track() -> TrackData:
 	copy.master_volume = master_volume
 	copy.weights = weights
 	copy.recorded_audio_stream = recorded_audio_stream
+	copy.recording_data = recording_data
 	return copy
 
 func set_recording_audio_stream(audio_stream: AudioStream) -> void:
 	recorded_audio_stream = audio_stream
+	if audio_stream is AudioStreamWAV:
+		recording_data = RecordingData.new(self, audio_stream as AudioStreamWAV)
+	else:
+		recording_data = null
+
+func has_recording() -> bool:
+	return recording_data != null and recording_data.audio_stream != null

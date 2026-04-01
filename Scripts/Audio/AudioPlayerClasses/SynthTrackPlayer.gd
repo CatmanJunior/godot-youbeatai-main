@@ -48,6 +48,11 @@ func set_recorded_stream(stream: AudioStream) -> void:
 	_has_recording = true
 	set_weights(_weights) # reapply weights now that streams are loaded
 
+	# Store RecordingData on the track data
+	var data := _get_synth_data()
+	if data:
+		data.set_recording_audio_stream(stream)
+
 	var thread := Thread.new()
 	thread.start(_process_voice_threaded.bind(stream, thread))
 

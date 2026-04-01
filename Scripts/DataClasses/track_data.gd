@@ -55,6 +55,7 @@ func set_recording_audio_stream(audio_stream: AudioStream) -> void:
 			if recording_data.state != RecordingData.State.PROCESSING:
 				recording_data.state = RecordingData.State.RECORDING_DONE
 		else:
+			push_warning("RecordingData was null when set_recording_audio_stream was called — bypassing start_recording() flow.")
 			recording_data = RecordingData.new(self, -1, audio_stream as AudioStreamWAV)
 			recording_data.state = RecordingData.State.RECORDING_DONE
 	else:

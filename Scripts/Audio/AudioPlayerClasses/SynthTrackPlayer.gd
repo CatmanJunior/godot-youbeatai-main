@@ -48,9 +48,12 @@ func set_recorded_stream(stream: AudioStream) -> void:
 	_has_recording = true
 	set_weights(_weights) # reapply weights now that streams are loaded
 
-	# Store RecordingData on the track data
+	# Store RecordingData on the track data and mark as PROCESSING before
+	# set_recording_audio_stream so the PROCESSING state is preserved.
 	var data := _get_synth_data()
 	if data:
+		if data.recording_data:
+			data.recording_data.state = RecordingData.State.PROCESSING
 		data.set_recording_audio_stream(stream)
 
 	var thread := Thread.new()
@@ -89,6 +92,9 @@ func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
 	var data: SynthTrackData = _get_synth_data()
 	if sequence and data:
 		data.sequence = sequence
+		# Voice processing complete — mark as done
+		if data.recording_data:
+			data.recording_data.state = RecordingData.State.RECORDING_DONE
 
 	EventBus.synth_sequence_ready.emit(track_index)
 

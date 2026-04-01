@@ -3,7 +3,9 @@ extends RefCounted
 
 ## Data class encapsulating a recorded audio stream and the TrackData it belongs to.
 ## Provides lazy-cached analysis utilities: PCM extraction, RMS/volume, FFT/spectrum,
-## and waveform visualization helpers. Holds no recording state.
+## and waveform visualization helpers. Tracks recording state and section context.
+
+enum State { NOT_STARTED, RECORDING, PROCESSING, RECORDING_DONE }
 
 const Fft = preload("res://fft/Fft.gd")
 
@@ -11,6 +13,8 @@ const DEFAULT_FFT_SIZE := 2048
 const MAX_FFT_SIZE := 8192
 const SILENCE_THRESHOLD := 0.01
 
+var state: State = State.NOT_STARTED
+var section_index: int = -1
 var track_data: TrackData
 var audio_stream: AudioStreamWAV:
 	set(value):
@@ -33,9 +37,11 @@ var _waveform_cache: PackedVector2Array = []
 var _waveform_cache_resolution: int = -1
 
 
-func _init(p_track_data: TrackData, p_audio_stream: AudioStreamWAV) -> void:
+func _init(p_track_data: TrackData, p_section_index: int = -1, p_audio_stream: AudioStreamWAV = null) -> void:
 	track_data = p_track_data
-	audio_stream = p_audio_stream
+	section_index = p_section_index
+	if p_audio_stream:
+		audio_stream = p_audio_stream
 
 
 # --- Cache invalidation ---

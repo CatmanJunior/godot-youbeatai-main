@@ -40,10 +40,23 @@ func duplicate_track() -> TrackData:
 	copy.recording_data = recording_data
 	return copy
 
+func start_recording(p_section_index: int) -> RecordingData:
+	recording_data = RecordingData.new(self, p_section_index)
+	recording_data.state = RecordingData.State.RECORDING
+	return recording_data
+
 func set_recording_audio_stream(audio_stream: AudioStream) -> void:
 	recorded_audio_stream = audio_stream
 	if audio_stream is AudioStreamWAV:
-		recording_data = RecordingData.new(self, audio_stream as AudioStreamWAV)
+		if recording_data != null:
+			recording_data.audio_stream = audio_stream as AudioStreamWAV
+			# Only advance to RECORDING_DONE if not already in PROCESSING state
+			# (synth tracks stay in PROCESSING until voice analysis completes)
+			if recording_data.state != RecordingData.State.PROCESSING:
+				recording_data.state = RecordingData.State.RECORDING_DONE
+		else:
+			recording_data = RecordingData.new(self, -1, audio_stream as AudioStreamWAV)
+			recording_data.state = RecordingData.State.RECORDING_DONE
 	else:
 		recording_data = null
 

@@ -52,6 +52,9 @@ func set_recorded_stream(stream: AudioStream) -> void:
 	var data := _get_synth_data()
 	if data:
 		data.set_recording_audio_stream(stream)
+		# Mark as PROCESSING while voice analysis runs
+		if data.recording_data:
+			data.recording_data.state = RecordingData.State.PROCESSING
 
 	var thread := Thread.new()
 	thread.start(_process_voice_threaded.bind(stream, thread))
@@ -89,6 +92,9 @@ func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
 	var data: SynthTrackData = _get_synth_data()
 	if sequence and data:
 		data.sequence = sequence
+		# Voice processing complete — mark as done
+		if data.recording_data:
+			data.recording_data.state = RecordingData.State.RECORDING_DONE
 
 	EventBus.synth_sequence_ready.emit(track_index)
 

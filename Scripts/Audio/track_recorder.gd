@@ -51,6 +51,9 @@ func _start_recording() -> void:
 	has_detected_sound = false
 	actual_sound_length = 0.0
 
+	# Create RecordingData early so it tracks the full lifecycle
+	current_recording_track.start_recording(GameState.current_section_index)
+
 	#TODO maybe handle the muting in the audio manager instead of here based on starting/stopping recording
 	EventBus.mute_all_requested.emit(true)
 	EventBus.start_recording_requested.emit()
@@ -72,13 +75,20 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 
 func _on_recording_stopped(audio: AudioStream) -> void:
 	if not has_detected_sound:
+		# No sound detected — reset recording_data state
+		if current_recording_track and current_recording_track.recording_data:
+			current_recording_track.recording_data.state = RecordingData.State.NOT_STARTED
 		return
 
 	# Trim silence for sample tracks, keep full recording for loop tracks
 	if track_type == TrackData.TrackType.SAMPLE:
 		audio = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
 
-	# Store RecordingData on the track
+	# Synth tracks enter PROCESSING for voice analysis; sample tracks finish immediately
+	if track_type == TrackData.TrackType.SYNTH and current_recording_track.recording_data:
+		current_recording_track.recording_data.state = RecordingData.State.PROCESSING
+
+	# Store audio on the track (sets state to RECORDING_DONE for sample tracks)
 	current_recording_track.set_recording_audio_stream(audio)
 
 	# Update waveform visualization using RecordingData (only for SYNTH tracks)

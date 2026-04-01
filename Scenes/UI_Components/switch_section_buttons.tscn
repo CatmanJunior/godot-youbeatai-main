@@ -50,7 +50,7 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[node name="SwitchSectionButtons" type="Control" unique_id=1068760052 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "load_section_button", "copy_paste_clear_buttons_holder", "emoji_prompt", "song_recording_progress_bar")]
+[node name="SwitchSectionButtons" type="Control" unique_id=1068760052 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "remove_section_button", "load_section_button", "copy_paste_clear_buttons_holder", "emoji_prompt", "song_recording_progress_bar")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,16 +59,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3bcou")
 section_button_prefab = ExtResource("3_3b4f3")
-section_buttons_container = NodePath("SwitchLayerButtonsContainer")
-add_section_button = NodePath("CopyPasteClearButtons/AddLayerButton")
-clear_section_button = NodePath("CopyPasteClearButtons/ClearLayerButton")
-save_section_button = NodePath("CopyPasteClearButtons/SaveLayerButton")
-load_section_button = NodePath("CopyPasteClearButtons/LoadLayerButton")
+section_buttons_container = NodePath("SwitchSectionButtonsContainer")
+add_section_button = NodePath("CopyPasteClearButtons/AddSectionButton")
+clear_section_button = NodePath("CopyPasteClearButtons/ClearSectionButton")
+save_section_button = NodePath("CopyPasteClearButtons/CopySectionButton")
+remove_section_button = NodePath("CopyPasteClearButtons/RemoveSectionButton")
+load_section_button = NodePath("CopyPasteClearButtons/PasteSectionButton")
 copy_paste_clear_buttons_holder = NodePath("CopyPasteClearButtons")
 emoji_prompt = NodePath("EmojiPrompt")
 song_recording_progress_bar = NodePath("RealTimeAudioRecordingProgressBar")
 
-[node name="SwitchLayerButtonsContainer" type="HBoxContainer" parent="." unique_id=179776166]
+[node name="SwitchSectionButtonsContainer" type="HBoxContainer" parent="." unique_id=179776166]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.19609375
@@ -86,26 +87,18 @@ theme_override_constants/separation = 12
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="CopyPasteClearButtons" type="Control" parent="." unique_id=2032541506]
-anchors_preset = 0
+[node name="CopyPasteClearButtons" type="HBoxContainer" parent="." unique_id=2103297005]
+layout_mode = 1
 offset_left = 215.0
 offset_top = 101.45422
-offset_right = 215.0
-offset_bottom = 101.45422
+offset_right = 388.0
+offset_bottom = 129.45422
+pivot_offset_ratio = Vector2(0.5, 0)
+alignment = 1
 
-[node name="SaveLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=886923601]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -63.0
-offset_top = 45.0
-offset_right = -3.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="AddSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
 theme_override_font_sizes/font_size = 28
@@ -113,23 +106,12 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "💾
-"
+text = "+"
 metadata/_edit_use_anchors_ = true
 
-[node name="ClearLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=2008335968]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -129.0
-offset_top = 45.0
-offset_right = -69.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CopySectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=886923601]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
 theme_override_font_sizes/font_size = 28
@@ -137,23 +119,27 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "🗑️
+text = "📥
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="LoadLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=1172480617]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 3.0
-offset_top = 44.0
-offset_right = 63.0
-offset_bottom = 104.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="PasteSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1172480617]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
+action_mode = 0
+text = "📤
+"
+metadata/_edit_use_anchors_ = true
+
+[node name="ClearSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=2008335968]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
 theme_override_font_sizes/font_size = 28
@@ -165,19 +151,9 @@ text = "♻️
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="AddLayerButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 69.0
-offset_top = 45.0
-offset_right = 129.0
-offset_bottom = 105.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="RemoveSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1218212978]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
 theme_override_font_sizes/font_size = 28
@@ -185,7 +161,7 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "+"
+text = "🗑️"
 metadata/_edit_use_anchors_ = true
 
 [node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="." unique_id=798254824]

@@ -156,7 +156,7 @@ func get_peak_volume() -> float:
 	var samples := get_samples()
 	var peak := 0.0
 	for s in samples:
-		var a := abs(s)
+		var a : float = abs(s)
 		if a > peak:
 			peak = a
 	return peak

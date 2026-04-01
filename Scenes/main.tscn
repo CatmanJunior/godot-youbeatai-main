@@ -305,7 +305,7 @@ offset_top = 57.0
 offset_right = -257.0
 offset_bottom = 57.0
 
-[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2032541506]
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2103297005]
 visible = false
 offset_left = 2.0
 offset_top = -349.0

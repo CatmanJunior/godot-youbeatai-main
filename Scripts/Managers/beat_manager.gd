@@ -24,10 +24,10 @@ var _is_playing: bool = false
 	get:
 		return _is_playing
 
-@export var current_beat: int = total_beats - 1
+var current_beat: int = 0
 var beat_elapsed: float = 0.0
 
-@export var swing: float = 0.05
+var swing: float = 0.00
 
 var beat_duration: float
 

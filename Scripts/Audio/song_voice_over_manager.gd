@@ -1,9 +1,5 @@
 extends Node
 
-# Signals for recording state
-signal started_recording
-signal stopped_recording
-
 # UI References
 var progress_bar: ProgressBar
 var record_song_button: Button
@@ -102,7 +98,8 @@ func start_recording():
 	
 	EventBus.countdown_close_requested.emit()
 	
-	started_recording.emit()
+	EventBus.recording_started.emit()
+
 
 func stop_recording():
 	if audio_effect_record:
@@ -123,4 +120,4 @@ func stop_recording():
 	
 	finished = true
 	
-	stopped_recording.emit()
+	EventBus.recording_stopped.emit(voice_over)

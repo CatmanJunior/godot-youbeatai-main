@@ -38,4 +38,5 @@ func duplicate_track() -> TrackData:
 	copy.main_audio_stream = main_audio_stream
 	copy.alt_audio_stream = alt_audio_stream
 	copy.recorded_audio_stream = recorded_audio_stream
+	copy.recording_data = recording_data
 	return copy

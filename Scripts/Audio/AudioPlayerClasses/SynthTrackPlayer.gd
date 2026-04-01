@@ -24,7 +24,20 @@ func _ready() -> void:
 func _on_section_switched(_old, _new) -> void:
 	# Clear stale scheduled notes when switching sections
 	if note_player:
-		note_player.note_off_all(note_player.get_time())
+		note_player.note_off_all(0)
+	
+	# Reload the new section's recorded stream into the audio players
+	var data : SynthTrackData = _get_synth_data()
+	if data and data.recorded_audio_stream:
+		for i in [0, 2]:
+			players[i].stream = data.recorded_audio_stream
+		_has_recording = true
+		set_weights(_weights)
+	else:
+		# No recording in this section — clear streams and flag
+		for i in [0, 2]:
+			players[i].stream = null
+		_has_recording = false
 
 func _on_beat_triggered(beat: int) -> void:
 	if _has_recording and note_player:

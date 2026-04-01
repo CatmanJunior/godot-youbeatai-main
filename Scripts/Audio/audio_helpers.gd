@@ -1,5 +1,31 @@
 class_name AudioHelpers
 
+## Caps an AudioStreamWAV to a maximum duration in seconds by truncating trailing data.
+static func cap_audio_duration(original: AudioStream, max_duration: float) -> AudioStream:
+	if original == null or max_duration <= 0.0:
+		return original
+
+	var current_length: float = original.get_length()
+	if current_length <= max_duration:
+		return original
+
+	var is_stereo: bool = original.stereo
+	var fmt: int = original.format
+	var channels: int = 2 if is_stereo else 1
+	var bytes_per_sample: int = 2 if fmt == 1 else 1
+	var frame_size: int = channels * bytes_per_sample
+
+	var max_frames: int = int(max_duration * float(original.mix_rate))
+	var max_bytes: int = max_frames * frame_size
+	max_bytes = mini(max_bytes, original.data.size())
+
+	var capped: AudioStreamWAV = AudioStreamWAV.new()
+	capped.data = original.data.slice(0, max_bytes)
+	capped.mix_rate = original.mix_rate
+	capped.stereo = original.stereo
+	capped.format = original.format
+	return capped
+
 
 ## Trims leading silence from an AudioStreamWAV by scanning the raw sample data.
 ## silence_threshold: normalised amplitude (0.0–1.0) below which a frame counts as silent.

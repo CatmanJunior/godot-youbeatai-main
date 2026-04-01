@@ -75,7 +75,6 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 
 func _on_recording_stopped(audio: AudioStream) -> void:
 	if not has_detected_sound:
-		# No sound detected — reset recording_data state
 		if current_recording_track and current_recording_track.recording_data:
 			current_recording_track.recording_data.state = RecordingData.State.NOT_STARTED
 		return
@@ -83,6 +82,8 @@ func _on_recording_stopped(audio: AudioStream) -> void:
 	# Trim silence for sample tracks, keep full recording for loop tracks
 	if track_type == TrackData.TrackType.SAMPLE:
 		audio = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
+		# Also cap to 1 beat duration so trailing audio is removed
+		audio = AudioHelpers.cap_audio_duration(audio, GameState.beat_duration)
 
 	# Synth tracks enter PROCESSING for voice analysis; sample tracks finish immediately
 	if track_type == TrackData.TrackType.SYNTH and current_recording_track.recording_data:

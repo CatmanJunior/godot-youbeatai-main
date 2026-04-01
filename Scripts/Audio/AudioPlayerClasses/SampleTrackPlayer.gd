@@ -19,7 +19,14 @@ func set_streams(a: AudioStream, b: AudioStream, rec: AudioStream=null) -> void:
 	if rec != null:
 		set_recorded_stream(rec)
 
+func _ready() -> void:
+	EventBus.section_switched.connect(_on_section_switched)
 
+
+func _on_section_switched(_old, _new) -> void:
+	if _new.tracks[track_index].recorded_audio_stream != null:
+		set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
+	
 
 func set_recorded_stream(rec: AudioStream) -> void:
 	players[2].stream = rec

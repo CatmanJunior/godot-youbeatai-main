@@ -3,20 +3,16 @@ extends Node
 # --- BPM properties ---
 var beats_per_bar = 4.0
 
-@export var bpm: int = 120:
+var bpm: int = 120:
 	set(value):
 		bpm = value
 		EventBus.bpm_changed.emit(bpm)
 
-static var total_beats: int = 16
-
-@export var total_beat_count: int:
-	get:
-		return total_beats
+var total_beats: int = 16
 
 var _is_playing: bool = false
 
-@export var playing: bool:
+var playing: bool:
 	set(value):
 		if _is_playing != value:
 			EventBus.playing_changed.emit(value)
@@ -47,7 +43,6 @@ func _ready():
 
 	# Beat manager connections
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
-	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.beat_set_requested.connect(set_beat)
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.section_switched.connect(_on_section_switched)
@@ -104,24 +99,15 @@ func _on_section_switched(_old_section: SectionData, _new_section: SectionData):
 			var is_active = _new_section.get_beat(track, beat)
 			EventBus.beat_state_changed.emit(track, beat, is_active)
 
-func _on_beat_sprite_clicked(p_ring: int, beat: int):
+func _on_beat_sprite_clicked(p_track: int, beat: int):
 	"""Handle beat sprite click via EventBus"""
-	toggle_beat(p_ring, beat)
-	var is_active = get_beat(p_ring, beat)
+	toggle_beat(p_track, beat)
+	var is_active = get_beat(p_track, beat)
 	if is_active:
-		EventBus.play_sample_track_requested.emit(p_ring)
-	if p_ring < GameState.colors.size():
-		EventBus.particles_requested.emit(Vector2.ZERO, GameState.colors[p_ring])
-	EventBus.track_selected.emit(p_ring)
-
-func _on_beat_triggered(current_beat: int):
-	"""Called when a beat occurs"""
-	for track_index in range(GameState.current_section.SAMPLE_TRACKS_PER_SECTION):
-		if GameState.current_section.get_beat(track_index, current_beat):
-			EventBus.play_sample_track_requested.emit(track_index)
-	if current_beat == 0:
-		for track_index in range(GameState.current_section.SYNTH_TRACKS_PER_SECTION):
-			EventBus.play_track_requested.emit(track_index + GameState.current_section.SAMPLE_TRACKS_PER_SECTION)
+		EventBus.play_track_requested.emit(p_track)
+	if p_track < GameState.colors.size():
+		EventBus.particles_requested.emit(Vector2.ZERO, GameState.colors[p_track])
+	EventBus.track_selected.emit(p_track)
 
 func _on_template_set(actives: Array):
 	"""Apply template beat actives"""
@@ -131,17 +117,17 @@ func _on_template_set(actives: Array):
 		for beat in actives[track].size():
 			EventBus.beat_state_changed.emit(track, beat, actives[track][beat])
 
-func toggle_beat(ring: int, beat: int):
+func toggle_beat(track: int, beat: int):
 	"""Toggle a beat on or off"""
-	GameState.current_section.toggle_beat(ring, beat)
-	var is_active = GameState.current_section.get_beat(ring, beat)
-	EventBus.beat_state_changed.emit(ring, beat, is_active)
+	GameState.current_section.toggle_beat(track, beat)
+	var is_active = GameState.current_section.get_beat(track, beat)
+	EventBus.beat_state_changed.emit(track, beat, is_active)
 
-func set_beat(ring: int, beat: int, active: bool):
+func set_beat(track: int, beat: int, active: bool):
 	"""Set a beat to active or inactive"""
-	GameState.current_section.set_beat(ring, beat, active)
-	EventBus.beat_state_changed.emit(ring, beat, active)
+	GameState.current_section.set_beat(track, beat, active)
+	EventBus.beat_state_changed.emit(track, beat, active)
 
-func get_beat(ring: int, beat: int) -> bool:
+func get_beat(track: int, beat: int) -> bool:
 	"""Get whether a beat is active"""
-	return GameState.current_section.get_beat(ring, beat)
+	return GameState.current_section.get_beat(track, beat)

@@ -18,8 +18,14 @@ func _get_synth_data() -> SynthTrackData:
 	return track
 
 func _ready() -> void:
-	EventBus.beat_triggered.connect(_on_beat_triggered)
-	EventBus.section_switched.connect(_on_section_switched)
+	super._ready()
+	EventBus.note_player_settings_changed.connect(_on_note_player_settings_changed)
+	
+func _on_note_player_settings_changed(new_settings: NotePlayerSettings, track_id: int) -> void:
+	if track_id != self.track_index:
+		return
+	note_player_settings = new_settings
+	note_player.apply_settings(note_player_settings)
 
 func _on_section_switched(_old, _new) -> void:
 	# Clear stale scheduled notes when switching sections
@@ -40,8 +46,12 @@ func _on_section_switched(_old, _new) -> void:
 		_has_recording = false
 
 func _on_beat_triggered(beat: int) -> void:
-	if _has_recording and note_player:
+	if not _has_recording:
+		return
+	if note_player:
 		play_note(beat)
+	if beat == 0: 
+		players[0].play()
 
 func setup(index: int, parent_bus: String, settings : NotePlayerSettings = null) -> void:
 	if settings:

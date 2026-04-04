@@ -16,6 +16,11 @@ font_size = 80
 [node name="Robot" type="Sprite2D" unique_id=1025278274]
 z_index = 4
 
+[node name="Podium" type="Sprite2D" parent="." unique_id=594292625]
+position = Vector2(-8, 176.00003)
+scale = Vector2(0.90207714, 1.215)
+texture = ExtResource("7_g650j")
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=1162549337]
 anchors_preset = 8
 anchor_left = 0.5
@@ -238,11 +243,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="ProgressBarAchievementNode" type="Node2D" parent="ProgressBar" unique_id=915898225]
 position = Vector2(1239.05, -302)
-
-[node name="Podium" type="Sprite2D" parent="." unique_id=594292625]
-position = Vector2(-8, 176.00003)
-scale = Vector2(0.90207714, 1.215)
-texture = ExtResource("7_g650j")
 
 [node name="KlappyReaction" parent="." unique_id=1739815365 node_paths=PackedStringArray("achievement_panel", "instruction_label") instance=ExtResource("8_wcpyi")]
 achievement_panel = NodePath("../AchievementsPanel")

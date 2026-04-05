@@ -75,11 +75,4 @@ func get_track_volume(track: int) -> float:
 	
 	return BusHelper.get_volume(track_players[track].bus_name)
 
-## Set the volume for a specific track bus, and update the crossfade weights for sample tracks
-func set_track_volume(track: int, volume: float, weights: Vector3):
-	if track < 0 or track >= TRACK_COUNT:
-		printerr("Invalid track index %d for set_track_volume" % track)
-		return
-	track_players[track].set_weights(weights)
-	track_players[track].set_volume_db(volume)
 

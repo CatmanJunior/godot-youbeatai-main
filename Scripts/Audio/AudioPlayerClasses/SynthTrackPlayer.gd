@@ -91,7 +91,9 @@ func _on_beat_triggered(beat: int) -> void:
 			players[i].stop()
 			players[i].play() # retrigger recording layer on the downbeat to keep it in sync
 
-	
+func _on_all_players_stop():
+	stop()
+
 
 ## Playback control
 func play(offset: float = 0.0) -> void:
@@ -113,7 +115,7 @@ func stop() -> void:
 		players[i].stop()
 	# Also stop all currently playing notes immediately
 	if note_player:
-		note_player.note_off_all(note_player.get_time())
+		note_player.note_off_all(0)
 		
 # -- Voice Processing ---
 func _process_voice_threaded(stream: AudioStream, thread: Thread) -> void:

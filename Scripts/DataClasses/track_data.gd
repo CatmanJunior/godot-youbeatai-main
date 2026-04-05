@@ -1,15 +1,13 @@
+## Base data class for a single track within a section.
+## Contains chaos pad knob position, mixing state, and audio player references.
 class_name TrackData
 extends RefCounted
-
 
 enum TrackType { SAMPLE, SYNTH }
 
 var track_type: TrackType = TrackType.SAMPLE
 
 var index: int = -1 
-
-## Base data class for a single track within a section.
-## Contains chaos pad knob position, mixing state, and audio player references.
 
 var recorded_audio_stream: AudioStream = null
 var recording_data: RecordingData = null
@@ -21,16 +19,10 @@ var knob_position: Vector2 = Vector2.ZERO
 var master_volume: float = 0.0
 var weights: Vector3 = Vector3.ZERO
 
-## Audio player references (set at runtime by AudioPlayerManager)
-var audio_player: AudioStreamPlayer = null
-var sync_stream: AudioStreamSynchronized = null
-
-
 func _init(track_index:int, knob_pos: Vector2 = Vector2.ZERO, type: TrackType = TrackType.SAMPLE) -> void:
 	knob_position = knob_pos
 	self.track_type = type
 	self.index = track_index
-
 
 func duplicate_track() -> TrackData:
 	var copy : TrackData = TrackData.new(index, knob_position, track_type)

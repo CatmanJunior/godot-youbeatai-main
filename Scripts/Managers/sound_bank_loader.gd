@@ -95,6 +95,7 @@ func _apply_soundfont_and_instrument(bank: AudioBank) -> void:
 		NotePlayerSettings.create(bank.synth1_soundfont, base_noteplayer_settings[0].notes, bank.synth1_instrument_id, base_noteplayer_settings[0].base_note, base_noteplayer_settings[0].allow_key_input, base_noteplayer_settings[0].gate, base_noteplayer_settings[0].volume_db),
 		NotePlayerSettings.create(bank.synth2_soundfont, base_noteplayer_settings[1].notes, bank.synth2_instrument_id, base_noteplayer_settings[1].base_note, base_noteplayer_settings[1].allow_key_input, base_noteplayer_settings[1].gate, base_noteplayer_settings[1].volume_db)
 	]
+	
 	print("Applying soundfont and instrument settings for synth tracks:")
 	for i in range(2):
 		print("  Synth Track %d: soundfont=%s, instrument_id=%d" % [

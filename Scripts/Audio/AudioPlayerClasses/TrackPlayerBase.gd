@@ -2,6 +2,7 @@
 class_name TrackPlayerBase
 extends Node
 
+
 const SILENT_DB: float = -80.0
 const SUB_TRACK_PLAYER_COUNT = 3
 
@@ -14,6 +15,10 @@ var players: Array[AudioStreamPlayer] = [] # players for main, alt, recording
 
 var _weights: Vector3 = Vector3(1.0, 0.0, 0.0)
 
+var track_data: TrackData:
+	get:
+		return GameState.current_section.tracks[track_index]
+
 @warning_ignore("unused_private_class_variable")
 var _has_recording: bool = false
 
@@ -23,11 +28,38 @@ func _get_bus_suffixes() -> Array[String]:
 func _get_bus_prefix() -> String:
 	return ""
 
-func setup(index: int, parent_bus: String, _settings = null) -> void:
-	track_index = index
-	name = "%sTrack%d" % [_get_bus_prefix(), track_index]
-	_create_buses(parent_bus)
-	_setup_players()
+func _ready() -> void:
+	EventBus.all_players_stop_requested.connect(_on_all_players_stop)
+	EventBus.mute_all_requested.connect(_mute_all)
+	EventBus.set_track_volume_requested.connect(set_track_volume)
+	EventBus.set_stream_requested.connect(_on_request_set_stream)
+	EventBus.set_recorded_stream_requested.connect(_on_request_set_recorded_stream)
+	EventBus.beat_triggered.connect(_on_beat_triggered)
+	EventBus.section_switched.connect(_on_section_switched)
+
+## Override in subclasses
+func _on_beat_triggered(_beat: int) -> void:
+	print("Beat triggered should be overridden in subclass if needed")
+
+func _on_section_switched(_old, _new) -> void:
+	print("Section Switched should be overridden in subclass if needed")
+
+func _on_request_set_recorded_stream(trackIndex: int, audio: AudioStream):
+	if trackIndex != track_index:
+		return
+	set_recorded_stream(audio)
+
+func _on_request_set_stream(trackIndex: int, audio_layer: int, audio: AudioStream):
+	if trackIndex != track_index:
+		return
+	set_stream(audio_layer, audio)
+
+func _mute_all(muted: bool) -> void:
+	set_muted(muted)
+
+func _on_all_players_stop():
+	for p in players:
+		p.stop()
 
 # Override in subclasses
 func _create_buses(parent_bus: String) -> void:
@@ -63,6 +95,19 @@ func _apply_layer_effects(layer: int, bus_idx: int) -> void:
 			pass
 		2: # Alt2 — no effects
 			pass
+
+
+func setup(index: int, parent_bus: String, _settings = null) -> void:
+	track_index = index
+	name = "%sTrack%d" % [_get_bus_prefix(), track_index]
+	_create_buses(parent_bus)
+	_setup_players()
+
+func set_track_volume(track: int, volume: float, weights: Vector3):
+	if track != track_index:
+		return
+	set_weights(weights)
+	set_volume_db(volume)
 
 func apply_effect_profile(effect_profile: EffectProfile) -> void:
 	var bus_idx = AudioServer.get_bus_index(bus_name)
@@ -105,7 +150,6 @@ func get_playback_position() -> float:
 		return players[0].get_playback_position()
 	return 0.0
 
-# Called by Section when tearing down (section change)
 func teardown_buses() -> void:
 	for b in sub_bus_names:
 		BusHelper.remove_bus(b)

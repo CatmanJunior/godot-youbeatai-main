@@ -20,13 +20,25 @@ func set_streams(a: AudioStream, b: AudioStream, rec: AudioStream=null) -> void:
 		set_recorded_stream(rec)
 
 func _ready() -> void:
-	EventBus.section_switched.connect(_on_section_switched)
+	super._ready()
+	EventBus.play_track_requested.connect(_on_play_track_requested)
 
+func _on_play_track_requested(trackIndex: int) -> void:
+	if trackIndex == track_index:
+		play()
 
 func _on_section_switched(_old, _new) -> void:
 	if _new.tracks[track_index].recorded_audio_stream != null:
 		set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
-	
+	else:
+		# Clear recording stream and flag if new section doesn't have a recording for this track
+		players[2].stream = null
+		_has_recording = false
+		set_weights(_weights) # update volumes to remove recording bus
+
+func _on_beat_triggered(beat: int) -> void:
+	if track_data.get_beat(track_index, beat):
+		play()
 
 func set_recorded_stream(rec: AudioStream) -> void:
 	players[2].stream = rec
@@ -40,3 +52,4 @@ func play(offset: float = 0.0) -> void:
 	players[1].play(offset)
 	if _has_recording:
 		players[2].play(offset)
+

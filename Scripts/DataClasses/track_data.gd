@@ -1,3 +1,5 @@
+## Base data class for a single track within a section.
+## Contains chaos pad knob position, mixing state, and audio player references.
 class_name TrackData
 extends RefCounted
 
@@ -7,8 +9,6 @@ var track_type: TrackType = TrackType.SAMPLE
 
 var index: int = -1 
 
-## Base data class for a single track within a section.
-## Contains chaos pad knob position, mixing state, and audio player references.
 var recorded_audio_stream: AudioStream = null
 var recording_data: RecordingData = null
 

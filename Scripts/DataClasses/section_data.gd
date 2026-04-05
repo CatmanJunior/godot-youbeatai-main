@@ -35,7 +35,12 @@ func _init(new_index: int = 0, section_emoji: String = "") -> void:
 
 	for i in range(SYNTH_TRACKS_PER_SECTION):
 		tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION))
+	
+	EventBus.template_set.connect(_on_template_set)
 
+
+func _on_template_set(actives: Array[Array]) -> void:
+	set_beat_actives(actives)
 
 # ── Beat access helpers ──────────────────────────────────────────────────────
 

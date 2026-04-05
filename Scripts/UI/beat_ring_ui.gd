@@ -24,11 +24,20 @@ func _ready() -> void:
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.playing_changed.connect(_update_play_pause_button)
 	EventBus.beat_state_changed.connect(set_beat_active)
+	EventBus.template_set.connect(_on_template_set)
 	play_pause_button.pressed.connect(_on_play_pause_toggled)
 
-func set_beat_active(ring: int, beat: int, active: bool):
-	if ring < beat_buttons.size() and beat < beat_buttons[ring].size():
-		var beat_button : BeatButton = beat_buttons[ring][beat]
+
+func _on_template_set(actives: Array[Array]) -> void:
+	# Update all beat sprites to match the new template actives
+	for track in range(actives.size()):
+		for beat in range(actives[track].size()):
+			var active = actives[track][beat]
+			set_beat_active(track, beat, active)
+
+func set_beat_active(track: int, beat: int, active: bool):
+	if track < beat_buttons.size() and beat < beat_buttons[track].size():
+		var beat_button : BeatButton = beat_buttons[track][beat]
 		beat_button.set_pressed_no_signal(active)
 
 func _process(_delta: float) -> void:
@@ -50,6 +59,14 @@ func _on_beat_triggered(beat: int):
 
 func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
 	_reset_scales()
+
+	for track : TrackData in _new_section.tracks:
+		if track.track_type == TrackData.TrackType.SYNTH:
+			return
+
+		for beat in track.beats:
+			var active = track.get_beat(beat)
+			set_beat_active(track.index, beat, active)
 
 func _init_beat_but_positions() -> void:
 	var beats_amount = GameState.total_beats

@@ -45,9 +45,8 @@ func _ready():
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(set_beat)
 	EventBus.template_set.connect(_on_template_set)
-	EventBus.section_switched.connect(_on_section_switched)
-# --- BPM functions ---
 
+# --- BPM functions ---
 func get_beat_progress() -> float:
 	var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
 	var progress = beat_elapsed / swing_adjusted_duration
@@ -91,14 +90,6 @@ func _get_swing_offset() -> float:
 		return -swing
 
 # --- Beat manager functions ---
-
-func _on_section_switched(_old_section: SectionData, _new_section: SectionData):
-	"""Reset beat states when switching sections"""
-	for track in range(_new_section.SAMPLE_TRACKS_PER_SECTION):
-		for beat in range(GameState.total_beats):
-			var is_active = _new_section.get_beat(track, beat)
-			EventBus.beat_state_changed.emit(track, beat, is_active)
-
 func _on_beat_sprite_clicked(p_track: int, beat: int):
 	"""Handle beat sprite click via EventBus"""
 	toggle_beat(p_track, beat)
@@ -113,9 +104,6 @@ func _on_template_set(actives: Array):
 	"""Apply template beat actives"""
 	if GameState.current_section:
 		GameState.current_section.set_beat_actives(actives)
-	for track in actives.size():
-		for beat in actives[track].size():
-			EventBus.beat_state_changed.emit(track, beat, actives[track][beat])
 
 func toggle_beat(track: int, beat: int):
 	"""Toggle a beat on or off"""

@@ -14,7 +14,7 @@ var chordLookup = {
 	"X": 10
 }
 
-func _on_note(note: SequenceElement):
+func _on_note(note: SequenceNote):
 	var notationUpper = note.chord.to_upper()
 	var note_in_scale = chordLookup[notationUpper]
 	var major = notationUpper == note.chord

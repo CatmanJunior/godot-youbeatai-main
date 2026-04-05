@@ -15,6 +15,7 @@
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="11_2nf2g"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="11_vnxl8"]
 [ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Resources/SoundFonts/tencho.sfo" id="12_vnxl8"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="13_eprof"]
 
 [resource]
 script = ExtResource("9_nx8i2")
@@ -26,9 +27,8 @@ clap = ExtResource("1_l8cde")
 clap_alt = ExtResource("2_l8cde")
 closed = ExtResource("3_sfolf")
 closed_alt = ExtResource("4_sfolf")
-green_soundfont = ExtResource("6_pb4c0")
-green_instrument_id = 5
-green_effectProfile = ExtResource("5_l8cde")
-purple_soundfont = ExtResource("12_vnxl8")
-purple_instrument_id = 2
 noteplayer_settings = Array[ExtResource("9_sfolf")]([ExtResource("10_pb4c0"), ExtResource("11_vnxl8")])
+synth_soundfonts = [ExtResource("6_pb4c0"), ExtResource("12_vnxl8")]
+synth_instrument_ids = Array[int]([5, 2])
+synth_beats = Array[float]([0.0, 0.0])
+synth_effect_profiles = Array[ExtResource("13_eprof")]([ExtResource("5_l8cde"), ExtResource("5_l8cde")])

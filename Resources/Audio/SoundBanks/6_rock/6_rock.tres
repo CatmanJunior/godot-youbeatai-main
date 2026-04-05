@@ -12,6 +12,9 @@
 [ext_resource type="AudioStream" uid="uid://c6recttco4teo" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Snare Butter 2.wav" id="7_4uiet"]
 [ext_resource type="AudioStream" uid="uid://qffta4dethj5" path="res://Resources/Audio/SoundBanks/6_rock/Snare Crystal 1.wav" id="7_x7f7w"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_5dk7e"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="10_eprof"]
+[ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
+[ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 
 [resource]
 script = ExtResource("6_5dk7e")
@@ -23,9 +26,9 @@ clap = ExtResource("1_5ewh3")
 clap_alt = ExtResource("2_oryav")
 closed = ExtResource("2_s8q6a")
 closed_alt = ExtResource("4_5dk7e")
-green_soundfont = ExtResource("5_oryav")
-green_instrument_id = 12
-green_effectProfile = ExtResource("6_4uiet")
-purple_soundfont = ExtResource("5_oryav")
-purple_instrument_id = 15
+synth_soundfonts = [ExtResource("5_oryav"), ExtResource("5_oryav")]
+synth_instrument_ids = Array[int]([12, 15])
+synth_beats = Array[float]([0.0, 0.0])
+synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_4uiet"), ExtResource("6_4uiet")])
+noteplayer_settings = Array[ExtResource("9_5dk7e")]([ExtResource("11_bass"), ExtResource("12_syn1")])
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

@@ -13,6 +13,9 @@
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="9_jp6wy"]
 [ext_resource type="AudioStream" uid="uid://b0uof5pu1qvvs" path="res://Resources/Audio/SoundBanks/1_new-age/Snare Gnarly.wav" id="10_a4u4m"]
 [ext_resource type="AudioStream" uid="uid://b3wsokmo1n77" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/Snare_Perc Oka.wav" id="11_a4u4m"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="12_eprof"]
+[ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="13_bass"]
+[ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="14_syn1"]
 
 [resource]
 script = ExtResource("9_jp6wy")
@@ -24,10 +27,9 @@ clap = ExtResource("1_n0abr")
 clap_alt = ExtResource("2_n0abr")
 closed = ExtResource("3_6rnhg")
 closed_alt = ExtResource("4_6rnhg")
-green_soundfont = ExtResource("5_kvqfu")
-green_beats = 0.5
-green_effectProfile = ExtResource("5_6rnhg")
-purple_soundfont = ExtResource("8_paa6u")
-purple_instrument_id = 12
-purple_beats = 1.0
+synth_soundfonts = [ExtResource("5_kvqfu"), ExtResource("8_paa6u")]
+synth_instrument_ids = Array[int]([0, 12])
+synth_beats = Array[float]([0.5, 1.0])
+synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("5_6rnhg"), ExtResource("5_6rnhg")])
+noteplayer_settings = Array[ExtResource("9_iog55")]([ExtResource("13_bass"), ExtResource("14_syn1")])
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

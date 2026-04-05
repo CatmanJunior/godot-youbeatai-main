@@ -12,6 +12,9 @@
 [ext_resource type="AudioStream" uid="uid://cbrym1dck8n1a" path="res://Resources/Audio/SoundBanks/6_hiphop/Snare Bling.wav" id="7_q0w1p"]
 [ext_resource type="AudioStream" uid="uid://dpf2gbxtjafbj" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Snare Bazzazian 3.wav" id="7_rphxq"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_aj41f"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="10_eprof"]
+[ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
+[ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 
 [resource]
 script = ExtResource("6_aj41f")
@@ -23,9 +26,9 @@ clap = ExtResource("1_xyvau")
 clap_alt = ExtResource("2_gnqcb")
 closed = ExtResource("2_ptr84")
 closed_alt = ExtResource("4_aj41f")
-green_soundfont = ExtResource("5_gnqcb")
-green_instrument_id = 12
-green_effectProfile = ExtResource("5_aj41f")
-purple_soundfont = ExtResource("5_gnqcb")
-purple_instrument_id = 14
+synth_soundfonts = [ExtResource("5_gnqcb"), ExtResource("5_gnqcb")]
+synth_instrument_ids = Array[int]([12, 14])
+synth_beats = Array[float]([0.0, 0.0])
+synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("5_aj41f"), ExtResource("5_aj41f")])
+noteplayer_settings = Array[ExtResource("9_aj41f")]([ExtResource("11_bass"), ExtResource("12_syn1")])
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

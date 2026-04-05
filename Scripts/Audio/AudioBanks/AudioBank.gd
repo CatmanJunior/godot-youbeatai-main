@@ -13,14 +13,10 @@ extends Resource
 @export var closed: AudioStream
 @export var closed_alt: AudioStream
 
-@export var green_soundfont: SoundFont
-@export var green_instrument_id: int
-@export var green_beats: float
-@export var green_effectProfile: EffectProfile
-
-@export var purple_soundfont: SoundFont
-@export var purple_instrument_id: int
-@export var purple_beats: float
+@export var synth_soundfonts: Array[Resource]
+@export var synth_instrument_ids: Array[int]
+@export var synth_beats: Array[float]
+@export var synth_effect_profiles: Array[EffectProfile]
 
 @export var bpm: int = 120
 @export var swing: float = 0.0
@@ -36,46 +32,38 @@ func create_note_player_settings(note_player_settings: Array[NotePlayerSettings]
 		)
 	return new_noteplayer_settings
 
-var synth_soundfonts: Array[Resource] :
-	get:
-		return [green_soundfont, purple_soundfont]
-var synth_instrument_ids: Array[int] = [green_instrument_id, purple_instrument_id]
-var synth_beats: Array[float] = [green_beats, purple_beats]
-var synth_effect_profiles: Array[EffectProfile] = [green_effectProfile, green_effectProfile] # default to main effect profile if synth doesn't have its own
-
 var synth1_soundfont: Resource = null:
 	get:
-		return green_soundfont
+		return synth_soundfonts[0] if synth_soundfonts.size() > 0 else null
 
 var synth1_instrument_id: int = 0:
 	get:
-		return green_instrument_id
+		return synth_instrument_ids[0] if synth_instrument_ids.size() > 0 else 0
 
 var synth1_beats: float = 0.0:
 	get:
-		return green_beats
+		return synth_beats[0] if synth_beats.size() > 0 else 0.0
 
 var synth1_effectProfile: EffectProfile = null:
 	get:
-		return green_effectProfile
+		return synth_effect_profiles[0] if synth_effect_profiles.size() > 0 else null
 
 var synth2_soundfont: Resource = null:
 	get:
-		return purple_soundfont
+		return synth_soundfonts[1] if synth_soundfonts.size() > 1 else null
 
 var synth2_instrument_id: int = 0:
 	get:
-		return purple_instrument_id
+		return synth_instrument_ids[1] if synth_instrument_ids.size() > 1 else 0
 
 var synth2_beats: float = 0.0:
 	get:
-		return purple_beats
+		return synth_beats[1] if synth_beats.size() > 1 else 0.0
 
 var synth2_effectProfile: EffectProfile = null:
 	get:
-		return green_effectProfile
+		return synth_effect_profiles[1] if synth_effect_profiles.size() > 1 else null
 
 var effectProfile: EffectProfile = null:
 	get:
-		# If the synths have their own effect profile, use that. Otherwise fall back to the main one.
-		return green_effectProfile
+		return synth_effect_profiles[0] if synth_effect_profiles.size() > 0 else null

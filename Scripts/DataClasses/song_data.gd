@@ -44,18 +44,18 @@ extends Resource
 
 static func from_current() -> SongData:
 	var song := SongData.new()
-	if GameState.song_track:
-		song.song_track = GameState.song_track.duplicate_track() as SongTrackData
-	song.bpm = GameState.bpm
-	song.total_beats = GameState.total_beats
-	song.swing = GameState.swing
+	if SongState.song_track:
+		song.song_track = SongState.song_track.duplicate_track() as SongTrackData
+	song.bpm = SongState.bpm
+	song.total_beats = SongState.total_beats
+	song.swing = SongState.swing
 	song.playing = GameState.playing
-	song.current_section_index = GameState.current_section_index
-	song.audio_bank = SoundBankLoader.load_audio_bank(GameState.selected_soundbank)
+	song.current_section_index = SongState.current_section_index
+	song.audio_bank = SoundBankLoader.load_audio_bank(SongState.selected_soundbank)
 	song.created_at = Time.get_datetime_string_from_system(true)
 
 	# Sections are already Resources — duplicate so saving doesn't mutate live state
-	for section: SectionData in GameState.sections:
+	for section: SectionData in SongState.sections:
 		song.sections.append(section.duplicate_section())
 
 	return song
@@ -69,23 +69,23 @@ func apply_to_current() -> void:
 	# Playback settings
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
-	GameState.total_beats = total_beats
+	SongState.total_beats = total_beats
 	# Restore song track
 	if song_track:
-		GameState.song_track = song_track
-		GameState.song_track.rebuild_runtime()
+		SongState.song_track = song_track
+		SongState.song_track.rebuild_runtime()
 	else:
-		GameState.song_track = SongTrackData.new()
+		SongState.song_track = SongTrackData.new()
 	# Rebuild sections
-	GameState.sections.clear()
+	SongState.sections.clear()
 	for i in range(sections.size()):
 		var section: SectionData = sections[i]
 		section.index = i
 		section.rebuild_runtime()
-		GameState.sections.append(section)
+		SongState.sections.append(section)
 
 	# Switch to saved section
-	if current_section_index >= 0 and current_section_index < GameState.sections.size():
+	if current_section_index >= 0 and current_section_index < SongState.sections.size():
 		EventBus.section_switch_requested.emit(current_section_index)
 
 	# Restore soundbank

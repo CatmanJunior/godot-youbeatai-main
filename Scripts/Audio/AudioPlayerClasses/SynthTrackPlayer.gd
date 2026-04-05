@@ -93,9 +93,9 @@ func play_note(beat: int) -> void:
 	var data: SynthTrackData = _get_synth_data()
 	if data == null or data.sequence == null:
 		return
-	var note: SequenceNote = data.sequence.get_note_at_beat(beat)
-	if note and note_player:
-		note_player.play_note(note)
+	var beat_notes: Array[SequenceNote] = data.sequence.get_notes_at_beat(beat)
+	if beat_notes.size() > 0 and note_player:
+		note_player.play_notes(beat_notes, GameState.beat_duration)
 
 func stop() -> void:
 	for p in [players[0], players[2]]: # stop all non-note player layers

@@ -108,58 +108,64 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 		printerr("not enough samples received, got: %d" % samples.size())
 		return null
 
-	# Analyze each beat window: extract dominant frequency and volume
-	var result: PackedVector3Array = []
-	for i in range(length):
-		var start_idx := i * samples_per_beat
-		var end_idx := mini((i + 1) * samples_per_beat, samples.size())
-		var chunk := samples.slice(start_idx, end_idx)
+	const MAX_SUBDIVISIONS := 4
+	@warning_ignore("integer_division")
+	var samples_per_sub := int(samples_per_beat / MAX_SUBDIVISIONS)
+	# If the beat is too short to subdivide, fall back to 1 subdivision
+	var subdivisions := MAX_SUBDIVISIONS if samples_per_sub > 0 else 1
+	if subdivisions == 1:
+		samples_per_sub = samples_per_beat
 
-		var freq := _dominant_frequency(chunk, sample_rate)
-		var vol := _rms(chunk)
-
-		# Skip silent beats — push a sentinel with note id -1
-		if vol < silence_threshold:
-			result.push_back(Vector3(-1, 0.0, float(i) * GameState.beat_duration))
-			continue
-
-		var time := float(i) * GameState.beat_duration
-
-		# Clamp frequency to closest note in octave range
-		var closest_diff: float = 9999
-		var closest: Note = notes.get_octave(octaveRange.x).notes[0]
-
-		for octaveNumber in range(octaveRange.x, octaveRange.y + 1):
-			var octave = notes.get_octave(octaveNumber)
-			for note in octave.notes:
-				var diff: float = abs(freq - note.frequency)
-				if diff < closest_diff:
-					closest_diff = diff
-					closest = note
-
-		result.push_back(Vector3(closest.id, vol, time))
-
-	# Build sequence notes with optional combining
+	# Analyze each beat window with subdivisions
 	var sequence_notes: Array[SequenceNote] = []
-	for i in range(len(result)):
-		var current = result[i]
-		var last: SequenceNote = null
 
-		if len(sequence_notes) > 0:
-			last = sequence_notes.back()
+	for beat_idx in range(length):
+		var beat_start := beat_idx * samples_per_beat
 
-		if last == null or abs(last.note - current.x) > combine_threshold:
-			last = SequenceNote.new()
-			last.beat = i
-			last.note = current.x
-			last.duration = 1
-			last.velocity = current.y
-			sequence_notes.append(last)
-		else:
-			last.duration += 1
+		for sub in range(subdivisions):
+			var start_idx := beat_start + sub * samples_per_sub
+			var end_idx := mini(start_idx + samples_per_sub, samples.size())
+			if start_idx >= samples.size():
+				break
+			var chunk := samples.slice(start_idx, end_idx)
 
-	for index in range(len(sequence_notes)):
-		print("beat: %d, note: %d, duration: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration])
+			var freq := _dominant_frequency(chunk, sample_rate)
+			var vol := _rms(chunk)
+
+			# Skip silent sub-beats
+			if vol < silence_threshold:
+				continue
+
+			# Clamp frequency to closest note in octave range
+			var closest_diff: float = 9999
+			var closest: Note = notes.get_octave(octaveRange.x).notes[0]
+
+			for octaveNumber in range(octaveRange.x, octaveRange.y + 1):
+				var octave = notes.get_octave(octaveNumber)
+				for note in octave.notes:
+					var diff: float = abs(freq - note.frequency)
+					if diff < closest_diff:
+						closest_diff = diff
+						closest = note
+
+			# Combine with previous sub-beat if same note, same beat, and combining is enabled
+			var combined := false
+			if combine_threshold >= 0 and sequence_notes.size() > 0:
+				var last := sequence_notes.back() as SequenceNote
+				if last.beat == beat_idx and abs(last.note - closest.id) <= combine_threshold:
+					combined = true
+
+			if not combined:
+				var sn := SequenceNote.new()
+				sn.beat = beat_idx
+				sn.sub_beat = sub
+				sn.note = closest.id
+				sn.duration = 1
+				sn.velocity = vol
+				sequence_notes.append(sn)
+
+	for sn in sequence_notes:
+		print("beat: %d, sub: %d, note: %d, vel: %.3f" % [sn.beat, sn.sub_beat, sn.note, sn.velocity])
 
 	var sequence = Sequence.new(sequence_notes)
 	return sequence

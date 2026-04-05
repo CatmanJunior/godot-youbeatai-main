@@ -71,6 +71,25 @@ func play_note(sequence_note: SequenceNote) -> void:
 	channel_note_on(t, 0, sequence_note.note, sequence_note.velocity)
 	channel_note_off(t + gate, 0, sequence_note.note)
 
+## Play multiple notes within a single beat, spacing them by sub_beat index.
+## beat_duration is the total duration of one beat in seconds.
+func play_notes(beat_notes: Array[SequenceNote], beat_duration: float) -> void:
+	if beat_notes.size() == 0:
+		return
+	var t := get_time()
+	# Find the max subdivision count among the notes to compute sub-beat spacing
+	var max_sub := 1
+	for sn in beat_notes:
+		if sn.sub_beat + 1 > max_sub:
+			max_sub = sn.sub_beat + 1
+	var sub_duration := beat_duration / float(max_sub) if max_sub > 1 else beat_duration
+	var note_gate := minf(gate, sub_duration)
+
+	for sn in beat_notes:
+		var offset := float(sn.sub_beat) * sub_duration
+		channel_note_on(t + offset, 0, sn.note, sn.velocity)
+		channel_note_off(t + offset + note_gate, 0, sn.note)
+
 
 func play_note_raw(note: int, duration: float) -> void:
 	var t = get_time()

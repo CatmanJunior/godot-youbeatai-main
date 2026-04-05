@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_qgh1d"]
 [ext_resource type="AudioStream" uid="uid://bgkgd7isxdqq8" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Kick Flowdown 2.wav" id="7_ald5y"]
 [ext_resource type="AudioStream" uid="uid://ck0ivmwkcp6lp" path="res://Resources/Audio/SoundBanks/3_soul/Snare TwoTone.wav" id="7_hfg1u"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_qgh1d"]
 [ext_resource type="AudioStream" uid="uid://ccfr5pef3o6bk" path="res://Resources/Audio/SoundBanks/3_soul/mineur/Snare_Perc Pueblo.wav" id="11_ns1ub"]
 
 [resource]

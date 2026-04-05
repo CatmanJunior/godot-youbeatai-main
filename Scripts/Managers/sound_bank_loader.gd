@@ -5,7 +5,7 @@ extends Node
 ## Add this node inside the Managers group in main.tscn.
 
 # Path template — each soundbank folder contains an AudioBank.tres resource.
-const BANK_PATH_TEMPLATE := "res://Resources/Audio/SoundBanks/%s/AudioBank.tres"
+const BANK_PATH_TEMPLATE := "res://Resources/Audio/SoundBanks/%s/%s.tres"
 
 # Fallback bank name used when nothing has been selected yet (e.g. during dev).
 const FALLBACK_BANK_NAME := "2_acoustisch"
@@ -18,90 +18,46 @@ const FALLBACK_BANK_NAME := "2_acoustisch"
 
 func _ready() -> void:
 	var bank_dict: Dictionary = GameState.selected_soundbank
+	var bank_name: String = bank_dict.get("name", "")
+	
+	var bank = load_audio_bank(bank_name)
+
+#TODO These should all just be set in the audio bank resource, but for now we can also pull them from the JSON since that's how the UI is structured.
+	_apply_soundfont_and_instrument(bank)
+	_apply_bpm_swing(bank, bank_dict)
+	
+	EventBus.audio_bank_loaded.emit(bank)
+
+func load_audio_bank(bank_name: String) -> AudioBank:	
 	var bank : AudioBank
 	# Determine which bank to load
-	var bank_name: String = bank_dict.get("name", "")
 	if bank_name.is_empty():
 		push_warning("SoundBankLoader: no soundbank selected, falling back to '%s'." % FALLBACK_BANK_NAME)
 		bank_name = FALLBACK_BANK_NAME
-		bank = fallback_bank
-	else:
-		var bank_path := BANK_PATH_TEMPLATE % bank_name
+	
+	
+	var bank_path := BANK_PATH_TEMPLATE % [bank_name, bank_name]
 
-		# Load the AudioBank resource
-		if not ResourceLoader.exists(bank_path):
-			push_error("SoundBankLoader: AudioBank not found at '%s'." % bank_path)
-			return
+	# Load the AudioBank resource
+	if not ResourceLoader.exists(bank_path):
+		push_error("SoundBankLoader: AudioBank not found at '%s'." % bank_path)
+		return null
 
-		bank = ResourceLoader.load(bank_path)
-		if bank == null:
-			push_error("SoundBankLoader: Failed to cast resource at '%s' to AudioBank." % bank_path)
-			return
+	bank = ResourceLoader.load(bank_path)
+	if bank == null:
+		push_error("SoundBankLoader: Failed to cast resource at '%s' to AudioBank." % bank_path)
+		return null
 
-	_apply_streams(bank)
-	_apply_bpm_swing(bank_dict)
-	_apply_effect_profile(bank)
-	_apply_soundfont_and_instrument(bank)
-
-	EventBus.soundbank_loaded.emit(bank_name)
-
-
-	print("SoundBankLoader: loaded '%s' (bpm=%d, swing=%d%%)" % [
-		bank_name,
-		bank_dict.get("bpm", 0),
-		bank_dict.get("swing", 0)
-	])
-
-
-## Push the AudioBank's audio files into AudioPlayerManager via EventBus.
-## Track layout:  0=kick  1=clap  2=snare  3=closed  (matches main.tscn export order)
-func _apply_streams(bank: AudioBank) -> void:
-	# Main (dry) streams
-	EventBus.set_stream_requested.emit(0, 0, bank.kick)
-	EventBus.set_stream_requested.emit(1, 0, bank.clap)
-	EventBus.set_stream_requested.emit(2, 0, bank.snare)
-	EventBus.set_stream_requested.emit(3, 0, bank.closed)
-
-	# Alt streams (layer 1)
-	EventBus.set_stream_requested.emit(0, 1, bank.kick_alt)
-	EventBus.set_stream_requested.emit(1, 1, bank.clap_alt)
-	EventBus.set_stream_requested.emit(2, 1, bank.snare_alt)
-	EventBus.set_stream_requested.emit(3, 1, bank.closed_alt)
-
+	print("SoundBankLoader: loaded '%s'" % [bank_name])
+	return bank
 
 ## Apply BPM and swing from the JSON dictionary.
-func _apply_bpm_swing(bank_dict: Dictionary) -> void:
-	var bpm: int = bank_dict.get("bpm", 120)
-	var swing_pct: int = bank_dict.get("swing", 0)
-
-	EventBus.bpm_set_requested.emit(bpm)
-
-	# Swing is stored as a percentage (0–100) in the JSON.
-	# BpmManager expects a normalised float (0.0–1.0).
-	var swing_normalized: float = float(swing_pct) / 100.0
-	EventBus.swing_set_requested.emit(swing_normalized)
-
-
-## Apply the AudioBank's effect profile to the mixer buses.
-func _apply_effect_profile(bank: AudioBank) -> void:
-	if bank.effectProfile == null:
-		return
-	audio_player_manager.track_players[4].apply_effect_profile(bank.effectProfile)
-	audio_player_manager.track_players[5].apply_effect_profile(bank.effectProfile)
+func _apply_bpm_swing(bank: AudioBank, bank_dict: Dictionary) -> void:
+	bank.bpm = bank_dict.get("bpm", bank.bpm)
+	var swing_normalized: float = float(bank_dict.get("swing", 0)) / 100.0
+	bank.swing = swing_normalized
 
 func _apply_soundfont_and_instrument(bank: AudioBank) -> void:
-	
-	var new_noteplayer_settings : Array[NotePlayerSettings]= [
-		NotePlayerSettings.create(bank.synth1_soundfont, base_noteplayer_settings[0].notes, bank.synth1_instrument_id, base_noteplayer_settings[0].base_note, base_noteplayer_settings[0].allow_key_input, base_noteplayer_settings[0].gate, base_noteplayer_settings[0].volume_db),
-		NotePlayerSettings.create(bank.synth2_soundfont, base_noteplayer_settings[1].notes, bank.synth2_instrument_id, base_noteplayer_settings[1].base_note, base_noteplayer_settings[1].allow_key_input, base_noteplayer_settings[1].gate, base_noteplayer_settings[1].volume_db)
-	]
-	
-	print("Applying soundfont and instrument settings for synth tracks:")
-	for i in range(2):
-		print("  Synth Track %d: soundfont=%s, instrument_id=%d" % [
-			i+1,
-			str(new_noteplayer_settings[i].soundfont),
-			new_noteplayer_settings[i].instrument
-		])
-	EventBus.note_player_settings_changed.emit(new_noteplayer_settings[0], 4)
-	EventBus.note_player_settings_changed.emit(new_noteplayer_settings[1], 5)
+	bank.noteplayer_settings = bank.create_note_player_settings(base_noteplayer_settings)
+	print("SoundBankLoader: applied soundfont and instrument settings to AudioBank")
+	print("SoundBankLoader: AudioBank noteplayer settings: %s" % bank.noteplayer_settings[0].soundfont)

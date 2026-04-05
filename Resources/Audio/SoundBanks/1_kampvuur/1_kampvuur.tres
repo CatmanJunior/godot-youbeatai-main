@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://d3g22c6fs6tte" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Kick TwoTone.wav" id="7_133fl"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_pi2h2"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="9_1xfe1"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_4tubm"]
 [ext_resource type="AudioStream" uid="uid://c5jsuheqpdgp7" path="res://Resources/Audio/SoundBanks/1_kampvuur/Snare_Perc Sa.wav" id="10_ohdxi"]
 [ext_resource type="AudioStream" uid="uid://v3bjsqvgwe7h" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Snare Glow 1.wav" id="11_ajb1i"]
 

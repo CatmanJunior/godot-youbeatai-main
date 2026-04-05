@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://dp7rwu7lkypjn" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Kick Rainbow 1.wav" id="7_8lexy"]
 [ext_resource type="AudioStream" uid="uid://cyqs7v1jh8j15" path="res://Resources/Audio/SoundBanks/4_balkisch/Snare Cameleon.wav" id="7_fvvum"]
 [ext_resource type="SoundFont" uid="uid://c5dodwngr8aq" path="res://Resources/SoundFonts/Monsoons Maple Neck 1974 Fender Jazz Bass.sfo" id="7_xq0bs"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_fvvum"]
 [ext_resource type="AudioStream" uid="uid://gsxi7tfibrrc" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Snare_ Lusine.wav" id="11_xq0bs"]
 
 [resource]

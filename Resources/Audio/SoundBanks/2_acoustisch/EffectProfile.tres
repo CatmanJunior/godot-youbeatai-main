@@ -4,7 +4,9 @@
 
 [resource]
 script = ExtResource("1_xq3gh")
+pitch_shift = 10.0
+distortion_db = 20.0
 phaser = 3.0
 delay = 125.0
 reverb = 0.4
-metadata/_custom_type_script = "uid://b1ymetkpj7tbs"
+chorus = true

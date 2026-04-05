@@ -36,6 +36,19 @@ func _ready() -> void:
 	EventBus.set_recorded_stream_requested.connect(_on_request_set_recorded_stream)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.section_switched.connect(_on_section_switched)
+	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
+	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
+
+func _on_mixing_weights_changed(trackIndex: int, master_volume: float, weights: Vector3) -> void:
+	if trackIndex == track_index:
+		set_weights(weights)
+		set_volume_db(master_volume)
+		print("TrackPlayerBase received mixing_weights_changed for track %d: master_volume=%.2f, weights=%s" % [trackIndex, master_volume, str(weights)])
+
+func _on_audio_bank_loaded(_bank: AudioBank) -> void:
+	# Default implementation does nothing, since not all track players will need to respond to new soundbanks.
+	# SynthTrackPlayer will override this to update its note player settings based on the new bank.
+	pass
 
 ## Override in subclasses
 func _on_beat_triggered(_beat: int) -> void:
@@ -47,7 +60,7 @@ func _on_section_switched(_old, _new) -> void:
 func _on_request_set_recorded_stream(trackIndex: int, audio: AudioStream):
 	if trackIndex != track_index:
 		return
-	set_recorded_stream(audio)
+	_set_recorded_stream(audio)
 
 func _on_request_set_stream(trackIndex: int, audio_layer: int, audio: AudioStream):
 	if trackIndex != track_index:
@@ -68,33 +81,21 @@ func _create_buses(parent_bus: String) -> void:
 
 	for i in range(SUB_TRACK_PLAYER_COUNT):
 		sub_bus_names.append(bus_name + "_" + _get_bus_suffixes()[i])
-		var new_bus_index = BusHelper.create_bus(sub_bus_names[i], bus_name)
-		_apply_layer_effects(i, new_bus_index)
+		BusHelper.create_bus(sub_bus_names[i], bus_name)
 
 	set_weights(_weights) # initialize volumes based on default weights
 
 func _setup_players() -> void:
 	for i in range(SUB_TRACK_PLAYER_COUNT):
 		players.append(_make_player(sub_bus_names[i]))
-		players[i].name = "%s_Track_%s" % [_get_bus_prefix(),sub_bus_names[i]]
+		
 
 func _make_player(bus: String) -> AudioStreamPlayer:
 	var p := AudioStreamPlayer.new()
+	p.name = bus
 	p.bus = bus
 	add_child(p)
 	return p
-
-func _apply_layer_effects(layer: int, bus_idx: int) -> void:
-	if bus_idx == -1:
-		push_error("Bus '%s' not found for applying effects." % sub_bus_names[layer])
-		return
-	match layer:
-		0: # Dry — no effects
-			pass
-		1: # Alt1 — no effects
-			pass
-		2: # Alt2 — no effects
-			pass
 
 
 func setup(index: int, parent_bus: String, _settings = null) -> void:
@@ -117,15 +118,15 @@ func apply_effect_profile(effect_profile: EffectProfile) -> void:
 	effect_profile.apply_effects(bus_idx)
 
 func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> void: pass
-func set_recorded_stream(_rec: AudioStream) -> void: pass
+func _set_recorded_stream(_rec: AudioStream) -> void: pass
 
 func set_stream(audio_layer: int, stream: AudioStream) -> void:
 	if audio_layer < 0 or audio_layer >= SUB_TRACK_PLAYER_COUNT:
 		printerr("Invalid audio layer %d for set_stream" % audio_layer)
 		return
 	if audio_layer == 2:
-		set_recorded_stream(stream)
-		printerr("Warning: set_stream with audio_layer 2 will set the recorded stream. Use set_recorded_stream directly for clarity. Stream: %s" % stream)
+		_set_recorded_stream(stream)
+		printerr("Warning: set_stream with audio_layer 2 will set the recorded stream. Use _set_recorded_stream directly for clarity. Stream: %s" % stream)
 	else:
 		players[audio_layer].stream = stream
 
@@ -140,7 +141,8 @@ func stop() -> void:
 		p.stop()
 
 func set_volume_db(db: float) -> void:
-	BusHelper.set_volume(bus_name, db)
+	print("Setting volume for track %d to %.2f dB" % [track_index, db])
+	BusHelper.set_volume(bus_name, db*10)
 
 func set_muted(muted: bool) -> void:
 	BusHelper.set_mute(bus_name, muted)
@@ -155,3 +157,7 @@ func teardown_buses() -> void:
 		BusHelper.remove_bus(b)
 
 	BusHelper.remove_bus(bus_name)
+
+func create_data() -> TrackData:
+	return track_data.duplicate_track()
+	

@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://bsrugmpssatfv" path="res://Resources/Audio/SoundBanks/1_new-age/Kick Elegance 2.wav" id="6_iog55"]
 [ext_resource type="AudioStream" uid="uid://daxypt2kfn2i4" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/Kick Cosmos 1.wav" id="7_iog55"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_paa6u"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_iog55"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="9_jp6wy"]
 [ext_resource type="AudioStream" uid="uid://b0uof5pu1qvvs" path="res://Resources/Audio/SoundBanks/1_new-age/Snare Gnarly.wav" id="10_a4u4m"]
 [ext_resource type="AudioStream" uid="uid://b3wsokmo1n77" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/Snare_Perc Oka.wav" id="11_a4u4m"]

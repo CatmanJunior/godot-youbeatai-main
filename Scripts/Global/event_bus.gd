@@ -5,11 +5,11 @@ extends Node
 ## Emitted when a full application restart is requested.
 signal restart_requested()
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
-signal soundbank_selected(themes: Array[String], emotions: Array[String])
+signal audio_bank_selected(themes: Array[String], emotions: Array[String])
 ## Emitted when note player settings have changed, carrying the new settings for each synth track.
 signal note_player_settings_changed(new_settings: NotePlayerSettings, track_index: int)
 ## Emitted when a soundbank has been fully loaded and applied.
-signal soundbank_loaded(bank_name: String)
+signal audio_bank_loaded(bank: AudioBank)
 
 # ── Playback ──
 ## Emitted when the playback state has changed (playing or stopped).
@@ -88,7 +88,7 @@ signal all_players_stop_requested()
 ## Emitted when a track has been selected for mixing, carrying its index.
 signal track_selected(new_track_index: int)
 ## Emitted when the mixing weights have changed (master volume and per-layer weights).
-signal mixing_weights_changed(master_volume: float, weights: Vector3)
+signal mixing_weights_changed(track_index: int, master_volume: float, weights: Vector3)
 ## Emitted to request setting the volume for a specific track with master volume and layer weights.
 signal set_track_volume_requested(track: int, master_volume: float, weights: Vector3)
 

@@ -76,7 +76,7 @@ func end_soundbank_selection() -> void:
 	if DisplayServer.tts_is_speaking():
 		DisplayServer.tts_stop()
 	
-	EventBus.soundbank_selected.emit(chosen_emotions_emojis, chosen_themes_emojis)
+	EventBus.audio_bank_selected.emit(chosen_emotions_emojis, chosen_themes_emojis)
 	await get_tree().create_timer(0.5).timeout
 	change_to_main()
 	

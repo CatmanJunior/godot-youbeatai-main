@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://cpm50u1ocghef" path="res://Resources/Audio/SoundBanks/5_zuid-ame/EffectProfile_bass.tres" id="6_d27c3"]
 [ext_resource type="AudioStream" uid="uid://7cda032xv3gf" path="res://Resources/Audio/SoundBanks/5_zuid-ame/Snare Crystal 1.wav" id="7_d27c3"]
 [ext_resource type="AudioStream" uid="uid://bumn8a50plb2w" path="res://Resources/Audio/SoundBanks/5_zuid-ame/mineur/Snare Crystal 2.wav" id="7_ph0eh"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_1d0q0"]
 
 [resource]
 script = ExtResource("6_1d0q0")

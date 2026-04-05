@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_a4xo8"]
 [ext_resource type="AudioStream" uid="uid://sg7hwbuvgnme" path="res://Resources/Audio/SoundBanks/5_afrikaans/Snare Askari.wav" id="7_gc85r"]
 [ext_resource type="AudioStream" uid="uid://16i0hx50xlsn" path="res://Resources/Audio/SoundBanks/5_afrikaans/mineur/Snare Anorac.wav" id="7_xbbyl"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_gc85r"]
 
 [resource]
 script = ExtResource("6_a4xo8")

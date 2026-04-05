@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_kmdtp"]
 [ext_resource type="AudioStream" uid="uid://c0vncoipende0" path="res://Resources/Audio/SoundBanks/7_techno/Snare Elektrocuted 2.wav" id="7_g7ebr"]
 [ext_resource type="AudioStream" uid="uid://c4jnqb0mi577" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Kick A LowLife.wav" id="7_rojp7"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_kmdtp"]
 [ext_resource type="AudioStream" uid="uid://d3x5of0xstwhn" path="res://Resources/Audio/SoundBanks/7_techno/mineur/Snare AB 2.wav" id="11_cefoj"]
 
 [resource]

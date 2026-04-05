@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://bkw52bqhi76nt" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile_Bass.tres" id="6_loxld"]
 [ext_resource type="AudioStream" uid="uid://sefuiwp4k82o" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Snare Bling.wav" id="7_05f0b"]
 [ext_resource type="AudioStream" uid="uid://6m7uj6j1xdum" path="res://Resources/Audio/SoundBanks/6_funk/Snare Acidy.wav" id="7_loxld"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_hgown"]
 
 [resource]
 script = ExtResource("6_hgown")

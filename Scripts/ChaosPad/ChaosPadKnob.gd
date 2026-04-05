@@ -56,4 +56,4 @@ func _get_weights_and_emit() -> void:
 
 	var result = ChaosPadCalculator.calc_weights(local_pos, corners, outer_triangle_size)
 	# EventBus.chaos_pad_dragging.emit(local_pos, result.master_volume, result.weights)
-	EventBus.mixing_weights_changed.emit(result.master_volume, result.weights)
+	EventBus.mixing_weights_changed.emit(GameState.selected_track_index, result.master_volume, result.weights)

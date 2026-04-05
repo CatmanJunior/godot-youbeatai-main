@@ -29,7 +29,7 @@ func _ready():
 	# Connect to EventBus instead of direct manager references
 	EventBus.play_sfx_requested.connect(play_sfx)
 
-func _process(delta):
+func _process(_delta):
 	_log_volumes()
 
 func _log_volumes():

@@ -16,7 +16,7 @@ func _ready() -> void:
 	lookup = _load_json("res://Resources/SoundBankMatrix/elec.json")
 	soundbanks = load_soundbanks()
 
-	EventBus.soundbank_selected.connect(_on_soundbank_selected)
+	EventBus.audio_bank_selected.connect(_on_soundbank_selected)
 
 func _on_soundbank_selected(themes: Array[String], emotions: Array[String]) -> void:
 	GameState.selected_soundbank = choose_soundbank(themes, emotions)

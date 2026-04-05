@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="6_aj41f"]
 [ext_resource type="AudioStream" uid="uid://cbrym1dck8n1a" path="res://Resources/Audio/SoundBanks/6_hiphop/Snare Bling.wav" id="7_q0w1p"]
 [ext_resource type="AudioStream" uid="uid://dpf2gbxtjafbj" path="res://Resources/Audio/SoundBanks/6_hiphop/mineur/Snare Bazzazian 3.wav" id="7_rphxq"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_aj41f"]
 
 [resource]
 script = ExtResource("6_aj41f")

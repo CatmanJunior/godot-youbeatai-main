@@ -41,10 +41,16 @@ func _ready():
 	EventBus.bpm_changed.emit(bpm)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 
+	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
+
 	# Beat manager connections
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(set_beat)
 	EventBus.template_set.connect(_on_template_set)
+
+func _on_audio_bank_loaded(bank: AudioBank) -> void:
+	bpm = bank.bpm
+	swing = bank.swing
 
 # --- BPM functions ---
 func get_beat_progress() -> float:

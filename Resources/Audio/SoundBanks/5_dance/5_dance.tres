@@ -12,6 +12,7 @@
 [ext_resource type="Resource" uid="uid://cymydehmu2oqg" path="res://Resources/Audio/SoundBanks/5_dance/EffectProfile_bass.tres" id="6_6veg5"]
 [ext_resource type="AudioStream" uid="uid://cm8tcwxjl6e5k" path="res://Resources/Audio/SoundBanks/5_dance/Snare BackOut.wav" id="7_6veg5"]
 [ext_resource type="AudioStream" uid="uid://bg8k54f7k527" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Snare Acidy.wav" id="7_lcnh7"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_6veg5"]
 
 [resource]
 script = ExtResource("6_0u368")

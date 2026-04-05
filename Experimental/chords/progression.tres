@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ChordProgression" format=3 uid="uid://beu6dtif6dtlp"]
 
-[ext_resource type="Script" path="res://Experimental/chords/chord.gd" id="1_lnapc"]
+[ext_resource type="Script" uid="uid://cy33axifo2vk7" path="res://Experimental/chords/chord.gd" id="1_lnapc"]
 [ext_resource type="Script" path="res://Experimental/chords/chord_progression.gd" id="2_603r4"]
 
 [sub_resource type="Resource" id="Resource_5fy3c"]

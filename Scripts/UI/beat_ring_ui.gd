@@ -28,7 +28,7 @@ func _ready() -> void:
 	play_pause_button.pressed.connect(_on_play_pause_toggled)
 
 
-func _on_template_set(actives: Array[Array]) -> void:
+func _on_template_set(actives: Array) -> void:
 	# Update all beat sprites to match the new template actives
 	for track in range(actives.size()):
 		for beat in range(actives[track].size()):

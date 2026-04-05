@@ -3,7 +3,7 @@ extends TrackPlayerBase
 
 var BUS_SUFFIXES : Array[String] = ["Main", "Alt", "Rec"]
 
-var BUS_PREFIX : String = "Track"
+var BUS_PREFIX : String = "Sample"
 
 func _get_bus_suffixes() -> Array[String]:
 	return BUS_SUFFIXES
@@ -17,11 +17,24 @@ func set_streams(a: AudioStream, b: AudioStream, rec: AudioStream=null) -> void:
 	players[0].stream = a
 	players[1].stream = b
 	if rec != null:
-		set_recorded_stream(rec)
+		_set_recorded_stream(rec)
 
 func _ready() -> void:
 	super._ready()
 	EventBus.play_track_requested.connect(_on_play_track_requested)
+
+func _on_audio_bank_loaded(bank: AudioBank) -> void:
+	match track_index:
+		0:
+			set_streams(bank.kick, bank.kick_alt)
+		1:
+			set_streams(bank.clap, bank.clap_alt)
+		2:
+			set_streams(bank.snare, bank.snare_alt)
+		3:
+			set_streams(bank.closed, bank.closed_alt)
+	
+
 
 func _on_play_track_requested(trackIndex: int) -> void:
 	if trackIndex == track_index:
@@ -29,7 +42,7 @@ func _on_play_track_requested(trackIndex: int) -> void:
 
 func _on_section_switched(_old, _new) -> void:
 	if _new.tracks[track_index].recorded_audio_stream != null:
-		set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
+		_set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
 	else:
 		# Clear recording stream and flag if new section doesn't have a recording for this track
 		players[2].stream = null
@@ -40,7 +53,7 @@ func _on_beat_triggered(beat: int) -> void:
 	if track_data.get_beat_active(beat):
 		play()
 
-func set_recorded_stream(rec: AudioStream) -> void:
+func _set_recorded_stream(rec: AudioStream) -> void:
 	players[2].stream = rec
 	_has_recording = true
 	set_weights(_weights) # update volumes to include recording bus

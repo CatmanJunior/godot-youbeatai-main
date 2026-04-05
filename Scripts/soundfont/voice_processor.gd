@@ -153,6 +153,7 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 			if combine_threshold >= 0 and sequence_notes.size() > 0:
 				var last := sequence_notes.back() as SequenceNote
 				if last.beat == beat_idx and abs(last.note - closest.id) <= combine_threshold:
+					last.duration += 1
 					combined = true
 
 			if not combined:

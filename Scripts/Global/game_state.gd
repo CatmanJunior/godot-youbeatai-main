@@ -91,8 +91,6 @@ var bar_progress: float = 0.0
 ## Duration of one beat subdivision in seconds (60 / bpm / beats_per_bar).
 var beat_duration: float = 0.5
 
-var beats_amount_scaler	: float = 1.0
-
 # -- Recording --
 
 var is_recording: bool = false

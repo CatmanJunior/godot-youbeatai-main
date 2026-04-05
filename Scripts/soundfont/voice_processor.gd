@@ -150,13 +150,13 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 
 		if last == null or abs(last.note - current.x) > combine_threshold:
 			last = SequenceNote.new()
-			last.beat = round(i / GameState.beats_amount_scaler)
+			last.beat = i
 			last.note = current.x
-			last.duration = round(1.0 / GameState.beats_amount_scaler)
+			last.duration = 1
 			last.velocity = current.y
 			sequence_notes.append(last)
 		else:
-			last.duration += round(1.0 / GameState.beats_amount_scaler)
+			last.duration += 1
 
 	for index in range(len(sequence_notes)):
 		print("beat: %d, note: %d, duration: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration])

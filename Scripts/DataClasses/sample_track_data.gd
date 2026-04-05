@@ -23,6 +23,11 @@ func has_active_beats() -> bool:
 			return true
 	return false
 
+func get_beat_active(beat: int) -> bool:
+	if beat < beats.size():
+		return beats[beat]
+	return false
+
 
 func clear_beats() -> void:
 	for i in range(beats.size()):

@@ -103,4 +103,5 @@ func _apply_soundfont_and_instrument(bank: AudioBank) -> void:
 			str(new_noteplayer_settings[i].soundfont),
 			new_noteplayer_settings[i].instrument
 		])
-	EventBus.note_player_settings_changed.emit(new_noteplayer_settings)
+	EventBus.note_player_settings_changed.emit(new_noteplayer_settings[0], 4)
+	EventBus.note_player_settings_changed.emit(new_noteplayer_settings[1], 5)

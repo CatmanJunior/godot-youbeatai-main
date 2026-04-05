@@ -65,7 +65,7 @@ func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
 			return
 
 		for beat in track.beats:
-			var active = track.get_beat(beat)
+			var active = track.get_beat_active(beat)
 			set_beat_active(track.index, beat, active)
 
 func _init_beat_but_positions() -> void:

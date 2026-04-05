@@ -37,7 +37,7 @@ func _on_section_switched(_old, _new) -> void:
 		set_weights(_weights) # update volumes to remove recording bus
 
 func _on_beat_triggered(beat: int) -> void:
-	if track_data.get_beat(track_index, beat):
+	if track_data.get_beat_active(beat):
 		play()
 
 func set_recorded_stream(rec: AudioStream) -> void:
@@ -52,4 +52,3 @@ func play(offset: float = 0.0) -> void:
 	players[1].play(offset)
 	if _has_recording:
 		players[2].play(offset)
-

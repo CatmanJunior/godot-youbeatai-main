@@ -4,8 +4,28 @@ extends Node
 ## Provides easy access to sections, playback state, and common data
 ## without needing %UniqueNode references everywhere.
 
+var song_track: SongTrackData = SongTrackData.new()
 
+func reset() -> void:
+	# Sections & Tracks
+	song_track.clear()
+	sections.clear()
+	current_section = null
+	current_section_index = -1
+	selected_track_index = 0
 
+	# Playback
+	playing = false
+	bpm = 120
+	current_beat = 0
+	total_beats = BEATS_AMOUNT_DEFAULT
+	swing = 0.05
+	beat_progress = 0.0
+	bar_progress = 0.0
+	beat_duration = 0.5
+
+	# Recording
+	is_recording = false
 
 var notes: Notes
 
@@ -113,7 +133,7 @@ func _on_bpm_changed(new_bpm: int) -> void:
 	
 # ── Section helpers ──────────────────────────────────────────────────────────
 
-func _on_section_changed(_old_section: SectionData, section: SectionData) -> void:
+func _on_section_changed(section: SectionData) -> void:
 	current_section = section
 
 # ── Convenience accessors ────────────────────────────────────────────────────

@@ -6,7 +6,7 @@ const SYNTH_TRACKS_COUNT = 2
 const SAMPLE_TRACKS_COUNT = 4
 
 var track_players: Array[TrackPlayerBase] = []
-
+var song_track_player: SongTrackPlayer
 var sfx_player: AudioStreamPlayer
 
 ## FOR DEBUGGING
@@ -21,6 +21,8 @@ var current_volume: Dictionary= {}
 @export var achievement_sfx: AudioStream
 
 @export var note_player_settings: Array[NotePlayerSettings] = []
+
+
 
 func _ready():
 	_init_audio_players()
@@ -57,6 +59,11 @@ func _init_audio_players():
 		player.setup(i + SAMPLE_TRACKS_COUNT, "Master", note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)
+
+	# Create the song track player
+	song_track_player = SongTrackPlayer.new()
+	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, "Master")
+	add_child(song_track_player)
 
 func play_sfx(stream: AudioStream):
 	"""Play a sound effect"""

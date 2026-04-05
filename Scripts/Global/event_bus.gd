@@ -61,8 +61,8 @@ signal stomp_triggered()
 signal add_section_requested(emoji: String)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
-## Emitted when a section switch has completed, carrying the old and new section data.
-signal section_switched(old_section_data: SectionData, section_data: SectionData)
+## Emitted when a section switch has completed, carrying the new section data.
+signal section_switched(section_data: SectionData)
 ## Emitted when a new section has been added at the given index with an emoji label.
 signal section_added(new_section_index: int, emoji: String)
 ## Emitted when a section has been removed at the given index.
@@ -177,3 +177,10 @@ signal buttons_disabled_requested(disabled: bool)
 
 ## Emitted when the export button is pressed. [code]mode_export_song[/code]: false for beat, true for song.
 signal export_button_pressed(mode_export_song: bool)
+
+
+# ── Song Track Recording ──
+## Emitted to request starting a full-song recording (voice-over + master bus).
+signal song_recording_start_requested()
+## Emitted to request stopping the full-song recording.
+signal song_recording_stop_requested()

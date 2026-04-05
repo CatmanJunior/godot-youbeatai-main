@@ -19,7 +19,7 @@ func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_switched.connect(_on_section_switched)
 
-func _on_section_switched(_old_section_data: SectionData, new_section_data: SectionData):
+func _on_section_switched(new_section_data: SectionData):
 	waveform_lines[0].points = new_section_data.tracks[4].synth_waveform_visualizer.offsets  # Update waveform points for new section
 	waveform_lines[1].points = new_section_data.tracks[5].synth_waveform_visualizer.offsets  # Update waveform points for new section
 			

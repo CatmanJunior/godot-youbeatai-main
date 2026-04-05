@@ -46,3 +46,21 @@ static func go_to_main() -> void:
 static func go_to_soundbank() -> void:
 	go_to(SCENE_SOUNDBANK)
 
+static func _on_restart_requested():
+	go_to_main_menu()
+
+	# var user_path = ProjectSettings.globalize_path("user://")
+	# var files_to_reset = [
+	# 	user_path + "/chosen_emoticons.json",
+	# 	user_path + "/chosen_soundbank.json",
+	# 	user_path + "/beats_amount.txt",
+	# 	user_path + "/use_tutorial.txt",
+	# 	user_path + "/use_achievements.txt"
+	# ]
+
+	# for file_path in files_to_reset:
+	# 	if FileAccess.file_exists(file_path):
+	# 		DirAccess.remove_absolute(file_path)
+
+	GameState.reset()
+	

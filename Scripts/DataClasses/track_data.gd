@@ -4,7 +4,7 @@
 class_name TrackData
 extends Resource
 
-enum TrackType { SAMPLE, SYNTH }
+enum TrackType { SAMPLE, SYNTH, SONG }
 
 
 @export var track_type: TrackType = TrackType.SAMPLE

@@ -9,6 +9,8 @@ extends Resource
 ## Load:  var song := SongData.load_from_file("user://songs/my_song.tres")
 ##        song.apply_to_current()
 
+@export var song_track: SongTrackData = null
+
 # ── Playback ─────────────────────────────────────────────────────────────────
 
 @export var bpm: int = 120
@@ -42,6 +44,8 @@ extends Resource
 
 static func from_current() -> SongData:
 	var song := SongData.new()
+	if GameState.song_track:
+		song.song_track = GameState.song_track.duplicate_track() as SongTrackData
 	song.bpm = GameState.bpm
 	song.total_beats = GameState.total_beats
 	song.swing = GameState.swing
@@ -66,7 +70,12 @@ func apply_to_current() -> void:
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
 	GameState.total_beats = total_beats
-
+	# Restore song track
+	if song_track:
+		GameState.song_track = song_track
+		GameState.song_track.rebuild_runtime()
+	else:
+		GameState.song_track = SongTrackData.new()
 	# Rebuild sections
 	GameState.sections.clear()
 	for i in range(sections.size()):

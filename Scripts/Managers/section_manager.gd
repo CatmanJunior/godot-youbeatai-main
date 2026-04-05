@@ -54,7 +54,6 @@ func add_section(section: int, emoji: String = ""):
 	var new_section: SectionData = SectionData.new(section, emoji)
 	sections.insert(section, new_section)
 
-	var old_section: SectionData = current_section
 	current_section_index = section
 	current_section = new_section
 
@@ -62,7 +61,7 @@ func add_section(section: int, emoji: String = ""):
 	print("Section added at index %d with emoji %s" % [section, emoji])
 	GameState.sections = sections
 	EventBus.section_added.emit(section, emoji)
-	EventBus.section_switched.emit(old_section, current_section)
+	EventBus.section_switched.emit(current_section)
 
 
 
@@ -116,11 +115,10 @@ func clear_section():
 
 func switch_section(section_index: int):
 	"""Switch to a different section"""
-	var old_section = current_section
 	# Switch to new section
 	current_section_index = section_index
 	current_section = sections[current_section_index]
-	EventBus.section_switched.emit(old_section, current_section)
+	EventBus.section_switched.emit(current_section)
 
 func switch_section_next_frame(section_index: int):
 	"""Switch to a different section on the next frame"""

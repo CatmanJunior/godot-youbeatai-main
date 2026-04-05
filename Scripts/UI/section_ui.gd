@@ -46,22 +46,18 @@ func init_section_button_actions():
 
 	load_section_button.pressed.connect(func():
 		_paste_section_button_pressed()
-		_play_extra_sfx()
 	)
 
 	save_section_button.pressed.connect(func():
 		_copy_section_button_pressed()
-		_play_extra_sfx()
 	)
 
 	clear_section_button.pressed.connect(func():
 		_clear_section_button_pressed()
-		_play_extra_sfx()
 	)
 
 	add_section_button.button_up.connect(func():
 		_open_emoji_prompt()
-		_play_extra_sfx()
 	)
 
 	if remove_section_button:
@@ -70,7 +66,6 @@ func init_section_button_actions():
 func _on_remove_section_button_pressed():
 	if GameState.sections.size() > 0:
 		EventBus.section_removed.emit(GameState.current_section_index)
-		_play_extra_sfx()
 
 func _on_emoji_button_pressed(emoji: String):
 	_close_emoji_prompt()
@@ -124,13 +119,6 @@ func _update_section_ui() -> void:
 	section_buttons_container.size = Vector2(section_buttons.size() * SECTION_BUTTON_SIZE, SECTION_BUTTON_SIZE)
 	section_buttons_container.position.x = - section_buttons_container.size.x / 2
 
-	#TODO move to switch section function
-	for button in section_buttons:
-		button.outline.visible = false
-
-	if GameState.current_section_index < section_buttons.size():
-		section_buttons[GameState.current_section_index].outline.visible = true
-
 	if song_recording_progress_bar:
 		var back_panel_over_size = Vector2(16, 8)
 		song_recording_progress_bar.size = section_buttons_container.size + back_panel_over_size
@@ -158,10 +146,6 @@ func update_section_switch_buttons_colors() -> void:
 		if not has_beats:
 			button.modulate = button.modulate.darkened(0.5)
 
-func update_section_buttons_delayed() -> void:
-	await get_tree().create_timer(0.2).timeout
-	_update_section_ui()
-
 func set_copy_paste_clear_buttons_active(active: bool) -> void:
 	copy_paste_clear_buttons_holder.visible = active
 
@@ -182,11 +166,13 @@ func _paste_section_button_pressed() -> void:
 func _clear_section_button_pressed() -> void:
 	EventBus.section_clear_requested.emit()
 
-func _play_extra_sfx() -> void:
-	pass
-
-func _on_switch_section(_old_section: SectionData, _new_section: SectionData) -> void:
+func _on_switch_section(new_section: SectionData) -> void:
 	_update_section_ui()
 	set_copy_paste_clear_buttons_active(true)
-	var i = _new_section.index
+	var i = new_section.index
 	copy_paste_clear_buttons_holder.global_position.x = section_buttons[i].global_position.x 
+
+	for button in section_buttons:
+		button.outline.visible = false
+
+	section_buttons[i].outline.visible = true

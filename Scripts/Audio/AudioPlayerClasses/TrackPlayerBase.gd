@@ -54,7 +54,7 @@ func _on_audio_bank_loaded(_bank: AudioBank) -> void:
 func _on_beat_triggered(_beat: int) -> void:
 	print("Beat triggered should be overridden in subclass if needed")
 
-func _on_section_switched(_old, _new) -> void:
+func _on_section_switched(_new) -> void:
 	print("Section Switched should be overridden in subclass if needed")
 
 func _on_request_set_recorded_stream(trackIndex: int, audio: AudioStream):

@@ -57,10 +57,10 @@ func _update_play_pause_button(is_playing: bool) -> void:
 func _on_beat_triggered(beat: int):
 	_update_beat_sprites(beat)
 
-func _on_switch_section(_old_section: SectionData, _new_section: SectionData):
+func _on_switch_section(new_section: SectionData):
 	_reset_scales()
 
-	for track : TrackData in _new_section.tracks:
+	for track : TrackData in new_section.tracks:
 		if track.track_type == TrackData.TrackType.SYNTH:
 			return
 

@@ -5,6 +5,11 @@ extends Resource
 ## Because SectionData → TrackData → AudioStreamWAV are all Resources,
 ## Godot serializes the entire tree — including recorded samples.
 ##
+## At runtime [SongState] holds a live [SongData] instance and delegates all
+## persistent song properties to it.  Use [method from_current] to create a
+## deep-copy snapshot for saving, and [method apply_to_current] to restore a
+## loaded snapshot into the live state.
+##
 ## Save:  ResourceSaver.save(song, "user://songs/my_song.tres")
 ## Load:  var song := SongData.load_from_file("user://songs/my_song.tres")
 ##        song.apply_to_current()
@@ -42,21 +47,29 @@ extends Resource
 # Snapshot: capture live state → SongData
 # ══════════════════════════════════════════════════════════════════════════════
 
+## Create a deep-copy snapshot of the current live [SongData] for safe
+## serialization.  Sections and song_track are duplicated so that saving
+## does not mutate the running state.
 static func from_current() -> SongData:
 	var song := SongData.new()
-	if SongState.song_track:
-		song.song_track = SongState.song_track.duplicate_track() as SongTrackData
-	song.bpm = SongState.bpm
-	song.total_beats = SongState.total_beats
-	song.swing = SongState.swing
-	song.playing = GameState.playing
+	var live := SongState.data
+
+	# Deep-copy mutable resources
+	if live.song_track:
+		song.song_track = live.song_track.duplicate_track() as SongTrackData
+	for section: SectionData in live.sections:
+		song.sections.append(section.duplicate_section())
+
+	# Copy value-type fields from the live data
+	song.bpm = live.bpm
+	song.total_beats = live.total_beats
+	song.swing = live.swing
 	song.current_section_index = SongState.current_section_index
+
+	# State originating outside SongData
+	song.playing = GameState.playing
 	song.audio_bank = SoundBankLoader.load_audio_bank(SongState.selected_soundbank)
 	song.created_at = Time.get_datetime_string_from_system(true)
-
-	# Sections are already Resources — duplicate so saving doesn't mutate live state
-	for section: SectionData in SongState.sections:
-		song.sections.append(section.duplicate_section())
 
 	return song
 
@@ -65,24 +78,39 @@ static func from_current() -> SongData:
 # Restore: SongData → live state
 # ══════════════════════════════════════════════════════════════════════════════
 
+## Push every field of this [SongData] into the live [member SongState.data]
+## and emit the necessary signals so that managers and UI update.
 func apply_to_current() -> void:
-	# Playback settings
+	# Playback settings (via signals so BeatManager picks them up)
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
+
+	# Explicitly sync values that are only set through SongState properties
 	SongState.total_beats = total_beats
+	SongState.swing = swing
+
 	# Restore song track
 	if song_track:
 		SongState.song_track = song_track
 		SongState.song_track.rebuild_runtime()
 	else:
 		SongState.song_track = SongTrackData.new()
-	# Rebuild sections
+
+	# Rebuild sections into the live array (preserves existing references)
 	SongState.sections.clear()
 	for i in range(sections.size()):
 		var section: SectionData = sections[i]
 		section.index = i
 		section.rebuild_runtime()
 		SongState.sections.append(section)
+
+	# Sync metadata to the live SongData so nothing is lost
+	SongState.data.audio_bank = audio_bank
+	SongState.data.soundbank_name = soundbank_name
+	SongState.data.title = title
+	SongState.data.created_at = created_at
+	SongState.data.version = version
+	SongState.data.playing = playing
 
 	# Switch to saved section
 	if current_section_index >= 0 and current_section_index < SongState.sections.size():

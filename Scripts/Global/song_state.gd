@@ -1,18 +1,43 @@
 extends Node
 
 ## Song state singleton (autoload).
-## Provides access to song-related data: sections, tracks, soundbank, and tempo.
-## Wraps SongData so the live state and the serializable resource stay in sync.
+## Acts as an adapter over a live [SongData] instance so that the
+## serializable resource and the runtime state are always in sync.
+##
+## Persistent song properties (sections, tempo, song_track …) are delegated
+## to [member data].  Runtime-only state (current_section pointer,
+## selected_track_index, selected_soundbank) lives directly on this node.
 
 const BEATS_AMOUNT_DEFAULT: int = 16
 
-# ── Song Track ───────────────────────────────────────────────────────────────
+## The underlying serializable song data.
+## All persistent song properties are read from / written to this instance.
+var data: SongData = SongData.new()
 
-var song_track: SongTrackData = SongTrackData.new()
+# ── Delegated properties (read/write through data) ──────────────────────────
 
-# ── Sections & Tracks ────────────────────────────────────────────────────────
+var song_track: SongTrackData:
+	get: return data.song_track
+	set(value): data.song_track = value
 
-var sections: Array[SectionData] = []
+var sections: Array[SectionData]:
+	get: return data.sections
+	set(value): data.sections = value
+
+var bpm: int:
+	get: return data.bpm
+	set(value): data.bpm = value
+
+var total_beats: int:
+	get: return data.total_beats
+	set(value): data.total_beats = value
+
+var swing: float:
+	get: return data.swing
+	set(value): data.swing = value
+
+# ── Runtime-only state ──────────────────────────────────────────────────────
+
 var current_section: SectionData = null
 
 var current_section_index: int:
@@ -30,42 +55,38 @@ var current_track: TrackData:
 			return current_section.tracks[selected_track_index]
 		return null
 
-# ── Soundbank ────────────────────────────────────────────────────────────────
-
 var selected_soundbank: Dictionary = {}
-
-# ── Tempo ────────────────────────────────────────────────────────────────────
-
-var bpm: int = 120
-var total_beats: int = BEATS_AMOUNT_DEFAULT
-var swing: float = 0.05
-
 
 # ── Initialization ───────────────────────────────────────────────────────────
 
 func _ready() -> void:
+	# Ensure defaults that differ from SongData's own defaults
+	if data.song_track == null:
+		data.song_track = SongTrackData.new()
+
 	EventBus.section_switched.connect(_on_section_changed)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 
 
 func _on_bpm_changed(new_bpm: int) -> void:
-	bpm = new_bpm
+	data.bpm = new_bpm
 
 
 func _on_section_changed(section: SectionData) -> void:
 	current_section = section
+	data.current_section_index = section.index if section else 0
 
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 func section_count() -> int:
-	return sections.size()
+	return data.sections.size()
 
 
 func get_section(index: int) -> SectionData:
-	if index >= 0 and index < sections.size():
-		return sections[index]
+	if index >= 0 and index < data.sections.size():
+		return data.sections[index]
 	return null
 
 
@@ -83,23 +104,21 @@ func is_beat_active(track: int, beat: int) -> bool:
 
 
 func has_active_beats_on_section(section_index: int) -> bool:
-	if section_index >= 0 and section_index < sections.size():
-		return sections[section_index].has_active_beats()
+	if section_index >= 0 and section_index < data.sections.size():
+		return data.sections[section_index].has_active_beats()
 	return false
 
 
 func is_last_section() -> bool:
-	return current_section_index == sections.size() - 1
+	return current_section_index == data.sections.size() - 1
 
 
 # ── Reset ────────────────────────────────────────────────────────────────────
 
 func reset() -> void:
-	song_track.clear()
-	sections.clear()
+	data = SongData.new()
+	data.song_track = SongTrackData.new()
+	data.total_beats = BEATS_AMOUNT_DEFAULT
 	current_section = null
 	selected_track_index = 0
 	selected_soundbank = {}
-	bpm = 120
-	total_beats = BEATS_AMOUNT_DEFAULT
-	swing = 0.05

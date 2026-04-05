@@ -13,6 +13,9 @@
 [ext_resource type="AudioStream" uid="uid://sg7hwbuvgnme" path="res://Resources/Audio/SoundBanks/5_afrikaans/Snare Askari.wav" id="7_gc85r"]
 [ext_resource type="AudioStream" uid="uid://16i0hx50xlsn" path="res://Resources/Audio/SoundBanks/5_afrikaans/mineur/Snare Anorac.wav" id="7_xbbyl"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_gc85r"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="10_eprof"]
+[ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
+[ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 
 [resource]
 script = ExtResource("6_a4xo8")
@@ -24,8 +27,9 @@ clap = ExtResource("1_pktws")
 clap_alt = ExtResource("2_gk18y")
 closed = ExtResource("2_f2pa0")
 closed_alt = ExtResource("4_a4xo8")
-green_soundfont = ExtResource("3_0tynt")
-green_effectProfile = ExtResource("5_a4xo8")
-purple_soundfont = ExtResource("5_gk18y")
-purple_instrument_id = 2
+synth_soundfonts = [ExtResource("3_0tynt"), ExtResource("5_gk18y")]
+synth_instrument_ids = Array[int]([0, 2])
+synth_beats = Array[float]([0.0, 0.0])
+synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("5_a4xo8"), ExtResource("5_a4xo8")])
+noteplayer_settings = Array[ExtResource("9_gc85r")]([ExtResource("11_bass"), ExtResource("12_syn1")])
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

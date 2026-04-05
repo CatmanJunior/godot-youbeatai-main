@@ -85,7 +85,8 @@ func apply_to_current() -> void:
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
 
-	# Explicitly sync values that are only set through SongState properties
+	# BeatManager has its own swing var and does NOT echo back to SongState,
+	# so we also write directly to keep data in sync.
 	SongState.total_beats = total_beats
 	SongState.swing = swing
 
@@ -104,7 +105,9 @@ func apply_to_current() -> void:
 		section.rebuild_runtime()
 		SongState.sections.append(section)
 
-	# Sync metadata to the live SongData so nothing is lost
+	# Sync metadata fields that have no delegated SongState property.
+	# Note: `self` is the loaded SongData, NOT `SongState.data` — these
+	# copy from the loaded file into the live data instance.
 	SongState.data.audio_bank = audio_bank
 	SongState.data.soundbank_name = soundbank_name
 	SongState.data.title = title

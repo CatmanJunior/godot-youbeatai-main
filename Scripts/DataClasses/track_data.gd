@@ -1,28 +1,36 @@
 ## Base data class for a single track within a section.
 ## Contains chaos pad knob position, mixing state, and audio player references.
+## Extends Resource so the full track state (including recordings) can be saved/loaded.
 class_name TrackData
-extends RefCounted
+extends Resource
 
 enum TrackType { SAMPLE, SYNTH }
 
-var track_type: TrackType = TrackType.SAMPLE
 
-var index: int = -1 
+@export var track_type: TrackType = TrackType.SAMPLE
 
-var recorded_audio_stream: AudioStream = null
+@export var index: int = -1
+
+## Recorded audio from the microphone (AudioStreamWAV is a Resource — saved automatically).
+@export var recorded_audio_stream: AudioStream = null
+
+## Chaos pad knob position for mixing on this track.
+@export var knob_position: Vector2 = Vector2.ZERO
+
+## Current mixing state for this track.
+@export var master_volume: float = 0.0
+@export var weights: Vector3 = Vector3.ZERO
+
 var recording_data: RecordingData = null
 
-## Chaos pad knob position for mixing on this track
-var knob_position: Vector2 = Vector2.ZERO
-
-## Current mixing state for this track
-var master_volume: float = 0.0
-var weights: Vector3 = Vector3.ZERO
-
 func _init(track_index:int, knob_pos: Vector2 = Vector2.ZERO, type: TrackType = TrackType.SAMPLE) -> void:
+	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
 	knob_position = knob_pos
 	self.track_type = type
 	self.index = track_index
+
+func _on_knob_position_changed(new_position: Vector2) -> void:
+	knob_position = new_position
 
 func duplicate_track() -> TrackData:
 	var copy : TrackData = TrackData.new(index, knob_position, track_type)

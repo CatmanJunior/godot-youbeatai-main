@@ -104,10 +104,9 @@ script = ExtResource("12_ceghn")
 unique_name_in_owner = true
 script = ExtResource("49_102yd")
 
-[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=841610021 node_paths=PackedStringArray("chaos_pad_ui")]
+[node name="MixingManager" type="Node" parent="Managers/AudioManagers" unique_id=841610021]
 unique_name_in_owner = true
 script = ExtResource("50_rtmaq")
-chaos_pad_ui = NodePath("../../../UserInterface/ChaosPad")
 
 [node name="AudioPlayerManager" type="Node" parent="Managers/AudioManagers" unique_id=904688926]
 unique_name_in_owner = true

@@ -4,17 +4,20 @@ extends TrackData
 ## Data class for a sample-based track within a section.
 ## Holds beat pattern state in addition to the base track properties.
 
-## Beat activation pattern — one bool per beat
-var beats: Array[bool] = []
+## Beat activation pattern — one bool per beat.
+@export var beats: Array[bool] = []
 
-var main_audio_stream: AudioStream = null
-var alt_audio_stream: AudioStream = null
+## The main and alt audio streams loaded from the soundbank.
+## These are Resources — saved automatically when the section is saved.
+@export var main_audio_stream: AudioStream = null
+@export var alt_audio_stream: AudioStream = null
 
 func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, knob_pos, TrackType.SAMPLE)
-	var beats_amount = GameState.total_beats
-	for i in range(beats_amount):
-		beats.append(false)
+	if beats.is_empty():
+		var beats_amount = GameState.total_beats
+		for i in range(beats_amount):
+			beats.append(false)
 
 
 func has_active_beats() -> bool:

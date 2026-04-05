@@ -19,7 +19,7 @@ func _ready():
 	EventBus.track_selected.connect(_on_track_selected)
 	EventBus.section_switched.connect(_on_section_changed)
 
-func _on_section_changed(_old_section_data: SectionData, new_section_data: SectionData):
+func _on_section_changed(new_section_data: SectionData):
 	set_knob_position(new_section_data.get_track_knob_position(GameState.selected_track_index))
 
 func set_knob_position(pos: Vector2):

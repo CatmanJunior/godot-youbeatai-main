@@ -31,7 +31,6 @@ var beat_progress: float = 0.0
 var bar_progress: float = 0.0
 
 func _ready():
-	# BPM connections
 	EventBus.bpm_up_requested.connect(func(value): bpm += value)
 	EventBus.bpm_down_requested.connect(func(value): bpm -= value)
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
@@ -43,10 +42,8 @@ func _ready():
 
 	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
 
-	# Beat manager connections
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(set_beat)
-	EventBus.template_set.connect(_on_template_set)
 
 func _on_audio_bank_loaded(bank: AudioBank) -> void:
 	bpm = bank.bpm
@@ -105,11 +102,6 @@ func _on_beat_sprite_clicked(p_track: int, beat: int):
 	if p_track < GameState.colors.size():
 		EventBus.particles_requested.emit(Vector2.ZERO, GameState.colors[p_track])
 	EventBus.track_selected.emit(p_track)
-
-func _on_template_set(actives: Array):
-	"""Apply template beat actives"""
-	if GameState.current_section:
-		GameState.current_section.set_beat_actives(actives)
 
 func toggle_beat(track: int, beat: int):
 	"""Toggle a beat on or off"""

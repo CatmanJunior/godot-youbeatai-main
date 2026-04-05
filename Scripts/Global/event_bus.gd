@@ -93,10 +93,9 @@ signal mixing_weights_changed(track_index: int, master_volume: float, weights: V
 signal set_track_volume_requested(track: int, master_volume: float, weights: Vector3)
 
 # ── Chaos Pad ──
-## Emitted while the chaos pad knob is being dragged, carrying the knob position, master volume, and layer weights.
-signal chaos_pad_dragging(knob_position: Vector2, master_volume: float, weights: Vector3)
-## Emitted when the chaos pad knob is released, carrying the final master volume and layer weights.
-signal chaos_pad_released(master_volume: float, weights: Vector3)
+## Emitted while the chaos pad knob is being dragged, carrying the knob position.
+signal chaos_pad_dragging(knob_position: Vector2)
+
 
 # ── Particles ──
 ## Emitted to request spawning particles at a given position with a given color.

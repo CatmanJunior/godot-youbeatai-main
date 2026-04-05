@@ -1,4 +1,5 @@
 extends Node
+class_name SoundBankLoader
 ## Reads GameState.selected_soundbank (set by SoundBankSelector) and
 ## applies the AudioBank's streams + BPM/swing to the running main scene.
 ##
@@ -17,24 +18,18 @@ const FALLBACK_BANK_NAME := "2_acoustisch"
 @export var audio_player_manager: AudioPlayerManager
 
 func _ready() -> void:
-	var bank_dict: Dictionary = GameState.selected_soundbank
-	var bank_name: String = bank_dict.get("name", "")
-	
-	var bank = load_audio_bank(bank_name)
+	var bank = SoundBankLoader.load_audio_bank(GameState.selected_soundbank)
 
-#TODO These should all just be set in the audio bank resource, but for now we can also pull them from the JSON since that's how the UI is structured.
-	_apply_soundfont_and_instrument(bank)
-	_apply_bpm_swing(bank, bank_dict)
-	
 	EventBus.audio_bank_loaded.emit(bank)
 
-func load_audio_bank(bank_name: String) -> AudioBank:	
+static func load_audio_bank(bank_dict: Dictionary) -> AudioBank:	
 	var bank : AudioBank
 	# Determine which bank to load
+	var bank_name: String = bank_dict.get("name", "")
+
 	if bank_name.is_empty():
 		push_warning("SoundBankLoader: no soundbank selected, falling back to '%s'." % FALLBACK_BANK_NAME)
 		bank_name = FALLBACK_BANK_NAME
-	
 	
 	var bank_path := BANK_PATH_TEMPLATE % [bank_name, bank_name]
 
@@ -48,16 +43,14 @@ func load_audio_bank(bank_name: String) -> AudioBank:
 		push_error("SoundBankLoader: Failed to cast resource at '%s' to AudioBank." % bank_path)
 		return null
 
+	_apply_bpm_swing(bank, bank_dict)
+	bank.create_note_player_settings()
+
 	print("SoundBankLoader: loaded '%s'" % [bank_name])
 	return bank
 
 ## Apply BPM and swing from the JSON dictionary.
-func _apply_bpm_swing(bank: AudioBank, bank_dict: Dictionary) -> void:
+static func _apply_bpm_swing(bank: AudioBank, bank_dict: Dictionary) -> void:
 	bank.bpm = bank_dict.get("bpm", bank.bpm)
 	var swing_normalized: float = float(bank_dict.get("swing", 0)) / 100.0
 	bank.swing = swing_normalized
-
-func _apply_soundfont_and_instrument(bank: AudioBank) -> void:
-	bank.noteplayer_settings = bank.create_note_player_settings(base_noteplayer_settings)
-	print("SoundBankLoader: applied soundfont and instrument settings to AudioBank")
-	print("SoundBankLoader: AudioBank noteplayer settings: %s" % bank.noteplayer_settings[0].soundfont)

@@ -137,7 +137,7 @@ func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
 ## Override to create NotePlayer for the NOTE layer
 func _make_player(bus: String) -> AudioStreamPlayer:
 	var new_player: AudioStreamPlayer
-	if bus.contains("NotePlayer"):
+	if bus.contains(BUS_SUFFIXES[SynthLayer.NOTE]):
 		new_player = NotePlayer.new()
 	else:
 		new_player = AudioStreamPlayer.new()

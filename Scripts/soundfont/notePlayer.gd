@@ -60,36 +60,15 @@ func _process_key_input(event: InputEventKey):
 
 func _process_midi_input(event: InputEventMIDI):
 	channel_set_presetindex(0, event.channel, event.instrument)
-	channel_note_on(0, event.channel, event.pitch, event.velocity)
+	if event.message == MIDI_MESSAGE_NOTE_ON and event.velocity > 0:
+		channel_note_on(0, event.channel, event.pitch, event.velocity / 127.0)
+	elif event.message == MIDI_MESSAGE_NOTE_OFF or (event.message == MIDI_MESSAGE_NOTE_ON and event.velocity == 0):
+		channel_note_off(0, event.channel, event.pitch)
 
-
-func queue_song(start: int, song: Sequence):
-	note_off_all(get_time()) # clear all current notes
-	# queue song
-	for i in range(start, len(song.notes), 1):
-		var note: SequenceNote = song.notes[i]
-		var rms_value = note.velocity
-		var log_value = 20.0 * (log(sqrt(rms_value) / 0.1) / log(10))
-
-		# convert to value around 0-1
-		# capped becasue soundfont does not play well with higher values
-		log_value = min(1, pow(10, log_value / 10))
-
-		# gate quiet notes
-		if log_value <= gate:
-			continue
-
-		var beatDuration = (60.0 / GameState.bpm / 4.0)
-		var start_time: float = float(note.beat) * beatDuration
-		var stop_time: float = start_time + float(note.duration) * beatDuration
-		print("%f - %f, %f" % [start_time, stop_time, beatDuration])
-		channel_note_on(get_time() + start_time, 0, round(note.note), log_value)
-		channel_note_off(get_time() + stop_time, 0, round(note.note))
 
 func play_note(sequence_note: SequenceNote) -> void:
 	var t = get_time()
-	channel_note_on(t, 0, sequence_note.note, 1.0)
-	print("playing note: %d, beat: %d, duration: %d" % [sequence_note.note, sequence_note.beat, sequence_note.duration])
+	channel_note_on(t, 0, sequence_note.note, sequence_note.velocity)
 	channel_note_off(t + gate, 0, sequence_note.note)
 
 

@@ -55,5 +55,6 @@ func _get_weights_and_emit() -> void:
 	var corners: Array[Vector2] = [tri[0], tri[1], tri[2]]
 
 	var result = ChaosPadCalculator.calc_weights(local_pos, corners, outer_triangle_size)
-	# EventBus.chaos_pad_dragging.emit(local_pos, result.master_volume, result.weights)
-	EventBus.mixing_weights_changed.emit(SongState.selected_track_index, result.master_volume, result.weights)
+	EventBus.chaos_pad_dragging.emit(local_pos)
+	EventBus.mixing_weights_changed.emit(SongState.selected_track_index, result.weights)
+	EventBus.set_track_volume_requested.emit(SongState.selected_track_index, result.master_volume)

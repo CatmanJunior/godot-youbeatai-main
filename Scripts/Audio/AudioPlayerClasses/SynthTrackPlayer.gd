@@ -1,7 +1,6 @@
 class_name SynthTrackPlayer
 extends TrackPlayerBase
 
-
 enum SynthLayer {
 	ALT = 0,
 	NOTE = 1,
@@ -47,11 +46,9 @@ func _set_recorded_stream(stream: AudioStream) -> void:
 
 	# Store RecordingData on the track data and mark as PROCESSING before
 	# set_recording_audio_stream so the PROCESSING state is preserved.
-	var data: TrackData = track_data
-	if data:
-		if data.recording_data:
-			data.recording_data.state = RecordingData.State.PROCESSING
-		data.set_recording_audio_stream(stream)
+	if track_data.recording_data:
+		track_data.recording_data.state = RecordingData.State.PROCESSING
+	track_data.set_recording_audio_stream(stream)
 
 	var thread := Thread.new()
 	thread.start(_process_voice_threaded.bind(stream, thread))
@@ -104,9 +101,9 @@ func play(offset: float = 0.0) -> void:
 
 func play_note(beat: int) -> void:
 	var data: SynthTrackData = track_data
-	if data == null or data.sequence == null:
+	if data == null or data._sequence == null:
 		return
-	var note: SequenceNote = data.sequence.get_note_at_beat(beat)
+	var note: SequenceNote = data._sequence.get_note_at_beat(beat)
 	if note and note_player:
 		note_player.play_note(note)
 
@@ -127,7 +124,7 @@ func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
 	thread.wait_to_finish()
 	var data: SynthTrackData = track_data
 	if sequence and data:
-		data.sequence = sequence
+		data.set_sequence(sequence)
 		# Voice processing complete — mark as done
 		if data.recording_data:
 			data.recording_data.state = RecordingData.State.RECORDING_DONE

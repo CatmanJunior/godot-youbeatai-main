@@ -16,6 +16,9 @@ func _get_bus_prefix() -> String:
 func set_streams(a: AudioStream, b: AudioStream, rec: AudioStream=null) -> void:
 	players[0].stream = a
 	players[1].stream = b
+	if track_data:
+		track_data.main_audio_stream = a
+		track_data.alt_audio_stream = b
 	if rec != null:
 		_set_recorded_stream(rec)
 
@@ -41,13 +44,15 @@ func _on_play_track_requested(trackIndex: int) -> void:
 		play()
 
 func _on_section_switched(_new) -> void:
+	
 	if _new.tracks[track_index].recorded_audio_stream != null:
 		_set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
 	else:
 		# Clear recording stream and flag if new section doesn't have a recording for this track
 		players[2].stream = null
 		_has_recording = false
-		set_weights(_weights) # update volumes to remove recording bus
+	set_weights(_new.tracks[track_index].weights) # apply new section's weights for this track
+	set_volume_db(_new.tracks[track_index].master_volume) # apply new section's master volume for this track
 
 func _on_beat_triggered(beat: int) -> void:
 	if track_data.get_beat_active(beat):
@@ -56,6 +61,8 @@ func _on_beat_triggered(beat: int) -> void:
 func _set_recorded_stream(rec: AudioStream) -> void:
 	players[2].stream = rec
 	_has_recording = true
+	if track_data:
+		track_data.set_recording_audio_stream(rec)
 	set_weights(_weights) # update volumes to include recording bus
 
 ## Playback control (called by Section when starting/stopping playback)

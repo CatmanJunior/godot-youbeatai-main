@@ -30,6 +30,9 @@ func _ready() -> void:
 
 func _on_template_set(actives: Array) -> void:
 	# Update all beat sprites to match the new template actives
+	set_beat_actives(actives)
+
+func set_beat_actives(actives: Array) -> void:
 	for track in range(actives.size()):
 		for beat in range(actives[track].size()):
 			var active = actives[track][beat]
@@ -60,13 +63,8 @@ func _on_beat_triggered(beat: int):
 func _on_switch_section(new_section: SectionData):
 	_reset_scales()
 
-	for track : TrackData in new_section.tracks:
-		if track.track_type == TrackData.TrackType.SYNTH:
-			return
-
-		for beat in track.beats:
-			var active = track.get_beat_active(beat)
-			set_beat_active(track.index, beat, active)
+	set_beat_actives(new_section.get_beat_actives())
+	
 
 func _init_beat_but_positions() -> void:
 	var beats_amount = SongState.total_beats

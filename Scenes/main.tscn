@@ -180,6 +180,7 @@ offset_left = -638.0
 offset_top = -358.0
 offset_right = 642.0
 offset_bottom = 362.0
+bpm_modifier = null
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 layout_mode = 0

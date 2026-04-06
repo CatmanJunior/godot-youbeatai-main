@@ -1,5 +1,4 @@
 extends Node
-
 ## Song state singleton (autoload).
 ## Acts as an adapter over a live [SongData] instance so that the
 ## serializable resource and the runtime state are always in sync.
@@ -53,6 +52,8 @@ var current_track: TrackData:
 	get:
 		if current_section and selected_track_index >= 0 and selected_track_index < current_section.tracks.size():
 			return current_section.tracks[selected_track_index]
+		if selected_track_index == SongTrackData.SONG_TRACK_INDEX:
+			return song_track
 		return null
 
 var selected_soundbank: Dictionary = {}

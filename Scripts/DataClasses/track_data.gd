@@ -24,13 +24,10 @@ enum TrackType { SAMPLE, SYNTH, SONG }
 var recording_data: RecordingData = null
 
 func _init(track_index:int, knob_pos: Vector2 = Vector2.ZERO, type: TrackType = TrackType.SAMPLE) -> void:
-	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
-	knob_position = knob_pos
+	knob_position = knob_pos	
+	
 	self.track_type = type
 	self.index = track_index
-
-func _on_knob_position_changed(new_position: Vector2) -> void:
-	knob_position = new_position
 
 func duplicate_track() -> TrackData:
 	var copy : TrackData = TrackData.new(index, knob_position, track_type)

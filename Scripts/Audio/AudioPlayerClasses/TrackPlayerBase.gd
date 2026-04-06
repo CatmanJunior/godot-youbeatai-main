@@ -17,8 +17,12 @@ var _weights: Vector3 = Vector3(1.0, 0.0, 0.0)
 
 var track_data: TrackData:
 	get:
-		return SongState.current_section.tracks[track_index]
-
+		if SongState.current_section and track_index >= 0 and track_index < SongState.current_section.tracks.size():
+			return SongState.current_section.tracks[track_index]
+		if track_index == SongTrackData.SONG_TRACK_INDEX:
+			return SongState.song_track
+		return null
+		
 @warning_ignore("unused_private_class_variable")
 var _has_recording: bool = false
 
@@ -31,19 +35,22 @@ func _get_bus_prefix() -> String:
 func _ready() -> void:
 	EventBus.all_players_stop_requested.connect(_on_all_players_stop)
 	EventBus.mute_all_requested.connect(_mute_all)
-	EventBus.set_track_volume_requested.connect(set_track_volume)
+	EventBus.set_track_volume_requested.connect(_set_track_volume)
 	EventBus.set_stream_requested.connect(_on_request_set_stream)
 	EventBus.set_recorded_stream_requested.connect(_on_request_set_recorded_stream)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
 	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
+	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
 
-func _on_mixing_weights_changed(trackIndex: int, master_volume: float, weights: Vector3) -> void:
+func _on_knob_position_changed(knobPos: Vector2) -> void:
+	if SongState.selected_track_index == track_index and track_data:
+		track_data.knob_position = knobPos
+
+func _on_mixing_weights_changed(trackIndex: int, weights: Vector3) -> void:
 	if trackIndex == track_index:
 		set_weights(weights)
-		set_volume_db(master_volume)
-		print("TrackPlayerBase received mixing_weights_changed for track %d: master_volume=%.2f, weights=%s" % [trackIndex, master_volume, str(weights)])
 
 func _on_audio_bank_loaded(_bank: AudioBank) -> void:
 	# Default implementation does nothing, since not all track players will need to respond to new soundbanks.
@@ -83,8 +90,6 @@ func _create_buses(parent_bus: String) -> void:
 		sub_bus_names.append(bus_name + "_" + _get_bus_suffixes()[i])
 		BusHelper.create_bus(sub_bus_names[i], bus_name)
 
-	set_weights(_weights) # initialize volumes based on default weights
-
 func _setup_players() -> void:
 	for i in range(SUB_TRACK_PLAYER_COUNT):
 		players.append(_make_player(sub_bus_names[i]))
@@ -104,11 +109,11 @@ func setup(index: int, parent_bus: String, _settings = null) -> void:
 	_create_buses(parent_bus)
 	_setup_players()
 
-func set_track_volume(track: int, volume: float, weights: Vector3):
+func _set_track_volume(track: int, volume: float):
 	if track != track_index:
 		return
-	set_weights(weights)
 	set_volume_db(volume)
+	
 
 func apply_effect_profile(effect_profile: EffectProfile) -> void:
 	var bus_idx = AudioServer.get_bus_index(bus_name)
@@ -133,6 +138,7 @@ func set_stream(audio_layer: int, stream: AudioStream) -> void:
 func set_weights(weights: Vector3) -> void:
 	print("Setting weights for track %d: %s" % [track_index, str(weights)])
 	_weights = BusHelper.crossfade3(sub_bus_names, weights)
+	track_data.weights = weights
 
 func play(_offset: float = 0.0) -> void: pass
 
@@ -143,6 +149,7 @@ func stop() -> void:
 func set_volume_db(db: float) -> void:
 	print("Setting volume for track %d to %.2f dB" % [track_index, db])
 	BusHelper.set_volume(bus_name, db*10)
+	track_data.master_volume = db
 
 func set_muted(muted: bool) -> void:
 	BusHelper.set_mute(bus_name, muted)

@@ -88,9 +88,9 @@ signal all_players_stop_requested()
 ## Emitted when a track has been selected for mixing, carrying its index.
 signal track_selected(new_track_index: int)
 ## Emitted when the mixing weights have changed (master volume and per-layer weights).
-signal mixing_weights_changed(track_index: int, master_volume: float, weights: Vector3)
+signal mixing_weights_changed(track_index: int, weights: Vector3)
 ## Emitted to request setting the volume for a specific track with master volume and layer weights.
-signal set_track_volume_requested(track: int, master_volume: float, weights: Vector3)
+signal set_track_volume_requested(track_index: int, master_volume: float)
 
 # ── Chaos Pad ──
 ## Emitted while the chaos pad knob is being dragged, carrying the knob position.

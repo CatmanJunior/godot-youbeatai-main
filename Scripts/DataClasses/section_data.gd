@@ -43,7 +43,8 @@ func _init(new_index: int = 0, section_emoji: String = "") -> void:
 # -- Event handlers ─────────────────────────────────────────────────────────────
 
 func _on_template_set(actives: Array) -> void:
-	set_beat_actives(actives)
+	if SongState.current_section_index == index:
+		set_beat_actives(actives)
 
 # ── Post-load rebuild ────────────────────────────────────────────────────────
 

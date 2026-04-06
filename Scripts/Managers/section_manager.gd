@@ -59,11 +59,9 @@ func add_section(section: int, emoji: String = ""):
 
 	# Notify other managers about new section via EventBus
 	print("Section added at index %d with emoji %s" % [section, emoji])
-	GameState.sections = sections
+	SongState.sections = sections
 	EventBus.section_added.emit(section, emoji)
 	EventBus.section_switched.emit(current_section)
-
-
 
 func _on_add_section_requested(emoji: String):
 	add_section(sections.size(), emoji)
@@ -80,7 +78,7 @@ func remove_section(section: int):
 	
 	# Notify other managers about removed section
 	EventBus.section_removed.emit(section)
-	GameState.sections = sections
+	SongState.sections = sections
 
 	# If the deleted section was the current one, go to first section
 	if section == current_section_index:
@@ -170,7 +168,7 @@ func _manipulate_recording(section: int, operation: Callable) -> void:
 
 	var result = operation.call(
 		rec_node.recording_result, song_vo.voice_over,
-		section, GameState.total_beats, GameState.beat_duration)
+		section, SongState.total_beats, GameState.beat_duration)
 
 	if result.recording:
 		rec_node.recording_result = result.recording

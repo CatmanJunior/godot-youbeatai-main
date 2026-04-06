@@ -97,7 +97,7 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 
 	var sample_rate := float(wav.mix_rate)
 
-	var length: int = int(GameState.total_beats)
+	var length: int = int(SongState.total_beats)
 
 	if length <= 0:
 		printerr("invalid beat length")

@@ -20,14 +20,14 @@ func _ready():
 	EventBus.section_switched.connect(_on_section_changed)
 
 func _on_section_changed(new_section_data: SectionData):
-	set_knob_position(new_section_data.get_track_knob_position(GameState.selected_track_index))
+	set_knob_position(new_section_data.get_track_knob_position(SongState.selected_track_index))
 
 func set_knob_position(pos: Vector2):
 	knob.position = pos
 
 func _on_track_selected(track: int):
-	if GameState.current_section != null:
-		set_knob_position(GameState.current_section.get_track_knob_position(track))
+	if SongState.current_section != null:
+		set_knob_position(SongState.current_section.get_track_knob_position(track))
 	update_track_icons(track)
 	start_triangle_color_change(track_settings.get_track(track).track_color, 0.2)
 

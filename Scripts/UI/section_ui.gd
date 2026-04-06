@@ -64,8 +64,8 @@ func init_section_button_actions():
 		remove_section_button.pressed.connect(_on_remove_section_button_pressed)
 
 func _on_remove_section_button_pressed():
-	if GameState.sections.size() > 0:
-		EventBus.section_removed.emit(GameState.current_section_index)
+	if SongState.sections.size() > 0:
+		EventBus.section_removed.emit(SongState.current_section_index)
 
 func _on_emoji_button_pressed(emoji: String):
 	_close_emoji_prompt()
@@ -128,7 +128,7 @@ func _update_section_ui() -> void:
 
 func _update_section_outline_sprite_rotation():
 	var clock_rot = GameState.bar_progress
-	section_buttons[GameState.current_section_index].rotate_outline(clock_rot * 360.0 - 7.0)
+	section_buttons[SongState.current_section_index].rotate_outline(clock_rot * 360.0 - 7.0)
 
 func _update_copy_paste_buttons(delta: float) -> void:
 	copy_paste_clear_button_holder_time_since_activation += delta
@@ -142,7 +142,7 @@ func update_section_switch_buttons_colors() -> void:
 		var button = section_buttons[i]
 		button.modulate = Color(1, 1, 1, 1)
 
-		var has_beats = GameState.sections[i].has_active_beats()
+		var has_beats = SongState.sections[i].has_active_beats()
 		if not has_beats:
 			button.modulate = button.modulate.darkened(0.5)
 

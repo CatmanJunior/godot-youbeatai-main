@@ -84,7 +84,7 @@ func change_to_main() -> void:
 	SceneChanger.go_to_main()
 	
 func _set_beats(beats: int) -> void:
-	GameState.total_beats = beats
+	SongState.total_beats = beats
 
 func _on_soundbank_label_changed(label_text: String) -> void:
 	gevonden_soundbank_label.text = label_text

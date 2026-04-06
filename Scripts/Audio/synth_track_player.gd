@@ -63,7 +63,7 @@ func is_voice_playing(synth_index: int) -> bool:
 ## Handle stream update requests from EventBus
 func _on_request_set_stream(track: int, audio_layer: int, audio: AudioStream) -> void:
 	# Only handle synth tracks
-	if GameState.current_section.tracks[track].track_type == TrackData.TrackType.SYNTH:
+	if SongState.current_section.tracks[track].track_type == TrackData.TrackType.SYNTH:
 		var synth_index = track - SAMPLE_TRACK_COUNT
 		set_voice_stream(synth_index, audio)
 

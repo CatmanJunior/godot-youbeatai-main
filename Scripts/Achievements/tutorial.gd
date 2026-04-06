@@ -412,7 +412,7 @@ func _read_use_tutorial() -> bool:
 
 func _active_beats_per_ring(index_ring: int) -> int:
 	var amount: int = 0
-	for beat in range(GameState.total_beats):
+	for beat in range(SongState.total_beats):
 		if beatManager.current_section.get_beat(index_ring, beat):
 			amount += 1
 	return amount
@@ -440,7 +440,7 @@ func _body_continue(body: Area2D) -> void:
 
 
 func _next_line() -> void:
-	print(GameState.bpm)
+	print(SongState.bpm)
 	if _outcome.is_valid():
 		_outcome.call()
 	if tutorial_level >= tutorial_steps.size():

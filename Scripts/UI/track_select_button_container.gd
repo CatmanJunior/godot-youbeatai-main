@@ -27,7 +27,7 @@ func _set_initial_track():
 func _process(_delta: float) -> void:
 	var progression = GameState.bar_progress
 
-	track_buttons[GameState.selected_track_index].update_outline(progression)
+	track_buttons[SongState.selected_track_index].update_outline(progression)
 
 func _on_track_button_pressed(track_index: int):
 	for button in track_buttons:

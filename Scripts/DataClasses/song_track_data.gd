@@ -28,7 +28,7 @@ extends TrackData
 # ── Init ─────────────────────────────────────────────────────────────────────
 
 ## Song track uses a fixed index. Convention: index -1 (special value for song-level track).
-const SONG_TRACK_INDEX: int = -1
+const SONG_TRACK_INDEX: int = 6
 
 func _init(track_index: int = SONG_TRACK_INDEX, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, knob_pos, TrackType.SONG)

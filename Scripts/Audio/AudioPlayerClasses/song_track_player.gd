@@ -65,16 +65,16 @@ func _process(delta: float) -> void:
 # ── Record effect setup ──────────────────────────────────────────────────────
 
 func _setup_record_effects() -> void:
-	# Voice-over record effect (Microphone bus, effect index 1)
-	var mic_bus := AudioServer.get_bus_index("Microphone")
-	if mic_bus >= 0 and AudioServer.get_bus_effect_count(mic_bus) > 1:
-		voice_record_effect = AudioServer.get_bus_effect(mic_bus, 1)
+	# # Voice-over record effect (Microphone bus, effect index 1)
+	# var mic_bus := AudioServer.get_bus_index("Microphone")
+	# if mic_bus >= 0 and AudioServer.get_bus_effect_count(mic_bus) > 1:
+	# 	voice_record_effect = AudioServer.get_bus_effect(mic_bus, 1)
 
-	# Master bus record effect (SubMaster bus, effect index 0)
-	var master_bus := AudioServer.get_bus_index("SubMaster")
-	if master_bus >= 0 and AudioServer.get_bus_effect_count(master_bus) > 0:
-		master_record_effect = AudioServer.get_bus_effect(master_bus, 0)
-
+	# # Master bus record effect (SubMaster bus, effect index 0)
+	# var master_bus := AudioServer.get_bus_index("SubMaster")
+	# if master_bus >= 0 and AudioServer.get_bus_effect_count(master_bus) > 0:
+	# 	master_record_effect = AudioServer.get_bus_effect(master_bus, 0)
+	pass
 
 # ── Playback ─────────────────────────────────────────────────────────────────
 

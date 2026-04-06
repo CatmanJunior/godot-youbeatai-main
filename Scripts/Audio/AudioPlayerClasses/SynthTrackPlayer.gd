@@ -63,7 +63,7 @@ func _on_audio_bank_loaded(bank: AudioBank) -> void:
 		apply_effect_profile(effect_profile) # apply the synth's specific effect profile from the bank
 	apply_note_player_settings(bank.noteplayer_settings[track_index - SAMPLE_TRACK_COUNT])
 
-func _on_section_switched(_old, _new) -> void:
+func _on_section_switched(_new) -> void:
 	# Clear stale scheduled notes when switching sections
 	if note_player:
 		note_player.note_off_all(0)

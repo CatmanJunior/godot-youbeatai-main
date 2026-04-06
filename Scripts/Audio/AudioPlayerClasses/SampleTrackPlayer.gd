@@ -40,7 +40,7 @@ func _on_play_track_requested(trackIndex: int) -> void:
 	if trackIndex == track_index:
 		play()
 
-func _on_section_switched(_old, _new) -> void:
+func _on_section_switched(_new) -> void:
 	if _new.tracks[track_index].recorded_audio_stream != null:
 		_set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
 	else:

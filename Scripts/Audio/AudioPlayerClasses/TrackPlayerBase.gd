@@ -17,7 +17,7 @@ var _weights: Vector3 = Vector3(1.0, 0.0, 0.0)
 
 var track_data: TrackData:
 	get:
-		return GameState.current_section.tracks[track_index]
+		return SongState.current_section.tracks[track_index]
 
 @warning_ignore("unused_private_class_variable")
 var _has_recording: bool = false

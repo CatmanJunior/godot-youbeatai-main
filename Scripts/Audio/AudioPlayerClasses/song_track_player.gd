@@ -4,7 +4,7 @@ extends TrackPlayerBase
 ## Audio player for the song-level track (extends TrackPlayerBase).
 ##
 ## Key difference from SampleTrackPlayer/SynthTrackPlayer:
-##   - track_data getter reads from GameState.song_track (NOT current_section.tracks[])
+##   - track_data getter reads from SongState.song_track (NOT current_section.tracks[])
 ##   - Records from BOTH the Microphone bus (voice-over) AND SubMaster bus (full mix)
 ##   - Plays back the voice-over recording during song mode
 ##   - Not driven by beat_triggered (continuous playback, not per-beat)
@@ -163,8 +163,8 @@ func stop_song_recording() -> void:
 func get_recording_progress() -> float:
 	if not is_song_recording:
 		return 0.0
-	var sections_count := GameState.sections.size()
-	var total_time := sections_count * GameState.total_beats * GameState.beat_duration
+	var sections_count := SongState.sections.size()
+	var total_time := sections_count * SongState.total_beats * GameState.beat_duration
 	if total_time <= 0.0:
 		return 0.0
 	return clampf(recording_timer / total_time, 0.0, 1.0)
@@ -178,7 +178,7 @@ func _on_beat_triggered(_beat: int) -> void:
 
 
 ## Song track is NOT per-section — ignore section switches for stream loading.
-## (The voice_over lives on GameState.song_track, not on sections.)
+## (The voice_over lives on SongState.song_track, not on sections.)
 func _on_section_switched(_new) -> void:
 	pass
 
@@ -188,10 +188,10 @@ func _on_section_switched(_new) -> void:
 func _on_section_added(section_index: int, _emoji: String) -> void:
 	var data := track_data as SongTrackData
 	if data and data.has_recording():
-		data.insert_silence_for_section(section_index, GameState.total_beats, GameState.beat_duration)
+		data.insert_silence_for_section(section_index, SongState.total_beats, GameState.beat_duration)
 
 
 func _on_section_removed(section_index: int) -> void:
 	var data := track_data as SongTrackData
 	if data and data.has_recording():
-		data.remove_audio_for_section(section_index, GameState.total_beats, GameState.beat_duration)
+		data.remove_audio_for_section(section_index, SongState.total_beats, GameState.beat_duration)

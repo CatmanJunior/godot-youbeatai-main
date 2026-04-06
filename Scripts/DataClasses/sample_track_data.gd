@@ -15,7 +15,7 @@ extends TrackData
 func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, knob_pos, TrackType.SAMPLE)
 	if beats.is_empty():
-		var beats_amount = GameState.total_beats
+		var beats_amount = SongState.total_beats
 		for i in range(beats_amount):
 			beats.append(false)
 

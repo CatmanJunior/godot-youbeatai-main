@@ -19,7 +19,7 @@ func _ready() -> void:
 	EventBus.audio_bank_selected.connect(_on_soundbank_selected)
 
 func _on_soundbank_selected(themes: Array[String], emotions: Array[String]) -> void:
-	GameState.selected_soundbank = choose_soundbank(themes, emotions)
+	SongState.selected_soundbank = choose_soundbank(themes, emotions)
 
 func _process(_delta: float) -> void:
 	if soundbank_selection_menu.check_ready_condition():

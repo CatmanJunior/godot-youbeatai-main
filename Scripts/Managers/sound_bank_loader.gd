@@ -1,6 +1,6 @@
 extends Node
 class_name SoundBankLoader
-## Reads GameState.selected_soundbank (set by SoundBankSelector) and
+## Reads SongState.selected_soundbank (set by SoundBankSelector) and
 ## applies the AudioBank's streams + BPM/swing to the running main scene.
 ##
 ## Add this node inside the Managers group in main.tscn.
@@ -18,7 +18,7 @@ const FALLBACK_BANK_NAME := "2_acoustisch"
 @export var audio_player_manager: AudioPlayerManager
 
 func _ready() -> void:
-	var bank = SoundBankLoader.load_audio_bank(GameState.selected_soundbank)
+	var bank = SoundBankLoader.load_audio_bank(SongState.selected_soundbank)
 
 	EventBus.audio_bank_loaded.emit(bank)
 

@@ -47,7 +47,7 @@ func _start_export(mode: ExportMode):
 		loading.open()
 
 	if mode == ExportMode.SONG:
-		_target_section_count = GameState.sections.size()
+		_target_section_count = SongState.sections.size()
 	else:
 		_target_section_count = 1
 
@@ -55,7 +55,7 @@ func _start_export(mode: ExportMode):
 	if mode == ExportMode.SONG:
 		start_section = 0
 	else:
-		start_section = GameState.current_section_index
+		start_section = SongState.current_section_index
 
 	# Stop playback, wait briefly for audio to settle, then begin.
 	if GameState.playing:
@@ -64,7 +64,7 @@ func _start_export(mode: ExportMode):
 	await get_tree().create_timer(0.75).timeout
 
 	EventBus.section_switch_requested.emit(start_section)
-	GameState.current_beat = GameState.total_beats - 1
+	GameState.current_beat = SongState.total_beats - 1
 
 	await get_tree().process_frame
 
@@ -92,7 +92,7 @@ func _on_beat(_beat: int):
 	if _sections_completed >= _target_section_count:
 		_stop_recording()
 	elif export_mode == ExportMode.SONG:
-		EventBus.section_switch_requested.emit(GameState.current_section_index + 1)
+		EventBus.section_switch_requested.emit(SongState.current_section_index + 1)
 
 
 func _stop_recording():
@@ -103,8 +103,8 @@ func _stop_recording():
 
 
 func _update_loading_progress():
-	var total: int = GameState.total_beats * _target_section_count
-	var current: int = GameState.current_beat + (GameState.total_beats * _sections_completed)
+	var total: int = SongState.total_beats * _target_section_count
+	var current: int = GameState.current_beat + (SongState.total_beats * _sections_completed)
 	loading.set_progress(float(current) / total)
 
 

@@ -50,7 +50,7 @@ func _process(delta: float):
 	# Set progress bar value
 	if recording and progress_bar and layer_manager:
 		var layers_amount = layer_manager.sections_amount
-		var total_time = layers_amount * GameState.total_beats * GameState.beat_duration
+		var total_time = layers_amount * SongState.total_beats * GameState.beat_duration
 		if total_time > 0:
 			progress_bar.value = recording_timer / total_time
 
@@ -81,7 +81,7 @@ func _on_button():
 			var last_layer = layer_manager.sections_amount - 1
 			layer_manager.switch_layer(last_layer)
 
-		EventBus.beat_seek_requested.emit(GameState.total_beats / 2)
+		EventBus.beat_seek_requested.emit(SongState.total_beats / 2)
 		EventBus.playing_change_requested.emit(true)
 		EventBus.countdown_show_requested.emit()
 

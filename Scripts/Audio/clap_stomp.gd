@@ -25,7 +25,7 @@ func on_stomp():
 
 
 func _handle_beat_interaction(ring: int) -> void:
-	var active = GameState.current_section.get_beat(ring, GameState.current_beat)
+	var active = SongState.current_section.get_beat(ring, GameState.current_beat)
 	if time_after_play < 0.2:
 		return
 
@@ -56,12 +56,12 @@ func _handle_beat_interaction(ring: int) -> void:
 
 func _on_beat():
 	# Emit signals for next beat
-	var next_beat = (GameState.current_beat + 1) % GameState.current_section.beats_amount
-	var clap_active = GameState.current_section.get_beat(1, next_beat)
+	var next_beat = (GameState.current_beat + 1) % SongState.current_section.beats_amount
+	var clap_active = SongState.current_section.get_beat(1, next_beat)
 	if clap_active:
 		EventBus.clap_triggered.emit()
 	
-	var stomp_active = GameState.current_section.get_beat(0, next_beat)
+	var stomp_active = SongState.current_section.get_beat(0, next_beat)
 	if stomp_active:
 		EventBus.stomp_triggered.emit()
 

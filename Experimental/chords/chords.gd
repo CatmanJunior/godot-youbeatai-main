@@ -74,7 +74,7 @@ func on_bpm():
 	if current % chordDuration != 0:
 		return
 
-	var beatDuration = 60.0/GameState.bpm /4.0
+	var beatDuration = 60.0/SongState.bpm /4.0
 	var duration = chordDuration * beatDuration
 
 	var current_beat = (GameState.amount_of_beats * GameState.currentLayerIndex) + GameState.currentBeat

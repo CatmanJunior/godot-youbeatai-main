@@ -37,6 +37,6 @@ func update_count_down_label():
 
 func calculate_time_until_top() -> float:
     var cur_beat: int = GameState.current_beat
-    var beats_until_top: int = GameState.total_beats - cur_beat - 1
+    var beats_until_top: int = SongState.total_beats - cur_beat - 1
     var four_beats_until_top: int = beats_until_top / 4
     return four_beats_until_top + 1

@@ -7,7 +7,7 @@ func _on_section_changed(new_section_data: SectionData):
 	_apply_stored_volumes(new_section_data)
 
 func _retrieve_knob(section_data: SectionData) -> Vector2:
-	return section_data.get_track_knob_position(GameState.selected_track_index)	
+	return section_data.get_track_knob_position(SongState.selected_track_index)	
 
 func _apply_stored_volumes(new_section_data: SectionData):
 	"""Re-apply remembered mixing volumes for all tracks"""

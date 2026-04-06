@@ -29,7 +29,7 @@ func _on_section_added(section_index: int, _emoji: String):
 		if waveform_lines[i]:
 			var cfg = LINE_CONFIGS[i]
 			var visualizer = SynthWaveform.new(waveform_lines[i], cfg.points, cfg.base_dist, cfg.volume_dist, cfg.reversed)
-			var section_data = GameState.sections[section_index]
+			var section_data = SongState.sections[section_index]
 			section_data.tracks[i+4].synth_waveform_visualizer = visualizer  # Link visualizer to track data
 
 func update_progress(track_index: int, percentage: float) -> void:
@@ -42,7 +42,7 @@ func update_waveform(track_index: int, rec_data: RecordingData) -> void:
 	track_index = track_index - 4  # Adjust index for waveform visualizers (only for SYNTH tracks)
 	if track_index >= 0 and track_index < waveform_lines.size() and waveform_lines[track_index]:
 		if rec_data:
-			GameState.sections[GameState.current_section_index].tracks[track_index + 4].synth_waveform_visualizer.update_line_from_recording(rec_data)
+			SongState.sections[SongState.current_section_index].tracks[track_index + 4].synth_waveform_visualizer.update_line_from_recording(rec_data)
 			print("Updated waveform for track ", track_index + 4)
 			waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
 

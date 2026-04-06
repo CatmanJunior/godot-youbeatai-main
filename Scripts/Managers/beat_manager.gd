@@ -75,7 +75,7 @@ func _process(delta: float):
 	bar_progress = get_bar_progress()
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
-	GameState.total_beats = total_beats
+	SongState.total_beats = total_beats
 	GameState.beat_duration = beat_duration
 
 	if playing:
@@ -105,15 +105,15 @@ func _on_beat_sprite_clicked(p_track: int, beat: int):
 
 func toggle_beat(track: int, beat: int):
 	"""Toggle a beat on or off"""
-	GameState.current_section.toggle_beat(track, beat)
-	var is_active = GameState.current_section.get_beat(track, beat)
+	SongState.current_section.toggle_beat(track, beat)
+	var is_active = SongState.current_section.get_beat(track, beat)
 	EventBus.beat_state_changed.emit(track, beat, is_active)
 
 func set_beat(track: int, beat: int, active: bool):
 	"""Set a beat to active or inactive"""
-	GameState.current_section.set_beat(track, beat, active)
+	SongState.current_section.set_beat(track, beat, active)
 	EventBus.beat_state_changed.emit(track, beat, active)
 
 func get_beat(track: int, beat: int) -> bool:
 	"""Get whether a beat is active"""
-	return GameState.current_section.get_beat(track, beat)
+	return SongState.current_section.get_beat(track, beat)

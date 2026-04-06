@@ -34,9 +34,9 @@ func _handle_recording(delta: float) -> void:
 		TrackData.TrackType.SAMPLE:
 			beats_to_record = 1
 		TrackData.TrackType.SYNTH:
-			beats_to_record = GameState.total_beats
+			beats_to_record = SongState.total_beats
 		TrackData.TrackType.SONG:
-			beats_to_record = GameState.total_beats * GameState.sections.size()
+			beats_to_record = SongState.total_beats * SongState.sections.size()
 
 
 	var percentage: float = actual_sound_length / (GameState.beat_duration * beats_to_record)
@@ -45,15 +45,15 @@ func _handle_recording(delta: float) -> void:
 	
 	# Update progress bar (only for SYNTH tracks)
 	if track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_progress(GameState.selected_track_index, percentage)
+		waveform_visualizer.update_progress(SongState.selected_track_index, percentage)
 
 	if percentage >= 1.0:
 		_stop_recording()
 
 
 func _start_recording() -> void:
-	var cur_track_index = GameState.selected_track_index
-	current_recording_track = GameState.current_section.tracks[cur_track_index]
+	var cur_track_index = SongState.selected_track_index
+	current_recording_track = SongState.current_section.tracks[cur_track_index]
 	track_type = current_recording_track.track_type
 
 	#Reset recording state
@@ -61,7 +61,7 @@ func _start_recording() -> void:
 	actual_sound_length = 0.0
 
 	# Create RecordingData early so it tracks the full lifecycle
-	current_recording_track.start_recording(GameState.current_section_index)
+	current_recording_track.start_recording(SongState.current_section_index)
 
 	#TODO maybe handle the muting in the audio manager instead of here based on starting/stopping recording
 	EventBus.mute_all_requested.emit(true)

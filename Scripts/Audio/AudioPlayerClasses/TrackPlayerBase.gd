@@ -13,7 +13,7 @@ var sub_bus_names: Array[String] = [] # bus names for this track
 
 var players: Array[AudioStreamPlayer] = [] # players for main, alt, recording
 
-var _weights: Vector3 = Vector3(1.0, 0.0, 0.0)
+var _weights: Vector3 = Vector3(0.3, 0.3, 0.4) # default weights for main, alt, recording layers
 
 var track_data: TrackData:
 	get:

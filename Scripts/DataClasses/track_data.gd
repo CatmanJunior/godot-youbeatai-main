@@ -15,15 +15,15 @@ enum TrackType { SAMPLE, SYNTH, SONG }
 @export var recorded_audio_stream: AudioStream = null
 
 ## Chaos pad knob position for mixing on this track.
-@export var knob_position: Vector2 = Vector2.ZERO
+@export var knob_position: Vector2 = Vector2(150,150)
 
 ## Current mixing state for this track.
 @export var master_volume: float = 0.0
-@export var weights: Vector3 = Vector3.ZERO
+@export var weights: Vector3 = Vector3(0.3, 0.3, 0.4)
 
 var recording_data: RecordingData = null
 
-func _init(track_index:int, knob_pos: Vector2 = Vector2.ZERO, type: TrackType = TrackType.SAMPLE) -> void:
+func _init(track_index:int, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:
 	knob_position = knob_pos	
 	
 	self.track_type = type

@@ -1,6 +1,8 @@
 class_name SynthTrackPlayer
 extends TrackPlayerBase
 
+var thread: Thread = null
+
 enum SynthLayer {
 	ALT = 0,
 	NOTE = 1,
@@ -50,7 +52,7 @@ func _set_recorded_stream(stream: AudioStream) -> void:
 		track_data.recording_data.state = RecordingData.State.PROCESSING
 	track_data.set_recording_audio_stream(stream)
 
-	var thread := Thread.new()
+	thread = Thread.new()
 	thread.start(_process_voice_threaded.bind(stream, thread))
 
 

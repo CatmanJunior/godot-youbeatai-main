@@ -42,29 +42,21 @@ static func save_realtime_recorded_song_as_file(
 
 ## Save only the current layer/beat from the recording and return the path.
 static func save_realtime_recorded_beat_as_file(
-		recording: AudioStreamWAV,
-		voice_over: AudioStreamWAV,
+		audio: AudioStreamWAV,
 		bpm: int,
-		layer_index: int,
+		section_index: int,
 		beats_amount: int,
 		base_time_per_beat: float) -> String:
-
-	if recording == null:
-		push_warning("AudioSavingManager: no recording to export")
-		return ""
 
 	var user_dir := ProjectSettings.globalize_path("user://")
 	var sanitized_time := Time.get_time_string_from_system().replace(":", "_")
 	var final_name := user_dir.path_join("export_%dbpm_%s" % [bpm, sanitized_time])
 
-	# Mix master recording + voice-over
-	var mixed := _mix_or_fallback(recording, voice_over)
-
-	# Trim to the current layer time range
-	var time_per_layer := beats_amount * base_time_per_beat
-	var start_time := layer_index * time_per_layer
-	var end_time := start_time + time_per_layer
-	var trimmed := trim_stream(mixed, start_time, end_time)
+	# Trim to the current section time range
+	var time_per_section := beats_amount * base_time_per_beat
+	var start_time := section_index * time_per_section
+	var end_time := start_time + time_per_section
+	var trimmed := trim_stream(audio, start_time, end_time)
 
 	var err := trimmed.save_to_wav(final_name + ".wav")
 	if err != OK:
@@ -74,45 +66,37 @@ static func save_realtime_recorded_beat_as_file(
 	print("AudioSavingManager: saved beat → %s.wav" % final_name)
 	return final_name + ".wav"
 
-
-## Remove a layer's time-slice from both recording streams IN-PLACE.
-## Call this when a layer is deleted while a recording exists.
-## Returns the modified streams as a Dictionary { "recording": …, "voice_over": … }.
-static func remove_layer_part_of_recordings(
-		voice_over: AudioStreamWAV,
-		layer: int,
+## Remove a section's time-slice from the recording and voice-over, returning the modified streams.
+static func remove_section_part_of_recordings(
+		audio: AudioStreamWAV,
+		section: int,
 		beats_amount: int,
-		base_time_per_beat: float) -> Dictionary:
+		base_time_per_beat: float) -> AudioStreamWAV:
 
 	var time_per_layer := beats_amount * base_time_per_beat
-	var start_time := layer * time_per_layer
+	var start_time := section * time_per_layer
 	var end_time := start_time + time_per_layer
 
 
-	var new_vo := remove_segment(voice_over, start_time, end_time) if voice_over else null
-	print("AudioSavingManager: removed layer %d (%.2fs–%.2fs)" % [layer, start_time, end_time])
-	return { "recording": null, "voice_over": new_vo }  # recording is not modified when removing a layer, only voice-over
+	var new_audio := remove_segment(audio, start_time, end_time) if audio else null
+	print("AudioSavingManager: removed section %d (%.2fs–%.2fs)" % [section, start_time, end_time])
+	return new_audio
 
 
-
-## Insert silence for a new layer in both recording streams IN-PLACE.
-## Call this when a layer is added while a recording exists.
-## Returns the modified streams as a Dictionary { "recording": …, "voice_over": … }.
-static func insert_silent_layer_part_of_recordings(
-		recording: AudioStreamWAV,
-		voice_over: AudioStreamWAV,
-		layer: int,
+## Insert a section's time-slice of silence into both recording streams IN-PLACE.
+static func insert_silent_section_part_of_recordings(
+		audio: AudioStreamWAV,
+		section: int,
 		beats_amount: int,
-		base_time_per_beat: float) -> Dictionary:
+		base_time_per_beat: float) -> AudioStreamWAV:
 
 	var time_per_layer := beats_amount * base_time_per_beat
-	var insert_time := layer * time_per_layer
+	var insert_time := section * time_per_layer
 
-	var new_rec := insert_silence(recording, insert_time, time_per_layer) if recording else null
-	var new_vo := insert_silence(voice_over, insert_time, time_per_layer) if voice_over else null
+	var new_audio := insert_silence(audio, insert_time, time_per_layer) if audio else null
 
-	print("AudioSavingManager: inserted %.2fs silence at %.2fs for layer %d" % [time_per_layer, insert_time, layer])
-	return { "recording": new_rec, "voice_over": new_vo }
+	print("AudioSavingManager: inserted %.2fs silence at %.2fs for section %d" % [time_per_layer, insert_time, section])
+	return new_audio
 
 
 # ══════════════════════════════════════════════════════════════════════════════

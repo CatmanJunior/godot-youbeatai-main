@@ -54,7 +54,7 @@ var current_track: TrackData:
 			return current_section.tracks[selected_track_index]
 		return null
 
-var selected_soundbank: Dictionary = {}
+var selected_soundbank: AudioBank = null
 
 # ── Initialization ───────────────────────────────────────────────────────────
 
@@ -125,4 +125,4 @@ func reset() -> void:
 	_apply_data_defaults()
 	current_section = null
 	selected_track_index = 0
-	selected_soundbank = {}
+	selected_soundbank = null

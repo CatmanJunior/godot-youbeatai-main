@@ -68,7 +68,7 @@ static func from_current() -> SongData:
 
 	# State originating outside SongData
 	song.playing = GameState.playing
-	song.audio_bank = SoundBankLoader.load_audio_bank(SongState.selected_soundbank)
+	song.audio_bank = live.selected_soundbank
 	song.created_at = Time.get_datetime_string_from_system(true)
 
 	return song

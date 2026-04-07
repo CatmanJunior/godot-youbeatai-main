@@ -70,10 +70,9 @@ script = ExtResource("7_b4mik")
 unique_name_in_owner = true
 script = ExtResource("8_urine")
 
-[node name="TemplateManager" type="Node" parent="Managers/GameManager" unique_id=1447662219 node_paths=PackedStringArray("settings_ui")]
+[node name="TemplateManager" type="Node" parent="Managers/GameManager" unique_id=1447662219]
 unique_name_in_owner = true
 script = ExtResource("10_o2owy")
-settings_ui = NodePath("../../../UserInterface/SettingsPanel")
 
 [node name="Exporter" type="Node" parent="Managers/GameManager" unique_id=944798366]
 script = ExtResource("65_87bhu")

@@ -24,12 +24,3 @@ extends Resource
 @export var noteplayer_settings: Array[NotePlayerSettings]
 
 #THIS SHOULD BE REPLACED BY SETTING NOTEPLAYER SETTINGS IN THE AUDIO BANKS
-func create_note_player_settings() -> Array[NotePlayerSettings]:
-	var new_noteplayer_settings : Array[NotePlayerSettings] = []
-	for i in range(noteplayer_settings.size()):
-		new_noteplayer_settings.append(
-		NotePlayerSettings.create(synth_soundfonts[i], noteplayer_settings[i].notes, synth_instrument_ids[i], noteplayer_settings[i].base_note, noteplayer_settings[i].allow_key_input, noteplayer_settings[i].gate, noteplayer_settings[i].volume_db),
-		)
-	noteplayer_settings = new_noteplayer_settings
-	return new_noteplayer_settings
-

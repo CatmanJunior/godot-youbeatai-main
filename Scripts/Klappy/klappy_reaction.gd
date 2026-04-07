@@ -33,7 +33,7 @@ func _achievement_panel_visibility(_utterance_id:int):
 
 
 func _start_tts(message:String):
-	TTSHelper.speak(GameState.Text_without_emoticons(message))
+	TTSHelper.speak(TTSHelper.Text_without_emoticons(message))
 
 func _on_utterance_end(_utterance):
 	achievement_panel.visible = false

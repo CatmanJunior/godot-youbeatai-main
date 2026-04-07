@@ -33,11 +33,8 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)
-
-		
-
-func _process(_delta: float) -> void:
 	spawn_initial_sections()
+		
 
 func spawn_initial_sections():
 	"""Spawn the initial set of sections (data only)."""
@@ -157,10 +154,10 @@ func section_has_beats(section: int) -> bool:
 # ── Audio recording manipulation when sections change ────────────────────
 
 func _insert_silence_for_section(section: int) -> void:
-	_manipulate_recording(section, AudioSavingManager.insert_silent_layer_part_of_recordings)
+	_manipulate_recording(section, AudioSavingManager.insert_silent_section_part_of_recordings)
 
 func _remove_audio_for_section(section: int) -> void:
-	_manipulate_recording(section, AudioSavingManager.remove_layer_part_of_recordings)
+	_manipulate_recording(section, AudioSavingManager.remove_section_part_of_recordings)
 
 ## Shared helper for insert/remove recording operations.
 ## `operation` must accept (recording, voice_over, section, total_beats, beat_duration)
@@ -169,9 +166,9 @@ func _manipulate_recording(section: int, operation: Callable) -> void:
 	var song_vo = SongState.song_track
 
 
-	var result = operation.call(song_vo.recording, section, SongState.total_beats, GameState.beat_duration)
+	var result : Dictionary = operation.call(song_vo.recording, section, SongState.total_beats, GameState.beat_duration)
 
-	if result.voice_over:
+	if result and result.voice_over:
 		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
 		song_vo.voice_over = result.voice_over
 		if song_vo.audio_player:

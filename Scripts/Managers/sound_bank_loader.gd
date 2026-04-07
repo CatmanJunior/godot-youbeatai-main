@@ -13,14 +13,13 @@ const FALLBACK_BANK_NAME := "2_acoustisch"
 
 @export var fallback_bank: AudioBank
 
-@export var base_noteplayer_settings: Array[NotePlayerSettings]
-
-@export var audio_player_manager: AudioPlayerManager
-
 func _ready() -> void:
-	var bank = SoundBankLoader.load_audio_bank(SongState.selected_soundbank)
-
-	EventBus.audio_bank_loaded.emit(bank)
+	if SongState.selected_soundbank == null:
+		EventBus.audio_bank_loaded.emit(SongState.selected_soundbank)
+	else:
+		push_error("Failed to load AudioBank '%s', loading fallback bank instead." % SongState.selected_soundbank)
+		EventBus.audio_bank_loaded.emit(fallback_bank)
+	
 
 static func load_audio_bank(bank_dict: Dictionary) -> AudioBank:	
 	var bank : AudioBank
@@ -44,7 +43,7 @@ static func load_audio_bank(bank_dict: Dictionary) -> AudioBank:
 		return null
 
 	_apply_bpm_swing(bank, bank_dict)
-	bank.create_note_player_settings()
+	_create_note_player_settings(bank)
 
 	print("SoundBankLoader: loaded '%s'" % [bank_name])
 	return bank
@@ -54,3 +53,13 @@ static func _apply_bpm_swing(bank: AudioBank, bank_dict: Dictionary) -> void:
 	bank.bpm = bank_dict.get("bpm", bank.bpm)
 	var swing_normalized: float = float(bank_dict.get("swing", 0)) / 100.0
 	bank.swing = swing_normalized
+
+static func _create_note_player_settings(bank: AudioBank) -> Array[NotePlayerSettings]:
+	var new_noteplayer_settings : Array[NotePlayerSettings] = []
+	for i in range(bank.noteplayer_settings.size()):
+		new_noteplayer_settings.append(
+		NotePlayerSettings.create(bank.synth_soundfonts[i], bank.noteplayer_settings[i].notes, bank.synth_instrument_ids[i], bank.noteplayer_settings[i].base_note, bank.noteplayer_settings[i].allow_key_input, bank.noteplayer_settings[i].gate, bank.noteplayer_settings[i].volume_db),
+		)
+	bank.noteplayer_settings = new_noteplayer_settings
+	return new_noteplayer_settings
+

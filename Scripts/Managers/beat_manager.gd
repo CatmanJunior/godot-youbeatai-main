@@ -1,5 +1,7 @@
 extends Node
 
+@export var track_settings_registry: TrackSettingsRegistry
+
 var beats_per_bar = 4.0
 
 var bpm: int:
@@ -39,6 +41,9 @@ var beat_progress: float = 0.0
 var bar_progress: float = 0.0
 
 func _ready():
+	if track_settings_registry == null:
+		push_error("BeatManager: No TrackSettingsRegistry assigned! Please assign one in the inspector.")
+
 	EventBus.bpm_up_requested.connect(func(value): bpm += value)
 	EventBus.bpm_down_requested.connect(func(value): bpm -= value)
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
@@ -52,7 +57,7 @@ func _ready():
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(_set_beat)
 	EventBus.template_set.connect(_on_template_set)
-	
+
 func _on_template_set(actives: Array) -> void:
 	SongState.current_section.set_beat_actives(actives)
 
@@ -108,8 +113,8 @@ func _on_beat_sprite_clicked(p_track: int, beat: int):
 	var is_active = get_beat(p_track, beat)
 	if is_active:
 		EventBus.play_track_requested.emit(p_track)
-	if p_track < GameState.colors.size():
-		EventBus.particles_requested.emit(Vector2.ZERO, GameState.colors[p_track])
+
+		EventBus.particles_requested.emit(Vector2.ZERO, track_settings_registry.get_color(p_track))
 	EventBus.track_selected.emit(p_track)
 
 func toggle_beat(track: int, beat: int):

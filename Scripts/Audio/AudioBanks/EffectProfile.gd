@@ -8,50 +8,57 @@ extends Resource
 @export var reverb: float
 @export var chorus: bool
 
+
+enum EffectType {
+	PITCH_SHIFT,
+	DISTORTION,
+	PHASER,
+	CHORUS,
+	DELAY,
+	REVERB
+}
+
+
+
+var effect_values: Dictionary = {
+	EffectType.PITCH_SHIFT: [AudioEffectPitchShift, apply_pitch_shift, pitch_shift],
+	EffectType.DISTORTION: [AudioEffectDistortion, apply_distortion, distortion_db],
+	EffectType.PHASER: [AudioEffectPhaser, apply_phaser, phaser],
+	EffectType.CHORUS: [AudioEffectChorus, null, chorus],
+	EffectType.DELAY: [AudioEffectDelay, apply_delay, delay],
+	EffectType.REVERB: [AudioEffectReverb, apply_reverb, reverb]
+}
+
 func apply_effects(bus_index: int) -> void:
-	apply_pitch_shift(bus_index, 0, pitch_shift)
-	apply_distortion(bus_index, 1, distortion_db)
-	apply_phaser(bus_index, 2, phaser)
-	apply_chorus(bus_index, 3, chorus)
-	apply_delay(bus_index, 4, delay)
-	apply_reverb(bus_index, 5, reverb)
+	var i : int = 0
+	for effect_type in EffectType.values():
+		var effect_class = effect_values[effect_type][0]
+		var callable : Callable = effect_values[effect_type][1]
+		var value = effect_values[effect_type][2]
+		var effect_instance = effect_class.new()
+		_add_effect_bus(effect_instance, bus_index, i, value)
+		if callable:
+			callable.call(effect_instance, value)
+		i += 1
 
-func apply_pitch_shift(bus_index: int, effect_index: int, value: float) -> void:
-	var pitch: AudioEffectPitchShift = AudioEffectPitchShift.new()
-	AudioServer.add_bus_effect(bus_index, AudioEffectPitchShift.new())
-	
-	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
-	pitch.pitch_scale = value if value > 0 else 1.0
-
-func apply_distortion(bus_index: int, effect_index: int, value: float) -> void:
-	var distortion: AudioEffectDistortion = AudioEffectDistortion.new()
-	AudioServer.add_bus_effect(bus_index, distortion)	
-	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
-	distortion.pre_gain = value
-
-func apply_phaser(bus_index: int, effect_index: int, value: float) -> void:
-	var phaser_effect: AudioEffectPhaser = AudioEffectPhaser.new()
-	AudioServer.add_bus_effect(bus_index, phaser_effect)
-	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
+func _add_effect_bus(effect: AudioEffect, bus_index: int, effect_index: int, value):
+	var new_effect: AudioEffect = effect.new()
+	AudioServer.add_bus_effect(bus_index, new_effect)
 	if value > 0:
-		phaser_effect.rate_hz = value
+		AudioServer.set_bus_effect_enabled(bus_index, effect_index, true)
 
-func apply_chorus(bus_index: int, effect_index: int, enabled: bool) -> void:
-	var chorus_effect: AudioEffectChorus = AudioEffectChorus.new()
-	AudioServer.add_bus_effect(bus_index, chorus_effect)
-	AudioServer.set_bus_effect_enabled(bus_index, effect_index, enabled)
+func apply_pitch_shift(bus_effect: AudioEffectPitchShift, value: float) -> void:
+	bus_effect.pitch_scale = value if value > 0 else 1.0
 
-func apply_delay(bus_index: int, effect_index: int, value: float) -> void:
-	var delay_effect: AudioEffectDelay = AudioEffectDelay.new()
-	AudioServer.add_bus_effect(bus_index, delay_effect)
-	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
-	if value > 0:
-		delay_effect.tap1_delay_ms = value
-		delay_effect.tap2_delay_ms = value * 2
+func apply_distortion(bus_effect: AudioEffectDistortion, value: float) -> void:
+	bus_effect.pre_gain = value
 
-func apply_reverb(bus_index: int, effect_index: int, value: float) -> void:
-	var reverb_effect: AudioEffectReverb = AudioEffectReverb.new()
-	AudioServer.add_bus_effect(bus_index, reverb_effect)
-	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
-	if value > 0:
-		reverb_effect.room_size = value
+func apply_phaser(bus_effect: AudioEffectPhaser, value: float) -> void:
+	bus_effect.rate_hz = value
+
+func apply_delay(bus_effect: AudioEffectDelay, value: float) -> void:
+	bus_effect.tap1_delay_ms = value
+	bus_effect.tap2_delay_ms = value * 2
+
+func apply_reverb(bus_effect: AudioEffectReverb, value: float) -> void:
+	bus_effect.room_size = value

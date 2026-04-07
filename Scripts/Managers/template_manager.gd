@@ -1,9 +1,7 @@
 extends Node
+class_name TemplateManager
 
-@export var settings_ui: SettingsUI
-var template_button: TemplateButton
-
-var names: Array[String] = []
+static var template_names: Array[String] = []
 var contents: Array[String] = []
 var actives: Array = []  # Array of Array[bool] (row per sample track)
 
@@ -11,17 +9,14 @@ var current_template: int = 4
 var show_template: bool = false
 
 func _ready():
-	template_button = settings_ui.template_button
-
-	template_button.names = read_templates()
 	EventBus.template_set_requested.connect(_set_template)
 
 func read_templates() -> Array[String]:
 	var result = _load_text_files_in_directory("Resources/Templates")
-	names = result.names
+	template_names = result.template_names
 	contents = result.contents
 	actives = result.actives
-	return names
+	return template_names
 
 func _load_text_files_in_directory(folder: String) -> Dictionary:
 	var folder_path = "res://%s/" % folder
@@ -33,7 +28,7 @@ func _load_text_files_in_directory(folder: String) -> Dictionary:
 
 	if dir == null:
 		push_error("Could not open directory: %s" % folder_path)
-		return { "names": temp_names, "contents": temp_contents, "actives": temp_actives }
+		return { "template_names": temp_names, "contents": temp_contents, "actives": temp_actives }
 
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
@@ -55,7 +50,7 @@ func _load_text_files_in_directory(folder: String) -> Dictionary:
 
 	dir.list_dir_end()
 
-	return { "names": temp_names, "contents": temp_contents, "actives": temp_actives }
+	return { "template_names": temp_names, "contents": temp_contents, "actives": temp_actives }
 
 func _to_actives(content: String) -> Array:
 	var lines = content.strip_edges().split("\n")

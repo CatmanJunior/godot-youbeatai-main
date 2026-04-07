@@ -1,67 +1,60 @@
 extends Node
+
+const CLAP_TRACK: int = 0
+const STOMP_TRACK: int = 1
+
 # Clap and stomp detection
-var stomped: bool = false
-var clapped: bool = false
 var clapped_amount: int = 0
 var clapped_on_beat_amount: int = 0
 var stomped_amount: int = 0
 var stomped_on_beat_amount: int = 0
 
+@export var clap_freq_min: float = 7000.0
+@export var clap_threshold: float = 0.1
+@export var stamp_freq_max: float = 150.0
+@export var stamp_threshold: float = 0.005
 
-# Progress bar value
-var progress_bar_value: float = 0.0
-var time_after_play: float = 0.0
-
-func _ready() -> void:
-	EventBus.clap_triggered.connect(on_clap)
-	EventBus.stomp_triggered.connect(on_stomp)
-
-
-func on_clap():
-	_handle_beat_interaction(1)
-
-func on_stomp():
-	_handle_beat_interaction(0)
+var is_clapping: bool:
+	get: return clap_volume > clap_threshold and clap_volume > stamp_volume
+var is_stamping: bool:
+	get: return stamp_volume > stamp_threshold and stamp_volume > clap_volume
 
 
-func _handle_beat_interaction(ring: int) -> void:
-	var active = SongState.current_section.get_beat(ring, GameState.current_beat)
-	if time_after_play < 0.2:
-		return
+# Live analysis
+var clap_volume: float = 0.0
+var stamp_volume: float = 0.0
 
-	
+func _process(_delta: float):
+	# Live volume analysis
+	stamp_volume = _get_magnitude(0.0, stamp_freq_max)
+	clap_volume = _get_magnitude(clap_freq_min, 20000.0)
 
-	if active:
-		progress_bar_value += 2.0
-		EventBus.progress_bar_particles_requested.emit()
-	
-	if ring < GameState.colors.size():
-		EventBus.particles_requested.emit(Vector2.ZERO, GameState.colors[ring])
-	else:
-		progress_bar_value -= 1.0
+## TODO: fix the clap stomp
+func _get_magnitude(_freq_min: float, _freq_max: float) -> float:
+	return 0.0
 
-	if active:
-		if ring == 0:
-			stomped_on_beat_amount += 1
-		else:
-			clapped_on_beat_amount += 1
-	else:
-		if ring == 0:
-			stomped_amount += 1
-		else:
-			clapped_amount += 1
+enum InteractionType {
+	CLAP,
+	STOMP
+}
 
-	if GameState.add_beats_enabled:
-		EventBus.beat_set_requested.emit(ring, GameState.current_beat, true)
+func _ready():
+	EventBus.on_clap_stomp_detected.connect(_handle_clap_stomp)
 
-func _on_beat():
+func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 	# Emit signals for next beat
-	var next_beat = (GameState.current_beat + 1) % SongState.current_section.beats_amount
-	var clap_active = SongState.current_section.get_beat(1, next_beat)
-	if clap_active:
-		EventBus.clap_triggered.emit()
-	
-	var stomp_active = SongState.current_section.get_beat(0, next_beat)
-	if stomp_active:
-		EventBus.stomp_triggered.emit()
+	var next_beat = GameState.current_beat + 1
+	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
+	if  SongState.current_section.get_beat(track_index, next_beat):
+		if interaction_type == InteractionType.CLAP:
+			clapped_on_beat_amount += 1
+		else:
+			stomped_on_beat_amount += 1
+	else:
+		if interaction_type == InteractionType.CLAP:
+			clapped_amount += 1
+		else:
+			stomped_amount += 1
 
+	if GameState.button_is_clap:
+		EventBus.beat_set_requested.emit(track_index, GameState.current_beat, true)

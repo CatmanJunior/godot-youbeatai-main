@@ -6,13 +6,20 @@ const SECTIONS_AMOUNT_INITIAL: int = 4
 const SECTION_BUTTON_SIZE: int = 72
 
 # Section state
-var current_section_index: int = 0
-var current_section: SectionData
+var current_section_index: int:
+	get: return SongState.current_section_index
+	set(value): SongState.current_section_index = value
+var current_section: SectionData:
+	get: return SongState.current_section
+	set(value): SongState.current_section = value
 
-# Section data — each entry is a SectionData instance
-var sections: Array[SectionData] = []
+var sections: Array[SectionData]:
+	get: return SongState.sections
+	set(value): SongState.sections = value
 
-var beats_amount: int = 16
+var beats_amount:
+	get: return SongState.total_beats
+	set(value): SongState.total_beats = value
 
 # Clipboard for copy/paste
 var clipboard_section: SectionData = null
@@ -26,6 +33,8 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)
+
+		
 
 func _process(_delta: float) -> void:
 	spawn_initial_sections()
@@ -76,13 +85,12 @@ func remove_section(section: int):
 
 	sections.remove_at(section)
 	
-	# Notify other managers about removed section
-	EventBus.section_removed.emit(section)
-	SongState.sections = sections
-
 	# If the deleted section was the current one, go to first section
 	if section == current_section_index:
 		switch_section(0)
+
+	# Notify other managers about removed section
+	EventBus.section_removed.emit(section)
 
 
 func _copy_section():
@@ -158,21 +166,11 @@ func _remove_audio_for_section(section: int) -> void:
 ## `operation` must accept (recording, voice_over, section, total_beats, beat_duration)
 ## and return a result with `.recording` and `.voice_over` fields.
 func _manipulate_recording(section: int, operation: Callable) -> void:
-	var song_vo = get_node_or_null("%SongVoiceOver")
-	if song_vo == null or song_vo.voice_over == null:
-		return
+	var song_vo = SongState.song_track
 
-	var rec_node = get_node_or_null("%RealTimeAudioRecording")
-	if rec_node == null:
-		return
 
-	var result = operation.call(
-		rec_node.recording_result, song_vo.voice_over,
-		section, SongState.total_beats, GameState.beat_duration)
+	var result = operation.call(song_vo.recording, section, SongState.total_beats, GameState.beat_duration)
 
-	if result.recording:
-		rec_node.recording_result = result.recording
-		rec_node.recording_length = float(result.recording.get_length())
 	if result.voice_over:
 		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
 		song_vo.voice_over = result.voice_over

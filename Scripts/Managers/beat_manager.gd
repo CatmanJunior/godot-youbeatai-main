@@ -1,31 +1,39 @@
 extends Node
 
-# --- BPM properties ---
 var beats_per_bar = 4.0
 
-var bpm: int = 120:
+var bpm: int:
+	get: return SongState.bpm
 	set(value):
-		bpm = value
-		EventBus.bpm_changed.emit(bpm)
+		GameState.beat_duration = 60.0 / value / beats_per_bar
+		EventBus.bpm_changed.emit(value)
+		SongState.bpm = value
 
-var total_beats: int = 16
-
-var _is_playing: bool = false
+var total_beats: int:
+	get: return SongState.total_beats
+	set(value): SongState.total_beats = value
 
 var playing: bool:
 	set(value):
-		if _is_playing != value:
+		if GameState.playing != value:
 			EventBus.playing_changed.emit(value)
-		_is_playing = value
-	get:
-		return _is_playing
+			GameState.playing = value
+	get: return GameState.playing
+	
+var current_beat: int:
+	get: return GameState.current_beat
+	set(value):
+		GameState.current_beat = value
 
-var current_beat: int = 0
+var swing: float:
+	get: return SongState.swing
+	set(value): SongState.swing = value
+
+var beat_duration: float:
+	get: return GameState.beat_duration
+	set(value): GameState.beat_duration = value
+
 var beat_elapsed: float = 0.0
-
-var swing: float = 0.00
-
-var beat_duration: float
 
 var beat_progress: float = 0.0
 var bar_progress: float = 0.0
@@ -37,13 +45,16 @@ func _ready():
 	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
 	EventBus.beat_seek_requested.connect(func(beat): current_beat = beat)
-	EventBus.bpm_changed.emit(bpm)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 
 	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
 
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
-	EventBus.beat_set_requested.connect(set_beat)
+	EventBus.beat_set_requested.connect(_set_beat)
+	EventBus.template_set.connect(_on_template_set)
+	
+func _on_template_set(actives: Array) -> void:
+	SongState.current_section.set_beat_actives(actives)
 
 func _on_audio_bank_loaded(bank: AudioBank) -> void:
 	bpm = bank.bpm
@@ -70,12 +81,11 @@ func _on_playing_change_requested(is_playing: bool):
 		EventBus.all_players_stop_requested.emit()
 
 func _process(delta: float):
-	beat_duration = 60.0 / bpm / beats_per_bar
+	
 	beat_progress = get_beat_progress()
 	bar_progress = get_bar_progress()
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
-	SongState.total_beats = total_beats
 	GameState.beat_duration = beat_duration
 
 	if playing:
@@ -109,7 +119,7 @@ func toggle_beat(track: int, beat: int):
 	var is_active = SongState.current_section.get_beat(track, beat)
 	EventBus.beat_state_changed.emit(track, beat, is_active)
 
-func set_beat(track: int, beat: int, active: bool):
+func _set_beat(track: int, beat: int, active: bool):
 	"""Set a beat to active or inactive"""
 	SongState.current_section.set_beat(track, beat, active)
 	EventBus.beat_state_changed.emit(track, beat, active)

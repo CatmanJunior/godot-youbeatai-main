@@ -38,13 +38,10 @@ func _init(new_index: int = 0, section_emoji: String = "") -> void:
 		for i in range(SYNTH_TRACKS_PER_SECTION):
 			tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION))
 	
-	EventBus.template_set.connect(_on_template_set)
 
 # -- Event handlers ─────────────────────────────────────────────────────────────
 
-func _on_template_set(actives: Array) -> void:
-	if SongState.current_section_index == index:
-		set_beat_actives(actives)
+
 
 # ── Post-load rebuild ────────────────────────────────────────────────────────
 
@@ -129,7 +126,8 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 # ── Duplicate ────────────────────────────────────────────────────────────────
 
 func duplicate_section() -> SectionData:
-	var copy: SectionData = SectionData.new()
+	var copy: SectionData = SectionData.new(index, emoji)
+	copy.tracks.clear()
 
 	for i in range(tracks.size()):
 		var track_copy = tracks[i].duplicate_track()

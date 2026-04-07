@@ -79,7 +79,6 @@ static func save_realtime_recorded_beat_as_file(
 ## Call this when a layer is deleted while a recording exists.
 ## Returns the modified streams as a Dictionary { "recording": …, "voice_over": … }.
 static func remove_layer_part_of_recordings(
-		recording: AudioStreamWAV,
 		voice_over: AudioStreamWAV,
 		layer: int,
 		beats_amount: int,
@@ -89,11 +88,11 @@ static func remove_layer_part_of_recordings(
 	var start_time := layer * time_per_layer
 	var end_time := start_time + time_per_layer
 
-	var new_rec := remove_segment(recording, start_time, end_time) if recording else null
-	var new_vo := remove_segment(voice_over, start_time, end_time) if voice_over else null
 
+	var new_vo := remove_segment(voice_over, start_time, end_time) if voice_over else null
 	print("AudioSavingManager: removed layer %d (%.2fs–%.2fs)" % [layer, start_time, end_time])
-	return { "recording": new_rec, "voice_over": new_vo }
+	return { "recording": null, "voice_over": new_vo }  # recording is not modified when removing a layer, only voice-over
+
 
 
 ## Insert silence for a new layer in both recording streams IN-PLACE.

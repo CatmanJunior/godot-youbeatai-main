@@ -52,8 +52,6 @@ var current_track: TrackData:
 	get:
 		if current_section and selected_track_index >= 0 and selected_track_index < current_section.tracks.size():
 			return current_section.tracks[selected_track_index]
-		if selected_track_index == SongTrackData.SONG_TRACK_INDEX:
-			return song_track
 		return null
 
 var selected_soundbank: Dictionary = {}
@@ -63,7 +61,7 @@ var selected_soundbank: Dictionary = {}
 func _ready() -> void:
 	_apply_data_defaults()
 
-	EventBus.section_switched.connect(_on_section_changed)
+	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 
@@ -80,7 +78,7 @@ func _on_bpm_changed(new_bpm: int) -> void:
 	data.bpm = new_bpm
 
 
-func _on_section_changed(section: SectionData) -> void:
+func _on_section_switched(section: SectionData) -> void:
 	current_section = section
 	data.current_section_index = section.index if section else 0
 

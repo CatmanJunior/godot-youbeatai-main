@@ -86,7 +86,6 @@ func _process(delta: float):
 	bar_progress = get_bar_progress()
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
-	GameState.beat_duration = beat_duration
 
 	if playing:
 		beat_elapsed += delta

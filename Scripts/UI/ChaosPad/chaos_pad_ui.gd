@@ -5,7 +5,7 @@ class_name ChaosPadUI
 @export var knob: ChaosPadKnob
 
 # Icons
-@export var track_settings: TrackSettingsRegistry
+@export var track_settings: TrackUISettingsRegistry
 
 @export var main_icon: TextureRect
 @export var alt_icon: TextureRect

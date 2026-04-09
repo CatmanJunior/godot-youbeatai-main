@@ -4,6 +4,8 @@ extends Node
 
 ## Emitted when a full application restart is requested.
 signal restart_requested()
+
+
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
 signal audio_bank_selected(themes: Array[String], emotions: Array[String])
 ## Emitted when note player settings have changed, carrying the new settings for each synth track.
@@ -141,6 +143,8 @@ signal save_to_mp3_requested()
 signal export_requested(mail: bool, mode_export_song: bool)
 ## Emitted to request opening the export dialog. [code]mode_export_song[/code]: false for beat, true for song.
 signal open_export_dialog_requested(mode_export_song: bool)
+## Emitted when the export button is pressed. [code]mode_export_song[/code]: false for beat, true for song.
+signal export_button_pressed(mode_export_song: bool)
 
 # ── Achievements ──
 ## Emitted when an achievement has been completed, carrying its ID.
@@ -161,20 +165,12 @@ signal countdown_show_requested()
 signal countdown_close_requested()
 
 # ── Keyboard ──
-## Emitted when the Enter key is pressed.
-signal enter_pressed()
 ## Emitted to request toggling fullscreen mode.
 signal fullscreen_toggle_requested()
-## Emitted when a ring key is pressed (A=0, S=1, D=2, F=3).
-signal ring_key_pressed(ring: int)
 
 # ── Recording UI ──
 ## Emitted to request disabling or enabling UI buttons during recording workflows.
 signal buttons_disabled_requested(disabled: bool)
-
-## Emitted when the export button is pressed. [code]mode_export_song[/code]: false for beat, true for song.
-signal export_button_pressed(mode_export_song: bool)
-
 
 # ── Song Track Recording ──
 ## Emitted to request starting a full-song recording (voice-over + master bus).

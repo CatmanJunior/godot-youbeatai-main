@@ -1,14 +1,14 @@
 extends Control
 class_name TrackSelectButtonContainer
 
-@export var track_settings: TrackSettingsRegistry
+@export var track_UI_settings: TrackUISettingsRegistry
 @export var track_buttons: Array[TrackSelectButton]
 
 
 
 func _ready():
 	for button in track_buttons:
-		var settings := track_settings.get_track(button.track_index)
+		var settings := track_UI_settings.get_track(button.track_index)
 		if settings != null:
 			button.texture_normal = settings.button_icon_texture
 			button.outline_texture = settings.button_outline_texture
@@ -35,7 +35,7 @@ func _on_track_button_pressed(track_index: int):
 	track_buttons[track_index].set_button_selected(true)
 
 	if track_buttons[track_index].is_synth_track:
-		track_buttons[track_index].background.modulate = track_settings.get_track(track_index).track_color
+		track_buttons[track_index].background.modulate = track_UI_settings.get_track(track_index).track_color
 
 	if not track_buttons[track_index].is_synth_track:
 		EventBus.play_track_requested.emit(track_index)

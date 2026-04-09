@@ -1,6 +1,6 @@
 extends Node
 
-@export var track_settings_registry: TrackSettingsRegistry
+@export var track_settings_registry: TrackUISettingsRegistry
 
 var beats_per_bar = 4.0
 
@@ -42,7 +42,7 @@ var bar_progress: float = 0.0
 
 func _ready():
 	if track_settings_registry == null:
-		push_error("BeatManager: No TrackSettingsRegistry assigned! Please assign one in the inspector.")
+		push_error("BeatManager: No TrackUISettingsRegistry assigned! Please assign one in the inspector.")
 
 	EventBus.bpm_up_requested.connect(func(value): bpm += value)
 	EventBus.bpm_down_requested.connect(func(value): bpm -= value)

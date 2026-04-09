@@ -6,7 +6,7 @@ class_name BeatRingUI
 
 @export var beat_button_prefab: PackedScene
 @export var beat_ring_pivot_point: Control
-@export var track_settings: TrackSettingsRegistry
+@export var track_settings: TrackUISettingsRegistry
 
 
 @export var play_pause_button: Button

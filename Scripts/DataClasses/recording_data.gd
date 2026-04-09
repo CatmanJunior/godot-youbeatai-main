@@ -1,5 +1,5 @@
 class_name RecordingData
-extends RefCounted
+extends Resource
 
 ## Data class encapsulating a recorded audio stream and the TrackData it belongs to.
 ## Provides lazy-cached analysis utilities: PCM extraction, RMS/volume, FFT/spectrum,

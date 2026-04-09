@@ -39,18 +39,6 @@
 
 ## 🟢 LOW PRIORITY (Tech Debt & Cleanup)
 
-### Refactoring Complete ✅
-- ✅ **DONE: Moved audio data classes** — `AudioBank.gd`, `EffectProfile.gd`, `note_player_settings.gd` moved from `Scripts/Audio/AudioBanks/` → `Scripts/DataClasses/AudioBanks/`
-  - All SoundBank resource references updated (25+ .tres files)
-  - Aligns with architecture: data classes extend Resource in DataClasses/
-- ✅ **DONE: Deleted orphaned files**
-  - `Experimental/chords/test.tscn`
-  - `Resources/chords.tscn` (orphaned resource, not referenced)
-  - `Resources/TrackSettings/*.tres` (SampleTrack1-4, SynthTrack1-2, SongTrack1, registry)
-  - ~60 unused loading animation PNGs from `Resources/loadanim/`
-
-### Experimental & Work-in-Progress (Delete)
-- [ ] Delete `Scenes/Work_in_progress_scenes/` (main_web.tscn, main_backup.tscn, main_copy.tscn, main_menu_web.tscn, esmeemain.tscn)
 
 ### Remaining Experimental Cleanup
 **Active & Keep:**

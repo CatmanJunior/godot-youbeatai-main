@@ -6,7 +6,7 @@ extends Node
 
 @export var progress_bars: Array[TextureProgressBar]
 @export var waveform_lines: Array[Line2D]
-@export var track_settings: TrackSettingsRegistry
+@export var track_settings: TrackUISettingsRegistry
 
 
 const LINE_CONFIGS = [

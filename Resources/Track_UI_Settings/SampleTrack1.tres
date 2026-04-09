@@ -1,14 +1,14 @@
-[gd_resource type="Resource" script_class="SampleTrackSettings" format=3 uid="uid://d3u2fw2qxnssq"]
+[gd_resource type="Resource" script_class="SampleTrackUISettings" format=3 uid="uid://d3u2fw2qxnssq"]
 
-[ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/UI/TrackSettingsRes/sample_track_settings.gd" id="1_gwqi5"]
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="1_tv5jv"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="2_endoi"]
 [ext_resource type="Texture2D" uid="uid://cg3avji2owvlu" path="res://Resources/Textures_New/Icons/_0001s_0011_Drum-Loud.png" id="3_1qkoq"]
 [ext_resource type="Texture2D" uid="uid://canqqbj4wyrwa" path="res://Resources/Textures_New/Icons/_0001s_0002_Snare_Drum.png" id="4_ni70f"]
 [ext_resource type="Texture2D" uid="uid://bcce4bvvjavg0" path="res://Resources/Textures_New/Icons/_0001s_0010_Kick_Drum.png" id="5_hbu3i"]
+[ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/DataClasses/Track_UI_Settings/sample_track_UI_settings.gd" id="6_1qly3"]
 
 [resource]
-script = ExtResource("1_gwqi5")
+script = ExtResource("6_1qly3")
 beat_outline_texture = ExtResource("2_endoi")
 beat_filled_texture = ExtResource("1_tv5jv")
 button_icon_texture = ExtResource("3_1qkoq")

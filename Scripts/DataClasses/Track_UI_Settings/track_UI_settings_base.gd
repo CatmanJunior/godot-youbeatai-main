@@ -1,8 +1,17 @@
+@abstract
 extends Resource
-class_name TrackSettingsBase
+class_name TrackUISettingsBase
 
 ## Base resource for per-track visual settings shared across all track types.
-## Subclassed by SampleTrackSettings, SynthTrackSettings, and SongTrackSettings.
+## Subclassed by SampleTrackUISettings, SynthTrackUISettings, and SongTrackUISettings.
+
+@export_group("Track Select Button Textures")
+## The icon displayed on the track select button (normal state)
+@export var button_icon_texture: Texture2D
+## The outline ring shown around the button when NOT selected
+@export var button_outline_texture: Texture2D
+## The filled ring shown around the button when selected / progress indicator
+@export var button_filled_texture: Texture2D
 
 @export_group("Chaos Pad Icons")
 ## The primary icon shown on the chaos pad triangle corner (main/left vertex)

@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://chblk160rw0iy" path="res://Scenes/Prefab/BeatButton.tscn" id="2_5lvir"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
-[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_registry.tres" id="3_mgl8v"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]

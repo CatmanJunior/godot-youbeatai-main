@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://b4ov3m707x820"]
+
+[ext_resource type="Texture2D" uid="uid://d1wdxuaes71s7" path="res://Resources/Klappy/Textures/TKleppy_Arms_Base_color.png" id="1_j120h"]
+
+[resource]
+albedo_texture = ExtResource("1_j120h")

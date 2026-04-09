@@ -1,16 +1,16 @@
 [gd_scene format=3 uid="uid://bqky323kw7oj1"]
 
-[ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/ChaosPad/chaos_pad_ui.gd" id="1_43llw"]
+[ext_resource type="Script" uid="uid://c34atfm0yp24o" path="res://Scripts/UI/ChaosPad/chaos_pad_ui.gd" id="1_43llw"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="1_c7cwa"]
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="2_7ufgw"]
-[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/TrackSettings/default_track_registry.tres" id="2_a3b2x"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_registry.tres" id="2_a3b2x"]
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/UI_Components/chaos_icon.tscn" id="3_ajioc"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
-[ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/ChaosPad/ChaosPadKnob.gd" id="22_ds0f1"]
-[ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/ChaosPad/ChaosTriangleContainer.gd" id="25_gu6ag"]
+[ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/UI/ChaosPad/ChaosPadKnob.gd" id="22_ds0f1"]
+[ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/UI/ChaosPad/ChaosTriangleContainer.gd" id="25_gu6ag"]
 
 [sub_resource type="GDScript" id="GDScript_43llw"]
 script/source = "extends Button

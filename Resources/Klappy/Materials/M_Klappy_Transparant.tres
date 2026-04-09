@@ -1,0 +1,24 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://cdlns5hnhw21u"]
+
+[ext_resource type="Texture2D" uid="uid://6sq868geon1o" path="res://Resources/Klappy/Textures/TKleppy_TransparantLamp_Base_color.png" id="1_ens2l"]
+[ext_resource type="Texture2D" uid="uid://c6861iv1h71u0" path="res://Resources/Klappy/Textures/TKleppy_Transparant_Mixed_AO.png" id="2_txkoc"]
+[ext_resource type="Texture2D" uid="uid://bxyflfntaqcsg" path="res://Resources/Klappy/Textures/TKleppy_Transparant_Height.png" id="3_uyjxo"]
+[ext_resource type="Texture2D" uid="uid://sjqo18an6nx0" path="res://Resources/Klappy/Textures/TKleppy_Transparant_Metallic.png" id="4_3rw3m"]
+[ext_resource type="Texture2D" uid="uid://ceo5w2bo562k4" path="res://Resources/Klappy/Textures/TKleppy_Transparant_Normal.png" id="5_ens2l"]
+[ext_resource type="Texture2D" uid="uid://rk0njqqcy68u" path="res://Resources/Klappy/Textures/TKleppy_Transparant_Roughness.png" id="6_hhfyx"]
+
+[resource]
+transparency = 1
+cull_mode = 2
+albedo_color = Color(1, 1, 1, 0.470588)
+albedo_texture = ExtResource("1_ens2l")
+metallic = 1.0
+metallic_texture = ExtResource("4_3rw3m")
+roughness_texture = ExtResource("6_hhfyx")
+normal_enabled = true
+normal_texture = ExtResource("5_ens2l")
+ao_enabled = true
+ao_texture = ExtResource("2_txkoc")
+heightmap_enabled = true
+heightmap_scale = 0.1
+heightmap_texture = ExtResource("3_uyjxo")

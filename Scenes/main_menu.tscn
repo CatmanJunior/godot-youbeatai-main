@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://88rxelg1bo3"]
 
-[ext_resource type="Script" uid="uid://bnxxorr3ahw75" path="res://Scenes/main_menu_panel.gd" id="1_trj04"]
+[ext_resource type="Script" uid="uid://bnxxorr3ahw75" path="res://Scripts/UI/main_menu_panel.gd" id="1_trj04"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_1ehe0"]
 [ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="4_16hvj"]

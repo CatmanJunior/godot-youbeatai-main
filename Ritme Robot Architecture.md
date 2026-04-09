@@ -180,6 +180,20 @@ graph TD
 
 ### Core Systems
 
+### Data Class Refactoring
+
+Audio data classes now live in `Scripts/DataClasses/AudioBanks/` (per architecture convention):
+
+| Class | Path | Purpose |
+|-------|------|----------|
+| `AudioBank` | `Scripts/DataClasses/AudioBanks/AudioBank.gd` | Soundbank definition (tracks, effects, synth settings) |
+| `EffectProfile` | `Scripts/DataClasses/AudioBanks/EffectProfile.gd` | Audio effect chain per track |
+| `NotePlayerSettings` | `Scripts/DataClasses/AudioBanks/note_player_settings.gd` | Synth instrument configuration |
+
+All soundbank resources (25+ .tres files under `Resources/Audio/SoundBanks/`) reference these classes.
+
+---
+
 | Manager | Responsibility | Key Signals |
 |---------|---------------|-------------|
 | `beat_manager.gd` | Master clock + sequencer logic, BPM, swing, beat toggling | Emits: `beat_triggered`, `bpm_changed`, `beat_state_changed`. Listens: `bpm_up/down/set_requested`, `play_pause_toggle_requested`, `beat_sprite_clicked`, `template_set` |

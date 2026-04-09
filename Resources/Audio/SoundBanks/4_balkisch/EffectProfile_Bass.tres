@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EffectProfile" format=3 uid="uid://65isouwqh4er"]
 
-[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="1_u5k7v"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/AudioBanks/EffectProfile.gd" id="1_u5k7v"]
 
 [resource]
 script = ExtResource("1_u5k7v")

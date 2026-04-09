@@ -3,10 +3,8 @@ extends Node
 
 ## Manages the microphone: live spectrum analysis (clap/stamp detection,
 ## volume level) AND audio recording via AudioEffectRecord.
-## Lives in the scene tree as %MicrophoneCapture.
 
 @export var bus_name: String = "Microphone"
-
 
 var audio_stream_player: AudioStreamPlayer
 var analyzer: AudioEffectSpectrumAnalyzerInstance
@@ -16,8 +14,6 @@ var microphone: AudioStreamMicrophone
 var audio_effect_record: AudioEffectRecord
 var recording: bool = false
 var recording_timer: float = 0.0
-
-
 
 func _ready():
 	EventBus.start_recording_requested.connect(_start_recording)

@@ -20,3 +20,12 @@ static func Text_without_emoticons(text: String) -> String:
 	var regex = RegEx.new()
 	regex.compile(r":[^:\s]+:")
 	return regex.sub(text, "")
+
+
+func _ready():
+	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
+
+
+
+func utterance_end(utterance_id: int):
+	EventBus.utterance_ended.emit(utterance_id)

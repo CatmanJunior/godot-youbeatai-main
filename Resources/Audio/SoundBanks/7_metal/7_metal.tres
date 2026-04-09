@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://b5dsw5po6avlo"]
 
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="1_06ngr"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/AudioBanks/AudioBank.gd" id="1_06ngr"]
 [ext_resource type="AudioStream" uid="uid://lo7i5p1qnvx5" path="res://Resources/Audio/SoundBanks/7_metal/Clap TwoTone.wav" id="1_djrgv"]
 [ext_resource type="AudioStream" uid="uid://co2ml8xfjjglw" path="res://Resources/Audio/SoundBanks/7_metal/mineur/Clap_Perc Bling 1.wav" id="2_n7rrv"]
 [ext_resource type="AudioStream" uid="uid://d2o0tjfe111yr" path="res://Resources/Audio/SoundBanks/7_metal/OpenHH Body2Body.wav" id="2_ni1cg"]
@@ -11,8 +11,8 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_n7rrv"]
 [ext_resource type="AudioStream" uid="uid://cadnf7sn3twr3" path="res://Resources/Audio/SoundBanks/7_metal/Snare DoubleDutch 2.wav" id="7_l52x6"]
 [ext_resource type="AudioStream" uid="uid://g0h2t0cmae0t" path="res://Resources/Audio/SoundBanks/7_metal/mineur/Snare Bazzazian 3.wav" id="7_v1pk3"]
-[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_l52x6"]
-[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="10_eprof"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="9_l52x6"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/AudioBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 

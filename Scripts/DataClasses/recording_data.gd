@@ -7,7 +7,7 @@ extends RefCounted
 
 enum State { NOT_STARTED, RECORDING, PROCESSING, RECORDING_DONE }
 
-const Fft = preload("res://fft/Fft.gd")
+const Fft = preload("res://addons/fft/Fft.gd")
 
 const DEFAULT_FFT_SIZE := 2048
 const MAX_FFT_SIZE := 8192

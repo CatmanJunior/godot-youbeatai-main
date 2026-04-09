@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="1_40pej"]
 [ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="2_c86x6"]
-[ext_resource type="Script" uid="uid://b1g7nwjqognfg" path="res://Scenes/Prefab/beat_button.gd" id="3_r17hn"]
+[ext_resource type="Script" uid="uid://b1g7nwjqognfg" path="res://Scripts/UI/Buttons/beat_button.gd" id="3_r17hn"]
 
 [node name="BeatButton" type="TextureButton" unique_id=1956853531]
 anchors_preset = 8

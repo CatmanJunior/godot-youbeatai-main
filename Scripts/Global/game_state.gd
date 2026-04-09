@@ -1,10 +1,7 @@
 extends Node
 
 ## Global game state singleton (autoload).
-## Provides easy access to playback state, settings, and UI-related data
-## without needing %UniqueNode references everywhere.
-##
-## Song-related state (sections, tracks, soundbank, tempo) lives in SongState.
+## Provides easy access to session state.
 
 func reset() -> void:
 	SongState.reset()
@@ -22,7 +19,6 @@ func reset() -> void:
 var notes: Notes
 
 # -- TO BE IMPLEMENTED --
-var songModeActive: bool = false
 var tutorialActivated: bool = false
 var loop_sections: bool = false
 
@@ -47,9 +43,6 @@ var clap_bias: float = 0.0
 var metronome_enabled: bool = false
 
 var mute_speech: bool = false
-
-# -- Players and buses --
-var audio_players: Array[TrackPlayerBase] = []
 
 # -- Playback --
 var playing: bool = false

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://dyy8617ukyptm"]
 
 [ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/Audio/AudioBanks/AudioBank.gd" id="1_qlc07"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/AudioBanks/AudioBank.gd" id="1_qlc07"]
 [ext_resource type="AudioStream" uid="uid://b70b3353jtpvd" path="res://Resources/Audio/SoundBanks/7_hardcore/ClosedHH Bandits 1.wav" id="2_120gr"]
 [ext_resource type="AudioStream" uid="uid://cna7wbhdje4fl" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Clap Denim.wav" id="2_ytapi"]
 [ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]
@@ -11,8 +11,8 @@
 [ext_resource type="Resource" uid="uid://d4c5jcrp0ty32" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile_bass.tres" id="6_tm1gk"]
 [ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://b7ycvuoy7t3tc" path="res://Resources/Audio/SoundBanks/7_hardcore/Snare Fakesch.wav" id="7_tm1gk"]
-[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="9_tm1gk"]
-[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/Audio/AudioBanks/EffectProfile.gd" id="10_eprof"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="9_tm1gk"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/AudioBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 

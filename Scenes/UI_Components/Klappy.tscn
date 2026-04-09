@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c3etasd6jbwwv"]
 
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_pokpn"]
-[ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Experimental/Klappy/Klappy.tscn" id="2_wcpyi"]
+[ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Resources/Klappy/Klappy.tscn" id="2_wcpyi"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_rcijy"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="4_dm53t"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="5_7m7ed"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Resource" uid="uid://i4koqv6xf3fh" path="res://Resources/NotePlayerSettings/basenote.tres" id="1_gh2ix"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="1_wbn16"]
-[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/Audio/AudioPlayerClasses/note_player_settings.gd" id="2_gh2ix"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="2_gh2ix"]
 [ext_resource type="SoundFont" uid="uid://bku54wgk62esj" path="res://Resources/SoundFonts/Emu Funky Guitars.sf2" id="4_gh2ix"]
 
 [resource]

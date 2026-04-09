@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://boh0od1y4wa8p"]
 
-[ext_resource type="SpriteFrames" uid="uid://1mictkronqdo" path="res://loadanim.tres" id="2_k66n3"]
+[ext_resource type="SpriteFrames" uid="uid://1mictkronqdo" path="res://Resources/Animations/loadanim.tres" id="2_k66n3"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="3_xrc7h"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="4_4tbtc"]
 

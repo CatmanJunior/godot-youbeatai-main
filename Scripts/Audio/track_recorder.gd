@@ -36,7 +36,7 @@ func _handle_recording(delta: float) -> void:
 		TrackData.TrackType.SYNTH:
 			beats_to_record = SongState.total_beats
 		TrackData.TrackType.SONG:
-			beats_to_record = SongState.total_beats * SongState.sections.size()
+			beats_to_record = SongState.total_beats * SongState.section_count()
 
 
 	var percentage: float = actual_sound_length / (GameState.beat_duration * beats_to_record)
@@ -88,6 +88,7 @@ func _on_recording_stopped(audio: AudioStream) -> void:
 			current_recording_track.recording_data.state = RecordingData.State.NOT_STARTED
 		return
 
+	#TODO handle this in the trackdata or trackPlayer, or recording data??
 	# Trim silence for sample tracks, keep full recording for loop tracks
 	if track_type == TrackData.TrackType.SAMPLE:
 		audio = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)

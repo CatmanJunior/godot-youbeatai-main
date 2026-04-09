@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dkd4xm6dcj43i"]
 
-[ext_resource type="Script" uid="uid://dm7r5d1s47gmy" path="res://Scripts/klappy_light_pad.gd" id="1_omcsf"]
+[ext_resource type="Script" uid="uid://dm7r5d1s47gmy" path="res://Scripts/Klappy/klappy_light_pad.gd" id="1_omcsf"]
 [ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="3_cwede"]
 
 [sub_resource type="Curve" id="Curve_fob3f"]

@@ -72,7 +72,7 @@ func _on_emoji_button_pressed(emoji: String):
 	EventBus.add_section_requested.emit(emoji)
 
 func _on_section_added(new_section_index: int, emoji: String) -> void:
-	print("Section added at index %d with emoji %s" % [new_section_index, emoji])
+	print("[SectionUI] Section added at index %d with emoji %s" % [new_section_index, emoji])
 	_add_section_button(new_section_index, emoji)
 	_update_section_ui()
 
@@ -88,11 +88,11 @@ func _add_section_button(index: int, emoji: String) -> void:
 		return
 
 	var section_button = section_button_prefab.instantiate() as SectionButton
+	section_button.index = index
 	section_button.text = emoji if emoji != "" else ["🌱", "📜", "🤩", "🏁"][index % 4]
 	section_button.pressed.connect(func():
-		var section_index = section_buttons.find(section_button)
-		if section_index >= 0:
-			EventBus.section_switch_requested.emit(section_index)
+		print("[SectionUI] Section button %d pressed, requesting switch." % section_button.index)
+		EventBus.section_switch_requested.emit(section_button.index)
 	)
 
 	section_buttons.insert(index, section_button)
@@ -110,6 +110,7 @@ func _remove_section_button(index: int) -> void:
 
 func _sort_section_buttons() -> void:
 	for i in range(section_buttons.size()):
+		section_buttons[i].index = i
 		section_buttons_container.move_child(section_buttons[i], i)
 
 func _update_section_ui() -> void:
@@ -170,7 +171,7 @@ func _on_switch_section(new_section: SectionData) -> void:
 	_update_section_ui()
 	set_copy_paste_clear_buttons_active(true)
 	var i = new_section.index
-	copy_paste_clear_buttons_holder.global_position.x = section_buttons[i].global_position.x 
+	copy_paste_clear_buttons_holder.global_position.x = section_buttons[i].global_position.x
 
 	for button in section_buttons:
 		button.outline.visible = false

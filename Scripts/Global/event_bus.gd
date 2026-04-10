@@ -110,17 +110,17 @@ signal toggle_settings_menu_requested()
 
 # ── Buttons ──
 ## Emitted when the recording sample button is toggled on or off.
-signal recording_sample_button_toggled(toggled: bool)
+signal record_button_toggled(toggled: bool)
 ## Emitted when the song select button is toggled on or off.
 signal song_select_button_toggled(toggled: bool)
 
 # ── Recording ──
 ## Emitted to request starting audio recording.
-signal start_recording_requested()
+signal start_recording_requested(recording_data: RecordingData)
 ## Emitted to request stopping audio recording.
 signal stop_recording_requested()
 ## Emitted when audio recording has started.
-signal recording_started()
+signal recording_started(recording_data: RecordingData)
 ## Emitted when audio recording has stopped, carrying the recorded audio stream.
 signal recording_stopped(audio: AudioStream)
 ## Emitted to announce processing a recorded audio stream into a note sequence.

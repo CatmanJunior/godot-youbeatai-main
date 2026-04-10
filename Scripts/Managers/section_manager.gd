@@ -8,10 +8,9 @@ const SECTION_BUTTON_SIZE: int = 72
 # Section state
 var current_section_index: int:
 	get: return SongState.current_section_index
-	set(value): SongState.current_section_index = value
+
 var current_section: SectionData:
 	get: return SongState.current_section
-	set(value): SongState.current_section = value
 
 var sections: Array[SectionData]:
 	get: return SongState.sections
@@ -33,7 +32,7 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)
-	spawn_initial_sections()
+	call_deferred("spawn_initial_sections")
 		
 
 func spawn_initial_sections():
@@ -47,47 +46,43 @@ func spawn_initial_sections():
 	switch_section_next_frame(0)
 	_sections_initialized = true
 
-func add_section(section: int, emoji: String = ""):
+func add_section(section_index: int, emoji: String = ""):
 	"""Add a new section at the specified index"""
 	if sections.size() == SECTIONS_AMOUNT_MAX:
 		push_warning("Maximum sections reached, cannot add more.")
 		return
 
-	# Insert silence into active recordings for the new section
-	_insert_silence_for_section(section)
+	# # Insert silence into active recordings for the new section
+	# _insert_silence_for_section(section)
 
 	# Create a new SectionData instance
-	var new_section: SectionData = SectionData.new(section, emoji)
-	sections.insert(section, new_section)
+	var new_section: SectionData = SectionData.new(section_index, emoji)
+	sections.insert(section_index, new_section)
 
-	current_section_index = section
-	current_section = new_section
-
-	# Notify other managers about new section via EventBus
-	print("Section added at index %d with emoji %s" % [section, emoji])
 	SongState.sections = sections
-	EventBus.section_added.emit(section, emoji)
-	EventBus.section_switched.emit(current_section)
+	EventBus.section_added.emit(section_index, emoji)
+	if _sections_initialized:
+		EventBus.section_switched.emit(SongState.get_section(section_index))
 
 func _on_add_section_requested(emoji: String):
 	add_section(sections.size(), emoji)
 
-func remove_section(section: int):
+func remove_section(section_index: int):
 	"""Remove a section at the specified index"""
 	if sections.size() <= 1:
 		return
 
 	# Remove the section's audio segment from active recordings
-	_remove_audio_for_section(section)
+	_remove_audio_for_section(section_index)
 
-	sections.remove_at(section)
+	sections.remove_at(section_index)
 	
 	# If the deleted section was the current one, go to first section
-	if section == current_section_index:
+	if section_index == current_section_index:
 		switch_section(0)
 
 	# Notify other managers about removed section
-	EventBus.section_removed.emit(section)
+	EventBus.section_removed.emit(section_index)
 
 
 func _copy_section():
@@ -116,12 +111,13 @@ func clear_section():
 	EventBus.section_cleared.emit()
 
 
+##Switch to a different section
 func switch_section(section_index: int):
-	"""Switch to a different section"""
 	# Switch to new section
-	current_section_index = section_index
-	current_section = sections[current_section_index]
-	EventBus.section_switched.emit(current_section)
+	if section_index < 0 or section_index >= sections.size():
+		push_warning("Invalid section index %d, cannot switch." % section_index)
+		return
+	EventBus.section_switched.emit(SongState.get_section(section_index))
 
 func switch_section_next_frame(section_index: int):
 	"""Switch to a different section on the next frame"""

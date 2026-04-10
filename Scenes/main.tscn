@@ -142,7 +142,7 @@ scale = Vector2(0.505, 0.505)
 focus_mode = 0
 script = ExtResource("36_y86h7")
 
-[node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 node_paths=PackedStringArray("track_buttons") instance=ExtResource("1_qax2n")]
+[node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
 offset_left = -615.0
 offset_top = -342.0
@@ -150,7 +150,6 @@ offset_right = -530.8041
 offset_bottom = 379.6797
 scale = Vector2(0.91453314, 0.91453314)
 track_UI_settings = ExtResource("36_qax2n")
-track_buttons = [NodePath("VBoxContainer/TrackSelectButton_0"), NodePath("VBoxContainer/TrackSelectButton_1"), NodePath("VBoxContainer/TrackSelectButton_2"), NodePath("VBoxContainer/TrackSelectButton_3"), NodePath("VBoxContainer/TrackSelectButton_4"), NodePath("VBoxContainer/TrackSelectButton_5"), null]
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
@@ -321,4 +320,5 @@ grow_vertical = 1
 [editable path="UserInterface/ChaosPad"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
+[editable path="UserInterface/TrackSelectButtons"]
 [editable path="UserInterface/SwitchSectionButtons"]

@@ -6,8 +6,8 @@ extends TrackData
 ## the entire song (all sections played in sequence).
 ##
 ## Uses the base TrackData fields:
-##   - recorded_audio_stream → the voice-over mic recording
-##   - knob_position, master_volume, weights → chaos pad state in SONG_MIXING mode
+##   - recorded_audio_stream → the voice-over (mic input)
+##   - knob_position, master_volume, weights 
 ##   - recording_data → runtime RecordingData for the voice-over
 ##
 ## Adds:
@@ -27,7 +27,7 @@ extends TrackData
 
 # ── Init ─────────────────────────────────────────────────────────────────────
 
-## Song track uses a fixed index. Convention: index -1 (special value for song-level track).
+## Song track uses a fixed index. 
 const SONG_TRACK_INDEX: int = 6
 
 func _init(track_index: int = SONG_TRACK_INDEX, knob_pos: Vector2 = Vector2.ZERO) -> void:

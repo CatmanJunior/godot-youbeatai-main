@@ -43,6 +43,11 @@ func _ready() -> void:
 	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
 	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
 	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
+	EventBus.start_recording_requested.connect(_on_recording_start)
+
+func _on_recording_start(recording_data: RecordingData) -> void:
+	EventBus.recording_started.emit(recording_data)
+
 
 func _on_knob_position_changed(knobPos: Vector2) -> void:
 	if SongState.selected_track_index == track_index and track_data:

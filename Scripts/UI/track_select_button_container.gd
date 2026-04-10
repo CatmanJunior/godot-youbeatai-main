@@ -4,8 +4,6 @@ class_name TrackSelectButtonContainer
 @export var track_UI_settings: TrackUISettingsRegistry
 @export var track_buttons: Array[TrackSelectButton]
 
-
-
 func _ready():
 	for button in track_buttons:
 		var settings := track_UI_settings.get_track(button.track_index)
@@ -16,7 +14,6 @@ func _ready():
 			button.outline_rect.texture = button.outline_texture
 
 		button.track_button_pressed.connect(_on_track_button_pressed)
-
 
 	call_deferred("_set_initial_track")
 

@@ -14,8 +14,10 @@ const MAX_FFT_SIZE := 8192
 const SILENCE_THRESHOLD := 0.01
 
 var state: State = State.NOT_STARTED
+var has_detected_sound: bool = false
 var section_index: int = -1
 var track_data: TrackData
+var max_recording_length: float = 0.0
 var audio_stream: AudioStreamWAV:
 	set(value):
 		audio_stream = value

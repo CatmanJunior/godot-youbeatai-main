@@ -1,9 +1,9 @@
 extends Node
 class_name AudioPlayerManager
 
-const TRACK_COUNT = 6
-const SYNTH_TRACKS_COUNT = 2
-const SAMPLE_TRACKS_COUNT = 4
+static var TRACK_COUNT = 6
+static var SYNTH_TRACKS_COUNT = 2
+static var SAMPLE_TRACKS_COUNT = 4
 
 var track_players: Array[TrackPlayerBase] = []
 var song_track_player: SongTrackPlayer
@@ -56,7 +56,7 @@ func _init_audio_players():
 	# Create synth track players
 	for i in range(SYNTH_TRACKS_COUNT):
 		var player : SynthTrackPlayer = SynthTrackPlayer.new()
-		player.setup(i + SAMPLE_TRACKS_COUNT, "Master", note_player_settings[i]) # pass settings for note player
+		player.setup(track_players.size(), "Master", note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)
 
@@ -71,10 +71,7 @@ func play_sfx(stream: AudioStream):
 		sfx_player.stream = stream
 		sfx_player.play()
 
-func get_playback_position(track_index: int) -> float:
-	return track_players[track_index].get_playback_position()
-
-##Get the volume for a specific track bus (used for visualizations and recording level checks)
+##--- Debugging method to get current track volumes (not used for actual volume control) ---
 func get_track_volume(track: int) -> float:
 	if track < 0 or track >= TRACK_COUNT:
 		printerr("Invalid track index %d for get_track_volume" % track)

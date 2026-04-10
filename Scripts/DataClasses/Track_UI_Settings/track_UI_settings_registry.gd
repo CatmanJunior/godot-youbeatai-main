@@ -40,10 +40,10 @@ func get_synth_track(synth_index: int) -> SynthTrackUISettings:
 
 
 ## Returns the base TrackUISettingsBase for any absolute track index
-## (0–3 → sample, 4–5 → synth). Returns song_track if index is -1.
+## (0–3 → sample, 4–5 → synth). Returns song_track if index is 6.
 func get_track(track_index: int) -> TrackUISettingsBase:
 	const SAMPLE_COUNT := 4
-	if track_index == -1:
+	if track_index == 6:
 		return song_track
 	if track_index < SAMPLE_COUNT:
 		return get_sample_track(track_index)

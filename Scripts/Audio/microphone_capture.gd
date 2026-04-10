@@ -16,7 +16,7 @@ var recording: bool = false
 var recording_timer: float = 0.0
 
 func _ready():
-	EventBus.start_recording_requested.connect(_start_recording)
+	EventBus.recording_started.connect(_start_recording)
 	EventBus.stop_recording_requested.connect(_stop_recording)
 	microphone = AudioStreamMicrophone.new()
 	audio_stream_player = AudioStreamPlayer.new()
@@ -57,14 +57,11 @@ func _process(delta: float):
 
 # -- Recording -----------------------------------------------------------------
 
-func _start_recording() -> void:
-	if audio_effect_record:
-		audio_effect_record.set_recording_active(true)
-		recording = true
-		EventBus.recording_started.emit()
-	else:
-		push_warning("Cannot start recording: no AudioEffectRecord found on %s bus, effect 1" % bus_name)
-
+func _start_recording(recording_data: RecordingData) -> void:
+	audio_effect_record.set_recording_active(true)
+	recording = true
+	recording_data.state = RecordingData.State.RECORDING
+	
 func _stop_recording() -> void:
 	var recorded_audio: AudioStream = null
 	if audio_effect_record:

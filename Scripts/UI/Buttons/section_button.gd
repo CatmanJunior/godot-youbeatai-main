@@ -3,6 +3,8 @@ class_name SectionButton
 
 @export var outline : TextureRect
 
+var index: int
+
 func _ready():
     outline.visible = false
 

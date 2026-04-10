@@ -14,7 +14,7 @@ const LINE_CONFIGS = [
 	{"points": 40, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]
 
-var sample_track_amount: int = 4  # Number of sample tracks before synth tracks start (used for indexing)
+var _sample_track_amount: int = AudioPlayerManager.SAMPLE_TRACKS_COUNT  # Number of sample tracks to offset synth track indices
 
 func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
@@ -23,8 +23,8 @@ func _ready() -> void:
 func _on_section_switched(new_section_data: SectionData):
 	for i in range(waveform_lines.size()):
 		if waveform_lines[i]:
-			if new_section_data.tracks[i+sample_track_amount].synth_waveform_visualizer:
-				waveform_lines[i].points = new_section_data.tracks[i+sample_track_amount].synth_waveform_visualizer.offsets  # Update waveform points for new section
+			if new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer:
+				waveform_lines[i].points = new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer.offsets  # Update waveform points for new section
 			
 
 func _on_section_added(section_index: int, _emoji: String):
@@ -33,24 +33,27 @@ func _on_section_added(section_index: int, _emoji: String):
 			var cfg = LINE_CONFIGS[i]
 			var visualizer = SynthWaveform.new(waveform_lines[i], cfg.points, cfg.base_dist, cfg.volume_dist, cfg.reversed)
 			var section_data = SongState.sections[section_index]
-			section_data.tracks[i+sample_track_amount].synth_waveform_visualizer = visualizer  # Link visualizer to track data
+			section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer = visualizer  # Link visualizer to track data
 
-func update_progress(track_index: int, percentage: float) -> void:
-	track_index = track_index - sample_track_amount  # Adjust index for progress bars (only for SYNTH tracks)
+func update_progress_bar(rec_data: RecordingData, percentage: float) -> void:
+	var track_index = rec_data.track_data.index
+	track_index = track_index - _sample_track_amount  # Adjust index for progress bars (only for SYNTH tracks)
 	if track_index >= 0 and track_index < progress_bars.size() and progress_bars[track_index]:
 		progress_bars[track_index].value = percentage
 
 
-func update_waveform(track_index: int, rec_data: RecordingData) -> void:
-	track_index = track_index - sample_track_amount  # Adjust index for waveform visualizers (only for SYNTH tracks)
+func update_waveform(rec_data: RecordingData) -> void:
+	var track_index = rec_data.track_data.index
+	track_index = track_index - _sample_track_amount  # Adjust index for waveform visualizers (only for SYNTH tracks)
 	if track_index >= 0 and track_index < waveform_lines.size() and waveform_lines[track_index]:
 		if rec_data:
-			SongState.sections[SongState.current_section_index].tracks[track_index + sample_track_amount].synth_waveform_visualizer.update_line_from_recording(rec_data)
-			print("Updated waveform for track ", track_index + sample_track_amount)
+			SongState.sections[SongState.current_section_index].tracks[track_index + _sample_track_amount].synth_waveform_visualizer.update_line_from_recording(rec_data)
+			print("Updated waveform for track ", track_index + _sample_track_amount)
 			waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
 
 
-func reset_progress(track_index: int) -> void:
-	track_index = track_index - sample_track_amount									  # Adjust index for progress bars (only for SYNTH tracks)
+func reset_progress_bar(rec_data: RecordingData) -> void:
+	var track_index = rec_data.track_data.index
+	track_index = track_index - _sample_track_amount									  # Adjust index for progress bars (only for SYNTH tracks)
 	if track_index >= 0 and track_index < progress_bars.size() and progress_bars[track_index]:
 		progress_bars[track_index].value = 0

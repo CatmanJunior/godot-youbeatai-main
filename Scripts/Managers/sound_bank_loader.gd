@@ -14,10 +14,10 @@ const FALLBACK_BANK_NAME := "2_acoustisch"
 @export var fallback_bank: AudioBank
 
 func _ready() -> void:
-	if SongState.selected_soundbank == null:
+	if SongState.selected_soundbank != null:
 		EventBus.audio_bank_loaded.emit(SongState.selected_soundbank)
 	else:
-		push_error("Failed to load AudioBank '%s', loading fallback bank instead." % SongState.selected_soundbank)
+		push_warning("Failed to load AudioBank '%s', loading fallback bank instead." % SongState.selected_soundbank)
 		EventBus.audio_bank_loaded.emit(fallback_bank)
 	
 
@@ -62,4 +62,3 @@ static func _create_note_player_settings(bank: AudioBank) -> Array[NotePlayerSet
 		)
 	bank.noteplayer_settings = new_noteplayer_settings
 	return new_noteplayer_settings
-

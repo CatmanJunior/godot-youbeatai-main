@@ -1,6 +1,6 @@
 class_name VoiceProcessor
 
-const Fft = preload("res://fft/Fft.gd")
+const Fft = preload("res://addons/fft/Fft.gd")
 
 const combine_threshold: float = -1 # -1 is off
 const octaveRange: Vector2i = Vector2i(3, 5) # inclusive

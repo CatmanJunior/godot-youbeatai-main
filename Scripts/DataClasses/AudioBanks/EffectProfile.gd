@@ -24,7 +24,7 @@ var effect_values: Dictionary = {
 	EffectType.PITCH_SHIFT: [AudioEffectPitchShift, apply_pitch_shift, pitch_shift],
 	EffectType.DISTORTION: [AudioEffectDistortion, apply_distortion, distortion_db],
 	EffectType.PHASER: [AudioEffectPhaser, apply_phaser, phaser],
-	EffectType.CHORUS: [AudioEffectChorus, null, chorus],
+	EffectType.CHORUS: [AudioEffectChorus, apply_chorus, 1 if chorus else 0],
 	EffectType.DELAY: [AudioEffectDelay, apply_delay, delay],
 	EffectType.REVERB: [AudioEffectReverb, apply_reverb, reverb]
 }
@@ -42,10 +42,13 @@ func apply_effects(bus_index: int) -> void:
 		i += 1
 
 func _add_effect_bus(effect: AudioEffect, bus_index: int, effect_index: int, value):
-	var new_effect: AudioEffect = effect.new()
-	AudioServer.add_bus_effect(bus_index, new_effect)
+	
+	AudioServer.add_bus_effect(bus_index, effect)
 	if value > 0:
 		AudioServer.set_bus_effect_enabled(bus_index, effect_index, true)
+
+func apply_chorus(_bus_effect: AudioEffectChorus, _enabled: bool) -> void:
+	pass
 
 func apply_pitch_shift(bus_effect: AudioEffectPitchShift, value: float) -> void:
 	bus_effect.pitch_scale = value if value > 0 else 1.0

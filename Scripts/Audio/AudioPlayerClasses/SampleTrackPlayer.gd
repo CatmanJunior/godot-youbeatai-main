@@ -37,8 +37,6 @@ func _on_audio_bank_loaded(bank: AudioBank) -> void:
 		3:
 			set_streams(bank.closed, bank.closed_alt)
 	
-
-
 func _on_play_track_requested(trackIndex: int) -> void:
 	if trackIndex == track_index:
 		play()

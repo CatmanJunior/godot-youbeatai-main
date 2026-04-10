@@ -114,7 +114,7 @@ func _on_beat_sprite_clicked(p_track: int, beat: int):
 	if is_active:
 		EventBus.play_track_requested.emit(p_track)
 
-		EventBus.particles_requested.emit(Vector2.ZERO, track_settings_registry.get_color(p_track))
+		EventBus.particles_requested.emit(Vector2.ZERO, track_settings_registry.get_track(p_track).track_color)
 	EventBus.track_selected.emit(p_track)
 
 func toggle_beat(track: int, beat: int):

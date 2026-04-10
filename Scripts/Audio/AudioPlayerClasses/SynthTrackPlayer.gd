@@ -19,6 +19,9 @@ var BUS_SUFFIXES: Array[String] = ["Alt", "NotePlayer", "Recording"]
 
 var BUS_PREFIX: String = "Synth"
 
+## Whether we are waiting for beat 0 (countdown) before starting the mic.
+var _waiting_for_countdown: bool = false
+
 func _get_bus_suffixes() -> Array[String]:
 	return BUS_SUFFIXES
 
@@ -27,6 +30,16 @@ func _get_bus_prefix() -> String:
 
 func _ready() -> void:
 	super._ready()
+
+func _process(delta: float) -> void:
+	if not _is_recording or _waiting_for_countdown:
+		return
+	_recording_time += delta
+	var total_duration: float = SongState.total_beats * GameState.beat_duration
+	var percentage: float = _recording_time / total_duration
+	EventBus.recording_progress_updated.emit(track_index, percentage)
+	if percentage >= 1.0:
+		_end_recording()
 
 # --- Public API ---
 func apply_note_player_settings(new_settings: NotePlayerSettings) -> void:
@@ -81,6 +94,17 @@ func _on_section_switched(_new) -> void:
 		_has_recording = false
 
 func _on_beat_triggered(beat: int) -> void:
+	# Handle countdown → start recording at beat 0
+	if _waiting_for_countdown and beat == 0:
+		_waiting_for_countdown = false
+		EventBus.countdown_close_requested.emit()
+		EventBus.mute_all_requested.emit(true)
+		EventBus.start_recording_requested.emit()
+		return
+
+	# Normal playback (skip during active recording)
+	if _is_recording:
+		return
 	if not _has_recording:
 		return
 	if note_player:
@@ -115,15 +139,68 @@ func stop() -> void:
 	# Also stop all currently playing notes immediately
 	if note_player:
 		note_player.note_off_all(0)
-		
+
+# ── Recording ────────────────────────────────────────────────────────────────
+
+func _begin_recording() -> void:
+	_is_recording = true
+	_waiting_for_countdown = true
+	_has_detected_sound = false
+	_recording_time = 0.0
+	# Create recording data on the track
+	track_data.create_recording_data(SongState.current_section_index)
+	track_data.recording_data.state = RecordingData.State.RECORDING
+	# Show countdown — mic starts when beat 0 is reached (see _on_beat_triggered)
+	EventBus.countdown_show_requested.emit()
+
+func _end_recording() -> void:
+	if not _is_recording:
+		return
+	# If still waiting for countdown, cancel without starting mic
+	if _waiting_for_countdown:
+		_waiting_for_countdown = false
+		_is_recording = false
+		_recording_time = 0.0
+		EventBus.countdown_close_requested.emit()
+		if track_data and track_data.recording_data:
+			track_data.recording_data.state = RecordingData.State.NOT_STARTED
+		return
+	# Normal stop — mic is running, stop it and unmute
+	super._end_recording()
+
+func _on_mic_recording_stopped(audio: AudioStream) -> void:
+	if not _is_recording:
+		return
+	_is_recording = false
+	_recording_time = 0.0
+
+	if audio == null:
+		if track_data and track_data.recording_data:
+			track_data.recording_data.state = RecordingData.State.NOT_STARTED
+		return
+
+	# Mark as PROCESSING before storing audio (voice analysis pending)
+	track_data.recording_data.state = RecordingData.State.PROCESSING
+	track_data.set_recording_audio_stream(audio)
+
+	# Update player streams
+	for i in [SynthLayer.ALT, SynthLayer.REC]:
+		players[i].stream = audio
+	_has_recording = true
+	set_weights(_weights)
+
+	# Start threaded voice processing
+	thread = Thread.new()
+	thread.start(_process_voice_threaded.bind(audio, thread))
+
 # -- Voice Processing ---
-func _process_voice_threaded(stream: AudioStream, thread: Thread) -> void:
+func _process_voice_threaded(stream: AudioStream, _thread: Thread) -> void:
 	var sequence: Sequence = VoiceProcessor.process_audio(stream, GameState.notes)
 	# Marshal back to main thread
-	call_deferred("_on_voice_processed", sequence, thread)
+	call_deferred("_on_voice_processed", sequence, _thread)
 
-func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
-	thread.wait_to_finish()
+func _on_voice_processed(sequence: Sequence, _thread: Thread) -> void:
+	_thread.wait_to_finish()
 	var data: SynthTrackData = track_data
 	if sequence and data:
 		data.set_sequence(sequence)

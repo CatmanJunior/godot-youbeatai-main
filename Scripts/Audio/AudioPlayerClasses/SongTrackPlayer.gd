@@ -107,7 +107,7 @@ func start_song_recording() -> void:
 
 	var data := track_data as SongTrackData
 	if data:
-		data.start_recording(-1)  # section -1 = song-level
+		data.create_recording_data(-1)  # section -1 = song-level
 
 	# Start both record effects
 	if voice_record_effect:

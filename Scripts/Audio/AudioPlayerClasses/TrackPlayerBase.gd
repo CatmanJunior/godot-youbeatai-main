@@ -26,6 +26,15 @@ var track_data: TrackData:
 @warning_ignore("unused_private_class_variable")
 var _has_recording: bool = false
 
+# ── Recording State ──────────────────────────────────────────────────────────
+
+## Whether this player is currently in a recording session.
+var _is_recording: bool = false
+## Whether sound has been detected during the current recording.
+var _has_detected_sound: bool = false
+## Accumulated recording time in seconds (since sound was detected).
+var _recording_time: float = 0.0
+
 func _get_bus_suffixes() -> Array[String]:
 	return []
 
@@ -43,6 +52,9 @@ func _ready() -> void:
 	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
 	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
 	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
+	EventBus.track_recording_start_requested.connect(_on_track_recording_start_requested)
+	EventBus.track_recording_stop_requested.connect(_on_track_recording_stop_requested)
+	EventBus.recording_stopped.connect(_on_mic_recording_stopped)
 
 func _on_knob_position_changed(knobPos: Vector2) -> void:
 	if SongState.selected_track_index == track_index and track_data:
@@ -80,6 +92,37 @@ func _mute_all(muted: bool) -> void:
 func _on_all_players_stop():
 	for p in players:
 		p.stop()
+
+# ── Recording ────────────────────────────────────────────────────────────────
+
+func _on_track_recording_start_requested(p_track_index: int) -> void:
+	if p_track_index != track_index:
+		return
+	_begin_recording()
+
+func _on_track_recording_stop_requested(p_track_index: int) -> void:
+	if p_track_index != track_index:
+		return
+	_end_recording()
+
+## Override in subclasses to implement type-specific recording start.
+func _begin_recording() -> void:
+	pass
+
+## Stops the microphone and unmutes all tracks.
+## Audio is received asynchronously via _on_mic_recording_stopped.
+func _end_recording() -> void:
+	if not _is_recording:
+		return
+	EventBus.mute_all_requested.emit(false)
+	EventBus.stop_recording_requested.emit()
+
+## Override in subclasses to handle received audio from the microphone.
+func _on_mic_recording_stopped(_audio: AudioStream) -> void:
+	pass
+
+func _get_recording_volume() -> float:
+	return GameState.microphone_volume
 
 # Override in subclasses
 func _create_buses(parent_bus: String) -> void:

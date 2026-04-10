@@ -37,22 +37,21 @@ func duplicate_track() -> TrackData:
 	copy.recording_data = recording_data
 	return copy
 
-func start_recording(p_section_index: int) -> RecordingData:
+## Creates a new RecordingData for this track. Does NOT set recording state —
+## the caller (track player) is responsible for managing state transitions.
+func create_recording_data(p_section_index: int) -> RecordingData:
 	recording_data = RecordingData.new(self, p_section_index)
-	recording_data.state = RecordingData.State.RECORDING
 	return recording_data
 
+## Stores the recorded audio stream on this track and links it to the RecordingData.
+## Does NOT manage recording state — the caller is responsible for state transitions.
 func set_recording_audio_stream(audio_stream: AudioStream) -> void:
 	recorded_audio_stream = audio_stream
 	if audio_stream is AudioStreamWAV:
 		if recording_data != null:
 			recording_data.audio_stream = audio_stream as AudioStreamWAV
-			# Only advance to RECORDING_DONE if not already in PROCESSING state
-			# (synth tracks stay in PROCESSING until voice analysis completes)
-			if recording_data.state != RecordingData.State.PROCESSING:
-				recording_data.state = RecordingData.State.RECORDING_DONE
 		else:
-			push_warning("RecordingData was null when set_recording_audio_stream was called — bypassing start_recording() flow.")
+			push_warning("RecordingData was null when set_recording_audio_stream was called — creating fallback RecordingData.")
 			recording_data = RecordingData.new(self, -1, audio_stream as AudioStreamWAV)
 			recording_data.state = RecordingData.State.RECORDING_DONE
 	else:

@@ -114,12 +114,20 @@ signal recording_sample_button_toggled(toggled: bool)
 ## Emitted when the song select button is toggled on or off.
 signal song_select_button_toggled(toggled: bool)
 
-# ── Recording ──
-## Emitted to request starting audio recording.
+# ── Track Recording ──
+## Emitted to request a track player to begin its recording process.
+signal track_recording_start_requested(track_index: int)
+## Emitted to request a track player to stop its recording process.
+signal track_recording_stop_requested(track_index: int)
+## Emitted by a track player to report recording progress (0.0–1.0).
+signal recording_progress_updated(track_index: int, percentage: float)
+
+# ── Recording (Microphone) ──
+## Emitted to request starting audio recording on the microphone.
 signal start_recording_requested()
-## Emitted to request stopping audio recording.
+## Emitted to request stopping audio recording on the microphone.
 signal stop_recording_requested()
-## Emitted when audio recording has started.
+## Emitted when audio recording has started on the microphone.
 signal recording_started()
 ## Emitted when audio recording has stopped, carrying the recorded audio stream.
 signal recording_stopped(audio: AudioStream)

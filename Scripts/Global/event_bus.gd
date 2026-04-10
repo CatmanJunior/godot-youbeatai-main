@@ -120,7 +120,9 @@ signal track_recording_start_requested(track_index: int)
 ## Emitted to request a track player to stop its recording process.
 signal track_recording_stop_requested(track_index: int)
 ## Emitted by a track player to report recording progress (0.0–1.0).
-signal recording_progress_updated(track_index: int, percentage: float)
+signal recording_progress_updated(track_index: int, percentage: float, recording_data: RecordingData)
+## Emitted when a recording's state changes (e.g. RECORDING → PROCESSING → RECORDING_DONE).
+signal recording_state_changed(track_index: int, recording_data: RecordingData)
 
 # ── Recording (Microphone) ──
 ## Emitted to request starting audio recording on the microphone.
@@ -132,7 +134,7 @@ signal recording_started()
 ## Emitted when audio recording has stopped, carrying the recorded audio stream.
 signal recording_stopped(audio: AudioStream)
 ## Emitted to announce processing a recorded audio stream into a note sequence.
-signal synth_sequence_ready(track_index: int)
+signal synth_sequence_ready(track_index: int, recording_data: RecordingData)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.

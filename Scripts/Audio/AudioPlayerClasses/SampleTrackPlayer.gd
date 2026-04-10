@@ -36,7 +36,7 @@ func _process(delta: float) -> void:
 		return
 	_recording_time += delta
 	var percentage: float = _recording_time / GameState.beat_duration
-	EventBus.recording_progress_updated.emit(track_index, percentage)
+	EventBus.recording_progress_updated.emit(track_index, percentage, track_data.recording_data)
 	if percentage >= 1.0:
 		_end_recording()
 
@@ -88,6 +88,7 @@ func _begin_recording() -> void:
 	# Create recording data on the track
 	track_data.create_recording_data(SongState.current_section_index)
 	track_data.recording_data.state = RecordingData.State.RECORDING
+	EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 	# Mute all tracks and start mic — recording clock starts when sound is detected
 	EventBus.mute_all_requested.emit(true)
 	EventBus.start_recording_requested.emit()
@@ -102,6 +103,7 @@ func _on_mic_recording_stopped(audio: AudioStream) -> void:
 		# No sound detected or no audio — cancel recording
 		if track_data and track_data.recording_data:
 			track_data.recording_data.state = RecordingData.State.NOT_STARTED
+			EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 		_has_detected_sound = false
 		return
 	_has_detected_sound = false
@@ -113,6 +115,7 @@ func _on_mic_recording_stopped(audio: AudioStream) -> void:
 	# Store audio on the track data and mark as done
 	track_data.set_recording_audio_stream(audio)
 	track_data.recording_data.state = RecordingData.State.RECORDING_DONE
+	EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 
 	# Update the player's recording layer
 	players[2].stream = audio

@@ -37,7 +37,7 @@ func _process(delta: float) -> void:
 	_recording_time += delta
 	var total_duration: float = SongState.total_beats * GameState.beat_duration
 	var percentage: float = _recording_time / total_duration
-	EventBus.recording_progress_updated.emit(track_index, percentage)
+	EventBus.recording_progress_updated.emit(track_index, percentage, track_data.recording_data)
 	if percentage >= 1.0:
 		_end_recording()
 
@@ -150,6 +150,7 @@ func _begin_recording() -> void:
 	# Create recording data on the track
 	track_data.create_recording_data(SongState.current_section_index)
 	track_data.recording_data.state = RecordingData.State.RECORDING
+	EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 	# Show countdown — mic starts when beat 0 is reached (see _on_beat_triggered)
 	EventBus.countdown_show_requested.emit()
 
@@ -164,6 +165,7 @@ func _end_recording() -> void:
 		EventBus.countdown_close_requested.emit()
 		if track_data and track_data.recording_data:
 			track_data.recording_data.state = RecordingData.State.NOT_STARTED
+			EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 		return
 	# Normal stop — mic is running, stop it and unmute
 	super._end_recording()
@@ -177,10 +179,12 @@ func _on_mic_recording_stopped(audio: AudioStream) -> void:
 	if audio == null:
 		if track_data and track_data.recording_data:
 			track_data.recording_data.state = RecordingData.State.NOT_STARTED
+			EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 		return
 
 	# Mark as PROCESSING before storing audio (voice analysis pending)
 	track_data.recording_data.state = RecordingData.State.PROCESSING
+	EventBus.recording_state_changed.emit(track_index, track_data.recording_data)
 	track_data.set_recording_audio_stream(audio)
 
 	# Update player streams
@@ -207,8 +211,9 @@ func _on_voice_processed(sequence: Sequence, p_thread: Thread) -> void:
 		# Voice processing complete — mark as done
 		if data.recording_data:
 			data.recording_data.state = RecordingData.State.RECORDING_DONE
+			EventBus.recording_state_changed.emit(track_index, data.recording_data)
 
-	EventBus.synth_sequence_ready.emit(track_index)
+	EventBus.synth_sequence_ready.emit(track_index, data.recording_data if data else null)
 
 ## Override to create NotePlayer for the NOTE layer
 func _make_player(bus: String) -> AudioStreamPlayer:

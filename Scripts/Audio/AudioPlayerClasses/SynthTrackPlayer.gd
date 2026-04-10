@@ -194,13 +194,13 @@ func _on_mic_recording_stopped(audio: AudioStream) -> void:
 	thread.start(_process_voice_threaded.bind(audio, thread))
 
 # -- Voice Processing ---
-func _process_voice_threaded(stream: AudioStream, _thread: Thread) -> void:
+func _process_voice_threaded(stream: AudioStream, p_thread: Thread) -> void:
 	var sequence: Sequence = VoiceProcessor.process_audio(stream, GameState.notes)
 	# Marshal back to main thread
-	call_deferred("_on_voice_processed", sequence, _thread)
+	call_deferred("_on_voice_processed", sequence, p_thread)
 
-func _on_voice_processed(sequence: Sequence, _thread: Thread) -> void:
-	_thread.wait_to_finish()
+func _on_voice_processed(sequence: Sequence, p_thread: Thread) -> void:
+	p_thread.wait_to_finish()
 	var data: SynthTrackData = track_data
 	if sequence and data:
 		data.set_sequence(sequence)

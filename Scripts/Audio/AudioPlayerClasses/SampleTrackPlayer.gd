@@ -64,7 +64,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 		return
 	if recording_data.section_index != track_data.section_index:
 		return
-	players[2].stream = recording_data.stream
+	players[2].stream = recording_data.audio_stream
 	_has_recording = true
 	if track_data:
 		track_data.set_recording_audio_stream(recording_data)

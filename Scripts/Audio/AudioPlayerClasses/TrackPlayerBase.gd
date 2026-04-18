@@ -65,7 +65,7 @@ func _on_section_switched(_new) -> void:
 	print("Section Switched should be overridden in subclass if needed")
 
 func _on_request_set_recorded_stream(recording_data: RecordingData) -> void:
-	if track_data and track_data.index == track_index:
+	if recording_data and recording_data.track_data and track_data and recording_data.track_data.index == track_index:
 		_set_recorded_stream(recording_data)
 
 func _on_request_set_stream(trackIndex: int, audio_layer: int, audio: AudioStream):

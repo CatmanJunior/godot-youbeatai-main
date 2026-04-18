@@ -47,7 +47,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 		return
 
 	for i in [SynthLayer.ALT, SynthLayer.REC]: # update all non-note player layers with the new recording
-		players[i].stream = recording_data.stream # all layers share the same recording
+		players[i].stream = recording_data.audio_stream # all layers share the same recording
 	_has_recording = true
 	set_weights(_weights) # reapply weights now that streams are loaded
 
@@ -58,7 +58,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	track_data.set_recording_audio_stream(recording_data)
 
 	thread = Thread.new()
-	thread.start(_process_voice_threaded.bind(recording_data.stream, thread))
+	thread.start(_process_voice_threaded.bind(recording_data.audio_stream, thread))
 
 
 func _on_audio_bank_loaded(bank: AudioBank) -> void:

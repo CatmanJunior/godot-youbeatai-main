@@ -85,6 +85,9 @@ func _set_recorded_stream(recording_data : RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
 		return
 	track_data.recorded_audio_stream = recording_data.audio_stream
+	players[SongLayer.VOICE_OVER].stream = recording_data.audio_stream
+	_has_recording = true
+	set_weights(_weights)
 
 
 # ── Song Recording ───────────────────────────────────────────────────────────

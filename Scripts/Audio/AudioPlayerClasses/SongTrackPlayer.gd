@@ -79,9 +79,8 @@ func _setup_record_effects() -> void:
 # ── Playback ─────────────────────────────────────────────────────────────────
 
 func play(offset: float = 0.0) -> void:
-	var data := track_data as SongTrackData
-	if data and data.recorded_audio_stream:
-		players[SongLayer.VOICE_OVER].stream = data.recorded_audio_stream
+	if track_data and track_data.recorded_audio_stream:
+		players[SongLayer.VOICE_OVER].stream = track_data.recorded_audio_stream
 		players[SongLayer.VOICE_OVER].play(offset)
 
 
@@ -98,65 +97,63 @@ func _set_recorded_stream(rec: AudioStream) -> void:
 
 # ── Song Recording ───────────────────────────────────────────────────────────
 
-func start_song_recording() -> void:
-	if is_song_recording:
-		return
+# func start_song_recording() -> void:
+# 	if is_song_recording:
+# 		return
 
-	is_song_recording = true
-	recording_timer = 0.0
+# 	is_song_recording = true
+# 	recording_timer = 0.0
 
-	var data := track_data as SongTrackData
-	if data:
-		data.start_recording(-1)  # section -1 = song-level
+# 	var data : SongTrackData = track_data as SongTrackData
+# 	if data:
+# 		data.create_recording_data()  # section -1 = song-level
 
-	# Start both record effects
-	if voice_record_effect:
-		voice_record_effect.set_recording_active(true)
-	if master_record_effect:
-		master_record_effect.set_recording_active(true)
+# 	# Start both record effects
+# 	if voice_record_effect:
+# 		voice_record_effect.set_recording_active(true)
+# 	if master_record_effect:
+# 		master_record_effect.set_recording_active(true)
 
-	# Reduce master volume so mic picks up voice, not feedback
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
+# 	# Reduce master volume so mic picks up voice, not feedback
+# 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
 
-	EventBus.buttons_disabled_requested.emit(true)
-	EventBus.recording_started.emit()
+# 	EventBus.buttons_disabled_requested.emit(true)
+# 	EventBus.recording_started.emit()
 
 
-func stop_song_recording() -> void:
-	if not is_song_recording:
-		return
+# func stop_song_recording() -> void:
+# 	if not is_song_recording:
+# 		return
 
-	is_song_recording = false
+# 	is_song_recording = false
 
-	var data := track_data as SongTrackData
-	if not data:
-		return
 
-	# Stop voice record effect and capture
-	if voice_record_effect:
-		voice_record_effect.set_recording_active(false)
-		var voice_wav := voice_record_effect.get_recording()
-		data.set_recording_audio_stream(voice_wav)  # uses base TrackData method
 
-	# Stop master record effect and capture
-	if master_record_effect:
-		master_record_effect.set_recording_active(false)
-		data.master_recording_stream = master_record_effect.get_recording()
+# 	# Stop voice record effect and capture
+# 	if voice_record_effect:
+# 		voice_record_effect.set_recording_active(false)
+# 		var voice_wav := voice_record_effect.get_recording()
+# 		data.set_recording_audio_stream(voice_wav)  # uses base TrackData method
 
-	# Update metadata
-	data.recording_length = recording_timer
+# 	# Stop master record effect and capture
+# 	if master_record_effect:
+# 		master_record_effect.set_recording_active(false)
+# 		data.master_recording_stream = master_record_effect.get_recording()
 
-	# Restore master volume
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), 0.0)
+# 	# Update metadata
+# 	data.recording_length = recording_timer
 
-	# Load voice stream into player for immediate playback
-	if data.recorded_audio_stream:
-		players[SongLayer.VOICE_OVER].stream = data.recorded_audio_stream
-		_has_recording = true
-		set_weights(_weights)
+# 	# Restore master volume
+# 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), 0.0)
 
-	EventBus.buttons_disabled_requested.emit(false)
-	EventBus.recording_stopped.emit(data.recorded_audio_stream)
+# 	# Load voice stream into player for immediate playback
+# 	if data.recorded_audio_stream:
+# 		players[SongLayer.VOICE_OVER].stream = data.recorded_audio_stream
+# 		_has_recording = true
+# 		set_weights(_weights)
+
+# 	EventBus.buttons_disabled_requested.emit(false)
+# 	EventBus.recording_stopped.emit(data.recording_data)
 
 
 ## Get recording progress (0.0 – 1.0) based on total song duration.
@@ -186,12 +183,10 @@ func _on_section_switched(_new) -> void:
 # ── Section add/remove handlers ──────────────────────────────────────────────
 
 func _on_section_added(section_index: int, _emoji: String) -> void:
-	var data := track_data as SongTrackData
-	if data and data.has_recording():
-		data.insert_silence_for_section(section_index, SongState.total_beats, GameState.beat_duration)
+	if track_data.has_recording():
+		track_data.insert_silence_for_section(section_index, SongState.total_beats, GameState.beat_duration)
 
 
 func _on_section_removed(section_index: int) -> void:
-	var data := track_data as SongTrackData
-	if data and data.has_recording():
-		data.remove_audio_for_section(section_index, SongState.total_beats, GameState.beat_duration)
+	if track_data.has_recording():
+		track_data.remove_audio_for_section(section_index, SongState.total_beats, GameState.beat_duration)

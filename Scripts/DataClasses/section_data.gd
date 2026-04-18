@@ -33,16 +33,11 @@ func _init(new_index: int = 0, section_emoji: String = "") -> void:
 	emoji = section_emoji
 	if tracks.is_empty():
 		for i in range(SAMPLE_TRACKS_PER_SECTION):
-			tracks.append(SampleTrackData.new(i))
+			tracks.append(SampleTrackData.new(i, index))
 
 		for i in range(SYNTH_TRACKS_PER_SECTION):
-			tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION))
+			tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION, index))
 	
-
-# -- Event handlers ─────────────────────────────────────────────────────────────
-
-
-
 # ── Post-load rebuild ────────────────────────────────────────────────────────
 
 ## Call after loading from disk to restore runtime-only state (Sequence, id, etc.).
@@ -53,7 +48,7 @@ func rebuild_runtime() -> void:
 			track.rebuild_sequence()
 		# Rebuild RecordingData from saved audio streams
 		if track.recorded_audio_stream is AudioStreamWAV:
-			track.recording_data = RecordingData.new(track, index, track.recorded_audio_stream as AudioStreamWAV)
+			track.recording_data = RecordingData.new(track, track.recorded_audio_stream as AudioStreamWAV)
 			track.recording_data.state = RecordingData.State.RECORDING_DONE
 
 # ── Beat access helpers ──────────────────────────────────────────────────────

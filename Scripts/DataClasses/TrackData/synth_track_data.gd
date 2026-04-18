@@ -12,8 +12,8 @@ var _sequence: Sequence = null
 
 var synth_waveform_visualizer: SynthWaveform = null
 
-func _init(track_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
-	super._init(track_index, knob_pos, TrackType.SYNTH)
+func _init(track_index: int, p_section_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
+	super._init(track_index, p_section_index, knob_pos, TrackType.SYNTH)
 
 
 func rebuild_sequence() -> void:
@@ -32,9 +32,9 @@ func set_sequence(new_sequence: Sequence) -> void:
 		sequence_notes.clear()
 
 func duplicate_track() -> TrackData:
-	var copy := SynthTrackData.new(index, knob_position)
+	var copy := SynthTrackData.new(index, section_index, knob_position)
 	copy.recorded_audio_stream = recorded_audio_stream
-	copy.recording_data = recording_data
+	copy.recording_data = recording_data.duplicate()
 	copy.master_volume = master_volume
 	copy.weights = weights
 	copy.sequence_notes = sequence_notes.duplicate()

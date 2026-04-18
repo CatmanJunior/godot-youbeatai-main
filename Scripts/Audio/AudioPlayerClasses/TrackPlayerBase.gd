@@ -43,11 +43,6 @@ func _ready() -> void:
 	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
 	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
 	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
-	EventBus.start_recording_requested.connect(_on_recording_start)
-
-func _on_recording_start(recording_data: RecordingData) -> void:
-	EventBus.recording_started.emit(recording_data)
-
 
 func _on_knob_position_changed(knobPos: Vector2) -> void:
 	if SongState.selected_track_index == track_index and track_data:
@@ -69,10 +64,9 @@ func _on_beat_triggered(_beat: int) -> void:
 func _on_section_switched(_new) -> void:
 	print("Section Switched should be overridden in subclass if needed")
 
-func _on_request_set_recorded_stream(trackIndex: int, audio: AudioStream):
-	if trackIndex != track_index:
-		return
-	_set_recorded_stream(audio)
+func _on_request_set_recorded_stream(recording_data: RecordingData) -> void:
+	if track_data and track_data.index == track_index:
+		_set_recorded_stream(recording_data)
 
 func _on_request_set_stream(trackIndex: int, audio_layer: int, audio: AudioStream):
 	if trackIndex != track_index:
@@ -128,17 +122,10 @@ func apply_effect_profile(effect_profile: EffectProfile) -> void:
 	effect_profile.apply_effects(bus_idx)
 
 func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> void: pass
-func _set_recorded_stream(_rec: AudioStream) -> void: pass
+func _set_recorded_stream(_recording_data: RecordingData) -> void: pass
 
-func set_stream(audio_layer: int, stream: AudioStream) -> void:
-	if audio_layer < 0 or audio_layer >= SUB_TRACK_PLAYER_COUNT:
-		printerr("Invalid audio layer %d for set_stream" % audio_layer)
-		return
-	if audio_layer == 2:
-		_set_recorded_stream(stream)
-		printerr("Warning: set_stream with audio_layer 2 will set the recorded stream. Use _set_recorded_stream directly for clarity. Stream: %s" % stream)
-	else:
-		players[audio_layer].stream = stream
+func set_stream(_audio_layer: int, _stream: AudioStream) -> void:
+	pass
 
 func set_weights(weights: Vector3) -> void:
 	print("Setting weights for track %d: %s" % [track_index, str(weights)])

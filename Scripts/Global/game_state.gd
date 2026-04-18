@@ -66,5 +66,5 @@ var is_recording: bool = false
 func _ready() -> void:
 	EventBus.playing_changed.connect(func(value: bool): playing = value)
 	EventBus.beat_triggered.connect(func(beat: int): current_beat = beat)
-	EventBus.recording_started.connect(func(): is_recording = true)
-	EventBus.recording_stopped.connect(func(_audio): is_recording = false)
+	EventBus.recording_started.connect(func(_rd: RecordingData): is_recording = true)
+	EventBus.recording_stopped.connect(func(_rd: RecordingData): is_recording = false)

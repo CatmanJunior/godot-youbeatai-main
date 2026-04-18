@@ -56,19 +56,18 @@ func _process(delta: float):
 
 
 # -- Recording -----------------------------------------------------------------
-
-func _start_recording(recording_data: RecordingData) -> void:
+func _start_recording(_recording_data: RecordingData) -> void:
 	audio_effect_record.set_recording_active(true)
 	recording = true
-	recording_data.state = RecordingData.State.RECORDING
-	
-func _stop_recording() -> void:
-	var recorded_audio: AudioStream = null
+
+func _stop_recording(recording_data: RecordingData) -> void:
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(false)
-		recorded_audio = audio_effect_record.get_recording()
+		var audio = audio_effect_record.get_recording()
+		if recording_data:
+			recording_data.audio_stream = audio  # Put audio ON the RecordingData
 	recording = false
-	EventBus.recording_stopped.emit(recorded_audio)
+	EventBus.recording_stopped.emit(recording_data)
 
 # -- Helpers -------------------------------------------------------------------
 

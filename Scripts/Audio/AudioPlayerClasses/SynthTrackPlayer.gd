@@ -40,14 +40,14 @@ func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) 
 	else:
 		print("Warning: No note player settings provided for SynthTrackPlayer %d, using defaults." % index)
 
-func _on_recording_start(recording_data: RecordingData) -> void:
-	EventBus.countdown_show_requested.emit(5.0) # show 5 second countdown for synth recording to give user time to prepare
-	await EventBus.countdown_close_requested
-	EventBus.recording_started.emit(recording_data)
+func _set_recorded_stream(recording_data: RecordingData) -> void:
+	if recording_data.track_data.index != track_index:
+		return
+	if recording_data.section_index != track_data.section_index:
+		return
 
-func _set_recorded_stream(stream: AudioStream) -> void:
 	for i in [SynthLayer.ALT, SynthLayer.REC]: # update all non-note player layers with the new recording
-		players[i].stream = stream # all layers share the same recording
+		players[i].stream = recording_data.stream # all layers share the same recording
 	_has_recording = true
 	set_weights(_weights) # reapply weights now that streams are loaded
 
@@ -55,10 +55,10 @@ func _set_recorded_stream(stream: AudioStream) -> void:
 	# set_recording_audio_stream so the PROCESSING state is preserved.
 	if track_data.recording_data:
 		track_data.recording_data.state = RecordingData.State.PROCESSING
-	track_data.set_recording_audio_stream(stream)
+	track_data.set_recording_audio_stream(recording_data)
 
 	thread = Thread.new()
-	thread.start(_process_voice_threaded.bind(stream, thread))
+	thread.start(_process_voice_threaded.bind(recording_data.stream, thread))
 
 
 func _on_audio_bank_loaded(bank: AudioBank) -> void:
@@ -122,13 +122,13 @@ func stop() -> void:
 		note_player.note_off_all(0)
 		
 # -- Voice Processing ---
-func _process_voice_threaded(stream: AudioStream, thread: Thread) -> void:
+func _process_voice_threaded(stream: AudioStream, p_thread: Thread) -> void:
 	var sequence: Sequence = VoiceProcessor.process_audio(stream, GameState.notes)
 	# Marshal back to main thread
-	call_deferred("_on_voice_processed", sequence, thread)
+	call_deferred("_on_voice_processed", sequence, p_thread)
 
-func _on_voice_processed(sequence: Sequence, thread: Thread) -> void:
-	thread.wait_to_finish()
+func _on_voice_processed(sequence: Sequence, p_thread: Thread) -> void:
+	p_thread.wait_to_finish()
 	var data: SynthTrackData = track_data
 	if sequence and data:
 		data.set_sequence(sequence)

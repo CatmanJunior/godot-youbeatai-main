@@ -118,19 +118,19 @@ signal song_select_button_toggled(toggled: bool)
 ## Emitted to request starting audio recording.
 signal start_recording_requested(recording_data: RecordingData)
 ## Emitted to request stopping audio recording.
-signal stop_recording_requested()
+signal stop_recording_requested(recording_data: RecordingData)
 ## Emitted when audio recording has started.
 signal recording_started(recording_data: RecordingData)
 ## Emitted when audio recording has stopped, carrying the recorded audio stream.
-signal recording_stopped(audio: AudioStream)
+signal recording_stopped(recording_data: RecordingData)
 ## Emitted to announce processing a recorded audio stream into a note sequence.
-signal synth_sequence_ready(track_index: int)
+signal synth_sequence_ready(recording_data: RecordingData)
+## Emitted to request setting a recorded audio stream on a specific track.
+signal set_recorded_stream_requested(recording_data: RecordingData)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.
 signal set_stream_requested(track: int, audio_layer: int, audio: AudioStream)
-## Emitted to request setting a recorded audio stream on a specific track.
-signal set_recorded_stream_requested(track_index: int, audio: AudioStream)
 ## Emitted to request muting or unmuting all audio tracks.
 signal mute_all_requested(mute: bool)
 

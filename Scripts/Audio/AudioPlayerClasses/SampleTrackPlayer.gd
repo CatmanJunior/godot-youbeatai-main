@@ -20,7 +20,10 @@ func set_streams(a: AudioStream, b: AudioStream, rec: AudioStream=null) -> void:
 		track_data.main_audio_stream = a
 		track_data.alt_audio_stream = b
 	if rec != null:
-		_set_recorded_stream(rec)
+		var rec_data = track_data.create_recording_data()
+		rec_data.audio_stream = rec
+		rec_data.state = RecordingData.State.RECORDING_DONE
+		_set_recorded_stream(rec_data)
 
 func _ready() -> void:
 	super._ready()
@@ -41,10 +44,10 @@ func _on_play_track_requested(trackIndex: int) -> void:
 	if trackIndex == track_index:
 		play()
 
-func _on_section_switched(_new) -> void:
+func _on_section_switched(_new : SectionData) -> void:
 	
-	if _new.tracks[track_index].recorded_audio_stream != null:
-		_set_recorded_stream(_new.tracks[track_index].recorded_audio_stream)
+	if _new.tracks[track_index].recording_data and _new.tracks[track_index].recording_data.audio_stream:
+		_set_recorded_stream(_new.tracks[track_index].recording_data)
 	else:
 		# Clear recording stream and flag if new section doesn't have a recording for this track
 		players[2].stream = null
@@ -56,11 +59,15 @@ func _on_beat_triggered(beat: int) -> void:
 	if track_data.get_beat_active(beat):
 		play()
 
-func _set_recorded_stream(rec: AudioStream) -> void:
-	players[2].stream = rec
+func _set_recorded_stream(recording_data: RecordingData) -> void:
+	if recording_data.track_data.index != track_index:
+		return
+	if recording_data.section_index != track_data.section_index:
+		return
+	players[2].stream = recording_data.stream
 	_has_recording = true
 	if track_data:
-		track_data.set_recording_audio_stream(rec)
+		track_data.set_recording_audio_stream(recording_data)
 	set_weights(_weights) # update volumes to include recording bus
 
 ## Playback control (called by Section when starting/stopping playback)

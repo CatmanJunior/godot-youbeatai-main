@@ -6,10 +6,11 @@ extends Resource
 
 enum TrackType { SAMPLE, SYNTH, SONG }
 
-
 @export var track_type: TrackType = TrackType.SAMPLE
 
 @export var index: int = -1
+
+@export var section_index: int = -1
 
 ## Recorded audio from the microphone (AudioStreamWAV is a Resource — saved automatically).
 @export var recorded_audio_stream: AudioStream = null
@@ -23,40 +24,32 @@ enum TrackType { SAMPLE, SYNTH, SONG }
 
 var recording_data: RecordingData = null
 
-func _init(track_index:int, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:
+func _init(track_index:int, p_section_index: int, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:
 	knob_position = knob_pos	
 	
 	self.track_type = type
 	self.index = track_index
+	self.section_index = p_section_index
 
 func duplicate_track() -> TrackData:
-	var copy : TrackData = TrackData.new(index, knob_position, track_type)
+	var copy : TrackData = TrackData.new(index, section_index, knob_position, track_type)
 	copy.master_volume = master_volume
 	copy.weights = weights
 	copy.recorded_audio_stream = recorded_audio_stream
-	copy.recording_data = recording_data
+	copy.recording_data = recording_data.duplicate()
 	return copy
 
-func start_recording(p_section_index: int) -> RecordingData:
-	recording_data = RecordingData.new(self, p_section_index)
-	recording_data.state = RecordingData.State.RECORDING
+func create_recording_data() -> RecordingData:
+	recording_data = RecordingData.new(self)
 	return recording_data
 
-func set_recording_audio_stream(audio_stream: AudioStream) -> void:
-	recorded_audio_stream = audio_stream
-	if audio_stream is AudioStreamWAV:
-		if recording_data != null:
-			recording_data.audio_stream = audio_stream as AudioStreamWAV
-			# Only advance to RECORDING_DONE if not already in PROCESSING state
-			# (synth tracks stay in PROCESSING until voice analysis completes)
-			if recording_data.state != RecordingData.State.PROCESSING:
-				recording_data.state = RecordingData.State.RECORDING_DONE
-		else:
-			push_warning("RecordingData was null when set_recording_audio_stream was called — bypassing start_recording() flow.")
-			recording_data = RecordingData.new(self, -1, audio_stream as AudioStreamWAV)
-			recording_data.state = RecordingData.State.RECORDING_DONE
-	else:
-		recording_data = null
+func set_recording_audio_stream(p_recording_data: RecordingData) -> void:
+	if p_recording_data.audio_stream == null:
+		printerr("Attempted to set recording audio stream with null audio on track ", index)
+		return
+	
+	recorded_audio_stream = p_recording_data.audio_stream
 
+			
 func has_recording() -> bool:
 	return recording_data != null and recording_data.audio_stream != null

@@ -18,10 +18,17 @@ var has_detected_sound: bool = false
 var section_index: int = -1
 var track_data: TrackData
 var max_recording_length: float = 0.0
+var actual_recording_length: float = 0.0
+var length_since_detected_sound: float = 0.0
 var audio_stream: AudioStreamWAV:
 	set(value):
 		audio_stream = value
 		_invalidate_all()
+
+var track_type: TrackData.TrackType:
+	get():
+		return track_data.track_type
+
 
 # --- Lazy caches ---
 var _samples_cache: PackedFloat32Array = []
@@ -39,9 +46,9 @@ var _waveform_cache: PackedVector2Array = []
 var _waveform_cache_resolution: int = -1
 
 
-func _init(p_track_data: TrackData, p_section_index: int = -1, p_audio_stream: AudioStreamWAV = null) -> void:
+func _init(p_track_data: TrackData, p_audio_stream: AudioStreamWAV = null) -> void:
 	track_data = p_track_data
-	section_index = p_section_index
+	section_index = p_track_data.section_index
 	if p_audio_stream:
 		audio_stream = p_audio_stream
 

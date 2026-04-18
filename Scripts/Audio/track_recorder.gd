@@ -3,7 +3,6 @@ extends Node
 var recording: bool:
 	get: return GameState.is_recording
 
-var actual_sound_length: float = 0.0
 
 var current_recording_data: RecordingData = null
 
@@ -25,12 +24,13 @@ func _handle_recording(delta: float) -> void:
 	if not current_recording_data.has_detected_sound:
 		return
 	
-	actual_sound_length += delta
+
+	current_recording_data.actual_recording_length += delta
+	
 
 	var max_length := current_recording_data.max_recording_length
 
-
-	var percentage: float = actual_sound_length / max_length
+	var percentage: float = current_recording_data.actual_recording_length / max_length
 
 	recording_sample_button.update_button(percentage)
 	
@@ -41,18 +41,30 @@ func _handle_recording(delta: float) -> void:
 	if percentage >= 1.0:
 		_stop_recording()
 
-
 func _start_recording() -> void:
-	actual_sound_length = 0.0
 
-	# Create RecordingData early so it tracks the full lifecycle
-	current_recording_data = SongState.current_track.start_recording(SongState.current_section_index)
-	
-	var max_recording_length: float = _calculate_max_recording_length(current_recording_data.track_data.track_type)
-	current_recording_data.max_recording_length = max_recording_length
+	# Step 1: TrackData creates the RecordingData (no state change yet)
+	current_recording_data = SongState.current_track.create_recording_data()
+	current_recording_data.max_recording_length = _calculate_max_recording_length(current_recording_data.track_type)
 
+	# Step 2: Mute all tracks
 	EventBus.mute_all_requested.emit(true)
-	EventBus.start_recording_requested.emit(current_recording_data)
+
+	# Step 3: If SYNTH → show countdown first, then start mic
+	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
+		EventBus.countdown_show_requested.emit()
+		#Wait for 4 seconds (countdown duration) before starting recording
+		await get_tree().create_timer(4.0).timeout
+		EventBus.countdown_close_requested.emit()
+		
+
+	# Step 4: Announce to the world that recording has started
+	current_recording_data.state = RecordingData.State.RECORDING
+	EventBus.recording_started.emit(current_recording_data)
+
+func _stop_recording() -> void:
+	EventBus.mute_all_requested.emit(false)
+	EventBus.stop_recording_requested.emit(current_recording_data)
 
 
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
@@ -66,9 +78,6 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 	return GameState.beat_duration * 2.0 # default max length
 
 
-func _stop_recording() -> void:
-	EventBus.mute_all_requested.emit(false)
-	EventBus.stop_recording_requested.emit()
 
 #------------------Event Handlers----------------------
 func _on_recording_sample_button_toggled(toggled: bool) -> void:
@@ -81,34 +90,32 @@ func _on_recording_sample_button_toggled(toggled: bool) -> void:
 		EventBus.mute_all_requested.emit(false)
 
 
-func _on_recording_stopped(audio: AudioStream) -> void:
-	if not current_recording_data:
+func _on_recording_stopped(recording_data: RecordingData) -> void:
+	if not recording_data:
 		printerr("No current recording data on recording stopped!")
 		return
 	
-	if not current_recording_data.has_detected_sound:
-		current_recording_data.state = RecordingData.State.NOT_STARTED
+	if not recording_data.has_detected_sound:
+		recording_data.state = RecordingData.State.NOT_STARTED
+		printerr("Recording stopped without detecting sound, marking as NOT_STARTED.")
 		return
 
-	current_recording_data.state = RecordingData.State.PROCESSING
+	recording_data.state = RecordingData.State.PROCESSING
 
-	#TODO handle this in the trackdata or trackPlayer, or recording data??
-	# Trim silence for sample tracks, keep full recording for loop tracks
-	if current_recording_data.track_data.track_type == TrackData.TrackType.SAMPLE:
-		audio = AudioHelpers.trim_audio_stream(audio, GameState.recording_volume_threshold)
+	var audio: AudioStream = recording_data.audio_stream
+
+	if recording_data.track_type == TrackData.TrackType.SAMPLE:
+		audio = AudioHelpers.trim_audio_stream(recording_data.audio_stream, GameState.recording_volume_threshold)
 		# Also cap to 1 beat duration so trailing audio is removed
 		audio = AudioHelpers.cap_audio_duration(audio, GameState.beat_duration)
 
-	#TODO: wait isnt this also set somewhere else?? maybe handle all of this in the track player or track data instead of here??
-	# Store audio on the track (sets state to RECORDING_DONE for sample tracks)
-	current_recording_data.track_data.set_recording_audio_stream(audio)
-
 	# Update waveform visualization using RecordingData (only for SYNTH tracks)
-	if current_recording_data.track_data.track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_waveform(current_recording_data)
-		waveform_visualizer.reset_progress_bar(current_recording_data)
+	if recording_data.track_type == TrackData.TrackType.SYNTH:
+		waveform_visualizer.update_waveform(recording_data)
+		waveform_visualizer.reset_progress_bar(recording_data)
 
-	EventBus.set_recorded_stream_requested.emit(current_recording_data.track_data.index, audio)
+	recording_data.state = RecordingData.State.RECORDING_DONE
+	EventBus.set_recorded_stream_requested.emit(recording_data.track_data.index, audio)
 
 func get_recording_volume() -> float:
 	return GameState.microphone_volume

@@ -114,8 +114,9 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 		waveform_visualizer.update_waveform(recording_data)
 		waveform_visualizer.reset_progress_bar(recording_data)
 
+	recording_data.audio_stream = audio
 	recording_data.state = RecordingData.State.RECORDING_DONE
-	EventBus.set_recorded_stream_requested.emit(recording_data.track_data.index, audio)
+	EventBus.set_recorded_stream_requested.emit(recording_data)
 
 func get_recording_volume() -> float:
 	return GameState.microphone_volume

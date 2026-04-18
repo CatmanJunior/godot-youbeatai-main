@@ -5,11 +5,10 @@
 ### Critical Bugs
 - [ ] **Fix clap/stomp detection** — `Scripts/Audio/clap_stomp.gd` returns hardcoded 0.0, feature is non-functional
 - [ ] **Remove hardcoded bus reference** — `Scripts/klappy_light_pad.gd:24` has TODO comment, uses hardcoded "SubMaster" bus
-- [ ] **Debug key bindings in production** — `Scripts/Managers/keyboard_input_manager.gd:44-48` F6 sets extreme BPM (900, 4000, 90) with no guard
 
 ### Incomplete Core Features
 - [ ] **Song recording** — Record full song mix, playback, export
-- [ ] **Audio export/email feature** — `Experimental/SongExport/exporter.gd` has commented-out email export
+
 
 ---
 
@@ -21,6 +20,7 @@
 - [ ] **Synth filter support** — `addons/synth/synth.gd:226-237` only lowpass tested, others non-functional
 - [ ] **Klappy tutorial outcome** — `Scripts/Achievements/tutorial.gd:166` stomp visibility disabled with cryptic comment
 - [ ] **Track muting architecture** — Recording mute logic in `track_recorder.gd` should be in AudioPlayerManager
+- [ ] **Audio export/email feature** — `Experimental/SongExport/exporter.gd` has commented-out email export
 
 ### Features to Complete
 - [ ] **Beat suggestions / tip button** — Random beat pattern suggestions

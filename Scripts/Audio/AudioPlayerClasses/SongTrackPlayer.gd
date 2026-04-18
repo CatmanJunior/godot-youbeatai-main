@@ -23,12 +23,6 @@ enum SongLayer {
 var BUS_SUFFIXES: Array[String] = ["VoiceOver", "Master", "Mix"]
 var BUS_PREFIX: String = "Song"
 
-## AudioEffectRecord on the Microphone bus (captures voice-over).
-var voice_record_effect: AudioEffectRecord
-
-## AudioEffectRecord on the SubMaster bus (captures master output).
-var master_record_effect: AudioEffectRecord
-
 ## Recording timer (for progress calculation).
 var recording_timer: float = 0.0
 
@@ -43,8 +37,6 @@ func _get_bus_suffixes() -> Array[String]:
 
 func _get_bus_prefix() -> String:
 	return BUS_PREFIX
-
-
 
 func _ready() -> void:
 	super._ready()
@@ -89,10 +81,10 @@ func stop() -> void:
 		p.stop()
 
 
-func _set_recorded_stream(rec: AudioStream) -> void:
-	players[SongLayer.VOICE_OVER].stream = rec
-	_has_recording = rec != null
-	set_weights(_weights)
+func _set_recorded_stream(recording_data : RecordingData) -> void:
+	if recording_data.track_data.index != track_index:
+		return
+	track_data.recorded_audio_stream = recording_data.audio_stream
 
 
 # ── Song Recording ───────────────────────────────────────────────────────────

@@ -15,6 +15,7 @@ func reset() -> void:
 
 	# Recording
 	is_recording = false
+	SceneChanger.restart()
 
 var notes: Notes
 
@@ -68,3 +69,4 @@ func _ready() -> void:
 	EventBus.beat_triggered.connect(func(beat: int): current_beat = beat)
 	EventBus.recording_started.connect(func(_rd: RecordingData): is_recording = true)
 	EventBus.recording_stopped.connect(func(_rd: RecordingData): is_recording = false)
+	EventBus.restart_requested.connect(reset)

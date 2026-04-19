@@ -47,10 +47,10 @@ func _move_handle_constrained() -> void:
 	)
 
 	position = clamped - size / 2.0
-	_get_weights_and_emit()
+	_get_weights_and_emit(clamped)
 
-func _get_weights_and_emit() -> void:
-	var local_pos := container.get_local_mouse_position()
+func _get_weights_and_emit(local_pos: Vector2) -> void:
+	
 	var tri := container.tri
 	var corners: Array[Vector2] = [tri[0], tri[1], tri[2]]
 

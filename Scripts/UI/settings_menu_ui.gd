@@ -111,7 +111,7 @@ func _on_bpm_down_pressed():
 	EventBus.bpm_down_requested.emit(bpm_modifier)
 
 func _on_swing_changed(value: float):
-	SongState.swing = value
+	EventBus.swing_set_requested.emit(value)
 
 func _on_export_beat_pressed():
 	EventBus.open_export_dialog_requested.emit(false) # false for beat export, true for song export

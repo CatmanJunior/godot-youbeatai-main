@@ -17,7 +17,7 @@ func _ready() -> void:
 	if SongState.selected_soundbank != null:
 		EventBus.audio_bank_loaded.emit(SongState.selected_soundbank)
 	else:
-		push_warning("Failed to load AudioBank '%s', loading fallback bank instead." % SongState.selected_soundbank)
+		push_warning("No soundbank selected, emitting fallback bank '%s'." % FALLBACK_BANK_NAME)
 		EventBus.audio_bank_loaded.emit(fallback_bank)
 	
 
@@ -43,7 +43,7 @@ static func load_audio_bank(bank_dict: Dictionary) -> AudioBank:
 		return null
 
 	_apply_bpm_swing(bank, bank_dict)
-	_create_note_player_settings(bank)
+	_create_apply_note_player_settings(bank)
 
 	print("SoundBankLoader: loaded '%s'" % [bank_name])
 	return bank
@@ -54,7 +54,9 @@ static func _apply_bpm_swing(bank: AudioBank, bank_dict: Dictionary) -> void:
 	var swing_normalized: float = float(bank_dict.get("swing", 0)) / 100.0
 	bank.swing = swing_normalized
 
-static func _create_note_player_settings(bank: AudioBank) -> Array[NotePlayerSettings]:
+
+#TODO: this is a bit hacky — we have to create new NotePlayerSettings instances to apply the new AudioStreamSample references from the loaded bank, since NotePlayerSettings is a Resource and its properties are not directly editable at runtime. We should consider refactoring this in the future for better clarity and maintainability.
+static func _create_apply_note_player_settings(bank: AudioBank) -> Array[NotePlayerSettings]:
 	var new_noteplayer_settings : Array[NotePlayerSettings] = []
 	for i in range(bank.noteplayer_settings.size()):
 		new_noteplayer_settings.append(

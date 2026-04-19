@@ -22,7 +22,6 @@ var emoji_prompt_cancel_button: Button
 var copy_paste_clear_button_holder_time_since_activation: float = 0.0
 
 func _ready():
-	print("SectionUI ready")
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.section_switched.connect(_on_switch_section)
@@ -65,14 +64,13 @@ func init_section_button_actions():
 
 func _on_remove_section_button_pressed():
 	if SongState.sections.size() > 0:
-		EventBus.section_removed.emit(SongState.current_section_index)
+		EventBus.section_remove_requested.emit(SongState.current_section_index)
 
 func _on_emoji_button_pressed(emoji: String):
 	_close_emoji_prompt()
 	EventBus.add_section_requested.emit(emoji)
 
 func _on_section_added(new_section_index: int, emoji: String) -> void:
-	print("[SectionUI] Section added at index %d with emoji %s" % [new_section_index, emoji])
 	_add_section_button(new_section_index, emoji)
 	_update_section_ui()
 
@@ -91,7 +89,6 @@ func _add_section_button(index: int, emoji: String) -> void:
 	section_button.index = index
 	section_button.text = emoji if emoji != "" else ["🌱", "📜", "🤩", "🏁"][index % 4]
 	section_button.pressed.connect(func():
-		print("[SectionUI] Section button %d pressed, requesting switch." % section_button.index)
 		EventBus.section_switch_requested.emit(section_button.index)
 	)
 

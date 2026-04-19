@@ -30,7 +30,6 @@ func _ready() -> void:
 
 # --- Public API ---
 func apply_note_player_settings(new_settings: NotePlayerSettings) -> void:
-	print(new_settings.soundfont)
 	note_player.apply_settings(new_settings)
 
 func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) -> void:
@@ -38,7 +37,7 @@ func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) 
 	if settings:
 		apply_note_player_settings(settings)
 	else:
-		print("Warning: No note player settings provided for SynthTrackPlayer %d, using defaults." % index)
+		push_warning("Warning: No note player settings provided for SynthTrackPlayer %d, using defaults." % index)
 
 func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
@@ -108,9 +107,9 @@ func play(offset: float = 0.0) -> void:
 
 func play_note(beat: int) -> void:
 	var data: SynthTrackData = track_data
-	if data == null or data._sequence == null:
+	if data == null or data.sequence == null:
 		return
-	var note: SequenceNote = data._sequence.get_note_at_beat(beat)
+	var note: SequenceNote = data.sequence.get_note_at_beat(beat)
 	if note and note_player:
 		note_player.play_note(note)
 
@@ -135,8 +134,6 @@ func _on_voice_processed(sequence: Sequence, p_thread: Thread) -> void:
 		# Voice processing complete — mark as done
 		if data.recording_data:
 			data.recording_data.state = RecordingData.State.RECORDING_DONE
-
-	EventBus.synth_sequence_ready.emit(track_index)
 
 ## Override to create NotePlayer for the NOTE layer
 func _make_player(bus: String) -> AudioStreamPlayer:

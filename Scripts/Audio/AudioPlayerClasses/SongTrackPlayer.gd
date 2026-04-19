@@ -40,11 +40,8 @@ func _get_bus_prefix() -> String:
 
 func _ready() -> void:
 	super._ready()
-	_setup_record_effects()
 
 	# Song-specific signals
-	# EventBus.song_recording_start_requested.connect(_on_song_recording_start)
-	# EventBus.song_recording_stop_requested.connect(_on_song_recording_stop)
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
 
@@ -53,21 +50,6 @@ func _process(delta: float) -> void:
 	if is_song_recording:
 		recording_timer += delta
 
-
-# ── Record effect setup ──────────────────────────────────────────────────────
-
-func _setup_record_effects() -> void:
-	# # Voice-over record effect (Microphone bus, effect index 1)
-	# var mic_bus := AudioServer.get_bus_index("Microphone")
-	# if mic_bus >= 0 and AudioServer.get_bus_effect_count(mic_bus) > 1:
-	# 	voice_record_effect = AudioServer.get_bus_effect(mic_bus, 1)
-
-	# # Master bus record effect (SubMaster bus, effect index 0)
-	# var master_bus := AudioServer.get_bus_index("SubMaster")
-	# if master_bus >= 0 and AudioServer.get_bus_effect_count(master_bus) > 0:
-	# 	master_record_effect = AudioServer.get_bus_effect(master_bus, 0)
-	pass
-
 # ── Playback ─────────────────────────────────────────────────────────────────
 
 func play(offset: float = 0.0) -> void:
@@ -75,11 +57,9 @@ func play(offset: float = 0.0) -> void:
 		players[SongLayer.VOICE_OVER].stream = track_data.recorded_audio_stream
 		players[SongLayer.VOICE_OVER].play(offset)
 
-
 func stop() -> void:
 	for p in players:
 		p.stop()
-
 
 func _set_recorded_stream(recording_data : RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
@@ -89,85 +69,11 @@ func _set_recorded_stream(recording_data : RecordingData) -> void:
 	_has_recording = true
 	set_weights(_weights)
 
-
-# ── Song Recording ───────────────────────────────────────────────────────────
-
-# func start_song_recording() -> void:
-# 	if is_song_recording:
-# 		return
-
-# 	is_song_recording = true
-# 	recording_timer = 0.0
-
-# 	var data : SongTrackData = track_data as SongTrackData
-# 	if data:
-# 		data.create_recording_data()  # section -1 = song-level
-
-# 	# Start both record effects
-# 	if voice_record_effect:
-# 		voice_record_effect.set_recording_active(true)
-# 	if master_record_effect:
-# 		master_record_effect.set_recording_active(true)
-
-# 	# Reduce master volume so mic picks up voice, not feedback
-# 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), linear_to_db(0.1))
-
-# 	EventBus.buttons_disabled_requested.emit(true)
-# 	EventBus.recording_started.emit()
-
-
-# func stop_song_recording() -> void:
-# 	if not is_song_recording:
-# 		return
-
-# 	is_song_recording = false
-
-
-
-# 	# Stop voice record effect and capture
-# 	if voice_record_effect:
-# 		voice_record_effect.set_recording_active(false)
-# 		var voice_wav := voice_record_effect.get_recording()
-# 		data.set_recording_audio_stream(voice_wav)  # uses base TrackData method
-
-# 	# Stop master record effect and capture
-# 	if master_record_effect:
-# 		master_record_effect.set_recording_active(false)
-# 		data.master_recording_stream = master_record_effect.get_recording()
-
-# 	# Update metadata
-# 	data.recording_length = recording_timer
-
-# 	# Restore master volume
-# 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SubMaster"), 0.0)
-
-# 	# Load voice stream into player for immediate playback
-# 	if data.recorded_audio_stream:
-# 		players[SongLayer.VOICE_OVER].stream = data.recorded_audio_stream
-# 		_has_recording = true
-# 		set_weights(_weights)
-
-# 	EventBus.buttons_disabled_requested.emit(false)
-# 	EventBus.recording_stopped.emit(data.recording_data)
-
-
-## Get recording progress (0.0 – 1.0) based on total song duration.
-func get_recording_progress() -> float:
-	if not is_song_recording:
-		return 0.0
-	var sections_count := SongState.sections.size()
-	var total_time := sections_count * SongState.total_beats * GameState.beat_duration
-	if total_time <= 0.0:
-		return 0.0
-	return clampf(recording_timer / total_time, 0.0, 1.0)
-
-
 # ── TrackPlayerBase overrides ────────────────────────────────────────────────
 
 ## Song track is not beat-driven — do nothing on beat_triggered.
 func _on_beat_triggered(_beat: int) -> void:
 	pass
-
 
 ## Song track is NOT per-section — ignore section switches for stream loading.
 ## (The voice_over lives on SongState.song_track, not on sections.)

@@ -24,9 +24,6 @@ func _ready():
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
 
-	for preset in get_presetcount():
-		print("%s - %s" % [preset, get_presetname(preset)])
-
 func _input(event):
 	if event is InputEventMIDI:
 		_process_midi_input(event)

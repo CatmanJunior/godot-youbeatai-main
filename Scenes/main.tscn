@@ -2,8 +2,6 @@
 
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="2_my4ki"]
-[ext_resource type="Script" uid="uid://28mff4f5g60j" path="res://Scripts/Managers/game_manager.gd" id="6_64lof"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
 [ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="9_5vy51"]
@@ -56,38 +54,6 @@ current = true
 
 [node name="Managers" type="Node" parent="." unique_id=205411252]
 
-[node name="GameManager" type="Node" parent="Managers" unique_id=874834820]
-script = ExtResource("6_64lof")
-notes = ExtResource("2_my4ki")
-
-[node name="SectionManager" type="Node" parent="Managers/GameManager" unique_id=710188850]
-script = ExtResource("7_b4mik")
-
-[node name="BeatManager" type="Node" parent="Managers/GameManager" unique_id=540173422]
-script = ExtResource("8_urine")
-track_settings_registry = ExtResource("36_qax2n")
-
-[node name="TemplateManager" type="Node" parent="Managers/GameManager" unique_id=1447662219]
-script = ExtResource("10_o2owy")
-
-[node name="Exporter" type="Node" parent="Managers/GameManager" unique_id=944798366]
-script = ExtResource("65_87bhu")
-metadata/_custom_type_script = "uid://c6xnic6xfnewu"
-
-[node name="ListenToLastExport" type="Node" parent="Managers/GameManager/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
-script = ExtResource("66_33qc4")
-player = NodePath("lastExportPlayer")
-metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
-
-[node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/ListenToLastExport" unique_id=723625077]
-playback_type = 1
-
-[node name="PreviewExportsManager" type="Node2D" parent="Managers/GameManager/Exporter" unique_id=1232035288]
-
-[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/PreviewExportsManager" unique_id=1270233026]
-
-[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/GameManager/Exporter/PreviewExportsManager" unique_id=1661558996]
-
 [node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
 
 [node name="MicrophoneCapture" type="Node" parent="Managers/AudioManagers" unique_id=1923883284]
@@ -110,6 +76,34 @@ waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visuali
 [node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
 script = ExtResource("29_s8vy0")
 fallback_bank = ExtResource("28_nwwfm")
+
+[node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
+script = ExtResource("7_b4mik")
+
+[node name="BeatManager" type="Node" parent="Managers" unique_id=540173422]
+script = ExtResource("8_urine")
+track_settings_registry = ExtResource("36_qax2n")
+
+[node name="TemplateManager" type="Node" parent="Managers" unique_id=1447662219]
+script = ExtResource("10_o2owy")
+
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366]
+script = ExtResource("65_87bhu")
+metadata/_custom_type_script = "uid://c6xnic6xfnewu"
+
+[node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
+script = ExtResource("66_33qc4")
+player = NodePath("lastExportPlayer")
+metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
+
+[node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/Exporter/ListenToLastExport" unique_id=723625077]
+playback_type = 1
+
+[node name="PreviewExportsManager" type="Node2D" parent="Managers/Exporter" unique_id=1232035288]
+
+[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1270233026]
+
+[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1661558996]
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false

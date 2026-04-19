@@ -32,8 +32,10 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)
+	EventBus.section_remove_requested.connect(remove_section)
 	call_deferred("spawn_initial_sections")
 		
+
 
 func spawn_initial_sections():
 	"""Spawn the initial set of sections (data only)."""
@@ -52,9 +54,6 @@ func add_section(section_index: int, emoji: String = ""):
 		push_warning("Maximum sections reached, cannot add more.")
 		return
 
-	# # Insert silence into active recordings for the new section
-	# _insert_silence_for_section(section)
-
 	# Create a new SectionData instance
 	var new_section: SectionData = SectionData.new(section_index, emoji)
 	sections.insert(section_index, new_section)
@@ -71,9 +70,6 @@ func remove_section(section_index: int):
 	"""Remove a section at the specified index"""
 	if sections.size() <= 1:
 		return
-
-	# Remove the section's audio segment from active recordings
-	_remove_audio_for_section(section_index)
 
 	sections.remove_at(section_index)
 	
@@ -99,6 +95,8 @@ func _paste_section():
 	current_section.set_section_knob_positions(clipboard_section.get_section_knob_positions())
 	for i in range(SectionData.TRACKS_PER_SECTION):
 		current_section.tracks[i] = clipboard_section.tracks[i].duplicate_track()
+	EventBus.template_set.emit(current_section.get_beat_actives())
+	
 
 func clear_section():
 	"""Clear all beats from the current section"""
@@ -109,7 +107,6 @@ func clear_section():
 	sections[section].clear_beats()
 	
 	EventBus.section_cleared.emit()
-
 
 ##Switch to a different section
 func switch_section(section_index: int):
@@ -131,44 +128,9 @@ func next_section():
 	else:
 		switch_section(current_section_index + 1)
 
-func get_current_section_data() -> SectionData:
-	"""Get the SectionData for the current section"""
-	return sections[current_section_index]
-
-func set_current_section(value: Array):
-	"""Set the beat actives for the current section"""
-	if current_section_index < sections.size():
-		sections[current_section_index].set_beat_actives(value)
-
 func section_has_beats(section: int) -> bool:
 	"""Check if a section has any active beats"""
 	if section < 0 or section >= sections.size():
 		return false
 	return sections[section].has_active_beats()
 
-
-# ── Audio recording manipulation when sections change ────────────────────
-
-func _insert_silence_for_section(section: int) -> void:
-	_manipulate_recording(section, AudioSavingManager.insert_silent_section_part_of_recordings)
-
-func _remove_audio_for_section(section: int) -> void:
-	_manipulate_recording(section, AudioSavingManager.remove_section_part_of_recordings)
-
-## Shared helper for insert/remove recording operations.
-## `operation` must accept (recording, voice_over, section, total_beats, beat_duration)
-## and return a result with `.recording` and `.voice_over` fields.
-func _manipulate_recording(section: int, operation: Callable) -> void:
-	var song_vo = SongState.song_track
-
-
-	var result : Dictionary = operation.call(song_vo.recording, section, SongState.total_beats, GameState.beat_duration)
-
-	if result and result.voice_over:
-		var was_playing: bool = song_vo.audio_player.playing if song_vo.audio_player else false
-		song_vo.voice_over = result.voice_over
-		if song_vo.audio_player:
-			song_vo.audio_player.stream = song_vo.voice_over
-			if was_playing:
-				song_vo.audio_player.play()
-		song_vo.recording_length = float(result.voice_over.get_length())

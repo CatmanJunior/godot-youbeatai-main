@@ -59,10 +59,10 @@ func _on_audio_bank_loaded(_bank: AudioBank) -> void:
 
 ## Override in subclasses
 func _on_beat_triggered(_beat: int) -> void:
-	print("Beat triggered should be overridden in subclass if needed")
+	push_error("Beat triggered should be overridden in subclass if needed")
 
 func _on_section_switched(_new) -> void:
-	print("Section Switched should be overridden in subclass if needed")
+	push_error("Section switched should be overridden in subclass if needed")
 
 func _on_request_set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data and recording_data.track_data and track_data and recording_data.track_data.index == track_index:
@@ -128,7 +128,6 @@ func set_stream(_audio_layer: int, _stream: AudioStream) -> void:
 	pass
 
 func set_weights(weights: Vector3) -> void:
-	print("Setting weights for track %d: %s" % [track_index, str(weights)])
 	_weights = BusHelper.crossfade3(sub_bus_names, weights)
 	track_data.weights = weights
 
@@ -139,8 +138,7 @@ func stop() -> void:
 		p.stop()
 
 func set_volume_db(db: float) -> void:
-	print("Setting volume for track %d to %.2f dB" % [track_index, db])
-	BusHelper.set_volume(bus_name, db*10)
+	BusHelper.set_volume(bus_name, db)
 	track_data.master_volume = db
 
 func set_muted(muted: bool) -> void:

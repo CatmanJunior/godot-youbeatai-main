@@ -15,5 +15,4 @@ func _ready() -> void:
 	pressed.connect(_on_pressed)
 
 func _on_pressed() -> void:
-	print("Beat button pressed: track ", track_index, " beat ", beat_index)
 	EventBus.beat_sprite_clicked.emit(track_index, beat_index)

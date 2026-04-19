@@ -44,7 +44,7 @@ var current_section_index: int:
 		if current_section:
 			return current_section.index
 		else:
-			return -1
+			return 0
 
 var selected_track_index: int = 0
 

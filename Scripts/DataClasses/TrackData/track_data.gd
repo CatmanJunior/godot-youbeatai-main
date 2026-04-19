@@ -4,7 +4,7 @@
 class_name TrackData
 extends Resource
 
-enum TrackType { SAMPLE, SYNTH, SONG }
+enum TrackType { SAMPLE, SYNTH, SONG, EXPORT }
 
 @export var track_type: TrackType = TrackType.SAMPLE
 
@@ -35,8 +35,10 @@ func duplicate_track() -> TrackData:
 	var copy : TrackData = TrackData.new(index, section_index, knob_position, track_type)
 	copy.master_volume = master_volume
 	copy.weights = weights
-	copy.recorded_audio_stream = recorded_audio_stream
-	copy.recording_data = recording_data.duplicate()
+	if recorded_audio_stream:
+		copy.recorded_audio_stream = recorded_audio_stream
+	if recording_data:
+		copy.recording_data = recording_data.duplicate()
 	return copy
 
 func create_recording_data() -> RecordingData:

@@ -60,6 +60,12 @@ signal clap_stomp_detected(interaction_type: int)
 signal add_section_requested(emoji: String)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
+## Emitted to request copying the current section data.
+signal copy_requested()
+## Emitted to request pasting previously copied section data.
+signal paste_requested()
+## Emitted to request removing a section by its index.
+signal section_remove_requested(section_index: int)
 ## Emitted when a section switch has completed, carrying the new section data.
 signal section_switched(section_data: SectionData)
 ## Emitted when a new section has been added at the given index with an emoji label.
@@ -68,10 +74,6 @@ signal section_added(new_section_index: int, emoji: String)
 signal section_removed(section_index: int)
 ## Emitted when the current section has been cleared of all beats.
 signal section_cleared()
-## Emitted to request copying the current section data.
-signal copy_requested()
-## Emitted to request pasting previously copied section data.
-signal paste_requested()
 ## Emitted to request clearing all beats in the current section.
 signal section_clear_requested()
 
@@ -115,16 +117,12 @@ signal record_button_toggled(toggled: bool)
 signal song_select_button_toggled(toggled: bool)
 
 # ── Recording ──
-## Emitted to request starting audio recording.
-signal start_recording_requested(recording_data: RecordingData)
 ## Emitted to request stopping audio recording.
 signal stop_recording_requested(recording_data: RecordingData)
 ## Emitted when audio recording has started.
 signal recording_started(recording_data: RecordingData)
 ## Emitted when audio recording has stopped, carrying the recorded audio stream.
 signal recording_stopped(recording_data: RecordingData)
-## Emitted to announce processing a recorded audio stream into a note sequence.
-signal synth_sequence_ready(recording_data: RecordingData)
 ## Emitted to request setting a recorded audio stream on a specific track.
 signal set_recorded_stream_requested(recording_data: RecordingData)
 
@@ -135,6 +133,8 @@ signal set_stream_requested(track: int, audio_layer: int, audio: AudioStream)
 signal mute_all_requested(mute: bool)
 
 # ── Saving / Exporting ──
+## Emitted to request starting audio recording.
+signal export_recording_requested(recording_data: ExportRecordingData)
 ## Emitted when saving has completed successfully, carrying the output file path.
 signal saving_completed(path: String)
 ## Emitted to request saving the current project as an MP3 file.
@@ -171,9 +171,3 @@ signal fullscreen_toggle_requested()
 # ── Recording UI ──
 ## Emitted to request disabling or enabling UI buttons during recording workflows.
 signal buttons_disabled_requested(disabled: bool)
-
-# ── Song Track Recording ──
-## Emitted to request starting a full-song recording (voice-over + master bus).
-signal song_recording_start_requested()
-## Emitted to request stopping the full-song recording.
-signal song_recording_stop_requested()

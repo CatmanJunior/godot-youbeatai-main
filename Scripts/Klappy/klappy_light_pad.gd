@@ -81,7 +81,6 @@ func _on_gui_input(event: InputEvent) -> void:
 			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
 			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
-			#print(pos)
 			
 			#klappys lampje word veranderd van kleur op basis van muis positie in het vak
 			var color := Color("#ffe8aa")

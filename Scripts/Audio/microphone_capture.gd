@@ -12,8 +12,6 @@ var microphone: AudioStreamMicrophone
 
 # Recording
 var audio_effect_record: AudioEffectRecord
-var recording: bool = false
-var recording_timer: float = 0.0
 
 func _ready():
 	EventBus.recording_started.connect(_start_recording)
@@ -44,21 +42,15 @@ func _ready():
 
 	audio_stream_player.play()
 
-func _process(delta: float):
-
+func _process(_delta: float):
 	GameState.microphone_volume = _get_magnitude(0.0, 20000.0)
-
-	# Recording timer
-	if recording:
-		recording_timer += delta
-	else:
-		recording_timer = 0.0
-
 
 # -- Recording -----------------------------------------------------------------
 func _start_recording(_recording_data: RecordingData) -> void:
-	audio_effect_record.set_recording_active(true)
-	recording = true
+	if audio_effect_record:
+		audio_effect_record.set_recording_active(true)
+	else:
+		push_error("Cannot start recording: no AudioEffectRecord found on bus '%s'." % bus_name)
 
 func _stop_recording(recording_data: RecordingData) -> void:
 	if audio_effect_record:
@@ -66,14 +58,9 @@ func _stop_recording(recording_data: RecordingData) -> void:
 		var audio = audio_effect_record.get_recording()
 		if recording_data:
 			recording_data.audio_stream = audio  # Put audio ON the RecordingData
-	recording = false
 	EventBus.recording_stopped.emit(recording_data)
 
 # -- Helpers -------------------------------------------------------------------
-
 func _get_magnitude(freq_min: float, freq_max: float) -> float:
 	var rms: Vector2 = analyzer.get_magnitude_for_frequency_range(freq_min, freq_max)
 	return (rms.x + rms.y) * 0.5
-
-func get_microphone_volume() -> float:
-	return _get_magnitude(0.0, 20000.0)

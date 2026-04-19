@@ -24,21 +24,15 @@ func _handle_recording(delta: float) -> void:
 	if not current_recording_data.has_detected_sound:
 		return
 	
-
 	current_recording_data.actual_recording_length += delta
 	
-
-	var max_length := current_recording_data.max_recording_length
-
-	var percentage: float = current_recording_data.actual_recording_length / max_length
-
-	recording_sample_button.update_button(percentage)
+	recording_sample_button.update_button(current_recording_data.get_recording_progress())
 	
 	# Update progress bar (only for SYNTH tracks)
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_progress_bar(current_recording_data, percentage)
+		waveform_visualizer.update_progress_bar(current_recording_data, current_recording_data.get_recording_progress())
 
-	if percentage >= 1.0:
+	if current_recording_data.get_recording_progress() >= 1.0:
 		_stop_recording()
 
 func _start_recording() -> void:
@@ -65,6 +59,7 @@ func _start_recording() -> void:
 func _stop_recording() -> void:
 	EventBus.mute_all_requested.emit(false)
 	EventBus.stop_recording_requested.emit(current_recording_data)
+	current_recording_data = null
 
 
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
@@ -81,7 +76,7 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 
 #------------------Event Handlers----------------------
 func _on_recording_sample_button_toggled(toggled: bool) -> void:
-	if toggled and not recording:
+	if toggled and current_recording_data == null:
 		_start_recording()
 	elif recording:
 		_stop_recording()

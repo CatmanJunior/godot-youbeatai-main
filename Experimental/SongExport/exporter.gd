@@ -69,7 +69,8 @@ func _start_export(mode: ExportMode):
 	await get_tree().process_frame
 
 	EventBus.playing_change_requested.emit(true)
-	EventBus.start_recording_requested.emit()
+	var recording_data = ExportRecordingData.new()
+	EventBus.export_recording_requested.emit(recording_data)
 
 
 func _on_beat(_beat: int):
@@ -94,13 +95,12 @@ func _on_beat(_beat: int):
 	elif export_mode == ExportMode.SONG:
 		EventBus.section_switch_requested.emit(SongState.current_section_index + 1)
 
-
 func _stop_recording():
 	EventBus.playing_change_requested.emit(false)
 	# Brief tail to avoid cutting off the last note.
 	await get_tree().create_timer(0.75).timeout
-	EventBus.stop_recording_requested.emit()
-
+	#TODO export stop recording event with data if needed for mail export
+	EventBus.stop_recording_requested.emit(null) # No need to pass data for export case
 
 func _update_loading_progress():
 	var total: int = SongState.total_beats * _target_section_count

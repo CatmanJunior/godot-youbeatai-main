@@ -128,6 +128,9 @@ func get_duration() -> float:
 		return 0.0
 	return audio_stream.get_length()
 
+func get_recording_progress() -> float:
+	return actual_recording_length / max_recording_length if max_recording_length > 0 else 0.0
+	
 
 # =========================================================
 # Volume / RMS

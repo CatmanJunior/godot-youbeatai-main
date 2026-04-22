@@ -10,6 +10,7 @@ var show_template: bool = false
 
 func _ready():
 	EventBus.template_set_requested.connect(_set_template)
+	read_templates()
 
 func read_templates() -> Array[String]:
 	var result = _load_text_files_in_directory("Resources/Templates")
@@ -77,6 +78,3 @@ func _set_template(template_index: int):
 
 func _toggle_show_template():
 	show_template = !show_template
-
-
-

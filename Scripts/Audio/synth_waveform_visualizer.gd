@@ -39,20 +39,20 @@ func _apply_offsets(new_offsets) -> void:
 		line.add_point(offset)
 
 
-func _calculate_volume_offsets(audio: AudioStream, points: int, base_dist: int, volume_dist: int, reversed: bool) -> Array:
+func _calculate_volume_offsets(audio: AudioStream, p_points: int, p_base_dist: int, p_volume_dist: int, p_reversed: bool) -> Array:
 	var new_offsets: Array = []
 
-	for i in range(points):
+	for i in range(p_points):
 		var volume_offset := 0.0
 
 		if audio and audio is AudioStreamWAV:
 			var wav := audio as AudioStreamWAV
 			var length := wav.get_length()
-			var percentage := float(i) / points
-			volume_offset = get_volume_at_time(wav, percentage * length) * volume_dist
+			var percentage := float(i) / p_points
+			volume_offset = get_volume_at_time(wav, percentage * length) * p_volume_dist
 
-		var angle := -PI / 2.0 + TAU * i / points
-		var final_dist := (base_dist - volume_offset) if reversed else (base_dist + volume_offset)
+		var angle := -PI / 2.0 + TAU * i / p_points
+		var final_dist := (p_base_dist - volume_offset) if p_reversed else (p_base_dist + volume_offset)
 
 		new_offsets.append(Vector2(cos(angle), sin(angle)) * final_dist)
 

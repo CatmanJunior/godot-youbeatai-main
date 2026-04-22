@@ -18,9 +18,8 @@ var _target_section_count: int = 0
 func _ready():
 	var bus = AudioServer.get_bus_index("SubMaster")
 	recorder = AudioServer.get_bus_effect(bus, 4)
-	EventBus.export_requested.connect(_on_export_requested)
-	EventBus.beat_triggered.connect(_on_beat)
-	EventBus.recording_stopped.connect(_on_recording_stopped)
+	# EventBus.export_requested.connect(_on_export_requested)
+	# EventBus.beat_triggered.connect(_on_beat)
 
 
 func _on_export_requested(mail: bool, song: bool):
@@ -108,15 +107,15 @@ func _update_loading_progress():
 	loading.set_progress(float(current) / total)
 
 
-func _on_recording_stopped(recording: AudioStream):
+func _on_recording_stopped(_recording_data: RecordingData) -> void:
 	if not is_recording:
 		return
 
-	var filename = _get_file_name()
+	var _filename = _get_file_name()
 	#TODO mail export
 	# var path = Mailer.GetDocumentspath().path_join(filename)
 	
-	recording.save_to_wav(filename)
+	# recording_data.save_to_wav(filename)
 
 	if export_mode != ExportMode.INTERACTIVE:
 		loading.close()

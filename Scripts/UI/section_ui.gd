@@ -125,6 +125,7 @@ func _update_section_ui() -> void:
 	update_section_switch_buttons_colors()
 
 func _update_section_outline_sprite_rotation():
+	if SongState.current_section_index < 0 or SongState.current_section_index >= section_buttons.size(): return
 	var clock_rot = GameState.bar_progress
 	section_buttons[SongState.current_section_index].rotate_outline(clock_rot * 360.0 - 7.0)
 

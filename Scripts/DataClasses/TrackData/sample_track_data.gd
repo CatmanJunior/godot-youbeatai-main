@@ -45,8 +45,8 @@ func duplicate_track() -> TrackData:
 	copy.weights = weights
 	copy.main_audio_stream = main_audio_stream
 	copy.alt_audio_stream = alt_audio_stream
-	if recorded_audio_stream:
+	if recorded_audio_stream != null:
 		copy.recorded_audio_stream = recorded_audio_stream
-	if recording_data:
+	if recording_data != null:
 		copy.recording_data = recording_data.duplicate()
 	return copy

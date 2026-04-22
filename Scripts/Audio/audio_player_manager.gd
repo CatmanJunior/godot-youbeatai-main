@@ -22,7 +22,7 @@ var current_volume: Dictionary= {}
 
 @export var note_player_settings: Array[NotePlayerSettings] = []
 
-
+@export var notes: Notes
 
 func _ready():
 	_init_audio_players()
@@ -56,6 +56,7 @@ func _init_audio_players():
 	# Create synth track players
 	for i in range(SYNTH_TRACKS_COUNT):
 		var player : SynthTrackPlayer = SynthTrackPlayer.new()
+		player.notes = notes
 		player.setup(track_players.size(), "Master", note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)

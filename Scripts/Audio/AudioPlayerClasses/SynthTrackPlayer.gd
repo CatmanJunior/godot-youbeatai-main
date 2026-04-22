@@ -2,6 +2,7 @@ class_name SynthTrackPlayer
 extends TrackPlayerBase
 
 var thread: Thread = null
+var notes : Notes = null
 
 enum SynthLayer {
 	ALT = 0,
@@ -122,7 +123,7 @@ func stop() -> void:
 		
 # -- Voice Processing ---
 func _process_voice_threaded(stream: AudioStream, p_thread: Thread) -> void:
-	var sequence: Sequence = VoiceProcessor.process_audio(stream, GameState.notes)
+	var sequence: Sequence = VoiceProcessor.process_audio(stream, notes)
 	# Marshal back to main thread
 	call_deferred("_on_voice_processed", sequence, p_thread)
 

@@ -8,11 +8,11 @@ class_name Notes
 func import_csv():
 	var records = preload("res://Experimental/VoiceToSynth/data.csv").records.slice(1)
 	
-	var append_to_octaves := func (notes: Array[Note], dest):
+	var append_to_octaves := func (p_notes: Array[Note], dest):
 		var octave = Octave.new()
-		octave.notes = notes.duplicate()
+		octave.notes = p_notes.duplicate()
 		dest.append(octave)
-		notes.clear()
+		p_notes.clear()
 
 	var new_octaves: Array[Octave] = []
 	var notes: Array[Note] = []

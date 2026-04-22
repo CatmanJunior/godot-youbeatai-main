@@ -13,7 +13,6 @@ static func save_layout() -> void:
         push_error("Failed to save layout. Error: %d" % result)
 
 static func create_bus(bus_name: String, send_to: String) -> int:
-    
     var existing := AudioServer.get_bus_index(bus_name)
     if existing != -1:
         return existing
@@ -22,6 +21,7 @@ static func create_bus(bus_name: String, send_to: String) -> int:
     var idx := AudioServer.bus_count - 1
     AudioServer.set_bus_name(idx, bus_name)
     AudioServer.set_bus_send(idx, send_to)
+    print("Created bus '%s' with send to '%s' at index %d" % [bus_name, send_to, idx])
     return idx
 
 static func remove_bus(bus_name: String) -> void:

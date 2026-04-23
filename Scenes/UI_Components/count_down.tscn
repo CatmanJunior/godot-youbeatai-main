@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://caqcrls6ynrlt"]
 
+[ext_resource type="Script" uid="uid://chdspecqyd7qe" path="res://Scripts/UI/count_down.gd" id="1_7cldf"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_5480e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
@@ -12,7 +13,7 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[node name="CountDown" type="Panel" unique_id=2019424404]
+[node name="CountDown" type="Panel" unique_id=2019424404 node_paths=PackedStringArray("count_down_panel", "count_down_label")]
 top_level = true
 z_index = 20
 anchors_preset = 8
@@ -27,6 +28,9 @@ offset_bottom = -280.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_aqgau")
+script = ExtResource("1_7cldf")
+count_down_panel = NodePath(".")
+count_down_label = NodePath("Label")
 
 [node name="Label" type="Label" parent="." unique_id=1909179598]
 layout_mode = 1

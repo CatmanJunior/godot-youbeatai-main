@@ -12,7 +12,7 @@ extends TrackData
 @export var main_audio_stream: AudioStream = null
 @export var alt_audio_stream: AudioStream = null
 
-func _init(track_index: int, p_section_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
+func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, p_section_index, knob_pos, TrackType.SAMPLE)
 	if beats.is_empty():
 		var beats_amount = SongState.total_beats
@@ -47,6 +47,5 @@ func duplicate_track() -> TrackData:
 	copy.alt_audio_stream = alt_audio_stream
 	if recorded_audio_stream != null:
 		copy.recorded_audio_stream = recorded_audio_stream
-	if recording_data != null:
-		copy.recording_data = recording_data.duplicate()
+
 	return copy

@@ -47,7 +47,7 @@ func update_waveform(rec_data: RecordingData) -> void:
 	track_index = track_index - _sample_track_amount  # Adjust index for waveform visualizers (only for SYNTH tracks)
 	if track_index >= 0 and track_index < waveform_lines.size() and waveform_lines[track_index]:
 		if rec_data:
-			SongState.sections[SongState.current_section_index].tracks[track_index + _sample_track_amount].synth_waveform_visualizer.update_line_from_recording(rec_data)
+			rec_data.track_data.synth_waveform_visualizer.update_line_from_recording(rec_data)
 			waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
 
 

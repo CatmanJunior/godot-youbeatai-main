@@ -46,7 +46,7 @@ var _waveform_cache: PackedVector2Array = []
 var _waveform_cache_resolution: int = -1
 
 
-func _init(p_track_data: TrackData, p_audio_stream: AudioStreamWAV = null) -> void:
+func _init(p_track_data: TrackData = null, p_audio_stream: AudioStreamWAV = null) -> void:
 	track_data = p_track_data
 	section_index = p_track_data.section_index
 	if p_audio_stream:

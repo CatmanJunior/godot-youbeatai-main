@@ -134,4 +134,3 @@ func section_has_beats(section: int) -> bool:
 	if section < 0 or section >= sections.size():
 		return false
 	return sections[section].has_active_beats()
-

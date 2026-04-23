@@ -24,7 +24,7 @@ enum TrackType { SAMPLE, SYNTH, SONG, EXPORT }
 
 var recording_data: RecordingData = null
 
-func _init(track_index:int, p_section_index: int, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:
+func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:
 	knob_position = knob_pos	
 	
 	self.track_type = type

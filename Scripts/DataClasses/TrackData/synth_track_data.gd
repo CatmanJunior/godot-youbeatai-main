@@ -12,7 +12,7 @@ var sequence: Sequence = null
 
 var synth_waveform_visualizer: SynthWaveform = null
 
-func _init(track_index: int, p_section_index: int, knob_pos: Vector2 = Vector2.ZERO) -> void:
+func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = Vector2.ZERO) -> void:
 	super._init(track_index, p_section_index, knob_pos, TrackType.SYNTH)
 
 

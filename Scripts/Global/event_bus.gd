@@ -137,6 +137,10 @@ signal mute_all_requested(mute: bool)
 signal export_recording_requested(recording_data: ExportRecordingData)
 ## Emitted when saving has completed successfully, carrying the output file path.
 signal saving_completed(path: String)
+## Emitted to request saving the current song data to disk.
+signal save_song_requested()
+## Emitted to request loading the last saved song data from disk.
+signal load_song_requested()
 ## Emitted to request saving the current project as an MP3 file.
 signal save_to_mp3_requested()
 ## Emitted to request exporting the project. [code]mode_export_song[/code]: false for beat, true for song.

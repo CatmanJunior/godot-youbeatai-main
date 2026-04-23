@@ -54,8 +54,9 @@ func add_section(section_index: int, emoji: String = ""):
 		push_warning("Maximum sections reached, cannot add more.")
 		return
 
-	# Create a new SectionData instance
+	# Create a new SectionData instance and populate its default tracks
 	var new_section: SectionData = SectionData.new(section_index, emoji)
+	new_section.create_default_tracks()
 	sections.insert(section_index, new_section)
 
 	SongState.sections = sections

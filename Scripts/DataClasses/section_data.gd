@@ -25,18 +25,24 @@ var id: int
 
 
 # ── Initialization ───────────────────────────────────────────────────────────
-## Initialize with empty tracks and a new unique ID. Connect to template_set to update beats when a template is applied.
+## Initialize with a new unique ID. Tracks are NOT created here to avoid
+## ghost sub-resources that corrupt Godot's typed-array serialization.
+## Call [method create_default_tracks] explicitly when creating a brand-new section.
 func _init(new_index: int = 0, section_emoji: String = "") -> void:
 	self.id = get_next_id()
 	self.index = new_index
-
 	emoji = section_emoji
-	if tracks.is_empty():
-		for i in range(SAMPLE_TRACKS_PER_SECTION):
-			tracks.append(SampleTrackData.new(i, index))
 
-		for i in range(SYNTH_TRACKS_PER_SECTION):
-			tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION, index))
+## Populate [member tracks] with the default set of [SampleTrackData] and
+## [SynthTrackData] instances. Must be called explicitly after constructing a
+## new section; it is intentionally NOT called from [method _init] so that
+## Godot's ResourceSaver does not encounter ghost sub-resources during
+## serialization.
+func create_default_tracks() -> void:
+	for i in range(SAMPLE_TRACKS_PER_SECTION):
+		tracks.append(SampleTrackData.new(i, index))
+	for i in range(SYNTH_TRACKS_PER_SECTION):
+		tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION, index))
 	
 # ── Post-load rebuild ────────────────────────────────────────────────────────
 
@@ -122,7 +128,6 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 
 func duplicate_section() -> SectionData:
 	var copy: SectionData = SectionData.new(index, emoji)
-	copy.tracks.clear()
 
 	for i in range(tracks.size()):
 		var track_copy = tracks[i].duplicate_track()

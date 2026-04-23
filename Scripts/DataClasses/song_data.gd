@@ -54,11 +54,17 @@ static func from_current() -> SongData:
 	var song := SongData.new()
 	var live := SongState.data
 
-	# Deep-copy mutable resources
+	# Deep-copy mutable resources.
+	# Build the sections array into a local variable first, then assign it in
+	# one shot.  Appending directly to song.sections one-by-one can leave the
+	# first element orphaned in the .tres file due to a Godot ResourceSaver
+	# quirk with typed arrays that are mutated after construction.
 	if live.song_track:
 		song.song_track = live.song_track.duplicate_track() as SongTrackData
+	var sections_snapshot: Array[SectionData] = []
 	for section: SectionData in live.sections:
-		song.sections.append(section.duplicate_section())
+		sections_snapshot.append(section.duplicate_section())
+	song.sections = sections_snapshot
 
 	# Copy value-type fields from the live data
 	song.bpm = live.bpm

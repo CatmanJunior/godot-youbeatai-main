@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="9_5vy51"]
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="10_o2owy"]
+[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="17_kwxat"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
@@ -90,6 +91,9 @@ track_settings_registry = ExtResource("36_qax2n")
 
 [node name="TemplateManager" type="Node" parent="Managers" unique_id=1447662219]
 script = ExtResource("10_o2owy")
+
+[node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
+script = ExtResource("99_sslm1")
 
 [node name="Exporter" type="Node" parent="Managers" unique_id=944798366]
 script = ExtResource("65_87bhu")

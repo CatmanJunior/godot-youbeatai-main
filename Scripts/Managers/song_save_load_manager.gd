@@ -38,6 +38,7 @@ func _on_load_song_requested() -> void:
 
 func _save_song() -> void:
 	_ensure_save_dir()
+	# Create a deep-copy snapshot of the current live SongState for serialisation.
 	var song := SongData.from_current()
 	var err := song.save_to_file(SAVE_PATH)
 	if err == OK:
@@ -52,11 +53,17 @@ func _load_song() -> void:
 	if song == null:
 		push_warning("SongSaveLoadManager: no save file found at %s" % SAVE_PATH)
 		return
+	# Push the loaded resource into SongState and emit update signals.
 	song.apply_to_current()
 	print("SongSaveLoadManager: song loaded ← %s" % SAVE_PATH)
 
 
 func _ensure_save_dir() -> void:
 	var dir := DirAccess.open("user://")
-	if dir and not dir.dir_exists("songs"):
-		dir.make_dir("songs")
+	if dir == null:
+		push_error("SongSaveLoadManager: cannot open user:// directory (error %d)" % DirAccess.get_open_error())
+		return
+	if not dir.dir_exists("songs"):
+		var err := dir.make_dir("songs")
+		if err != OK:
+			push_error("SongSaveLoadManager: failed to create user://songs/ directory (error %d)" % err)

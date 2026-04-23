@@ -1,0 +1,9 @@
+[gd_resource type="Theme" format=3 uid="uid://c0bwj08madm3f"]
+
+[ext_resource type="FontFile" uid="uid://d1cp3vkc5el5b" path="res://Fonts/seguiemj.ttf" id="1_e7bfs"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="2_3taad"]
+
+[resource]
+default_font = ExtResource("2_3taad")
+Button/fonts/font = ExtResource("1_e7bfs")
+Label/fonts/font = ExtResource("1_e7bfs")

@@ -1,409 +1,779 @@
-[gd_scene format=3 uid="uid://c382hsycqmpyw"]
+[gd_scene format=3 uid="uid://qaph84l46wo0"]
 
-[ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="1_f7oq6"]
+[ext_resource type="Texture2D" uid="uid://cnl15vf13mia8" path="res://Resources/Textures_New/Backgrounds/_0003_BG-1080p.png" id="1_e2x6l"]
 [ext_resource type="Script" uid="uid://v62uubacsyqx" path="res://Scripts/UI/settings_menu_ui.gd" id="2_17eq1"]
-[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_igr4l"]
-[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="3_17eq1"]
+[ext_resource type="Theme" path="res://default_theme.tres" id="2_yaket"]
+[ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_5tpfg"]
+[ext_resource type="Texture2D" uid="uid://bvxoaqrsw68b8" path="res://Resources/Textures_Settings/Settings__0008_Slider-empty.png" id="4_xbhen"]
 [ext_resource type="Script" uid="uid://cwhmhfr83v837" path="res://Scripts/UI/template_button.gd" id="5_17eq1"]
+[ext_resource type="Texture2D" uid="uid://p7huqo8hkmpg" path="res://Resources/Textures_Settings/Settings__0000_Hare-Button--no-glow.png" id="5_gx8v5"]
+[ext_resource type="Texture2D" uid="uid://dumxi28qepc74" path="res://Resources/Textures_Settings/Settings__0001_Tortoise-Button-no-glow.png" id="6_mvuv7"]
+[ext_resource type="Texture2D" uid="uid://d0tcoodnl8uvx" path="res://Resources/Textures_Settings/Settings__0010_Slider.png" id="7_ryerx"]
+[ext_resource type="Texture2D" uid="uid://dwnfwdawnl7v1" path="res://Resources/Textures_Settings/Settings__0000_Swinging-Pendulum.png" id="8_r42af"]
+[ext_resource type="Texture2D" uid="uid://n1dnssx3f5r0" path="res://Resources/Textures_Settings/Settings__0001_Pendulum.png" id="9_oqudy"]
+[ext_resource type="Texture2D" uid="uid://bbnkybehc7hv3" path="res://Resources/Textures_Settings/Time.png" id="10_mthl7"]
+[ext_resource type="Texture2D" uid="uid://dca7efdnkbmjq" path="res://Resources/Textures_Settings/shadows__0000s_0008_Small-Button-Glow-Shadow.png" id="11_von1x"]
+[ext_resource type="Texture2D" uid="uid://lhanmhp63mdd" path="res://Resources/Textures_Settings/_0002_Toggle-ON.png" id="12_eyme4"]
+[ext_resource type="Texture2D" uid="uid://vlpkgc7maesp" path="res://Resources/Textures_Settings/_0003_Toggle-OFF.png" id="13_rs3bn"]
+[ext_resource type="Texture2D" uid="uid://d38plcpfw0kp8" path="res://Resources/Textures_Settings/Settings__0013_Note.png" id="14_o6j77"]
+[ext_resource type="Texture2D" uid="uid://cr4otco1wltik" path="res://Resources/Textures_Settings/Settings__0012_Beat-Ring-Icon.png" id="15_bbulw"]
+[ext_resource type="Texture2D" uid="uid://c46agdfmouhob" path="res://Resources/Textures_Settings/Settings__0011_X.png" id="16_aa32w"]
+[ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
+[ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
-texture = ExtResource("1_f7oq6")
+texture = ExtResource("1_e2x6l")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylsbi"]
+bg_color = Color(0.5690333, 0.559, 0.86, 0.09803922)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.58431375, 0.57254905, 0.8666667, 1)
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfvrx"]
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilwxp"]
+bg_color = Color(0.32156864, 0.50980395, 0.3372549, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_bottom = 4
+border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ja2pg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qv1an"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8dylv"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0wopu"]
+bg_color = Color(0.32156864, 0.50980395, 0.3372549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_na2ur"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceghn"]
+bg_color = Color(0.57565, 0.56549996, 0.87, 0.09803922)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.58431375, 0.57254905, 0.8666667, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3h4bx"]
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_3h4bx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o2owy"]
+bg_color = Color(0.32156864, 0.50980395, 0.3372549, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rlvxq"]
+bg_color = Color(0.52487504, 0.85, 0.46750003, 0.5921569)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
 
-[node name="SettingsPanel" type="Panel" unique_id=1609891462 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "swing_slider", "swing_label", "template_button", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
 top_level = true
+light_mask = 2
 z_index = 1000
 z_as_relative = false
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
+offset_left = 3.0
+offset_top = 3.0
+offset_right = 1283.0
+offset_bottom = 723.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
 script = ExtResource("2_17eq1")
 settings_panel = NodePath(".")
-settings_back_button = NodePath("Back")
-button_is_clap = NodePath("Sliders/ButtonIsClap")
-button_add_beats = NodePath("Sliders/ButtonAddsBeat")
+settings_back_button = NodePath("Buttons2/Back")
+button_is_clap = NodePath("Panel/right/ButtonIsClap")
+button_add_beats = NodePath("Panel/right/Knop adds beat")
 clap_bias_slider = NodePath("Sliders/ClapStompBias")
 recording_volume_threshold_slider = NodePath("Sliders/VolumeTreshold")
 microphone_volume_progress_bar = NodePath("Sliders/VolumeTreshold/ProgressBar")
-recording_delay_slider = NodePath("Sliders/RecordingDelaySlider")
-recording_delay_label = NodePath("Sliders/RecordingDelaySlider/recordingDelayLabel")
-bpm_label = NodePath("BpmLabel")
-bpm_up_button = NodePath("Buttons/BpmUpButton")
-bpm_down_button = NodePath("Buttons/BpmDownButton")
-swing_slider = NodePath("Sliders/SwingSlider")
-swing_label = NodePath("Sliders/SwingSlider/SwingLabel")
-template_button = NodePath("Buttons/TemplateButton")
-all_sections_to_mp3 = NodePath("Buttons/ExportSongButton")
-save_to_wav_button = NodePath("Buttons/ExportBeatSectionButton")
-restart_button = NodePath("Buttons/RestartButton")
-metronome_toggle = NodePath("Sliders/MetronomeToggle")
-mute_speech = NodePath("Sliders/MuteSpeachToggle")
+recording_delay_slider = NodePath("Panel/delay/RecordingDelaySlider")
+recording_delay_label = NodePath("Panel/delay/Shadows0000s0008SmallButtonGlowShadow/recordingDelayLabel")
+bpm_label = NodePath("Panel/bpm/bpm slider/BpmLabel")
+bpm_up_button = NodePath("Panel/bpm/BpmUpButton")
+bpm_down_button = NodePath("Panel/bpm/BpmDownButton")
+bpm_slider = NodePath("Panel/bpm/bpm slider")
+bpm_progress_bar = NodePath("Panel/bpm/bpmProgressBar")
+swing_up_button = NodePath("Panel/swing/swingUpButton2")
+swing_down_button = NodePath("Panel/swing/swingDownButton2")
+swing_slider = NodePath("Panel/swing/SwingSlider")
+swing_label = NodePath("left text/SwingLabel")
+swing_progress_bar = NodePath("Panel/swing/ProgressBar")
+template_button = NodePath("Buttons/tip_doe/TemplateButton")
+all_sections_to_mp3 = NodePath("Buttons2/AllLayersToMp3")
+save_to_wav_button = NodePath("Buttons2/SaveToWavButton")
+restart_button = NodePath("Buttons2/RestartButton")
+metronome_toggle = NodePath("Panel/right/MetronomeToggle")
+mute_speech = NodePath("Panel/right/MuteSpeachToggle")
 
-[node name="Title" type="Label" parent="." unique_id=1881447421]
+[node name="left text" type="VBoxContainer" parent="." unique_id=1161421862]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 245.0
+offset_top = -258.0
+offset_right = 388.0
+offset_bottom = 119.0
+grow_vertical = 2
+theme_override_constants/separation = 115
+
+[node name="bpm" type="Label" parent="left text" unique_id=1191003587]
+light_mask = 2
+layout_mode = 2
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "BPM"
+metadata/_edit_use_anchors_ = true
+
+[node name="SwingLabel" type="Label" parent="left text" unique_id=1853889709]
+light_mask = 2
+layout_mode = 2
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "Swing"
+metadata/_edit_use_anchors_ = true
+
+[node name="style" type="Label" parent="left text" unique_id=502296905]
+light_mask = 2
+layout_mode = 2
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "Style Tip"
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="." unique_id=502402695]
 layout_mode = 0
 offset_left = 514.0
 offset_top = 20.0
 offset_right = 766.0
 offset_bottom = 76.0
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
+theme_override_colors/font_color = Color(0.5803922, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 53
 text = "Instellingen"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Back" type="Button" parent="." unique_id=119032608]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 158.0
-offset_bottom = 48.0
-focus_mode = 0
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 30
-text = "↩️ Terug
-"
-alignment = 0
+[node name="Panel" type="Panel" parent="." unique_id=1205068931]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -527.0
+offset_top = -271.0
+offset_right = 528.0
+offset_bottom = 209.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ylsbi")
 
-[node name="Buttons" type="Node2D" parent="." unique_id=922183712]
-position = Vector2(328, 136)
+[node name="bpm" type="Control" parent="Panel" unique_id=1292344551]
+anchors_preset = 0
+offset_left = 60.0
+offset_top = 70.0
+offset_right = 560.0
+offset_bottom = 140.0
+
+[node name="bpmProgressBar" type="ProgressBar" parent="Panel/bpm" unique_id=375551702]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 5.0
+offset_right = 467.0
+offset_bottom = 55.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_mfvrx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ilwxp")
+min_value = 40.0
+max_value = 300.0
+step = 1.0
+value = 120.0
+show_percentage = false
+
+[node name="bpm slider" type="HSlider" parent="Panel/bpm" unique_id=550920341]
+layout_mode = 0
+offset_left = -14.0
+offset_top = -24.0
+offset_right = 701.0
+offset_bottom = 130.095
+scale = Vector2(0.7, 0.7)
+theme_override_icons/grabber = ExtResource("4_xbhen")
+theme_override_icons/grabber_highlight = ExtResource("4_xbhen")
+theme_override_styles/slider = SubResource("StyleBoxFlat_ja2pg")
+min_value = 40.0
+max_value = 300.0
+value = 120.0
+
+[node name="BpmLabel" type="Label" parent="Panel/bpm/bpm slider" unique_id=1382470317]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.28773436
+anchor_top = -2.1829972
+anchor_right = 0.3353903
+anchor_bottom = -2.1524413
+offset_left = 141.4128
+offset_top = 286.38895
+offset_right = 249.74095
+offset_bottom = 353.38895
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 50
+text = "bpm"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="BpmUpButton" type="Button" parent="Panel/bpm" unique_id=105996143]
+layout_mode = 0
+offset_left = 417.0
+offset_top = -20.0
+offset_right = 617.0
+offset_bottom = 180.0
+scale = Vector2(0.5, 0.5)
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 640
+icon = ExtResource("5_gx8v5")
+flat = true
+expand_icon = true
+
+[node name="BpmDownButton" type="Button" parent="Panel/bpm" unique_id=1928230477]
+layout_mode = 0
+offset_left = -47.0
+offset_top = -20.0
+offset_right = 153.0
+offset_bottom = 180.0
+scale = Vector2(0.5, 0.5)
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 640
+icon = ExtResource("6_mvuv7")
+flat = true
+expand_icon = true
+
+[node name="swing" type="Control" parent="Panel" unique_id=1661127305]
+anchors_preset = 0
+offset_left = 61.0
+offset_top = 219.0
+offset_right = 561.0
+offset_bottom = 289.0
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel/swing" unique_id=1555317528]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 10.0
+offset_right = 467.0
+offset_bottom = 60.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_mfvrx")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ilwxp")
+max_value = 2.0
+show_percentage = false
+
+[node name="SwingSlider" type="HSlider" parent="Panel/swing" unique_id=553197593]
+visible = false
+light_mask = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.04624646
+anchor_top = -0.6842262
+anchor_right = -0.04624646
+anchor_bottom = -0.6842261
+offset_left = 12.123222
+offset_top = 30.895834
+offset_right = 727.1232
+offset_bottom = 180.89583
+scale = Vector2(0.7, 0.7)
+theme_override_icons/grabber = ExtResource("7_ryerx")
+theme_override_icons/grabber_highlight = ExtResource("7_ryerx")
+theme_override_styles/slider = SubResource("StyleBoxFlat_qv1an")
+max_value = 2.0
+step = 0.01
+metadata/_edit_use_anchors_ = true
+
+[node name="swingUpButton2" type="Button" parent="Panel/swing" unique_id=904268492]
+layout_mode = 0
+offset_left = 415.0
+offset_top = -16.0
+offset_right = 615.0
+offset_bottom = 184.0
+scale = Vector2(0.5, 0.5)
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 640
+icon = ExtResource("8_r42af")
+flat = true
+expand_icon = true
+
+[node name="swingDownButton2" type="Button" parent="Panel/swing" unique_id=1158822682]
+layout_mode = 0
+offset_left = -49.0
+offset_top = -16.0
+offset_right = 151.0
+offset_bottom = 184.0
+scale = Vector2(0.5, 0.5)
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 640
+icon = ExtResource("9_oqudy")
+flat = true
+expand_icon = true
+
+[node name="delay" type="Control" parent="Panel" unique_id=2030069879]
+anchors_preset = 0
+offset_left = 679.0
+offset_top = 381.0
+offset_right = 979.0
+offset_bottom = 451.0
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel/delay" unique_id=306259752]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 9.0
+offset_right = 282.0
+offset_bottom = 59.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_8dylv")
+theme_override_styles/fill = SubResource("StyleBoxFlat_0wopu")
+max_value = 0.8
+value = 0.45
+show_percentage = false
+
+[node name="RecordingDelaySlider" type="HSlider" parent="Panel/delay" unique_id=56271380]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.2770997
+anchor_top = -4.5928555
+anchor_right = 1.2770997
+anchor_bottom = -4.5928555
+offset_left = -393.1299
+offset_top = 304.49988
+offset_right = 56.870087
+offset_bottom = 454.49988
+scale = Vector2(0.7, 0.7)
+theme_override_icons/grabber = ExtResource("4_xbhen")
+theme_override_icons/grabber_highlight = ExtResource("4_xbhen")
+theme_override_styles/slider = SubResource("StyleBoxFlat_na2ur")
+max_value = 0.8
+step = 0.01
+value = 0.45
+metadata/_edit_use_anchors_ = true
+
+[node name="Shadows0000s0008SmallButtonGlowShadow2" type="Sprite2D" parent="Panel/delay" unique_id=1900299613]
+position = Vector2(9.000122, 33)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("10_mthl7")
+
+[node name="Shadows0000s0008SmallButtonGlowShadow" type="Sprite2D" parent="Panel/delay" unique_id=1637106568]
+position = Vector2(281.00012, 33)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("11_von1x")
+
+[node name="recordingDelayLabel" type="Label" parent="Panel/delay/Shadows0000s0008SmallButtonGlowShadow" unique_id=1269911775]
+offset_left = -44.28588
+offset_top = -38.571426
+offset_right = 48.515663
+offset_bottom = 37.94731
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "0.4s"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="right" type="VBoxContainer" parent="Panel" unique_id=688920235]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -435.0
+offset_top = -253.0
+offset_right = 115.0
+offset_bottom = 227.0
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(0.75, 0.75)
+theme_override_constants/separation = -55
+
+[node name="MetronomeToggle" type="CheckButton" parent="Panel/right" unique_id=1708949378]
+light_mask = 2
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_icons/checked = ExtResource("12_eyme4")
+theme_override_icons/unchecked = ExtResource("13_rs3bn")
+vertical_icon_alignment = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/right/MetronomeToggle" unique_id=175385891]
+light_mask = 2
+layout_mode = 0
+offset_left = -2.0
+offset_top = 51.0
+offset_right = 195.0
+offset_bottom = 94.0
+theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 46
+text = "Metronoom"
+
+[node name="Knop adds beat" type="CheckButton" parent="Panel/right" unique_id=1549939005]
+light_mask = 2
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+theme_override_icons/checked = ExtResource("12_eyme4")
+theme_override_icons/unchecked = ExtResource("13_rs3bn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/right/Knop adds beat" unique_id=1596923273]
+light_mask = 2
+layout_mode = 0
+offset_top = 45.0
+offset_right = 201.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 46
+text = "Knop is klap"
+
+[node name="ButtonIsClap" type="CheckButton" parent="Panel/right" unique_id=860283575]
+light_mask = 2
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_focus_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+theme_override_icons/checked = ExtResource("12_eyme4")
+theme_override_icons/unchecked = ExtResource("13_rs3bn")
+button_pressed = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/right/ButtonIsClap" unique_id=1035969502]
+light_mask = 2
+layout_mode = 0
+offset_top = 45.0
+offset_right = 296.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 46
+text = "Knop maakt beat"
+
+[node name="AddBeatsToggle" type="CheckButton" parent="Panel/right" unique_id=2078575210]
+light_mask = 2
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+theme_override_icons/checked = ExtResource("12_eyme4")
+theme_override_icons/unchecked = ExtResource("13_rs3bn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/right/AddBeatsToggle" unique_id=131516433]
+light_mask = 2
+layout_mode = 0
+offset_top = 45.0
+offset_right = 282.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 46
+text = "Klap maakt beat"
+
+[node name="MuteSpeachToggle" type="CheckButton" parent="Panel/right" unique_id=1064535899]
+light_mask = 2
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+theme_override_icons/checked = ExtResource("12_eyme4")
+theme_override_icons/unchecked = ExtResource("13_rs3bn")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel/right/MuteSpeachToggle" unique_id=1766770326]
+light_mask = 2
+layout_mode = 0
+offset_top = 45.0
+offset_right = 170.0
+offset_bottom = 88.0
+theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 46
+text = "Klappy stil"
+
+[node name="Buttons2" type="HBoxContainer" parent="." unique_id=696631749]
+light_mask = 2
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -530.0
+offset_top = -127.0
+offset_right = 530.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="AllLayersToMp3" type="Button" parent="Buttons2" unique_id=1439104028]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_constants/icon_max_width = 82
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
+text = "Liedje opslaan?"
+icon = ExtResource("14_o6j77")
+autowrap_mode = 2
+icon_alignment = 2
+
+[node name="SaveToWavButton" type="Button" parent="Buttons2" unique_id=409124706]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_constants/icon_max_width = 82
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 25
+theme_override_icons/icon = SubResource("CanvasTexture_3h4bx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
+text = "Beats opslaan?"
+icon = ExtResource("15_bbulw")
+autowrap_mode = 2
+icon_alignment = 2
+
+[node name="RestartButton" type="Button" parent="Buttons2" unique_id=32174646]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_constants/icon_max_width = 82
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 25
+theme_override_icons/icon = SubResource("CanvasTexture_3h4bx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
+text = "Herstart"
+icon = ExtResource("16_aa32w")
+autowrap_mode = 2
+icon_alignment = 2
+
+[node name="Back" type="Button" parent="Buttons2" unique_id=286806211]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 25
+theme_override_icons/icon = SubResource("CanvasTexture_3h4bx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
+text = "Terug
+"
+autowrap_mode = 2
+icon_alignment = 2
+
+[node name="style2" type="Label" parent="." unique_id=1065496162]
+light_mask = 2
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.6278763
+anchor_top = -1.4828335
+anchor_right = 1.720055
+anchor_bottom = -1.4828335
+offset_left = -1236.6815
+offset_top = 1492.6401
+offset_right = -1093.6815
+offset_bottom = 1535.6401
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "Vertraging"
+metadata/_edit_use_anchors_ = true
+
+[node name="Buttons" type="Node2D" parent="." unique_id=1829239205]
+position = Vector2(-1006, -32)
 scale = Vector2(1.8903, 1.8903)
 
-[node name="BpmUpButton" type="Button" parent="Buttons" unique_id=1571816358]
-offset_left = 34.0
-offset_top = 3.0
-offset_right = 75.0
-offset_bottom = 43.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-text = "🐇"
-
-[node name="BpmDownButton" type="Button" parent="Buttons" unique_id=936857892]
-offset_left = -75.0
-offset_top = 3.0
-offset_right = -32.0
-offset_bottom = 43.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-text = "🐢"
-
-[node name="TemplateButton" type="Button" parent="Buttons" unique_id=1890445174 node_paths=PackedStringArray("previous_template_button", "next_template_button", "tip_template_button", "set_template_button")]
-offset_left = -75.0
-offset_top = 47.0
-offset_right = 75.0
-offset_bottom = 87.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-text = ".........."
-script = ExtResource("5_17eq1")
-previous_template_button = NodePath("TemplateLeftButton")
-next_template_button = NodePath("TemplateRightButton")
-tip_template_button = NodePath("ShowTemplateButton")
-set_template_button = NodePath("SetTemplateButton")
-
-[node name="TemplateLeftButton" type="Button" parent="Buttons/TemplateButton" unique_id=302347013]
-layout_mode = 0
-offset_left = -44.0
-offset_right = -4.0
-offset_bottom = 40.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-text = "<"
-
-[node name="TemplateRightButton" type="Button" parent="Buttons/TemplateButton" unique_id=581934042]
-layout_mode = 0
-offset_left = 154.0
-offset_right = 194.0
-offset_bottom = 40.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-text = ">"
-
-[node name="ShowTemplateButton" type="Button" parent="Buttons/TemplateButton" unique_id=180709587]
-layout_mode = 0
-offset_top = 44.0
-offset_right = 73.0
-offset_bottom = 84.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-text = "Tip🔮"
-
-[node name="SetTemplateButton" type="Button" parent="Buttons/TemplateButton" unique_id=1997146572]
-layout_mode = 0
-offset_left = 77.0
-offset_top = 44.0
-offset_right = 150.0
-offset_bottom = 84.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-text = "Doe 🤖
-"
-
-[node name="ExportSongButton" type="Button" parent="Buttons" unique_id=1689275553]
-offset_left = -75.0
-offset_top = 135.0
-offset_right = 75.0
-offset_bottom = 175.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-text = "🎼 Liedje opslaan"
-alignment = 0
-
-[node name="ExportBeatSectionButton" type="Button" parent="Buttons" unique_id=21524903]
-offset_left = -75.0
-offset_top = 179.0
-offset_right = 75.0
-offset_bottom = 219.0
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "📥 Beat ring opslaan"
-alignment = 0
-
-[node name="ListenSongExportButton" type="Button" parent="Buttons" unique_id=1638053343]
+[node name="ListenSongExportButton" type="Button" parent="Buttons" unique_id=1404813126]
 offset_left = 78.29445
 offset_top = 134.8992
 offset_right = 118.29445
 offset_bottom = 174.8992
 focus_mode = 0
-theme = ExtResource("3_17eq1")
+theme = ExtResource("2_yaket")
 text = "▶️"
 
-[node name="ListenBeatExportButton" type="Button" parent="Buttons" unique_id=728244629]
-offset_left = 78.294
-offset_top = 179.0
-offset_right = 118.294
-offset_bottom = 219.0
+[node name="ListenBeatExportButton" type="Button" parent="Buttons" unique_id=991533812]
+offset_left = 88.345764
+offset_top = 202.08432
+offset_right = 128.34576
+offset_bottom = 242.08432
 focus_mode = 0
-theme = ExtResource("3_17eq1")
+theme = ExtResource("2_yaket")
 text = "▶️"
 
-[node name="RestartButton" type="Button" parent="Buttons" unique_id=1658275871]
-offset_left = -75.0
-offset_top = 223.0
-offset_right = 75.0
-offset_bottom = 263.0
+[node name="tip_doe" type="Node2D" parent="Buttons" unique_id=1478037291]
+position = Vector2(-75.000015, 47)
+
+[node name="TemplateButton" type="Button" parent="Buttons/tip_doe" unique_id=1526642944 node_paths=PackedStringArray("previous_template_button", "next_template_button", "tip_template_button", "set_template_button")]
+offset_left = 706.1168
+offset_top = 222.79843
+offset_right = 866.1168
+offset_bottom = 254.79843
+scale = Vector2(0.845, 0.845)
 focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-text = "🔄 Herstart"
-alignment = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_o2owy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_o2owy")
+text = ".........."
+script = ExtResource("5_17eq1")
+previous_template_button = NodePath("TemplateLeftButton")
+next_template_button = NodePath("TemplateRightButton")
+tip_template_button = NodePath("ShowTemplateButton")
+set_template_button = NodePath(".")
 
-[node name="Sliders" type="Node2D" parent="." unique_id=1347618555]
-position = Vector2(911, 144)
-scale = Vector2(2.52787, 2.52787)
-
-[node name="MetronomeToggle" type="CheckButton" parent="Sliders" unique_id=2387856]
-offset_left = -75.0
-offset_top = -18.1089
-offset_right = 75.0
-offset_bottom = 5.89106
+[node name="TemplateLeftButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1884172626]
+layout_mode = 0
+offset_left = 27.306335
+offset_top = -18.155617
+offset_right = 95.306335
+offset_bottom = 49.844383
+scale = Vector2(-1, 1)
 focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_font_sizes/font_size = 12
-alignment = 2
-metadata/_edit_use_anchors_ = true
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 60
+icon = ExtResource("17_vlckr")
+flat = true
 
-[node name="Label" type="Label" parent="Sliders/MetronomeToggle" unique_id=749873005]
+[node name="TemplateRightButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1965643518]
 layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "🫀"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="Sliders/MetronomeToggle" unique_id=1417501234]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.0037179312
-anchor_top = 0.12818654
-anchor_right = 0.93628204
-anchor_bottom = 1.2948532
-offset_right = 95.0
-offset_bottom = 20.0
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
-text = "metronoom"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonAddsBeat" type="CheckButton" parent="Sliders" unique_id=897877742]
-offset_left = -75.0
-offset_top = 21.1543
-offset_right = 75.0
-offset_bottom = 45.1543
+offset_left = 134.98785
+offset_top = -18.155617
+offset_right = 202.98785
+offset_bottom = 49.844383
 focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 60
+icon = ExtResource("17_vlckr")
+flat = true
 
-[node name="Label" type="Label" parent="Sliders/ButtonAddsBeat" unique_id=278160239]
+[node name="ShowTemplateButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1911187870]
 layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "🔘"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="Sliders/ButtonAddsBeat" unique_id=1846016658]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.001080645
-anchor_top = 0.05809625
-anchor_right = -0.0010806274
-anchor_bottom = 0.05809625
-offset_top = -17.80156
-offset_right = 224.0
-offset_bottom = 30.19844
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
-text = "knop is klap"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ButtonIsClap" type="CheckButton" parent="Sliders" unique_id=1455014883]
-offset_left = -75.0
-offset_top = 3.35274
-offset_right = 75.0
-offset_bottom = 27.3527
+offset_left = 180.30377
+offset_top = -20.03376
+offset_right = 253.30377
+offset_bottom = 52.96624
 focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_font_sizes/font_size = 12
-button_pressed = true
-alignment = 1
-metadata/_edit_use_anchors_ = true
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.9882353, 0.9764706, 0.8666667, 1)
+theme_override_constants/icon_max_width = 60
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rlvxq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rlvxq")
+text = "TIP"
+icon = ExtResource("18_sm01b")
+flat = true
+icon_alignment = 1
 
-[node name="Label" type="Label" parent="Sliders/ButtonIsClap" unique_id=1735217019]
+[node name="SetTemplateButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1247118301]
 layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "👏"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="Sliders/ButtonIsClap" unique_id=1491424473]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.0037179312
-anchor_top = 0.10754522
-anchor_right = 1.4296155
-anchor_bottom = 1.3575453
-offset_top = 17.801556
-offset_right = 117.0
-offset_bottom = 35.80156
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
-text = "knop maakt beat"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="AddBeatsToggle" type="CheckButton" parent="Sliders" unique_id=71349857]
-offset_left = -75.0
-offset_top = 41.3294
-offset_right = 75.0
-offset_bottom = 65.3294
+offset_left = 77.0
+offset_top = 183.43411
+offset_right = 150.0
+offset_bottom = 223.43411
 focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
+text = "Doe 🤖
+"
 
-[node name="Label" type="Label" parent="Sliders/AddBeatsToggle" unique_id=658818379]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "👂🏼"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
+[node name="Sliders" type="Node2D" parent="." unique_id=656894523]
+position = Vector2(-594, 531)
+scale = Vector2(1.485, 1.485)
 
-[node name="Label2" type="Label" parent="Sliders/AddBeatsToggle" unique_id=1347126476]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
-text = "klap maakt beat"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="MuteSpeachToggle" type="CheckButton" parent="Sliders" unique_id=791084309]
-offset_left = -75.0
-offset_top = 61.3735
-offset_right = 75.0
-offset_bottom = 85.3735
-focus_mode = 0
-theme = ExtResource("3_17eq1")
-theme_override_font_sizes/font_size = 12
-alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Sliders/MuteSpeachToggle" unique_id=625446555]
-layout_mode = 0
-offset_left = -25.0
-offset_top = 4.0
-offset_bottom = 24.0
-mouse_filter = 0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "🔇"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="Sliders/MuteSpeachToggle" unique_id=1674191175]
-layout_mode = 0
-offset_right = 87.0
-offset_bottom = 23.0
-scale = Vector2(0.35, 0.35)
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
-text = "klappy stil"
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="VolumeTreshold" type="HSlider" parent="Sliders" unique_id=385654296]
+[node name="VolumeTreshold" type="HSlider" parent="Sliders" unique_id=917690287]
 z_index = 4096
 z_as_relative = false
 offset_left = -75.0
@@ -416,20 +786,20 @@ step = 0.001
 value = 0.1
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Sliders/VolumeTreshold" unique_id=311393832]
+[node name="Label" type="Label" parent="Sliders/VolumeTreshold" unique_id=484500895]
 layout_mode = 0
 offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 15
 text = "🎙️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="ProgressBar" type="ProgressBar" parent="Sliders/VolumeTreshold" unique_id=470098930]
+[node name="ProgressBar" type="ProgressBar" parent="Sliders/VolumeTreshold" unique_id=641471240]
 z_index = 1001
 z_as_relative = false
 layout_mode = 0
@@ -441,7 +811,7 @@ max_value = 1.0
 value = 0.1
 show_percentage = false
 
-[node name="ClapStompBias" type="HSlider" parent="Sliders" unique_id=126735712]
+[node name="ClapStompBias" type="HSlider" parent="Sliders" unique_id=1882241039]
 offset_left = -75.0
 offset_top = 104.0
 offset_right = 75.0
@@ -455,55 +825,33 @@ step = 50.0
 value = 800.0
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Sliders/ClapStompBias" unique_id=24467238]
+[node name="Label" type="Label" parent="Sliders/ClapStompBias" unique_id=1452742482]
 layout_mode = 0
 offset_left = 151.0
 offset_right = 176.0
 offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 15
 text = "👟"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Label2" type="Label" parent="Sliders/ClapStompBias" unique_id=1825757462]
+[node name="Label2" type="Label" parent="Sliders/ClapStompBias" unique_id=747237103]
 layout_mode = 0
 offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 15
 text = "🖐🏼"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="SwingSlider" type="HSlider" parent="Sliders" unique_id=225632544]
-offset_left = -75.0
-offset_top = 124.0
-offset_right = 75.0
-offset_bottom = 148.0
-max_value = 0.4
-step = 0.01
-metadata/_edit_use_anchors_ = true
-
-[node name="SwingLabel" type="Label" parent="Sliders/SwingSlider" unique_id=1428928164]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "🌀"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ReverbSlider" type="HSlider" parent="Sliders" unique_id=473977425]
+[node name="ReverbSlider" type="HSlider" parent="Sliders" unique_id=1381816311]
 offset_left = -75.0
 offset_top = 144.0
 offset_right = 75.0
@@ -512,20 +860,20 @@ max_value = 0.5
 step = 0.01
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Sliders/ReverbSlider" unique_id=1343130]
+[node name="Label" type="Label" parent="Sliders/ReverbSlider" unique_id=2086577272]
 layout_mode = 0
 offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 15
 text = "🏛️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="DelaySlider" type="HSlider" parent="Sliders" unique_id=1069314394]
+[node name="DelaySlider" type="HSlider" parent="Sliders" unique_id=1398828883]
 offset_left = -75.0
 offset_top = 164.0
 offset_right = 75.0
@@ -534,81 +882,25 @@ max_value = 0.5
 step = 0.01
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Sliders/DelaySlider" unique_id=25603858]
+[node name="Label" type="Label" parent="Sliders/DelaySlider" unique_id=864663077]
 layout_mode = 0
 offset_left = -24.41
 offset_right = 0.59
 offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
+theme = ExtResource("2_yaket")
+theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 15
 text = "⛰️"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="RecordingDelaySlider" type="HSlider" parent="Sliders" unique_id=959889564]
-offset_left = -75.0
-offset_top = 186.15298
-offset_right = 75.0
-offset_bottom = 210.15298
-max_value = 0.8
-step = 0.01
-value = 0.45
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Sliders/RecordingDelaySlider" unique_id=29017293]
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.13186264
-anchor_bottom = 0.13186264
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 15
-text = "⏱️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="recordingDelayLabel" type="Label" parent="Sliders/RecordingDelaySlider" unique_id=1207364435]
+[node name="soundtesttext" type="Label" parent="." unique_id=369322797]
 layout_mode = 0
-offset_left = 153.48897
-offset_top = -0.7911835
-offset_right = 246.29051
-offset_bottom = 75.72757
-scale = Vector2(0.375, 0.375)
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 40
-text = "0.4s"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="BpmLabel" type="Label" parent="." unique_id=1170250403]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.674133
-anchor_top = -0.725
-anchor_right = -0.626477
-anchor_bottom = -0.694444
-offset_left = 1138.89
-offset_top = 659.0
-offset_right = 1183.89
-offset_bottom = 726.0
-theme = ExtResource("3_17eq1")
-theme_override_fonts/font = ExtResource("2_igr4l")
-theme_override_font_sizes/font_size = 32
-text = "bpm"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="soundtesttext" type="Label" parent="." unique_id=1971537104]
-layout_mode = 0
-offset_left = 88.0
-offset_top = 86.0
-offset_right = 165.0
-offset_bottom = 123.0
+offset_left = 4.0
+offset_top = 691.0
+offset_right = 55.0
+offset_bottom = 716.0
 theme_override_font_sizes/font_size = 25
+
+[connection signal="value_changed" from="Panel/bpm/bpmProgressBar" to="Panel/bpm" method="_on_bpm_progress_bar_value_changed"]

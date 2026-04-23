@@ -1,17 +1,17 @@
-[gd_resource type="Resource" script_class="SynthTrackSettings" format=3 uid="uid://b4kjw1gmbbkj6"]
+[gd_resource type="Resource" script_class="SynthTrackUISettings" format=3 uid="uid://b4kjw1gmbbkj6"]
 
 [ext_resource type="Texture2D" uid="uid://x1cwacm11rji" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Yellow_Ring.png" id="1_3kvy2"]
 [ext_resource type="Script" uid="uid://c8a4ts2urwcjm" path="res://Scripts/DataClasses/Track_UI_Settings/synth_track_UI_settings.gd" id="1_mqs16"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="2_cab6j"]
-[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="3_qj05e"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Icons/Icons-_28_0012_Robot.png" id="3_qj05e"]
 [ext_resource type="Texture2D" uid="uid://636ogogq7njv" path="res://Resources/Textures_New/Icons/_0001s_0003_Bird.png" id="4_3yoxf"]
 
 [resource]
 script = ExtResource("1_mqs16")
+button_background_color = Color(1, 1, 0, 0.34901962)
 button_icon_texture = ExtResource("4_3yoxf")
 button_outline_texture = ExtResource("2_cab6j")
 button_filled_texture = ExtResource("1_3kvy2")
-button_background_color = Color(1, 1, 0, 0.34901962)
 chaos_pad_main_icon = ExtResource("4_3yoxf")
 chaos_pad_alt_icon = ExtResource("3_qj05e")
 track_color = Color(1, 1, 0, 1)

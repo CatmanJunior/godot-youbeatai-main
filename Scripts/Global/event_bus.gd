@@ -32,7 +32,8 @@ signal bpm_down_requested(value: int)
 signal bpm_set_requested(value: int)
 ## Emitted to request setting the swing value (0.0 – 1.0).
 signal swing_set_requested(value: float)
-
+## Emitted when the swing value has changed.
+signal swing_changed(new_swing: float)
 
 # ── Beat Clock ──
 ## Emitted on every beat tick with the current beat index.

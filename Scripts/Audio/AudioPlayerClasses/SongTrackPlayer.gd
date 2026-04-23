@@ -29,6 +29,7 @@ var recording_timer: float = 0.0
 ## Whether we're in song-recording mode.
 var is_song_recording: bool = false
 
+var _is_playing: bool = false
 
 # ── TrackPlayerBase overrides ────────────────────────────────────────────────
 
@@ -42,6 +43,7 @@ func _ready() -> void:
 	super._ready()
 
 	# Song-specific signals
+	EventBus.track_selected.connect(_on_track_selected)
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
 
@@ -54,14 +56,15 @@ func _process(delta: float) -> void:
 
 func play(offset: float = 0.0) -> void:
 	if track_data and track_data.recorded_audio_stream:
-		players[SongLayer.VOICE_OVER].stream = track_data.recorded_audio_stream
+		_is_playing = true
 		players[SongLayer.VOICE_OVER].play(offset)
 
 func stop() -> void:
+	_is_playing = false
 	for p in players:
 		p.stop()
 
-func _set_recorded_stream(recording_data : RecordingData) -> void:
+func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
 		return
 	track_data.recorded_audio_stream = recording_data.audio_stream
@@ -71,9 +74,24 @@ func _set_recorded_stream(recording_data : RecordingData) -> void:
 
 # ── TrackPlayerBase overrides ────────────────────────────────────────────────
 
-## Song track is not beat-driven — do nothing on beat_triggered.
+
 func _on_beat_triggered(_beat: int) -> void:
-	pass
+	if SongState.selected_track_index != track_index:
+		return
+
+	if _beat != 1:
+		return
+
+	if SongState.current_section_index == 0 and not _is_playing:
+		play()
+		return
+		
+	if SongState.current_section_index == SongState.sections.size() - 1:
+		EventBus.section_switch_requested.emit(0) 
+		play()
+	else:
+		EventBus.section_switch_requested.emit(SongState.current_section_index + 1)
+
 
 ## Song track is NOT per-section — ignore section switches for stream loading.
 ## (The voice_over lives on SongState.song_track, not on sections.)
@@ -91,3 +109,8 @@ func _on_section_added(section_index: int, _emoji: String) -> void:
 func _on_section_removed(section_index: int) -> void:
 	if track_data.has_recording():
 		track_data.remove_audio_for_section(section_index, SongState.total_beats, GameState.beat_duration)
+
+# When another track is selected stop playback of the songtrack
+func _on_track_selected(new_track_index: int) -> void:
+	if new_track_index != track_index:
+		stop()

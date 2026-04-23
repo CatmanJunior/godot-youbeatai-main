@@ -78,6 +78,7 @@ func _apply_data_defaults() -> void:
 
 func _on_bpm_changed(new_bpm: int) -> void:
 	data.bpm = new_bpm
+	print("BPM changed to %d" % new_bpm)
 
 
 func _on_section_switched(section: SectionData) -> void:

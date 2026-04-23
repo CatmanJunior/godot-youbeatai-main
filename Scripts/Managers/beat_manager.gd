@@ -1,4 +1,5 @@
 extends Node
+class_name BeatManager
 
 @export var track_settings_registry: TrackUISettingsRegistry
 
@@ -9,7 +10,7 @@ var bpm: int:
 	set(value):
 		GameState.beat_duration = 60.0 / value / beats_per_bar
 		EventBus.bpm_changed.emit(value)
-		SongState.bpm = value
+		
 
 var total_beats: int:
 	get: return SongState.total_beats
@@ -62,6 +63,7 @@ func _on_template_set(actives: Array) -> void:
 	SongState.current_section.set_beat_actives(actives)
 
 func _on_audio_bank_loaded(bank: AudioBank) -> void:
+	print("Audio bank loaded: %s" % bank)
 	bpm = bank.bpm
 	swing = bank.swing
 
@@ -131,3 +133,10 @@ func _set_beat(track: int, beat: int, active: bool):
 func get_beat(track: int, beat: int) -> bool:
 	"""Get whether a beat is active"""
 	return SongState.current_section.get_beat(track, beat)
+
+
+static func calculate_time_until_top() -> float:
+	var cur_beat: int = GameState.current_beat
+	var beats_until_top: int = SongState.total_beats - cur_beat - 1
+	var four_beats_until_top: int = beats_until_top / 4
+	return four_beats_until_top + 1

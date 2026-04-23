@@ -6,12 +6,12 @@ var recording: bool:
 
 var current_recording_data: RecordingData = null
 
-
+@export var song_recording_progress_bar: ProgressBar
 @export var recording_sample_button: RecordSampleButton
 @export var waveform_visualizer: TrackWaveformVisualizer
 
 func _ready():
-	EventBus.record_button_toggled.connect(_on_recording_sample_button_toggled)
+	EventBus.record_button_toggled.connect(_on_recording_button_toggled)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
 
 func _process(delta: float):
@@ -32,6 +32,9 @@ func _handle_recording(delta: float) -> void:
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SYNTH:
 		waveform_visualizer.update_progress_bar(current_recording_data, current_recording_data.get_recording_progress())
 
+	if current_recording_data.track_data.track_type == TrackData.TrackType.SONG:
+		song_recording_progress_bar.value = current_recording_data.get_recording_progress()
+
 	if current_recording_data.get_recording_progress() >= 1.0:
 		_stop_recording()
 
@@ -48,8 +51,12 @@ func _start_recording() -> void:
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
 		EventBus.countdown_show_requested.emit()
 		#Wait for 4 seconds (countdown duration) before starting recording
-		await get_tree().create_timer(4.0).timeout
+		var amount_to_wait = BeatManager.calculate_time_until_top() + 0.1
+		await get_tree().create_timer(amount_to_wait).timeout
 		EventBus.countdown_close_requested.emit()
+
+	if current_recording_data.track_type == TrackData.TrackType.SONG:
+		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
 		
 
 	# Step 4: Announce to the world that recording has started
@@ -75,7 +82,7 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 
 
 #------------------Event Handlers----------------------
-func _on_recording_sample_button_toggled(toggled: bool) -> void:
+func _on_recording_button_toggled(toggled: bool) -> void:
 	if toggled and current_recording_data == null:
 		_start_recording()
 	elif recording:

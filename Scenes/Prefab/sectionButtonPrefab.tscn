@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://7ihp2yx2750i"]
 
 [ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="1_jf038"]
+[ext_resource type="Script" uid="uid://81gjarb3j1hq" path="res://Scripts/UI/Buttons/section_button.gd" id="2_vlsjc"]
+[ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="3_f4ak3"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jf038"]
 texture = ExtResource("1_jf038")
@@ -29,7 +31,8 @@ corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
-[node name="layerButton" type="Button" unique_id=597122503]
+[node name="layerButton" type="Button" unique_id=597122503 node_paths=PackedStringArray("outline")]
+custom_minimum_size = Vector2(72, 72)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -54,4 +57,17 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
 icon_alignment = 1
 expand_icon = true
+script = ExtResource("2_vlsjc")
+outline = NodePath("Outline")
 metadata/_edit_use_anchors_ = true
+
+[node name="Outline" type="TextureRect" parent="." unique_id=1566726914]
+layout_mode = 0
+offset_left = -234.60931
+offset_top = -235.95358
+offset_right = 304.83295
+offset_bottom = 309.0253
+scale = Vector2(0.135, 0.135)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("3_f4ak3")
+stretch_mode = 3

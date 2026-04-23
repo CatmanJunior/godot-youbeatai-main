@@ -24,11 +24,8 @@ func close_count_down():
 
 
 func update_count_down_label():
-	count_down_label.text = str(snapped(calculate_time_until_top(), 1))
+	var time_until_top = BeatManager.calculate_time_until_top()
+	count_down_label.text = str(snapped(time_until_top, 1))
 
 
-func calculate_time_until_top() -> float:
-	var cur_beat: int = GameState.current_beat
-	var beats_until_top: int = SongState.total_beats - cur_beat - 1
-	var four_beats_until_top: int = beats_until_top / 4
-	return four_beats_until_top + 1
+

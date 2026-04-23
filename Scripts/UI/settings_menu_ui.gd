@@ -126,5 +126,3 @@ func _on_restart_button() -> void:
 
 func _on_metronome_toggle_toggled(button_pressed: bool):
 	GameState.metronome_enabled = button_pressed
-
-

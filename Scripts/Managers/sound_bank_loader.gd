@@ -14,12 +14,16 @@ const FALLBACK_BANK_NAME := "2_acoustisch"
 @export var fallback_bank: AudioBank
 
 func _ready() -> void:
+	# Defer loading the bank until the main scene is fully initialized, to ensure SongState and EventBus are ready to receive the loaded data.
+	call_deferred("_load_and_apply_bank")
+
+func _load_and_apply_bank() -> void:
 	if SongState.selected_soundbank != null:
-		EventBus.audio_bank_loaded.emit(SongState.selected_soundbank)
+		var bank = SongState.selected_soundbank
+		EventBus.audio_bank_loaded.emit(bank)
 	else:
 		push_warning("No soundbank selected, emitting fallback bank '%s'." % FALLBACK_BANK_NAME)
 		EventBus.audio_bank_loaded.emit(fallback_bank)
-	
 
 static func load_audio_bank(bank_dict: Dictionary) -> AudioBank:	
 	var bank : AudioBank

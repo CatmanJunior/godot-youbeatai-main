@@ -9,14 +9,16 @@
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_opfnp"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
+[ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]
+[ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_vr1f0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
-bg_color = Color(0.2, 0.2, 0.2, 1)
+bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(0.87654406, 0.4330934, 1, 1)
+border_color = Color(0.8784314, 0.43137255, 1, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
@@ -24,21 +26,25 @@ corner_radius_bottom_left = 20
 shadow_color = Color(0, 0, 0, 0.4745098)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yhxw7"]
-bg_color = Color(0.2, 0.2, 0.2, 1)
+bg_color = Color(0.5529412, 0.9411765, 0.5921569, 0.49019608)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
-border_color = Color(1.3907979, 0.69834554, 1.5790963, 1)
+border_color = Color(0.5568628, 0.9372549, 0.5921569, 1)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
-shadow_color = Color(0, 0, 0, 0.8901961)
+shadow_color = Color(0.5529412, 0.9411765, 0.5921569, 0.20392157)
+shadow_size = 5
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vr1f0"]
+texture = ExtResource("10_16hvj")
 
 [node name="scene" type="Node2D" unique_id=451630034]
 
-[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button")]
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "credits_panel")]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -54,6 +60,9 @@ grow_vertical = 2
 scale = Vector2(2.14354, 2.14354)
 script = ExtResource("1_trj04")
 pro_button = NodePath("ProButton")
+credits_button = NodePath("CreditsButton")
+back_button = NodePath("../CreditsPanel/Back")
+credits_panel = NodePath("../CreditsPanel")
 
 [node name="TitleLabel" type="Label" parent="MainMenuPanel" unique_id=1650576418]
 layout_mode = 1
@@ -62,15 +71,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -150.0
-offset_right = 229.0
-offset_bottom = -43.000107
+offset_left = -288.172
+offset_top = -158.397
+offset_right = 306.172
+offset_bottom = -73.024
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_1ehe0")
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_fonts/font = ExtResource("3_trj04")
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Klappy de
 Ritme Robot"
 horizontal_alignment = 1
@@ -86,16 +96,17 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -88.96871
 offset_top = -7.7120056
-offset_right = 111.03128
-offset_bottom = 24.287994
+offset_right = 21.03128
+offset_bottom = 42.287994
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
-theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_fonts/font = ExtResource("3_trj04")
 theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
-text = "Uitleg ❓"
+text = "Uitleg"
 
 [node name="SpelenButton" type="Button" parent="MainMenuPanel" unique_id=1461700594]
 visible = false
@@ -118,18 +129,39 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -88.96871
-offset_top = -114.79236
-offset_right = 111.03128
-offset_bottom = -83.79236
+offset_left = -45.116013
+offset_top = -51.345886
+offset_right = 64.88397
+offset_bottom = -1.3458862
 grow_horizontal = 2
 grow_vertical = 0
 focus_mode = 0
-theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_fonts/font = ExtResource("3_trj04")
 theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
-text = "Pro 👑"
+text = "Pro"
+
+[node name="CreditsButton" type="Button" parent="MainMenuPanel" unique_id=1715816388]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -283.04
+offset_top = -21.489014
+offset_right = -221.04001
+offset_bottom = 36.510986
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.8745098, 0.43137255, 1, 1)
+theme_override_constants/icon_max_width = 50
+theme_override_fonts/font = ExtResource("4_16hvj")
+text = "Credits"
+flat = true
 
 [node name="PermissionButton" type="Button" parent="MainMenuPanel" unique_id=1692853427]
 visible = false
@@ -143,13 +175,17 @@ disabled = true
 text = "🎙️ Microfoon Toegang Verlenen"
 
 [node name="Robot" parent="MainMenuPanel" unique_id=1062863753 instance=ExtResource("4_ce3w2")]
-position = Vector2(399.80594, 242.58937)
+position = Vector2(209.554, 131.645)
 scale = Vector2(0.5, 0.5)
 
 [node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0" unique_id=1497439872]
 visible = false
 
+[node name="Klappylight" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model" parent_id_path=PackedInt32Array(1062863753, 1167922712, 386737351) index="4" unique_id=746853411]
+visible = true
+
 [node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1062863753, 2110113658) index="1" unique_id=1195742085]
+visible = false
 energy = 1.71
 texture_scale = 2.41
 
@@ -204,6 +240,62 @@ texture_filter = 2
 texture_repeat = 1
 texture = ExtResource("8_trj04")
 metadata/_edit_lock_ = true
+
+[node name="MenuShapes1280002KlappyBg" type="Sprite2D" parent="." unique_id=159748039]
+position = Vector2(-3.813, -9.813)
+scale = Vector2(2.4, 2.4)
+texture = ExtResource("10_vr1f0")
+
+[node name="CreditsPanel" type="Panel" parent="." unique_id=913167759]
+visible = false
+z_index = 1000
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_vr1f0")
+
+[node name="Back" type="Button" parent="CreditsPanel" unique_id=1326333430]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 158.0
+offset_bottom = 57.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_font_sizes/font_size = 30
+text = "↩️ Terug"
+
+[node name="names" type="Label" parent="CreditsPanel" unique_id=467177475]
+layout_mode = 0
+offset_left = 327.0
+offset_top = 2.0
+offset_right = 947.0
+offset_bottom = 719.0
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_font_sizes/font_size = 27
+text = "Monobanda.nl	
+
+Simon van der Linden	
+Sjoerd Wouterse 	
+Jesse van Leeuwen
+Roland MacDonald
+Keano Dussel	
+Esmée Veldhuizen	
+
+Rian Evers	
+Nastasia Griffioen	
+Luc Berendsen 	
+
+Kirsten Oppeneer (Kunst Centraal)		
+Erwin Spaan (Tech Explorers)		
+		
+Fonds21		
+Gemeente Utrecht		
+KFHein fonds		
+Stimuleringsfonds voor Creatieve Industrie"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="MainMenuPanel/Tutorial explanition" to="MainMenuPanel" method="OnTutorialExplanitionPressed"]
 [connection signal="pressed" from="MainMenuPanel/Muziek explanation" to="MainMenuPanel" method="OnMuziekExplanation"]

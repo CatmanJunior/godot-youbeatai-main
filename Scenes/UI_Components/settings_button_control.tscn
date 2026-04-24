@@ -1,15 +1,17 @@
 [gd_scene format=3 uid="uid://bx31iyxqitumv"]
 
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_q3fpn"]
+[ext_resource type="Texture2D" uid="uid://brnocdwbua0kp" path="res://Resources/Textures_Settings/Settings.png" id="2_x67wp"]
 
 [sub_resource type="GDScript" id="GDScript_pfx1i"]
 script/source = "extends Button
 
 func _ready():
-    pressed.connect(_on_pressed)
+	pressed.connect(_on_pressed)
 
 func _on_pressed():
-    EventBus.toggle_settings_menu_requested.emit()"
+	EventBus.toggle_settings_menu_requested.emit()
+"
 
 [node name="SettingsButtonControl" type="Control" unique_id=641439858]
 layout_mode = 3
@@ -26,15 +28,22 @@ grow_vertical = 2
 [node name="SettingsButton" type="Button" parent="." unique_id=754926829]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -1.1
-anchor_top = -1.05
-anchor_right = -1.0999998
-anchor_bottom = -1.05
+anchor_left = -0.725
+anchor_top = -0.725
+anchor_right = -0.9749998
+anchor_bottom = -0.975
 offset_right = 59.999992
 offset_bottom = 60.0
 focus_mode = 0
 theme = ExtResource("1_q3fpn")
+theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 25
-text = "⚙"
 script = SubResource("GDScript_pfx1i")
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="SettingsButton" unique_id=508809174]
+layout_mode = 1
+offset_right = 212.76611
+offset_bottom = 212.76611
+scale = Vector2(0.235, 0.235)
+texture = ExtResource("2_x67wp")

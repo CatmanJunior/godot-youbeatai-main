@@ -8,6 +8,7 @@ var is_visible: bool:
 
 ##How much the BPM changes when pressing the BPM up/down buttons
 @export var bpm_modifier: int = 5
+@export var swing_modifier: float = 0.05
 
 @export_category("Settings Panel")
 @export var settings_panel: Panel
@@ -32,11 +33,16 @@ var is_visible: bool:
 @export var bpm_label: Label
 @export var bpm_up_button: Button
 @export var bpm_down_button: Button
+@export var bpm_slider: Slider
+@export var bpm_progress_bar: ProgressBar
 
 # --- Swing ---
 @export_category("Swing")
+@export var swing_up_button: Button
+@export var swing_down_button: Button
 @export var swing_slider: Slider
 @export var swing_label: Label
+@export var swing_progress_bar: ProgressBar
 
 @export_category("Templates")
 @export var template_button: Button
@@ -55,9 +61,15 @@ func _ready():
 	button_add_beats.toggled.connect(_on_button_add_beats_toggled)
 	recording_volume_threshold_slider.value_changed.connect(_on_volume_threshold_changed)
 	clap_bias_slider.value_changed.connect(_on_clap_bias_changed)
+
+	# BPM
 	bpm_up_button.pressed.connect(_on_bpm_up_pressed)
 	bpm_down_button.pressed.connect(_on_bpm_down_pressed)
-	swing_slider.value_changed.connect(_on_swing_changed)
+	bpm_slider.value_changed.connect(_on_bpm_slider_changed)
+	# Swing
+	swing_up_button.pressed.connect(_on_swing_up_pressed)
+	swing_down_button.pressed.connect(_on_swing_down_pressed)
+	swing_slider.value_changed.connect(_on_swing_slider_changed)
 	recording_delay_slider.value_changed.connect(_on_recording_delay_changed)
 	save_to_wav_button.pressed.connect(_on_export_song_pressed)
 	restart_button.pressed.connect(_on_restart_button)
@@ -65,7 +77,11 @@ func _ready():
 	settings_back_button.pressed.connect(_on_settings_button_pressed)
 	all_sections_to_mp3.button_up.connect(_on_export_beat_pressed)
 	mute_speech.toggled.connect(_on_mute_speech_toggled)
+
+	#incomming Events
 	EventBus.toggle_settings_menu_requested.connect(_on_settings_button_pressed)
+	EventBus.bpm_changed.connect(_bpm_changed)
+	EventBus.swing_changed.connect(_on_swing_changed)
 
 
 func _process(_delta: float) -> void:
@@ -73,6 +89,16 @@ func _process(_delta: float) -> void:
 	_update_mic_meter()
 
 
+func _bpm_changed(new_bpm: float) -> void:
+	bpm_slider.value = new_bpm
+	bpm_progress_bar.value = new_bpm
+	bpm_label.text = str(int(new_bpm))
+
+func _on_swing_changed(new_swing: float) -> void:
+	swing_slider.value = new_swing
+	swing_progress_bar.value = new_swing
+	swing_label.text = "Swing: %.2f%%" % (new_swing * 100.0)
+	
 func _update_mic_meter() -> void:
 	microphone_volume_progress_bar.value = GameState.microphone_volume * 100.0
 
@@ -104,13 +130,22 @@ func _on_volume_threshold_changed(value: float):
 func _on_clap_bias_changed(value: float):
 	GameState.clap_bias = value
 
+func _on_bpm_slider_changed(value: float):
+	EventBus.bpm_set_requested.emit(int(value))
+
 func _on_bpm_up_pressed():
 	EventBus.bpm_up_requested.emit(bpm_modifier)
 
 func _on_bpm_down_pressed():
 	EventBus.bpm_down_requested.emit(bpm_modifier)
 
-func _on_swing_changed(value: float):
+func _on_swing_up_pressed():
+	EventBus.swing_set_requested.emit(swing_slider.value+swing_modifier)
+
+func _on_swing_down_pressed():
+	EventBus.swing_set_requested.emit(swing_slider.value-swing_modifier)
+
+func _on_swing_slider_changed(value: float):
 	EventBus.swing_set_requested.emit(value)
 
 func _on_export_beat_pressed():

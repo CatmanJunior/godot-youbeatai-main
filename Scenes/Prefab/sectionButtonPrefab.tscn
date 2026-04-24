@@ -59,6 +59,8 @@ icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_vlsjc")
 outline = NodePath("Outline")
+script = ExtResource("2_vlsjc")
+outline = NodePath("Outline")
 metadata/_edit_use_anchors_ = true
 
 [node name="Outline" type="TextureRect" parent="." unique_id=1566726914]

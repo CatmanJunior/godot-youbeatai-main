@@ -3,11 +3,11 @@
 [ext_resource type="Script" uid="uid://cjx5hltdcaljj" path="res://Scripts/UI/emoji_prompt.gd" id="1_tssnp"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_1pkca"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_tlq35"]
-[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="4_56yf2"]
-[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Textures_New_Correct/Icons-_28_0028_Verse.png" id="5_rgnj4"]
-[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Textures_New_Correct/Icons-_28_0025_Riser.png" id="6_0ixf2"]
-[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Textures_New_Correct/Icons-_28_0026_Blast.png" id="7_k7goj"]
-[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Textures_New_Correct/Icons-_28_0021_Flag.png" id="8_34gcy"]
+[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Icons/Icons-_28_0029_Leaf.png" id="4_56yf2"]
+[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Icons/Icons-_28_0028_Verse.png" id="5_rgnj4"]
+[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Icons/Icons-_28_0025_Riser.png" id="6_0ixf2"]
+[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Icons/Icons-_28_0026_Blast.png" id="7_k7goj"]
+[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Icons/Icons-_28_0021_Flag.png" id="8_34gcy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6nm1e"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)

@@ -12,13 +12,16 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="21_aa8k8"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
+[ext_resource type="Texture2D" uid="uid://klel4nmby0jl" path="res://Resources/Textures_New/Beat-Ring-Beam_0002_Layer-1-copy-2.png" id="28_aa8k8"]
 [ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
+[ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="34_kwxat"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
 [ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="43_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="43_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
@@ -127,6 +130,9 @@ offset_right = -125.0
 offset_bottom = 1.0
 mouse_filter = 1
 
+[node name="PointLight2D" parent="UserInterface/BeatRing/Pointer" parent_id_path=PackedInt32Array(192422746, 57170616) index="0" unique_id=378491608]
+texture = ExtResource("28_aa8k8")
+
 [node name="Waveform_visualisers" parent="UserInterface/BeatRing" index="5" unique_id=1117100626]
 track_settings = ExtResource("36_qax2n")
 
@@ -159,19 +165,15 @@ song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudi
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
 
-[node name="SettingsPanel" parent="UserInterface" unique_id=1609891462 instance=ExtResource("90_658pa")]
-visible = false
-layout_mode = 0
-offset_left = -638.0
-offset_top = -358.0
-offset_right = 642.0
-offset_bottom = 362.0
-
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
+offset_left = -640.0
+offset_top = -356.0
+offset_right = 640.0
+offset_bottom = 364.0
 grow_horizontal = 1
 grow_vertical = 1
 
@@ -182,6 +184,19 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = 100.0
 offset_bottom = 50.0
+
+[node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("34_kwxat")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.49400002
+anchor_top = -0.48100004
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.6799927
+offset_top = -8.679962
+offset_right = 6.0
+offset_bottom = 5.0
 
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false

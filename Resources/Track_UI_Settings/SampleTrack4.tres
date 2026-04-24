@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SampleTrackSettings" format=3 uid="uid://dl6vvjusql8q7"]
+[gd_resource type="Resource" script_class="SampleTrackUISettings" format=3 uid="uid://dl6vvjusql8q7"]
 
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="1_5xxe8"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="2_m0enc"]

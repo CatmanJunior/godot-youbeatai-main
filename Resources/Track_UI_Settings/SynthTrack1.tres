@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" uid="uid://c8a4ts2urwcjm" path="res://Scripts/DataClasses/Track_UI_Settings/synth_track_UI_settings.gd" id="1_3744s"]
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="1_dtvpf"]
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="2_c118j"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Icons/Icons-_28_0010_Bear.png" id="2_c118j"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="3_lvqs3"]
-[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="4_al8ww"]
-[ext_resource type="Texture2D" uid="uid://blvhxyh3mdlq6" path="res://Resources/Textures_New_Correct/Icons-_28_0009_Bear-Singing.png" id="5_owkpa"]
+[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Icons/Icons-_28_0012_Robot.png" id="4_al8ww"]
+[ext_resource type="Texture2D" uid="uid://blvhxyh3mdlq6" path="res://Resources/Icons/Icons-_28_0009_Bear-Singing.png" id="5_owkpa"]
 
 [resource]
 script = ExtResource("1_3744s")

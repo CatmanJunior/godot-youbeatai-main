@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://bpdqsmko6vhdc"]
+[gd_resource type="Resource" script_class="SoundBank" format=3 uid="uid://bpdqsmko6vhdc"]
 
 [ext_resource type="AudioStream" uid="uid://brixrkbh80hww" path="res://Resources/Audio/SoundBanks/5_dance/Clap Pueblo.wav" id="1_l4nox"]
 [ext_resource type="AudioStream" uid="uid://x7obpk11oa56" path="res://Resources/Audio/SoundBanks/5_dance/ClosedHH Phon_o.wav" id="2_q2ho0"]
@@ -8,12 +8,12 @@
 [ext_resource type="AudioStream" uid="uid://c8ekvl7815v4i" path="res://Resources/Audio/SoundBanks/5_dance/Kick Acidy 2.wav" id="4_lcnh7"]
 [ext_resource type="AudioStream" uid="uid://dsbv88j5iiama" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Kick VibeOffering 2.wav" id="4_ofjox"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_w2ik1"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/AudioBanks/AudioBank.gd" id="6_0u368"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_0u368"]
 [ext_resource type="Resource" uid="uid://cymydehmu2oqg" path="res://Resources/Audio/SoundBanks/5_dance/EffectProfile_bass.tres" id="6_6veg5"]
 [ext_resource type="AudioStream" uid="uid://cm8tcwxjl6e5k" path="res://Resources/Audio/SoundBanks/5_dance/Snare BackOut.wav" id="7_6veg5"]
 [ext_resource type="AudioStream" uid="uid://bg8k54f7k527" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Snare Acidy.wav" id="7_lcnh7"]
-[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="9_6veg5"]
-[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/AudioBanks/EffectProfile.gd" id="10_eprof"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="9_6veg5"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 

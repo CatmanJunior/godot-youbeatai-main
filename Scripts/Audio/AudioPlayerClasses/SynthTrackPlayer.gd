@@ -61,7 +61,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	thread.start(_process_voice_threaded.bind(recording_data.audio_stream, thread))
 
 
-func _on_audio_bank_loaded(bank: AudioBank) -> void:
+func _on_soundbank_loaded(bank: SoundBank) -> void:
 	var effect_profile = bank.synth_effect_profiles[track_index - SAMPLE_TRACK_COUNT]
 	if effect_profile:
 		apply_effect_profile(effect_profile) # apply the synth's specific effect profile from the bank

@@ -52,7 +52,7 @@ func _ready():
 	EventBus.beat_seek_requested.connect(func(beat): current_beat = beat)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 
-	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
+	EventBus.soundbank_loaded.connect(_on_soundbank_loaded)
 
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(_set_beat)
@@ -61,8 +61,8 @@ func _ready():
 func _on_template_set(actives: Array) -> void:
 	SongState.current_section.set_beat_actives(actives)
 
-func _on_audio_bank_loaded(bank: AudioBank) -> void:
-	print("Audio bank loaded: %s" % bank)
+func _on_soundbank_loaded(bank: SoundBank) -> void:
+	print("Soundbank loaded: %s" % bank)
 	bpm = bank.bpm
 	swing = bank.swing
 

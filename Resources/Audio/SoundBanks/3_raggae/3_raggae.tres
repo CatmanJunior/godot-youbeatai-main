@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://bb347u5txp04v"]
+[gd_resource type="Resource" script_class="SoundBank" format=3 uid="uid://bb347u5txp04v"]
 
 [ext_resource type="AudioStream" uid="uid://cy75ewe553ug5" path="res://Resources/Audio/SoundBanks/3_raggae/Clap Sinister 1.wav" id="1_7cefr"]
 [ext_resource type="AudioStream" uid="uid://der0kb6d2ynoo" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Clap AlexBanks.wav" id="2_1al31"]
@@ -8,11 +8,11 @@
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_5i1t3"]
 [ext_resource type="AudioStream" uid="uid://be37oruasvm8u" path="res://Resources/Audio/SoundBanks/3_raggae/Kick Bandits.wav" id="6_ftxhs"]
 [ext_resource type="AudioStream" uid="uid://bspcfiukoeorw" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Kick Shapednoise 1.wav" id="7_f2swm"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/AudioBanks/AudioBank.gd" id="8_cp1vu"]
-[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="9_7qwu2"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="8_cp1vu"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="9_7qwu2"]
 [ext_resource type="AudioStream" uid="uid://dqbqtyunere7y" path="res://Resources/Audio/SoundBanks/3_raggae/Snare_Perc Gl.wav" id="9_bv348"]
 [ext_resource type="AudioStream" uid="uid://dq2137h5khh8b" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Snare Andromeda 5.wav" id="10_onkgs"]
-[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/AudioBanks/EffectProfile.gd" id="11_eprof"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="11_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="12_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="13_syn1"]
 

@@ -8,9 +8,8 @@ var beats_per_bar = 4.0
 var bpm: int:
 	get: return SongState.bpm
 	set(value):
-		GameState.beat_duration = 60.0 / value / beats_per_bar
+		GameState.beat_duration = 60.0 / value / SongState.total_beats * beats_per_bar
 		EventBus.bpm_changed.emit(value)
-		
 
 var total_beats: int:
 	get: return SongState.total_beats
@@ -138,5 +137,5 @@ func get_beat(track: int, beat: int) -> bool:
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
 	var beats_until_top: int = SongState.total_beats - cur_beat - 1
-	var four_beats_until_top: int = beats_until_top / 4
-	return four_beats_until_top + 1
+	var duration_until_top := (beats_until_top + 1 - GameState.beat_progress) * GameState.beat_duration
+	return duration_until_top

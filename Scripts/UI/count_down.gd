@@ -15,17 +15,14 @@ func _process(_delta: float):
 
 func show_count_down():
 	is_showing_count_down = true
+	count_down_panel.visible = true
 
 
 func close_count_down():
-	if count_down_panel:
-		count_down_panel.position = - count_down_panel.size / 2.0 + Vector2.UP * 1000
+	count_down_panel.visible = false
 	is_showing_count_down = false
 
 
 func update_count_down_label():
 	var time_until_top = BeatManager.calculate_time_until_top()
 	count_down_label.text = str(snapped(time_until_top, 1))
-
-
-

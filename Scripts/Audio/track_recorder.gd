@@ -19,10 +19,11 @@ func _process(delta: float):
 		_handle_recording(delta)
 
 func _handle_recording(delta: float) -> void:
-	if get_recording_volume() > GameState.recording_volume_threshold:
-		current_recording_data.has_detected_sound = true
-	if not current_recording_data.has_detected_sound:
-		return
+	if current_recording_data.track_type == TrackData.TrackType.SAMPLE:
+		if get_recording_volume() > GameState.recording_volume_threshold:
+			current_recording_data.has_detected_sound = true
+		if not current_recording_data.has_detected_sound:
+			return
 	
 	current_recording_data.actual_recording_length += delta
 	
@@ -50,10 +51,12 @@ func _start_recording() -> void:
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
 		EventBus.countdown_show_requested.emit()
+		EventBus.playing_change_requested.emit(true)
 		#Wait for 4 seconds (countdown duration) before starting recording
 		var amount_to_wait = BeatManager.calculate_time_until_top() + 0.1
 		await get_tree().create_timer(amount_to_wait).timeout
 		EventBus.countdown_close_requested.emit()
+		print("Starting recording after countdown, waited for: " + str(amount_to_wait) + " seconds")
 
 	if current_recording_data.track_type == TrackData.TrackType.SONG:
 		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
@@ -97,7 +100,7 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 		printerr("No current recording data on recording stopped!")
 		return
 	
-	if not recording_data.has_detected_sound:
+	if not recording_data.has_detected_sound and recording_data.track_type == TrackData.TrackType.SAMPLE:
 		recording_data.state = RecordingData.State.NOT_STARTED
 		printerr("Recording stopped without detecting sound, marking as NOT_STARTED.")
 		return

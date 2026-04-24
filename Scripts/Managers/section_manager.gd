@@ -27,8 +27,8 @@ var _sections_initialized: bool = false
 
 func _ready() -> void:
 	# Connect to EventBus
-	EventBus.copy_requested.connect(_copy_section)
-	EventBus.paste_requested.connect(_paste_section)
+	EventBus.section_copy_requested.connect(_copy_section)
+	EventBus.section_paste_requested.connect(_paste_section)
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)

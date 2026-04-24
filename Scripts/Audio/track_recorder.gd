@@ -3,7 +3,6 @@ extends Node
 var recording: bool:
 	get: return GameState.is_recording
 
-
 var current_recording_data: RecordingData = null
 
 @export var song_recording_progress_bar: ProgressBar

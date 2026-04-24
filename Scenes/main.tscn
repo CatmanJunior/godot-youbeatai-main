@@ -10,18 +10,17 @@
 [ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="17_kwxat"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="21_aa8k8"]
+[ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://klel4nmby0jl" path="res://Resources/Textures_New/Beat-Ring-Beam_0002_Layer-1-copy-2.png" id="28_aa8k8"]
 [ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
-[ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="34_kwxat"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
 [ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
-[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="43_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="43_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
@@ -47,7 +46,7 @@
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -85,6 +84,9 @@ waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visuali
 script = ExtResource("29_s8vy0")
 fallback_bank = ExtResource("28_nwwfm")
 
+[node name="ClapStomp" type="Node" parent="Managers/AudioManagers" unique_id=958670281]
+script = ExtResource("21_s8vy0")
+
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")
 
@@ -98,8 +100,10 @@ script = ExtResource("10_o2owy")
 [node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
 script = ExtResource("99_sslm1")
 
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366]
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
 script = ExtResource("65_87bhu")
+loading = NodePath("../../UserInterface/LoadingContainer")
+rec_button = NodePath("../../UserInterface/RecButton")
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
@@ -185,7 +189,7 @@ offset_top = 0.0
 offset_right = 100.0
 offset_bottom = 50.0
 
-[node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("34_kwxat")]
+[node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
 visible = false
 layout_mode = 1
 anchors_preset = -1

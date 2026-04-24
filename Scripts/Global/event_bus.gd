@@ -62,9 +62,9 @@ signal add_section_requested(emoji: String)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
 ## Emitted to request copying the current section data.
-signal copy_requested()
+signal section_copy_requested()
 ## Emitted to request pasting previously copied section data.
-signal paste_requested()
+signal section_paste_requested()
 ## Emitted to request removing a section by its index.
 signal section_remove_requested(section_index: int)
 ## Emitted when a section switch has completed, carrying the new section data.

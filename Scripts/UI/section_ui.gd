@@ -157,10 +157,10 @@ func _close_emoji_prompt():
 	emoji_prompt.visible = false
 
 func _copy_section_button_pressed() -> void:
-	EventBus.copy_requested.emit()
+	EventBus.section_copy_requested.emit()
 
 func _paste_section_button_pressed() -> void:
-	EventBus.paste_requested.emit()
+	EventBus.section_paste_requested.emit()
 
 func _clear_section_button_pressed() -> void:
 	EventBus.section_clear_requested.emit()

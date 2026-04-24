@@ -22,7 +22,7 @@ project root
 │   ├── Global/           # Autoload singletons (EventBus, GameState, SongState, TTSHelper)
 │   ├── Managers/         # Core game logic (BeatManager, SectionManager, GameManager, …)
 │   ├── Audio/            # Audio playback, recording, bus helpers
-│   │   ├── AudioBanks/       # AudioBank & EffectProfile resources
+│   │   ├── SoundBanks/       # SoundBank & EffectProfile resources
 │   │   └── AudioPlayerClasses/  # TrackPlayerBase, SampleTrackPlayer, SynthTrackPlayer, …
 │   ├── DataClasses/      # Pure data resources (SongData, SectionData, TrackData, …)
 │   ├── UI/               # Visual controllers, button scripts
@@ -182,13 +182,13 @@ graph TD
 
 ### Data Class Refactoring
 
-Audio data classes now live in `Scripts/DataClasses/AudioBanks/` (per architecture convention):
+Audio data classes now live in `Scripts/DataClasses/SoundBanks/` (per architecture convention):
 
 | Class | Path | Purpose |
 |-------|------|----------|
-| `AudioBank` | `Scripts/DataClasses/AudioBanks/AudioBank.gd` | Soundbank definition (tracks, effects, synth settings) |
-| `EffectProfile` | `Scripts/DataClasses/AudioBanks/EffectProfile.gd` | Audio effect chain per track |
-| `NotePlayerSettings` | `Scripts/DataClasses/AudioBanks/note_player_settings.gd` | Synth instrument configuration |
+| `SoundBank` | `Scripts/DataClasses/SoundBanks/SoundBank.gd` | Soundbank definition (tracks, effects, synth settings) |
+| `EffectProfile` | `Scripts/DataClasses/SoundBanks/EffectProfile.gd` | Audio effect chain per track |
+| `NotePlayerSettings` | `Scripts/DataClasses/SoundBanks/note_player_settings.gd` | Synth instrument configuration |
 
 All soundbank resources (25+ .tres files under `Resources/Audio/SoundBanks/`) reference these classes.
 
@@ -202,8 +202,8 @@ All soundbank resources (25+ .tres files under `Resources/Audio/SoundBanks/`) re
 | `game_manager.gd` | Top-level scene setup, fullscreen toggle, TTS, time tracking | Listens: `fullscreen_toggle_requested` |
 | `keyboard_input_manager.gd` | Keyboard shortcuts → EventBus signals | Emits: `bpm_up/down_requested`, `play_pause_toggle_requested`, `ring_key_pressed`, etc. |
 | `template_manager.gd` | Beat template loading & application from text files | Listens: `template_set_requested`. Emits: `template_set` |
-| `sound_bank_selector.gd` | Soundbank matching by themes + emotions | Listens: `audio_bank_selected` |
-| `sound_bank_loader.gd` | Loads AudioBank resources & applies BPM/swing/settings | Emits: `audio_bank_loaded` |
+| `sound_bank_selector.gd` | Soundbank matching by themes + emotions | Listens: `soundbank_selected` |
+| `sound_bank_loader.gd` | Loads SoundBank resources & applies BPM/swing/settings | Emits: `soundbank_loaded` |
 
 ### Audio Player Hierarchy
 
@@ -256,7 +256,7 @@ Resource
 │   ├── SampleTrackData — beats[] (bool array), main/alt audio streams
 │   ├── SynthTrackData  — sequence_notes[], _sequence (runtime Sequence)
 │   └── SongTrackData   — master_recording_stream, recording_length
-├── AudioBank           — Soundbank: kick/clap/snare/closed streams + synth settings
+├── SoundBank           — Soundbank: kick/clap/snare/closed streams + synth settings
 ├── EffectProfile       — Per-track audio effect chain
 ├── NotePlayerSettings  — Synth instrument configuration
 └── TemplateData        — Beat template definition

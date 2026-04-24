@@ -1,4 +1,4 @@
-class_name AudioBank
+class_name SoundBank
 extends Resource
 
 @export var kick: AudioStream

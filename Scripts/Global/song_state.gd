@@ -56,7 +56,7 @@ var current_track: TrackData:
 			return current_section.tracks[selected_track_index]
 		return null
 
-var selected_soundbank: AudioBank = null
+var selected_soundbank: SoundBank = null
 
 # ── Initialization ───────────────────────────────────────────────────────────
 

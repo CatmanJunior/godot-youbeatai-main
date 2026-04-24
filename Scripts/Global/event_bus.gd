@@ -7,11 +7,11 @@ signal restart_requested()
 
 
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
-signal audio_bank_selected(themes: Array[String], emotions: Array[String])
+signal soundbank_selected(themes: Array[String], emotions: Array[String])
 ## Emitted when note player settings have changed, carrying the new settings for each synth track.
 signal note_player_settings_changed(new_settings: NotePlayerSettings, track_index: int)
 ## Emitted when a soundbank has been fully loaded and applied.
-signal audio_bank_loaded(bank: AudioBank)
+signal soundbank_loaded(bank: SoundBank)
 
 # ── Playback ──
 ## Emitted when the playback state has changed (playing or stopped).

@@ -22,7 +22,11 @@ enum TrackType { SAMPLE, SYNTH, SONG, EXPORT }
 @export var master_volume: float = 0.0
 @export var weights: Vector3 = Vector3(0.3, 0.3, 0.4)
 
-var recording_data: RecordingData = null
+@export var recording_data: RecordingData = null:
+	set(value):
+		recording_data = value
+		if recording_data != null:
+			recording_data.track_data = self
 
 func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:	
 	knob_position = knob_pos	
@@ -37,7 +41,8 @@ func duplicate_track() -> TrackData:
 	copy.weights = weights
 	if recorded_audio_stream:
 		copy.recorded_audio_stream = recorded_audio_stream
-
+	if recording_data != null:
+		copy.recording_data = recording_data.duplicate_data(copy)
 	return copy
 
 func create_recording_data() -> RecordingData:

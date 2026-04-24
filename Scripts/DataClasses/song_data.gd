@@ -34,7 +34,7 @@ extends Resource
 # ── Soundbank ────────────────────────────────────────────────────────────────
 
 @export var soundbank_name: String = ""
-@export var audio_bank: AudioBank
+@export var soundbank: SoundBank
 
 # ── Metadata ─────────────────────────────────────────────────────────────────
 
@@ -74,7 +74,7 @@ static func from_current() -> SongData:
 
 	# State originating outside SongData
 	song.playing = GameState.playing
-	song.audio_bank = live.audio_bank
+	song.soundbank = live.soundbank
 	song.soundbank_name = live.soundbank_name
 	song.created_at = Time.get_datetime_string_from_system(true)
 
@@ -115,7 +115,7 @@ func apply_to_current() -> void:
 	# Sync metadata fields that have no delegated SongState property.
 	# Note: `self` is the loaded SongData, NOT `SongState.data` — these
 	# copy from the loaded file into the live data instance.
-	SongState.data.audio_bank = audio_bank
+	SongState.data.soundbank = soundbank
 	SongState.data.soundbank_name = soundbank_name
 	SongState.data.title = title
 	SongState.data.created_at = created_at
@@ -127,8 +127,8 @@ func apply_to_current() -> void:
 		EventBus.section_switch_requested.emit(current_section_index)
 
 	# Restore soundbank
-	if audio_bank:
-		EventBus.audio_bank_loaded.emit(audio_bank)
+	if soundbank:
+		EventBus.soundbank_loaded.emit(soundbank)
 
 	# Restore playback last
 	if playing:

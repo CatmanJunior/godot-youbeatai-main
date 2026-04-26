@@ -9,9 +9,6 @@ var track_players: Array[TrackPlayerBase] = []
 var song_track_player: SongTrackPlayer
 var sfx_player: AudioStreamPlayer
 
-## FOR DEBUGGING
-var current_volume: Dictionary= {} 
-
 # Audio files
 @export var main_audio_files: Array[AudioStream] = []
 @export var alt_audio_files: Array[AudioStream] = []
@@ -30,14 +27,6 @@ func _ready():
 
 	# Connect to EventBus instead of direct manager references
 	EventBus.play_sfx_requested.connect(play_sfx)
-
-func _process(_delta):
-	_log_volumes()
-
-func _log_volumes():
-	for i in range(TRACK_COUNT):
-		var volume = get_track_volume(i)
-		current_volume[i] = volume
 
 func _init_sfx_player():
 	sfx_player = AudioStreamPlayer.new()

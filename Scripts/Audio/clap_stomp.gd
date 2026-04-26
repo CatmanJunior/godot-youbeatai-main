@@ -48,7 +48,7 @@ func _ready():
 
 func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 	# Emit signals for next beat
-	var next_beat = GameState.current_beat + 1
+	var next_beat = (GameState.current_beat + 1) % SongState.total_beats
 	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
 	if  SongState.current_section.get_beat(track_index, next_beat):
 		if interaction_type == InteractionType.CLAP:

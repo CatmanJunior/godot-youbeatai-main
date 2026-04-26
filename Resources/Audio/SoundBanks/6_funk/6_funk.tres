@@ -31,4 +31,3 @@ synth_instrument_ids = Array[int]([5, 12])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_loxld"), ExtResource("6_loxld")])
 noteplayer_settings = Array[ExtResource("9_hgown")]([ExtResource("11_bass"), ExtResource("12_syn1")])
-metadata/_custom_type_script = "uid://d0cv5il7l6laj"

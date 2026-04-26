@@ -146,5 +146,5 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	new_player.name = bus
 	new_player.bus = bus
 	add_child(new_player)
-
+	
 	return new_player

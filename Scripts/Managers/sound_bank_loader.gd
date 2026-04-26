@@ -27,8 +27,10 @@ func _load_and_apply_bank() -> void:
 
 static func load_soundbank(bank_dict: Dictionary) -> SoundBank:	
 	var bank : SoundBank
+	print("SoundBankLoader: loading soundbank with data: %s" % [bank_dict])
 	# Determine which bank to load
 	var bank_name: String = bank_dict.get("name", "")
+
 
 	if bank_name.is_empty():
 		push_warning("SoundBankLoader: no soundbank selected, falling back to '%s'." % FALLBACK_BANK_NAME)

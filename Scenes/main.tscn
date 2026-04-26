@@ -190,7 +190,6 @@ offset_right = 100.0
 offset_bottom = 50.0
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.49400002

@@ -83,7 +83,6 @@ static func _dominant_frequency(chunk: PackedFloat32Array, sample_rate: float) -
 
 	return float(max_bin) * sample_rate / float(n)
 
-
 static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 	if audio == null or not audio is AudioStreamWAV:
 		printerr("VoiceProcessor: expected AudioStreamWAV, got %s" % str(type_string(typeof(audio))))

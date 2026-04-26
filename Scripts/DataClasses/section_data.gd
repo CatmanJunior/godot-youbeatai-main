@@ -81,13 +81,15 @@ func toggle_beat(track: int, beat: int):
 
 ## Set a beat active/inactive by index.
 func set_beat(track: int, beat: int, active: bool):
-	if track >= 0 and track < SAMPLE_TRACKS_PER_SECTION:
+	if track >= 0 and track < SAMPLE_TRACKS_PER_SECTION and beat >= 0 and beat < tracks[track].beats.size():
 		tracks[track].beats[beat] = active
 
 ## Check if any beats are active on any sample track.
 func get_beat(track: int, beat: int) -> bool:
-	return tracks[track].beats[beat]
-
+	if track >= 0 and track < SAMPLE_TRACKS_PER_SECTION and beat >= 0 and beat < tracks[track].beats.size():
+		return tracks[track].beats[beat]
+	return false
+	
 ## Check if any beats are active on any sample track.
 func has_active_beats() -> bool:
 	for track in tracks:

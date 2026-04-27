@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://klel4nmby0jl" path="res://Resources/Textures_New/Beat-Ring-Beam_0002_Layer-1-copy-2.png" id="28_aa8k8"]
 [ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
+[ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="30_jut3y"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
@@ -133,6 +134,9 @@ offset_top = 1.0
 offset_right = -125.0
 offset_bottom = 1.0
 mouse_filter = 1
+
+[node name="PlayPauseButton" parent="UserInterface/BeatRing" index="0" unique_id=2061116021]
+shortcut = ExtResource("30_jut3y")
 
 [node name="PointLight2D" parent="UserInterface/BeatRing/Pointer" parent_id_path=PackedInt32Array(192422746, 57170616) index="0" unique_id=378491608]
 texture = ExtResource("28_aa8k8")

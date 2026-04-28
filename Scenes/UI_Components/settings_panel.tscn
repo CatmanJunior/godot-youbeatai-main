@@ -1,10 +1,11 @@
-[gd_scene format=3 uid="uid://qaph84l46wo0"]
+[gd_scene format=3 uid="uid://c382hsycqmpyw"]
 
-[ext_resource type="Texture2D" uid="uid://cnl15vf13mia8" path="res://Resources/Textures_New/Backgrounds/_0003_BG-1080p.png" id="1_e2x6l"]
+[ext_resource type="StyleBox" uid="uid://bojdums45wmeg" path="res://new_style_box_texture.tres" id="1_g4ckg"]
 [ext_resource type="Script" uid="uid://v62uubacsyqx" path="res://Scripts/UI/settings_menu_ui.gd" id="2_17eq1"]
-[ext_resource type="Theme" path="res://default_theme.tres" id="2_yaket"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_yaket"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_5tpfg"]
 [ext_resource type="Texture2D" uid="uid://bvxoaqrsw68b8" path="res://Resources/Textures_Settings/Settings__0008_Slider-empty.png" id="4_xbhen"]
+[ext_resource type="StyleBox" uid="uid://b14dhb3d5eh2h" path="res://menupanel.tres" id="5_8qhib"]
 [ext_resource type="Script" uid="uid://cwhmhfr83v837" path="res://Scripts/UI/template_button.gd" id="5_17eq1"]
 [ext_resource type="Texture2D" uid="uid://p7huqo8hkmpg" path="res://Resources/Textures_Settings/Settings__0000_Hare-Button--no-glow.png" id="5_gx8v5"]
 [ext_resource type="Texture2D" uid="uid://dumxi28qepc74" path="res://Resources/Textures_Settings/Settings__0001_Tortoise-Button-no-glow.png" id="6_mvuv7"]
@@ -20,21 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://c46agdfmouhob" path="res://Resources/Textures_Settings/Settings__0011_X.png" id="16_aa32w"]
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
-texture = ExtResource("1_e2x6l")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylsbi"]
-bg_color = Color(0.5690333, 0.559, 0.86, 0.09803922)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.58431375, 0.57254905, 0.8666667, 1)
-corner_radius_top_left = 35
-corner_radius_top_right = 35
-corner_radius_bottom_right = 35
-corner_radius_bottom_left = 35
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfvrx"]
 draw_center = false
@@ -120,7 +106,7 @@ offset_left = 3.0
 offset_top = 3.0
 offset_right = 1283.0
 offset_bottom = 723.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
+theme_override_styles/panel = ExtResource("1_g4ckg")
 script = ExtResource("2_17eq1")
 settings_panel = NodePath(".")
 settings_back_button = NodePath("Buttons2/Back")
@@ -218,7 +204,7 @@ offset_right = 528.0
 offset_bottom = 209.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ylsbi")
+theme_override_styles/panel = ExtResource("5_8qhib")
 
 [node name="bpm" type="Control" parent="Panel" unique_id=1292344551]
 anchors_preset = 0

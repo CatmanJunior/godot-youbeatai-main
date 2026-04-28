@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/UI_Components/chaos_icon.tscn" id="3_ajioc"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
+[ext_resource type="Script" uid="uid://bi23kcj8rmhbw" path="res://Scripts/Trail.gd" id="12_f0ro3"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/UI/ChaosPad/choas_pad_knob.gd" id="22_ds0f1"]
@@ -31,6 +32,13 @@ func update_button(percentage: float) -> void:
 	else:
 		fillTexture.value = 1 - percentage
 "
+
+[sub_resource type="Curve" id="Curve_f0ro3"]
+_data = [Vector2(0.010416664, 0.010668635), 0.0, 0.55734617, 0, 0, Vector2(0.80902773, 0.9999999), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_vhj50"]
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.5372549)
 
 [node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon")]
 physics_interpolation_mode = 0
@@ -205,8 +213,18 @@ script = ExtResource("22_ds0f1")
 
 [node name="KnobSprite" type="Sprite2D" parent="ChaosPadTriangle/Knob" unique_id=329933470]
 z_index = 2
+scale = Vector2(1.2, 1.2)
 texture = ExtResource("4_bd6tm")
 centered = false
+
+[node name="Line2D" type="Line2D" parent="ChaosPadTriangle/Knob/KnobSprite" unique_id=1689996630]
+top_level = true
+texture_repeat = 2
+position = Vector2(40, 40)
+width = 35.0
+width_curve = SubResource("Curve_f0ro3")
+gradient = SubResource("Gradient_vhj50")
+script = ExtResource("12_f0ro3")
 
 [editable path="ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="ChaosPadTriangle/PointRight/ChaosIconAlt"]

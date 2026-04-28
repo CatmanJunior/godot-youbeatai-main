@@ -75,6 +75,7 @@ texture = ExtResource("3_rcijy")
 texture_scale = 2.41
 
 [node name="AchievementsPanel" parent="." unique_id=37829949 instance=ExtResource("4_dm53t")]
+light_mask = 2
 z_index = -1
 anchors_preset = -1
 anchor_left = -24.5

@@ -19,6 +19,9 @@ func reset() -> void:
 
 var notes: Notes
 
+# -- MIDI --
+var midi_settings: MidiSettingsData = MidiSettingsData.new()
+
 # -- TO BE IMPLEMENTED --
 var tutorialActivated: bool = false
 var loop_sections: bool = false

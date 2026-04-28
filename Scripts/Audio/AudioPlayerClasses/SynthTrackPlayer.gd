@@ -28,10 +28,17 @@ func _get_bus_prefix() -> String:
 
 func _ready() -> void:
 	super._ready()
+	EventBus.midi_synth_channel_changed.connect(_on_midi_synth_channel_changed)
 
 # --- Public API ---
 func apply_note_player_settings(new_settings: NotePlayerSettings) -> void:
 	note_player.apply_settings(new_settings)
+
+## Set the MIDI input channel filter on the inner NotePlayer.
+## Pass -1 to accept all channels.
+func apply_midi_channel(channel: int) -> void:
+	if note_player:
+		note_player.midi_channel_in = channel
 
 func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) -> void:
 	super.setup(index, parent_bus, settings)
@@ -97,6 +104,10 @@ func _on_beat_triggered(beat: int) -> void:
 
 func _on_all_players_stop():
 	stop()
+
+func _on_midi_synth_channel_changed(track_index_signal: int, channel: int) -> void:
+	if track_index_signal == track_index:
+		apply_midi_channel(channel)
 
 
 ## Playback control

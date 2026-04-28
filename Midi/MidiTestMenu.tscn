@@ -1,11 +1,12 @@
 [gd_scene format=3 uid="uid://dgncfttb257h"]
 
 [ext_resource type="StyleBox" uid="uid://bojdums45wmeg" path="res://new_style_box_texture.tres" id="1_56iea"]
-[ext_resource type="Theme" uid="uid://ktjldfcfwwxj" path="res://menupaneltheme.tres" id="2_hjaec"]
+[ext_resource type="Script" uid="uid://dfhnq5wj6waor" path="res://Midi/midi_settings_menu.gd" id="1_hjaec"]
 [ext_resource type="StyleBox" uid="uid://b14dhb3d5eh2h" path="res://menupanel.tres" id="3_7vp5v"]
+[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="3_56iea"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="4_3y4eb"]
 
-[node name="MidiTestMenu" type="Control" unique_id=2092763234]
+[node name="MidiTestMenu" type="Control" unique_id=2092763234 node_paths=PackedStringArray("device_select", "clock_in", "clock_out", "log_in_box", "log_out_box", "in_1", "out_1", "note_1", "in_2", "out_2", "note_2", "in_3", "out_3", "note_3", "in_4", "out_4", "note_4", "in_5", "out_5", "in_6", "out_6")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,6 +17,28 @@ offset_right = 82.0
 offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_hjaec")
+device_select = NodePath("Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer/DeviceSelect")
+clock_in = NodePath("Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2/Clock In")
+clock_out = NodePath("Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2/Clock out")
+log_in_box = NodePath("Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer3/LogInBox")
+log_out_box = NodePath("Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer3/LogOutBox")
+in_1 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1/In1")
+out_1 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1/Out1")
+note_1 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1/Note1")
+in_2 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2/In2")
+out_2 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2/Out2")
+note_2 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2/Note2")
+in_3 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3/In3")
+out_3 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3/Out3")
+note_3 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3/Note3")
+in_4 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4/In4")
+out_4 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4/Out4")
+note_4 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4/Note4")
+in_5 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth1/In5")
+out_5 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth1/Out5")
+in_6 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth2/In6")
+out_6 = NodePath("Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth2/Out6")
 
 [node name="Panel" type="Panel" parent="." unique_id=1706886627]
 layout_mode = 0
@@ -23,93 +46,291 @@ offset_right = 853.0
 offset_bottom = 485.0
 theme_override_styles/panel = ExtResource("1_56iea")
 
-[node name="Panel" type="Panel" parent="Panel" unique_id=1882808631]
-layout_mode = 0
-offset_left = 78.0
-offset_top = 65.0
-offset_right = 707.0
-offset_bottom = 420.0
-theme = ExtResource("2_hjaec")
-theme_override_styles/panel = ExtResource("3_7vp5v")
-
-[node name="Panel" type="Panel" parent="Panel/Panel" unique_id=1284650552]
+[node name="Panel2" type="Panel" parent="Panel" unique_id=1284650552]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.52400005
 anchor_bottom = 1.0
-offset_left = 44.0
-offset_top = 68.0
-offset_right = 267.40396
-offset_bottom = -24.0
+offset_left = 26.0
+offset_top = 69.0
+offset_right = 384.02795
+offset_bottom = -33.0
 theme_override_styles/panel = ExtResource("3_7vp5v")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Panel/Panel" unique_id=748256334]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Panel2" unique_id=748256334]
 layout_mode = 0
-offset_left = 23.0
+offset_left = 13.0
 offset_top = 37.0
-offset_right = 522.0
-offset_bottom = 237.0
-theme_override_constants/separation = 53
+offset_right = 764.0
+offset_bottom = 358.0
+theme_override_constants/separation = 5
 
-[node name="Panel2" type="Panel" parent="Panel/Panel/Panel/HBoxContainer" unique_id=1718710181]
+[node name="Panel2" type="Panel" parent="Panel/Panel2/HBoxContainer" unique_id=1718710181]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = ExtResource("3_7vp5v")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Panel/Panel/HBoxContainer/Panel2" unique_id=163750910]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel2" unique_id=163750910]
 layout_mode = 0
-offset_left = 32.0
+offset_left = 13.0
 offset_top = 16.0
-offset_right = 107.0
-offset_bottom = 170.0
+offset_right = 357.0
+offset_bottom = 302.0
 
-[node name="Label" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel2/VBoxContainer" unique_id=2047778173]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer" unique_id=123183689]
 layout_mode = 2
-text = "asdfdssdaf"
 
-[node name="Label2" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel2/VBoxContainer" unique_id=553395508]
+[node name="Label" type="Label" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer" unique_id=2047778173]
 layout_mode = 2
-text = "asdfdssdaf"
+text = "Device:"
 
-[node name="Label3" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel2/VBoxContainer" unique_id=1396512119]
+[node name="DeviceSelect" type="OptionButton" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer" unique_id=229000698]
 layout_mode = 2
-text = "asdfdssdaf"
+item_count = 1
+popup/item_0/text = "Select "
+popup/item_0/id = 0
 
-[node name="Label4" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel2/VBoxContainer" unique_id=70761419]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer" unique_id=295052583]
 layout_mode = 2
-text = "asdfdssdaf"
 
-[node name="Panel3" type="Panel" parent="Panel/Panel/Panel/HBoxContainer" unique_id=1271362503]
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2" unique_id=553395508]
+layout_mode = 2
+text = "Clock in"
+
+[node name="Clock In" type="CheckButton" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2" unique_id=1011124979]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2" unique_id=1462805454]
+layout_mode = 2
+text = "out"
+
+[node name="Clock out" type="CheckButton" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer2" unique_id=1371168319]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer" unique_id=517036838]
+layout_mode = 2
+text = "Log"
+horizontal_alignment = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer" unique_id=1094170716]
+layout_mode = 2
+
+[node name="LogInBox" type="TextEdit" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer3" unique_id=32651426]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+text = "
+"
+editable = false
+scroll_v_scroll_speed = 79.94
+scroll_fit_content_width = true
+
+[node name="In" type="Label" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer3/LogInBox" unique_id=1928550891]
+layout_mode = 0
+offset_left = 60.0
+offset_top = -5.0
+offset_right = 87.0
+offset_bottom = 11.0
+text = "Log"
+horizontal_alignment = 1
+
+[node name="LogOutBox" type="TextEdit" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer3" unique_id=1139903644]
+custom_minimum_size = Vector2(150, 200)
+layout_mode = 2
+text = "
+"
+editable = false
+scroll_v_scroll_speed = 79.94
+scroll_fit_content_width = true
+
+[node name="Label" type="Label" parent="Panel/Panel2/HBoxContainer/Panel2/VBoxContainer/HBoxContainer3/LogOutBox" unique_id=325459041]
+layout_mode = 0
+offset_left = 58.0
+offset_top = -5.0
+offset_right = 85.0
+offset_bottom = 11.0
+text = "Out"
+horizontal_alignment = 1
+
+[node name="Panel3" type="Panel" parent="Panel/Panel2/HBoxContainer" unique_id=1271362503]
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/panel = ExtResource("3_7vp5v")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/Panel/Panel/HBoxContainer/Panel3" unique_id=184487211]
+[node name="VBoxContainer2" type="VBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3" unique_id=85309148]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 16.0
-offset_right = 107.0
-offset_bottom = 170.0
+offset_left = 16.000002
+offset_top = 7.0
+offset_right = 474.0
+offset_bottom = 183.0
+scale = Vector2(0.74, 0.74)
+theme_override_constants/separation = 18
 
-[node name="Label" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel3/VBoxContainer" unique_id=999699729]
+[node name="Sample1 ch in" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=895381]
 layout_mode = 2
-text = "asdfdssdaf"
+text = "Midi channels"
+horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel3/VBoxContainer" unique_id=954852946]
+[node name="Sample1" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=1932276511]
 layout_mode = 2
-text = "asdfdssdaf"
+theme_override_constants/separation = 9
 
-[node name="Label3" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel3/VBoxContainer" unique_id=78278562]
+[node name="Sample1 ch in" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1" unique_id=999699729]
 layout_mode = 2
-text = "asdfdssdaf"
+text = "Sample1 in"
 
-[node name="Label4" type="Label" parent="Panel/Panel/Panel/HBoxContainer/Panel3/VBoxContainer" unique_id=75141179]
+[node name="In1" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1" unique_id=969056467]
 layout_mode = 2
-text = "asdfdssdaf"
+size_flags_horizontal = 0
+theme = ExtResource("3_56iea")
 
-[node name="CenterContainer" type="CenterContainer" parent="Panel/Panel" unique_id=1543107542]
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1" unique_id=1913410641]
+layout_mode = 2
+text = "out"
+
+[node name="Out1" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1" unique_id=1547967573]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Label3" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1" unique_id=1717072860]
+layout_mode = 2
+text = "Note #"
+
+[node name="Note1" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample1" unique_id=1556806311]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Sample2" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=2023693814]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Sample1 ch in" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2" unique_id=1795321562]
+layout_mode = 2
+text = "Sample2 in"
+
+[node name="In2" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2" unique_id=578962113]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("3_56iea")
+
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2" unique_id=157449024]
+layout_mode = 2
+text = "out"
+
+[node name="Out2" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2" unique_id=1620209077]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Label3" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2" unique_id=1054885659]
+layout_mode = 2
+text = "Note #"
+
+[node name="Note2" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample2" unique_id=661655546]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Sample3" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=675261692]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Sample1 ch in" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3" unique_id=675039827]
+layout_mode = 2
+text = "Sample3 in"
+
+[node name="In3" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3" unique_id=782504882]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("3_56iea")
+
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3" unique_id=756347265]
+layout_mode = 2
+text = "out"
+
+[node name="Out3" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3" unique_id=1274158242]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Label3" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3" unique_id=1887654167]
+layout_mode = 2
+text = "Note #"
+
+[node name="Note3" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample3" unique_id=1202622720]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Sample4" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=785973683]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Sample1 ch in" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4" unique_id=1631920639]
+layout_mode = 2
+text = "Sample4 in"
+
+[node name="In4" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4" unique_id=1756204614]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("3_56iea")
+
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4" unique_id=313793893]
+layout_mode = 2
+text = "out"
+
+[node name="Out4" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4" unique_id=1703358884]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Label3" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4" unique_id=9871360]
+layout_mode = 2
+text = "Note #"
+
+[node name="Note4" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Sample4" unique_id=1332719127]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Synth1" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=935939956]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Synth1" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth1" unique_id=1201043141]
+layout_mode = 2
+text = "Synth1 in   "
+
+[node name="In5" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth1" unique_id=1682820164]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("3_56iea")
+
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth1" unique_id=1749175684]
+layout_mode = 2
+text = "out"
+
+[node name="Out5" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth1" unique_id=1592469862]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="Synth2" type="HBoxContainer" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2" unique_id=256681925]
+layout_mode = 2
+theme_override_constants/separation = 9
+
+[node name="Synth1" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth2" unique_id=1548848276]
+layout_mode = 2
+text = "Synth2 in   "
+
+[node name="In6" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth2" unique_id=1665700722]
+layout_mode = 2
+size_flags_horizontal = 0
+theme = ExtResource("3_56iea")
+
+[node name="Label2" type="Label" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth2" unique_id=708650502]
+layout_mode = 2
+text = "out"
+
+[node name="Out6" type="SpinBox" parent="Panel/Panel2/HBoxContainer/Panel3/VBoxContainer2/Synth2" unique_id=116775877]
+layout_mode = 2
+theme = ExtResource("3_56iea")
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel" unique_id=1543107542]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -118,7 +339,7 @@ offset_bottom = 24.956001
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="Panel/Panel/CenterContainer" unique_id=2114223834]
+[node name="Label" type="Label" parent="Panel/CenterContainer" unique_id=2114223834]
 layout_mode = 2
 theme = ExtResource("4_3y4eb")
 theme_type_variation = &"HeaderMedium"

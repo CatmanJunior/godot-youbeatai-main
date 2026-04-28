@@ -18,7 +18,6 @@ const SILENCE_THRESHOLD := 0.01
 @export var section_index: int = -1
 ## Back-reference to the owning TrackData. Not exported to avoid circular refs.
 ## Re-linked by TrackData after load via its recording_data setter.
-var track_data: TrackData
 @export var max_recording_length: float = 0.0
 @export var actual_recording_length: float = 0.0
 @export var length_since_detected_sound: float = 0.0
@@ -27,6 +26,7 @@ var track_data: TrackData
 		audio_stream = value
 		_invalidate_all()
 
+var track_data: TrackData
 var track_type: TrackData.TrackType:
 	get():
 		return track_data.track_type

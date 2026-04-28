@@ -159,6 +159,16 @@ signal all_achievements_unlocked()
 ## Emitted to request skipping the tutorial.
 signal skip_tutorial_requested()
 
+# ── MIDI ──
+## Emitted when the user selects a MIDI input device by its index in OS.get_connected_midi_inputs().
+signal midi_device_changed(device_index: int)
+## Emitted when the Clock In checkbox is toggled.
+signal midi_clock_in_toggled(enabled: bool)
+## Emitted for every incoming MIDI event, carrying a human-readable log string.
+signal midi_input_received(message: String)
+## Emitted when the MIDI input channel for a synth track changes.
+signal midi_synth_channel_changed(track_index: int, channel: int)
+
 # ── TTS ──
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.
 signal utterance_ended(utterance_id: int)

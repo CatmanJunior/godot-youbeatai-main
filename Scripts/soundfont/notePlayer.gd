@@ -11,6 +11,10 @@ var base_note: Note
 var allow_key_input: bool = false
 var gate: float = 0.5
 
+## When set to a value >= 0 only MIDI events on this channel are processed.
+## -1 means accept all channels.
+var midi_channel_in: int = -1
+
 func apply_settings(settings: NotePlayerSettings) -> void:
 	soundfont = settings.soundfont
 	notes = settings.notes
@@ -55,7 +59,9 @@ func _process_key_input(event: InputEventKey):
 	if event.is_released():
 		channel_note_off(0, 0, base_note.id + map[event.keycode])
 
-func _process_midi_input(event: InputEventMIDI):
+func _process_midi_input(event: InputEventMIDI) -> void:
+	if midi_channel_in >= 0 and event.channel != midi_channel_in:
+		return
 	channel_set_presetindex(0, event.channel, event.instrument)
 	if event.message == MIDI_MESSAGE_NOTE_ON and event.velocity > 0:
 		channel_note_on(0, event.channel, event.pitch, event.velocity / 127.0)

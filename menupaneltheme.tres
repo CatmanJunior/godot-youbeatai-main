@@ -54,3 +54,4 @@ Label/fonts/font = ExtResource("1_wqfxe")
 Label/styles/focus = SubResource("StyleBoxFlat_wqfxe")
 Label/styles/normal = SubResource("StyleBoxEmpty_eerrj")
 Panel/styles/panel = SubResource("StyleBoxFlat_wkudg")
+SpinBox/constants/buttons_width = 12

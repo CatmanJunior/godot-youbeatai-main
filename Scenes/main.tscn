@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://klel4nmby0jl" path="res://Resources/Textures_New/Beat-Ring-Beam_0002_Layer-1-copy-2.png" id="28_aa8k8"]
 [ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
+[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="33_s8vy0"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
@@ -129,10 +130,14 @@ offset_bottom = 1.0
 mouse_filter = 1
 
 [node name="PointLight2D" parent="UserInterface/BeatRing/Pointer" parent_id_path=PackedInt32Array(192422746, 57170616) index="0" unique_id=378491608]
+scale = Vector2(0.887, 0.887)
 texture = ExtResource("28_aa8k8")
 
 [node name="Waveform_visualisers" parent="UserInterface/BeatRing" index="5" unique_id=1117100626]
 track_settings = ExtResource("36_qax2n")
+
+[node name="TextureProgressBar1" parent="UserInterface/BeatRing/Waveform_visualisers" index="3" unique_id=1981743700]
+tint_progress = Color(0.5176471, 0, 1, 1)
 
 [node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
 layout_mode = 1
@@ -159,6 +164,9 @@ track_UI_settings = ExtResource("36_qax2n")
 
 [node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" parent_id_path=PackedInt32Array(2075389560, 154923035) index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
 song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
+
+[node name="OutlineTex" parent="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5" parent_id_path=PackedInt32Array(2075389560, 608896429) index="2" unique_id=945291825]
+texture = ExtResource("33_s8vy0")
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)

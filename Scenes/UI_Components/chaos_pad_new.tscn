@@ -96,10 +96,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 163.5
-offset_top = -149.49997
-offset_right = 163.5
-offset_bottom = -149.49997
+offset_left = 226.5
+offset_top = -178.5
+offset_right = 226.5
+offset_bottom = -178.5
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.31, 1.31)
@@ -114,10 +114,10 @@ scale = Vector2(0.6, 0.6)
 
 [node name="PointTop" type="Control" parent="ChaosPadTriangle" unique_id=400839598]
 anchors_preset = 0
-offset_left = 254.99998
-offset_top = 412.0
-offset_right = 254.99998
-offset_bottom = 412.0
+offset_left = 251.00002
+offset_top = 463.00003
+offset_right = 251.00002
+offset_bottom = 463.00003
 scale = Vector2(1.31, 1.31)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 
@@ -183,10 +183,10 @@ offset = Vector2(22.435, 19.34)
 
 [node name="PointRight" type="Control" parent="ChaosPadTriangle" unique_id=1203642698]
 anchors_preset = 0
-offset_left = 86.0
-offset_top = 107.00009
-offset_right = 86.0
-offset_bottom = 107.00009
+offset_left = 35.0
+offset_top = 74.0
+offset_right = 35.0
+offset_bottom = 74.0
 scale = Vector2(1.31, 1.31)
 
 [node name="ChaosIconAlt" parent="ChaosPadTriangle/PointRight" unique_id=1470349372 instance=ExtResource("3_ajioc")]
@@ -204,8 +204,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 210.00002
 offset_top = 218.99998
-offset_right = -168.0
-offset_bottom = -162.0
+offset_right = -143.0
+offset_bottom = -136.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -221,6 +221,7 @@ centered = false
 top_level = true
 texture_repeat = 2
 position = Vector2(40, 40)
+points = PackedVector2Array(381, 68)
 width = 35.0
 width_curve = SubResource("Curve_f0ro3")
 gradient = SubResource("Gradient_vhj50")

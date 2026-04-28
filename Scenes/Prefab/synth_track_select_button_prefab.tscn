@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://cdvmdek6n3ciy"]
 
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Icons/Icons-_28_0010_Bear.png" id="1_16ta1"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="1_16ta1"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="2_lhsuy"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="3_sylab"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_mey70"]
-[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="5_jckbl"]
+[ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="5_16ta1"]
 
 [node name="TrackSelectButton_4" type="TextureButton" unique_id=1274099305 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label", "background")]
 custom_minimum_size = Vector2(100, 120)
@@ -55,7 +55,7 @@ offset_right = 122.01138
 offset_bottom = 116.35605
 scale = Vector2(1.405, 1.405)
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("5_jckbl")
+texture = ExtResource("5_16ta1")
 stretch_mode = 4
 
 [node name="IconLabel" type="Label" parent="." unique_id=1968652299]

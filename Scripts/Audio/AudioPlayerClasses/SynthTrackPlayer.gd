@@ -1,8 +1,6 @@
 class_name SynthTrackPlayer
 extends TrackPlayerBase
 
-var thread: Thread = null
-var notes : Notes = null
 
 enum SynthLayer {
 	ALT = 0,
@@ -28,6 +26,7 @@ func _get_bus_prefix() -> String:
 
 func _ready() -> void:
 	super._ready()
+	EventBus.sequence_ready.connect(_on_sequence_ready)
 
 # --- Public API ---
 func apply_note_player_settings(new_settings: NotePlayerSettings) -> void:
@@ -51,14 +50,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	_has_recording = true
 	set_weights(_weights) # reapply weights now that streams are loaded
 
-	# Store RecordingData on the track data and mark as PROCESSING before
-	# set_recording_audio_stream so the PROCESSING state is preserved.
-	if track_data.recording_data:
-		track_data.recording_data.state = RecordingData.State.PROCESSING
 	track_data.set_recording_audio_stream(recording_data)
-
-	thread = Thread.new()
-	thread.start(_process_voice_threaded.bind(recording_data.audio_stream, thread))
 
 
 func _on_soundbank_loaded(bank: SoundBank) -> void:
@@ -122,17 +114,14 @@ func stop() -> void:
 		note_player.note_off_all(0)
 		
 # -- Voice Processing ---
-func _process_voice_threaded(stream: AudioStream, p_thread: Thread) -> void:
-	var sequence: Sequence = VoiceProcessor.process_audio(stream, notes)
-	# Marshal back to main thread
-	call_deferred("_on_voice_processed", sequence, p_thread)
-
-func _on_voice_processed(sequence: Sequence, p_thread: Thread) -> void:
-	p_thread.wait_to_finish()
+func _on_sequence_ready(sequence: Sequence, p_track_data: TrackData) -> void:
+	if p_track_data.index != track_index:
+		return
+	if p_track_data.section_index != track_data.section_index:
+		return
 	var data: SynthTrackData = track_data
 	if sequence and data:
 		data.set_sequence(sequence)
-		# Voice processing complete — mark as done
 		if data.recording_data:
 			data.recording_data.state = RecordingData.State.RECORDING_DONE
 

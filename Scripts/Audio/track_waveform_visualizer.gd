@@ -46,10 +46,13 @@ func update_waveform(rec_data: RecordingData) -> void:
 	var track_index = rec_data.track_data.index
 	track_index = track_index - _sample_track_amount  # Adjust index for waveform visualizers (only for SYNTH tracks)
 	if track_index >= 0 and track_index < waveform_lines.size() and waveform_lines[track_index]:
-		if rec_data:
-			print(rec_data)
-			rec_data.track_data.synth_waveform_visualizer.update_line_from_recording(rec_data)
-			waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
+		if rec_data == null or rec_data.audio_stream == null:
+			return
+		var samples := VoiceProcessor.get_samples(rec_data.audio_stream)
+		var length := rec_data.audio_stream.get_length()
+		var rate := float(rec_data.audio_stream.mix_rate)
+		rec_data.track_data.synth_waveform_visualizer.update_line(samples, rate, length)
+		waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
 
 
 func reset_progress_bar(rec_data: RecordingData) -> void:

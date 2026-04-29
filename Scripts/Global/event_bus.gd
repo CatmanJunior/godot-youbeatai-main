@@ -126,6 +126,8 @@ signal recording_started(recording_data: RecordingData)
 signal recording_stopped(recording_data: RecordingData)
 ## Emitted to request setting a recorded audio stream on a specific track.
 signal set_recorded_stream_requested(recording_data: RecordingData)
+## Emitted when voice processing is complete and a sequence is ready for playback.
+signal sequence_ready(sequence: Sequence, track_data: TrackData)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.

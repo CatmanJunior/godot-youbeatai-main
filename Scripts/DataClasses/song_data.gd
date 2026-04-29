@@ -91,6 +91,10 @@ func apply_to_current() -> void:
 	# Stop playback so the beat clock does not tick during data replacement.
 	EventBus.playing_change_requested.emit(false)
 
+	# Null current_section immediately so that track_data returns null (instead of
+	# a stale section that may have wrong track types) for the entire rebuild window.
+	SongState.current_section = null
+
 	# Playback settings (via signals so BeatManager picks them up)
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
@@ -157,7 +161,10 @@ static func load_from_file(path: String) -> SongData:
 	if not ResourceLoader.exists(path):
 		push_error("SongData: file not found: %s" % path)
 		return null
-	var res := ResourceLoader.load(path)
+	# CACHE_MODE_IGNORE: always deserialize fresh from disk so the loaded objects
+	# are never shared with objects already in the live SongState (which would
+	# cause type corruption on a second load).
+	var res := ResourceLoader.load(path, "", ResourceLoader.CACHE_MODE_IGNORE)
 	if res is SongData:
 		return res as SongData
 	push_error("SongData: loaded resource is not SongData: %s" % path)

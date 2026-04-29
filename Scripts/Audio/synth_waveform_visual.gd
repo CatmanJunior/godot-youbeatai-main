@@ -23,6 +23,10 @@ func update_line(samples: PackedFloat32Array, rate: float, length: float) -> voi
 	offsets = _compute_circular_offsets(samples, rate, length, points)
 	_apply_offsets(offsets)
 
+func set_color(color: Color) -> void:
+	if line:
+		line.self_modulate = color
+
 
 func _compute_circular_offsets(samples: PackedFloat32Array, rate: float, length: float, point_count: int) -> PackedVector2Array:
 	var result := PackedVector2Array()

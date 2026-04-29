@@ -19,6 +19,7 @@ var _sample_track_amount: int = AudioPlayerManager.SAMPLE_TRACKS_COUNT  # Number
 func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_switched.connect(_on_section_switched)
+	EventBus.song_loaded.connect(_on_song_loaded)
 
 func _on_section_switched(new_section_data: SectionData):
 	for i in range(waveform_lines.size()):
@@ -26,6 +27,32 @@ func _on_section_switched(new_section_data: SectionData):
 			if new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer:
 				waveform_lines[i].points = new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer.offsets  # Update waveform points for new section
 			
+
+func _on_song_loaded() -> void:
+	# Rebuild SynthWaveform visualizer instances for every loaded section, and
+	# pre-compute waveform offsets for sections that have a voice recording.
+	for section in SongState.sections:
+		for i in range(waveform_lines.size()):
+			if not waveform_lines[i]:
+				continue
+			var cfg: Dictionary = LINE_CONFIGS[i]
+			var visualizer := SynthWaveform.new(
+				waveform_lines[i],
+				cfg.points,
+				cfg.base_dist,
+				cfg.volume_dist,
+				cfg.reversed
+			)
+			var track: TrackData = section.tracks[i + _sample_track_amount]
+			track.synth_waveform_visualizer = visualizer
+			if track.recorded_audio_stream is AudioStreamWAV:
+				var wav := track.recorded_audio_stream as AudioStreamWAV
+				var samples := VoiceProcessor.get_samples(wav)
+				var rate := float(wav.mix_rate)
+				var length := wav.get_length()
+				visualizer.update_line(samples, rate, length)
+			visualizer.set_color(track_settings.get_synth_track(i).track_color)
+
 
 func _on_section_added(section_index: int, _emoji: String):
 	for i in range(waveform_lines.size()):

@@ -144,6 +144,10 @@ signal saving_completed(path: String)
 signal save_song_requested()
 ## Emitted to request loading the last saved song data from disk.
 signal load_song_requested()
+## Emitted after a song has been fully loaded into SongState.
+## Handlers should rebuild any runtime objects (section buttons, waveform visualizers)
+## before the section_switch_requested signal fires the full UI cascade.
+signal song_loaded()
 ## Emitted to request saving the current project as an MP3 file.
 signal save_to_mp3_requested()
 ## Emitted to request exporting the project. [code]mode_export_song[/code]: false for beat, true for song.

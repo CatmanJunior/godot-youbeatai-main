@@ -65,17 +65,19 @@ func _on_section_switched(_new) -> void:
 		note_player.note_off_all(0)
 	
 	# Reload the new section's recorded stream into the audio players
-	
 	if track_data.recorded_audio_stream:
 		for i in [SynthLayer.ALT, SynthLayer.REC]:
 			players[i].stream = track_data.recorded_audio_stream
 		_has_recording = true
-		set_weights(_weights)
 	else:
 		# No recording in this section — clear streams and flag
 		for i in [SynthLayer.ALT, SynthLayer.REC]:
 			players[i].stream = null
 		_has_recording = false
+
+	# Always restore saved weights and master volume from track data (not the runtime cache).
+	set_weights(track_data.weights)
+	set_volume_db(track_data.master_volume)
 
 func _on_beat_triggered(beat: int) -> void:
 	if not _has_recording:

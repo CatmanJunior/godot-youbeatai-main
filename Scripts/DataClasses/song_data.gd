@@ -88,6 +88,9 @@ static func from_current() -> SongData:
 ## Push every field of this [SongData] into the live [member SongState.data]
 ## and emit the necessary signals so that managers and UI update.
 func apply_to_current() -> void:
+	# Stop playback so the beat clock does not tick during data replacement.
+	EventBus.playing_change_requested.emit(false)
+
 	# Playback settings (via signals so BeatManager picks them up)
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
@@ -121,6 +124,10 @@ func apply_to_current() -> void:
 	SongState.data.created_at = created_at
 	SongState.data.version = version
 	SongState.data.playing = playing
+
+	# Notify listeners (SectionUI, TrackWaveformVisualizer) to rebuild runtime objects
+	# before the section_switch_requested signal triggers the full UI cascade below.
+	EventBus.song_loaded.emit()
 
 	# Switch to saved section
 	if current_section_index >= 0 and current_section_index < SongState.sections.size():

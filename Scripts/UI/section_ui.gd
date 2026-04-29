@@ -26,6 +26,7 @@ func _ready():
 	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.section_cleared.connect(_on_section_cleared)
+	EventBus.song_loaded.connect(_on_song_loaded)
 
 	init_section_button_actions()
 
@@ -69,6 +70,16 @@ func _on_remove_section_button_pressed():
 func _on_emoji_button_pressed(emoji: String):
 	_close_emoji_prompt()
 	EventBus.add_section_requested.emit(emoji)
+
+func _on_song_loaded() -> void:
+	# Destroy all existing section buttons and rebuild from the loaded SongState sections.
+	for btn in section_buttons:
+		section_buttons_container.remove_child(btn)
+		btn.queue_free()
+	section_buttons.clear()
+	for i in range(SongState.sections.size()):
+		_add_section_button(i, SongState.sections[i].emoji)
+	_update_section_ui()
 
 func _on_section_added(new_section_index: int, emoji: String) -> void:
 	_add_section_button(new_section_index, emoji)

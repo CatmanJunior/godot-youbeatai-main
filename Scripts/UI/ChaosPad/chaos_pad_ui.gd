@@ -22,8 +22,19 @@ func _ready():
 func _on_section_changed(new_section_data: SectionData):
 	set_knob_position(new_section_data.get_track_knob_position(SongState.selected_track_index))
 
-func set_knob_position(pos: Vector2):
-	knob.position = pos
+func set_knob_position(pos: Vector2) -> void:
+	if pos == TrackData.KNOB_POSITION_UNSET:
+		var tri := knob.container.tri
+		if tri.size() >= 3:
+			var centroid := (tri[0] + tri[1] + tri[2]) / 3.0
+			knob.position = centroid - knob.size / 2.0
+		else:
+			# Triangle not yet resolved (still within the deferred _ready frame).
+			# Defer to next frame when tri is guaranteed to be populated.
+			set_knob_position.call_deferred(pos)
+		return
+	# pos is the saved center point; subtract half-size to get top-left corner.
+	knob.position = pos - knob.size / 2.0
 
 func _on_track_selected(track: int):
 	if SongState.current_section != null:

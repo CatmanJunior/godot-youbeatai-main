@@ -6,6 +6,10 @@ extends Resource
 
 enum TrackType { SAMPLE, SYNTH, SONG, EXPORT }
 
+## Sentinel value meaning the knob has never been placed; chaos_pad_ui will
+## compute the triangle centroid and place the knob there on first display.
+const KNOB_POSITION_UNSET := Vector2(-1.0, -1.0)
+
 @export var track_type: TrackType = TrackType.SAMPLE
 
 @export var index: int = -1
@@ -16,7 +20,8 @@ enum TrackType { SAMPLE, SYNTH, SONG, EXPORT }
 @export var recorded_audio_stream: AudioStream = null
 
 ## Chaos pad knob position for mixing on this track.
-@export var knob_position: Vector2 = Vector2(150,150)
+## Defaults to KNOB_POSITION_UNSET so chaos_pad_ui centers it on first display.
+@export var knob_position: Vector2 = KNOB_POSITION_UNSET
 
 ## Current mixing state for this track.
 @export var master_volume: float = 0.0
@@ -28,7 +33,7 @@ enum TrackType { SAMPLE, SYNTH, SONG, EXPORT }
 		if recording_data != null:
 			recording_data.track_data = self
 
-func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = Vector2(150,150), type: TrackType = TrackType.SAMPLE) -> void:	
+func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = KNOB_POSITION_UNSET, type: TrackType = TrackType.SAMPLE) -> void:	
 	knob_position = knob_pos	
 	
 	self.track_type = type

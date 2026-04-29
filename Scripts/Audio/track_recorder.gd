@@ -117,7 +117,11 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 	EventBus.set_recorded_stream_requested.emit(recording_data)
 
 func _post_process_sample(recording_data: RecordingData) -> void:
-	var audio: AudioStream = AudioHelpers.trim_audio_stream(recording_data.audio_stream, GameState.recording_volume_threshold)
+	var audio: AudioStream = recording_data.audio_stream
+	# Use the timestamp to skip the bulk of the silence, then do an amplitude
+	# scan on a small window around that point to find the precise attack onset.
+	var silent_lead_time: float = audio.get_length() - recording_data.actual_recording_length
+	audio = AudioHelpers.trim_sample_smart(audio, silent_lead_time)
 	audio = AudioHelpers.cap_audio_duration(audio, GameState.beat_duration)
 	recording_data.audio_stream = audio
 	recording_data.state = RecordingData.State.RECORDING_DONE

@@ -27,6 +27,54 @@ static func cap_audio_duration(original: AudioStream, max_duration: float) -> Au
 	return capped
 
 
+## Trims a precise leading segment of known duration from an AudioStreamWAV.
+## Use this when you already know the silent lead time (e.g. from recording timestamps).
+static func trim_audio_by_time_offset(original: AudioStream, offset_seconds: float) -> AudioStream:
+	if original == null or offset_seconds <= 0.0:
+		return original
+
+	var is_stereo: bool = original.stereo
+	var fmt: int = original.format
+	var channels: int = 2 if is_stereo else 1
+	var bytes_per_sample: int = 2 if fmt == 1 else 1
+	var frame_size: int = channels * bytes_per_sample
+
+	var offset_bytes: int = int(offset_seconds * float(original.mix_rate)) * frame_size
+	offset_bytes = mini(offset_bytes, original.data.size())
+
+	if offset_bytes <= 0:
+		return original
+
+	print("Trim by time offset: skipping %.3f s (%d bytes)" % [offset_seconds, offset_bytes])
+
+	var trimmed: AudioStreamWAV = AudioStreamWAV.new()
+	trimmed.data = original.data.slice(offset_bytes)
+	trimmed.mix_rate = original.mix_rate
+	trimmed.stereo = original.stereo
+	trimmed.format = original.format
+	return trimmed
+
+
+## Combined trim for sample recordings: uses the known silent lead time to jump
+## close to the sound onset, backs off by a small safety buffer, then amplitude-scans
+## the remaining short window to find the exact attack without cutting into it.
+## silence_threshold is a normalised PCM amplitude (0.0–1.0).
+static func trim_sample_smart(
+		original: AudioStream,
+		silent_lead_time: float,
+		silence_threshold: float = 0.01,
+		safety_buffer_seconds: float = 0.05) -> AudioStream:
+	if original == null:
+		return original
+
+	# Back off by the safety buffer so we don't skip over the very start of the attack.
+	var coarse_offset: float = maxf(0.0, silent_lead_time - safety_buffer_seconds)
+	var working: AudioStream = trim_audio_by_time_offset(original, coarse_offset)
+
+	# Fine-trim the remaining small window with an amplitude scan.
+	return trim_audio_stream(working, silence_threshold)
+
+
 ## Trims leading silence from an AudioStreamWAV by scanning the raw sample data.
 ## silence_threshold: normalised amplitude (0.0–1.0) below which a frame counts as silent.
 static func trim_audio_stream(original: AudioStream, silence_threshold: float = 0.01) -> AudioStream:

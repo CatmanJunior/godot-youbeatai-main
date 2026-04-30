@@ -10,6 +10,7 @@ const NOTE_MAX: int = 127
 
 @export_category("Device")
 @export var device_select: OptionButton
+@export var out_device_select: OptionButton
 
 # ── Clock ─────────────────────────────────────────────────────────────
 
@@ -79,13 +80,34 @@ func _populate_device_select() -> void:
 	if devices.is_empty():
 		device_select.add_item("No devices found", 0)
 		device_select.disabled = true
+	else:
+		device_select.disabled = false
+		for i: int in devices.size():
+			device_select.add_item(devices[i], i)
+		var saved_index: int = GameState.midi_settings.device_index
+		if saved_index < device_select.item_count:
+			device_select.select(saved_index)
+
+	if not is_instance_valid(out_device_select):
 		return
-	device_select.disabled = false
-	for i: int in devices.size():
-		device_select.add_item(devices[i], i)
-	var saved_index: int = GameState.midi_settings.device_index
-	if saved_index < device_select.item_count:
-		device_select.select(saved_index)
+	out_device_select.clear()
+	if not ClassDB.class_exists("MidiOut"):
+		out_device_select.add_item("Not available", 0)
+		out_device_select.disabled = true
+		return
+	var out_instance: Object = ClassDB.instantiate("MidiOut")
+	var out_devices: PackedStringArray = out_instance.get_port_names()
+	out_instance.free()
+	if out_devices.is_empty():
+		out_device_select.add_item("No devices found", 0)
+		out_device_select.disabled = true
+		return
+	out_device_select.disabled = false
+	for i: int in out_devices.size():
+		out_device_select.add_item(out_devices[i], i)
+	var saved_out_index: int = GameState.midi_settings.out_device_index
+	if saved_out_index < out_device_select.item_count:
+		out_device_select.select(saved_out_index)
 
 func _configure_spinbox_ranges() -> void:
 	var channel_spinboxes: Array[SpinBox] = [in_1, out_1, in_2, out_2, in_3, out_3, in_4, out_4, in_5, out_5, in_6, out_6]
@@ -124,6 +146,8 @@ func _load_settings() -> void:
 func _connect_ui_signals() -> void:
 	if is_instance_valid(device_select):
 		device_select.item_selected.connect(_on_device_selected)
+	if is_instance_valid(out_device_select):
+		out_device_select.item_selected.connect(_on_out_device_selected)
 	if is_instance_valid(clock_in):
 		clock_in.toggled.connect(_on_clock_in_toggled)
 	if is_instance_valid(clock_out):
@@ -172,6 +196,10 @@ func _connect_note_spinbox(spinbox: SpinBox, track: int) -> void:
 func _on_device_selected(index: int) -> void:
 	GameState.midi_settings.device_index = index
 	EventBus.midi_device_changed.emit(index)
+
+func _on_out_device_selected(index: int) -> void:
+	GameState.midi_settings.out_device_index = index
+	EventBus.midi_out_device_changed.emit(index)
 
 func _on_clock_in_toggled(enabled: bool) -> void:
 	GameState.midi_settings.clock_in_enabled = enabled

@@ -50,6 +50,7 @@
 [ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 [ext_resource type="Script" uid="uid://cin3ijkpp77ab" path="res://Scripts/Managers/midi_manager.gd" id="midi_manager_script"]
+[ext_resource type="Script" path="res://Scripts/Managers/midi_output_manager.gd" id="midi_output_manager_script"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -99,6 +100,9 @@ track_settings_registry = ExtResource("36_qax2n")
 
 [node name="MidiManager" type="Node" parent="Managers" unique_id=1776047867]
 script = ExtResource("midi_manager_script")
+
+[node name="MidiOutputManager" type="Node" parent="Managers" unique_id=1776047868]
+script = ExtResource("midi_output_manager_script")
 
 [node name="TemplateManager" type="Node" parent="Managers" unique_id=1447662219]
 script = ExtResource("10_o2owy")

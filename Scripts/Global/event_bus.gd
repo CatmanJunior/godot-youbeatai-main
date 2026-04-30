@@ -168,6 +168,11 @@ signal midi_clock_in_toggled(enabled: bool)
 signal midi_input_received(message: String)
 ## Emitted when the MIDI input channel for a synth track changes.
 signal midi_synth_channel_changed(track_index: int, channel: int)
+## Emitted when the user selects a MIDI output device by its index in MidiOut.get_port_names().
+signal midi_out_device_changed(device_index: int)
+## Emitted to request a MIDI Note On/Off pair on the output port.
+## velocity is 0–127, gate is the note duration in seconds.
+signal midi_note_out_requested(channel: int, note: int, velocity: int, gate: float)
 
 # ── TTS ──
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.

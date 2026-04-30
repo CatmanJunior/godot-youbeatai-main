@@ -124,6 +124,8 @@ func play_note(beat: int) -> void:
 	var note: SequenceNote = data.sequence.get_note_at_beat(beat)
 	if note and note_player:
 		note_player.play_note(note)
+		var channel: int = GameState.midi_settings.track_channel_out[track_index]
+		EventBus.midi_note_out_requested.emit(channel, note.note, int(note.velocity * 127.0), note_player.gate)
 
 func stop() -> void:
 	for i in [SynthLayer.ALT, SynthLayer.REC]: # stop all non-note player layers

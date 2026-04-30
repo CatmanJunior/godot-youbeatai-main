@@ -181,9 +181,6 @@ scale = Vector2(0.5, 0.5)
 [node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0" unique_id=1497439872]
 visible = false
 
-[node name="Klappylight" parent="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model" parent_id_path=PackedInt32Array(1062863753, 1167922712, 386737351) index="4" unique_id=746853411]
-visible = true
-
 [node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1062863753, 2110113658) index="1" unique_id=1195742085]
 visible = false
 energy = 1.71

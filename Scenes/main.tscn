@@ -15,7 +15,6 @@
 [ext_resource type="Texture2D" uid="uid://klel4nmby0jl" path="res://Resources/Textures_New/Beat-Ring-Beam_0002_Layer-1-copy-2.png" id="28_aa8k8"]
 [ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
-[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="33_s8vy0"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
@@ -164,9 +163,6 @@ track_UI_settings = ExtResource("36_qax2n")
 
 [node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" parent_id_path=PackedInt32Array(2075389560, 154923035) index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
 song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
-
-[node name="OutlineTex" parent="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5" parent_id_path=PackedInt32Array(2075389560, 608896429) index="2" unique_id=945291825]
-texture = ExtResource("33_s8vy0")
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
@@ -347,4 +343,8 @@ grow_vertical = 1
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/Robot"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
+[editable path="UserInterface/Robot/AchievementsPanel"]
 [editable path="UserInterface/SwitchSectionButtons"]

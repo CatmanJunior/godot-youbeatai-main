@@ -18,6 +18,9 @@ var chosen_themes_emojis: Array[String] = []
 
 @export var beatSelectButtonGroup: ButtonGroup
 
+@export var emotion_placeholders: Array[Sprite2D]
+@export var theme_placeholders: Array[Sprite2D]
+
 func _ready() -> void:
 	if GameState.tutorialActivated:
 		selected_emotion_labels[0].text = "😁"
@@ -41,20 +44,35 @@ func _on_beat_button_group_pressed(button: BaseButton) -> void:
 func _on_emotion_toggle(buttons: Array[BaseButton]) -> void:
 	amount_emotions_selected = buttons.size()
 	chosen_emotions_emojis.clear()
-	for btn in buttons:
-		chosen_emotions_emojis.append(get_label_text(btn))
-	for i in chosen_emotions_emojis.size():
-		selected_emotion_labels[i].text = chosen_emotions_emojis[i]
-		
+
+	for i in range(selected_emotion_labels.size()):
+		selected_emotion_labels[i].text = ""
+		emotion_placeholders[i].visible = true
+
+	for i in range(buttons.size()):
+		var emoji = get_label_text(buttons[i])
+		chosen_emotions_emojis.append(emoji)
+
+		selected_emotion_labels[i].text = emoji
+		emotion_placeholders[i].visible = false
+
 	check_ready_condition()
 
 func _on_theme_toggle(buttons: Array[BaseButton]) -> void:
 	amount_themes_selected = buttons.size()
 	chosen_themes_emojis.clear()
-	for btn in buttons:
-		chosen_themes_emojis.append(get_label_text(btn))
-	for i in chosen_themes_emojis.size():
-		selected_theme_labels[i].text = chosen_themes_emojis[i]
+
+	for i in range(selected_theme_labels.size()):
+		selected_theme_labels[i].text = ""
+		theme_placeholders[i].visible = true
+
+	for i in range(buttons.size()):
+		var emoji = get_label_text(buttons[i])
+		chosen_themes_emojis.append(emoji)
+
+		selected_theme_labels[i].text = emoji
+		theme_placeholders[i].visible = false
+
 	check_ready_condition()
 
 func check_ready_condition() -> bool:

@@ -168,6 +168,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_0" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_0" unique_id=2107428534]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -197,6 +198,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_1" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_1" unique_id=252746729]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -224,6 +226,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_2" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_2" unique_id=410568272]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -251,6 +254,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_3" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_3" unique_id=1602143551]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -278,6 +282,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_4" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_4" unique_id=1037148491]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -305,6 +310,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_6" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_5" unique_id=935287436]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -332,6 +338,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_5" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_6" unique_id=1436557364]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -401,6 +408,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_0" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_0" unique_id=1603022020]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -430,6 +438,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_1" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_1" unique_id=1041963006]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -459,6 +468,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_2" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_2" unique_id=79912936]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -488,6 +498,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_3" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_3" unique_id=929301393]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -517,6 +528,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_4" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_4" unique_id=2075594561]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -546,6 +558,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_5" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_5" unique_id=2126277104]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -580,6 +593,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_6" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_6" unique_id=11990942]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -609,6 +623,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_7" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_7" unique_id=1402165382]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -638,6 +653,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_8" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_8" unique_id=727138844]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -667,6 +683,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_9" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_9" unique_id=1699383106]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -696,6 +713,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_10" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_10" unique_id=1477088588]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -725,6 +743,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_11" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_11" unique_id=1786018748]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

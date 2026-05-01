@@ -25,6 +25,8 @@ var clipboard_section: SectionData = null
 
 var _sections_initialized: bool = false
 
+var loop_cursor: int = 0
+
 func _ready() -> void:
 	# Connect to EventBus
 	EventBus.section_copy_requested.connect(_copy_section)
@@ -33,6 +35,8 @@ func _ready() -> void:
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section)
 	EventBus.section_remove_requested.connect(remove_section)
+	EventBus.section_next_requested.connect(next_section)
+	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
 	call_deferred("spawn_initial_sections")
 		
 
@@ -109,12 +113,21 @@ func clear_section():
 	
 	EventBus.section_cleared.emit()
 
+func _set_loop_count_requested(section_index: int, loop_count: int):
+	#TODO: catch invalid options?
+
+	sections[section_index].loop_count = loop_count
+	EventBus.on_set_loop_count.emit(section_index, loop_count)
+
+
 ##Switch to a different section
 func switch_section(section_index: int):
 	# Switch to new section
 	if section_index < 0 or section_index >= sections.size():
 		push_warning("Invalid section index %d, cannot switch." % section_index)
 		return
+
+	loop_cursor = 0
 	EventBus.section_switched.emit(SongState.get_section(section_index))
 
 func switch_section_next_frame(section_index: int):
@@ -123,6 +136,13 @@ func switch_section_next_frame(section_index: int):
 	switch_section(section_index)
 
 func next_section():
+	# Loop current section
+	loop_cursor += 1
+	if loop_cursor < current_section.loop_count:
+		print("loop")
+		EventBus.section_loop.emit(current_section_index, loop_cursor)
+		return
+
 	"""Switch to the next section (or loop to first)"""
 	if current_section_index == sections.size() - 1:
 		switch_section(0)

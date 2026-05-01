@@ -89,7 +89,7 @@ func _on_section_switched(section: SectionData) -> void:
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 func section_count() -> int:
-	return data.sections.size()
+	return data.sections.map(func(e): return e.loop_count).reduce(func(i, accum): return accum + i )
 
 
 func get_section(index: int) -> SectionData:

@@ -23,6 +23,7 @@ var id: int
 ## Emoji shown on the section button
 @export var emoji: String = ""
 
+@export var loop_count: int = 1
 
 # ── Initialization ───────────────────────────────────────────────────────────
 ## Initialize with a new unique ID. Tracks are NOT created here to avoid

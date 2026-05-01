@@ -325,9 +325,10 @@ section_button_prefab = ExtResource("43_kqrg6")
 [node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2103297005]
 visible = false
 offset_left = 2.0
-offset_top = -349.0
-offset_right = 2.0
-offset_bottom = -349.0
+offset_top = -300.0
+offset_right = 292.0
+offset_bottom = -255.0
+alignment = 0
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=569761149]
 offset_left = -1002.0

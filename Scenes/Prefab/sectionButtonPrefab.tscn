@@ -1,8 +1,13 @@
 [gd_scene format=3 uid="uid://7ihp2yx2750i"]
 
 [ext_resource type="Texture2D" uid="uid://dmevn2dgqod2w" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0001_Song-Filled.png" id="1_jf038"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="2_f4ak3"]
 [ext_resource type="Script" uid="uid://81gjarb3j1hq" path="res://Scripts/UI/Buttons/section_button.gd" id="2_vlsjc"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="3_f4ak3"]
+[ext_resource type="Texture2D" uid="uid://dgki5hjiy4i76" path="res://Resources/Textures_New_Extra/Hex_0002_Layer-1.png" id="5_4om38"]
+[ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="6_6664a"]
+[ext_resource type="Texture2D" uid="uid://pgbevn8kf0kd" path="res://Resources/Textures_New_Extra/Hex_ring_white.png" id="6_vnog6"]
+[ext_resource type="Script" uid="uid://cy7mkayqgle35" path="res://Experimental/section_ring_graphic.gd" id="8_6664a"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jf038"]
 texture = ExtResource("1_jf038")
@@ -31,7 +36,23 @@ corner_radius_top_right = 800
 corner_radius_bottom_right = 800
 corner_radius_bottom_left = 800
 
-[node name="layerButton" type="Button" unique_id=597122503 node_paths=PackedStringArray("outline")]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6664a"]
+resource_local_to_scene = true
+shader = ExtResource("6_6664a")
+shader_parameter/fill_amount = 0.0
+shader_parameter/start_angle = 67.0000031825
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/clockwise = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c6ed8"]
+resource_local_to_scene = true
+shader = ExtResource("6_6664a")
+shader_parameter/fill_amount = 0.0
+shader_parameter/start_angle = 67.0000031825
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/clockwise = 1.0
+
+[node name="layerButton" type="Button" unique_id=597122503 node_paths=PackedStringArray("outline", "inactive_ring", "active_ring")]
 custom_minimum_size = Vector2(72, 72)
 anchors_preset = 8
 anchor_left = 0.5
@@ -50,20 +71,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 focus_mode = 0
 theme = SubResource("Theme_eueij")
-theme_override_constants/icon_max_width = 25
+theme_override_constants/icon_max_width = 48
 theme_override_font_sizes/font_size = 25
 theme_override_styles/pressed = SubResource("StyleBoxFlat_hdf80")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r33sp")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_neg2b")
+icon = ExtResource("2_f4ak3")
+flat = true
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_vlsjc")
 outline = NodePath("Outline")
-script = ExtResource("2_vlsjc")
-outline = NodePath("Outline")
+inactive_ring = NodePath("segment_inactive")
+active_ring = NodePath("segment_active")
 metadata/_edit_use_anchors_ = true
 
 [node name="Outline" type="TextureRect" parent="." unique_id=1566726914]
+visible = false
 layout_mode = 0
 offset_left = -234.60931
 offset_top = -235.95358
@@ -73,3 +97,40 @@ scale = Vector2(0.135, 0.135)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("3_f4ak3")
 stretch_mode = 3
+
+[node name="background" type="TextureRect" parent="." unique_id=628771227]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_4om38")
+expand_mode = 1
+
+[node name="segment_inactive" type="TextureRect" parent="." unique_id=531764261]
+self_modulate = Color(0.797, 0.79, 1, 1)
+material = SubResource("ShaderMaterial_6664a")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_vnog6")
+expand_mode = 1
+script = ExtResource("8_6664a")
+repeating = 1
+
+[node name="segment_active" type="TextureRect" parent="." unique_id=131197921]
+material = SubResource("ShaderMaterial_c6ed8")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_vnog6")
+expand_mode = 1
+script = ExtResource("8_6664a")

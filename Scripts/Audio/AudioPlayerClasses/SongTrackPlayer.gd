@@ -85,12 +85,8 @@ func _on_beat_triggered(_beat: int) -> void:
 	if SongState.current_section_index == 0 and not _is_playing:
 		play()
 		return
-		
-	if SongState.current_section_index == SongState.sections.size() - 1:
-		EventBus.section_switch_requested.emit(0) 
-		play()
-	else:
-		EventBus.section_switch_requested.emit(SongState.current_section_index + 1)
+
+	EventBus.section_next_requested.emit()
 
 
 ## Song track is NOT per-section — ignore section switches for stream loading.

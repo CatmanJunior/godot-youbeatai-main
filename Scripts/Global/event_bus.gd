@@ -61,6 +61,10 @@ signal clap_stomp_detected(interaction_type: int)
 signal add_section_requested(emoji: String)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
+## Emitted on loop
+signal section_next_requested()
+## Emitted on loop
+signal section_loop(section_index: int, loop_cursor: int)
 ## Emitted to request copying the current section data.
 signal section_copy_requested()
 ## Emitted to request pasting previously copied section data.
@@ -77,6 +81,12 @@ signal section_removed(section_index: int)
 signal section_cleared()
 ## Emitted to request clearing all beats in the current section.
 signal section_clear_requested()
+
+## Emitted when loop count is assigned a new value
+signal on_set_loop_count(section_index: int, loop_count: int)
+## Emitted when loop count change is requested through the UI
+signal set_loop_count_requested(section_index: int, loop_count: int)
+
 
 # ── Audio Playback ──
 ## Emitted to request playing audio for the given track.

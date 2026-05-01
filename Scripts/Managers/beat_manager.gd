@@ -8,6 +8,10 @@ var beats_per_bar = 4.0
 var bpm: int:
 	get: return SongState.bpm
 	set(value):
+		if value < 40:
+			value = 40
+		elif value > 200:
+			value = 200
 		GameState.beat_duration = 60.0 / value / SongState.total_beats * beats_per_bar
 		EventBus.bpm_changed.emit(value)
 

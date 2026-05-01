@@ -29,6 +29,8 @@ func _ready() -> void:
 	EventBus.playing_changed.connect(_update_play_pause_button)
 	EventBus.beat_state_changed.connect(_set_beat_active)
 	EventBus.template_set.connect(_on_template_set)
+	EventBus.track_sprites_visibility_requested.connect(_set_track_sprites_visible)
+	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
 	play_pause_button.pressed.connect(_on_play_pause_button_toggled)
 
 func _process(_delta: float) -> void:
@@ -178,3 +180,18 @@ func _reset_scales() -> void:
 			if sprite:
 				var scale_factor: float = _scale_factor_for_beats_amount(beats_amount)
 				sprite.scale = Vector2.ONE * scale_factor * GLOBAL_SPRITE_SCALE_FACTOR
+
+
+## Set the sprites for a specific track visible 
+func _set_track_sprites_visible(track: int, visible: bool) -> void:
+	for beat in range(_beat_buttons[track].size()):
+		var sprite: BeatButton = _get_beat_button(track, beat)
+		if sprite:
+			sprite.visible = visible
+
+func _on_ui_visibility_requested(element: int, visible: bool) -> void:
+	match element:
+		VisibilityManager.UIElement.BEAT_POINTER:
+			pointer.visible = visible
+		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
+			play_pause_button.visible = visible

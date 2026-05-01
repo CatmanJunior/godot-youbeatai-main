@@ -182,3 +182,28 @@ signal fullscreen_toggle_requested()
 # ── Recording UI ──
 ## Emitted to request disabling or enabling UI buttons during recording workflows.
 signal buttons_disabled_requested(disabled: bool)
+
+# -- Visibility --
+## Emitted to request setting the visibility of a UI element by VisibilityManager.UIElement enum.
+## See VisibilityManager.UIElement for all available targets.
+signal ui_visibility_requested(element: int, visible: bool)
+## Emitted to request setting the visibility of a specific track's sprites.
+signal track_sprites_visibility_requested(track: int, visible: bool)
+
+
+## Emitted to request setting the visibility of the clap/stomp interaction UI.
+signal continue_button_pressed()
+
+# ── Tutorial Beat Control ──
+## Emitted to request forcing a specific beat slot to be active/free, used by tutorial.
+signal beat_set_free_requested(track: int, beat: int, free: bool)
+
+# ── Tutorial Chaos Pad ──
+## Emitted to request snapping the chaos pad knob to the given world position.
+signal chaos_pad_knob_position_set_requested(position: Vector2)
+## Emitted to request stopping the chaos pad activation button's animation player.
+signal chaos_pad_button_animation_stop_requested()
+## Emitted to request stopping the record button's animation player.
+signal record_button_animation_stop_requested()
+
+

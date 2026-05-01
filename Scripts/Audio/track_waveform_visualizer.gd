@@ -20,6 +20,10 @@ func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.song_loaded.connect(_on_song_loaded)
+	for i in range(progress_bars.size()):
+		var bar = progress_bars[i]
+		if bar:
+			bar.self_modulate = track_settings.get_synth_track(i).track_color
 
 func _on_section_switched(new_section_data: SectionData):
 	for i in range(waveform_lines.size()):

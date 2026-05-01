@@ -7,7 +7,7 @@
 [ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_rvsyq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3cvs7"]
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 corner_radius_top_left = 60
 corner_radius_top_right = 60
 corner_radius_bottom_right = 60
@@ -95,6 +95,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_m4jan")
 theme_override_styles/hover = SubResource("StyleBoxFlat_gasai")
 action_mode = 0
 text = " Doorgaan ✅ "
+flat = true
 script = ExtResource("2_3cvs7")
 anim = NodePath("AnimationPlayer")
 animation = ExtResource("3_rvsyq")

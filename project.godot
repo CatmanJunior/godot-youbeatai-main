@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="youbeatai-godot"
+config/name="Ritme Robot"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
+config/icon="uid://bw7qlsn2o2s82"
 
 [audio]
 

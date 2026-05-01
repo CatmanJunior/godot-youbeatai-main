@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
 [ext_resource type="Texture2D" uid="uid://bndvo0vsvj7ns" path="res://Resources/Textures_New_Extra/MenuShapes128_0008_8_Green.png" id="16_grpai"]
+[ext_resource type="Texture2D" uid="uid://dl6eu7qv8vsk8" path="res://Resources/Textures_New_Extra/NoEmoticon128.png" id="22_18n7q"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8jt4r"]
 
@@ -42,27 +43,49 @@ corner_radius_bottom_left = 20
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7sjhg"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g2pn6"]
-bg_color = Color(0.6, 0.6, 0.6, 0.25882354)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18n7q"]
+
+[sub_resource type="Theme" id="Theme_7oxff"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yrcn8"]
+bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8784314, 0.43137255, 1, 1)
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
 corner_radius_bottom_left = 30
-
-[sub_resource type="Theme" id="Theme_7oxff"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18n7q"]
+shadow_color = Color(0.8784314, 0.43137255, 1, 0.21176471)
+shadow_size = 25
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h74sy"]
+bg_color = Color(0.5529412, 0.9411765, 0.5921569, 0.49019608)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.5568628, 0.9372549, 0.5921569, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+shadow_color = Color(0.5529412, 0.9411765, 0.5921569, 0.20392157)
+shadow_size = 5
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yrcn8"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5f5ga"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_grpai"]
+bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8784314, 0.43137255, 1, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h74sy"]
 
@@ -72,7 +95,7 @@ corner_radius_bottom_left = 30
 script = ExtResource("1_h74sy")
 soundbank_selection_menu = NodePath("../SoundBankSelectionMenu")
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." unique_id=1866251115 node_paths=PackedStringArray("selected_emotion_labels", "selected_theme_labels", "gebruik_button", "gevonden_soundbank_label")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." unique_id=1866251115 node_paths=PackedStringArray("selected_emotion_labels", "selected_theme_labels", "gebruik_button", "gevonden_soundbank_label", "emotion_placeholders", "theme_placeholders")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -94,6 +117,8 @@ selected_theme_labels = [NodePath("../Chosen_Theme_label_0"), NodePath("../Chose
 gebruik_button = NodePath("Ready/Ready")
 gevonden_soundbank_label = NodePath("SelectieLabelTitle/SelectionLabel")
 beatSelectButtonGroup = ExtResource("8_dsbnb")
+emotion_placeholders = [NodePath("../Chosen_Emotion_label_0/Sprite2D"), NodePath("../Chosen_Emotion_label_1/Sprite2D")]
+theme_placeholders = [NodePath("../Chosen_Theme_label_0/Sprite2D"), NodePath("../Chosen_Theme_label_1/Sprite2D")]
 
 [node name="emoties" type="Panel" parent="SoundBankSelectionMenu" unique_id=1653933121]
 layout_mode = 0
@@ -143,6 +168,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_0" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_0" unique_id=2107428534]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -172,6 +198,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_1" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_1" unique_id=252746729]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -199,6 +226,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_2" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_2" unique_id=410568272]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -226,6 +254,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_3" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_3" unique_id=1602143551]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -253,6 +282,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_4" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_4" unique_id=1037148491]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -280,6 +310,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_6" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_5" unique_id=935287436]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -307,6 +338,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("5_dsbnb")
 
 [node name="EmojiToggle_5" type="Label" parent="SoundBankSelectionMenu/emoties/HBoxContainer/EmojiToggle_6" unique_id=1436557364]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -376,6 +408,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_0" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_0" unique_id=1603022020]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -405,6 +438,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_1" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_1" unique_id=1041963006]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -434,6 +468,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_2" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_2" unique_id=79912936]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -463,6 +498,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_3" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_3" unique_id=929301393]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -492,6 +528,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_4" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_4" unique_id=2075594561]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -521,6 +558,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_5" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer2/ThemeToggle_5" unique_id=2126277104]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -555,6 +593,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_6" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_6" unique_id=11990942]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -584,6 +623,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_7" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_7" unique_id=1402165382]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -613,6 +653,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_8" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_8" unique_id=727138844]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -642,6 +683,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_9" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_9" unique_id=1699383106]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -671,6 +713,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_10" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_10" unique_id=1477088588]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -700,6 +743,7 @@ script = ExtResource("5_7sjhg")
 my_group = ExtResource("3_grpai")
 
 [node name="theme_label_11" type="Label" parent="SoundBankSelectionMenu/themas/VBoxContainer/HBoxContainer/ThemeToggle_11" unique_id=1786018748]
+show_behind_parent = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -756,11 +800,12 @@ vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SoundBankSelectionMenu/beats" unique_id=1292268808]
 layout_mode = 0
-offset_left = -47.031982
-offset_top = 33.924698
-offset_right = 344.96802
-offset_bottom = 161.9247
+offset_left = -36.23774
+offset_top = 30.840637
+offset_right = 377.76227
+offset_bottom = 158.84064
 scale = Vector2(0.78, 0.78)
+theme_override_constants/separation = 15
 
 [node name="Beat_8" type="TextureButton" parent="SoundBankSelectionMenu/beats/HBoxContainer" unique_id=13036957]
 layout_mode = 2
@@ -865,27 +910,24 @@ offset_left = 593.68225
 offset_top = 67.8494
 offset_right = 793.6823
 offset_bottom = 146.49304
-theme_override_styles/panel = SubResource("StyleBoxFlat_g2pn6")
+theme_override_styles/panel = SubResource("StyleBoxEmpty_18n7q")
 
 [node name="Ready" type="Button" parent="SoundBankSelectionMenu/Ready" unique_id=1703942918]
-modulate = Color(0.5254902, 0.8509804, 0.47058824, 1)
 layout_mode = 0
-offset_left = 35.466736
-offset_top = 1.5420303
-offset_right = 171.46674
-offset_bottom = 77.87261
+offset_right = 190.0
+offset_bottom = 78.0
 theme = SubResource("Theme_7oxff")
 theme_type_variation = &"FlatButton"
 theme_override_constants/line_spacing = -10
 theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_18n7q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_yrcn8")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_h74sy")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_yrcn8")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_5f5ga")
+theme_override_styles/hover = SubResource("StyleBoxFlat_h74sy")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_h74sy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_grpai")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_h74sy")
 disabled = true
 text = "Start "
-flat = true
 icon_alignment = 1
 
 [node name="Label" type="Label" parent="SoundBankSelectionMenu" unique_id=1617777208]
@@ -904,13 +946,14 @@ light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 1670853344) index="0" unique_id=1071747644]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 118098534) index="0" unique_id=1128806749]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]
 transform = Transform3D(0.98480767, 0.0030305798, 0.1736215, -0.17144132, -0.14190595, 0.9749207, 0.027592069, -0.9898756, -0.13923067, 0, -3.29693, 0)
 
 [node name="KlappyLight" parent="Robot/SubViewportContainer" index="1" unique_id=1195742085]
+visible = false
 light_mask = 2
 position = Vector2(202.5, 57.499996)
 scale = Vector2(0.6, 0.6)
@@ -959,10 +1002,14 @@ offset_left = -112.0
 offset_top = -246.0
 offset_right = -12.0
 offset_bottom = -146.0
-theme_override_font_sizes/font_size = 40
-text = "."
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Chosen_Emotion_label_0" unique_id=1934298910]
+position = Vector2(48.800003, 50.800003)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("22_18n7q")
 
 [node name="Chosen_Emotion_label_1" type="Label" parent="." unique_id=1470734653]
 custom_minimum_size = Vector2(100, 100)
@@ -970,32 +1017,44 @@ offset_left = -51.0
 offset_top = -246.0
 offset_right = 49.0
 offset_bottom = -146.0
-theme_override_font_sizes/font_size = 40
-text = "."
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Chosen_Emotion_label_1" unique_id=1208468043]
+position = Vector2(51.8, 50.800003)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("22_18n7q")
 
 [node name="Chosen_Theme_label_0" type="Label" parent="." unique_id=2056004005]
 custom_minimum_size = Vector2(100, 100)
 offset_left = -112.0
-offset_top = -12.0
+offset_top = -30.0
 offset_right = -12.0
-offset_bottom = 88.0
-theme_override_font_sizes/font_size = 40
-text = "."
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Chosen_Theme_label_0" unique_id=862373601]
+position = Vector2(48.800003, 50.800003)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("22_18n7q")
 
 [node name="Chosen_Theme_label_1" type="Label" parent="." unique_id=1647424092]
 custom_minimum_size = Vector2(100, 100)
 offset_left = -51.0
-offset_top = -12.0
+offset_top = -30.0
 offset_right = 49.0
-offset_bottom = 88.0
-theme_override_font_sizes/font_size = 40
-text = "."
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 50
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Chosen_Theme_label_1" unique_id=150318601]
+position = Vector2(51.8, 50.800003)
+scale = Vector2(0.45, 0.45)
+texture = ExtResource("22_18n7q")
 
 [editable path="Robot"]
 [editable path="Robot/AchievementsPanel"]

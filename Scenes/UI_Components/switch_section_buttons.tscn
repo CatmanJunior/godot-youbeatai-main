@@ -3,7 +3,11 @@
 [ext_resource type="Script" uid="uid://cc7u261da7fff" path="res://Scripts/UI/section_ui.gd" id="1_3bcou"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_mka03"]
 [ext_resource type="PackedScene" uid="uid://ckwwv0pdx8e2c" path="res://Scenes/Prefab/addLayerButtonPrefab.tscn" id="3_3b4f3"]
+[ext_resource type="Texture2D" uid="uid://dnrsnokeidh62" path="res://Resources/Textures_New_Correct/Icons-_28_0002_Bin.png" id="4_2ivto"]
 [ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="5_8duxt"]
+[ext_resource type="Texture2D" uid="uid://ml681mo0sr5a" path="res://Resources/Textures_New/Icons/copy.png" id="5_r0nxd"]
+[ext_resource type="Texture2D" uid="uid://dqa7rjhcgqcoh" path="res://Resources/Textures_New_Correct/Icons-_28_0000_Paste.png" id="6_0g022"]
+[ext_resource type="Texture2D" uid="uid://da2j55ggfvjrj" path="res://Resources/Textures_New/Icons/Icons-_28_0003_+.png" id="7_r0nxd"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8duxt"]
 bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
@@ -96,17 +100,19 @@ offset_bottom = 129.45422
 pivot_offset_ratio = Vector2(0.5, 0)
 alignment = 1
 
-[node name="AddSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
+[node name="RemoveSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1218212978]
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "+"
+icon = ExtResource("4_2ivto")
+icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="CopySectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=886923601]
@@ -114,13 +120,16 @@ custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "📥
+text = "
 "
+icon = ExtResource("5_r0nxd")
+icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="PasteSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1172480617]
@@ -128,16 +137,18 @@ custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "📤
-"
+icon = ExtResource("6_0g022")
+icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="ClearSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=2008335968]
+visible = false
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
@@ -151,17 +162,19 @@ text = "♻️
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="RemoveSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1218212978]
+[node name="AddSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-text = "🗑️"
+icon = ExtResource("7_r0nxd")
+icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
 [node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="." unique_id=798254824]

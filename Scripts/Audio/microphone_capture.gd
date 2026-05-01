@@ -6,8 +6,9 @@ extends Node
 
 @export var bus_name: String = "Microphone"
 
+static var analyzer: AudioEffectSpectrumAnalyzerInstance
+
 var audio_stream_player: AudioStreamPlayer
-var analyzer: AudioEffectSpectrumAnalyzerInstance
 var microphone: AudioStreamMicrophone
 
 # Recording
@@ -43,7 +44,7 @@ func _ready():
 	audio_stream_player.play()
 
 func _process(_delta: float):
-	GameState.microphone_volume = _get_magnitude(0.0, 20000.0)
+	GameState.microphone_volume = get_magnitude(0.0, 20000.0)
 
 # -- Recording -----------------------------------------------------------------
 func _start_recording(_recording_data: RecordingData) -> void:
@@ -61,6 +62,6 @@ func _stop_recording(recording_data: RecordingData) -> void:
 	EventBus.recording_stopped.emit(recording_data)
 
 # -- Helpers -------------------------------------------------------------------
-func _get_magnitude(freq_min: float, freq_max: float) -> float:
-	var rms: Vector2 = analyzer.get_magnitude_for_frequency_range(freq_min, freq_max)
+static func get_magnitude(freq_min: float, freq_max: float, p_analyzer: AudioEffectSpectrumAnalyzerInstance = analyzer) -> float:
+	var rms: Vector2 = p_analyzer.get_magnitude_for_frequency_range(freq_min, freq_max)
 	return (rms.x + rms.y) * 0.5

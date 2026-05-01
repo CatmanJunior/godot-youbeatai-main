@@ -36,26 +36,15 @@ var _increased_speed: bool = false
 var tutorial_steps: Array = []
 const TUTORIAL_STEPS_PATH: String = "res://Data/tutorial_steps.json"
 
-var beatManager: Node
-var audioPlayerManager: Node
-var uiManager: Node
-var visabilityManager: Node
-var mixingManager: Node
-var gameManager: Node
+
 
 func _ready():
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
-	mixingManager = %MixingManager
-	beatManager = %BeatManager
-	audioPlayerManager = %AudioPlayerManager
-	uiManager = %UiManager
-	visabilityManager = %VisabilityManager
-	gameManager = %GameManager
+
 
 
 func _on_skip_tutorial_requested():
 	GameState.use_tutorial = false
-	uiManager.set_entire_interface_visibility(true)
 	uiManager.achievements_panel.visible = false
 	if DisplayServer.tts_is_speaking():
 		DisplayServer.tts_stop()

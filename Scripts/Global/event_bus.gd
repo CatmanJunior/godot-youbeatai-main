@@ -7,11 +7,11 @@ signal restart_requested()
 
 
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
-signal audio_bank_selected(themes: Array[String], emotions: Array[String])
+signal soundbank_selected(themes: Array[String], emotions: Array[String])
 ## Emitted when note player settings have changed, carrying the new settings for each synth track.
 signal note_player_settings_changed(new_settings: NotePlayerSettings, track_index: int)
 ## Emitted when a soundbank has been fully loaded and applied.
-signal audio_bank_loaded(bank: AudioBank)
+signal soundbank_loaded(bank: SoundBank)
 
 # ── Playback ──
 ## Emitted when the playback state has changed (playing or stopped).
@@ -62,9 +62,9 @@ signal add_section_requested(emoji: String)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
 ## Emitted to request copying the current section data.
-signal copy_requested()
+signal section_copy_requested()
 ## Emitted to request pasting previously copied section data.
-signal paste_requested()
+signal section_paste_requested()
 ## Emitted to request removing a section by its index.
 signal section_remove_requested(section_index: int)
 ## Emitted when a section switch has completed, carrying the new section data.
@@ -126,6 +126,8 @@ signal recording_started(recording_data: RecordingData)
 signal recording_stopped(recording_data: RecordingData)
 ## Emitted to request setting a recorded audio stream on a specific track.
 signal set_recorded_stream_requested(recording_data: RecordingData)
+## Emitted when voice processing is complete and a sequence is ready for playback.
+signal sequence_ready(sequence: Sequence, track_data: TrackData)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.
@@ -142,6 +144,10 @@ signal saving_completed(path: String)
 signal save_song_requested()
 ## Emitted to request loading the last saved song data from disk.
 signal load_song_requested()
+## Emitted after a song has been fully loaded into SongState.
+## Handlers should rebuild any runtime objects (section buttons, waveform visualizers)
+## before the section_switch_requested signal fires the full UI cascade.
+signal song_loaded()
 ## Emitted to request saving the current project as an MP3 file.
 signal save_to_mp3_requested()
 ## Emitted to request exporting the project. [code]mode_export_song[/code]: false for beat, true for song.

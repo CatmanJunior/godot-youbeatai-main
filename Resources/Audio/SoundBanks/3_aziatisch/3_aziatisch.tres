@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="AudioBank" format=3 uid="uid://idfcpb8lol15"]
+[gd_resource type="Resource" script_class="SoundBank" format=3 uid="uid://idfcpb8lol15"]
 
 [ext_resource type="AudioStream" uid="uid://cahpjypmhsvgv" path="res://Resources/Audio/SoundBanks/3_opera/Clap LowLife.wav" id="1_smoqj"]
 [ext_resource type="AudioStream" uid="uid://qpr6y32nnmg2" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Clap Sinister 1.wav" id="2_dx13v"]
@@ -8,11 +8,11 @@
 [ext_resource type="AudioStream" uid="uid://bn46av1vpq0py" path="res://Resources/Audio/SoundBanks/3_opera/Kick Beautiful 1.wav" id="6_1yl6k"]
 [ext_resource type="AudioStream" uid="uid://bhf463yx53ksw" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Kick C War.wav" id="7_oyr8o"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_hrxel"]
-[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/AudioBanks/AudioBank.gd" id="9_chmay"]
-[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="9_muj6l"]
+[ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="9_chmay"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="9_muj6l"]
 [ext_resource type="AudioStream" uid="uid://b3t1g447vrkhu" path="res://Resources/Audio/SoundBanks/3_opera/Snare_Perc Bac.wav" id="10_h8os2"]
 [ext_resource type="AudioStream" uid="uid://cpu1f3gq1kmqj" path="res://Resources/Audio/SoundBanks/3_opera/mineur/Snare Thoughts.wav" id="11_wowjv"]
-[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/AudioBanks/EffectProfile.gd" id="12_eprof"]
+[ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="12_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="13_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="14_syn1"]
 

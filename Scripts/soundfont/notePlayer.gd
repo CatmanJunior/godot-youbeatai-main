@@ -62,12 +62,10 @@ func _process_midi_input(event: InputEventMIDI):
 	elif event.message == MIDI_MESSAGE_NOTE_OFF or (event.message == MIDI_MESSAGE_NOTE_ON and event.velocity == 0):
 		channel_note_off(0, event.channel, event.pitch)
 
-
 func play_note(sequence_note: SequenceNote) -> void:
 	var t = get_time()
 	channel_note_on(t, 0, sequence_note.note, sequence_note.velocity)
 	channel_note_off(t + gate, 0, sequence_note.note)
-
 
 func play_note_raw(note: int, duration: float) -> void:
 	var t = get_time()

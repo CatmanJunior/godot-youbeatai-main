@@ -22,7 +22,7 @@ project root
 │   ├── Global/           # Autoload singletons (EventBus, GameState, SongState, TTSHelper)
 │   ├── Managers/         # Core game logic (BeatManager, SectionManager, GameManager, …)
 │   ├── Audio/            # Audio playback, recording, bus helpers
-│   │   ├── AudioBanks/       # AudioBank & EffectProfile resources
+│   │   ├── SoundBanks/       # SoundBank & EffectProfile resources
 │   │   └── AudioPlayerClasses/  # TrackPlayerBase, SampleTrackPlayer, SynthTrackPlayer, …
 │   ├── DataClasses/      # Pure data resources (SongData, SectionData, TrackData, …)
 │   ├── UI/               # Visual controllers, button scripts
@@ -85,93 +85,93 @@ Defined in `project.godot` under `[autoload]`:
 
 ```mermaid
 sequenceDiagram
-    participant BM as BeatManager
-    participant EB as EventBus
-    participant STP as SampleTrackPlayer
-    participant SyTP as SynthTrackPlayer
+	participant BM as BeatManager
+	participant EB as EventBus
+	participant STP as SampleTrackPlayer
+	participant SyTP as SynthTrackPlayer
 
-    BM->>BM: _process(delta) — accumulate beat_elapsed
-    BM->>BM: beat_elapsed > swing_adjusted_duration?
-    BM->>EB: beat_triggered(current_beat)
-    EB->>STP: _on_beat_triggered(beat)
-    STP->>STP: track_data.get_beat_active(beat)?
-    alt Beat is active
-        STP->>STP: play() — triggers Main + Alt + Rec players
-    end
-    EB->>SyTP: _on_beat_triggered(beat)
-    SyTP->>SyTP: has recording?
-    alt Has recording
-        SyTP->>SyTP: play_note(beat) via NotePlayer
-    end
+	BM->>BM: _process(delta) — accumulate beat_elapsed
+	BM->>BM: beat_elapsed > swing_adjusted_duration?
+	BM->>EB: beat_triggered(current_beat)
+	EB->>STP: _on_beat_triggered(beat)
+	STP->>STP: track_data.get_beat_active(beat)?
+	alt Beat is active
+		STP->>STP: play() — triggers Main + Alt + Rec players
+	end
+	EB->>SyTP: _on_beat_triggered(beat)
+	SyTP->>SyTP: has recording?
+	alt Has recording
+		SyTP->>SyTP: play_note(beat) via NotePlayer
+	end
 ```
 
 ### Chaos Pad Mixing Flow
 
 ```mermaid
 graph TD
-    A[User drags knob] --> B[ChaosPadKnob._gui_input]
-    B --> C[ChaosPadCalculator.calc_weights]
-    C --> D{Calculate barycentric coords}
-    D --> E[master_volume + weights Vector3]
-    E --> F[EventBus.mixing_weights_changed]
-    F --> G[TrackPlayerBase.set_weights]
-    G --> H[BusHelper.crossfade3]
-    H --> I[AudioServer bus volumes updated]
+	A[User drags knob] --> B[ChaosPadKnob._gui_input]
+	B --> C[ChaosPadCalculator.calc_weights]
+	C --> D{Calculate barycentric coords}
+	D --> E[master_volume + weights Vector3]
+	E --> F[EventBus.mixing_weights_changed]
+	F --> G[TrackPlayerBase.set_weights]
+	G --> H[BusHelper.crossfade3]
+	H --> I[AudioServer bus volumes updated]
 ```
 
 ### Section Switching Flow
 
 ```mermaid
 graph LR
-    A[User clicks section button] --> B[EventBus.section_switch_requested]
-    B --> C[SectionManager.switch_section]
-    C --> D[Update SongState.current_section]
-    C --> E[EventBus.section_switched]
-    E --> F[beat_ring_ui refreshes visuals]
-    E --> G[TrackPlayers restore knob / weights]
-    E --> H[SynthTrackPlayer reloads sequence]
+	A[User clicks section button] --> B[EventBus.section_switch_requested]
+	B --> C[SectionManager.switch_section]
+	C --> D[Update SongState.current_section]
+	C --> E[EventBus.section_switched]
+	E --> F[beat_ring_ui refreshes visuals]
+	E --> G[TrackPlayers restore knob / weights]
+	E --> H[SynthTrackPlayer reloads sequence]
 ```
 
 ### Recording Flow
 
 ```mermaid
 sequenceDiagram
-    participant UI as RecordSampleButton
-    participant TR as TrackRecorder
-    participant EB as EventBus
-    participant MC as MicrophoneCapture
-    participant STP as SynthTrackPlayer
+	participant UI as RecordSampleButton
+	participant TR as TrackRecorder
+	participant EB as EventBus
+	participant MC as MicrophoneCapture
+	participant STP as SynthTrackPlayer
 
-    UI->>EB: recording_sample_button_toggled(true)
-    EB->>TR: _on_recording_sample_button_toggled
-    TR->>TR: track_data.start_recording(section_index) → RecordingData
-    TR->>EB: mute_all_requested(true)
-    TR->>EB: start_recording_requested
-    EB->>MC: _start_recording() — AudioEffectRecord active
-    Note over TR: _process monitors volume & progress
-    TR->>EB: stop_recording_requested
-    EB->>MC: _stop_recording() → AudioStream
-    MC->>EB: recording_stopped(audio)
-    EB->>TR: _on_recording_stopped(audio)
-    TR->>TR: set_recorded_stream on track
-    TR->>EB: set_recorded_stream_requested(track_index, audio)
-    EB->>STP: _set_recorded_stream → spawns VoiceProcessor thread
-    STP->>STP: _on_voice_processed → sequence ready
-    STP->>EB: synth_sequence_ready(track_index)
+	UI->>EB: recording_sample_button_toggled(true)
+	EB->>TR: _on_recording_sample_button_toggled
+	TR->>TR: track_data.start_recording(section_index) → RecordingData
+	TR->>EB: mute_all_requested(true)
+	TR->>EB: start_recording_requested
+	EB->>MC: _start_recording() — AudioEffectRecord active
+	Note over TR: _process monitors volume & progress
+	TR->>EB: stop_recording_requested
+	EB->>MC: _stop_recording() → AudioStream
+	MC->>EB: recording_stopped(audio)
+	EB->>TR: _on_recording_stopped(audio)
+	TR->>TR: set_recorded_stream on track
+	TR->>EB: set_recorded_stream_requested(track_index, audio)
+	EB->>STP: _set_recorded_stream → spawns VoiceProcessor thread
+	STP->>STP: _on_voice_processed → sequence ready
+	STP->>EB: synth_sequence_ready(track_index)
 ```
 
 ### Save / Load Flow
 
 ```mermaid
 graph TD
-    A[Save requested] --> B[SongData.from_current]
-    B --> C[Deep-copy sections + song_track]
-    C --> D[ResourceSaver.save → .tres file]
+	A[Save requested] --> B[SongData.from_current]
+	B --> C[Deep-copy sections + song_track]
+	C --> D[ResourceSaver.save → .tres file]
 
-    E[Load requested] --> F[SongData.load_from_file]
-    F --> G[song.apply_to_current]
-    G --> H[Emit bpm_set, swing_set, section_switch signals]
-    G --> I[Rebuild sections & song_track runtime state]
+	E[Load requested] --> F[SongData.load_from_file]
+	F --> G[song.apply_to_current]
+	G --> H[Emit bpm_set, swing_set, section_switch signals]
+	G --> I[Rebuild sections & song_track runtime state]
 ```
 
 ---
@@ -182,13 +182,13 @@ graph TD
 
 ### Data Class Refactoring
 
-Audio data classes now live in `Scripts/DataClasses/AudioBanks/` (per architecture convention):
+Audio data classes now live in `Scripts/DataClasses/SoundBanks/` (per architecture convention):
 
 | Class | Path | Purpose |
 |-------|------|----------|
-| `AudioBank` | `Scripts/DataClasses/AudioBanks/AudioBank.gd` | Soundbank definition (tracks, effects, synth settings) |
-| `EffectProfile` | `Scripts/DataClasses/AudioBanks/EffectProfile.gd` | Audio effect chain per track |
-| `NotePlayerSettings` | `Scripts/DataClasses/AudioBanks/note_player_settings.gd` | Synth instrument configuration |
+| `SoundBank` | `Scripts/DataClasses/SoundBanks/SoundBank.gd` | Soundbank definition (tracks, effects, synth settings) |
+| `EffectProfile` | `Scripts/DataClasses/SoundBanks/EffectProfile.gd` | Audio effect chain per track |
+| `NotePlayerSettings` | `Scripts/DataClasses/SoundBanks/note_player_settings.gd` | Synth instrument configuration |
 
 All soundbank resources (25+ .tres files under `Resources/Audio/SoundBanks/`) reference these classes.
 
@@ -202,8 +202,8 @@ All soundbank resources (25+ .tres files under `Resources/Audio/SoundBanks/`) re
 | `game_manager.gd` | Top-level scene setup, fullscreen toggle, TTS, time tracking | Listens: `fullscreen_toggle_requested` |
 | `keyboard_input_manager.gd` | Keyboard shortcuts → EventBus signals | Emits: `bpm_up/down_requested`, `play_pause_toggle_requested`, `ring_key_pressed`, etc. |
 | `template_manager.gd` | Beat template loading & application from text files | Listens: `template_set_requested`. Emits: `template_set` |
-| `sound_bank_selector.gd` | Soundbank matching by themes + emotions | Listens: `audio_bank_selected` |
-| `sound_bank_loader.gd` | Loads AudioBank resources & applies BPM/swing/settings | Emits: `audio_bank_loaded` |
+| `sound_bank_selector.gd` | Soundbank matching by themes + emotions | Listens: `soundbank_selected` |
+| `sound_bank_loader.gd` | Loads SoundBank resources & applies BPM/swing/settings | Emits: `soundbank_loaded` |
 
 ### Audio Player Hierarchy
 
@@ -256,7 +256,7 @@ Resource
 │   ├── SampleTrackData — beats[] (bool array), main/alt audio streams
 │   ├── SynthTrackData  — sequence_notes[], _sequence (runtime Sequence)
 │   └── SongTrackData   — master_recording_stream, recording_length
-├── AudioBank           — Soundbank: kick/clap/snare/closed streams + synth settings
+├── SoundBank           — Soundbank: kick/clap/snare/closed streams + synth settings
 ├── EffectProfile       — Per-track audio effect chain
 ├── NotePlayerSettings  — Synth instrument configuration
 └── TemplateData        — Beat template definition
@@ -266,7 +266,7 @@ RefCounted
 
 Node
 └── Sequence            — Beat-mapped note list from VoiceProcessor
-    └── SequenceNote (Resource) — note, duration, beat, velocity, chord
+	└── SequenceNote (Resource) — note, duration, beat, velocity, chord
 ```
 
 ### Serialization
@@ -310,30 +310,30 @@ signal section_shuffle_requested()
 extends Button
 
 func _pressed() -> void:
-    EventBus.section_shuffle_requested.emit()
+	EventBus.section_shuffle_requested.emit()
 ```
 
 ### 3. Handle in Manager
 ```gdscript
 # Scripts/Managers/section_manager.gd
 func _ready() -> void:
-    EventBus.section_shuffle_requested.connect(_shuffle_current_section)
+	EventBus.section_shuffle_requested.connect(_shuffle_current_section)
 
 func _shuffle_current_section() -> void:
-    for track in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
-        for beat in range(SongState.total_beats):
-            current_section.set_beat(track, beat, randf() > 0.5)
-    EventBus.section_switched.emit(current_section)  # Notify UI to refresh
+	for track in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
+		for beat in range(SongState.total_beats):
+			current_section.set_beat(track, beat, randf() > 0.5)
+	EventBus.section_switched.emit(current_section)  # Notify UI to refresh
 ```
 
 ### 4. Test
 ```gdscript
 # tests/test_section_shuffle.gd
 func test_shuffle_changes_beats():
-    var original = current_section.get_beat_actives()
-    EventBus.section_shuffle_requested.emit()
-    await get_tree().process_frame
-    assert_ne(current_section.get_beat_actives(), original)
+	var original = current_section.get_beat_actives()
+	EventBus.section_shuffle_requested.emit()
+	await get_tree().process_frame
+	assert_ne(current_section.get_beat_actives(), original)
 ```
 
 ---

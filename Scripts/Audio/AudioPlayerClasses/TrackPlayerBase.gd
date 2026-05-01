@@ -40,7 +40,7 @@ func _ready() -> void:
 	EventBus.set_recorded_stream_requested.connect(_on_request_set_recorded_stream)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.section_switched.connect(_on_section_switched)
-	EventBus.audio_bank_loaded.connect(_on_audio_bank_loaded)
+	EventBus.soundbank_loaded.connect(_on_soundbank_loaded)
 	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
 	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
 
@@ -52,7 +52,7 @@ func _on_mixing_weights_changed(trackIndex: int, weights: Vector3) -> void:
 	if trackIndex == track_index:
 		set_weights(weights)
 
-func _on_audio_bank_loaded(_bank: AudioBank) -> void:
+func _on_soundbank_loaded(_bank: SoundBank) -> void:
 	# Default implementation does nothing, since not all track players will need to respond to new soundbanks.
 	# SynthTrackPlayer will override this to update its note player settings based on the new bank.
 	pass

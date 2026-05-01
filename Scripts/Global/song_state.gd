@@ -56,7 +56,7 @@ var current_track: TrackData:
 			return current_section.tracks[selected_track_index]
 		return null
 
-var selected_soundbank: AudioBank = null
+var selected_soundbank: SoundBank = null
 
 # ── Initialization ───────────────────────────────────────────────────────────
 
@@ -66,7 +66,7 @@ func _ready() -> void:
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
-
+	EventBus.soundbank_loaded.connect(func(bank: SoundBank): selected_soundbank = bank)
 
 ## Ensure data has sensible runtime defaults (song_track, total_beats).
 func _apply_data_defaults() -> void:

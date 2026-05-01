@@ -55,7 +55,7 @@ func _ready():
 		return
 
 
-func on_bank_loaded(bank: AudioBank):
+func on_bank_loaded(bank: SoundBank):
 	progressions = [bank.progressions[0]]
 	soundfont = bank.chord_soundfont
 	instrument = bank.chord_instrument_id

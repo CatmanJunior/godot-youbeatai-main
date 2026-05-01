@@ -8,7 +8,7 @@ extends TrackData
 ## Song track uses a fixed index. 
 const SONG_TRACK_INDEX: int = 6
 
-func _init(p_track_index: int = SONG_TRACK_INDEX, p_section_index: int = 0, knob_pos: Vector2 = Vector2.ZERO) -> void:
+func _init(p_track_index: int = SONG_TRACK_INDEX, p_section_index: int = 0, knob_pos: Vector2 = TrackData.KNOB_POSITION_UNSET) -> void:
 	super._init(p_track_index, p_section_index, knob_pos, TrackType.SONG)
 
 

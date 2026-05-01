@@ -9,9 +9,6 @@ var track_players: Array[TrackPlayerBase] = []
 var song_track_player: SongTrackPlayer
 var sfx_player: AudioStreamPlayer
 
-## FOR DEBUGGING
-var current_volume: Dictionary= {} 
-
 # Audio files
 @export var main_audio_files: Array[AudioStream] = []
 @export var alt_audio_files: Array[AudioStream] = []
@@ -22,22 +19,12 @@ var current_volume: Dictionary= {}
 
 @export var note_player_settings: Array[NotePlayerSettings] = []
 
-@export var notes: Notes
-
 func _ready():
 	_init_audio_players()
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
 	EventBus.play_sfx_requested.connect(play_sfx)
-
-func _process(_delta):
-	_log_volumes()
-
-func _log_volumes():
-	for i in range(TRACK_COUNT):
-		var volume = get_track_volume(i)
-		current_volume[i] = volume
 
 func _init_sfx_player():
 	sfx_player = AudioStreamPlayer.new()
@@ -56,7 +43,6 @@ func _init_audio_players():
 	# Create synth track players
 	for i in range(SYNTH_TRACKS_COUNT):
 		var player : SynthTrackPlayer = SynthTrackPlayer.new()
-		player.notes = notes
 		player.setup(track_players.size(), "Master", note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)

@@ -44,7 +44,7 @@ texture = ExtResource("10_16hvj")
 
 [node name="scene" type="Node2D" unique_id=451630034]
 
-[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "tutorial_button", "credits_button", "back_button", "credits_panel")]
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "credits_panel")]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -60,7 +60,6 @@ grow_vertical = 2
 scale = Vector2(2.14354, 2.14354)
 script = ExtResource("1_trj04")
 pro_button = NodePath("ProButton")
-tutorial_button = NodePath("TutorialButton")
 credits_button = NodePath("CreditsButton")
 back_button = NodePath("../CreditsPanel/Back")
 credits_panel = NodePath("../CreditsPanel")
@@ -95,10 +94,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -179.93973
-offset_top = 96.32152
-offset_right = -69.93973
-offset_bottom = 146.32153
+offset_left = -88.96871
+offset_top = -7.7120056
+offset_right = 21.03128
+offset_bottom = 42.287994
 grow_horizontal = 2
 grow_vertical = 2
 focus_mode = 0
@@ -304,4 +303,3 @@ vertical_alignment = 1
 [editable path="MainMenuPanel/Robot/AchievementsPanel"]
 [editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model"]
-[editable path="Klappy respons bubble"]

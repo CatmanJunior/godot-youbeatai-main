@@ -1,10 +1,12 @@
 extends Node
 
+const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
+
 var recording: bool:
 	get: return GameState.is_recording
 
-
 var current_recording_data: RecordingData = null
+var _thread: Thread = null
 
 @export var song_recording_progress_bar: ProgressBar
 @export var recording_sample_button: RecordSampleButton
@@ -99,7 +101,7 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 	if not recording_data:
 		printerr("No current recording data on recording stopped!")
 		return
-	
+
 	if not recording_data.has_detected_sound and recording_data.track_type == TrackData.TrackType.SAMPLE:
 		recording_data.state = RecordingData.State.NOT_STARTED
 		printerr("Recording stopped without detecting sound, marking as NOT_STARTED.")
@@ -107,21 +109,41 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 
 	recording_data.state = RecordingData.State.PROCESSING
 
+	match recording_data.track_type:
+		TrackData.TrackType.SAMPLE: _post_process_sample(recording_data)
+		TrackData.TrackType.SYNTH:  _post_process_synth(recording_data)
+		TrackData.TrackType.SONG:   _post_process_song(recording_data)
+
+	EventBus.set_recorded_stream_requested.emit(recording_data)
+
+func _post_process_sample(recording_data: RecordingData) -> void:
 	var audio: AudioStream = recording_data.audio_stream
-
-	if recording_data.track_type == TrackData.TrackType.SAMPLE:
-		audio = AudioHelpers.trim_audio_stream(recording_data.audio_stream, GameState.recording_volume_threshold)
-		# Also cap to 1 beat duration so trailing audio is removed
-		audio = AudioHelpers.cap_audio_duration(audio, GameState.beat_duration)
-
-	# Update waveform visualization using RecordingData (only for SYNTH tracks)
-	if recording_data.track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_waveform(recording_data)
-		waveform_visualizer.reset_progress_bar(recording_data)
-
+	# Use the timestamp to skip the bulk of the silence, then do an amplitude
+	# scan on a small window around that point to find the precise attack onset.
+	var silent_lead_time: float = audio.get_length() - recording_data.actual_recording_length
+	audio = AudioHelpers.trim_sample_smart(audio, silent_lead_time)
+	audio = AudioHelpers.cap_audio_duration(audio, GameState.beat_duration)
 	recording_data.audio_stream = audio
 	recording_data.state = RecordingData.State.RECORDING_DONE
-	EventBus.set_recorded_stream_requested.emit(recording_data)
+
+func _post_process_synth(recording_data: RecordingData) -> void:
+	waveform_visualizer.update_waveform(recording_data)
+	waveform_visualizer.reset_progress_bar(recording_data)
+	# State remains PROCESSING — thread sets RECORDING_DONE after voice analysis
+	_thread = Thread.new()
+	_thread.start(_run_voice_processing.bind(recording_data))
+
+func _run_voice_processing(recording_data: RecordingData) -> void:
+	var sequence: Sequence = VoiceProcessor.process_audio(recording_data.audio_stream, NOTES)
+	call_deferred("_on_voice_processed", sequence, recording_data)
+
+func _on_voice_processed(sequence: Sequence, recording_data: RecordingData) -> void:
+	_thread.wait_to_finish()
+	_thread = null
+	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+
+func _post_process_song(recording_data: RecordingData) -> void:
+	recording_data.state = RecordingData.State.RECORDING_DONE
 
 func get_recording_volume() -> float:
 	return GameState.microphone_volume

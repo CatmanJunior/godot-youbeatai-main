@@ -1,22 +1,37 @@
 [gd_scene format=3 uid="uid://cdvmdek6n3ciy"]
 
-[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="1_16ta1"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="2_lhsuy"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="3_lhsuy"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="3_sylab"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_mey70"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="5_16ta1"]
 
-[node name="TrackSelectButton_4" type="TextureButton" unique_id=1274099305 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label", "background")]
+[node name="TrackSelectButton_4" type="Button" unique_id=1681121463 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_rect", "background")]
 custom_minimum_size = Vector2(100, 120)
-texture_normal = ExtResource("1_16ta1")
-stretch_mode = 3
+offset_right = 128.0
+offset_bottom = 128.0
+flat = true
 script = ExtResource("2_lhsuy")
 outline_rect = NodePath("OutlineTex")
 glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
+icon_rect = NodePath("IconTex")
 background = NodePath("BgTex")
 is_synth_track = true
 track_index = 4
+
+[node name="IconTex" type="TextureRect" parent="." unique_id=1229799027]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.298
+anchor_bottom = 1.0
+offset_left = -3.3840027
+offset_top = -5.0
+offset_right = 92.472
+offset_bottom = 1.0
+pivot_offset = Vector2(32, 30)
+texture = ExtResource("3_lhsuy")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="BgTex" type="TextureRect" parent="." unique_id=1431828313]
 visible = false
@@ -57,21 +72,3 @@ scale = Vector2(1.405, 1.405)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_16ta1")
 stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="." unique_id=1968652299]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 0.023994446
-offset_right = 98.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true

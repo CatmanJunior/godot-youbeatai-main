@@ -5,13 +5,10 @@ class_name TrackSelectButtonContainer
 @export var track_buttons: Array[TrackSelectButton]
 
 func _ready():
-	for button in track_buttons:
-		var settings := track_UI_settings.get_track(button.track_index)
-		if settings != null:
-			button.texture_normal = settings.button_icon_texture
-			button.outline_texture = settings.button_outline_texture
-			button.filled_texture = settings.button_filled_texture
-			button.outline_rect.texture = button.outline_texture
+	for i in range(track_buttons.size()):
+		var button = track_buttons[i]
+		var settings := track_UI_settings.get_track(i)
+		button.init(i, settings)
 
 		button.track_button_pressed.connect(_on_track_button_pressed)
 

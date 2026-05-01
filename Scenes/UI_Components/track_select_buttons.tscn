@@ -1,20 +1,10 @@
 [gd_scene format=3 uid="uid://dijjqgkjlba4l"]
 
 [ext_resource type="Script" uid="uid://b5hq4beqtpol3" path="res://Scripts/UI/track_select_button_container.gd" id="1_pe0j6"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="2_b7hqm"]
 [ext_resource type="PackedScene" uid="uid://doag0uwksj5mb" path="res://Scenes/Prefab/song_track_select_button_prefab.tscn" id="2_i7akj"]
-[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="2_pe0j6"]
-[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_au716"]
 [ext_resource type="PackedScene" uid="uid://b4fo3pr1sq63u" path="res://Scenes/Prefab/track_select_button_prefab.tscn" id="3_tyigl"]
-[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="6_0b0kd"]
-[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="8_76su3"]
-[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="12_caa38"]
 [ext_resource type="PackedScene" uid="uid://cdvmdek6n3ciy" path="res://Scenes/Prefab/synth_track_select_button_prefab.tscn" id="12_pe0j6"]
-[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="15_i7akj"]
-[ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="16_tyigl"]
-[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="22_caa38"]
-[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="23_4x7ow"]
-[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="24_wh76t"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="27_tm8l3"]
 
 [node name="TrackSelectButtons" type="Control" unique_id=2075389560 node_paths=PackedStringArray("track_buttons")]
 layout_mode = 3
@@ -25,6 +15,7 @@ offset_top = -1.0
 offset_right = 166.0
 grow_vertical = 2
 script = ExtResource("1_pe0j6")
+track_UI_settings = ExtResource("2_b7hqm")
 track_buttons = [NodePath("VBoxContainer/TrackSelectButton_0"), NodePath("VBoxContainer/TrackSelectButton_1"), NodePath("VBoxContainer/TrackSelectButton_2"), NodePath("VBoxContainer/TrackSelectButton_3"), NodePath("VBoxContainer/TrackSelectButton_4"), NodePath("VBoxContainer/TrackSelectButton_5"), NodePath("VBoxContainer/SongTrackSelectButton_6")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=154923035]
@@ -48,250 +39,17 @@ layout_mode = 2
 [node name="TrackSelectButton_0" parent="VBoxContainer" unique_id=814915734 instance=ExtResource("3_tyigl")]
 layout_mode = 2
 
-[node name="TrackSelectButton_1" type="TextureButton" parent="VBoxContainer" unique_id=219827127 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label")]
-custom_minimum_size = Vector2(100, 100)
+[node name="TrackSelectButton_1" parent="VBoxContainer" unique_id=1401429003 instance=ExtResource("3_tyigl")]
 layout_mode = 2
-texture_normal = ExtResource("22_caa38")
-ignore_texture_size = true
-stretch_mode = 5
-script = ExtResource("16_tyigl")
-outline_rect = NodePath("OutlineTex")
-glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
-track_index = 1
 
-[node name="GlowTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_1" unique_id=39173874]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 76.776
-offset_bottom = 9.0
-pivot_offset = Vector2(32, 30)
-texture = ExtResource("3_au716")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="OutlineTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_1" unique_id=1803139046]
-z_index = -1
-layout_mode = 0
-offset_left = 6.5573773
-offset_top = -7.836064
-offset_right = 118.7327
-offset_bottom = 103.405235
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("2_pe0j6")
-stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="VBoxContainer/TrackSelectButton_1" unique_id=128855620]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 0.023994446
-offset_right = 98.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="TrackSelectButton_2" type="TextureButton" parent="VBoxContainer" unique_id=1782168564 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label")]
-custom_minimum_size = Vector2(100, 100)
+[node name="TrackSelectButton_2" parent="VBoxContainer" unique_id=1024189698 instance=ExtResource("3_tyigl")]
 layout_mode = 2
-texture_normal = ExtResource("23_4x7ow")
-ignore_texture_size = true
-stretch_mode = 5
-script = ExtResource("16_tyigl")
-outline_rect = NodePath("OutlineTex")
-glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
-track_index = 2
 
-[node name="GlowTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_2" unique_id=1986657448]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 76.776
-offset_bottom = 9.0
-pivot_offset = Vector2(32, 30)
-texture = ExtResource("3_au716")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="OutlineTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_2" unique_id=536008837]
-z_index = -1
-layout_mode = 0
-offset_left = 9.836066
-offset_top = -0.78690326
-offset_right = 122.01138
-offset_bottom = 110.4544
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("6_0b0kd")
-stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="VBoxContainer/TrackSelectButton_2" unique_id=759029081]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 0.023994446
-offset_right = 98.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="TrackSelectButton_3" type="TextureButton" parent="VBoxContainer" unique_id=5016721 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label")]
-custom_minimum_size = Vector2(80, 130)
+[node name="TrackSelectButton_3" parent="VBoxContainer" unique_id=1077184116 instance=ExtResource("3_tyigl")]
 layout_mode = 2
-texture_normal = ExtResource("24_wh76t")
-ignore_texture_size = true
-stretch_mode = 3
-flip_h = true
-script = ExtResource("16_tyigl")
-outline_rect = NodePath("OutlineTex")
-glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
-track_index = 3
-
-[node name="GlowTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_3" unique_id=1785620654]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 76.776
-offset_bottom = 9.0
-pivot_offset = Vector2(32, 30)
-texture = ExtResource("3_au716")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="OutlineTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_3" unique_id=764065886]
-z_index = -1
-layout_mode = 0
-offset_left = 1.639339
-offset_top = -0.0491817
-offset_right = 119.96445
-offset_bottom = 126.97032
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("8_76su3")
-stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="VBoxContainer/TrackSelectButton_3" unique_id=607633360]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 0.023994446
-offset_right = 98.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="TrackSelectButton_4" parent="VBoxContainer" unique_id=1274099305 instance=ExtResource("12_pe0j6")]
 layout_mode = 2
 
-[node name="TrackSelectButton_5" type="TextureButton" parent="VBoxContainer" unique_id=608896429 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label", "background")]
-custom_minimum_size = Vector2(100, 100)
+[node name="TrackSelectButton_5" parent="VBoxContainer" unique_id=1681121463 instance=ExtResource("12_pe0j6")]
 layout_mode = 2
-texture_normal = ExtResource("27_tm8l3")
-ignore_texture_size = true
-stretch_mode = 5
-script = ExtResource("16_tyigl")
-outline_rect = NodePath("OutlineTex")
-glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
-background = NodePath("BgTex")
-is_synth_track = true
-track_index = 5
-
-[node name="BgTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_5" unique_id=1337959991]
-visible = false
-self_modulate = Color(1, 1, 1, 0.19215687)
-z_index = -1
-layout_mode = 0
-offset_top = 1.5258789e-05
-offset_right = 108.29147
-offset_bottom = 111.08711
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("12_caa38")
-expand_mode = 1
-stretch_mode = 4
-
-[node name="GlowTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_5" unique_id=1305913567]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 76.776
-offset_bottom = 9.0
-pivot_offset = Vector2(32, 30)
-texture = ExtResource("3_au716")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="OutlineTex" type="TextureRect" parent="VBoxContainer/TrackSelectButton_5" unique_id=945291825]
-z_index = -1
-layout_mode = 0
-offset_left = 9.836066
-offset_top = -6.0000563
-offset_right = 122.01138
-offset_bottom = 105.24125
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("15_i7akj")
-stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="VBoxContainer/TrackSelectButton_5" unique_id=2118027589]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 0.023994446
-offset_right = 98.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true

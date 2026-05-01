@@ -1,34 +1,41 @@
 [gd_scene format=3 uid="uid://b4fo3pr1sq63u"]
 
-[ext_resource type="Texture2D" uid="uid://cg3avji2owvlu" path="res://Resources/Textures_New/Icons/_0001s_0011_Drum-Loud.png" id="1_3gj1q"]
+[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="2_3gj1q"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="2_xp7bp"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_uqlj7"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="4_br66b"]
 
-[node name="TrackSelectButton_0" type="TextureButton" unique_id=703475495 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_label")]
+[node name="TrackSelectButton_0" type="Button" unique_id=1401429003 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_rect")]
 custom_minimum_size = Vector2(100, 100)
 anchors_preset = -1
 anchor_right = 0.093
 anchor_bottom = 0.147
 offset_left = 1.0
 offset_top = 1.0
-offset_right = 0.9599991
-offset_bottom = 7.1600037
-texture_normal = ExtResource("1_3gj1q")
-ignore_texture_size = true
-stretch_mode = 5
+offset_right = 17.96
+offset_bottom = 31.160004
+flat = true
 script = ExtResource("2_xp7bp")
-outline_rect = NodePath("Button/OutlineTex")
-glow_rect = NodePath("Button/GlowTex")
-icon_label = NodePath("Button/IconLabel")
+outline_rect = NodePath("OutlineTex")
+glow_rect = NodePath("GlowTex")
+icon_rect = NodePath("IconTex")
 metadata/_edit_group_ = true
 
-[node name="Button" type="Button" parent="." unique_id=1917692210]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="IconTex" type="TextureRect" parent="." unique_id=1380255650]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.298
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -16.0
+offset_right = 92.472
+offset_bottom = 1.0
+pivot_offset = Vector2(32, 30)
+texture = ExtResource("2_3gj1q")
+expand_mode = 3
+stretch_mode = 4
 
-[node name="GlowTex" type="TextureRect" parent="Button" unique_id=522525537]
+[node name="GlowTex" type="TextureRect" parent="." unique_id=522525537]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -36,14 +43,14 @@ anchor_right = 0.298
 anchor_bottom = 1.0
 offset_left = -10.0
 offset_top = -8.0
-offset_right = 76.776
+offset_right = 83.537994
 offset_bottom = 9.0
 pivot_offset = Vector2(32, 30)
 texture = ExtResource("3_uqlj7")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="OutlineTex" type="TextureRect" parent="Button" unique_id=51465376]
+[node name="OutlineTex" type="TextureRect" parent="." unique_id=51465376]
 z_index = -1
 layout_mode = 0
 offset_left = 4.0
@@ -54,21 +61,3 @@ scale = Vector2(1.405, 1.405)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("4_br66b")
 stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="Button" unique_id=1506277708]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 62.631996
-offset_right = 98.0
-offset_bottom = 75.448
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true

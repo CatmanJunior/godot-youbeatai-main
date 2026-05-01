@@ -15,6 +15,9 @@ const SECTION_BUTTON_SIZE: int = 72
 @export var emoji_prompt: EmojiPrompt
 @export var song_recording_progress_bar: ProgressBar
 
+@export var up_loop_count_button: Button
+@export var down_loop_count_button: Button
+
 
 var section_buttons: Array[SectionButton] = []
 var emoji_prompt_cancel_button: Button
@@ -24,6 +27,7 @@ var copy_paste_clear_button_holder_time_since_activation: float = 0.0
 func _ready():
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
+	EventBus.section_switch_requested.connect(_on_switch_section_ui)
 	EventBus.section_switched.connect(_on_switch_section)
 	EventBus.section_cleared.connect(_on_section_cleared)
 	EventBus.song_loaded.connect(_on_song_loaded)
@@ -59,6 +63,17 @@ func init_section_button_actions():
 	add_section_button.button_up.connect(func():
 		_open_emoji_prompt()
 	)
+
+	down_loop_count_button.pressed.connect(func():
+		var count = max(1,SongState.current_section.loop_count - 1)
+		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
+	)
+
+	up_loop_count_button.pressed.connect(func():
+		var count = min(8,SongState.current_section.loop_count + 1)
+		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
+	)
+
 
 	if remove_section_button:
 		remove_section_button.pressed.connect(_on_remove_section_button_pressed)
@@ -152,13 +167,11 @@ func update_section_switch_buttons_colors() -> void:
 		var button = section_buttons[i]
 		button.modulate = Color(1, 1, 1, 1)
 
-		var has_beats = SongState.sections[i].has_active_beats()
-		if not has_beats:
-			button.modulate = button.modulate.darkened(0.5)
-
+		if i != SongState.current_section_index:
+			button.modulate = button.modulate.darkened(0.6)
+			
 func set_copy_paste_clear_buttons_active(active: bool) -> void:
 	copy_paste_clear_buttons_holder.visible = active
-
 	copy_paste_clear_button_holder_time_since_activation = 0
 
 func _open_emoji_prompt():
@@ -176,13 +189,22 @@ func _paste_section_button_pressed() -> void:
 func _clear_section_button_pressed() -> void:
 	EventBus.section_clear_requested.emit()
 
-func _on_switch_section(new_section: SectionData) -> void:
+func _on_switch_section(_section: SectionData) -> void:
+	_update_section_ui()
+	# for button in section_buttons:
+	# 	button.outline.visible = false
+		
+	# section_buttons[_section.index].outline.visible = true
+	
+func _on_switch_section_ui(section_index: int) -> void:
+	var new_section = SongState.sections[section_index]
+	
 	_update_section_ui()
 	set_copy_paste_clear_buttons_active(true)
 	var i = new_section.index
 	copy_paste_clear_buttons_holder.global_position.x = section_buttons[i].global_position.x
 
-	for button in section_buttons:
-		button.outline.visible = false
+	# for button in section_buttons:
+	# 	button.outline.visible = false
 
-	section_buttons[i].outline.visible = true
+	# section_buttons[i].outline.visible = true

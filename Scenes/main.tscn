@@ -47,7 +47,7 @@
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -169,9 +169,9 @@ script = ExtResource("36_y86h7")
 
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
-offset_left = -615.0
+offset_left = -593.00006
 offset_top = -342.0
-offset_right = -530.8041
+offset_right = -508.80414
 offset_bottom = 379.6797
 scale = Vector2(0.91453314, 0.91453314)
 
@@ -180,6 +180,9 @@ song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudi
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
+
+[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+visible = false
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 layout_mode = 0
@@ -327,9 +330,10 @@ section_button_prefab = ExtResource("43_kqrg6")
 [node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2103297005]
 visible = false
 offset_left = 2.0
-offset_top = -349.0
-offset_right = 2.0
-offset_bottom = -349.0
+offset_top = -300.0
+offset_right = 292.0
+offset_bottom = -255.0
+alignment = 0
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=569761149]
 offset_left = -1002.0
@@ -364,6 +368,13 @@ script = ExtResource("48_v2nl5")
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/SongTrackSelectButton_6"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_0"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_1"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/Robot"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]

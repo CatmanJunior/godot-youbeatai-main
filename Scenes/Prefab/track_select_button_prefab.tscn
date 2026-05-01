@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b4fo3pr1sq63u"]
 
-[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="2_3gj1q"]
+[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="2_3gj1q"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="2_xp7bp"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_uqlj7"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="4_br66b"]
@@ -26,10 +26,11 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.298
 anchor_bottom = 1.0
-offset_left = -20.0
-offset_top = -16.0
-offset_right = 92.472
-offset_bottom = 1.0
+offset_left = -8.000004
+offset_top = -11.000001
+offset_right = 104.472
+offset_bottom = 6.0
+scale = Vector2(0.8, 0.8)
 pivot_offset = Vector2(32, 30)
 texture = ExtResource("2_3gj1q")
 expand_mode = 3

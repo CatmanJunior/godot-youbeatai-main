@@ -62,6 +62,8 @@ func _process(delta: float) -> void:
 func _ready():
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 
+
+
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
 
 func _on_skip_tutorial_requested():

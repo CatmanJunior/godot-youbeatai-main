@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://ml681mo0sr5a" path="res://Resources/Textures_New/Icons/copy.png" id="5_r0nxd"]
 [ext_resource type="Texture2D" uid="uid://dqa7rjhcgqcoh" path="res://Resources/Textures_New_Correct/Icons-_28_0000_Paste.png" id="6_0g022"]
 [ext_resource type="Texture2D" uid="uid://da2j55ggfvjrj" path="res://Resources/Textures_New/Icons/Icons-_28_0003_+.png" id="7_r0nxd"]
+[ext_resource type="Texture2D" uid="uid://v75gi03uf3bs" path="res://Resources/Textures_New/Icons/Icons-_28_0003_-.png" id="8_0g022"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8duxt"]
 bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
@@ -20,6 +21,26 @@ corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2ivto"]
+bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r54ui"]
+bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.094415866, 0.094415896, 0.09441578, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mmmhy"]
 bg_color = Color(0.2784314, 0.25490198, 0.8235294, 1)
 border_width_right = 1
 border_width_bottom = 1
@@ -54,7 +75,7 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[node name="SwitchSectionButtons" type="Control" unique_id=1068760052 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "remove_section_button", "load_section_button", "copy_paste_clear_buttons_holder", "emoji_prompt", "song_recording_progress_bar")]
+[node name="SwitchSectionButtons" type="Control" unique_id=1068760052 node_paths=PackedStringArray("section_buttons_container", "add_section_button", "clear_section_button", "save_section_button", "remove_section_button", "load_section_button", "copy_paste_clear_buttons_holder", "emoji_prompt", "song_recording_progress_bar", "up_loop_count_button", "down_loop_count_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,6 +93,8 @@ load_section_button = NodePath("CopyPasteClearButtons/PasteSectionButton")
 copy_paste_clear_buttons_holder = NodePath("CopyPasteClearButtons")
 emoji_prompt = NodePath("EmojiPrompt")
 song_recording_progress_bar = NodePath("RealTimeAudioRecordingProgressBar")
+up_loop_count_button = NodePath("CopyPasteClearButtons/UpLoopCount")
+down_loop_count_button = NodePath("CopyPasteClearButtons/DownLoopCount")
 
 [node name="SwitchSectionButtonsContainer" type="HBoxContainer" parent="." unique_id=179776166]
 layout_mode = 1
@@ -174,6 +197,36 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
 icon = ExtResource("7_r0nxd")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="UpLoopCount" type="Button" parent="CopyPasteClearButtons" unique_id=1702701368]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_constants/icon_max_width = 35
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_r54ui")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mmmhy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r54ui")
+action_mode = 0
+icon = ExtResource("7_r0nxd")
+icon_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="DownLoopCount" type="Button" parent="CopyPasteClearButtons" unique_id=1472787063]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_mka03")
+theme_override_constants/icon_max_width = 35
+theme_override_font_sizes/font_size = 28
+theme_override_styles/normal = SubResource("StyleBoxFlat_r54ui")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mmmhy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r54ui")
+action_mode = 0
+icon = ExtResource("8_0g022")
 icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 

@@ -4,7 +4,16 @@
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="2_b7hqm"]
 [ext_resource type="PackedScene" uid="uid://doag0uwksj5mb" path="res://Scenes/Prefab/song_track_select_button_prefab.tscn" id="2_i7akj"]
 [ext_resource type="PackedScene" uid="uid://b4fo3pr1sq63u" path="res://Scenes/Prefab/track_select_button_prefab.tscn" id="3_tyigl"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="5_ojmv1"]
+[ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="6_i7akj"]
+[ext_resource type="Texture2D" uid="uid://cfxgu1flhmh1r" path="res://Resources/Textures_New_Correct/Icons-_28_0013_Horn.png" id="7_tyigl"]
+[ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="8_pe0j6"]
+[ext_resource type="Texture2D" uid="uid://h3e172rs430g" path="res://Resources/Textures_New_Correct/Icons-_28_0015_Crash.png" id="9_au716"]
+[ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="10_egu1i"]
+[ext_resource type="Texture2D" uid="uid://bl0i52ilv1hmc" path="res://Resources/Textures_New_Correct/Icons-_28_0010_Bear.png" id="12_lcgmo"]
 [ext_resource type="PackedScene" uid="uid://cdvmdek6n3ciy" path="res://Scenes/Prefab/synth_track_select_button_prefab.tscn" id="12_pe0j6"]
+[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="13_0b0kd"]
+[ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="14_aqvs6"]
 
 [node name="TrackSelectButtons" type="Control" unique_id=2075389560 node_paths=PackedStringArray("track_buttons")]
 layout_mode = 3
@@ -25,31 +34,166 @@ anchor_top = 0.044000003
 anchor_right = 1.0
 anchor_bottom = 0.9850001
 offset_left = 9.0
-offset_top = -5.1848335
-offset_right = 45.0
-offset_bottom = 494.35413
+offset_top = -5.0
+offset_right = 35.980003
+offset_bottom = 494.80896
 scale = Vector2(0.56, 0.56)
-theme_override_constants/separation = 70
+theme_override_constants/separation = 80
 alignment = 1
 metadata/_edit_group_ = true
 
 [node name="SongTrackSelectButton_6" parent="VBoxContainer" unique_id=703475495 instance=ExtResource("2_i7akj")]
 layout_mode = 2
 
+[node name="IconTex" parent="VBoxContainer/SongTrackSelectButton_6" index="0" unique_id=968006323]
+offset_left = 8.928574
+offset_top = 2.5371819
+offset_right = 104.78458
+offset_bottom = 8.537186
+scale = Vector2(1.2, 1.2)
+
+[node name="GlowTex" parent="VBoxContainer/SongTrackSelectButton_6" index="1" unique_id=522525537]
+offset_left = 2.5
+offset_top = 6.285717
+offset_right = 89.276
+offset_bottom = 23.28572
+
+[node name="OutlineTex" parent="VBoxContainer/SongTrackSelectButton_6" index="2" unique_id=51465376]
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 128.0
+offset_bottom = 128.0
+
 [node name="TrackSelectButton_0" parent="VBoxContainer" unique_id=814915734 instance=ExtResource("3_tyigl")]
 layout_mode = 2
+
+[node name="IconTex" parent="VBoxContainer/TrackSelectButton_0" index="0" unique_id=1380255650]
+offset_left = 0.742836
+offset_top = -3.8199492
+offset_right = 113.21483
+offset_bottom = 13.180054
+scale = Vector2(1, 1)
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_0" index="1" unique_id=522525537]
+offset_left = -4.642868
+offset_top = -2.6428375
+offset_right = 88.89513
+offset_bottom = 14.357162
+
+[node name="OutlineTex" parent="VBoxContainer/TrackSelectButton_0" index="2" unique_id=51465376]
+stretch_mode = 5
 
 [node name="TrackSelectButton_1" parent="VBoxContainer" unique_id=1401429003 instance=ExtResource("3_tyigl")]
 layout_mode = 2
 
+[node name="IconTex" parent="VBoxContainer/TrackSelectButton_1" index="0" unique_id=1380255650]
+offset_left = -1.0428696
+offset_top = -2.0342407
+offset_right = 80.79313
+offset_bottom = 14.965759
+scale = Vector2(1, 1)
+texture = ExtResource("5_ojmv1")
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_1" index="1" unique_id=522525537]
+offset_left = -6.4285736
+offset_top = -2.6428528
+offset_right = 87.10942
+offset_bottom = 14.357147
+
+[node name="OutlineTex" parent="VBoxContainer/TrackSelectButton_1" index="2" unique_id=51465376]
+texture = ExtResource("6_i7akj")
+stretch_mode = 5
+
 [node name="TrackSelectButton_2" parent="VBoxContainer" unique_id=1024189698 instance=ExtResource("3_tyigl")]
 layout_mode = 2
+
+[node name="IconTex" parent="VBoxContainer/TrackSelectButton_2" index="0" unique_id=1380255650]
+offset_left = 2.5285568
+offset_top = -2.0342712
+offset_right = 84.364555
+offset_bottom = 14.965729
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("7_tyigl")
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_2" index="1" unique_id=522525537]
+offset_left = -4.642868
+offset_top = -2.6428833
+offset_right = 88.89513
+offset_bottom = 14.357117
+
+[node name="OutlineTex" parent="VBoxContainer/TrackSelectButton_2" index="2" unique_id=51465376]
+texture = ExtResource("8_pe0j6")
+stretch_mode = 5
 
 [node name="TrackSelectButton_3" parent="VBoxContainer" unique_id=1077184116 instance=ExtResource("3_tyigl")]
 layout_mode = 2
 
+[node name="IconTex" parent="VBoxContainer/TrackSelectButton_3" index="0" unique_id=1380255650]
+offset_left = 2.528572
+offset_top = 8.680054
+offset_right = 84.36457
+offset_bottom = 25.680054
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("9_au716")
+stretch_mode = 5
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_3" index="1" unique_id=522525537]
+offset_left = -4.642868
+offset_top = -0.85705566
+offset_right = 88.89513
+offset_bottom = 16.142944
+
+[node name="OutlineTex" parent="VBoxContainer/TrackSelectButton_3" index="2" unique_id=51465376]
+texture = ExtResource("10_egu1i")
+stretch_mode = 5
+
 [node name="TrackSelectButton_4" parent="VBoxContainer" unique_id=1274099305 instance=ExtResource("12_pe0j6")]
 layout_mode = 2
 
+[node name="IconTex" parent="VBoxContainer/TrackSelectButton_4" index="0" unique_id=1229799027]
+offset_left = 3.7588654
+offset_top = -1.4285278
+offset_right = 99.61487
+offset_bottom = 4.571472
+texture = ExtResource("12_lcgmo")
+
+[node name="BgTex" parent="VBoxContainer/TrackSelectButton_4" index="1" unique_id=1431828313]
+offset_left = 12.5
+offset_top = 7.1428223
+offset_right = 120.791466
+offset_bottom = 118.22992
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_4" index="2" unique_id=814267231]
+offset_left = -2.8571472
+offset_top = -6.2142944
+offset_right = 98.97885
+offset_bottom = 10.785706
+
 [node name="TrackSelectButton_5" parent="VBoxContainer" unique_id=1681121463 instance=ExtResource("12_pe0j6")]
 layout_mode = 2
+
+[node name="IconTex" parent="VBoxContainer/TrackSelectButton_5" index="0" unique_id=1229799027]
+offset_left = 1.9731445
+offset_right = 97.82915
+texture = ExtResource("13_0b0kd")
+
+[node name="BgTex" parent="VBoxContainer/TrackSelectButton_5" index="1" unique_id=1431828313]
+offset_left = 10.714294
+offset_top = 5.3571777
+offset_right = 119.00576
+offset_bottom = 116.444275
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_5" index="2" unique_id=814267231]
+offset_left = -4.642868
+offset_right = 97.19313
+
+[node name="OutlineTex" parent="VBoxContainer/TrackSelectButton_5" index="3" unique_id=946711568]
+texture = ExtResource("14_aqvs6")
+
+[editable path="VBoxContainer/SongTrackSelectButton_6"]
+[editable path="VBoxContainer/TrackSelectButton_0"]
+[editable path="VBoxContainer/TrackSelectButton_1"]
+[editable path="VBoxContainer/TrackSelectButton_2"]
+[editable path="VBoxContainer/TrackSelectButton_3"]
+[editable path="VBoxContainer/TrackSelectButton_4"]
+[editable path="VBoxContainer/TrackSelectButton_5"]

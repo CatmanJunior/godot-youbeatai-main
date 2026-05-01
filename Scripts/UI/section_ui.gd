@@ -18,7 +18,6 @@ const SECTION_BUTTON_SIZE: int = 72
 @export var up_loop_count_button: Button
 @export var down_loop_count_button: Button
 
-
 var section_buttons: Array[SectionButton] = []
 var emoji_prompt_cancel_button: Button
 
@@ -42,8 +41,8 @@ func _process(delta: float) -> void:
 func init_section_button_actions():
 	# Emoji buttons
 	for button in emoji_prompt.emoji_buttons:
-		button.button_up.connect(func(emoji = button.text):
-			_on_emoji_button_pressed(emoji)
+		button.button_up.connect(func(tex = button.icon):
+			_on_emoji_button_pressed(tex)
 		)
 
 	emoji_prompt.cancel_button.button_up.connect(_close_emoji_prompt)
@@ -82,9 +81,9 @@ func _on_remove_section_button_pressed():
 	if SongState.sections.size() > 0:
 		EventBus.section_remove_requested.emit(SongState.current_section_index)
 
-func _on_emoji_button_pressed(emoji: String):
+func _on_emoji_button_pressed(tex: Texture2D):
 	_close_emoji_prompt()
-	EventBus.add_section_requested.emit(emoji)
+	EventBus.add_section_requested.emit(tex)
 
 func _on_song_loaded() -> void:
 	# Destroy all existing section buttons and rebuild from the loaded SongState sections.
@@ -93,11 +92,12 @@ func _on_song_loaded() -> void:
 		btn.queue_free()
 	section_buttons.clear()
 	for i in range(SongState.sections.size()):
-		_add_section_button(i, SongState.sections[i].emoji)
+		if SongState.sections[i].tex:
+			_add_section_button(i, SongState.sections[i].tex)
 	_update_section_ui()
 
-func _on_section_added(new_section_index: int, emoji: String) -> void:
-	_add_section_button(new_section_index, emoji)
+func _on_section_added(new_section_index: int, tex: Texture2D) -> void:
+	_add_section_button(new_section_index, tex)
 	_update_section_ui()
 
 func _on_section_removed(section_index: int) -> void:
@@ -107,13 +107,13 @@ func _on_section_removed(section_index: int) -> void:
 func _on_section_cleared() -> void:
 	update_section_switch_buttons_colors()
 
-func _add_section_button(index: int, emoji: String) -> void:
+func _add_section_button(index: int, tex: Texture2D) -> void:
 	if not section_button_prefab or not section_buttons_container:
 		return
 
 	var section_button = section_button_prefab.instantiate() as SectionButton
 	section_button.index = index
-	section_button.text = emoji if emoji != "" else ["🌱", "📜", "🤩", "🏁"][index % 4]
+	section_button.icon = tex
 	section_button.pressed.connect(func():
 		EventBus.section_switch_requested.emit(section_button.index)
 	)

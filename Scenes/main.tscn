@@ -11,7 +11,12 @@
 [ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
+[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Icons/Icons-_28_0029_Leaf.png" id="22_54nrm"]
+[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Icons/Icons-_28_0028_Verse.png" id="23_55jeb"]
+[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Icons/Icons-_28_0025_Riser.png" id="24_gsvbx"]
+[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Icons/Icons-_28_0026_Blast.png" id="25_bv80c"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
+[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Icons/Icons-_28_0021_Flag.png" id="26_ptfg5"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
 [ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="29_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
@@ -88,6 +93,7 @@ script = ExtResource("21_s8vy0")
 
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")
+initial_sections = Array[Texture2D]([ExtResource("22_54nrm"), ExtResource("23_55jeb"), ExtResource("24_gsvbx"), ExtResource("25_bv80c"), ExtResource("26_ptfg5")])
 
 [node name="BeatManager" type="Node" parent="Managers" unique_id=540173422]
 script = ExtResource("8_urine")

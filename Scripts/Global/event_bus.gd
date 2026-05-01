@@ -58,7 +58,7 @@ signal clap_stomp_detected(interaction_type: int)
 
 # ── Sections ──
 ## Emitted to request adding a new section with the given emoji label.
-signal add_section_requested(emoji: String)
+signal add_section_requested(tex: Texture2D)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
 ## Emitted on loop
@@ -74,7 +74,7 @@ signal section_remove_requested(section_index: int)
 ## Emitted when a section switch has completed, carrying the new section data.
 signal section_switched(section_data: SectionData)
 ## Emitted when a new section has been added at the given index with an emoji label.
-signal section_added(new_section_index: int, emoji: String)
+signal section_added(new_section_index: int, tex: Texture2D)
 ## Emitted when a section has been removed at the given index.
 signal section_removed(section_index: int)
 ## Emitted when the current section has been cleared of all beats.

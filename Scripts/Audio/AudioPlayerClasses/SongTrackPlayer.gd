@@ -97,7 +97,7 @@ func _on_section_switched(_new) -> void:
 
 # ── Section add/remove handlers ──────────────────────────────────────────────
 
-func _on_section_added(section_index: int, _emoji: String) -> void:
+func _on_section_added(section_index: int, _tex: Texture2D) -> void:
 	if track_data.has_recording():
 		track_data.insert_silence_for_section(section_index, SongState.total_beats, GameState.beat_duration)
 

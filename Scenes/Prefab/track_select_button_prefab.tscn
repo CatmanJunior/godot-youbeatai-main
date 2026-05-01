@@ -18,12 +18,17 @@ texture_normal = ExtResource("1_3gj1q")
 ignore_texture_size = true
 stretch_mode = 5
 script = ExtResource("2_xp7bp")
-outline_rect = NodePath("OutlineTex")
-glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
+outline_rect = NodePath("Button/OutlineTex")
+glow_rect = NodePath("Button/GlowTex")
+icon_label = NodePath("Button/IconLabel")
 metadata/_edit_group_ = true
 
-[node name="GlowTex" type="TextureRect" parent="." unique_id=522525537]
+[node name="Button" type="Button" parent="." unique_id=1917692210]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="GlowTex" type="TextureRect" parent="Button" unique_id=522525537]
 visible = false
 layout_mode = 1
 anchors_preset = -1
@@ -38,11 +43,11 @@ texture = ExtResource("3_uqlj7")
 expand_mode = 3
 stretch_mode = 4
 
-[node name="OutlineTex" type="TextureRect" parent="." unique_id=51465376]
+[node name="OutlineTex" type="TextureRect" parent="Button" unique_id=51465376]
 z_index = -1
 layout_mode = 0
-offset_left = 4.000001
-offset_top = 1.0000005
+offset_left = 4.0
+offset_top = 1.0
 offset_right = 116.175316
 offset_bottom = 112.2413
 scale = Vector2(1.405, 1.405)
@@ -50,16 +55,16 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("4_br66b")
 stretch_mode = 4
 
-[node name="IconLabel" type="Label" parent="." unique_id=1506277708]
+[node name="IconLabel" type="Label" parent="Button" unique_id=1506277708]
 visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.60200006
 anchor_bottom = 1.0
 offset_left = 52.0
-offset_top = 0.023994446
+offset_top = 62.631996
 offset_right = 98.0
-offset_bottom = 5.0
+offset_bottom = 75.448
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(20, 19)

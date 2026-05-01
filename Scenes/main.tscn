@@ -13,7 +13,8 @@
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
-[ext_resource type="Texture2D" uid="uid://klel4nmby0jl" path="res://Resources/Textures_New/Beat-Ring-Beam_0002_Layer-1-copy-2.png" id="28_aa8k8"]
+[ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
+[ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="29_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="30_jut3y"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
@@ -45,7 +46,7 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
-[ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
+[ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
@@ -137,10 +138,20 @@ mouse_filter = 1
 shortcut = ExtResource("30_jut3y")
 
 [node name="PointLight2D" parent="UserInterface/BeatRing/Pointer" parent_id_path=PackedInt32Array(192422746, 57170616) index="0" unique_id=378491608]
-texture = ExtResource("28_aa8k8")
+scale = Vector2(0.887, 0.887)
+texture = ExtResource("29_nwwfm")
 
 [node name="Waveform_visualisers" parent="UserInterface/BeatRing" index="5" unique_id=1117100626]
 track_settings = ExtResource("36_qax2n")
+
+[node name="BigLine0" parent="UserInterface/BeatRing/Waveform_visualisers" index="0" unique_id=866994840]
+points = PackedVector2Array(605, 60)
+
+[node name="TextureProgressBar0" parent="UserInterface/BeatRing/Waveform_visualisers" index="2" unique_id=1277010803]
+tint_progress = Color(1, 1, 0, 1)
+
+[node name="TextureProgressBar1" parent="UserInterface/BeatRing/Waveform_visualisers" index="3" unique_id=1981743700]
+tint_progress = Color(0.5176471, 0, 1, 1)
 
 [node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
 layout_mode = 1
@@ -347,4 +358,8 @@ grow_vertical = 1
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/Robot"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
+[editable path="UserInterface/Robot/AchievementsPanel"]
 [editable path="UserInterface/SwitchSectionButtons"]

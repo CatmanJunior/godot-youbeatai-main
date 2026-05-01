@@ -138,12 +138,6 @@ track_settings = ExtResource("36_qax2n")
 [node name="BigLine0" parent="UserInterface/BeatRing/Waveform_visualisers" index="0" unique_id=866994840]
 points = PackedVector2Array(605, 60)
 
-[node name="TextureProgressBar0" parent="UserInterface/BeatRing/Waveform_visualisers" index="2" unique_id=1277010803]
-tint_progress = Color(1, 1, 0, 1)
-
-[node name="TextureProgressBar1" parent="UserInterface/BeatRing/Waveform_visualisers" index="3" unique_id=1981743700]
-tint_progress = Color(0.5176471, 0, 1, 1)
-
 [node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
 layout_mode = 1
 anchors_preset = -1
@@ -162,16 +156,18 @@ script = ExtResource("36_y86h7")
 layout_mode = 1
 offset_left = -615.0
 offset_top = -342.0
-offset_right = -530.8041
+offset_right = -526.43024
 offset_bottom = 379.6797
 scale = Vector2(0.91453314, 0.91453314)
-track_UI_settings = ExtResource("36_qax2n")
 
 [node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" parent_id_path=PackedInt32Array(2075389560, 154923035) index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
 song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
+
+[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+visible = false
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 layout_mode = 0

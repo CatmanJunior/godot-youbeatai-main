@@ -45,8 +45,8 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
-[ext_resource type="PackedScene" uid="uid://c382hsycqmpyw" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
+[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -168,18 +168,20 @@ script = ExtResource("36_y86h7")
 
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
-offset_left = -615.0
+offset_left = -593.00006
 offset_top = -342.0
-offset_right = -530.8041
+offset_right = -508.80414
 offset_bottom = 379.6797
 scale = Vector2(0.91453314, 0.91453314)
-track_UI_settings = ExtResource("36_qax2n")
 
 [node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" parent_id_path=PackedInt32Array(2075389560, 154923035) index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
 song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
+
+[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+visible = false
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 layout_mode = 0
@@ -358,6 +360,13 @@ grow_vertical = 1
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/SongTrackSelectButton_6"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_0"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_1"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/Robot"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]

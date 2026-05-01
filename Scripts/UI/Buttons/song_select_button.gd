@@ -7,4 +7,5 @@ class_name SongSelectButton
 func set_button_selected(active: bool) -> void:
 	super.set_button_selected(active)
 	song_track_line_texture.visible = active
-	song_section_progress_bar.visible = active
+	if song_section_progress_bar != null:
+		song_section_progress_bar.visible = active

@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://doag0uwksj5mb"]
 
-[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Icons/Icons-128_0032_Note.png" id="1_wnx8s"]
+[ext_resource type="Texture2D" uid="uid://cxjdacm3nnqbj" path="res://Resources/Textures_New_Correct/Icons-128_0032_Note.png" id="1_wnx8s"]
 [ext_resource type="Script" uid="uid://bx801a1b0kfin" path="res://Scripts/UI/Buttons/song_select_button.gd" id="2_ygwhu"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_ygwhu"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="4_3kt86"]
@@ -8,22 +8,34 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_hr2ek"]
 
-[node name="SongTrackSelectButton_6" type="TextureButton" unique_id=703475495 node_paths=PackedStringArray("song_track_line_texture", "outline_rect", "glow_rect", "icon_label")]
+[node name="SongTrackSelectButton_6" type="Button" unique_id=1740880555 node_paths=PackedStringArray("song_track_line_texture", "outline_rect", "glow_rect", "icon_rect")]
 custom_minimum_size = Vector2(100, 100)
 offset_left = -34.0
 offset_top = -23.0
 offset_right = 95.0
 offset_bottom = 100.0
-texture_normal = ExtResource("1_wnx8s")
-ignore_texture_size = true
-stretch_mode = 5
+flat = true
 script = ExtResource("2_ygwhu")
 song_track_line_texture = NodePath("Song mode line")
 outline_rect = NodePath("OutlineTex")
 glow_rect = NodePath("GlowTex")
-icon_label = NodePath("IconLabel")
+icon_rect = NodePath("IconTex")
 track_index = 6
 metadata/_edit_group_ = true
+
+[node name="IconTex" type="TextureRect" parent="." unique_id=968006323]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.298
+anchor_bottom = 1.0
+offset_left = -3.3840027
+offset_top = -5.0
+offset_right = 92.472
+offset_bottom = 1.0
+pivot_offset = Vector2(32, 30)
+texture = ExtResource("1_wnx8s")
+expand_mode = 3
+stretch_mode = 4
 
 [node name="GlowTex" type="TextureRect" parent="." unique_id=522525537]
 visible = false
@@ -51,24 +63,6 @@ scale = Vector2(1.405, 1.405)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("4_3kt86")
 stretch_mode = 4
-
-[node name="IconLabel" type="Label" parent="." unique_id=1506277708]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.60200006
-anchor_bottom = 1.0
-offset_left = 52.0
-offset_top = 0.023994446
-offset_right = 98.0
-offset_bottom = 5.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(20, 19)
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
 
 [node name="Song mode line" type="MeshInstance2D" parent="." unique_id=683439111]
 visible = false

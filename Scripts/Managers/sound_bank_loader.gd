@@ -8,8 +8,7 @@ class_name SoundBankLoader
 # Path template — each soundbank folder contains a SoundBank.tres resource.
 const BANK_PATH_TEMPLATE := "res://Resources/Audio/SoundBanks/%s/%s.tres"
 
-# Fallback bank name used when nothing has been selected yet (e.g. during dev).
-const FALLBACK_BANK_NAME := "2_acoustisch"
+static var fallback_bank_name: String = ""
 
 @export var fallback_bank: SoundBank
 
@@ -20,10 +19,13 @@ func _ready() -> void:
 func _load_and_apply_bank() -> void:
 	if SongState.selected_soundbank != null:
 		var bank = SongState.selected_soundbank
+		fallback_bank_name = bank.resource_name
 		EventBus.soundbank_loaded.emit(bank)
 	else:
-		push_warning("No soundbank selected, emitting fallback bank '%s'." % FALLBACK_BANK_NAME)
+		push_warning("No soundbank selected, emitting fallback bank '%s'." % fallback_bank.resource_name)
+		fallback_bank_name = fallback_bank.resource_name
 		EventBus.soundbank_loaded.emit(fallback_bank)
+
 
 static func load_soundbank(bank_dict: Dictionary) -> SoundBank:	
 	var bank : SoundBank
@@ -33,8 +35,8 @@ static func load_soundbank(bank_dict: Dictionary) -> SoundBank:
 
 
 	if bank_name.is_empty():
-		push_warning("SoundBankLoader: no soundbank selected, falling back to '%s'." % FALLBACK_BANK_NAME)
-		bank_name = FALLBACK_BANK_NAME
+		bank_name = fallback_bank_name
+		push_warning("SoundBankLoader: no soundbank selected, falling back to '%s'." % bank_name)
 	
 	var bank_path := BANK_PATH_TEMPLATE % [bank_name, bank_name]
 

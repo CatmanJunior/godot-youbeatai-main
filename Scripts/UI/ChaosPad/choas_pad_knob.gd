@@ -3,7 +3,7 @@ class_name ChaosPadKnob
 const DRAG_THRESHOLD := 6.0
 
 # How far outside the triangle edges the knob can travel (matches ChaosPadKnob)
-@export var outer_triangle_size: float = 60.0
+@export var outer_triangle_size: float = 100.0
 
 var _dragging := false
 var _mouse_down := false

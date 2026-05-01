@@ -6,16 +6,17 @@
 [ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
 [ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="9_5vy51"]
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="10_o2owy"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
-[ext_resource type="Resource" uid="uid://c0la6lq62g4pv" path="res://Experimental/VoiceToSynth/notes.tres" id="17_kwxat"]
+[ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/AudioBanks/note_player_settings.gd" id="21_aa8k8"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
 [ext_resource type="Resource" uid="uid://yqlugev118t2" path="res://Resources/Audio/SoundBanks/2_acoustisch/2_acoustisch.tres" id="28_nwwfm"]
 [ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="29_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
+[ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="30_jut3y"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
@@ -71,8 +72,7 @@ alt_audio_files = Array[AudioStream]([ExtResource("56_wt5iu"), ExtResource("57_p
 metronome_sfx = ExtResource("9_5vy51")
 metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
-note_player_settings = Array[ExtResource("21_aa8k8")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
-notes = ExtResource("17_kwxat")
+note_player_settings = Array[ExtResource("14_s8vy0")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
 script = ExtResource("62_daoo8")
@@ -82,7 +82,7 @@ waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visuali
 
 [node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
 script = ExtResource("29_s8vy0")
-fallback_bank = ExtResource("28_nwwfm")
+fallback_bank = ExtResource("19_s8vy0")
 
 [node name="ClapStomp" type="Node" parent="Managers/AudioManagers" unique_id=958670281]
 script = ExtResource("21_s8vy0")
@@ -133,6 +133,9 @@ offset_top = 1.0
 offset_right = -125.0
 offset_bottom = 1.0
 mouse_filter = 1
+
+[node name="PlayPauseButton" parent="UserInterface/BeatRing" index="0" unique_id=2061116021]
+shortcut = ExtResource("30_jut3y")
 
 [node name="PointLight2D" parent="UserInterface/BeatRing/Pointer" parent_id_path=PackedInt32Array(192422746, 57170616) index="0" unique_id=378491608]
 scale = Vector2(0.887, 0.887)

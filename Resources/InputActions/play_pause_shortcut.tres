@@ -1,0 +1,6 @@
+[gd_resource type="Shortcut" format=3 uid="uid://c04ero7rv3vuk"]
+
+[ext_resource type="InputEventAction" uid="uid://dmlghxmy7wplf" path="res://Resources/InputActions/playpause.tres" id="1_01jep"]
+
+[resource]
+events = [ExtResource("1_01jep")]

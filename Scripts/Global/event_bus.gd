@@ -126,6 +126,8 @@ signal recording_started(recording_data: RecordingData)
 signal recording_stopped(recording_data: RecordingData)
 ## Emitted to request setting a recorded audio stream on a specific track.
 signal set_recorded_stream_requested(recording_data: RecordingData)
+## Emitted when voice processing is complete and a sequence is ready for playback.
+signal sequence_ready(sequence: Sequence, track_data: TrackData)
 
 # ── Set Audio Streams ──
 ## Emitted to request setting an audio stream on a specific track and audio layer.
@@ -142,6 +144,10 @@ signal saving_completed(path: String)
 signal save_song_requested()
 ## Emitted to request loading the last saved song data from disk.
 signal load_song_requested()
+## Emitted after a song has been fully loaded into SongState.
+## Handlers should rebuild any runtime objects (section buttons, waveform visualizers)
+## before the section_switch_requested signal fires the full UI cascade.
+signal song_loaded()
 ## Emitted to request saving the current project as an MP3 file.
 signal save_to_mp3_requested()
 ## Emitted to request exporting the project. [code]mode_export_song[/code]: false for beat, true for song.

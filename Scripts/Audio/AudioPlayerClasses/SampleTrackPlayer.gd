@@ -56,7 +56,8 @@ func _on_section_switched(_new : SectionData) -> void:
 	set_volume_db(_new.tracks[track_index].master_volume) # apply new section's master volume for this track
 
 func _on_beat_triggered(beat: int) -> void:
-	if track_data.get_beat_active(beat):
+	var data := track_data as SampleTrackData
+	if data and data.get_beat_active(beat):
 		play()
 
 func _set_recorded_stream(recording_data: RecordingData) -> void:

@@ -13,5 +13,5 @@ instrument = 1
 base_note = ExtResource("1_t7g2r")
 allow_key_input = true
 gate = 0.4
-volume_db = -7.0
+volume_db = 8.0
 metadata/_custom_type_script = "uid://cx6op5amucrek"

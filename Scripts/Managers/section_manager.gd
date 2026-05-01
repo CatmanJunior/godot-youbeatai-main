@@ -1,7 +1,7 @@
 extends Node
 
 # Section management constants
-const SECTIONS_AMOUNT_MAX: int = 10
+const SECTIONS_AMOUNT_MAX: int = 8
 const SECTIONS_AMOUNT_INITIAL: int = 4
 const SECTION_BUTTON_SIZE: int = 72
 

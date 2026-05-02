@@ -1,5 +1,6 @@
 extends Node
 
+@export var tutorial_steps_resource: TutorialStepsCollection
 @export var achievements_panel: Panel
 @export var achievements_fx_sound: AudioStream
 @export var clap_stomp: Node
@@ -21,7 +22,6 @@ extends Node
 # Tutorial state
 var tutorial_level: int = 0
 var tutorial_activated: bool = false
-var use_tutorial: bool = false
 var _first_tts_done: bool = false
 
 var _beats_active_red_ring: int = 5
@@ -44,6 +44,8 @@ var _previous_clap: int = -1
 var _previous_stomp: int = -1
 var _stomping: bool = false
 var _clapping: bool = false
+var _in_stomp_phase: bool = false
+var _in_clap_phase: bool = false
 var _timer: Timer = null
 var _allowed: bool = false
 var _text_allowed: bool = true
@@ -51,22 +53,20 @@ var _clap_button = null
 var _stomp_button = null
 var _increased_speed: bool = false
 
-# Tutorial steps: array of dictionaries with keys: instruction, condition, outcome
-var tutorial_steps: Array = []
-const TUTORIAL_STEPS_PATH: String = "res://Data/tutorial_steps.json"
+var tutorial_steps: Array[TutorialStepData] = []
+var _condition_map: Dictionary = {}
+var _outcome_map: Dictionary = {}
 
 func _process(delta: float) -> void:
 	_clapping = false
 	_stomping = false
 
-func _ready():
+func _ready() -> void:
+	_build_maps()
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
-
-
-
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
 
-func _on_skip_tutorial_requested():
+func _on_skip_tutorial_requested() -> void:
 	GameState.use_tutorial = false
 	achievements_panel.visible = false
 	if DisplayServer.tts_is_speaking():
@@ -74,15 +74,6 @@ func _on_skip_tutorial_requested():
 
 func play_achievement_sfx() -> void:
 	EventBus.play_sfx_requested.emit(achievements_fx_sound)
-
-func _build_tutorial_steps() -> Array:
-	var steps := _load_tutorial_steps_from_json()
-	if steps.size() > 0:
-		return steps
-	else:
-		#throw an error
-		push_error("Failed to load tutorial steps from JSON")
-		return []
 
 func _on_has_clapped_or_stomped(interaction_type: int) -> void:
 	if interaction_type == 0: # InteractionType.CLAP
@@ -143,11 +134,9 @@ func _cond_synth_2_select() -> bool:
 func _cond_synth_2_record_or_tts() -> bool:
 	# _return_player(uiManager.green_layer_record_button.get_parent()).play("record_pulse")
 	if SongState.selected_track_index == 5 and GameState.is_recording:
-
 		play_achievement_sfx()
-		tutorial_level += 5
+		tutorial_level += 4  # skip 4 steps here; _next_line adds 1 more = 5 total
 		DisplayServer.tts_stop()
-		# _return_player(uiManager.green_layer_record_button.get_parent()).stop()
 		return true
 	return not DisplayServer.tts_is_speaking()
 
@@ -158,11 +147,9 @@ func _cond_false() -> bool:
 	return false
 
 func _cond_voice_over_finished() -> bool:
-	#TODO find out what is checked here
 	return true
 
 func _cond_save_knob_and_tts() -> bool:
-	#TODO this can be removed because knob is always saved
 	return not DisplayServer.tts_is_speaking()
 
 
@@ -201,11 +188,11 @@ func _outcome_timer_2() -> void:
 	_timer.start(2)
 
 func _outcome_stomp_setup() -> void:
-	_stomping = true
+	_in_stomp_phase = true
 	play_achievement_sfx()
 
 func _outcome_stomp_done() -> void:
-	_stomping = false
+	_in_stomp_phase = false
 	EventBus.playing_change_requested.emit(false)
 	play_achievement_sfx()
 
@@ -241,10 +228,10 @@ func _outcome_listen_again() -> void:
 	_timer.start(2)
 
 func _outcome_clap_count_setup() -> void:
-	_clapping = true
+	_in_clap_phase = true
 
 func _outcome_clap_done() -> void:
-	_clapping = false
+	_in_clap_phase = false
 	EventBus.playing_change_requested.emit(false)
 	play_achievement_sfx()
 
@@ -309,6 +296,7 @@ func _outcome_show_outside() -> void:
 	out_side_area.set_deferred("monitoring", true)
 	out_side_area.emit_signal("animation_star_play")
 	out_side_mesh.visible = true
+	out_side_area.area_entered.connect(_body_continue)
 
 func _outcome_move_outside() -> void:
 	out_side_area.set_deferred("monitoring", false)
@@ -318,7 +306,8 @@ func _outcome_move_outside() -> void:
 	_active = true
 
 func _outcome_end_tutorial() -> void:
-	tutorial_level = -2
+	tutorial_level = -1
+	GameState.use_tutorial = false
 	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.ENTIRE_INTERFACE, true)
 	achievements_panel.visible = false
 	play_achievement_sfx()
@@ -327,6 +316,8 @@ func _outcome_end_tutorial() -> void:
 		piano_area.area_entered.disconnect(_body_continue)
 	if in_between_area.area_entered.is_connected(_body_continue):
 		in_between_area.area_entered.disconnect(_body_continue)
+	if out_side_area.area_entered.is_connected(_body_continue):
+		out_side_area.area_entered.disconnect(_body_continue)
 	if klappy_continue_button and klappy_continue_button.pressed.is_connected(_klappy_continue):
 		klappy_continue_button.pressed.disconnect(_klappy_continue)
 	DisplayServer.tts_stop()
@@ -337,7 +328,6 @@ func _outcome_end_tutorial() -> void:
 func reset() -> void:
 	tutorial_level = 0
 	tutorial_activated = false
-	use_tutorial = _read_use_tutorial()
 	if _timer:
 		_timer.queue_free()
 		_timer = null
@@ -352,6 +342,8 @@ func reset() -> void:
 	_previous_stomp = -1
 	_stomping = false
 	_clapping = false
+	_in_stomp_phase = false
+	_in_clap_phase = false
 	_text_allowed = true
 	_clap_button = null
 	_stomp_button = null
@@ -359,18 +351,12 @@ func reset() -> void:
 	_first_tts_done = false
 
 
-func check_if_tutorial_was_chosen() -> void:
-	use_tutorial = _read_use_tutorial()
-
-
 func try_activate_tutorial() -> void:
-	if use_tutorial:
+	if GameState.use_tutorial:
 		print("tutorial activated")
+		GameState.tutorialActivated = true
 		EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
 		EventBus.bpm_set_requested.emit(60)
-		#TODO set entire interface invisible except for tutorial elements
-		# uiManager.audio_export_ui.settings_button.visible = true
-		# uiManager.achievements_panel.visible = true
 		EventBus.continue_button_pressed.connect(_tutorial_continue)
 		if klappy_continue_button:
 			klappy_continue_button.pressed.connect(_klappy_continue)
@@ -385,20 +371,23 @@ func try_activate_tutorial() -> void:
 
 func setup_tutorial() -> void:
 	_timer_setup()
-	tutorial_steps = _build_tutorial_steps()
+	if tutorial_steps_resource:
+		tutorial_steps = tutorial_steps_resource.steps
+	else:
+		push_error("tutorial_steps_resource is not assigned on Tutorial node")
 
 
 func update_tutorial() -> void:
 	_button_state()
 
-	if not _first_tts_done and use_tutorial:
+	if not _first_tts_done and GameState.use_tutorial:
 		_speak_tutorial_instruction(tutorial_level)
 		_first_tts_done = true
 
 	_correct_clap_play_sfx()
 	_correct_stomp_play_sfx()
 
-	if tutorial_level != -1 and use_tutorial and tutorial_level < tutorial_steps.size():
+	if tutorial_level != -1 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
 		_update_lists()
 		if _condition.is_valid() and _condition.call():
 			_next_line()
@@ -414,20 +403,6 @@ func _timer_setup() -> void:
 		achievements_panel.add_child(_timer)
 
 
-func _read_use_tutorial() -> bool:
-	var use: bool = true
-	var path: String = OS.get_user_data_dir() + "/use_tutorial.txt"
-	if FileAccess.file_exists(path):
-		var file := FileAccess.open(path, FileAccess.READ)
-		if file:
-			var content: String = file.get_as_text().strip_edges()
-			use = content.to_lower() == "true"
-			file.close()
-		DirAccess.remove_absolute(path)
-	print("use tutorial: " + str(use))
-	return use
-
-
 func _active_beats_per_ring(index_ring: int) -> int:
 	var amount: int = 0
 	for beat in range(SongState.total_beats):
@@ -437,7 +412,6 @@ func _active_beats_per_ring(index_ring: int) -> int:
 
 
 func _klappy_continue() -> void:
-	# manager.klappy.call("on_clap")
 	_next_line()
 
 
@@ -477,14 +451,14 @@ func _return_player(parent: Node) -> AnimationPlayer:
 
 
 func _correct_stomp_play_sfx() -> void:
-	if _stomping:
+	if _in_stomp_phase and _stomping:
 		if clap_stomp.stomped_on_beat_amount > _previous_stomp:
 			play_achievement_sfx()
 			_previous_stomp = clap_stomp.stomped_on_beat_amount
 
 
 func _correct_clap_play_sfx() -> void:
-	if _clapping:
+	if _in_clap_phase and _clapping:
 		if clap_stomp.clapped_on_beat_amount > _previous_clap:
 			play_achievement_sfx()
 			_previous_clap = clap_stomp.clapped_on_beat_amount
@@ -498,11 +472,10 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return
 
-	var text: String = tutorial_steps[instruction_index]["instruction"]
+	var text: String = tutorial_steps[instruction_index].instruction
 	var clean_text: String = TTSHelper.Text_without_emoticons(text)
 
 	if _increased_speed:
-		print("Increase the speed")
 		TTSHelper.speak(clean_text, 2.5)
 	else:
 		TTSHelper.speak(clean_text)
@@ -518,40 +491,78 @@ func _skip_play() -> bool:
 
 func _update_lists() -> void:
 	if tutorial_level >= 0 and tutorial_level < tutorial_steps.size():
-		var current_step: Dictionary = tutorial_steps[tutorial_level]
-		_instruction = current_step["instruction"]
-		_condition = current_step["condition"]
-		_outcome = current_step["outcome"]
+		var current_step: TutorialStepData = tutorial_steps[tutorial_level]
+		_instruction = current_step.instruction
+		_condition = _get_condition_callable(current_step.condition)
+		_outcome = _get_outcome_callable(current_step.outcome)
 		if instruction_label:
 			instruction_label.text = _instruction
 
-func _load_tutorial_steps_from_json() -> Array:
-	var file := FileAccess.open(TUTORIAL_STEPS_PATH, FileAccess.READ)
-	if file == null:
-		push_warning("Could not open tutorial steps JSON at %s" % TUTORIAL_STEPS_PATH)
-		return []
-	var raw: String = file.get_as_text()
-	file.close()
-	var parse_result: Variant = JSON.parse_string(raw)
-	if parse_result.error != OK or typeof(parse_result.result) != TYPE_ARRAY:
-		push_warning("Tutorial steps JSON is invalid: %s" % str(parse_result.error))
-		return []
-	var steps: Array = []
-	for entry in parse_result.result:
-		if entry is Dictionary:
-			steps.append({
-				"instruction": entry.get("instruction", ""),
-				"condition": _resolve_step_callable(entry.get("condition", ""), "_cond_false"),
-				"outcome": _resolve_step_callable(entry.get("outcome", ""), "_outcome_noop"),
-			})
-	return steps
 
-func _resolve_step_callable(stepName: String, fallback: String) -> Callable:
-	var method_name: String = stepName.strip_edges()
-	if method_name == "":
-		method_name = fallback
-	if has_method(method_name):
-		return Callable(self , method_name)
-	if method_name != fallback and has_method(fallback):
-		return Callable(self , fallback)
-	return Callable()
+# ── Enum dispatch ────────────────────────────────────────────────────
+
+func _build_maps() -> void:
+	var C := TutorialStepData.TutorialCondition
+	_condition_map = {
+		C.IS_CLAPPING: _cond_clapped,
+		C.TTS_FINISHED: _cond_tts_done,
+		C.IS_PLAYING: _cond_playing,
+		C.IS_PAUSED: _cond_not_playing,
+		C.TIMER_AT_ZERO: _cond_timer_done,
+		C.TIMER_IDLE: _cond_timer_stopped,
+		C.KICK_RING_FULL: _cond_red_ring_filled,
+		C.KICK_COUNT_SNAPPED_AND_PLAYING: _cond_update_red_and_playing,
+		C.STOMPED_ENOUGH: _cond_stomped_enough,
+		C.CLAP_RING_FULL: _cond_orange_ring_filled,
+		C.BEAT_REMOVED: _cond_circle_removed,
+		C.CLAP_COUNT_SNAPPED_AND_PLAYING: _cond_update_orange_and_playing,
+		C.CLAPPED_ENOUGH: _cond_clapped_enough,
+		C.BASS_TRACK_SELECTED: _cond_synth_2_select,
+		C.BASS_RECORDING_OR_TTS_DONE: _cond_synth_2_record_or_tts,
+		C.BASS_RECORDING_ACTIVE: _cond_synth_2_record_pressed,
+		C.ALWAYS: _cond_voice_over_finished,
+		C.TTS_DONE_AFTER_KNOB: _cond_save_knob_and_tts,
+		C.NEVER: _cond_false,
+	}
+	var O := TutorialStepData.TutorialOutcome
+	_outcome_map = {
+		O.NOOP: _outcome_noop,
+		O.SHOW_INTRO: _outcome_intro,
+		O.PLACE_KICK_BEATS: _outcome_kick_place,
+		O.START_TIMER_AND_UNLOCK: _outcome_start_timer_allowed,
+		O.ON_PAUSED: _outcome_pause_beat,
+		O.ON_KICK_RING_FILLED: _outcome_red_ring_filled,
+		O.START_SHORT_TIMER: _outcome_timer_2,
+		O.BEGIN_STOMP_PHASE: _outcome_stomp_setup,
+		O.END_STOMP_PHASE: _outcome_stomp_done,
+		O.SHOW_CLAP_RING: _outcome_show_orange_ring,
+		O.PLACE_CLAP_BEATS: _outcome_clap_ring_setup,
+		O.START_CLAP_LISTEN_TIMER: _outcome_clap_listen,
+		O.STOP_PLAYBACK: _outcome_stop_playing,
+		O.ON_CLAP_RING_FILLED: _outcome_orange_ring_filled,
+		O.ON_BEAT_REMOVED: _outcome_circle_removed,
+		O.START_LISTEN_AGAIN_TIMER: _outcome_listen_again,
+		O.BEGIN_CLAP_COUNT: _outcome_clap_count_setup,
+		O.END_CLAP_PHASE: _outcome_clap_done,
+		O.SHOW_BASS_LAYER: _outcome_show_green_layer,
+		O.SETUP_BASS_RECORDER: _outcome_green_bear,
+		O.ON_BASS_RECORDING_STARTED: _outcome_green_record_pressed,
+		O.END_FAST_TTS_AND_WAIT: _outcome_voice_over_done,
+		O.SHOW_CHAOS_TRIANGLE: _outcome_show_triangle,
+		O.SHOW_PIANO_STAR: _outcome_show_piano_area,
+		O.ON_PIANO_STAR_REACHED: _outcome_move_to_star_1,
+		O.ON_PIANO_LISTENED: _outcome_listen_piano,
+		O.SHOW_MIX_STAR: _outcome_show_in_between,
+		O.ON_MIX_STAR_REACHED: _outcome_move_in_between,
+		O.SHOW_OUTSIDE_STAR: _outcome_show_outside,
+		O.ON_OUTSIDE_STAR_REACHED: _outcome_move_outside,
+		O.FINISH_TUTORIAL: _outcome_end_tutorial,
+	}
+
+
+func _get_condition_callable(c: TutorialStepData.TutorialCondition) -> Callable:
+	return _condition_map.get(c, _cond_false)
+
+
+func _get_outcome_callable(o: TutorialStepData.TutorialOutcome) -> Callable:
+	return _outcome_map.get(o, Callable())

@@ -55,7 +55,8 @@ signal template_set_requested(template_index: int)
 
 # ── Beat Interaction ──
 signal clap_stomp_detected(interaction_type: int)
-
+signal clap_on_beat_detected()
+signal stomp_on_beat_detected()
 # ── Sections ──
 ## Emitted to request adding a new section with the given emoji label.
 signal add_section_requested(emoji: String)

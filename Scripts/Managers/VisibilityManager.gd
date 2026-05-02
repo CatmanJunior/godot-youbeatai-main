@@ -11,7 +11,7 @@ enum UIElement {
 	KLAPPY_CONTINUE,
 	CLAP_UI,
 	STOMP_UI,
-	GREEN_LAYER,
+	SYNTH2_LAYER,
 	MIC_RECORDER,
 	CHAOS_PAD_TRIANGLE,
 	ENTIRE_INTERFACE,
@@ -23,7 +23,7 @@ enum UIElement {
 @export var klappy_continue: CanvasItem
 @export var clap_ui: CanvasItem
 @export var stomp_ui: CanvasItem
-@export var green_layer: CanvasItem
+@export var synth2_layer: CanvasItem
 @export var mic_recorder: CanvasItem
 @export var chaos_pad_triangle: CanvasItem
 
@@ -53,9 +53,9 @@ func _on_ui_visibility_requested(element: int, visible: bool) -> void:
 		UIElement.STOMP_UI:
 			if stomp_ui:
 				stomp_ui.visible = visible
-		UIElement.GREEN_LAYER:
-			if green_layer:
-				green_layer.visible = visible
+		UIElement.SYNTH2_LAYER:
+			if synth2_layer:
+				synth2_layer.visible = visible
 		UIElement.MIC_RECORDER:
 			if mic_recorder:
 				mic_recorder.visible = visible

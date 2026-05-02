@@ -1,0 +1,398 @@
+[gd_scene format=3 uid="uid://cfn5n8p0tjj1v"]
+
+[ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
+[ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
+[ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
+[ext_resource type="Script" uid="uid://pbsxs7ed7c8h" path="res://Scripts/Managers/beat_manager.gd" id="8_urine"]
+[ext_resource type="AudioStream" uid="uid://drcptrr3wmmra" path="res://Resources/Audio/metronome.wav" id="9_5vy51"]
+[ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="10_o2owy"]
+[ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
+[ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
+[ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
+[ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
+[ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
+[ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
+[ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
+[ext_resource type="Script" uid="uid://b8fkn5kfy3sd5" path="res://Scripts/Tutorial/tutorial.gd" id="28_ux43w"]
+[ext_resource type="Resource" uid="uid://bhm2jpomt47pe" path="res://Scripts/Tutorial/tutorial_steps.tres" id="29_n7cmr"]
+[ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="29_nwwfm"]
+[ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
+[ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="30_jut3y"]
+[ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
+[ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
+[ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="36_y86h7"]
+[ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
+[ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="43_kqrg6"]
+[ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
+[ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
+[ext_resource type="PackedScene" uid="uid://1drhlix6kj7f" path="res://Scenes/UI_Components/background.tscn" id="47_jut3y"]
+[ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
+[ext_resource type="Script" uid="uid://cbjnj08au0vy8" path="res://Scripts/Managers/VisibilityManager.gd" id="48_v2nl5"]
+[ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
+[ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
+[ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/Audio/audio_player_manager.gd" id="51_eqnci"]
+[ext_resource type="PackedScene" uid="uid://jsbttb3fa3uy" path="res://Scenes/UI_Components/email_prompt.tscn" id="52_1semv"]
+[ext_resource type="PackedScene" uid="uid://caqcrls6ynrlt" path="res://Scenes/UI_Components/count_down.tscn" id="52_6ml46"]
+[ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="52_ojylq"]
+[ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="53_fle1e"]
+[ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
+[ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
+[ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
+[ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
+[ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
+[ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
+[ext_resource type="AudioStream" uid="uid://dftnqqs3hjppb" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Closed_Tam.wav" id="59_0w4wg"]
+[ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="60_dllok"]
+[ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="61_0t4jf"]
+[ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
+[ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
+[ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
+[ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
+[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+
+[node name="scene" type="Node2D" unique_id=260053861]
+metadata/_edit_horizontal_guides_ = [-545.0]
+
+[node name="Camera" type="Camera2D" parent="." unique_id=980598397]
+scale = Vector2(4.12, 1)
+
+[node name="AudioListener" type="AudioListener2D" parent="Camera" unique_id=394841198]
+current = true
+
+[node name="Managers" type="Node" parent="." unique_id=205411252]
+
+[node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
+
+[node name="MicrophoneCapture" type="Node" parent="Managers/AudioManagers" unique_id=1923883284]
+script = ExtResource("49_102yd")
+
+[node name="AudioPlayerManager" type="Node" parent="Managers/AudioManagers" unique_id=904688926]
+script = ExtResource("51_eqnci")
+main_audio_files = Array[AudioStream]([ExtResource("52_ojylq"), ExtResource("53_fle1e"), ExtResource("54_r1tr8"), ExtResource("55_vlivj")])
+alt_audio_files = Array[AudioStream]([ExtResource("56_wt5iu"), ExtResource("57_pmnrr"), ExtResource("58_s8cid"), ExtResource("59_0w4wg")])
+metronome_sfx = ExtResource("9_5vy51")
+metronome_alt_sfx = ExtResource("60_dllok")
+achievement_sfx = ExtResource("61_0t4jf")
+note_player_settings = Array[ExtResource("14_s8vy0")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
+
+[node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
+script = ExtResource("62_daoo8")
+song_recording_progress_bar = NodePath("../../../UserInterface/SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
+recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/PointTop/ChaosButtonMic")
+waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
+
+[node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
+script = ExtResource("29_s8vy0")
+fallback_bank = ExtResource("19_s8vy0")
+
+[node name="ClapStomp" type="Node" parent="Managers/AudioManagers" unique_id=958670281]
+script = ExtResource("21_s8vy0")
+
+[node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
+script = ExtResource("7_b4mik")
+
+[node name="BeatManager" type="Node" parent="Managers" unique_id=540173422]
+script = ExtResource("8_urine")
+track_settings_registry = ExtResource("36_qax2n")
+
+[node name="TemplateManager" type="Node" parent="Managers" unique_id=1447662219]
+script = ExtResource("10_o2owy")
+
+[node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
+script = ExtResource("99_sslm1")
+
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
+script = ExtResource("65_87bhu")
+loading = NodePath("../../UserInterface/LoadingContainer")
+rec_button = NodePath("../../UserInterface/RecButton")
+metadata/_custom_type_script = "uid://c6xnic6xfnewu"
+
+[node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
+script = ExtResource("66_33qc4")
+player = NodePath("lastExportPlayer")
+metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
+
+[node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/Exporter/ListenToLastExport" unique_id=723625077]
+playback_type = 1
+
+[node name="PreviewExportsManager" type="Node2D" parent="Managers/Exporter" unique_id=1232035288]
+
+[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1270233026]
+
+[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1661558996]
+
+[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "instruction_label")]
+script = ExtResource("28_ux43w")
+tutorial_steps_resource = ExtResource("29_n7cmr")
+achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
+achievements_fx_sound = ExtResource("61_0t4jf")
+clap_stomp = NodePath("../AudioManagers/ClapStomp")
+instruction_label = NodePath("../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
+
+[node name="UserInterface" type="Control" parent="." unique_id=1163092724]
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="BeatRing" parent="UserInterface" unique_id=192422746 instance=ExtResource("45_owhal")]
+layout_mode = 1
+offset_left = -125.0
+offset_top = 1.0
+offset_right = -125.0
+offset_bottom = 1.0
+mouse_filter = 1
+
+[node name="PlayPauseButton" parent="UserInterface/BeatRing" index="0" unique_id=2061116021]
+shortcut = ExtResource("30_jut3y")
+
+[node name="PointLight2D" parent="UserInterface/BeatRing/Pointer" parent_id_path=PackedInt32Array(192422746, 57170616) index="0" unique_id=378491608]
+scale = Vector2(0.887, 0.887)
+texture = ExtResource("29_nwwfm")
+
+[node name="Waveform_visualisers" parent="UserInterface/BeatRing" index="5" unique_id=1117100626]
+track_settings = ExtResource("36_qax2n")
+
+[node name="BigLine0" parent="UserInterface/BeatRing/Waveform_visualisers" index="0" unique_id=866994840]
+points = PackedVector2Array(605, 60)
+
+[node name="TextureProgressBar0" parent="UserInterface/BeatRing/Waveform_visualisers" index="2" unique_id=1277010803]
+tint_progress = Color(1, 1, 1, 1)
+
+[node name="TextureProgressBar1" parent="UserInterface/BeatRing/Waveform_visualisers" index="3" unique_id=1981743700]
+tint_progress = Color(1, 1, 1, 1)
+
+[node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.0
+offset_left = 306.0
+offset_top = -341.0
+offset_right = 306.0
+offset_bottom = -341.0
+scale = Vector2(0.505, 0.505)
+
+[node name="ChaosButtonMic" parent="UserInterface/ChaosPad/ChaosPadTriangle/PointTop" parent_id_path=PackedInt32Array(2043765558, 400839598) index="0" unique_id=2002827164]
+focus_mode = 0
+script = ExtResource("36_y86h7")
+
+[node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
+layout_mode = 1
+offset_left = -593.00006
+offset_top = -342.0
+offset_right = -508.80414
+offset_bottom = 379.6797
+scale = Vector2(0.91453314, 0.91453314)
+
+[node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" parent_id_path=PackedInt32Array(2075389560, 154923035) index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
+song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
+
+[node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
+position = Vector2(406, 139)
+
+[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+visible = false
+script = null
+
+[node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -640.0
+offset_top = -356.0
+offset_right = 640.0
+offset_bottom = 364.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="RecButton" parent="UserInterface" unique_id=342405439 instance=ExtResource("38_s8vy0")]
+visible = false
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 100.0
+offset_bottom = 50.0
+
+[node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.49400002
+anchor_top = -0.48100004
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1.6799927
+offset_top = -8.679962
+offset_right = 6.0
+offset_bottom = 5.0
+
+[node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
+visible = false
+layout_mode = 1
+offset_left = -1278.0
+offset_top = -560.0
+offset_right = -6.0
+offset_bottom = -210.0
+
+[node name="CountDown" parent="UserInterface" unique_id=2019424404 instance=ExtResource("52_6ml46")]
+visible = false
+layout_mode = 1
+offset_left = -241.0
+offset_top = -529.0
+offset_right = -161.0
+offset_bottom = -449.0
+
+[node name="ConfirmationPrompt" parent="UserInterface" unique_id=111843129 instance=ExtResource("45_kqrg6")]
+visible = false
+layout_mode = 1
+offset_left = -974.0
+offset_top = -319.0
+offset_right = -526.0
+offset_bottom = -129.0
+
+[node name="SavingLabel" parent="UserInterface" unique_id=945421672 instance=ExtResource("54_qax2n")]
+visible = false
+layout_mode = 0
+offset_left = -187.0
+offset_top = -27.0
+offset_right = -32.0
+offset_bottom = 125.0
+
+[node name="ParticleSystems" type="Control" parent="UserInterface" unique_id=2112743489 node_paths=PackedStringArray("beat_particles", "pbar_particles", "achievement_particles")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 1
+mouse_behavior_recursive = 1
+script = ExtResource("14_xg142")
+beat_particles = NodePath("BeatParticleSystem")
+pbar_particles = NodePath("ProgressBarParticleSystem")
+achievement_particles = NodePath("AchievementsParticleSystem")
+
+[node name="BeatParticleSystem" type="CPUParticles2D" parent="UserInterface/ParticleSystems" unique_id=830678190]
+z_index = 2
+emitting = false
+amount = 128
+emission_shape = 2
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 90.0
+gravity = Vector2(0, 100)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+scale_amount_min = 8.0
+scale_amount_max = 12.0
+hue_variation_max = 0.55
+
+[node name="ProgressBarParticleSystem" type="CPUParticles2D" parent="UserInterface/ParticleSystems" unique_id=1250804351]
+z_index = 2
+position = Vector2(279, 337)
+rotation = 1.5708
+emitting = false
+amount = 800
+lifetime = 2.4
+emission_shape = 2
+emission_sphere_radius = 25.0
+direction = Vector2(0, 0)
+spread = 0.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+scale_amount_min = 8.0
+scale_amount_max = 12.0
+color = Color(0, 1, 0, 1)
+hue_variation_max = 0.55
+
+[node name="AchievementsParticleSystem" type="CPUParticles2D" parent="UserInterface/ParticleSystems" unique_id=354766483]
+z_index = 2
+position = Vector2(303, -332)
+emitting = false
+amount = 20
+texture = ExtResource("20_tvghb")
+lifetime = 2.0
+emission_shape = 2
+emission_sphere_radius = 16.0
+direction = Vector2(0, 0)
+spread = 90.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 67.42
+initial_velocity_max = 67.42
+angular_velocity_max = 8.8
+angle_min = 45.0
+angle_max = 90.0
+hue_variation_max = 0.55
+
+[node name="SwitchSectionButtons" parent="UserInterface" unique_id=1068760052 instance=ExtResource("49_v2nl5")]
+layout_mode = 1
+offset_left = -257.0
+offset_top = 57.0
+offset_right = -257.0
+offset_bottom = 57.0
+section_button_prefab = ExtResource("43_kqrg6")
+
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2103297005]
+visible = false
+offset_left = 2.0
+offset_top = -300.0
+offset_right = 292.0
+offset_bottom = -255.0
+alignment = 0
+
+[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=569761149]
+offset_left = -1002.0
+offset_top = -605.0
+offset_right = -554.0
+offset_bottom = -415.0
+
+[node name="BackGround" parent="UserInterface" unique_id=615418117 instance=ExtResource("47_jut3y")]
+layout_mode = 0
+mouse_filter = 1
+mouse_behavior_recursive = 1
+metadata/_edit_group_ = true
+metadata/_edit_lock_ = true
+
+[node name="SettingsButtonControl" parent="UserInterface" unique_id=641439858 instance=ExtResource("48_jut3y")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 561.0
+offset_top = 282.0
+offset_right = 561.0
+offset_bottom = 282.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="VisibilityManager" type="Node" parent="UserInterface" unique_id=1167792615 node_paths=PackedStringArray("beat_ring", "beat_pointer", "play_pause_button", "klappy_continue", "chaos_pad_triangle")]
+script = ExtResource("48_v2nl5")
+beat_ring = NodePath("../BeatRing")
+beat_pointer = NodePath("../BeatRing/Pointer")
+play_pause_button = NodePath("../BeatRing/PlayPauseButton")
+klappy_continue = NodePath("../Robot/AchievementsPanel/Continue")
+chaos_pad_triangle = NodePath("../ChaosPad/ChaosPadTriangle")
+
+[editable path="UserInterface/BeatRing"]
+[editable path="UserInterface/ChaosPad"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
+[editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/SongTrackSelectButton_6"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_0"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_1"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
+[editable path="UserInterface/Robot"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
+[editable path="UserInterface/Robot/AchievementsPanel"]
+[editable path="UserInterface/SwitchSectionButtons"]

@@ -1,4 +1,5 @@
 extends Node
+class_name ClapStompDetector
 
 const CLAP_TRACK: int = 0
 const STOMP_TRACK: int = 1

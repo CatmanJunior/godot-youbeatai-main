@@ -168,7 +168,7 @@ max_value = 1.0
 step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("2_bt3xi")
-tint_progress = Color(0.516666, 0, 1, 1)
+tint_progress = Color(1, 1, 0, 1)
 metadata/_edit_lock_ = true
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1981743700]
@@ -191,5 +191,5 @@ max_value = 1.0
 step = 0.01
 fill_mode = 4
 texture_progress = ExtResource("2_bt3xi")
-tint_progress = Color(1, 1, 0, 1)
+tint_progress = Color(0.5176471, 0, 1, 1)
 metadata/_edit_use_anchors_ = true

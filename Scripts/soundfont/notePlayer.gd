@@ -21,6 +21,7 @@ func apply_settings(settings: NotePlayerSettings) -> void:
 	instrument = settings.instrument
 
 func _ready():
+	setup()
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
 

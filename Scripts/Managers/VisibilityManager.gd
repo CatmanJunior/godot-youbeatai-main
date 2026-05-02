@@ -6,16 +6,16 @@ class_name VisibilityManager
 ## to show or hide the corresponding node. Each element maps 1-to-1 to an @export var below.
 
 enum UIElement {
-BEAT_RING,
-BEAT_POINTER,
-PLAY_PAUSE_BUTTON,
-KLAPPY_CONTINUE,
-CLAP_UI,
-STOMP_UI,
-SYNTH2_LAYER,
-MIC_RECORDER,
-CHAOS_PAD_TRIANGLE,
-ENTIRE_INTERFACE,
+	BEAT_RING,
+	BEAT_POINTER,
+	PLAY_PAUSE_BUTTON,
+	KLAPPY_CONTINUE,
+	CLAP_UI,
+	STOMP_UI,
+	SYNTH2_LAYER,
+	MIC_RECORDER,
+	CHAOS_PAD_TRIANGLE,
+	ENTIRE_INTERFACE,
 }
 
 @export var beat_ring: CanvasItem
@@ -35,24 +35,24 @@ ENTIRE_INTERFACE,
 var _element_map: Dictionary = {}
 
 func _ready() -> void:
-_element_map = {
-UIElement.BEAT_RING:          beat_ring,
-UIElement.BEAT_POINTER:       beat_pointer,
-UIElement.PLAY_PAUSE_BUTTON:  play_pause_button,
-UIElement.KLAPPY_CONTINUE:    klappy_continue,
-UIElement.CLAP_UI:            clap_ui,
-UIElement.STOMP_UI:           stomp_ui,
-UIElement.SYNTH2_LAYER:       synth2_layer,
-UIElement.MIC_RECORDER:       mic_recorder,
-UIElement.CHAOS_PAD_TRIANGLE: chaos_pad_triangle,
-}
-EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
+	_element_map = {
+		UIElement.BEAT_RING:          beat_ring,
+		UIElement.BEAT_POINTER:       beat_pointer,
+		UIElement.PLAY_PAUSE_BUTTON:  play_pause_button,
+		UIElement.KLAPPY_CONTINUE:    klappy_continue,
+		UIElement.CLAP_UI:            clap_ui,
+		UIElement.STOMP_UI:           stomp_ui,
+		UIElement.SYNTH2_LAYER:       synth2_layer,
+		UIElement.MIC_RECORDER:       mic_recorder,
+		UIElement.CHAOS_PAD_TRIANGLE: chaos_pad_triangle,
+	}
+	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
 
 func _on_ui_visibility_requested(element: int, vis: bool) -> void:
-if element == UIElement.ENTIRE_INTERFACE:
-for node: CanvasItem in entire_interface_nodes:
-node.visible = vis
-return
-var target: CanvasItem = _element_map.get(element, null)
-if target:
-target.visible = vis
+	if element == UIElement.ENTIRE_INTERFACE:
+		for node: CanvasItem in entire_interface_nodes:
+			node.visible = vis
+		return
+	var target: CanvasItem = _element_map.get(element, null)
+	if target:
+		target.visible = vis

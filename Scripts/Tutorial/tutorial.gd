@@ -278,9 +278,10 @@ func _build_maps() -> void:
 	_condition_map = _conditions.get_map()
 	_outcome_map = _outcomes.get_map()
 
-# Returns the condition callable mapped to the given enum value, falling back to _cond_never.
+# Returns the condition callable mapped to the given enum value.
+# Falls back to an invalid Callable(); callers guard with is_valid() before calling.
 func _get_condition_callable(c: TutorialStepData.TutorialCondition) -> Callable:
-	return _condition_map.get(c, _conditions._cond_never)
+	return _condition_map.get(c, Callable())
 
 # Returns the outcome callable mapped to the given enum value, falling back to an empty Callable.
 func _get_outcome_callable(o: TutorialStepData.TutorialOutcome) -> Callable:

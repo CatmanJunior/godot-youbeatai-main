@@ -107,11 +107,11 @@ func _cond_not_playing() -> bool:
 
 # Condition: the tutorial timer has counted down to zero.
 func _cond_timer_done() -> bool:
-	return _timer.time_left == 0
+	return _timer != null and _timer.time_left == 0
 
 # Condition: the tutorial timer is fully stopped (was never started or has completed).
 func _cond_timer_stopped() -> bool:
-	return _timer.is_stopped()
+	return _timer == null or _timer.is_stopped()
 
 # Condition: the kick (red) ring has at least the required number of active beats.
 func _cond_red_ring_filled() -> bool:
@@ -146,15 +146,13 @@ func _cond_update_orange_and_playing() -> bool:
 func _cond_clapped_enough() -> bool:
 	return clap_stomp.is_clapping and clap_stomp.clapped_on_beat_amount >= _FIXED_AMOUNT
 
-# Condition: the synth 2 track (index 5) is currently selected.
-func _cond_synth_2_select() -> bool:
-	# _return_player(uiManager.chaos_pad_ui.activate_synth2_chaos_button).play("Bear_pulse")
+# Condition: the bass ring track (index 5) is currently selected.
+func _cond_bass_ring_selected() -> bool:
 	return SongState.selected_track_index == 5
 
-# Condition: returns true when TTS is done. If the user already started recording on synth 2,
+# Condition: returns true when TTS is done. If the user already started recording on the bass ring,
 # awards achievement sfx and skips ahead 5 steps (fast-track through the recording instructions).
-func _cond_synth_2_record_or_tts() -> bool:
-	# _return_player(uiManager.synth2_layer_record_button.get_parent()).play("record_pulse")
+func _cond_bass_ring_record_or_tts_done() -> bool:
 	if SongState.selected_track_index == 5 and GameState.is_recording:
 		play_achievement_sfx()
 		tutorial_level += 4  # skip 4 steps here; _next_line adds 1 more = 5 total
@@ -162,8 +160,8 @@ func _cond_synth_2_record_or_tts() -> bool:
 		return true
 	return not DisplayServer.tts_is_speaking()
 
-# Condition: the synth 2 track is selected and recording is actively in progress.
-func _cond_synth_2_record_pressed() -> bool:
+# Condition: the bass ring track is selected and recording is actively in progress.
+func _cond_bass_ring_recording_active() -> bool:
 	return SongState.selected_track_index == 5 and GameState.is_recording
 
 # Condition: always returns false — used as a sentinel "never advance" condition.
@@ -284,13 +282,13 @@ func _outcome_clap_done() -> void:
 	EventBus.playing_change_requested.emit(false)
 	play_achievement_sfx()
 
-# Outcome: makes the synth 2 layer visible via the VisibilityManager.
-func _outcome_show_synth2_layer() -> void:
+# Outcome: makes the bass layer visible via the VisibilityManager.
+func _outcome_show_bass_layer() -> void:
 	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.SYNTH2_LAYER, true)
 
 # Outcome: shows the mic recorder, moves the chaos pad knob to the top position,
 # stops the chaos pad button animation, marks the step as allowed, and plays achievement sfx.
-func _outcome_synth2_bear() -> void:
+func _outcome_setup_bass_recorder() -> void:
 	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.MIC_RECORDER, true)
 	if chaos_pad_knob_top_position:
 		EventBus.chaos_pad_knob_position_set_requested.emit(chaos_pad_knob_top_position.global_position)
@@ -299,8 +297,8 @@ func _outcome_synth2_bear() -> void:
 	EventBus.chaos_pad_button_animation_stop_requested.emit()
 
 # Outcome: plays achievement sfx, switches to fast TTS speed, stops current speech,
-# and stops the record button animation when the user starts recording on synth 2.
-func _outcome_synth2_record_pressed() -> void:
+# and stops the record button animation when the user starts recording on the bass ring.
+func _outcome_on_bass_recording_started() -> void:
 	play_achievement_sfx()
 	_increased_speed = true
 	DisplayServer.tts_stop()
@@ -422,7 +420,7 @@ func reset() -> void:
 func try_activate_tutorial() -> void:
 	if GameState.use_tutorial:
 		print("tutorial activated")
-		GameState.tutorialActivated = true
+	GameState.tutorial_activated = true
 		EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
 		EventBus.bpm_set_requested.emit(60)
 		EventBus.continue_button_pressed.connect(_tutorial_continue)
@@ -478,6 +476,8 @@ func _timer_setup() -> void:
 
 # Returns the number of active (filled) beats in the given ring of the current section.
 func _active_beats_per_ring(index_ring: int) -> int:
+	if SongState.current_section == null:
+		return 0
 	var amount: int = 0
 	for beat in range(SongState.total_beats):
 		if SongState.current_section.get_beat(index_ring, beat):
@@ -506,7 +506,6 @@ func _tutorial_continue() -> void:
 
 # Advances the tutorial when the knob Area2D is entered by another Area2D body.
 func _body_continue(body: Area2D) -> void:
-	print("body continue " + str(body))
 	if body == knob_area:
 		_next_line()
 
@@ -514,7 +513,6 @@ func _body_continue(body: Area2D) -> void:
 # Fires the current outcome callable, increments the step index, speaks the next instruction,
 # and refreshes the active condition and outcome callables for the new step.
 func _next_line() -> void:
-	print(SongState.bpm)
 	if _outcome.is_valid():
 		_outcome.call()
 	if tutorial_level >= tutorial_steps.size():
@@ -560,7 +558,7 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 		return
 
 	var text: String = tutorial_steps[instruction_index].instruction
-	var clean_text: String = TTSHelper.Text_without_emoticons(text)
+	var clean_text: String = TTSHelper.text_without_emoticons(text)
 
 	if _increased_speed:
 		TTSHelper.speak(clean_text, 2.5)
@@ -610,9 +608,9 @@ func _build_maps() -> void:
 		C.BEAT_REMOVED: _cond_circle_removed,
 		C.CLAP_COUNT_SNAPPED_AND_PLAYING: _cond_update_orange_and_playing,
 		C.CLAPPED_ENOUGH: _cond_clapped_enough,
-		C.BASS_TRACK_SELECTED: _cond_synth_2_select,
-		C.BASS_RECORDING_OR_TTS_DONE: _cond_synth_2_record_or_tts,
-		C.BASS_RECORDING_ACTIVE: _cond_synth_2_record_pressed,
+		C.BASS_TRACK_SELECTED: _cond_bass_ring_selected,
+		C.BASS_RECORDING_OR_TTS_DONE: _cond_bass_ring_record_or_tts_done,
+		C.BASS_RECORDING_ACTIVE: _cond_bass_ring_recording_active,
 		C.ALWAYS: _cond_voice_over_finished,
 		C.TTS_DONE_AFTER_KNOB: _cond_save_knob_and_tts,
 		C.NEVER: _cond_false,
@@ -637,9 +635,9 @@ func _build_maps() -> void:
 		O.START_LISTEN_AGAIN_TIMER: _outcome_listen_again,
 		O.BEGIN_CLAP_COUNT: _outcome_clap_count_setup,
 		O.END_CLAP_PHASE: _outcome_clap_done,
-		O.SHOW_BASS_LAYER: _outcome_show_synth2_layer,
-		O.SETUP_BASS_RECORDER: _outcome_synth2_bear,
-		O.ON_BASS_RECORDING_STARTED: _outcome_synth2_record_pressed,
+		O.SHOW_BASS_LAYER: _outcome_show_bass_layer,
+		O.SETUP_BASS_RECORDER: _outcome_setup_bass_recorder,
+		O.ON_BASS_RECORDING_STARTED: _outcome_on_bass_recording_started,
 		O.END_FAST_TTS_AND_WAIT: _outcome_voice_over_done,
 		O.SHOW_CHAOS_TRIANGLE: _outcome_show_triangle,
 		O.SHOW_CHAOSPAD_STAR: _outcome_show_chaospad_area,

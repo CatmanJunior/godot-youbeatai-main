@@ -205,10 +205,6 @@ signal track_sprites_visibility_requested(track: int, visible: bool)
 ## Emitted to request setting the visibility of the clap/stomp interaction UI.
 signal continue_button_pressed()
 
-# ── Tutorial Beat Control ──
-## Emitted to request forcing a specific beat slot to be active/free, used by tutorial.
-signal beat_set_free_requested(track: int, beat: int, free: bool)
-
 # ── Tutorial Chaos Pad ──
 ## Emitted to request snapping the chaos pad knob to the given world position.
 signal chaos_pad_knob_position_set_requested(position: Vector2)

@@ -2,19 +2,20 @@ extends Node
 class_name VisibilityManager
 
 ## Handles all UI element visibility changes via EventBus.
-## Connect ui_visibility_requested(element, visible) from any system to show/hide elements.
+## Emit [signal EventBus.ui_visibility_requested] with a [enum UIElement] value and a bool
+## to show or hide the corresponding node. Each element maps 1-to-1 to an @export var below.
 
 enum UIElement {
-	BEAT_RING,
-	BEAT_POINTER,
-	PLAY_PAUSE_BUTTON,
-	KLAPPY_CONTINUE,
-	CLAP_UI,
-	STOMP_UI,
-	SYNTH2_LAYER,
-	MIC_RECORDER,
-	CHAOS_PAD_TRIANGLE,
-	ENTIRE_INTERFACE,
+BEAT_RING,
+BEAT_POINTER,
+PLAY_PAUSE_BUTTON,
+KLAPPY_CONTINUE,
+CLAP_UI,
+STOMP_UI,
+SYNTH2_LAYER,
+MIC_RECORDER,
+CHAOS_PAD_TRIANGLE,
+ENTIRE_INTERFACE,
 }
 
 @export var beat_ring: CanvasItem
@@ -30,38 +31,28 @@ enum UIElement {
 ## All nodes shown/hidden together when ENTIRE_INTERFACE is toggled.
 @export var entire_interface_nodes: Array[CanvasItem] = []
 
-func _ready() -> void:
-	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
+## Maps each UIElement enum value to its CanvasItem target.
+var _element_map: Dictionary = {}
 
-func _on_ui_visibility_requested(element: int, visible: bool) -> void:
-	match element:
-		UIElement.BEAT_RING:
-			if beat_ring:
-				beat_ring.visible = visible
-		UIElement.BEAT_POINTER:
-			if beat_pointer:
-				beat_pointer.visible = visible
-		UIElement.PLAY_PAUSE_BUTTON:
-			if play_pause_button:
-				play_pause_button.visible = visible
-		UIElement.KLAPPY_CONTINUE:
-			if klappy_continue:
-				klappy_continue.visible = visible
-		UIElement.CLAP_UI:
-			if clap_ui:
-				clap_ui.visible = visible
-		UIElement.STOMP_UI:
-			if stomp_ui:
-				stomp_ui.visible = visible
-		UIElement.SYNTH2_LAYER:
-			if synth2_layer:
-				synth2_layer.visible = visible
-		UIElement.MIC_RECORDER:
-			if mic_recorder:
-				mic_recorder.visible = visible
-		UIElement.CHAOS_PAD_TRIANGLE:
-			if chaos_pad_triangle:
-				chaos_pad_triangle.visible = visible
-		UIElement.ENTIRE_INTERFACE:
-			for node: CanvasItem in entire_interface_nodes:
-				node.visible = visible
+func _ready() -> void:
+_element_map = {
+UIElement.BEAT_RING:          beat_ring,
+UIElement.BEAT_POINTER:       beat_pointer,
+UIElement.PLAY_PAUSE_BUTTON:  play_pause_button,
+UIElement.KLAPPY_CONTINUE:    klappy_continue,
+UIElement.CLAP_UI:            clap_ui,
+UIElement.STOMP_UI:           stomp_ui,
+UIElement.SYNTH2_LAYER:       synth2_layer,
+UIElement.MIC_RECORDER:       mic_recorder,
+UIElement.CHAOS_PAD_TRIANGLE: chaos_pad_triangle,
+}
+EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
+
+func _on_ui_visibility_requested(element: int, vis: bool) -> void:
+if element == UIElement.ENTIRE_INTERFACE:
+for node: CanvasItem in entire_interface_nodes:
+node.visible = vis
+return
+var target: CanvasItem = _element_map.get(element, null)
+if target:
+target.visible = vis

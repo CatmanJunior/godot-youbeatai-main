@@ -30,7 +30,6 @@ func _ready() -> void:
 	EventBus.beat_state_changed.connect(_set_beat_active)
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.track_sprites_visibility_requested.connect(_set_track_sprites_visible)
-	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
 	play_pause_button.pressed.connect(_on_play_pause_button_toggled)
 
 func _process(_delta: float) -> void:
@@ -188,10 +187,3 @@ func _set_track_sprites_visible(track: int, visible: bool) -> void:
 		var sprite: BeatButton = _get_beat_button(track, beat)
 		if sprite:
 			sprite.visible = visible
-
-func _on_ui_visibility_requested(element: int, visible: bool) -> void:
-	match element:
-		VisibilityManager.UIElement.BEAT_POINTER:
-			pointer.visible = visible
-		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
-			play_pause_button.visible = visible

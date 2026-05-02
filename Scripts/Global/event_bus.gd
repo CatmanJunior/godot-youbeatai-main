@@ -55,6 +55,10 @@ signal template_set_requested(template_index: int)
 
 # ── Beat Interaction ──
 signal clap_stomp_detected(interaction_type: int)
+## Emitted when a clap is detected on (or near) a beat.
+signal clap_on_beat_detected()
+## Emitted when a stomp is detected on (or near) a beat.
+signal stomp_on_beat_detected()
 
 # ── Sections ──
 ## Emitted to request adding a new section with the given emoji label.

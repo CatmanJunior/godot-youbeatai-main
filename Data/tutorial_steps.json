@@ -111,17 +111,17 @@
   },
   {
     "instruction": "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen",
-    "condition": "_cond_green_bear",
+    "condition": "_cond_synth_2_select",
     "outcome": "_outcome_green_bear"
   },
   {
     "instruction": "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!",
-    "condition": "_cond_green_record_or_tts",
+    "condition": "_cond_synth_2_record_or_tts",
     "outcome": null
   },
   {
     "instruction": "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0",
-    "condition": "_cond_green_record_pressed",
+    "condition": "_cond_synth_2_record_pressed",
     "outcome": "_outcome_green_record_pressed"
   },
   {
@@ -161,7 +161,7 @@
   },
   {
     "instruction": "Laten we je sample veranderen!",
-    "condition": "_cond_save_knob_and_tts",
+    "condition": "_cond_tts_done",
     "outcome": "_outcome_show_triangle"
   },
   {

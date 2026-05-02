@@ -60,6 +60,7 @@ func _ready():
 
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(_set_beat)
+	EventBus.beat_set_free_requested.connect(_set_beat)
 	EventBus.template_set.connect(_on_template_set)
 
 func _on_template_set(actives: Array) -> void:

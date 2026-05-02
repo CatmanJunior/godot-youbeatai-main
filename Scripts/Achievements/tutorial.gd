@@ -67,7 +67,7 @@ func _ready():
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
 
 func _on_skip_tutorial_requested():
-	GameState.use_tutorial = false
+	use_tutorial = false
 	achievements_panel.visible = false
 	if DisplayServer.tts_is_speaking():
 		DisplayServer.tts_stop()
@@ -95,7 +95,7 @@ func _on_has_clapped_or_stomped(interaction_type: int) -> void:
 # ── Condition callbacks ──────────────────────────────────────────────
 
 func _cond_clapped() -> bool:
-	return clap_stomp.is_clapping
+	return clap_stomp != null and clap_stomp.is_clapping
 
 func _cond_tts_done() -> bool:
 	return not DisplayServer.tts_is_speaking()
@@ -120,7 +120,7 @@ func _cond_update_red_and_playing() -> bool:
 	return GameState.playing
 
 func _cond_stomped_enough() -> bool:
-	return clap_stomp.is_stamping and clap_stomp.stomped_on_beat_amount >= _FIXED_AMOUNT
+	return clap_stomp != null and clap_stomp.is_stamping and clap_stomp.stomped_on_beat_amount >= _FIXED_AMOUNT
 
 func _cond_orange_ring_filled() -> bool:
 	return _active_beats_per_ring(_INDEX_ORANGE_RING) >= _beats_active_orange_ring
@@ -134,20 +134,16 @@ func _cond_update_orange_and_playing() -> bool:
 	return GameState.playing
 
 func _cond_clapped_enough() -> bool:
-	return clap_stomp.is_clapping and clap_stomp.clapped_on_beat_amount >= _FIXED_AMOUNT
+	return clap_stomp != null and clap_stomp.is_clapping and clap_stomp.clapped_on_beat_amount >= _FIXED_AMOUNT
 
 func _cond_synth_2_select() -> bool:
-	# _return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).play("Bear_pulse")
 	return SongState.selected_track_index == 5
 
 func _cond_synth_2_record_or_tts() -> bool:
-	# _return_player(uiManager.green_layer_record_button.get_parent()).play("record_pulse")
 	if SongState.selected_track_index == 5 and GameState.is_recording:
-
 		play_achievement_sfx()
 		tutorial_level += 5
 		DisplayServer.tts_stop()
-		# _return_player(uiManager.green_layer_record_button.get_parent()).stop()
 		return true
 	return not DisplayServer.tts_is_speaking()
 
@@ -158,11 +154,9 @@ func _cond_false() -> bool:
 	return false
 
 func _cond_voice_over_finished() -> bool:
-	#TODO find out what is checked here
 	return true
 
 func _cond_save_knob_and_tts() -> bool:
-	#TODO this can be removed because knob is always saved
 	return not DisplayServer.tts_is_speaking()
 
 
@@ -477,14 +471,14 @@ func _return_player(parent: Node) -> AnimationPlayer:
 
 
 func _correct_stomp_play_sfx() -> void:
-	if _stomping:
+	if _stomping and clap_stomp != null:
 		if clap_stomp.stomped_on_beat_amount > _previous_stomp:
 			play_achievement_sfx()
 			_previous_stomp = clap_stomp.stomped_on_beat_amount
 
 
 func _correct_clap_play_sfx() -> void:
-	if _clapping:
+	if _clapping and clap_stomp != null:
 		if clap_stomp.clapped_on_beat_amount > _previous_clap:
 			play_achievement_sfx()
 			_previous_clap = clap_stomp.clapped_on_beat_amount
@@ -532,26 +526,26 @@ func _load_tutorial_steps_from_json() -> Array:
 		return []
 	var raw: String = file.get_as_text()
 	file.close()
-	var parse_result: Variant = JSON.parse_string(raw)
-	if parse_result.error != OK or typeof(parse_result.result) != TYPE_ARRAY:
-		push_warning("Tutorial steps JSON is invalid: %s" % str(parse_result.error))
+	var parsed: Variant = JSON.parse_string(raw)
+	if parsed == null or typeof(parsed) != TYPE_ARRAY:
+		push_warning("Tutorial steps JSON is invalid or not an array")
 		return []
 	var steps: Array = []
-	for entry in parse_result.result:
+	for entry in parsed:
 		if entry is Dictionary:
 			steps.append({
 				"instruction": entry.get("instruction", ""),
-				"condition": _resolve_step_callable(entry.get("condition", ""), "_cond_false"),
-				"outcome": _resolve_step_callable(entry.get("outcome", ""), "_outcome_noop"),
+				"condition": _resolve_step_callable(entry.get("condition"), "_cond_false"),
+				"outcome": _resolve_step_callable(entry.get("outcome"), "_outcome_noop"),
 			})
 	return steps
 
-func _resolve_step_callable(stepName: String, fallback: String) -> Callable:
-	var method_name: String = stepName.strip_edges()
+func _resolve_step_callable(step_name: Variant, fallback: String) -> Callable:
+	var method_name: String = "" if step_name == null else str(step_name).strip_edges()
 	if method_name == "":
 		method_name = fallback
 	if has_method(method_name):
-		return Callable(self , method_name)
+		return Callable(self, method_name)
 	if method_name != fallback and has_method(fallback):
-		return Callable(self , fallback)
+		return Callable(self, fallback)
 	return Callable()

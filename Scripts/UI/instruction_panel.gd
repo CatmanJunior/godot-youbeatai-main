@@ -11,7 +11,7 @@ func _ready() -> void:
 	skip_tutorial_button.pressed.connect(_on_skip_tutorial_pressed)
 
 func _on_continue_pressed() -> void:
-	EventBus.instruction_panel_continue_pressed.emit()
+	EventBus.continue_button_pressed.emit()
 
 func _on_skip_tutorial_pressed() -> void:
-	EventBus.instruction_panel_skip_tutorial_pressed.emit()
+	EventBus.skip_tutorial_requested.emit()

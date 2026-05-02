@@ -20,7 +20,7 @@ extends Node
 @export var continue_button: BaseButton
 @export var mute_speech_button: BaseButton
 
-# ── Constants ─────────────────────────────────────────────────────────────────
+# ── Constants ─────────────────────────────────────────────
 
 ## Track indices for the two main beat rings.
 const INDEX_RED_RING: int = 0
@@ -35,7 +35,7 @@ const CLAP_PRESET_BEAT_INDICES: Array[int] = [4, 12]     # right, left
 ## Number of on-beat claps/stomps required to complete the interaction phase.
 const REQUIRED_ON_BEAT_COUNT: int = 5
 
-# ── Tutorial state ────────────────────────────────────────────────────────────
+# ── Tutorial state ────────────────────────────────────────────
 
 var tutorial_level: int = 0
 var tutorial_activated: bool = false
@@ -65,223 +65,223 @@ var _outcome_map: Dictionary = {}
 var _conditions: TutorialConditions
 var _outcomes: TutorialOutcomes
 
-# ── Godot lifecycle ───────────────────────────────────────────────────────────
+# ── Godot lifecycle ───────────────────────────────────────────
 
 # Resets per-frame clap/stomp flags each tick so they are only true during the frame the interaction was detected.
 func _process(_delta: float) -> void:
-_clapping = false
-_stomping = false
+	_clapping = false
+	_stomping = false
 
 # Creates sub-nodes, builds the condition/outcome dispatch maps, and subscribes to EventBus signals.
 func _ready() -> void:
-_conditions = TutorialConditions.new()
-_conditions.tutorial = self
-add_child(_conditions)
+	_conditions = TutorialConditions.new()
+	_conditions.tutorial = self
+	add_child(_conditions)
 
-_outcomes = TutorialOutcomes.new()
-_outcomes.tutorial = self
-add_child(_outcomes)
+	_outcomes = TutorialOutcomes.new()
+	_outcomes.tutorial = self
+	add_child(_outcomes)
 
-_build_maps()
-EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
-EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
+	_build_maps()
+	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
+	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
 
-# ── EventBus handlers ─────────────────────────────────────────────────────────
+# ── EventBus handlers ───────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # Disables the tutorial immediately, hides the achievements panel, and stops any active TTS speech.
 func _on_skip_tutorial_requested() -> void:
-GameState.use_tutorial = false
-achievements_panel.visible = false
-if DisplayServer.tts_is_speaking():
-DisplayServer.tts_stop()
+	GameState.use_tutorial = false
+	achievements_panel.visible = false
+	if DisplayServer.tts_is_speaking():
+		DisplayServer.tts_stop()
 
 # Updates the per-frame clapping/stomping state flags when ClapStompDetector emits an interaction.
 func _on_has_clapped_or_stomped(interaction_type: int) -> void:
-if interaction_type == 0: # InteractionType.CLAP
-_clapping = true
-_stomping = false
-else:
-_clapping = false
-_stomping = true
+	if interaction_type == 0: # InteractionType.CLAP
+		_clapping = true
+		_stomping = false
+	else:
+		_clapping = false
+		_stomping = true
 
-# ── Public API ────────────────────────────────────────────────────────────────
+# ── Public API ────────────────────────────────────────────────────────────────────────────────────────────
 
 # Requests playback of the achievement sound effect through the EventBus.
 func play_achievement_sfx() -> void:
-EventBus.play_sfx_requested.emit(achievements_fx_sound)
+	EventBus.play_sfx_requested.emit(achievements_fx_sound)
 
 # Resets all tutorial state variables to their initial values.
 # Call this before re-running the tutorial from the beginning.
 func reset() -> void:
-tutorial_level = 0
-tutorial_activated = false
-if _timer:
-_timer.queue_free()
-_timer = null
-_beats_active_red_ring = 5
-_beats_active_orange_ring = 4
-_instruction = ""
-_condition = Callable()
-_outcome = Callable()
-_active = false
-_previous_clap = -1
-_previous_stomp = -1
-_stomping = false
-_clapping = false
-_in_stomp_phase = false
-_in_clap_phase = false
-_text_allowed = true
-_increased_speed = false
-_first_tts_done = false
+	tutorial_level = 0
+	tutorial_activated = false
+	if _timer:
+		_timer.queue_free()
+		_timer = null
+	_beats_active_red_ring = 5
+	_beats_active_orange_ring = 4
+	_instruction = ""
+	_condition = Callable()
+	_outcome = Callable()
+	_active = false
+	_previous_clap = -1
+	_previous_stomp = -1
+	_stomping = false
+	_clapping = false
+	_in_stomp_phase = false
+	_in_clap_phase = false
+	_text_allowed = true
+	_increased_speed = false
+	_first_tts_done = false
 
 # Activates the tutorial if GameState.use_tutorial is set.
 # Sets the BPM to 60, hides the beat pointer, wires up continue and instrument buttons.
 func try_activate_tutorial() -> void:
-if GameState.use_tutorial:
-GameState.tutorial_activated = true
-EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
-EventBus.bpm_set_requested.emit(60)
-EventBus.continue_button_pressed.connect(_tutorial_continue)
-if klappy_continue_button:
-klappy_continue_button.pressed.connect(_klappy_continue)
-if instrument_clap_button:
-instrument_clap_button.pressed.connect(func(): EventBus.clap_stomp_detected.emit(0))
-if instrument_stomp_button:
-instrument_stomp_button.pressed.connect(func(): EventBus.clap_stomp_detected.emit(1))
+	if GameState.use_tutorial:
+		GameState.tutorial_activated = true
+		EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
+		EventBus.bpm_set_requested.emit(60)
+		EventBus.continue_button_pressed.connect(_tutorial_continue)
+		if klappy_continue_button:
+			klappy_continue_button.pressed.connect(_klappy_continue)
+		if instrument_clap_button:
+			instrument_clap_button.pressed.connect(func(): EventBus.clap_stomp_detected.emit(0))
+		if instrument_stomp_button:
+			instrument_stomp_button.pressed.connect(func(): EventBus.clap_stomp_detected.emit(1))
 
 # Creates the tutorial timer and loads the ordered list of steps from the assigned resource.
 # Must be called before update_tutorial() is first ticked.
 func setup_tutorial() -> void:
-_timer_setup()
-if tutorial_steps_resource:
-tutorial_steps = tutorial_steps_resource.steps
-else:
-push_error("tutorial_steps_resource is not assigned on Tutorial node")
+	_timer_setup()
+	if tutorial_steps_resource:
+		tutorial_steps = tutorial_steps_resource.steps
+	else:
+		push_error("tutorial_steps_resource is not assigned on Tutorial node")
 
 # Per-frame update: triggers the first TTS on the initial frame, fires per-beat sfx feedback
 # for stomp/clap phases, and checks the current condition callable to advance the tutorial.
 func update_tutorial() -> void:
-_button_state()
+	_button_state()
 
-if not _first_tts_done and GameState.use_tutorial:
-_speak_tutorial_instruction(tutorial_level)
-_first_tts_done = true
+	if not _first_tts_done and GameState.use_tutorial:
+		_speak_tutorial_instruction(tutorial_level)
+		_first_tts_done = true
 
-_update_interaction_sfx()
+	_update_interaction_sfx()
 
-if tutorial_level != -1 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
-_update_lists()
-if _condition.is_valid() and _condition.call():
-_next_line()
+	if tutorial_level != -1 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
+		_update_lists()
+		if _condition.is_valid() and _condition.call():
+			_next_line()
 
-# ── Private helpers ───────────────────────────────────────────────────────────
+# ── Private helpers ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
 # Creates a one-shot Timer (3 s default) and adds it as a child of the achievements panel.
 func _timer_setup() -> void:
-if _timer == null:
-_timer = Timer.new()
-_timer.wait_time = 3
-_timer.one_shot = true
-achievements_panel.add_child(_timer)
+	if _timer == null:
+		_timer = Timer.new()
+		_timer.wait_time = 3
+		_timer.one_shot = true
+		achievements_panel.add_child(_timer)
 
 # Returns the number of active (filled) beats in the given ring of the current section.
 func _active_beats_per_ring(index_ring: int) -> int:
-if SongState.current_section == null:
-return 0
-var amount: int = 0
-for beat: int in range(SongState.total_beats):
-if SongState.current_section.get_beat(index_ring, beat):
-amount += 1
-return amount
+	if SongState.current_section == null:
+		return 0
+	var amount: int = 0
+	for beat: int in range(SongState.total_beats):
+		if SongState.current_section.get_beat(index_ring, beat):
+			amount += 1
+	return amount
 
 # Shows or hides the main continue button depending on whether the current step allows it.
 func _button_state() -> void:
-if continue_button:
-continue_button.visible = _active
+	if continue_button:
+		continue_button.visible = _active
 
 # Advances the tutorial when the main continue button is pressed,
 # but only if the current step has set _active = true.
 func _tutorial_continue() -> void:
-if not _active:
-return
-_next_line()
+	if not _active:
+		return
+	_next_line()
 
 # Advances the tutorial when the Klappy robot's continue button is pressed.
 func _klappy_continue() -> void:
-_next_line()
+	_next_line()
 
 # Advances the tutorial when the knob Area2D is entered by another Area2D body.
 func _body_continue(body: Area2D) -> void:
-if body == knob_area:
-_next_line()
+	if body == knob_area:
+		_next_line()
 
 # Fires the current outcome callable, increments the step index, speaks the next instruction,
 # and refreshes the active condition and outcome callables for the new step.
 func _next_line() -> void:
-if _outcome.is_valid():
-_outcome.call()
-if tutorial_level >= tutorial_steps.size():
-return
-tutorial_level += 1
-_speak_tutorial_instruction(tutorial_level)
-_update_lists()
+	if _outcome.is_valid():
+		_outcome.call()
+	if tutorial_level >= tutorial_steps.size():
+		return
+	tutorial_level += 1
+	_speak_tutorial_instruction(tutorial_level)
+	_update_lists()
 
 # Plays achievement sfx once each time a new on-beat stomp or clap is registered during its phase.
 func _update_interaction_sfx() -> void:
-if _in_stomp_phase and _stomping and clap_stomp.stomped_on_beat_amount > _previous_stomp:
-play_achievement_sfx()
-_previous_stomp = clap_stomp.stomped_on_beat_amount
-if _in_clap_phase and _clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
-play_achievement_sfx()
-_previous_clap = clap_stomp.clapped_on_beat_amount
+	if _in_stomp_phase and _stomping and clap_stomp.stomped_on_beat_amount > _previous_stomp:
+		play_achievement_sfx()
+		_previous_stomp = clap_stomp.stomped_on_beat_amount
+	if _in_clap_phase and _clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
+		play_achievement_sfx()
+		_previous_clap = clap_stomp.clapped_on_beat_amount
 
 # Speaks the instruction text for the given step index via TTS.
 # Strips emoticons from the text and uses a faster rate if _increased_speed is set.
 # Does nothing if TTS text is suppressed, speech is muted, or the index is out of bounds.
 func _speak_tutorial_instruction(instruction_index: int) -> void:
-if not _text_allowed:
-return
-if mute_speech_button and mute_speech_button.button_pressed:
-return
-if instruction_index < 0 or instruction_index >= tutorial_steps.size():
-return
-var text: String = tutorial_steps[instruction_index].instruction
-var clean_text: String = TTSHelper.text_without_emoticons(text)
-if _increased_speed:
-TTSHelper.speak(clean_text, 2.5)
-else:
-TTSHelper.speak(clean_text)
+	if not _text_allowed:
+		return
+	if mute_speech_button and mute_speech_button.button_pressed:
+		return
+	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
+		return
+	var text: String = tutorial_steps[instruction_index].instruction
+	var clean_text: String = TTSHelper.text_without_emoticons(text)
+	if _increased_speed:
+		TTSHelper.speak(clean_text, 2.5)
+	else:
+		TTSHelper.speak(clean_text)
 
 # Suppresses TTS text output if the song is currently playing, so instructions don't
 # overlap with music. Returns true if playback is active, false otherwise.
 func _skip_play() -> bool:
-if GameState.playing:
-_text_allowed = false
-return true
-return false
+	if GameState.playing:
+		_text_allowed = false
+		return true
+	return false
 
 # Reads the current step data and refreshes the instruction text label,
 # condition callable, and outcome callable from the step's enum values.
 func _update_lists() -> void:
-if tutorial_level >= 0 and tutorial_level < tutorial_steps.size():
-var current_step: TutorialStepData = tutorial_steps[tutorial_level]
-_instruction = current_step.instruction
-_condition = _get_condition_callable(current_step.condition)
-_outcome = _get_outcome_callable(current_step.outcome)
-if instruction_label:
-instruction_label.text = _instruction
+	if tutorial_level >= 0 and tutorial_level < tutorial_steps.size():
+		var current_step: TutorialStepData = tutorial_steps[tutorial_level]
+		_instruction = current_step.instruction
+		_condition = _get_condition_callable(current_step.condition)
+		_outcome = _get_outcome_callable(current_step.outcome)
+		if instruction_label:
+			instruction_label.text = _instruction
 
-# ── Enum dispatch ─────────────────────────────────────────────────────────────
+# ── Enum dispatch ──────────────────────────────────────────────────────────────────────────────────────────────────
 
 # Populates the condition and outcome dispatch dictionaries from the sub-node maps.
 func _build_maps() -> void:
-_condition_map = _conditions.get_map()
-_outcome_map = _outcomes.get_map()
+	_condition_map = _conditions.get_map()
+	_outcome_map = _outcomes.get_map()
 
 # Returns the condition callable mapped to the given enum value, falling back to _cond_never.
 func _get_condition_callable(c: TutorialStepData.TutorialCondition) -> Callable:
-return _condition_map.get(c, _conditions._cond_never)
+	return _condition_map.get(c, _conditions._cond_never)
 
 # Returns the outcome callable mapped to the given enum value, falling back to an empty Callable.
 func _get_outcome_callable(o: TutorialStepData.TutorialOutcome) -> Callable:
-return _outcome_map.get(o, Callable())
+	return _outcome_map.get(o, Callable())

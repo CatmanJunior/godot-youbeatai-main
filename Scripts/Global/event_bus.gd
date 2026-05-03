@@ -179,6 +179,10 @@ signal skip_tutorial_requested()
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.
 signal utterance_ended(utterance_id: int)
 
+signal utterance_started(utterance_id: int)
+
+signal utterance_content_changed(text: String)
+
 # ── Countdown ──
 ## Emitted to request showing the countdown overlay.
 signal countdown_show_requested()

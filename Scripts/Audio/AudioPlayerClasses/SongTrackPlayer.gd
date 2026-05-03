@@ -82,12 +82,11 @@ func _on_beat_triggered(_beat: int) -> void:
 	if _beat != 1:
 		return
 
+	EventBus.section_next_requested.emit()
+
 	if SongState.current_section_index == 0 and not _is_playing:
 		play()
 		return
-
-	EventBus.section_next_requested.emit()
-
 
 ## Song track is NOT per-section — ignore section switches for stream loading.
 ## (The voice_over lives on SongState.song_track, not on sections.)

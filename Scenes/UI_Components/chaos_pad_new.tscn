@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c8b73gewaboxn" path="res://Resources/Textures_New/KAOS_w.png" id="2_7ufgw"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="2_a3b2x"]
 [ext_resource type="PackedScene" uid="uid://c2pg35cd8uvsv" path="res://Scenes/UI_Components/chaos_icon.tscn" id="3_ajioc"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="3_vhj50"]
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
 [ext_resource type="Script" uid="uid://bi23kcj8rmhbw" path="res://Scripts/Trail.gd" id="12_f0ro3"]
@@ -61,6 +62,12 @@ track_settings = ExtResource("2_a3b2x")
 main_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconMain/ChaosIconBack")
 alt_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconAlt/ChaosIconBack")
 
+[node name="VisibilitySetter" type="Control" parent="." unique_id=863757447 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("3_vhj50")
+ui_element = 8
+ui_reference = NodePath("..")
+
 [node name="MicLight" type="PointLight2D" parent="." unique_id=1165301474]
 position = Vector2(255, 401.99997)
 scale = Vector2(0.833333, 0.833333)
@@ -77,6 +84,12 @@ offset_bottom = 505.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("25_gu6ag")
 corners = [NodePath("PointLeft"), NodePath("PointRight"), NodePath("PointTop")]
+
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle" unique_id=631358537 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("3_vhj50")
+ui_element = 9
+ui_reference = NodePath("..")
 
 [node name="TriangleSprite" type="TextureRect" parent="ChaosPadTriangle" unique_id=2129523945]
 layout_mode = 1

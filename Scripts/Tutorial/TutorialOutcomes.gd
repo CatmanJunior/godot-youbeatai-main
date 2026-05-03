@@ -18,7 +18,7 @@ func get_map() -> Dictionary:
 		O.START_SHORT_TIMER:       _start_timer.bind(2.0),
 		O.BEGIN_STOMP_PHASE:       _outcome_stomp_setup,
 		O.END_STOMP_PHASE:         _outcome_stomp_done,
-		O.SHOW_CLAP_RING:          EventBus.track_sprites_visibility_requested.emit.bind(Tutorial.INDEX_ORANGE_RING, true),
+		O.SHOW_CLAP_RING:          EventBus.track_sprites_visibility_requested.emit.bind(Tutorial.INDEX_CLAP_TRACK, true),
 		O.PLACE_CLAP_BEATS:        _outcome_clap_ring_setup,
 		O.START_CLAP_LISTEN_TIMER: _outcome_clap_listen,
 		O.STOP_PLAYBACK:           EventBus.playing_change_requested.emit.bind(false),
@@ -27,11 +27,11 @@ func get_map() -> Dictionary:
 		O.START_LISTEN_AGAIN_TIMER: _outcome_listen_again,
 		O.BEGIN_CLAP_COUNT:        _outcome_clap_count_setup,
 		O.END_CLAP_PHASE:          _outcome_clap_done,
-		O.SHOW_BASS_LAYER:         EventBus.ui_visibility_requested.emit.bind(VisibilityManager.UIElement.SYNTH2_LAYER, true),
+		O.SHOW_BASS_LAYER:         EventBus.ui_visibility_requested.emit.bind(UIVisibilityListener.UIElement.SYNTH2_LAYER, true),
 		O.SETUP_BASS_RECORDER:     _outcome_setup_bass_recorder,
 		O.ON_BASS_RECORDING_STARTED: _outcome_on_bass_recording_started,
 		O.END_FAST_TTS_AND_WAIT:   _outcome_voice_over_done,
-		O.SHOW_CHAOS_TRIANGLE:     EventBus.ui_visibility_requested.emit.bind(VisibilityManager.UIElement.CHAOS_PAD_TRIANGLE, true),
+		O.SHOW_CHAOS_TRIANGLE:     EventBus.ui_visibility_requested.emit.bind(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true),
 		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star,
 		O.ON_CHAOSPAD_STAR_REACHED: _outcome_chaospad_star_reached,
 		O.ON_CHAOSPAD_LISTENED:    _outcome_chaospad_listened,
@@ -50,9 +50,8 @@ func _outcome_noop() -> void:
 # ── Intro ────────────────────────────────────────────────────────────────────────────────────────────────
 
 func _outcome_intro() -> void:
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
 	EventBus.track_sprites_visibility_requested.emit(0, true)
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.KLAPPY_CONTINUE, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.KLAPPY_CONTINUE, true)
 	tutorial.play_achievement_sfx()
 
 # ── Kick ring ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -60,13 +59,13 @@ func _outcome_intro() -> void:
 ## Unlocks the preset kick-ring beat positions and shows the play-button + stomp UI.
 func _outcome_kick_place() -> void:
 	for beat_idx: int in Tutorial.KICK_PRESET_BEAT_INDICES:
-		EventBus.beat_set_requested.emit(Tutorial.INDEX_RED_RING, beat_idx, true)
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.PLAY_PAUSE_BUTTON, true)
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.STOMP_UI, true)
+		EventBus.beat_set_requested.emit(Tutorial.INDEX_KICK_TRACK, beat_idx, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.PLAY_PAUSE_BUTTON, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STOMP_UI, true)
 
 func _outcome_start_timer_allowed() -> void:
 	tutorial._timer.start(tutorial._timer.wait_time)
-	tutorial._allowed = true
+
 
 func _outcome_pause_beat() -> void:
 	tutorial.play_achievement_sfx()
@@ -74,7 +73,6 @@ func _outcome_pause_beat() -> void:
 
 func _outcome_kick_ring_filled() -> void:
 	tutorial._text_allowed = true
-	tutorial._allowed = true
 	tutorial.play_achievement_sfx()
 
 # ── Shared timer helper ────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -95,18 +93,17 @@ func _outcome_stomp_setup() -> void:
 ## Unlocks the preset clap-ring beat positions and shows the clap UI.
 func _outcome_clap_ring_setup() -> void:
 	for beat_idx: int in Tutorial.CLAP_PRESET_BEAT_INDICES:
-		EventBus.beat_set_requested.emit(Tutorial.INDEX_ORANGE_RING, beat_idx, true)
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.CLAP_UI, true)
+		EventBus.beat_set_requested.emit(Tutorial.INDEX_CLAP_TRACK, beat_idx, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CLAP_UI, true)
 	tutorial._skip_play()
 
 func _outcome_clap_listen() -> void:
-	tutorial._text_allowed = true
 	tutorial._timer.start(tutorial._timer.wait_time)
 	tutorial.play_achievement_sfx()
 
 func _outcome_clap_ring_filled() -> void:
-	tutorial._beats_active_orange_ring = tutorial._active_beats_per_ring(Tutorial.INDEX_ORANGE_RING)
-	tutorial._beats_active_red_ring = tutorial._active_beats_per_ring(Tutorial.INDEX_RED_RING)
+	tutorial._beats_active_clap_track = tutorial._active_beats_per_ring(Tutorial.INDEX_CLAP_TRACK)
+	tutorial._beats_active_kick_track = tutorial._active_beats_per_ring(Tutorial.INDEX_KICK_TRACK)
 	tutorial.play_achievement_sfx()
 
 func _outcome_beat_removed() -> void:
@@ -140,7 +137,7 @@ func _outcome_clap_done() -> void:
 # ── Bass ring / recording ────────────────────────────────────────────────────────────────────────────────────────────
 
 func _outcome_setup_bass_recorder() -> void:
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.MIC_RECORDER, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIC_RECORDER, true)
 	if tutorial.chaos_pad_knob_top_position:
 		EventBus.chaos_pad_knob_position_set_requested.emit(
 				tutorial.chaos_pad_knob_top_position.global_position)
@@ -161,15 +158,15 @@ func _outcome_voice_over_done() -> void:
 # ── Chaos pad ────────────────────────────────────────────────────────────────────────────────────────────────
 
 func _outcome_show_chaospad_star() -> void:
-	tutorial.chaospad_triangle_sprite.visible = true
-
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD, true)
+	
 func _outcome_chaospad_star_reached() -> void:
 	tutorial.play_achievement_sfx()
 	tutorial._skip_play()
 
 func _outcome_chaospad_listened() -> void:
 	tutorial._text_allowed = true
-	tutorial.chaospad_triangle_sprite.visible = false
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, false)
 	tutorial.play_achievement_sfx()
 	tutorial._active = true
 
@@ -194,15 +191,8 @@ func _reach_star_area(area: Area2D, mesh: Node3D) -> void:
 func _outcome_end_tutorial() -> void:
 	tutorial.tutorial_level = -1
 	GameState.use_tutorial = false
-	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.ENTIRE_INTERFACE, true)
-	tutorial.achievements_panel.visible = false
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
-	if tutorial.in_between_area.area_entered.is_connected(tutorial._body_continue):
-		tutorial.in_between_area.area_entered.disconnect(tutorial._body_continue)
-	if tutorial.out_side_area.area_entered.is_connected(tutorial._body_continue):
-		tutorial.out_side_area.area_entered.disconnect(tutorial._body_continue)
-	if tutorial.klappy_continue_button \
-			and tutorial.klappy_continue_button.pressed.is_connected(tutorial._klappy_continue):
-		tutorial.klappy_continue_button.pressed.disconnect(tutorial._klappy_continue)
 	DisplayServer.tts_stop()

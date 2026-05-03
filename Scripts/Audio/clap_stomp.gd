@@ -1,8 +1,8 @@
 extends Node
 class_name ClapStompDetector
 
-const CLAP_TRACK: int = 0
-const STOMP_TRACK: int = 1
+const CLAP_TRACK: int = 1
+const STOMP_TRACK: int = 0
 
 # Clap and stomp detection
 var clapped_amount: int = 0
@@ -40,8 +40,8 @@ func _get_magnitude(_freq_min: float, _freq_max: float) -> float:
 	return MicrophoneRecorder.get_magnitude(_freq_min, _freq_max)
 
 enum InteractionType {
-	CLAP,
-	STOMP
+	STOMP,
+	CLAP
 }
 
 func _ready():

@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_rcijy"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="4_dm53t"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="5_7m7ed"]
+[ext_resource type="Script" uid="uid://cbvyl5iyxiilh" path="res://Scenes/UI_Components/instruction_label.gd" id="6_dm53t"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="6_q1u4v"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="7_g650j"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/Klappy_components/klappy_reaction.tscn" id="8_wcpyi"]
@@ -96,6 +97,7 @@ anchor_left = 0.0032679802
 anchor_top = -0.1882353
 anchor_right = 0.0882353
 anchor_bottom = -0.1882353
+script = ExtResource("6_dm53t")
 
 [node name="Continue" parent="AchievementsPanel" index="3" unique_id=1432263596]
 metadata/_edit_use_anchors_ = true

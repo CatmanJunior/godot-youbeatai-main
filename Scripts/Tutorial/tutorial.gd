@@ -143,6 +143,19 @@ func reset() -> void:
 	_increased_speed = false
 	_first_tts_done = false
 
+#when . is pressed goto next tutorial step
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey:
+		var i_event : InputEventKey = event
+		if i_event.keycode == Key.KEY_0 and i_event.pressed:
+			if _outcome.is_valid():
+				_outcome.call()
+			if tutorial_level >= tutorial_steps.size():
+				return
+			tutorial_level += 1
+			_speak_tutorial_instruction(tutorial_level)
+			_update_lists()
+
 # Activates the tutorial if GameState.use_tutorial is set.
 # Sets the BPM to 60, hides the beat pointer, wires up continue and instrument buttons.
 func try_activate_tutorial() -> void:
@@ -163,6 +176,8 @@ func _set_interface_invisible_initial() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.BEAT_RING, true)
 	EventBus.track_select_button_visibility_requested.emit(0, true)
 	EventBus.track_select_button_visibility_requested.emit(1, true)
+	EventBus.synth_progress_bar_visible_requested.emit(0, false)
+	EventBus.synth_progress_bar_visible_requested.emit(1, false)
 
 # Creates the tutorial timer and loads the ordered list of steps from the assigned resource.
 # Must be called before update_tutorial() is first ticked.

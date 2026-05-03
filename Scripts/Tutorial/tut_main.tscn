@@ -155,9 +155,11 @@ track_settings = ExtResource("36_qax2n")
 points = PackedVector2Array(605, 60)
 
 [node name="TextureProgressBar0" parent="UserInterface/BeatRing/Waveform_visualisers" index="2" unique_id=1277010803]
+value = 1.0
 tint_progress = Color(1, 1, 1, 1)
 
 [node name="TextureProgressBar1" parent="UserInterface/BeatRing/Waveform_visualisers" index="3" unique_id=1981743700]
+value = 1.0
 tint_progress = Color(1, 1, 1, 1)
 
 [node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]

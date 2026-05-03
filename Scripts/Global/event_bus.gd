@@ -203,6 +203,8 @@ signal ui_visibility_requested(element: int, visible: bool)
 signal track_sprites_visibility_requested(track: int, visible: bool)
 ## Emitted to request setting the visibility of a specific track's select button.
 signal track_select_button_visibility_requested(track: int, visible: bool)
+## Emitted to request setting the visibility of a specific synth track's progress bar.
+signal synth_progress_bar_visible_requested(bar: int, visible: bool)
 
 ## Emitted when the continue button is pressed in the tutorial.
 signal continue_button_pressed()

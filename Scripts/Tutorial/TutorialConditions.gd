@@ -89,7 +89,7 @@ func _cond_beat_removed() -> bool:
 # ── Bass ring / recording ────────────────────────────────────────────────────────────────────────────────────────────
 
 func _cond_bass_ring_selected() -> bool:
-	return SongState.selected_track_index == 5
+	return SongState.selected_track_index == 4
 
 func _cond_bass_ring_record_or_tts_done() -> bool:
 	if SongState.selected_track_index == 5 and GameState.is_recording:

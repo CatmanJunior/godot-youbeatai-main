@@ -27,7 +27,7 @@ func get_map() -> Dictionary:
 		O.START_LISTEN_AGAIN_TIMER: _outcome_listen_again,
 		O.BEGIN_CLAP_COUNT:        _outcome_clap_count_setup,
 		O.END_CLAP_PHASE:          _outcome_clap_done,
-		O.SHOW_BASS_LAYER:         EventBus.ui_visibility_requested.emit.bind(UIVisibilityListener.UIElement.SYNTH2_LAYER, true),
+		O.SHOW_BASS_LAYER:         _outcome_show_bass_layer,
 		O.SETUP_BASS_RECORDER:     _outcome_setup_bass_recorder,
 		O.ON_BASS_RECORDING_STARTED: _outcome_on_bass_recording_started,
 		O.END_FAST_TTS_AND_WAIT:   _outcome_voice_over_done,
@@ -60,6 +60,7 @@ func _outcome_intro() -> void:
 func _outcome_kick_place() -> void:
 	for beat_idx: int in Tutorial.KICK_PRESET_BEAT_INDICES:
 		EventBus.beat_set_requested.emit(Tutorial.INDEX_KICK_TRACK, beat_idx, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.BEAT_POINTER, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.PLAY_PAUSE_BUTTON, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STOMP_UI, true)
 
@@ -136,12 +137,18 @@ func _outcome_clap_done() -> void:
 
 # ── Bass ring / recording ────────────────────────────────────────────────────────────────────────────────────────────
 
+func _outcome_show_bass_layer() -> void:
+	EventBus.synth_progress_bar_visible_requested.emit(0, true)
+	EventBus.track_select_button_visibility_requested.emit(4, true)
+	tutorial.play_achievement_sfx()
+
 func _outcome_setup_bass_recorder() -> void:
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIC_RECORDER, true)
 	if tutorial.chaos_pad_knob_top_position:
 		EventBus.chaos_pad_knob_position_set_requested.emit(
 				tutorial.chaos_pad_knob_top_position.global_position)
-	tutorial._allowed = true
 	tutorial.play_achievement_sfx()
 	EventBus.chaos_pad_button_animation_stop_requested.emit()
 

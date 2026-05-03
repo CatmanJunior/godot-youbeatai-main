@@ -1,9 +1,12 @@
 [gd_resource type="Resource" script_class="SoundBank" format=3 uid="uid://dyy8617ukyptm"]
 
 [ext_resource type="AudioStream" uid="uid://dswauqyykfnih" path="res://Resources/Audio/SoundBanks/7_hardcore/Clap MySunshine.wav" id="1_7jbdn"]
+[ext_resource type="Script" uid="uid://cyxcyx8tjnle4" path="res://Experimental/chords/chord_progression.gd" id="1_fjs6r"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="1_qlc07"]
 [ext_resource type="AudioStream" uid="uid://b70b3353jtpvd" path="res://Resources/Audio/SoundBanks/7_hardcore/ClosedHH Bandits 1.wav" id="2_120gr"]
+[ext_resource type="Script" uid="uid://cy33axifo2vk7" path="res://Experimental/chords/chord.gd" id="2_fgo6n"]
 [ext_resource type="AudioStream" uid="uid://cna7wbhdje4fl" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Clap Denim.wav" id="2_ytapi"]
+[ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_67gow"]
 [ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://d2t6q8lum30iv" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Kick Fm LowLife.wav" id="4_nomca"]
 [ext_resource type="AudioStream" uid="uid://8rxdspna22wi" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/ClosedHH Acidy.wav" id="4_tm1gk"]
@@ -15,6 +18,76 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
+
+[sub_resource type="Resource" id="Resource_mady3"]
+script = ExtResource("2_fgo6n")
+base_note = 69
+type = 1
+
+[sub_resource type="Resource" id="Resource_5u6nl"]
+script = ExtResource("2_fgo6n")
+base_note = 67
+
+[sub_resource type="Resource" id="Resource_3wmod"]
+script = ExtResource("2_fgo6n")
+base_note = 65
+
+[sub_resource type="Resource" id="Resource_8d077"]
+script = ExtResource("2_fgo6n")
+base_note = 64
+
+[sub_resource type="Resource" id="Resource_0s06s"]
+script = ExtResource("1_fjs6r")
+progression = Array[ExtResource("2_fgo6n")]([SubResource("Resource_mady3"), SubResource("Resource_5u6nl"), SubResource("Resource_3wmod"), SubResource("Resource_8d077")])
+
+[sub_resource type="Resource" id="Resource_woqdi"]
+script = ExtResource("2_fgo6n")
+base_note = 62
+type = 1
+
+[sub_resource type="Resource" id="Resource_jtvtw"]
+script = ExtResource("2_fgo6n")
+base_note = 62
+
+[sub_resource type="Resource" id="Resource_u8cvk"]
+script = ExtResource("2_fgo6n")
+base_note = 65
+
+[sub_resource type="Resource" id="Resource_tv2oh"]
+script = ExtResource("2_fgo6n")
+base_note = 59
+
+[sub_resource type="Resource" id="Resource_71rld"]
+script = ExtResource("1_fjs6r")
+progression = Array[ExtResource("2_fgo6n")]([SubResource("Resource_woqdi"), SubResource("Resource_jtvtw"), SubResource("Resource_u8cvk"), SubResource("Resource_tv2oh")])
+
+[sub_resource type="Resource" id="Resource_fm07l"]
+script = ExtResource("2_fgo6n")
+base_note = 65
+
+[sub_resource type="Resource" id="Resource_j0y66"]
+script = ExtResource("2_fgo6n")
+base_note = 67
+
+[sub_resource type="Resource" id="Resource_itxl5"]
+script = ExtResource("2_fgo6n")
+base_note = 69
+type = 1
+
+[sub_resource type="Resource" id="Resource_m18jx"]
+script = ExtResource("2_fgo6n")
+base_note = 64
+type = 1
+
+[sub_resource type="Resource" id="Resource_gad5g"]
+script = ExtResource("1_fjs6r")
+progression = Array[ExtResource("2_fgo6n")]([SubResource("Resource_fm07l"), SubResource("Resource_j0y66"), SubResource("Resource_itxl5"), SubResource("Resource_m18jx")])
+
+[sub_resource type="Resource" id="Resource_1m133"]
+script = ExtResource("3_67gow")
+progressions = Array[ExtResource("1_fjs6r")]([SubResource("Resource_0s06s"), SubResource("Resource_71rld"), SubResource("Resource_gad5g")])
+soundFont = ExtResource("5_ytapi")
+instrument = 9
 
 [resource]
 script = ExtResource("1_qlc07")
@@ -31,3 +104,4 @@ synth_instrument_ids = Array[int]([12, 9])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_tm1gk"), ExtResource("6_tm1gk")])
 noteplayer_settings = Array[ExtResource("9_tm1gk")]([ExtResource("11_bass"), ExtResource("12_syn1")])
+chord_progressions = SubResource("Resource_1m133")

@@ -5,7 +5,7 @@ extends Node
 @export var instruction_label:Label
 
 func _ready() -> void:
-	if not GameState.tutorialActivated:
+	if not GameState.tutorial_activated:
 		EventBus.achievement_done.connect(_on_achievement_done)
 		EventBus.utterance_ended.connect(_on_utterance_end)
 	_get_instruction_label()
@@ -33,7 +33,7 @@ func _achievement_panel_visibility(_utterance_id:int):
 
 
 func _start_tts(message:String):
-	TTSHelper.speak(TTSHelper.Text_without_emoticons(message))
+	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
 
 func _on_utterance_end(_utterance):
 	achievement_panel.visible = false

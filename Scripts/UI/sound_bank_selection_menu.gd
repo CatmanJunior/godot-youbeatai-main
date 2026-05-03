@@ -22,7 +22,7 @@ var chosen_themes_emojis: Array[String] = []
 @export var theme_placeholders: Array[Sprite2D]
 
 func _ready() -> void:
-	if GameState.tutorialActivated:
+	if GameState.tutorial_activated:
 		selected_emotion_labels[0].text = "😁"
 		selected_theme_labels[0].text = "💔"
 		chosen_emotions_emojis.append("😁")

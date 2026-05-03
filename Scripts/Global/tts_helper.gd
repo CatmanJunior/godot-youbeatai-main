@@ -16,16 +16,16 @@ static func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLU
 	DisplayServer.tts_speak(text, voices[0], volume, BASE_PITCH, rate)
 
 
-static func Text_without_emoticons(text: String) -> String:
+static func text_without_emoticons(text: String) -> String:
 	var regex = RegEx.new()
 	regex.compile(r":[^:\s]+:")
 	return regex.sub(text, "")
 
 
-func _ready():
-	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)
+func _ready() -> void:
+	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, _utterance_end)
 
 
 
-func utterance_end(utterance_id: int):
+func _utterance_end(utterance_id: int) -> void:
 	EventBus.utterance_ended.emit(utterance_id)

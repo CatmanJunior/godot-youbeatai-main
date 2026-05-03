@@ -8,6 +8,8 @@ var settings: ChordPlayerSettings
 func _ready():
 	super._ready()
 	base_note = Note.new()
+	gain = 0.0
+	
 	EventBus.section_added.connect(_on_new_section)
 	EventBus.beat_triggered.connect(on_beat)
 

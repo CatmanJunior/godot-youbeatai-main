@@ -20,5 +20,5 @@ windows.release.x86_32 = "res://addons/soundfont/lib/soundfont.windows.template_
 windows.debug.x86_64 = "res://addons/soundfont/lib/soundfont.windows.template_debug.x86_64.dll"
 windows.release.x86_64 = "res://addons/soundfont/lib/soundfont.windows.template_release.x86_64.dll"
 
-web = "res://addons/soundfont/lib/soundfont.web.template_debug.wasm32.wasm"
-web.debug = "res://addons/soundfont/lib/soundfont.web.template_release.wasm32.wasm"
+web.debug = "res://addons/soundfont/lib/soundfont.web.template_debug.wasm32.wasm"
+web = "res://addons/soundfont/lib/soundfont.web.template_release.wasm32.wasm"

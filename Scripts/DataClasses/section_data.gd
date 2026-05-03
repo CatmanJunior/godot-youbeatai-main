@@ -23,6 +23,9 @@ var id: int
 ## Emoji shown on the section button
 @export var tex: Texture2D
 
+@export var progression: ChordProgression
+@export var progression_offset: ProgressionOffset
+
 @export var loop_count: int = 1
 
 # ── Initialization ───────────────────────────────────────────────────────────

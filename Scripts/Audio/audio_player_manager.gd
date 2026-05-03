@@ -18,6 +18,7 @@ var sfx_player: AudioStreamPlayer
 @export var achievement_sfx: AudioStream
 
 @export var note_player_settings: Array[NotePlayerSettings] = []
+@export var chord_player_settings: ChordPlayerSettings
 
 func _ready():
 	_init_audio_players()
@@ -49,7 +50,7 @@ func _init_audio_players():
 
 	# Create the song track player
 	song_track_player = SongTrackPlayer.new()
-	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, "Master")
+	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, "Master", chord_player_settings)
 	add_child(song_track_player)
 
 func play_sfx(stream: AudioStream):

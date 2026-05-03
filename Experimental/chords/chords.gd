@@ -1,98 +1,72 @@
 extends NotePlayer
 class_name Chords
 
-@export var use_override = true
-@export var chordString : String
-@export var chordDuration: int = 4
-@export var progressions: Array[ChordProgression]
-
-
-enum ChordType {
-	MAJOR,
-	MINOR,
-	SEVEN,
-	MAJOR7,
-	MINOR7
-}
-
-
-var chordLookup = {
-	"I": 1,
-	"II": 2,
-	"III": 3,
-	"IV": 4,
-	"V": 5,
-	"VI": 6,
-	"VII": 7,
-	"VIII": 8,
-	"IX": 9,
-	"X": 10
-}
 
 var song_cursor = 0
-var current = 0
-var chord_song = []
-var layers = []
-
-func _parse():
-	if use_override: 
-		return
-
-	var chords = chordString.split("-")
-	for chord in chords:
-		var notationUpper = chord.to_upper()
-		var note = chordLookup[notationUpper]
-		var major = notationUpper == chord
-
-		chord_song.append( func(duration): if major: on_chord_major(note, duration) else: on_chord_minor(note, duration) )
-
+var settings: ChordPlayerSettings
 
 func _ready():
 	super._ready()
+	base_note = Note.new()
+	EventBus.section_added.connect(_on_new_section)
+	EventBus.beat_triggered.connect(on_beat)
 
-	if not use_override: 
-		load_progression()
+func _exit_tree():
+	EventBus.section_added.disconnect(_on_new_section)
+	EventBus.beat_triggered.disconnect(on_beat)
+
+func set_settings(_settings: ChordPlayerSettings, _bus: StringName) -> void:
+	settings = _settings
+
+	# load soundbank
+	var soundbank = SongState.selected_soundbank
+	soundfont = soundbank.chord_progressions.soundFont
+	instrument = soundbank.chord_progressions.instrument
+	bus = _bus
+
+func _on_new_section(_new_section_index: int, _tex: Texture2D):
+	if _tex not in settings.tex_lookup:
+		printerr("invalid layer emoji, no chord progression known. Fallback to default (0)")
+		_tex = settings.tex_lookup.keys()[0]
+
+	var progression_offset: ProgressionOffset = settings.tex_lookup[_tex]
+	var progression = SongState.selected_soundbank.chord_progressions.progressions[progression_offset.progression]
+
+	SongState.sections[_new_section_index].progression = progression
+	SongState.sections[_new_section_index].progression_offset = progression_offset
+
+func on_beat(beat: int):
+	if SongState.song_track.recorded_audio_stream == null:
 		return
 
-
-func on_bank_loaded(bank: SoundBank):
-	progressions = [bank.progressions[0]]
-	soundfont = bank.chord_soundfont
-	instrument = bank.chord_instrument_id
-
-func load_progression():
-	chord_song.clear()
-
-	for chord in progressions[0].progression:
-		chord_song.append( func(duration): play_chord_object(chord, duration) )
-
-func on_bpm():
-	if len(chord_song) == 0:
+	if beat % settings.chordDuration != 0:
 		return
 
-	current += 1
-	if current % chordDuration != 0:
-		return
+	var section: SectionData = SongState.current_section
+	var length = len(section.progression.chords)
+	var divider: int = length * settings.chordDuration / float(SongState.total_beats)
+	print(length, divider)
 
-	var beatDuration = 60.0/SongState.bpm /4.0
-	var duration = chordDuration * beatDuration
+	@warning_ignore("integer_division")
+	song_cursor = (beat / settings.chordDuration) % (length / divider)
+	song_cursor += section.progression_offset.offset
 
-	var current_beat = (GameState.amount_of_beats * GameState.currentLayerIndex) + GameState.currentBeat
-	song_cursor = (current_beat / chordDuration) % len(chord_song)
-	chord_song[song_cursor].call(duration)
+	var chord: Chord = section.progression.chords[song_cursor % length]
+	print(chord.base_note)
 
+	play_chord_object(chord, settings.chordDuration * GameState.beat_duration)
 
 func play_chord_object(chord: Chord, duration: float):
 	match chord.type:
-		ChordType.MAJOR:
+		Chord.ChordType.MAJOR:
 			on_chord_major(chord.base_note, duration)		
-		ChordType.MINOR:
+		Chord.ChordType.MINOR:
 			on_chord_minor(chord.base_note, duration)
-		ChordType.SEVEN:
+		Chord.ChordType.SEVEN:
 			on_chord_7(chord.base_note, duration)
-		ChordType.MAJOR7:
+		Chord.ChordType.MAJOR7:
 			on_chord_major_7(chord.base_note, duration)
-		ChordType.MINOR7:
+		Chord.ChordType.MINOR7:
 			on_chord_minor_7(chord.base_note, duration)
 
 

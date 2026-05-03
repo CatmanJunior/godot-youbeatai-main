@@ -31,7 +31,7 @@ func import_banks():
                 chords.append(new_chord)
 
             var new_progression = ChordProgression.new()
-            new_progression.progression = chords
+            new_progression.chords = chords
             progressions.progressions.append(new_progression)
 
         bank_resource.chord_progressions = progressions

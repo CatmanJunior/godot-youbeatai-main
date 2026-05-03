@@ -20,50 +20,63 @@
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="13_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="14_syn1"]
 
-[sub_resource type="Resource" id="Resource_vkc5l"]
+[sub_resource type="Resource" id="Resource_u7ueg"]
 script = ExtResource("2_t7lk8")
 base_note = 69
 type = 1
 
-[sub_resource type="Resource" id="Resource_g3ncf"]
+[sub_resource type="Resource" id="Resource_t7lk8"]
 script = ExtResource("2_t7lk8")
 base_note = 67
 
-[sub_resource type="Resource" id="Resource_ntdw0"]
+[sub_resource type="Resource" id="Resource_3hm7g"]
 script = ExtResource("2_t7lk8")
 base_note = 65
 
-[sub_resource type="Resource" id="Resource_5f6vx"]
+[sub_resource type="Resource" id="Resource_vkc5l"]
 script = ExtResource("2_t7lk8")
 base_note = 64
 
-[sub_resource type="Resource" id="Resource_j2wbu"]
+[sub_resource type="Resource" id="Resource_g3ncf"]
 script = ExtResource("1_u7ueg")
-progression = Array[ExtResource("2_t7lk8")]([SubResource("Resource_vkc5l"), SubResource("Resource_g3ncf"), SubResource("Resource_ntdw0"), SubResource("Resource_5f6vx")])
+chords = Array[ExtResource("2_t7lk8")]([SubResource("Resource_u7ueg"), SubResource("Resource_t7lk8"), SubResource("Resource_3hm7g"), SubResource("Resource_vkc5l")])
 
-[sub_resource type="Resource" id="Resource_kpxj6"]
+[sub_resource type="Resource" id="Resource_ntdw0"]
 script = ExtResource("2_t7lk8")
 base_note = 62
 type = 1
 
-[sub_resource type="Resource" id="Resource_aenym"]
+[sub_resource type="Resource" id="Resource_5f6vx"]
 script = ExtResource("2_t7lk8")
 base_note = 69
 type = 2
 
-[sub_resource type="Resource" id="Resource_3apqs"]
+[sub_resource type="Resource" id="Resource_j2wbu"]
 script = ExtResource("2_t7lk8")
 base_note = 62
 type = 1
 
-[sub_resource type="Resource" id="Resource_uywn6"]
+[sub_resource type="Resource" id="Resource_kpxj6"]
 script = ExtResource("2_t7lk8")
 base_note = 67
 type = 1
 
-[sub_resource type="Resource" id="Resource_ptxld"]
+[sub_resource type="Resource" id="Resource_aenym"]
 script = ExtResource("1_u7ueg")
-progression = Array[ExtResource("2_t7lk8")]([SubResource("Resource_kpxj6"), SubResource("Resource_aenym"), SubResource("Resource_3apqs"), SubResource("Resource_uywn6")])
+chords = Array[ExtResource("2_t7lk8")]([SubResource("Resource_ntdw0"), SubResource("Resource_5f6vx"), SubResource("Resource_j2wbu"), SubResource("Resource_kpxj6")])
+
+[sub_resource type="Resource" id="Resource_3apqs"]
+script = ExtResource("2_t7lk8")
+base_note = 64
+type = 1
+
+[sub_resource type="Resource" id="Resource_uywn6"]
+script = ExtResource("2_t7lk8")
+
+[sub_resource type="Resource" id="Resource_ptxld"]
+script = ExtResource("2_t7lk8")
+base_note = 59
+type = 2
 
 [sub_resource type="Resource" id="Resource_fkpx1"]
 script = ExtResource("2_t7lk8")
@@ -71,25 +84,12 @@ base_note = 64
 type = 1
 
 [sub_resource type="Resource" id="Resource_fouc3"]
-script = ExtResource("2_t7lk8")
+script = ExtResource("1_u7ueg")
+chords = Array[ExtResource("2_t7lk8")]([SubResource("Resource_3apqs"), SubResource("Resource_uywn6"), SubResource("Resource_ptxld"), SubResource("Resource_fkpx1")])
 
 [sub_resource type="Resource" id="Resource_c2bfy"]
-script = ExtResource("2_t7lk8")
-base_note = 59
-type = 2
-
-[sub_resource type="Resource" id="Resource_kmx2d"]
-script = ExtResource("2_t7lk8")
-base_note = 64
-type = 1
-
-[sub_resource type="Resource" id="Resource_vykul"]
-script = ExtResource("1_u7ueg")
-progression = Array[ExtResource("2_t7lk8")]([SubResource("Resource_fkpx1"), SubResource("Resource_fouc3"), SubResource("Resource_c2bfy"), SubResource("Resource_kmx2d")])
-
-[sub_resource type="Resource" id="Resource_rgfab"]
 script = ExtResource("3_3hm7g")
-progressions = Array[ExtResource("1_u7ueg")]([SubResource("Resource_j2wbu"), SubResource("Resource_ptxld"), SubResource("Resource_vykul")])
+progressions = Array[ExtResource("1_u7ueg")]([SubResource("Resource_g3ncf"), SubResource("Resource_aenym"), SubResource("Resource_fouc3")])
 soundFont = ExtResource("5_2an5y")
 instrument = 4
 
@@ -108,5 +108,5 @@ synth_instrument_ids = Array[int]([0, 4])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("6_8lexy"), ExtResource("6_8lexy")])
 noteplayer_settings = Array[ExtResource("9_fvvum")]([ExtResource("13_bass"), ExtResource("14_syn1")])
-chord_progressions = SubResource("Resource_rgfab")
+chord_progressions = SubResource("Resource_c2bfy")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

@@ -152,10 +152,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BeatRing" parent="UserInterface" unique_id=192422746 instance=ExtResource("45_owhal")]
 layout_mode = 1
-offset_left = -125.0
-offset_top = 1.0
-offset_right = -125.0
-offset_bottom = 1.0
+offset_left = -108.0
+offset_top = 49.0
+offset_right = -108.0
+offset_bottom = 49.0
 mouse_filter = 1
 
 [node name="PlayPauseButton" parent="UserInterface/BeatRing" index="0" unique_id=2061116021]
@@ -372,22 +372,14 @@ angle_max = 90.0
 hue_variation_max = 0.55
 
 [node name="SwitchSectionButtons" parent="UserInterface" unique_id=1068760052 instance=ExtResource("49_v2nl5")]
+custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
-offset_left = -257.0
-offset_top = 57.0
-offset_right = -257.0
-offset_bottom = 57.0
 section_button_prefab = ExtResource("43_kqrg6")
 
-[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2103297005]
-visible = false
-offset_left = 2.0
-offset_top = -300.0
-offset_right = 292.0
-offset_bottom = -255.0
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
 alignment = 0
 
-[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=569761149]
+[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
 offset_left = -1002.0
 offset_top = -605.0
 offset_right = -554.0

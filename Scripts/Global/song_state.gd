@@ -57,6 +57,7 @@ var current_track: TrackData:
 		return null
 
 var selected_soundbank: SoundBank = null
+var chosen_emoij: String = "🦄🏆😍😵‍💫"
 
 # ── Initialization ───────────────────────────────────────────────────────────
 
@@ -67,6 +68,7 @@ func _ready() -> void:
 	EventBus.bpm_changed.connect(_on_bpm_changed)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 	EventBus.soundbank_loaded.connect(func(bank: SoundBank): selected_soundbank = bank)
+	EventBus.soundbank_selected.connect(func (th, em): chosen_emoij = "".join(th) + "".join(em) )
 
 ## Ensure data has sensible runtime defaults (song_track, total_beats).
 func _apply_data_defaults() -> void:

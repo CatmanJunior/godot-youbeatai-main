@@ -42,6 +42,7 @@
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
+[ext_resource type="Script" uid="uid://c76hgacdcbr2k" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
 [ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
@@ -422,6 +423,19 @@ grow_vertical = 1
 
 [node name="VisibilityManager" type="Node" parent="UserInterface" unique_id=1167792615]
 script = ExtResource("48_v2nl5")
+
+[node name="ChosenEmoij\'s" type="Label" parent="UserInterface" unique_id=572018697]
+layout_mode = 0
+offset_left = 581.0
+offset_top = 114.0
+offset_right = 608.0
+offset_bottom = 266.0
+theme_override_constants/line_spacing = 11
+theme_override_font_sizes/font_size = 24
+text = "💔🌴🤔😢"
+horizontal_alignment = 1
+autowrap_mode = 1
+script = ExtResource("56_ptfg5")
 
 [editable path="UserInterface/ChaosPad"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]

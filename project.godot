@@ -13,6 +13,9 @@ config_version=5
 config/name="Ritme Robot"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
+run/max_fps=60
+run/low_processor_mode=true
+run/delta_smoothing=false
 config/icon="uid://bw7qlsn2o2s82"
 
 [audio]
@@ -27,9 +30,11 @@ FFT="*res://addons/fft/Fft.gd"
 EventBus="*uid://bj8qgtrwxpsxm"
 GameState="*res://Scripts/Global/game_state.gd"
 SongState="*res://Scripts/Global/song_state.gd"
+TTSHelper="*uid://cf2spv5qsn42j"
 
 [debug]
 
+settings/stdout/print_fps=true
 file_logging/enable_file_logging=true
 
 [display]
@@ -37,6 +42,7 @@ file_logging/enable_file_logging=true
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+window/vsync/vsync_mode=0
 
 [dotnet]
 

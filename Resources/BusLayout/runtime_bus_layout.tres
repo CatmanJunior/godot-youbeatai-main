@@ -15,14 +15,6 @@ resource_name = "LowPassFilter"
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
 
-[sub_resource type="AudioEffectPhaser" id="AudioEffectPhaser_o57ya"]
-
-[sub_resource type="AudioEffectDistortion" id="AudioEffectDistortion_gmly4"]
-
-[sub_resource type="AudioEffectHighPassFilter" id="AudioEffectHighPassFilter_lqisp"]
-
-[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_1sq6m"]
-
 [sub_resource type="AudioEffectCapture" id="AudioEffectCapture_04ot4"]
 resource_name = "Capture"
 buffer_length = 0.2
@@ -32,8 +24,6 @@ resource_name = "Record"
 
 [sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_se50o"]
 resource_name = "SpectrumAnalyzer"
-
-[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_cfn8f"]
 
 [resource]
 bus/0/volume_db = -10.51852
@@ -53,14 +43,6 @@ bus/1/effect/3/effect = SubResource("AudioEffectLowPassFilter_6n6ik")
 bus/1/effect/3/enabled = false
 bus/1/effect/4/effect = SubResource("AudioEffectRecord_6n6ik")
 bus/1/effect/4/enabled = true
-bus/1/effect/5/effect = SubResource("AudioEffectPhaser_o57ya")
-bus/1/effect/5/enabled = true
-bus/1/effect/6/effect = SubResource("AudioEffectDistortion_gmly4")
-bus/1/effect/6/enabled = true
-bus/1/effect/7/effect = SubResource("AudioEffectHighPassFilter_lqisp")
-bus/1/effect/7/enabled = true
-bus/1/effect/8/effect = SubResource("AudioEffectLowPassFilter_1sq6m")
-bus/1/effect/8/enabled = true
 bus/2/name = &"Microphone"
 bus/2/solo = false
 bus/2/mute = true
@@ -73,5 +55,3 @@ bus/2/effect/1/effect = SubResource("AudioEffectRecord_vcuto")
 bus/2/effect/1/enabled = true
 bus/2/effect/2/effect = SubResource("AudioEffectSpectrumAnalyzer_se50o")
 bus/2/effect/2/enabled = true
-bus/2/effect/3/effect = SubResource("AudioEffectSpectrumAnalyzer_cfn8f")
-bus/2/effect/3/enabled = true

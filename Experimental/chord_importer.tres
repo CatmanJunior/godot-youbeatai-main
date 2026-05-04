@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="ImportChordSettings" format=3 uid="uid://d1yxj7pghit4l"]
+
+[ext_resource type="Script" uid="uid://dteqi8wshy7c0" path="res://Experimental/ImportChordSettings.gd" id="1_816ua"]
+
+[resource]
+script = ExtResource("1_816ua")
+metadata/_custom_type_script = "uid://dteqi8wshy7c0"

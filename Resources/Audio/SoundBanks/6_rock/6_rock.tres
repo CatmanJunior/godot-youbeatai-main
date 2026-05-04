@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="SoundBank" format=3 uid="uid://bg0wxntk7lvv1"]
 
 [ext_resource type="AudioStream" uid="uid://dg23rhypshw0l" path="res://Resources/Audio/SoundBanks/6_rock/Clap Smoky.wav" id="1_5ewh3"]
+[ext_resource type="Script" uid="uid://cyxcyx8tjnle4" path="res://Experimental/chords/chord_progression.gd" id="1_ofhj8"]
+[ext_resource type="Script" uid="uid://cy33axifo2vk7" path="res://Experimental/chords/chord.gd" id="2_ekubr"]
 [ext_resource type="AudioStream" uid="uid://dinxghfhfe4k" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Clap Overflow 1.wav" id="2_oryav"]
 [ext_resource type="AudioStream" uid="uid://b0xt5kcus3tcw" path="res://Resources/Audio/SoundBanks/6_rock/ClosedHH AlphaCentauri.wav" id="2_s8q6a"]
+[ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_0jbs2"]
 [ext_resource type="AudioStream" uid="uid://c3cxgarxkyyr2" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Closed_Perc Phon_o 5.wav" id="4_5dk7e"]
 [ext_resource type="AudioStream" uid="uid://d2n4huplighmj" path="res://Resources/Audio/SoundBanks/6_rock/Kick TwoTone.wav" id="4_e16c4"]
 [ext_resource type="AudioStream" uid="uid://bqvgokl472bmq" path="res://Resources/Audio/SoundBanks/6_rock/mineur/Kick Fit 2.wav" id="4_x7f7w"]
@@ -15,6 +18,72 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
+
+[sub_resource type="Resource" id="Resource_ofhj8"]
+script = ExtResource("2_ekubr")
+base_note = 64
+
+[sub_resource type="Resource" id="Resource_ekubr"]
+script = ExtResource("2_ekubr")
+base_note = 69
+
+[sub_resource type="Resource" id="Resource_0jbs2"]
+script = ExtResource("2_ekubr")
+base_note = 59
+
+[sub_resource type="Resource" id="Resource_qmavd"]
+script = ExtResource("2_ekubr")
+base_note = 69
+
+[sub_resource type="Resource" id="Resource_swpmg"]
+script = ExtResource("1_ofhj8")
+chords = Array[ExtResource("2_ekubr")]([SubResource("Resource_ofhj8"), SubResource("Resource_ekubr"), SubResource("Resource_0jbs2"), SubResource("Resource_qmavd")])
+
+[sub_resource type="Resource" id="Resource_5wphk"]
+script = ExtResource("2_ekubr")
+base_note = 69
+type = 1
+
+[sub_resource type="Resource" id="Resource_ki6kh"]
+script = ExtResource("2_ekubr")
+base_note = 65
+
+[sub_resource type="Resource" id="Resource_oa3qm"]
+script = ExtResource("2_ekubr")
+
+[sub_resource type="Resource" id="Resource_scqbs"]
+script = ExtResource("2_ekubr")
+base_note = 67
+
+[sub_resource type="Resource" id="Resource_88tyg"]
+script = ExtResource("1_ofhj8")
+chords = Array[ExtResource("2_ekubr")]([SubResource("Resource_5wphk"), SubResource("Resource_ki6kh"), SubResource("Resource_oa3qm"), SubResource("Resource_scqbs")])
+
+[sub_resource type="Resource" id="Resource_yc8ej"]
+script = ExtResource("2_ekubr")
+base_note = 62
+
+[sub_resource type="Resource" id="Resource_i30l1"]
+script = ExtResource("2_ekubr")
+base_note = 67
+
+[sub_resource type="Resource" id="Resource_ngs1o"]
+script = ExtResource("2_ekubr")
+base_note = 69
+
+[sub_resource type="Resource" id="Resource_kfxwo"]
+script = ExtResource("2_ekubr")
+base_note = 67
+
+[sub_resource type="Resource" id="Resource_gs42l"]
+script = ExtResource("1_ofhj8")
+chords = Array[ExtResource("2_ekubr")]([SubResource("Resource_yc8ej"), SubResource("Resource_i30l1"), SubResource("Resource_ngs1o"), SubResource("Resource_kfxwo")])
+
+[sub_resource type="Resource" id="Resource_3lvv3"]
+script = ExtResource("3_0jbs2")
+progressions = Array[ExtResource("1_ofhj8")]([SubResource("Resource_swpmg"), SubResource("Resource_88tyg"), SubResource("Resource_gs42l")])
+soundFont = ExtResource("5_oryav")
+instrument = 15
 
 [resource]
 script = ExtResource("6_5dk7e")
@@ -31,4 +100,4 @@ synth_instrument_ids = Array[int]([12, 15])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_4uiet"), ExtResource("6_4uiet")])
 noteplayer_settings = Array[ExtResource("9_5dk7e")]([ExtResource("11_bass"), ExtResource("12_syn1")])
-metadata/_custom_type_script = "uid://d0cv5il7l6laj"
+chord_progressions = SubResource("Resource_3lvv3")

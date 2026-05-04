@@ -63,7 +63,7 @@ func _on_song_loaded() -> void:
 			visualizer.set_color(track_settings.get_synth_track(i).track_color)
 
 
-func _on_section_added(section_index: int, _emoji: String):
+func _on_section_added(section_index: int, _tex: Texture2D):
 	for i in range(waveform_lines.size()):
 		if waveform_lines[i]:
 			var cfg = LINE_CONFIGS[i]

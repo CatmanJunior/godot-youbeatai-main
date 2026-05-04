@@ -2,7 +2,7 @@ class_name SectionData
 extends Resource
 
 ## Data class representing a single section (formerly "layer").
-## Contains sample tracks, synth tracks, and the button emoji.
+## Contains sample tracks, synth tracks, and the button tex.
 ## Extends Resource so the entire section (including audio recordings) is serializable.
 
 const SAMPLE_TRACKS_PER_SECTION: int = 4
@@ -21,7 +21,10 @@ var id: int
 @export var tracks: Array[TrackData] = []
 
 ## Emoji shown on the section button
-@export var emoji: String = ""
+@export var tex: Texture2D
+
+@export var progression: ChordProgression
+@export var progression_offset: ProgressionOffset
 
 @export var loop_count: int = 1
 
@@ -29,10 +32,10 @@ var id: int
 ## Initialize with a new unique ID. Tracks are NOT created here to avoid
 ## ghost sub-resources that corrupt Godot's typed-array serialization.
 ## Call [method create_default_tracks] explicitly when creating a brand-new section.
-func _init(new_index: int = 0, section_emoji: String = "") -> void:
+func _init(section_tex: Texture2D, new_index: int = 0) -> void:
 	self.id = get_next_id()
 	self.index = new_index
-	emoji = section_emoji
+	tex = section_tex
 
 ## Populate [member tracks] with the default set of [SampleTrackData] and
 ## [SynthTrackData] instances. Must be called explicitly after constructing a
@@ -132,7 +135,7 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 # ── Duplicate ────────────────────────────────────────────────────────────────
 
 func duplicate_section() -> SectionData:
-	var copy: SectionData = SectionData.new(index, emoji)
+	var copy: SectionData = SectionData.new(tex, index)
 
 	for i in range(tracks.size()):
 		var track_copy = tracks[i].duplicate_track()

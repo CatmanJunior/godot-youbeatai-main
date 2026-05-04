@@ -60,7 +60,7 @@ signal stomp_on_beat_detected()
 
 # ── Sections ──
 ## Emitted to request adding a new section with the given emoji label.
-signal add_section_requested(emoji: String)
+signal add_section_requested(tex: Texture2D)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
 ## Emitted on loop
@@ -76,7 +76,7 @@ signal section_remove_requested(section_index: int)
 ## Emitted when a section switch has completed, carrying the new section data.
 signal section_switched(section_data: SectionData)
 ## Emitted when a new section has been added at the given index with an emoji label.
-signal section_added(new_section_index: int, emoji: String)
+signal section_added(new_section_index: int, tex: Texture2D)
 ## Emitted when a section has been removed at the given index.
 signal section_removed(section_index: int)
 ## Emitted when the current section has been cleared of all beats.
@@ -180,6 +180,10 @@ signal skip_tutorial_requested()
 # ── TTS ──
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.
 signal utterance_ended(utterance_id: int)
+
+signal utterance_started(utterance_id: int)
+
+signal utterance_content_changed(text: String)
 
 # ── Countdown ──
 ## Emitted to request showing the countdown overlay.

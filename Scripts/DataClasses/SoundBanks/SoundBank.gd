@@ -23,4 +23,6 @@ extends Resource
 
 @export var noteplayer_settings: Array[NotePlayerSettings]
 
+@export var chord_progressions: ChordSettings
+
 #THIS SHOULD BE REPLACED BY SETTING NOTEPLAYER SETTINGS IN THE AUDIO BANKS

@@ -7,14 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="4_5gnhr"]
+[ext_resource type="PackedScene" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
@@ -53,6 +47,7 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("1_b7oj2")
 theme_override_font_sizes/font_size = 34
+shortcut_in_tooltip = false
 text = "⏯️
 "
 flat = true
@@ -87,13 +82,17 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Cross" parent="Cross" unique_id=912512629 instance=ExtResource("5_5gnhr")]
+
 [node name="Vertical" type="Sprite2D" parent="Cross" unique_id=912789113]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
 [node name="Horizontal" type="Sprite2D" parent="Cross" unique_id=1103298008]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 1.5708
@@ -101,6 +100,7 @@ scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
 [node name="Vertical2" type="Sprite2D" parent="Cross" unique_id=841252515]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 0.785398
@@ -108,6 +108,7 @@ scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
 [node name="Horizontal2" type="Sprite2D" parent="Cross" unique_id=1226630070]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = -0.785398

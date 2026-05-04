@@ -15,4 +15,4 @@ builds/
 *.sln.DotSettings.user
 
 # libs
-addons/soundfont/lib/~libgd*
+addons/soundfont/lib/~soundfont*

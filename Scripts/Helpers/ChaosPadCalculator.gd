@@ -76,6 +76,13 @@ static func calc_weights(
 	v = sqrt(v)
 	w = sqrt(w)
 
+	# --- Apply exponential falloff ---
+	var falloff_exponent = 2.0  # Adjust this value (e.g., 2, 3, or 4)
+	u = u ** falloff_exponent
+	v = v ** falloff_exponent
+	w = w ** falloff_exponent
+	# --- End of exponential falloff ---
+	
 	var total := u + v + w
 	if total > 0:
 		u /= total
@@ -93,6 +100,7 @@ static func calc_weights(
 	if not _is_inside(bary):
 		var closest := _closest_point_on_triangle(knob_global_position, p1, p2, p3)
 		distance_from_triangle = knob_global_position.distance_to(closest)
+	
 	var linear_t := maxf(0.0, 1.0 - (distance_from_triangle / outer_triangle_size))
 	var master_volume := lerpf(OUTER_VOLUME_FLOOR_DB, 0.0, linear_t * linear_t)
 

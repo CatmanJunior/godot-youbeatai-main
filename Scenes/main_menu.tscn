@@ -44,7 +44,7 @@ texture = ExtResource("10_16hvj")
 
 [node name="scene" type="Node2D" unique_id=451630034]
 
-[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "credits_panel")]
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "tutorial_button", "credits_panel")]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 8
 anchor_left = 0.5
@@ -59,9 +59,10 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(2.14354, 2.14354)
 script = ExtResource("1_trj04")
-pro_button = NodePath("ProButton")
+pro_button = NodePath("VBoxContainer/ProButton")
 credits_button = NodePath("CreditsButton")
 back_button = NodePath("../CreditsPanel/Back")
+tutorial_button = NodePath("VBoxContainer/TutorialButton")
 credits_panel = NodePath("../CreditsPanel")
 
 [node name="TitleLabel" type="Label" parent="MainMenuPanel" unique_id=1650576418]
@@ -86,28 +87,6 @@ Ritme Robot"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TutorialButton" type="Button" parent="MainMenuPanel" unique_id=1542674455]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -88.96871
-offset_top = -7.7120056
-offset_right = 21.03128
-offset_bottom = 42.287994
-grow_horizontal = 2
-grow_vertical = 2
-focus_mode = 0
-theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
-theme_override_fonts/font = ExtResource("3_trj04")
-theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
-text = "Uitleg"
-
 [node name="SpelenButton" type="Button" parent="MainMenuPanel" unique_id=1461700594]
 visible = false
 layout_mode = 0
@@ -121,27 +100,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Muziek maken 🎶"
-
-[node name="ProButton" type="Button" parent="MainMenuPanel" unique_id=658627251]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -45.116013
-offset_top = -51.345886
-offset_right = 64.88397
-offset_bottom = -1.3458862
-grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
-theme_override_fonts/font = ExtResource("3_trj04")
-theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
-theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
-text = "Pro"
 
 [node name="CreditsButton" type="Button" parent="MainMenuPanel" unique_id=1715816388]
 layout_mode = 1
@@ -215,6 +173,34 @@ offset_right = 881.08496
 offset_bottom = 762.58936
 scale = Vector2(0.05, 0.05)
 icon = ExtResource("5_n45e2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenuPanel" unique_id=337081655]
+layout_mode = 0
+offset_left = 151.61836
+offset_top = 234.19205
+offset_right = 266.84833
+offset_bottom = 302.19205
+metadata/_edit_group_ = true
+
+[node name="TutorialButton" type="Button" parent="MainMenuPanel/VBoxContainer" unique_id=1542674455]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_fonts/font = ExtResource("3_trj04")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
+text = "Uitleg"
+
+[node name="ProButton" type="Button" parent="MainMenuPanel/VBoxContainer" unique_id=658627251]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_fonts/font = ExtResource("3_trj04")
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
+text = "Pro"
 
 [node name="Klappy respons bubble" parent="." unique_id=73255284 instance=ExtResource("6_opfnp")]
 visible = false

@@ -78,7 +78,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 
 # ── TrackPlayerBase overrides ────────────────────────────────────────────────
 
-func setup(index: int, parent_bus: String, _settings = null) -> void:
+func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = null) -> void:
 	super.setup(index, parent_bus, _settings)
 	chords = Chords.new()
 	

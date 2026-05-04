@@ -57,6 +57,8 @@ signal template_set_requested(template_index: int)
 
 # ── Beat Interaction ──
 signal clap_stomp_detected(interaction_type: int)
+signal clap_on_beat_detected()
+signal stomp_on_beat_detected()
 
 # ── Sections ──
 ## Emitted to request adding a new section with the given emoji label.
@@ -200,19 +202,20 @@ signal fullscreen_toggle_requested()
 signal buttons_disabled_requested(disabled: bool)
 
 # -- Visibility --
-## Emitted to request setting the visibility of a UI element by VisibilityManager.UIElement enum.
-## See VisibilityManager.UIElement for all available targets.
+## Emitted to request setting the visibility of a UI element by UIVisibilityListener.UIElement enum.
+## See UIVisibilityListener.UIElement for all available targets.
 signal ui_visibility_requested(element: int, visible: bool)
 ## Emitted to request setting the visibility of a specific track's sprites.
 signal track_sprites_visibility_requested(track: int, visible: bool)
+## Emitted to request setting the visibility of a specific track's select button.
+signal track_select_button_visibility_requested(track: int, visible: bool)
+## Emitted to request setting the visibility of a specific synth track's progress bar.
+signal synth_progress_bar_visible_requested(bar: int, visible: bool)
 
-
-## Emitted to request setting the visibility of the clap/stomp interaction UI.
+## Emitted when the continue button is pressed in the tutorial.
 signal continue_button_pressed()
-
-# ── Tutorial Beat Control ──
-## Emitted to request forcing a specific beat slot to be active/free, used by tutorial.
-signal beat_set_free_requested(track: int, beat: int, free: bool)
+## Emitted to request showing a tutorial instruction text, carrying the instruction string.
+signal tutorial_instruction_text_requested(instruction_text: String)
 
 # ── Tutorial Chaos Pad ──
 ## Emitted to request snapping the chaos pad knob to the given world position.

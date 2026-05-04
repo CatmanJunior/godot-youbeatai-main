@@ -22,7 +22,6 @@ func apply_settings(settings: NotePlayerSettings) -> void:
 	gain = settings.gain
 
 func _ready():
-	setup()
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
 

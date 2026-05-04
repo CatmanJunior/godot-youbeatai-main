@@ -1,0 +1,246 @@
+[gd_resource type="Resource" script_class="TutorialStepsCollection" format=3 uid="uid://bhm2jpomt47pe"]
+
+[ext_resource type="Script" uid="uid://dlkqmmap7jbvw" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
+[ext_resource type="Script" uid="uid://drurbmsmnjvp3" path="res://Scripts/Tutorial/TutorialStepData.gd" id="2_step"]
+
+[sub_resource type="Resource" id="Step_1"]
+script = ExtResource("2_step")
+instruction = "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏in je handen om te beginnen"
+condition = 0
+outcome = 2
+
+[sub_resource type="Resource" id="Step_2"]
+script = ExtResource("2_step")
+instruction = "Deze rode cirkels vormen een kick-ring"
+condition = 1
+
+[sub_resource type="Resource" id="Step_3"]
+script = ExtResource("2_step")
+instruction = "Op deze ring kun je de kick plaatsen van je Beat"
+condition = 1
+outcome = 3
+
+[sub_resource type="Resource" id="Step_4"]
+script = ExtResource("2_step")
+instruction = "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen"
+condition = 2
+outcome = 4
+
+[sub_resource type="Resource" id="Step_5"]
+script = ExtResource("2_step")
+condition = 4
+
+[sub_resource type="Resource" id="Step_6"]
+script = ExtResource("2_step")
+instruction = "Druk op ⏸️ om de Beat op pauze te zetten"
+condition = 3
+outcome = 5
+
+[sub_resource type="Resource" id="Step_7"]
+script = ExtResource("2_step")
+instruction = "Nu jij!, vul nog 2 cirkels door er op te drukken"
+condition = 6
+outcome = 6
+
+[sub_resource type="Resource" id="Step_8"]
+script = ExtResource("2_step")
+instruction = "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️"
+condition = 7
+outcome = 7
+
+[sub_resource type="Resource" id="Step_9"]
+script = ExtResource("2_step")
+condition = 5
+outcome = 8
+
+[sub_resource type="Resource" id="Step_10"]
+script = ExtResource("2_step")
+instruction = "Stamp 👟 5 keer mee met de kick van je Beat!"
+condition = 8
+outcome = 9
+
+[sub_resource type="Resource" id="Step_11"]
+script = ExtResource("2_step")
+instruction = "Wow super gedaan!"
+condition = 1
+outcome = 1
+
+[sub_resource type="Resource" id="Step_12"]
+script = ExtResource("2_step")
+instruction = "Op naar level 2!"
+condition = 1
+outcome = 10
+
+[sub_resource type="Resource" id="Step_13"]
+script = ExtResource("2_step")
+instruction = "Deze oranje ring is de clap-ring"
+condition = 1
+outcome = 11
+
+[sub_resource type="Resource" id="Step_14"]
+script = ExtResource("2_step")
+instruction = "Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!"
+condition = 2
+outcome = 12
+
+[sub_resource type="Resource" id="Step_15"]
+script = ExtResource("2_step")
+condition = 4
+
+[sub_resource type="Resource" id="Step_16"]
+script = ExtResource("2_step")
+instruction = "Klinkt al leuk!"
+condition = 1
+outcome = 13
+
+[sub_resource type="Resource" id="Step_17"]
+script = ExtResource("2_step")
+instruction = "Jouw beurt! Vul nóg 2 oranje cirkels in door er op te drukken"
+condition = 9
+outcome = 14
+
+[sub_resource type="Resource" id="Step_18"]
+script = ExtResource("2_step")
+instruction = "Haal nu ook 1 van de ingevulde cirkels weg door er op te drukken"
+condition = 10
+outcome = 15
+
+[sub_resource type="Resource" id="Step_19"]
+script = ExtResource("2_step")
+instruction = "Ik ben benieuwd laat mij eens horen! ▶️"
+condition = 11
+outcome = 16
+
+[sub_resource type="Resource" id="Step_20"]
+script = ExtResource("2_step")
+condition = 4
+outcome = 17
+
+[sub_resource type="Resource" id="Step_21"]
+script = ExtResource("2_step")
+instruction = "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje cirkels"
+condition = 12
+outcome = 18
+
+[sub_resource type="Resource" id="Step_22"]
+script = ExtResource("2_step")
+instruction = "Super goed gedaan, je hebt talent!"
+condition = 1
+outcome = 19
+
+[sub_resource type="Resource" id="Step_23"]
+script = ExtResource("2_step")
+instruction = "Dit is de groene bass-ring. Klik op de beer 🐻 om de groene laag te kiezen en een brommende melodie toe te voegen"
+condition = 13
+outcome = 20
+
+[sub_resource type="Resource" id="Step_24"]
+script = ExtResource("2_step")
+instruction = "Deze bass-ring kun je invullen door met je microfoon een sample op te nemen!"
+condition = 14
+
+[sub_resource type="Resource" id="Step_25"]
+script = ExtResource("2_step")
+instruction = "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0"
+condition = 15
+outcome = 21
+
+[sub_resource type="Resource" id="Step_26"]
+script = ExtResource("2_step")
+instruction = "4"
+condition = 1
+
+[sub_resource type="Resource" id="Step_27"]
+script = ExtResource("2_step")
+instruction = "3"
+condition = 1
+
+[sub_resource type="Resource" id="Step_28"]
+script = ExtResource("2_step")
+instruction = "2"
+condition = 1
+
+[sub_resource type="Resource" id="Step_29"]
+script = ExtResource("2_step")
+instruction = "1"
+condition = 1
+
+[sub_resource type="Resource" id="Step_30"]
+script = ExtResource("2_step")
+condition = 16
+outcome = 22
+
+[sub_resource type="Resource" id="Step_31"]
+script = ExtResource("2_step")
+condition = 5
+
+[sub_resource type="Resource" id="Step_32"]
+script = ExtResource("2_step")
+instruction = "Super gedaan, het klinkt heel leuk"
+condition = 1
+outcome = 13
+
+[sub_resource type="Resource" id="Step_33"]
+script = ExtResource("2_step")
+instruction = "Laten we je sample veranderen!"
+condition = 17
+outcome = 23
+
+[sub_resource type="Resource" id="Step_34"]
+script = ExtResource("2_step")
+instruction = "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen"
+condition = 1
+
+[sub_resource type="Resource" id="Step_35"]
+script = ExtResource("2_step")
+instruction = "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🎹 óf een effect 🤖aan je sample geven"
+condition = 1
+outcome = 24
+
+[sub_resource type="Resource" id="Step_36"]
+script = ExtResource("2_step")
+instruction = "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje "
+condition = 21
+outcome = 25
+
+[sub_resource type="Resource" id="Step_37"]
+script = ExtResource("2_step")
+instruction = "Luister maar eens!▶️"
+condition = 2
+outcome = 26
+
+[sub_resource type="Resource" id="Step_38"]
+script = ExtResource("2_step")
+instruction = "Dit geeft een hele andere sfeer aan je beat"
+condition = 1
+outcome = 27
+
+[sub_resource type="Resource" id="Step_39"]
+script = ExtResource("2_step")
+instruction = "Beweeg het grijze rondje weer naar het 🌟 sterretje"
+condition = 19
+outcome = 28
+
+[sub_resource type="Resource" id="Step_40"]
+script = ExtResource("2_step")
+instruction = "Zo krijg je een mix tussen jouw sample en het instrument!"
+outcome = 29
+
+[sub_resource type="Resource" id="Step_41"]
+script = ExtResource("2_step")
+instruction = "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje"
+condition = 20
+outcome = 30
+
+[sub_resource type="Resource" id="Step_42"]
+script = ExtResource("2_step")
+instruction = "Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer"
+
+[sub_resource type="Resource" id="Step_43"]
+script = ExtResource("2_step")
+instruction = "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!"
+outcome = 31
+
+[resource]
+script = ExtResource("1_col")
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2"), SubResource("Step_3"), SubResource("Step_4"), SubResource("Step_5"), SubResource("Step_6"), SubResource("Step_7"), SubResource("Step_8"), SubResource("Step_9"), SubResource("Step_10"), SubResource("Step_11"), SubResource("Step_12"), SubResource("Step_13"), SubResource("Step_14"), SubResource("Step_15"), SubResource("Step_16"), SubResource("Step_17"), SubResource("Step_18"), SubResource("Step_19"), SubResource("Step_20"), SubResource("Step_21"), SubResource("Step_22"), SubResource("Step_23"), SubResource("Step_24"), SubResource("Step_25"), SubResource("Step_26"), SubResource("Step_27"), SubResource("Step_28"), SubResource("Step_29"), SubResource("Step_30"), SubResource("Step_31"), SubResource("Step_32"), SubResource("Step_33"), SubResource("Step_34"), SubResource("Step_35"), SubResource("Step_36"), SubResource("Step_37"), SubResource("Step_38"), SubResource("Step_39"), SubResource("Step_40"), SubResource("Step_41"), SubResource("Step_42"), SubResource("Step_43")])

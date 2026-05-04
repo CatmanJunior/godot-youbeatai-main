@@ -24,11 +24,12 @@ var chosen_themes_emojis: Array[String] = []
 var _update := false
 
 func _ready() -> void:
-	if GameState.tutorialActivated:
-		selected_emotion_labels[0].text = "😁"
-		selected_theme_labels[0].text = "💔"
-		chosen_emotions_emojis.append("😁")
-		chosen_themes_emojis.append("💔")
+	if GameState.use_tutorial:
+		#set 2 random emotions and themes for the tutorial that are pre-pressed
+		emotion_toggles.set_pressed_buttons([emotion_toggles._buttons[0]])
+		theme_toggles.set_pressed_buttons([theme_toggles._buttons[0]])
+		_on_emotion_toggle(emotion_toggles.get_pressed_buttons())
+		_on_theme_toggle(theme_toggles.get_pressed_buttons())		
 
 	beatSelectButtonGroup.pressed.connect(_on_beat_button_group_pressed)
 	emotion_toggles.pressed.connect(_on_emotion_toggle)

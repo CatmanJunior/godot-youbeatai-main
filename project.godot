@@ -30,7 +30,7 @@ FFT="*res://addons/fft/Fft.gd"
 EventBus="*uid://bj8qgtrwxpsxm"
 GameState="*res://Scripts/Global/game_state.gd"
 SongState="*res://Scripts/Global/song_state.gd"
-TTSHelper="*uid://cf2spv5qsn42j"
+TTSHelper="*res://Scripts/Global/tts_helper.gd"
 
 [debug]
 

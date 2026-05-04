@@ -20,6 +20,7 @@ const BEAT_SCALE_8: float = 1.6
 const GLOBAL_SPRITE_SCALE_FACTOR: float = 0.28
 
 var _beat_buttons: Array = [] # 2D array [ring][beat]
+var _track_controls: Array = [] # Array of Control nodes, one per track, that hold the beat buttons for that track
 
 # -- Godot lifecycle --
 func _ready() -> void:
@@ -30,7 +31,6 @@ func _ready() -> void:
 	EventBus.beat_state_changed.connect(_set_beat_active)
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.track_sprites_visibility_requested.connect(_set_track_sprites_visible)
-	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
 	play_pause_button.pressed.connect(_on_play_pause_button_toggled)
 
 func _process(_delta: float) -> void:
@@ -86,13 +86,19 @@ func _init_beat_button_positions() -> void:
 	var beats_amount = SongState.total_beats
 
 	_beat_buttons = []
-	for track_index in range(SongState.data.sections[0].SAMPLE_TRACKS_PER_SECTION):
+	for track_index in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
+		#create a control node for each track to hold the beat buttons, so we can easily show/hide them when requested
+		var track_control = Control.new()
+		track_control.name = "Track" + str(track_index) + "_Beats"
+		beat_ring_pivot_point.add_child(track_control)
+		_track_controls.append(track_control)
+
 		_beat_buttons.append([])
 		for beat in range(beats_amount):
-			var beat_button = _create_sprite(beat, track_index, beats_amount)
+			var beat_button = _create_sprite(beat, track_index, beats_amount, track_control)
 			_beat_buttons[track_index].append(beat_button)
 
-func _create_sprite(beat: int, track_index: int, beats_amount: int) -> BeatButton:
+func _create_sprite(beat: int, track_index: int, beats_amount: int, p_track_control : Control) -> BeatButton:
 	var s := track_settings.get_sample_track(track_index)
 	var tex_outline := s.beat_outline_texture
 	var tex_filled := s.beat_filled_texture
@@ -100,7 +106,7 @@ func _create_sprite(beat: int, track_index: int, beats_amount: int) -> BeatButto
 	var beat_but: BeatButton = beat_button_prefab.instantiate() as BeatButton
 	beat_but.init(beat, track_index, tex_outline, tex_filled)
 
-	beat_ring_pivot_point.add_child(beat_but)
+	p_track_control.add_child(beat_but)
 
 	var scale_factor = _scale_factor_for_beats_amount(beats_amount)
 	beat_but.scale = Vector2.ONE * scale_factor * GLOBAL_SPRITE_SCALE_FACTOR
@@ -184,14 +190,5 @@ func _reset_scales() -> void:
 
 ## Set the sprites for a specific track visible 
 func _set_track_sprites_visible(track: int, visible: bool) -> void:
-	for beat in range(_beat_buttons[track].size()):
-		var sprite: BeatButton = _get_beat_button(track, beat)
-		if sprite:
-			sprite.visible = visible
-
-func _on_ui_visibility_requested(element: int, visible: bool) -> void:
-	match element:
-		VisibilityManager.UIElement.BEAT_POINTER:
-			pointer.visible = visible
-		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
-			play_pause_button.visible = visible
+	if track >= 0 and track < _track_controls.size():
+		_track_controls[track].visible = visible

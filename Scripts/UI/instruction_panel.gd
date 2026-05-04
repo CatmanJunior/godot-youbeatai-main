@@ -14,4 +14,4 @@ func _on_continue_pressed() -> void:
 	EventBus.instruction_panel_continue_pressed.emit()
 
 func _on_skip_tutorial_pressed() -> void:
-	EventBus.instruction_panel_skip_tutorial_pressed.emit()
+	EventBus.skip_tutorial_requested.emit()

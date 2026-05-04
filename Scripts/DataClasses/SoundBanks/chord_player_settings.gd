@@ -6,3 +6,5 @@ extends Resource
 
 # duration of a chord in the number of beats
 @export var chordDuration: int = 4
+
+@export var fallback_bank : SoundBank

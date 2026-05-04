@@ -1,16 +1,19 @@
 extends Node
-@onready var klappy_response = $"../Klappy respons bubble"
+@export var klappy_response : Node
 @export var message:String
-@onready var talking = $"../Robot/SubViewportContainer/SubViewport/Klappy"
+@export var talking : Node
 
 func _ready() -> void:
 	EventBus.utterance_started.connect(start_speaking)	
 	EventBus.utterance_ended.connect(done_speaking)
 	EventBus.utterance_content_changed.connect(update_bubble)
 	klappy_response.change_panel_visibility(false)
-	
+
+
 	speak()
-	
+
+
+
 func speak():
 	TTSHelper.speak(message)
 

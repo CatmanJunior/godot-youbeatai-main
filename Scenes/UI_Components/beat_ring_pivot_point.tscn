@@ -6,10 +6,18 @@
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="4_5gnhr"]
 [ext_resource type="PackedScene" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "pointer", "play_pause_button")]
 physics_interpolation_mode = 0
@@ -30,6 +38,11 @@ play_pause_button = NodePath("PlayPauseButton")
 beat_button_prefab = ExtResource("2_5lvir")
 track_settings = ExtResource("3_mgl8v")
 
+[node name="VisibilitySetter" type="Control" parent="." unique_id=1845062889 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("4_5gnhr")
+ui_reference = NodePath("..")
+
 [node name="PlayPauseButton" type="Button" parent="." unique_id=2061116021]
 z_index = 1
 layout_mode = 1
@@ -45,6 +58,25 @@ shortcut_in_tooltip = false
 text = "⏯️
 "
 flat = true
+metadata/_edit_use_anchors_ = true
+
+[node name="VisibilitySetter" type="Control" parent="PlayPauseButton" unique_id=145324735 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("4_5gnhr")
+ui_element = 2
+ui_reference = NodePath("..")
+
+[node name="Panel" type="Panel" parent="PlayPauseButton" unique_id=1954679283]
+modulate = Color(1, 1, 1, 0.7254902)
+show_behind_parent = true
+z_index = -1
+layout_mode = 0
+offset_left = -7.5
+offset_top = -17.5
+offset_right = 62.5
+offset_bottom = 52.5
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
 metadata/_edit_use_anchors_ = true
 
 [node name="Cross" type="Control" parent="." unique_id=1328617350]
@@ -103,6 +135,13 @@ range_z_min = -100
 range_z_max = -1
 texture = ExtResource("3_cj5h8")
 offset = Vector2(0, -150)
+
+[node name="VisibilitySetter" type="Control" parent="Pointer" unique_id=2092152354 node_paths=PackedStringArray("ui_reference")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("4_5gnhr")
+ui_element = 1
+ui_reference = NodePath("..")
 
 [node name="BeatParticleSystem" type="CPUParticles2D" parent="." unique_id=709395537]
 z_index = 2

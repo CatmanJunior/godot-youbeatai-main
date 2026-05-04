@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://c78m8ijn10kwh"]
+[gd_scene format=3 uid="uid://cfn5n8p0tjj1v"]
 
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
@@ -8,20 +8,23 @@
 [ext_resource type="Script" uid="uid://csndjjfx8747s" path="res://Scripts/Managers/template_manager.gd" id="10_o2owy"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
-[ext_resource type="Resource" uid="uid://gj7nhtsggdey" path="res://Resources/ChordPlayerSettings/default_chord_player_settings.tres" id="17_55jeb"]
+[ext_resource type="Resource" uid="uid://gj7nhtsggdey" path="res://Resources/ChordPlayerSettings/default_chord_player_settings.tres" id="17_ux43w"]
 [ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
-[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="22_54nrm"]
-[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Textures_New_Correct/Icons-_28_0028_Verse.png" id="23_55jeb"]
-[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Textures_New_Correct/Icons-_28_0025_Riser.png" id="24_gsvbx"]
-[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Textures_New_Correct/Icons-_28_0026_Blast.png" id="25_bv80c"]
+[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="23_712eu"]
+[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Textures_New_Correct/Icons-_28_0028_Verse.png" id="24_ex4ap"]
+[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Textures_New_Correct/Icons-_28_0025_Riser.png" id="25_otsk4"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="26_dmskm"]
-[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Textures_New_Correct/Icons-_28_0021_Flag.png" id="26_ptfg5"]
+[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Textures_New_Correct/Icons-_28_0026_Blast.png" id="26_lcc21"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="27_lx3vj"]
+[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Textures_New_Correct/Icons-_28_0021_Flag.png" id="27_ryq7e"]
+[ext_resource type="Script" uid="uid://b8fkn5kfy3sd5" path="res://Scripts/Tutorial/tutorial.gd" id="28_ux43w"]
+[ext_resource type="Resource" uid="uid://bhm2jpomt47pe" path="res://Scripts/Tutorial/tutorial_steps.tres" id="29_n7cmr"]
 [ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="29_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="30_jut3y"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
@@ -31,10 +34,6 @@
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
 [ext_resource type="PackedScene" uid="uid://1drhlix6kj7f" path="res://Scenes/UI_Components/background.tscn" id="47_jut3y"]
 [ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
-[ext_resource type="Script" uid="uid://b8fkn5kfy3sd5" path="res://Scripts/Tutorial/tutorial.gd" id="28_ux43w"]
-[ext_resource type="Resource" uid="uid://bhm2jpomt47pe" path="res://Scripts/Tutorial/tutorial_steps.tres" id="29_n7cmr"]
-[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
-[ext_resource type="Script" uid="uid://cbjnj08au0vy8" path="res://Scripts/Tutorial/VisibilityManager.gd" id="48_v2nl5"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
 [ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/Audio/audio_player_manager.gd" id="51_eqnci"]
@@ -81,7 +80,7 @@ metronome_sfx = ExtResource("9_5vy51")
 metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
 note_player_settings = Array[ExtResource("14_s8vy0")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
-chord_player_settings = ExtResource("17_55jeb")
+chord_player_settings = ExtResource("17_ux43w")
 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
 script = ExtResource("62_daoo8")
@@ -98,7 +97,7 @@ script = ExtResource("21_s8vy0")
 
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")
-initial_sections = Array[Texture2D]([ExtResource("22_54nrm"), ExtResource("23_55jeb"), ExtResource("24_gsvbx"), ExtResource("25_bv80c"), ExtResource("26_ptfg5")])
+initial_sections = Array[Texture2D]([ExtResource("23_712eu"), ExtResource("24_ex4ap"), ExtResource("25_otsk4"), ExtResource("26_lcc21"), ExtResource("27_ryq7e")])
 
 [node name="BeatManager" type="Node" parent="Managers" unique_id=540173422]
 script = ExtResource("8_urine")
@@ -146,11 +145,12 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BeatRing" parent="UserInterface" unique_id=192422746 instance=ExtResource("45_owhal")]
 layout_mode = 1
-offset_left = -125.0
-offset_top = 1.0
-offset_right = -125.0
-offset_bottom = 1.0
+offset_left = -176.0
+offset_top = 26.0
+offset_right = -176.0
+offset_bottom = 26.0
 mouse_filter = 1
+metadata/_edit_group_ = true
 
 [node name="PlayPauseButton" parent="UserInterface/BeatRing" index="1" unique_id=2061116021]
 shortcut = ExtResource("30_jut3y")
@@ -252,7 +252,7 @@ song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudi
 position = Vector2(406, 139)
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
-visible = false
+script = null
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 layout_mode = 0
@@ -429,9 +429,6 @@ offset_right = 561.0
 offset_bottom = 282.0
 grow_horizontal = 1
 grow_vertical = 1
-
-[node name="VisibilityManager" type="Node" parent="UserInterface" unique_id=1167792615]
-script = ExtResource("48_v2nl5")
 
 [editable path="UserInterface/BeatRing"]
 [editable path="UserInterface/ChaosPad"]

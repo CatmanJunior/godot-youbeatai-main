@@ -51,6 +51,17 @@ func remove_button(button: BaseButton) -> void:
 func get_pressed_buttons() -> Array[BaseButton]:
 	return _selected.duplicate()
 
+func set_pressed_buttons(buttons: Array[BaseButton]) -> void:
+	# Unpress all currently selected buttons that are not in the new list.
+	for button in _selected:
+		if not buttons.has(button):
+			button.set_pressed_no_signal(false)
+
+	# Press all new buttons that are not already selected.
+	for button in buttons:
+		if not _selected.has(button):
+			button.set_pressed_no_signal(true)
+			_selected.append(button)
 
 func _on_button_toggled(is_pressed: bool, button: BaseButton) -> void:
 	if is_pressed:

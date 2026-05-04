@@ -22,6 +22,7 @@ enum UIElement {
 	ACHIEVEMENTS_PANEL,
 	STAR1,
 	STAR2,
+	STAR3,
 }
 
 @export var ui_element: UIVisibilityListener.UIElement = UIVisibilityListener.UIElement.BEAT_RING

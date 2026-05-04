@@ -21,6 +21,9 @@ func _process(delta: float):
 		_handle_recording(delta)
 
 func _handle_recording(delta: float) -> void:
+	if current_recording_data.state != RecordingData.State.RECORDING:
+		return
+
 	if current_recording_data.track_type == TrackData.TrackType.SAMPLE:
 		if get_recording_volume() > GameState.recording_volume_threshold:
 			current_recording_data.has_detected_sound = true
@@ -39,10 +42,11 @@ func _handle_recording(delta: float) -> void:
 		song_recording_progress_bar.value = current_recording_data.get_recording_progress()
 
 	if current_recording_data.get_recording_progress() >= 1.0:
+		print("Max recording length reached, stopping recording.")
 		_stop_recording()
 
 func _start_recording() -> void:
-
+	GameState.is_recording = true
 	# Step 1: TrackData creates the RecordingData (no state change yet)
 	current_recording_data = SongState.current_track.create_recording_data()
 	current_recording_data.max_recording_length = _calculate_max_recording_length(current_recording_data.track_type)
@@ -69,9 +73,10 @@ func _start_recording() -> void:
 	EventBus.recording_started.emit(current_recording_data)
 
 func _stop_recording() -> void:
+	GameState.is_recording = false
 	EventBus.mute_all_requested.emit(false)
 	EventBus.stop_recording_requested.emit(current_recording_data)
-	current_recording_data = null
+	# current_recording_data = null
 
 
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:

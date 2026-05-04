@@ -30,6 +30,7 @@ func get_map() -> Dictionary:
 		C.NEVER:                          _cond_never,
 		C.KNOB_AT_MIX_STAR:               _cond_knob_at_mix_star,
 		C.KNOB_AT_OUTSIDE_STAR:           _cond_knob_at_outside_star,
+		C.KNOB_AT_STAR:                   _cond_knob_at_star,
 	}
 
 # ── Playback ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -94,7 +95,7 @@ func _cond_bass_ring_selected() -> bool:
 	return SongState.selected_track_index == 4
 
 func _cond_bass_ring_record_or_tts_done() -> bool:
-	if SongState.selected_track_index == 5 and GameState.is_recording:
+	if SongState.selected_track_index == 4 and GameState.is_recording:
 		tutorial.play_achievement_sfx()
 		tutorial.tutorial_level += 4  # skip 4 steps; _next_line adds 1 more = 5 total
 		DisplayServer.tts_stop()
@@ -102,7 +103,7 @@ func _cond_bass_ring_record_or_tts_done() -> bool:
 	return not DisplayServer.tts_is_speaking()
 
 func _cond_bass_ring_recording_active() -> bool:
-	return SongState.selected_track_index == 5 and GameState.is_recording
+	return SongState.selected_track_index == 4 and GameState.is_recording
 
 # ── Sentinels ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -121,6 +122,8 @@ func _cond_knob_at_mix_star() -> bool:
 	var marker := tutorial.chaos_pad_ui.mix_star_marker
 	if marker == null:
 		return false
+#print distance
+	print ("Checking knob distance to mix star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))
 	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
 
 ## True when the knob is within [constant KNOB_ZONE_RADIUS] of the outside-star marker.
@@ -128,4 +131,12 @@ func _cond_knob_at_outside_star() -> bool:
 	var marker := tutorial.chaos_pad_ui.outside_star_marker
 	if marker == null:
 		return false
+	print ("Checking knob distance to outside star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))
+	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
+
+func _cond_knob_at_star() -> bool:
+	var marker := tutorial.chaos_pad_ui.star3
+	if marker == null:
+		return false
+	print ("Checking knob distance to star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))
 	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS

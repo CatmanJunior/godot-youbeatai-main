@@ -124,66 +124,6 @@ script = ExtResource("3_vhj50")
 ui_element = 7
 ui_reference = NodePath("..")
 
-[node name="ChaosButtonMic" type="Button" parent="ChaosPadTriangle/PointTop" unique_id=2002827164 node_paths=PackedStringArray("fillTexture")]
-z_index = 3
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -87.49749
-offset_top = -87.4675
-offset_right = 87.49749
-offset_bottom = 87.4675
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(0.6, 0.6)
-pivot_offset_ratio = Vector2(0.5, 0.5)
-flat = true
-script = ExtResource("8_i8wdk")
-fillTexture = NodePath("ChaosIconMicBg/Rec_mic_Fill")
-
-[node name="ChaosIconMicBg" type="Sprite2D" parent="ChaosPadTriangle/PointTop/ChaosButtonMic" unique_id=1839512900]
-show_behind_parent = true
-z_index = 1
-z_as_relative = false
-scale = Vector2(2, 2)
-texture = ExtResource("11_cfhpg")
-centered = false
-
-[node name="Rec_mic_Fill" type="TextureProgressBar" parent="ChaosPadTriangle/PointTop/ChaosButtonMic/ChaosIconMicBg" unique_id=802485121]
-z_index = 1
-z_as_relative = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -39.945
-offset_top = -41.042
-offset_right = -14.94499
-offset_bottom = -16.041796
-grow_horizontal = 2
-grow_vertical = 2
-scale = Vector2(3.22, 3.22)
-max_value = 1.0
-step = 0.05
-fill_mode = 5
-texture_progress = ExtResource("12_i2dwl")
-tint_progress = Color(1, 0, 0, 1)
-metadata/_edit_use_anchors_ = true
-
-[node name="ChaosIconMic" type="Sprite2D" parent="ChaosPadTriangle/PointTop/ChaosButtonMic/ChaosIconMicBg" unique_id=1747814684]
-show_behind_parent = true
-z_index = 2
-z_as_relative = false
-position = Vector2(0, 4.455)
-scale = Vector2(0.5000001, 0.5000001)
-texture = ExtResource("13_objle")
-centered = false
-offset = Vector2(22.435, 19.34)
-
 [node name="PointRight" type="Control" parent="ChaosPadTriangle" unique_id=1203642698]
 anchors_preset = 0
 offset_left = 35.0
@@ -310,6 +250,73 @@ stretch_mode = 5
 anchors_preset = 0
 script = ExtResource("3_vhj50")
 ui_element = 12
+ui_reference = NodePath("..")
+
+[node name="ChaosButtonMic" type="Button" parent="." unique_id=806900459 node_paths=PackedStringArray("fillTexture")]
+z_index = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 165.0
+offset_top = 378.0
+offset_right = 339.995
+offset_bottom = 552.935
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.745, 0.745)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+flat = true
+script = ExtResource("8_i8wdk")
+fillTexture = NodePath("ChaosIconMicBg/Rec_mic_Fill")
+metadata/_edit_group_ = true
+
+[node name="ChaosIconMicBg" type="Sprite2D" parent="ChaosButtonMic" unique_id=452880462]
+show_behind_parent = true
+z_index = 1
+z_as_relative = false
+scale = Vector2(2, 2)
+texture = ExtResource("11_cfhpg")
+centered = false
+
+[node name="Rec_mic_Fill" type="TextureProgressBar" parent="ChaosButtonMic/ChaosIconMicBg" unique_id=551040892]
+z_index = 1
+z_as_relative = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.945
+offset_top = -41.042
+offset_right = -14.94499
+offset_bottom = -16.041796
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(3.22, 3.22)
+max_value = 1.0
+step = 0.05
+fill_mode = 5
+texture_progress = ExtResource("12_i2dwl")
+tint_progress = Color(1, 0, 0, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="ChaosIconMic" type="Sprite2D" parent="ChaosButtonMic/ChaosIconMicBg" unique_id=1976317579]
+show_behind_parent = true
+z_index = 2
+z_as_relative = false
+position = Vector2(0, 4.455)
+scale = Vector2(0.5000001, 0.5000001)
+texture = ExtResource("13_objle")
+centered = false
+offset = Vector2(22.435, 19.34)
+
+[node name="VisibilitySetter" type="Control" parent="ChaosButtonMic" unique_id=949414126 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("3_vhj50")
+ui_element = 7
 ui_reference = NodePath("..")
 
 [editable path="ChaosPadTriangle/PointLeft/ChaosIconMain"]

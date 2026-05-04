@@ -108,7 +108,9 @@ func clear_beats() -> void:
 # ── Knob helpers ─────────────────────────────────────────────────────────────
 
 func get_track_knob_position(track_index: int) -> Vector2:
-	if track_index >= 0 and track_index < TRACKS_PER_SECTION:
+	if track_index == SongTrackData.SONG_TRACK_INDEX:
+		return SongState.song_track.knob_position
+	elif track_index >= 0 and track_index < TRACKS_PER_SECTION:
 		return tracks[track_index].knob_position
 	return Vector2.ZERO
 

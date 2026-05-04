@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="29_nwwfm"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="30_jut3y"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
@@ -47,7 +48,7 @@
 [ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -77,7 +78,7 @@ note_player_settings = Array[ExtResource("14_s8vy0")]([ExtResource("26_dmskm"), 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
 script = ExtResource("62_daoo8")
 song_recording_progress_bar = NodePath("../../../UserInterface/SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
-recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/PointTop/ChaosButtonMic")
+recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosButtonMic")
 waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
 
 [node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
@@ -164,7 +165,7 @@ tint_progress = Color(1, 1, 1, 1)
 value = 1.0
 tint_progress = Color(1, 1, 1, 1)
 
-[node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
+[node name="ChaosPad" parent="UserInterface" unique_id=2043765558 node_paths=PackedStringArray("mix_star_marker", "outside_star_marker", "star3") instance=ExtResource("1_fg68e")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.0
@@ -173,6 +174,60 @@ offset_top = -341.0
 offset_right = 306.0
 offset_bottom = -341.0
 scale = Vector2(0.505, 0.505)
+mix_star_marker = NodePath("ChaosPadTriangle/Star")
+outside_star_marker = NodePath("ChaosPadTriangle/Star2")
+star3 = NodePath("ChaosPadTriangle/Star3")
+
+[node name="Star3" type="TextureRect" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=2107912249]
+self_modulate = Color(0.32172823, 0.3217279, 0.3217278, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -36.658417
+offset_top = -232.69803
+offset_right = 36.341583
+offset_bottom = -159.69803
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("20_tvghb")
+expand_mode = 1
+
+[node name="OutsideStar2" type="Marker2D" parent="UserInterface/ChaosPad/ChaosPadTriangle/Star3" unique_id=612860120]
+position = Vector2(36, 41)
+
+[node name="TextureRect2" type="TextureRect" parent="UserInterface/ChaosPad/ChaosPadTriangle/Star3" unique_id=420981683]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.6500015
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("20_tvghb")
+stretch_mode = 5
+
+[node name="VisibilitySetter2" type="Control" parent="UserInterface/ChaosPad/ChaosPadTriangle/Star3" unique_id=1927247439 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("35_8ctj7")
+ui_element = 14
+ui_reference = NodePath("..")
+
+[node name="Star2" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="7" unique_id=842200770]
+visible = true
+offset_left = 101.955444
+offset_top = -117.84653
+offset_right = 174.95544
+offset_bottom = -44.846527
+metadata/_edit_group_ = true
+
+[node name="Star" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="8" unique_id=1742236932]
+visible = true
 
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
@@ -368,6 +423,9 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [editable path="UserInterface/BeatRing"]
+[editable path="UserInterface/ChaosPad"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/TrackSelectButtons"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/SongTrackSelectButton_6"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_0"]

@@ -23,6 +23,7 @@ enum TutorialCondition {
 	NEVER,
 	KNOB_AT_MIX_STAR,
 	KNOB_AT_OUTSIDE_STAR,
+	KNOB_AT_STAR,
 }
 
 enum TutorialOutcome {

@@ -32,12 +32,12 @@ func get_map() -> Dictionary:
 		O.ON_BASS_RECORDING_STARTED: _outcome_on_bass_recording_started,
 		O.END_FAST_TTS_AND_WAIT:   _outcome_voice_over_done,
 		O.SHOW_CHAOS_TRIANGLE:     EventBus.ui_visibility_requested.emit.bind(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true),
-		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star,
+		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star.bind(2), # start with star 1
 		O.ON_CHAOSPAD_STAR_REACHED: _outcome_chaospad_star_reached,
 		O.ON_CHAOSPAD_LISTENED:    _outcome_chaospad_listened,
-		O.SHOW_MIX_STAR:           _show_knob_target.bind(tutorial.chaos_pad_ui.mix_star_marker),
+		O.SHOW_MIX_STAR:           _outcome_show_chaospad_star.bind(0),
 		O.ON_MIX_STAR_REACHED:     _reach_knob_target.bind(tutorial.chaos_pad_ui.mix_star_marker),
-		O.SHOW_OUTSIDE_STAR:       _show_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
+		O.SHOW_OUTSIDE_STAR:       _outcome_show_chaospad_star.bind(1),
 		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
 		O.FINISH_TUTORIAL:         _outcome_end_tutorial,
 	}
@@ -164,16 +164,24 @@ func _outcome_voice_over_done() -> void:
 
 # ── Chaos pad ────────────────────────────────────────────────────────────────────────────────────────────────
 
-func _outcome_show_chaospad_star() -> void:
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD, true)
+func _outcome_show_chaospad_star(starID:int) -> void:
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, false)
+	if starID == 0:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, true)
+	elif starID == 1:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, true)
+	elif starID == 2:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, true)
 	
+
 func _outcome_chaospad_star_reached() -> void:
 	tutorial.play_achievement_sfx()
 	tutorial._skip_play()
 
 func _outcome_chaospad_listened() -> void:
 	tutorial._text_allowed = true
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, false)
 	tutorial.play_achievement_sfx()
 	tutorial._active = true
 
@@ -183,7 +191,7 @@ func _show_knob_target(marker: Node2D) -> void:
 	tutorial._active = false
 	marker.visible = true
 
-func _reach_knob_target(marker: Node2D) -> void:
+func _reach_knob_target(marker: TextureRect) -> void:
 	tutorial._active = true
 	marker.visible = false
 	tutorial.play_achievement_sfx()
@@ -195,6 +203,9 @@ func _outcome_end_tutorial() -> void:
 	GameState.use_tutorial = false
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, false)
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()

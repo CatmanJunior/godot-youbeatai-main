@@ -200,6 +200,7 @@ outcome = 24
 [sub_resource type="Resource" id="Step_36"]
 script = ExtResource("2_step")
 instruction = "Beweeg het grijze rondje met de vingerafdruk naar het 🌟 sterretje "
+condition = 21
 outcome = 25
 
 [sub_resource type="Resource" id="Step_37"]
@@ -211,11 +212,13 @@ outcome = 26
 [sub_resource type="Resource" id="Step_38"]
 script = ExtResource("2_step")
 instruction = "Dit geeft een hele andere sfeer aan je beat"
+condition = 1
 outcome = 27
 
 [sub_resource type="Resource" id="Step_39"]
 script = ExtResource("2_step")
 instruction = "Beweeg het grijze rondje weer naar het 🌟 sterretje"
+condition = 19
 outcome = 28
 
 [sub_resource type="Resource" id="Step_40"]
@@ -226,6 +229,7 @@ outcome = 29
 [sub_resource type="Resource" id="Step_41"]
 script = ExtResource("2_step")
 instruction = "Beweeg het grijze rondje nog 1 keer naar het 🌟 sterretje"
+condition = 20
 outcome = 30
 
 [sub_resource type="Resource" id="Step_42"]

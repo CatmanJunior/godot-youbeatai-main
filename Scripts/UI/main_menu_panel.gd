@@ -3,13 +3,19 @@ extends Panel
 @export var pro_button: Button
 @export var credits_button: Button
 @export var back_button: Button
-
+@export var tutorial_button: Button
 @export var credits_panel: Panel
 
 func _ready():
+	tutorial_button.pressed.connect(_on_tutorial_button_pressed)
 	pro_button.pressed.connect(_on_pro_button_pressed)
 	credits_button.pressed.connect(_on_credits_button_pressed)
 	back_button.pressed.connect(_on_back_button_pressed)
+
+
+func _on_tutorial_button_pressed():
+	GameState.use_tutorial = true
+	_on_pro_button_pressed()
 
 func _on_pro_button_pressed():
 	if OS.has_feature("web"):

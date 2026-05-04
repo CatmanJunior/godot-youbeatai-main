@@ -89,7 +89,11 @@ corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h74sy"]
 
-[node name="scene2" type="Node2D" unique_id=46128934]
+[node name="scene2" type="Node2D" unique_id=46128934 node_paths=PackedStringArray("klappy_response", "talking")]
+script = ExtResource("5_pd2wx")
+klappy_response = NodePath("Klappy respons bubble")
+message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
+talking = NodePath("Robot/SubViewportContainer/SubViewport/Klappy")
 
 [node name="SoundBankSelector" type="Node" parent="." unique_id=760179130 node_paths=PackedStringArray("soundbank_selection_menu")]
 script = ExtResource("1_h74sy")
@@ -946,7 +950,7 @@ light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 118098534) index="0" unique_id=1128806749]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 1618779926) index="0" unique_id=1281992101]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]
@@ -962,15 +966,12 @@ energy = 2.66
 range_item_cull_mask = 2
 texture_scale = 2.41
 
-[node name="Klappy respons bubble" parent="." unique_id=532752049 instance=ExtResource("4_saqfl")]
+[node name="Klappy respons bubble" parent="." unique_id=532752049 node_paths=PackedStringArray("talking") instance=ExtResource("4_saqfl")]
 position = Vector2(85, -27)
+talking = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy")
 
 [node name="Continue" parent="Klappy respons bubble/Panel" parent_id_path=PackedInt32Array(532752049, 1355785928) index="1" unique_id=1713570990]
 visible = false
-
-[node name="Node" type="Node" parent="." unique_id=676744060]
-script = ExtResource("5_pd2wx")
-message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1519508310]
 

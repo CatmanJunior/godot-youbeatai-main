@@ -1,5 +1,6 @@
 [gd_resource type="Resource" script_class="ChordPlayerSettings" format=3 uid="uid://gj7nhtsggdey"]
 
+[ext_resource type="Resource" uid="uid://duu4xfosamul2" path="res://Resources/Audio/SoundBanks/4_pop/4_pop.tres" id="1_nwmne"]
 [ext_resource type="Script" uid="uid://u6uoammlr3ut" path="res://Scripts/DataClasses/SoundBanks/chord_player_settings.gd" id="1_plqal"]
 [ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="2_nwmne"]
 [ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="3_j4fbb"]
@@ -43,4 +44,5 @@ ExtResource("6_bf7qy"): SubResource("Resource_1semv"),
 ExtResource("7_rk7pe"): SubResource("Resource_2060n")
 })
 chordDuration = 8
+fallback_bank = ExtResource("1_nwmne")
 metadata/_custom_type_script = "uid://u6uoammlr3ut"

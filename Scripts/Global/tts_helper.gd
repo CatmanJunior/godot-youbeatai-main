@@ -26,7 +26,7 @@ func get_voices():
 func stop_speaking():
 	DisplayServer.tts_stop()
 
-func Text_without_emoticons(text: String) -> String:
+func text_without_emoticons(text: String) -> String:
 	var regex = RegEx.new()
 	regex.compile(r":[^:\s]+:")
 	return regex.sub(text, "")

@@ -3,7 +3,7 @@ extends Node2D
 @onready var response_panel:Panel = $Panel
 @onready var continue_button:Button = $Panel/Continue
 
-@onready var talking = $"../Robot/SubViewportContainer/SubViewport/Klappy"
+@export var talking : Node
 
 signal continue_pressed
 
@@ -14,10 +14,8 @@ func fill_response_label(message):
 func change_panel_visibility(visibile):
 	response_panel.visible = visibile
 	if visibile:
-		continue_button.animation_play.emit()
 		talking.talking = true
 	else:
-		continue_button.animation_stop.emit()
 		talking.talking = false
 
 

@@ -36,7 +36,7 @@ func _init_audio_players():
 	# Create sample track players
 	for i in range(SAMPLE_TRACKS_COUNT):
 		var player = SampleTrackPlayer.new()
-		player.setup(i, "Master")
+		player.setup(i, "SubMaster")
 		player.set_streams(main_audio_files[i], alt_audio_files[i]) # set initial streams from exported arrays
 		track_players.append(player)
 		add_child(player)
@@ -44,13 +44,13 @@ func _init_audio_players():
 	# Create synth track players
 	for i in range(SYNTH_TRACKS_COUNT):
 		var player : SynthTrackPlayer = SynthTrackPlayer.new()
-		player.setup(track_players.size(), "Master", note_player_settings[i]) # pass settings for note player
+		player.setup(track_players.size(), "SubMaster", note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)
 
 	# Create the song track player
 	song_track_player = SongTrackPlayer.new()
-	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, "Master", chord_player_settings)
+	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, "SubMaster", chord_player_settings)
 	add_child(song_track_player)
 
 func play_sfx(stream: AudioStream):
@@ -66,5 +66,3 @@ func get_track_volume(track: int) -> float:
 		return 0.0
 	
 	return BusHelper.get_volume(track_players[track].bus_name)
-
-

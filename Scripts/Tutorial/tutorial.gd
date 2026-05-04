@@ -5,11 +5,7 @@ extends Node
 @export var achievements_panel: Panel
 @export var achievements_fx_sound: AudioStream
 @export var clap_stomp: ClapStompDetector
-@export var in_between_area: Area2D
-@export var in_between_mesh: Node3D
-@export var out_side_area: Area2D
-@export var out_side_mesh: Node3D
-@export var knob_area: Area2D
+@export var chaos_pad_ui: ChaosPadUI
 @export var chaos_pad_knob_top_position: Node2D
 
 # ── Constants ─────────────────────────────────────────────
@@ -56,6 +52,8 @@ var tutorial_steps: Array[TutorialStepData] = []
 var _condition_map: Dictionary = {}
 var _outcome_map: Dictionary = {}
 
+var _last_knob_pos: Vector2 = Vector2.ZERO
+
 var _conditions: TutorialConditions
 var _outcomes: TutorialOutcomes
 
@@ -78,6 +76,7 @@ func _ready() -> void:
 	add_child(_outcomes)
 
 	_build_maps()
+	EventBus.chaos_pad_dragging.connect(_on_chaos_pad_knob_dragged)
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
 	EventBus.clap_on_beat_detected.connect(_on_has_clapped_on_beat)
@@ -142,6 +141,7 @@ func reset() -> void:
 	_text_allowed = true
 	_increased_speed = false
 	_first_tts_done = false
+	_last_knob_pos = Vector2.ZERO
 
 #when . is pressed goto next tutorial step
 func _input(event: InputEvent) -> void:
@@ -239,10 +239,8 @@ func _tutorial_continue() -> void:
 func _klappy_continue() -> void:
 	_next_line()
 
-# Advances the tutorial when the knob Area2D is entered by another Area2D body.
-func _body_continue(body: Area2D) -> void:
-	if body == knob_area:
-		_next_line()
+func _on_chaos_pad_knob_dragged(pos: Vector2) -> void:
+	_last_knob_pos = pos
 
 # Fires the current outcome callable, increments the step index, speaks the next instruction,
 # and refreshes the active condition and outcome callables for the new step.

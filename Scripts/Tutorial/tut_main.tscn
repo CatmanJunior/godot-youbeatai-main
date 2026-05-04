@@ -120,12 +120,13 @@ playback_type = 1
 
 [node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1661558996]
 
-[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp")]
+[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
 script = ExtResource("28_ux43w")
 tutorial_steps_resource = ExtResource("29_n7cmr")
 achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
+chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false

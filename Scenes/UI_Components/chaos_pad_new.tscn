@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="12_f0ro3"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
+[ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="15_ldfg3"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/UI/ChaosPad/choas_pad_knob.gd" id="22_ds0f1"]
 [ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/UI/ChaosPad/chaos_pad_triangle_container.gd" id="25_gu6ag"]
 
@@ -22,7 +23,7 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_vhj50"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.5372549)
 
-[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon")]
+[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon", "mix_star_marker", "outside_star_marker")]
 physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 8
@@ -42,6 +43,8 @@ knob = NodePath("ChaosPadTriangle/Knob")
 track_settings = ExtResource("2_a3b2x")
 main_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconMain/ChaosIconBack")
 alt_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconAlt/ChaosIconBack")
+mix_star_marker = NodePath("ChaosPadTriangle/MixStar")
+outside_star_marker = NodePath("ChaosPadTriangle/OutsideStar")
 
 [node name="VisibilitySetter" type="Control" parent="." unique_id=863757447 node_paths=PackedStringArray("ui_reference")]
 anchors_preset = 0
@@ -226,6 +229,91 @@ width = 35.0
 width_curve = SubResource("Curve_f0ro3")
 gradient = SubResource("Gradient_vhj50")
 script = ExtResource("12_f0ro3")
+
+[node name="Star2" type="TextureRect" parent="ChaosPadTriangle" unique_id=842200770]
+visible = false
+self_modulate = Color(0.32172823, 0.3217279, 0.3217278, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.5
+offset_top = -247.5
+offset_right = 34.5
+offset_bottom = -174.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("15_ldfg3")
+expand_mode = 1
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ChaosPadTriangle/Star2" unique_id=225166776]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.6500015
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("15_ldfg3")
+stretch_mode = 5
+
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle/Star2" unique_id=1998490079 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("3_vhj50")
+ui_element = 13
+ui_reference = NodePath("..")
+
+[node name="Star" type="TextureRect" parent="ChaosPadTriangle" unique_id=1742236932]
+visible = false
+self_modulate = Color(0.32172823, 0.3217279, 0.3217278, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.5
+offset_top = -144.5
+offset_right = -95.5
+offset_bottom = -71.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("15_ldfg3")
+expand_mode = 1
+metadata/_edit_group_ = true
+
+[node name="TextureRect" type="TextureRect" parent="ChaosPadTriangle/Star" unique_id=48249998]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -6.6500015
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("15_ldfg3")
+stretch_mode = 5
+
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle/Star" unique_id=1502824628 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("3_vhj50")
+ui_element = 12
+ui_reference = NodePath("..")
+
+[node name="MixStar" type="Marker2D" parent="ChaosPadTriangle" unique_id=1900000001]
+position = Vector2(255, 204)
+
+[node name="OutsideStar" type="Marker2D" parent="ChaosPadTriangle" unique_id=1900000002]
+visible = false
+position = Vector2(530, 30)
 
 [editable path="ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="ChaosPadTriangle/PointRight/ChaosIconAlt"]

@@ -35,10 +35,10 @@ func get_map() -> Dictionary:
 		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star,
 		O.ON_CHAOSPAD_STAR_REACHED: _outcome_chaospad_star_reached,
 		O.ON_CHAOSPAD_LISTENED:    _outcome_chaospad_listened,
-		O.SHOW_MIX_STAR:           _show_star_area.bind(tutorial.in_between_area, tutorial.in_between_mesh),
-		O.ON_MIX_STAR_REACHED:     _reach_star_area.bind(tutorial.in_between_area, tutorial.in_between_mesh),
-		O.SHOW_OUTSIDE_STAR:       _show_star_area.bind(tutorial.out_side_area, tutorial.out_side_mesh),
-		O.ON_OUTSIDE_STAR_REACHED: _reach_star_area.bind(tutorial.out_side_area, tutorial.out_side_mesh),
+		O.SHOW_MIX_STAR:           _show_knob_target.bind(tutorial.chaos_pad_ui.mix_star_marker),
+		O.ON_MIX_STAR_REACHED:     _reach_knob_target.bind(tutorial.chaos_pad_ui.mix_star_marker),
+		O.SHOW_OUTSIDE_STAR:       _show_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
+		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
 		O.FINISH_TUTORIAL:         _outcome_end_tutorial,
 	}
 
@@ -177,20 +177,15 @@ func _outcome_chaospad_listened() -> void:
 	tutorial.play_achievement_sfx()
 	tutorial._active = true
 
-# ── Shared helper: show/reach a star Area2D ────────────────────────────────────────────────────────────────────────────────────────────
+# ── Shared helper: show/reach a knob target Marker2D ─────────────────────────────────────────────────────────────────────────────
 
-func _show_star_area(area: Area2D, mesh: Node3D) -> void:
+func _show_knob_target(marker: Node2D) -> void:
 	tutorial._active = false
-	mesh.visible = true
-	area.set_deferred("monitoring", true)
-	area.emit_signal("animation_star_play")
-	area.area_entered.connect(tutorial._body_continue)
+	marker.visible = true
 
-func _reach_star_area(area: Area2D, mesh: Node3D) -> void:
+func _reach_knob_target(marker: Node2D) -> void:
 	tutorial._active = true
-	area.set_deferred("monitoring", false)
-	area.emit_signal("animation_star_stop")
-	mesh.visible = false
+	marker.visible = false
 	tutorial.play_achievement_sfx()
 
 # ── End tutorial ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────

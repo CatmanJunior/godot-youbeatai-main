@@ -28,6 +28,8 @@ func get_map() -> Dictionary:
 		C.BASS_RECORDING_ACTIVE:          _cond_bass_ring_recording_active,
 		C.ALWAYS:                         _cond_always,
 		C.NEVER:                          _cond_never,
+		C.KNOB_AT_MIX_STAR:               _cond_knob_at_mix_star,
+		C.KNOB_AT_OUTSIDE_STAR:           _cond_knob_at_outside_star,
 	}
 
 # ── Playback ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -109,3 +111,21 @@ func _cond_always() -> bool:
 
 func _cond_never() -> bool:
 	return false
+
+# ── Chaos pad knob zones ──────────────────────────────────────────────────────────────────────────────────────────────
+
+const KNOB_ZONE_RADIUS: float = 50.0
+
+## True when the knob is within [constant KNOB_ZONE_RADIUS] of the mix-star marker (centre of triangle).
+func _cond_knob_at_mix_star() -> bool:
+	var marker := tutorial.chaos_pad_ui.mix_star_marker
+	if marker == null:
+		return false
+	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
+
+## True when the knob is within [constant KNOB_ZONE_RADIUS] of the outside-star marker.
+func _cond_knob_at_outside_star() -> bool:
+	var marker := tutorial.chaos_pad_ui.outside_star_marker
+	if marker == null:
+		return false
+	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS

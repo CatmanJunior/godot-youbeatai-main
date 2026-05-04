@@ -21,6 +21,8 @@ enum TutorialCondition {
 	ALWAYS,
 	TTS_DONE_AFTER_KNOB,
 	NEVER,
+	KNOB_AT_MIX_STAR,
+	KNOB_AT_OUTSIDE_STAR,
 }
 
 enum TutorialOutcome {

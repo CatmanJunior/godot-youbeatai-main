@@ -76,7 +76,7 @@ func _stop_recording() -> void:
 	GameState.is_recording = false
 	EventBus.mute_all_requested.emit(false)
 	EventBus.stop_recording_requested.emit(current_recording_data)
-	# current_recording_data = null
+	current_recording_data = null
 
 
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:

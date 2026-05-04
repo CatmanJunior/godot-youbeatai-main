@@ -162,8 +162,7 @@ signal load_song_requested()
 ## Handlers should rebuild any runtime objects (section buttons, waveform visualizers)
 ## before the section_switch_requested signal fires the full UI cascade.
 signal song_loaded()
-## Emitted to request saving the current project as an MP3 file.
-signal save_to_mp3_requested()
+
 ## Emitted to request exporting the project. [code]mode_export_song[/code]: false for beat, true for song.
 signal export_requested(mail: bool, mode_export_song: bool)
 ## Emitted to request opening the export dialog. [code]mode_export_song[/code]: false for beat, true for song.

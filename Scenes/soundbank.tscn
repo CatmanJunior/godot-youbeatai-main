@@ -950,7 +950,7 @@ light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 1618779926) index="0" unique_id=1281992101]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 246976813) index="0" unique_id=25550152]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]

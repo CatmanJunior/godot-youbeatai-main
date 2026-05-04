@@ -12,6 +12,13 @@
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "pointer", "play_pause_button")]
 physics_interpolation_mode = 0
 layout_mode = 3

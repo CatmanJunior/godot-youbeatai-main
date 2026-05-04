@@ -1,4 +1,4 @@
-﻿# 🏗️ YouBeatAI Architecture
+# 🏗️ YouBeatAI Architecture
 
 ## 🎯 Design Philosophy
 
@@ -251,139 +251,139 @@ All signals are defined in `Scripts/Global/event_bus.gd`. Naming conventions: `*
 
 ```mermaid
 sequenceDiagram
-    participant BM as BeatManager
-    participant EB as EventBus
-    participant STP as SampleTrackPlayer
-    participant SyTP as SynthTrackPlayer
+	participant BM as BeatManager
+	participant EB as EventBus
+	participant STP as SampleTrackPlayer
+	participant SyTP as SynthTrackPlayer
 
-    BM->>BM: _process(delta) — beat_elapsed += delta
-    BM->>BM: swing_adjusted_duration = beat_duration ± (beat_duration × swing)
-    Note over BM: odd beats get +swing, even beats get -swing
-    BM->>BM: beat_elapsed > swing_adjusted_duration?
-    BM->>BM: current_beat = (current_beat + 1) % total_beats
-    BM->>EB: beat_triggered(current_beat)
-    EB->>STP: _on_beat_triggered(beat)
-    STP->>STP: (track_data as SampleTrackData).get_beat_active(beat)?
-    alt Beat is active
-        STP->>STP: play() — players[0] + players[1] + players[2] if has_recording
-    end
-    EB->>SyTP: _on_beat_triggered(beat)
-    SyTP->>SyTP: track_data.sequence.get_note_at_beat(beat)?
-    alt Has note at this beat
-        SyTP->>SyTP: note_player.play_note(sequence_note)
-    end
+	BM->>BM: _process(delta) — beat_elapsed += delta
+	BM->>BM: swing_adjusted_duration = beat_duration ± (beat_duration × swing)
+	Note over BM: odd beats get +swing, even beats get -swing
+	BM->>BM: beat_elapsed > swing_adjusted_duration?
+	BM->>BM: current_beat = (current_beat + 1) % total_beats
+	BM->>EB: beat_triggered(current_beat)
+	EB->>STP: _on_beat_triggered(beat)
+	STP->>STP: (track_data as SampleTrackData).get_beat_active(beat)?
+	alt Beat is active
+		STP->>STP: play() — players[0] + players[1] + players[2] if has_recording
+	end
+	EB->>SyTP: _on_beat_triggered(beat)
+	SyTP->>SyTP: track_data.sequence.get_note_at_beat(beat)?
+	alt Has note at this beat
+		SyTP->>SyTP: note_player.play_note(sequence_note)
+	end
 ```
 
 ### Section Switching Flow
 
 ```mermaid
 sequenceDiagram
-    participant UI as SectionUI
-    participant SM as SectionManager
-    participant EB as EventBus
-    participant SS as SongState
-    participant TP as TrackPlayers (all)
-    participant BR as BeatRingUI
+	participant UI as SectionUI
+	participant SM as SectionManager
+	participant EB as EventBus
+	participant SS as SongState
+	participant TP as TrackPlayers (all)
+	participant BR as BeatRingUI
 
-    UI->>EB: section_switch_requested(section_index)
-    EB->>SM: switch_section(section_index)
-    SM->>SS: current_section = sections[section_index]
-    SM->>EB: section_switched(section_data)
-    EB->>BR: _on_switch_section(new_section) — update beat sprites
-    EB->>TP: _on_section_switched(new_section) — reload streams + weights + knob
-    EB->>ChaosPadUI: _on_section_changed(new_section) — restore knob position
+	UI->>EB: section_switch_requested(section_index)
+	EB->>SM: switch_section(section_index)
+	SM->>SS: current_section = sections[section_index]
+	SM->>EB: section_switched(section_data)
+	EB->>BR: _on_switch_section(new_section) — update beat sprites
+	EB->>TP: _on_section_switched(new_section) — reload streams + weights + knob
+	EB->>ChaosPadUI: _on_section_changed(new_section) — restore knob position
 ```
 
 ### Recording Flow (SAMPLE track)
 
 ```mermaid
 sequenceDiagram
-    participant UI as RecordSampleButton
-    participant TR as TrackRecorder
-    participant EB as EventBus
-    participant MC as MicrophoneRecorder
-    participant STP as SampleTrackPlayer
+	participant UI as RecordSampleButton
+	participant TR as TrackRecorder
+	participant EB as EventBus
+	participant MC as MicrophoneRecorder
+	participant STP as SampleTrackPlayer
 
-    UI->>EB: record_button_toggled(true)
-    EB->>TR: _on_recording_button_toggled(true)
-    TR->>TR: current_recording_data = SongState.current_track.create_recording_data()
-    TR->>EB: mute_all_requested(true)
-    TR->>TR: state = RECORDING
-    TR->>EB: recording_started(recording_data)
-    EB->>MC: _start_recording() — AudioEffectRecord.set_recording_active(true)
-    Note over TR: _process monitors volume until threshold, then actual_recording_length += delta
-    TR->>TR: get_recording_progress() >= 1.0?
-    TR->>EB: stop_recording_requested(recording_data)
-    EB->>MC: _stop_recording() — get_recording() returns AudioStreamWAV
-    MC->>EB: recording_stopped(recording_data) — audio placed on RecordingData
-    EB->>STP: _on_request_set_recorded_stream() → _set_recorded_stream()
-    STP->>STP: players[2].stream = recording_data.audio_stream; _has_recording = true
+	UI->>EB: record_button_toggled(true)
+	EB->>TR: _on_recording_button_toggled(true)
+	TR->>TR: current_recording_data = SongState.current_track.create_recording_data()
+	TR->>EB: mute_all_requested(true)
+	TR->>TR: state = RECORDING
+	TR->>EB: recording_started(recording_data)
+	EB->>MC: _start_recording() — AudioEffectRecord.set_recording_active(true)
+	Note over TR: _process monitors volume until threshold, then actual_recording_length += delta
+	TR->>TR: get_recording_progress() >= 1.0?
+	TR->>EB: stop_recording_requested(recording_data)
+	EB->>MC: _stop_recording() — get_recording() returns AudioStreamWAV
+	MC->>EB: recording_stopped(recording_data) — audio placed on RecordingData
+	EB->>STP: _on_request_set_recorded_stream() → _set_recorded_stream()
+	STP->>STP: players[2].stream = recording_data.audio_stream; _has_recording = true
 ```
 
 ### Recording Flow (SYNTH track — with countdown)
 
 ```mermaid
 sequenceDiagram
-    participant TR as TrackRecorder
-    participant EB as EventBus
-    participant MC as MicrophoneRecorder
-    participant SyTP as SynthTrackPlayer
-    participant VP as VoiceProcessor (Thread)
+	participant TR as TrackRecorder
+	participant EB as EventBus
+	participant MC as MicrophoneRecorder
+	participant SyTP as SynthTrackPlayer
+	participant VP as VoiceProcessor (Thread)
 
-    TR->>EB: countdown_show_requested
-    TR->>EB: playing_change_requested(true)
-    TR->>TR: await calculate_time_until_top() — sync to bar top
-    TR->>EB: countdown_close_requested
-    TR->>EB: recording_started(recording_data)
-    EB->>MC: _start_recording()
-    Note over TR: records for bar_length × loop_count seconds
-    TR->>EB: stop_recording_requested(recording_data)
-    EB->>MC: _stop_recording() → AudioStreamWAV placed on RecordingData
-    MC->>EB: recording_stopped
-    EB->>SyTP: _on_request_set_recorded_stream()
-    SyTP->>VP: VoiceProcessor.process_audio(wav) in Thread
-    VP->>VP: FFT pitch analysis → SequenceNote[]
-    VP->>EB: sequence_ready(sequence, track_data)
-    EB->>SyTP: _on_sequence_ready → track_data.set_sequence(sequence)
+	TR->>EB: countdown_show_requested
+	TR->>EB: playing_change_requested(true)
+	TR->>TR: await calculate_time_until_top() — sync to bar top
+	TR->>EB: countdown_close_requested
+	TR->>EB: recording_started(recording_data)
+	EB->>MC: _start_recording()
+	Note over TR: records for bar_length × loop_count seconds
+	TR->>EB: stop_recording_requested(recording_data)
+	EB->>MC: _stop_recording() → AudioStreamWAV placed on RecordingData
+	MC->>EB: recording_stopped
+	EB->>SyTP: _on_request_set_recorded_stream()
+	SyTP->>VP: VoiceProcessor.process_audio(wav) in Thread
+	VP->>VP: FFT pitch analysis → SequenceNote[]
+	VP->>EB: sequence_ready(sequence, track_data)
+	EB->>SyTP: _on_sequence_ready → track_data.set_sequence(sequence)
 ```
 
 ### Chaos Pad Mixing Flow
 
 ```mermaid
 graph TD
-    A[User drags knob] --> B[ChaosPadKnob._gui_input]
-    B --> C[ChaosPadCalculator.clamp_to_triangle_area]
-    C --> D[ChaosPadCalculator.calc_weights]
-    D --> E[Barycentric coords u/v/w with sqrt equal-power curve]
-    E --> F[master_volume via outer-distance attenuation]
-    E --> G[weights: Vector3 for Main / Alt / Rec layers]
-    F --> H[EventBus.mixing_weights_changed]
-    G --> H
-    H --> I[TrackPlayerBase._on_mixing_weights_changed]
-    I --> J[BusHelper.crossfade3 — constant-power 3-way blend]
-    J --> K[AudioServer bus volume_db updated per sub-bus]
-    B --> L[EventBus.chaos_pad_dragging]
-    L --> M[TrackData.knob_position saved — persists on section switch]
+	A[User drags knob] --> B[ChaosPadKnob._gui_input]
+	B --> C[ChaosPadCalculator.clamp_to_triangle_area]
+	C --> D[ChaosPadCalculator.calc_weights]
+	D --> E[Barycentric coords u/v/w with sqrt equal-power curve]
+	E --> F[master_volume via outer-distance attenuation]
+	E --> G[weights: Vector3 for Main / Alt / Rec layers]
+	F --> H[EventBus.mixing_weights_changed]
+	G --> H
+	H --> I[TrackPlayerBase._on_mixing_weights_changed]
+	I --> J[BusHelper.crossfade3 — constant-power 3-way blend]
+	J --> K[AudioServer bus volume_db updated per sub-bus]
+	B --> L[EventBus.chaos_pad_dragging]
+	L --> M[TrackData.knob_position saved — persists on section switch]
 ```
 
 ### Save / Load Flow
 
 ```mermaid
 graph TD
-    A[S key or save_song_requested] --> B[SongSaveLoadManager._save_song]
-    B --> C[SongData.from_current — deep-copy snapshot of SongState.data]
-    C --> D[Duplicate sections array, song_track, copy bpm/swing/etc.]
-    D --> E[song.save_to_file — ResourceSaver.save to user://songs/last_save.tres]
-    E --> F[EventBus.saving_completed]
+	A[S key or save_song_requested] --> B[SongSaveLoadManager._save_song]
+	B --> C[SongData.from_current — deep-copy snapshot of SongState.data]
+	C --> D[Duplicate sections array, song_track, copy bpm/swing/etc.]
+	D --> E[song.save_to_file — ResourceSaver.save to user://songs/last_save.tres]
+	E --> F[EventBus.saving_completed]
 
-    G[L key or load_song_requested] --> H[SongData.load_from_file]
-    H --> I[ResourceLoader.load .tres]
-    I --> J[song.apply_to_current]
-    J --> K[SongState.data = loaded song]
-    J --> L[EventBus.bpm_set_requested / swing_set_requested]
-    J --> M[section.rebuild_runtime for each section — restores Sequence + RecordingData]
-    J --> N[EventBus.song_loaded — handlers rebuild runtime objects]
-    N --> O[EventBus.section_switch_requested — triggers full UI cascade]
+	G[L key or load_song_requested] --> H[SongData.load_from_file]
+	H --> I[ResourceLoader.load .tres]
+	I --> J[song.apply_to_current]
+	J --> K[SongState.data = loaded song]
+	J --> L[EventBus.bpm_set_requested / swing_set_requested]
+	J --> M[section.rebuild_runtime for each section — restores Sequence + RecordingData]
+	J --> N[EventBus.song_loaded — handlers rebuild runtime objects]
+	N --> O[EventBus.section_switch_requested — triggers full UI cascade]
 ```
 
 ---
@@ -443,8 +443,8 @@ TrackPlayerBase (Scripts/Audio/AudioPlayerClasses/TrackPlayerBase.gd)
 │   └─ _on_beat_triggered: note_player.play_note(sequence.get_note_at_beat(beat))
 │
 └── SongTrackPlayer (x1: index 6 = SongTrackData.SONG_TRACK_INDEX)
-    │  Bus prefix: "Song" → Song6, Song6_Main, Song6_Alt, Song6_Rec
-    └─ Handles full-song master recording + playback
+	│  Bus prefix: "Song" → Song6, Song6_Main, Song6_Alt, Song6_Rec
+	└─ Handles full-song master recording + playback
 ```
 
 ### Audio Bus Architecture
@@ -474,8 +474,8 @@ Master Bus
 │   ├── Song6_Alt
 │   └── Song6_Rec
 └── Microphone (static, declared in AudioServer/bus layout)
-    ├── AudioEffectRecord (effect index 1)
-    └── AudioEffectSpectrumAnalyzer (appended last)
+	├── AudioEffectRecord (effect index 1)
+	└── AudioEffectSpectrumAnalyzer (appended last)
 ```
 
 All track buses are created dynamically at runtime by `TrackPlayerBase.setup()` via `BusHelper.create_bus()`. The Microphone bus is pre-configured in the saved bus layout.
@@ -543,7 +543,7 @@ Resource
 
 Node
 └── Sequence                  — Beat-indexed note list (Dictionary: beat -> SequenceNote)
-    └── notes: Array[SequenceNote]
+	└── notes: Array[SequenceNote]
 
 Resource
 └── SequenceNote              — note (MIDI pitch), duration, beat, velocity, chord

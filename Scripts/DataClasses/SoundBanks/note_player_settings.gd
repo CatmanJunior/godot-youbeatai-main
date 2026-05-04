@@ -12,13 +12,13 @@ extends Resource
 
 @warning_ignore("shadowed_variable")
 static func create(soundfont: SoundFont, notes: Notes, instrument: int, base_note: Note, allow_key_input: bool, gate: float, volume_db: float, gain: float) -> NotePlayerSettings:
-    var instance = NotePlayerSettings.new()
-    instance.soundfont = soundfont
-    instance.notes = notes
-    instance.instrument = instrument
-    instance.base_note = base_note
-    instance.allow_key_input = allow_key_input
-    instance.gate = gate
-    instance.volume_db = volume_db
-    instance.gain = gain
-    return instance
+	var instance = NotePlayerSettings.new()
+	instance.soundfont = soundfont
+	instance.notes = notes
+	instance.instrument = instrument
+	instance.base_note = base_note
+	instance.allow_key_input = allow_key_input
+	instance.gate = gate
+	instance.volume_db = volume_db
+	instance.gain = gain
+	return instance

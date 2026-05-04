@@ -22,6 +22,9 @@ func set_settings(_settings: ChordPlayerSettings, _bus: StringName) -> void:
 
 	# load soundbank
 	var soundbank = SongState.selected_soundbank
+	if soundbank == null:
+		push_warning("Chords: No soundbank selected, using fallback bank '%s'." % settings.fallback_bank.resource_name)
+		soundbank = settings.fallback_bank
 	soundfont = soundbank.chord_progressions.soundFont
 	instrument = soundbank.chord_progressions.instrument
 	bus = _bus

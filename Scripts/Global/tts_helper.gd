@@ -5,6 +5,16 @@ const BASE_RATE : float = 1.0
 const BASE_VOLUME : int = 100
 const BASE_PITCH : float= 1.0
 
+var initialized := false
+
+func init():
+	if initialized:
+		return
+
+	initialized = true
+	# try to speak, it wont play but will enable the tts
+	speak("test")
+
 func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> void:
 	var voices = get_voices()
 	if voices.is_empty():

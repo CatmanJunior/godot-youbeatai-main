@@ -1,9 +1,28 @@
 extends Node
 
+@export var achievements_panel: Panel
+@export var achievements_fx_sound: AudioStream
+@export var clap_stomp: Node
+@export var instruction_label: Label
+@export var piano_area: Area2D
+@export var piano_mesh: Node3D
+@export var in_between_area: Area2D
+@export var in_between_mesh: Node3D
+@export var out_side_area: Area2D
+@export var out_side_mesh: Node3D
+@export var knob_area: Area2D
+@export var klappy_continue_button: BaseButton
+@export var instrument_clap_button: BaseButton
+@export var instrument_stomp_button: BaseButton
+@export var chaos_pad_knob_top_position: Node2D
+@export var continue_button: BaseButton
+@export var mute_speech_button: BaseButton
+
 # Tutorial state
 var tutorial_level: int = 0
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
+var _first_tts_done: bool = false
 
 var _beats_active_red_ring: int = 5
 var _beats_active_orange_ring: int = 4
@@ -36,21 +55,25 @@ var _increased_speed: bool = false
 var tutorial_steps: Array = []
 const TUTORIAL_STEPS_PATH: String = "res://Data/tutorial_steps.json"
 
-
+func _process(delta: float) -> void:
+	_clapping = false
+	_stomping = false
 
 func _ready():
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 
 
 
+	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
+
 func _on_skip_tutorial_requested():
 	GameState.use_tutorial = false
-	uiManager.achievements_panel.visible = false
+	achievements_panel.visible = false
 	if DisplayServer.tts_is_speaking():
 		DisplayServer.tts_stop()
 
 func play_achievement_sfx() -> void:
-	audioPlayerManager.play_extra_sfx(audioPlayerManager.achievement_sfx)
+	EventBus.play_sfx_requested.emit(achievements_fx_sound)
 
 func _build_tutorial_steps() -> Array:
 	var steps := _load_tutorial_steps_from_json()
@@ -61,10 +84,18 @@ func _build_tutorial_steps() -> Array:
 		push_error("Failed to load tutorial steps from JSON")
 		return []
 
+func _on_has_clapped_or_stomped(interaction_type: int) -> void:
+	if interaction_type == 0: # InteractionType.CLAP
+		_clapping = true
+		_stomping = false
+	else:
+		_clapping = false
+		_stomping = true
+
 # ── Condition callbacks ──────────────────────────────────────────────
 
 func _cond_clapped() -> bool:
-	return beatManager.clapped
+	return clap_stomp.is_clapping
 
 func _cond_tts_done() -> bool:
 	return not DisplayServer.tts_is_speaking()
@@ -89,7 +120,7 @@ func _cond_update_red_and_playing() -> bool:
 	return GameState.playing
 
 func _cond_stomped_enough() -> bool:
-	return beatManager.stomped_on_beat_amount >= _FIXED_AMOUNT
+	return clap_stomp.is_stamping and clap_stomp.stomped_on_beat_amount >= _FIXED_AMOUNT
 
 func _cond_orange_ring_filled() -> bool:
 	return _active_beats_per_ring(_INDEX_ORANGE_RING) >= _beats_active_orange_ring
@@ -103,33 +134,35 @@ func _cond_update_orange_and_playing() -> bool:
 	return GameState.playing
 
 func _cond_clapped_enough() -> bool:
-	return beatManager.clapped_on_beat_amount >= _FIXED_AMOUNT
+	return clap_stomp.is_clapping and clap_stomp.clapped_on_beat_amount >= _FIXED_AMOUNT
 
-func _cond_green_bear() -> bool:
-	_return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).play("Bear_pulse")
-	return mixingManager.chaos_pad_mode == mixingManager.ChaosPadMode.SYNTH_MIXING
+func _cond_synth_2_select() -> bool:
+	# _return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).play("Bear_pulse")
+	return SongState.selected_track_index == 5
 
-func _cond_green_record_or_tts() -> bool:
-	_return_player(uiManager.green_layer_record_button.get_parent()).play("record_pulse")
-	if uiManager.green_layer_record_button.button_pressed:
+func _cond_synth_2_record_or_tts() -> bool:
+	# _return_player(uiManager.green_layer_record_button.get_parent()).play("record_pulse")
+	if SongState.selected_track_index == 5 and GameState.is_recording:
+
 		play_achievement_sfx()
 		tutorial_level += 5
 		DisplayServer.tts_stop()
-		_return_player(uiManager.green_layer_record_button.get_parent()).stop()
+		# _return_player(uiManager.green_layer_record_button.get_parent()).stop()
 		return true
 	return not DisplayServer.tts_is_speaking()
 
-func _cond_green_record_pressed() -> bool:
-	return uiManager.green_layer_record_button.button_pressed
+func _cond_synth_2_record_pressed() -> bool:
+	return SongState.selected_track_index == 5 and GameState.is_recording
 
 func _cond_false() -> bool:
 	return false
 
 func _cond_voice_over_finished() -> bool:
-	return uiManager.layer_voice_over_0.finished
+	#TODO find out what is checked here
+	return true
 
 func _cond_save_knob_and_tts() -> bool:
-	_knob_pos = uiManager.chaos_pad_ui.knob.global_position
+	#TODO this can be removed because knob is always saved
 	return not DisplayServer.tts_is_speaking()
 
 
@@ -139,21 +172,17 @@ func _outcome_noop() -> void:
 	pass
 
 func _outcome_intro() -> void:
-	uiManager.transport_ui.pointer.visible = true
-	visabilityManager.set_ring_visibility(_INDEX_RED_RING, true)
-	uiManager.cross.visible = true
-	uiManager.klappy_continue.visible = false
-	uiManager.audio_export_ui.settings_button.visible = true
-	uiManager.continue_button.emit_signal("animation_play")
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
+	EventBus.track_sprites_visibility_requested.emit(0, true)
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.KLAPPY_CONTINUE, true)
 	play_achievement_sfx()
 
 func _outcome_kick_place() -> void:
-	beatManager.set_beat_free(_INDEX_RED_RING, _RING_TOP, true)
-	beatManager.set_beat_free(_INDEX_RED_RING, _RING_RIGHT, true)
-	beatManager.set_beat_free(_INDEX_RED_RING, _RING_BOTTOM, true)
-	uiManager.transport_ui.play_pause_button.visible = true
-	#TODO: HUH WHAT
-	# uiManager.set_stomp_visibility(true)
+	EventBus.beat_set_free_requested.emit(_INDEX_RED_RING, _RING_TOP, true)
+	EventBus.beat_set_free_requested.emit(_INDEX_RED_RING, _RING_RIGHT, true)
+	EventBus.beat_set_free_requested.emit(_INDEX_RED_RING, _RING_BOTTOM, true)
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.PLAY_PAUSE_BUTTON, true)
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.STOMP_UI, true)
 
 func _outcome_start_timer_allowed() -> void:
 	_timer.start(_timer.wait_time)
@@ -172,24 +201,21 @@ func _outcome_timer_2() -> void:
 	_timer.start(2)
 
 func _outcome_stomp_setup() -> void:
-	uiManager.amount_left.text = "Goed gestamped %d / 5" % uiManager.stomped_on_beat_amount
 	_stomping = true
 	play_achievement_sfx()
 
 func _outcome_stomp_done() -> void:
 	_stomping = false
-	uiManager.amount_left.visible = false
-	uiManager.amount_left.text = ""
 	EventBus.playing_change_requested.emit(false)
 	play_achievement_sfx()
 
 func _outcome_show_orange_ring() -> void:
-	visabilityManager.set_ring_visibility(_INDEX_ORANGE_RING, true)
+	EventBus.track_sprites_visibility_requested.emit(_INDEX_ORANGE_RING, true)
 
 func _outcome_clap_ring_setup() -> void:
-	beatManager.set_beat_free(_INDEX_ORANGE_RING, _RING_RIGHT, true)
-	beatManager.set_beat_free(_INDEX_ORANGE_RING, _RING_LEFT, true)
-	uiManager.set_clap_visibility(true)
+	EventBus.beat_set_free_requested.emit(_INDEX_ORANGE_RING, _RING_RIGHT, true)
+	EventBus.beat_set_free_requested.emit(_INDEX_ORANGE_RING, _RING_LEFT, true)
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.CLAP_UI, true)
 	_skip_play()
 
 func _outcome_clap_listen() -> void:
@@ -215,43 +241,42 @@ func _outcome_listen_again() -> void:
 	_timer.start(2)
 
 func _outcome_clap_count_setup() -> void:
-	uiManager.amount_left.visible = true
-	uiManager.amount_left.text = "Goed geklapped %d / 5" % uiManager.clapped_on_beat_amount
 	_clapping = true
 
 func _outcome_clap_done() -> void:
 	_clapping = false
-	uiManager.amount_left.visible = false
 	EventBus.playing_change_requested.emit(false)
 	play_achievement_sfx()
 
 func _outcome_show_green_layer() -> void:
-	visabilityManager.set_green_layer_visibility(true)
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.GREEN_LAYER, true)
 
 func _outcome_green_bear() -> void:
-	visabilityManager.set_mic_recorder_visibility(true)
-	uiManager.chaos_pad_ui.knob.global_position = _top.global_position
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.MIC_RECORDER, true)
+	if chaos_pad_knob_top_position:
+		EventBus.chaos_pad_knob_position_set_requested.emit(chaos_pad_knob_top_position.global_position)
 	_allowed = true
 	play_achievement_sfx()
-	_return_player(uiManager.chaos_pad_ui.activate_green_chaos_button).stop()
+	EventBus.chaos_pad_button_animation_stop_requested.emit()
 
 func _outcome_green_record_pressed() -> void:
 	play_achievement_sfx()
 	_increased_speed = true
 	DisplayServer.tts_stop()
-	_return_player(uiManager.green_layer_record_button.get_parent()).stop()
+	EventBus.record_button_animation_stop_requested.emit()
 
 func _outcome_voice_over_done() -> void:
 	_increased_speed = false
 	_timer.start(3)
 
 func _outcome_show_triangle() -> void:
-	uiManager.chaos_pad_ui.chaos_pad_triangle_sprite.visible = true
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.CHAOS_PAD_TRIANGLE, true)
 
 func _outcome_show_piano_area() -> void:
-	uiManager.piano_area.monitoring = true
-	uiManager.piano_mesh.visible = true
-	uiManager.piano_area.emit_signal("animation_star_play")
+	piano_area.monitoring = true
+	piano_mesh.visible = true
+	piano_area.emit_signal("animation_star_play")
+	piano_area.area_entered.connect(_body_continue)
 
 func _outcome_move_to_star_1() -> void:
 	play_achievement_sfx()
@@ -259,47 +284,51 @@ func _outcome_move_to_star_1() -> void:
 
 func _outcome_listen_piano() -> void:
 	_text_allowed = true
-	uiManager.piano_area.set_deferred("monitoring", false)
-	uiManager.piano_mesh.visible = false
-	uiManager.piano_area.emit_signal("animation_star_stop")
+	piano_area.set_deferred("monitoring", false)
+	piano_mesh.visible = false
+	piano_area.emit_signal("animation_star_stop")
 	play_achievement_sfx()
 	_active = true
 
 func _outcome_show_in_between() -> void:
 	_active = false
-	uiManager.in_between_mesh.visible = true
-	uiManager.in_between_area.set_deferred("monitoring", true)
-	uiManager.in_between_area.emit_signal("animation_star_play")
+	in_between_mesh.visible = true
+	in_between_area.set_deferred("monitoring", true)
+	in_between_area.emit_signal("animation_star_play")
+	in_between_area.area_entered.connect(_body_continue)
 
 func _outcome_move_in_between() -> void:
 	_active = true
-	uiManager.in_between_area.set_deferred("monitoring", false)
-	uiManager.in_between_area.emit_signal("animation_star_stop")
+	in_between_area.set_deferred("monitoring", false)
+	in_between_area.emit_signal("animation_star_stop")
 	play_achievement_sfx()
-	uiManager.in_between_mesh.visible = false
+	in_between_mesh.visible = false
 
 func _outcome_show_outside() -> void:
 	_active = false
-	uiManager.out_side_area.set_deferred("monitoring", true)
-	uiManager.out_side_area.emit_signal("animation_star_play")
-	uiManager.out_side_mesh.visible = true
+	out_side_area.set_deferred("monitoring", true)
+	out_side_area.emit_signal("animation_star_play")
+	out_side_mesh.visible = true
 
 func _outcome_move_outside() -> void:
-	uiManager.out_side_area.set_deferred("monitoring", false)
-	uiManager.out_side_area.emit_signal("animation_star_stop")
-	uiManager.out_side_mesh.visible = false
+	out_side_area.set_deferred("monitoring", false)
+	out_side_area.emit_signal("animation_star_stop")
+	out_side_mesh.visible = false
 	play_achievement_sfx()
 	_active = true
 
 func _outcome_end_tutorial() -> void:
 	tutorial_level = -2
-	visabilityManager.set_entire_interface_visibility(true)
-	uiManager.achievements_panel.visible = false
+	EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.ENTIRE_INTERFACE, true)
+	achievements_panel.visible = false
 	play_achievement_sfx()
-	uiManager.continue_button.pressed.disconnect(_tutorial_continue)
-	uiManager.piano_area.area_entered.disconnect(_body_continue)
-	uiManager.in_between_area.area_entered.disconnect(_body_continue)
-	uiManager.klappy_continue.pressed.disconnect(_klappy_continue)
+	EventBus.continue_button_pressed.disconnect(_tutorial_continue)
+	if piano_area.area_entered.is_connected(_body_continue):
+		piano_area.area_entered.disconnect(_body_continue)
+	if in_between_area.area_entered.is_connected(_body_continue):
+		in_between_area.area_entered.disconnect(_body_continue)
+	if klappy_continue_button and klappy_continue_button.pressed.is_connected(_klappy_continue):
+		klappy_continue_button.pressed.disconnect(_klappy_continue)
 	DisplayServer.tts_stop()
 
 
@@ -327,6 +356,7 @@ func reset() -> void:
 	_clap_button = null
 	_stomp_button = null
 	_increased_speed = false
+	_first_tts_done = false
 
 
 func check_if_tutorial_was_chosen() -> void:
@@ -336,22 +366,21 @@ func check_if_tutorial_was_chosen() -> void:
 func try_activate_tutorial() -> void:
 	if use_tutorial:
 		print("tutorial activated")
-		uiManager.transport_ui.pointer.visible = false
+		EventBus.ui_visibility_requested.emit(VisibilityManager.UIElement.BEAT_POINTER, false)
 		EventBus.bpm_set_requested.emit(60)
-		visabilityManager.set_entire_interface_visibility(false)
-		uiManager.audio_export_ui.settings_button.visible = true
-		uiManager.achievements_panel.visible = true
-		uiManager.continue_button.pressed.connect(_tutorial_continue)
-		uiManager.piano_area.area_entered.connect(_body_continue)
-		uiManager.in_between_area.area_entered.connect(_body_continue)
-		uiManager.klappy_continue.pressed.connect(_klappy_continue)
-		uiManager.out_side_area.area_entered.connect(_body_continue)
-		uiManager.add_beats.set_pressed(true)
-		_top = uiManager.corners[1]
-		_clap_button = uiManager.instrument_button_1
-		_stomp_button = uiManager.instrument_button_0
-		_clap_button.on_pressed.connect(uiManager.on_clap)
-		_stomp_button.on_pressed.connect(uiManager.on_stomp)
+		#TODO set entire interface invisible except for tutorial elements
+		# uiManager.audio_export_ui.settings_button.visible = true
+		# uiManager.achievements_panel.visible = true
+		EventBus.continue_button_pressed.connect(_tutorial_continue)
+		if klappy_continue_button:
+			klappy_continue_button.pressed.connect(_klappy_continue)
+		_top = chaos_pad_knob_top_position
+		_clap_button = instrument_clap_button
+		_stomp_button = instrument_stomp_button
+		if _clap_button:
+			_clap_button.pressed.connect(func(): EventBus.clap_stomp_detected.emit(0))
+		if _stomp_button:
+			_stomp_button.pressed.connect(func(): EventBus.clap_stomp_detected.emit(1))
 
 
 func setup_tutorial() -> void:
@@ -362,9 +391,9 @@ func setup_tutorial() -> void:
 func update_tutorial() -> void:
 	_button_state()
 
-	if not gameManager.first_tts_done and use_tutorial:
+	if not _first_tts_done and use_tutorial:
 		_speak_tutorial_instruction(tutorial_level)
-		gameManager.first_tts_done = true
+		_first_tts_done = true
 
 	_correct_clap_play_sfx()
 	_correct_stomp_play_sfx()
@@ -382,7 +411,7 @@ func _timer_setup() -> void:
 		_timer = Timer.new()
 		_timer.wait_time = 3
 		_timer.one_shot = true
-		uiManager.achievements_panel.add_child(_timer)
+		achievements_panel.add_child(_timer)
 
 
 func _read_use_tutorial() -> bool:
@@ -402,7 +431,7 @@ func _read_use_tutorial() -> bool:
 func _active_beats_per_ring(index_ring: int) -> int:
 	var amount: int = 0
 	for beat in range(SongState.total_beats):
-		if beatManager.current_section.get_beat(index_ring, beat):
+		if SongState.current_section.get_beat(index_ring, beat):
 			amount += 1
 	return amount
 
@@ -413,7 +442,8 @@ func _klappy_continue() -> void:
 
 
 func _button_state() -> void:
-	uiManager.continue_button.visible = _active
+	if continue_button:
+		continue_button.visible = _active
 
 
 func _tutorial_continue() -> void:
@@ -424,7 +454,7 @@ func _tutorial_continue() -> void:
 
 func _body_continue(body: Area2D) -> void:
 	print("body continue " + str(body))
-	if body == uiManager.knob_area:
+	if body == knob_area:
 		_next_line()
 
 
@@ -448,30 +478,28 @@ func _return_player(parent: Node) -> AnimationPlayer:
 
 func _correct_stomp_play_sfx() -> void:
 	if _stomping:
-		if beatManager.stomped_on_beat_amount > _previous_stomp:
+		if clap_stomp.stomped_on_beat_amount > _previous_stomp:
 			play_achievement_sfx()
-			_previous_stomp = beatManager.stomped_on_beat_amount
-			uiManager.amount_left.text = "Goed gestamped %d / 5" % beatManager.stomped_on_beat_amount
+			_previous_stomp = clap_stomp.stomped_on_beat_amount
 
 
 func _correct_clap_play_sfx() -> void:
 	if _clapping:
-		if beatManager.clapped_on_beat_amount > _previous_clap:
+		if clap_stomp.clapped_on_beat_amount > _previous_clap:
 			play_achievement_sfx()
-			_previous_clap = beatManager.clapped_on_beat_amount
-			uiManager.amount_left.text = "Goed geklapped %d / 5" % beatManager.clapped_on_beat_amount
+			_previous_clap = clap_stomp.clapped_on_beat_amount
 
 
 func _speak_tutorial_instruction(instruction_index: int) -> void:
 	if not _text_allowed:
 		return
-	if uiManager.audio_export_ui.mute_speach.button_pressed:
+	if mute_speech_button and mute_speech_button.button_pressed:
 		return
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return
 
 	var text: String = tutorial_steps[instruction_index]["instruction"]
-	var clean_text: String = gameManager.text_without_emoticons(text)
+	var clean_text: String = TTSHelper.Text_without_emoticons(text)
 
 	if _increased_speed:
 		print("Increase the speed")
@@ -494,7 +522,8 @@ func _update_lists() -> void:
 		_instruction = current_step["instruction"]
 		_condition = current_step["condition"]
 		_outcome = current_step["outcome"]
-		uiManager.instruction_label.text = _instruction
+		if instruction_label:
+			instruction_label.text = _instruction
 
 func _load_tutorial_steps_from_json() -> Array:
 	var file := FileAccess.open(TUTORIAL_STEPS_PATH, FileAccess.READ)

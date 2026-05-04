@@ -1,7 +1,10 @@
 [gd_resource type="Resource" script_class="SoundBank" format=3 uid="uid://dfenhkycs5sl2"]
 
 [ext_resource type="AudioStream" uid="uid://dg7td0d8d8ya6" path="res://Resources/Audio/SoundBanks/2_tango/Clap DoubleDutch 4.wav" id="1_70ug5"]
+[ext_resource type="Script" uid="uid://cyxcyx8tjnle4" path="res://Experimental/chords/chord_progression.gd" id="1_lcyyk"]
 [ext_resource type="AudioStream" uid="uid://pq1btyyp1krv" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Clap Aurora.wav" id="2_70ug5"]
+[ext_resource type="Script" uid="uid://cy33axifo2vk7" path="res://Experimental/chords/chord.gd" id="2_g7rqx"]
+[ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_kt6sr"]
 [ext_resource type="AudioStream" uid="uid://b6fwcswa2okoi" path="res://Resources/Audio/SoundBanks/2_tango/ClosedHH Aluminium.wav" id="3_numgs"]
 [ext_resource type="AudioStream" uid="uid://bumvtvdmtp6n4" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Closed_Perc Sini.wav" id="4_numgs"]
 [ext_resource type="Resource" uid="uid://c6gqhf86kj0cj" path="res://Resources/Audio/SoundBanks/2_tango/EffectProfile.tres" id="5_70ug5"]
@@ -15,6 +18,84 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="12_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="13_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="14_syn1"]
+
+[sub_resource type="Resource" id="Resource_lcyyk"]
+script = ExtResource("2_g7rqx")
+base_note = 69
+type = 1
+
+[sub_resource type="Resource" id="Resource_g7rqx"]
+script = ExtResource("2_g7rqx")
+base_note = 64
+type = 2
+
+[sub_resource type="Resource" id="Resource_kt6sr"]
+script = ExtResource("2_g7rqx")
+base_note = 69
+type = 1
+
+[sub_resource type="Resource" id="Resource_mjmid"]
+script = ExtResource("2_g7rqx")
+base_note = 62
+type = 1
+
+[sub_resource type="Resource" id="Resource_om6d4"]
+script = ExtResource("1_lcyyk")
+chords = Array[ExtResource("2_g7rqx")]([SubResource("Resource_lcyyk"), SubResource("Resource_g7rqx"), SubResource("Resource_kt6sr"), SubResource("Resource_mjmid")])
+
+[sub_resource type="Resource" id="Resource_b2jox"]
+script = ExtResource("2_g7rqx")
+base_note = 62
+type = 1
+
+[sub_resource type="Resource" id="Resource_yl87t"]
+script = ExtResource("2_g7rqx")
+base_note = 69
+type = 2
+
+[sub_resource type="Resource" id="Resource_1rux3"]
+script = ExtResource("2_g7rqx")
+base_note = 62
+type = 1
+
+[sub_resource type="Resource" id="Resource_bnpvg"]
+script = ExtResource("2_g7rqx")
+base_note = 64
+type = 2
+
+[sub_resource type="Resource" id="Resource_elct4"]
+script = ExtResource("1_lcyyk")
+chords = Array[ExtResource("2_g7rqx")]([SubResource("Resource_b2jox"), SubResource("Resource_yl87t"), SubResource("Resource_1rux3"), SubResource("Resource_bnpvg")])
+
+[sub_resource type="Resource" id="Resource_02ro2"]
+script = ExtResource("2_g7rqx")
+base_note = 64
+type = 1
+
+[sub_resource type="Resource" id="Resource_0lmk5"]
+script = ExtResource("2_g7rqx")
+base_note = 59
+type = 2
+
+[sub_resource type="Resource" id="Resource_hj12y"]
+script = ExtResource("2_g7rqx")
+base_note = 64
+type = 1
+
+[sub_resource type="Resource" id="Resource_03vpt"]
+script = ExtResource("2_g7rqx")
+base_note = 69
+type = 1
+
+[sub_resource type="Resource" id="Resource_j71oq"]
+script = ExtResource("1_lcyyk")
+chords = Array[ExtResource("2_g7rqx")]([SubResource("Resource_02ro2"), SubResource("Resource_0lmk5"), SubResource("Resource_hj12y"), SubResource("Resource_03vpt")])
+
+[sub_resource type="Resource" id="Resource_plshm"]
+script = ExtResource("3_kt6sr")
+progressions = Array[ExtResource("1_lcyyk")]([SubResource("Resource_om6d4"), SubResource("Resource_elct4"), SubResource("Resource_j71oq")])
+soundFont = ExtResource("8_iytk1")
+instrument = 7
 
 [resource]
 script = ExtResource("9_5nsoi")
@@ -31,4 +112,5 @@ synth_instrument_ids = Array[int]([5, 7])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("5_70ug5"), ExtResource("5_70ug5")])
 noteplayer_settings = Array[ExtResource("9_numgs")]([ExtResource("13_bass"), ExtResource("14_syn1")])
+chord_progressions = SubResource("Resource_plshm")
 metadata/_custom_type_script = "uid://d0cv5il7l6laj"

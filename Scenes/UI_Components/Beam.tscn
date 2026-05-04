@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://icjhd0tmmomt"]
+
+[ext_resource type="Texture2D" uid="uid://byc17yeo8eu4v" path="res://Resources/Shapes/Beat-Ring-Beam.png" id="1_7nkju"]
+
+[node name="Sprite2D" type="Sprite2D"]
+z_index = -1
+scale = Vector2(1, 0.8)
+texture = ExtResource("1_7nkju")
+offset = Vector2(0, -200)

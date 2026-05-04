@@ -1,0 +1,1322 @@
+{
+	"1_kampvuur": {
+		"font": "florestan-subset.sfo",
+		"instrument": 4.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"1_lo-fi": {
+		"font": "florestan-subset.sfo",
+		"instrument": 14.0,
+		"progressions": [
+			[
+				{
+					"note": 62.0,
+					"type": 4.0
+				},
+				{
+					"note": 67.0,
+					"type": 2.0
+				},
+				{
+					"note": 60.0,
+					"type": 3.0
+				},
+				{
+					"note": 69.0,
+					"type": 4.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 4.0
+				},
+				{
+					"note": 69.0,
+					"type": 2.0
+				},
+				{
+					"note": 62.0,
+					"type": 3.0
+				},
+				{
+					"note": 59.0,
+					"type": 4.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 3.0
+				},
+				{
+					"note": 69.0,
+					"type": 4.0
+				},
+				{
+					"note": 62.0,
+					"type": 4.0
+				},
+				{
+					"note": 67.0,
+					"type": 2.0
+				}
+			]
+		]
+	},
+	"1_new-age": {
+		"font": "florestan-subset.sfo",
+		"instrument": 12.0,
+		"progressions": [
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				},
+				{
+					"note": 59.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"2_acoustisch": {
+		"font": "florestan-subset.sfo",
+		"instrument": 2.0,
+		"progressions": [
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"2_keuken": {
+		"font": "florestan-subset.sfo",
+		"instrument": 4.0,
+		"progressions": [
+			[
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"2_tango": {
+		"font": "florestan-subset.sfo",
+		"instrument": 7.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 64.0,
+					"type": 2.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 62.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 2.0
+				},
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 64.0,
+					"type": 2.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 59.0,
+					"type": 2.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			]
+		]
+	},
+	"3_aziatisch": {
+		"font": "florestan-subset.sfo",
+		"instrument": 11.0,
+		"progressions": [
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 59.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"3_opera": {
+		"font": "florestan-subset.sfo",
+		"instrument": 9.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 59.0,
+					"type": 2.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"3_raggae": {
+		"font": "florestan-subset.sfo",
+		"instrument": 2.0,
+		"progressions": [
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"3_soul": {
+		"font": "florestan-subset.sfo",
+		"instrument": 0.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 4.0
+				},
+				{
+					"note": 62.0,
+					"type": 2.0
+				},
+				{
+					"note": 67.0,
+					"type": 3.0
+				},
+				{
+					"note": 60.0,
+					"type": 3.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 4.0
+				},
+				{
+					"note": 69.0,
+					"type": 2.0
+				},
+				{
+					"note": 62.0,
+					"type": 3.0
+				},
+				{
+					"note": 67.0,
+					"type": 3.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 3.0
+				},
+				{
+					"note": 59.0,
+					"type": 4.0
+				},
+				{
+					"note": 69.0,
+					"type": 4.0
+				},
+				{
+					"note": 62.0,
+					"type": 2.0
+				}
+			]
+		]
+	},
+	"4_balkisch": {
+		"font": "florestan-subset.sfo",
+		"instrument": 4.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 2.0
+				},
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 59.0,
+					"type": 2.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				}
+			]
+		]
+	},
+	"4_k-pop": {
+		"font": "Hardy-Boy.sf2",
+		"instrument": 11.0,
+		"progressions": [
+			[
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"4_pop": {
+		"font": "florestan-subset.sfo",
+		"instrument": 5.0,
+		"progressions": [
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"5_afrikaans": {
+		"font": "florestan-subset.sfo",
+		"instrument": 2.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 59.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"5_dance": {
+		"font": "florestan-subset.sfo",
+		"instrument": 7.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"5_zuid-ame": {
+		"font": "florestan-subset.sfo",
+		"instrument": 2.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 59.0,
+					"type": 2.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				}
+			]
+		]
+	},
+	"6_funk": {
+		"font": "florestan-subset.sfo",
+		"instrument": 12.0,
+		"progressions": [
+			[
+				{
+					"note": 64.0,
+					"type": 4.0
+				},
+				{
+					"note": 69.0,
+					"type": 2.0
+				},
+				{
+					"note": 62.0,
+					"type": 3.0
+				},
+				{
+					"note": 67.0,
+					"type": 2.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 4.0
+				},
+				{
+					"note": 62.0,
+					"type": 2.0
+				},
+				{
+					"note": 67.0,
+					"type": 2.0
+				},
+				{
+					"note": 60.0,
+					"type": 2.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 4.0
+				},
+				{
+					"note": 67.0,
+					"type": 2.0
+				},
+				{
+					"note": 60.0,
+					"type": 3.0
+				},
+				{
+					"note": 65.0,
+					"type": 3.0
+				}
+			]
+		]
+	},
+	"6_hiphop": {
+		"font": "florestan-subset.sfo",
+		"instrument": 14.0,
+		"progressions": [
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"6_rock": {
+		"font": "florestan-subset.sfo",
+		"instrument": 15.0,
+		"progressions": [
+			[
+				{
+					"note": 64.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				},
+				{
+					"note": 59.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"7_hardcore": {
+		"font": "florestan-subset.sfo",
+		"instrument": 9.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 59.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 64.0,
+					"type": 1.0
+				}
+			]
+		]
+	},
+	"7_metal": {
+		"font": "florestan-subset.sfo",
+		"instrument": 3.0,
+		"progressions": [
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				},
+				{
+					"note": 62.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 62.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 58.0,
+					"type": 0.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				}
+			]
+		]
+	},
+	"7_techno": {
+		"font": "Jellyfish Jam V1.sf2",
+		"instrument": 2.0,
+		"progressions": [
+			[
+				{
+					"note": 69.0,
+					"type": 1.0
+				},
+				{
+					"note": 67.0,
+					"type": 0.0
+				},
+				{
+					"note": 65.0,
+					"type": 0.0
+				},
+				{
+					"note": 64.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 64.0,
+					"type": 1.0
+				},
+				{
+					"note": 60.0,
+					"type": 0.0
+				},
+				{
+					"note": 59.0,
+					"type": 1.0
+				},
+				{
+					"note": 69.0,
+					"type": 0.0
+				}
+			],
+			[
+				{
+					"note": 65.0,
+					"type": 1.0
+				},
+				{
+					"note": 61.0,
+					"type": 0.0
+				},
+				{
+					"note": 63.0,
+					"type": 0.0
+				},
+				{
+					"note": 58.0,
+					"type": 1.0
+				}
+			]
+		]
+	}
+}

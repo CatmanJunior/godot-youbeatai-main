@@ -41,6 +41,8 @@ var button_is_clap: bool = false
 
 var clap_bias: float = 0.0
 
+var clap_adds_beats: bool = false
+
 var metronome_enabled: bool = false
 
 var mute_speech: bool = false

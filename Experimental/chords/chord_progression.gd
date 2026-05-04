@@ -1,4 +1,4 @@
 extends Resource
 class_name ChordProgression
 
-@export var progression : Array[Chord]
+@export var chords : Array[Chord]

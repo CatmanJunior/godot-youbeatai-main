@@ -103,17 +103,20 @@ func generate_soundbank_label(chosen_themes: Array[String]) -> String:
 
 func choose_soundbank(chosen_themes: Array[String], chosen_emotions: Array[String]) -> Dictionary:
 	var best_match: Dictionary = {}
-	var best_score: float = - INF
+	var best_score: float = -INF
 
-	for bank in soundbanks:
+	for bank in soundbanks:		
 		var theme_matches := 0
+		var bank_themes = bank.get("themes", [])
 		for theme in chosen_themes:
-			if bank.get("themes", []).has(theme):
+			if bank_themes.has(theme):
 				theme_matches += 1
 
 		var emotion_matches := 0
+		var bank_emoij = bank.get("emotions", [])
+
 		for emotion in chosen_emotions:
-			if bank.get("emotions", []).has(emotion):
+			if bank_emoij.has(emotion):
 				emotion_matches += 1
 
 		if theme_matches == 0 and emotion_matches == 0:

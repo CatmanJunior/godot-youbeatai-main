@@ -42,7 +42,10 @@ func set_knob_position(pos: Vector2, retry_count := 0) -> void:
 
 func _on_track_selected(track: int):
 	if SongState.current_section != null:
-		set_knob_position(SongState.current_section.get_track_knob_position(track))
+		if SongState.current_track.index == SongTrackData.SONG_TRACK_INDEX:
+			set_knob_position(SongState.song_track.knob_position)
+		else:
+			set_knob_position(SongState.current_section.get_track_knob_position(track))
 	update_track_icons(track)
 	start_triangle_color_change(track_settings.get_track(track).track_color, 0.2)
 

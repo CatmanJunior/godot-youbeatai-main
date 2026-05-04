@@ -58,9 +58,13 @@ signal clap_stomp_detected(interaction_type: int)
 
 # ── Sections ──
 ## Emitted to request adding a new section with the given emoji label.
-signal add_section_requested(emoji: String)
+signal add_section_requested(tex: Texture2D)
 ## Emitted to request switching to a section by its index.
 signal section_switch_requested(section_index: int)
+## Emitted on loop
+signal section_next_requested()
+## Emitted on loop
+signal section_loop(section_index: int, loop_cursor: int)
 ## Emitted to request copying the current section data.
 signal section_copy_requested()
 ## Emitted to request pasting previously copied section data.
@@ -70,13 +74,19 @@ signal section_remove_requested(section_index: int)
 ## Emitted when a section switch has completed, carrying the new section data.
 signal section_switched(section_data: SectionData)
 ## Emitted when a new section has been added at the given index with an emoji label.
-signal section_added(new_section_index: int, emoji: String)
+signal section_added(new_section_index: int, tex: Texture2D)
 ## Emitted when a section has been removed at the given index.
 signal section_removed(section_index: int)
 ## Emitted when the current section has been cleared of all beats.
 signal section_cleared()
 ## Emitted to request clearing all beats in the current section.
 signal section_clear_requested()
+
+## Emitted when loop count is assigned a new value
+signal on_set_loop_count(section_index: int, loop_count: int)
+## Emitted when loop count change is requested through the UI
+signal set_loop_count_requested(section_index: int, loop_count: int)
+
 
 # ── Audio Playback ──
 ## Emitted to request playing audio for the given track.
@@ -169,6 +179,10 @@ signal skip_tutorial_requested()
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.
 signal utterance_ended(utterance_id: int)
 
+signal utterance_started(utterance_id: int)
+
+signal utterance_content_changed(text: String)
+
 # ── Countdown ──
 ## Emitted to request showing the countdown overlay.
 signal countdown_show_requested()
@@ -182,3 +196,28 @@ signal fullscreen_toggle_requested()
 # ── Recording UI ──
 ## Emitted to request disabling or enabling UI buttons during recording workflows.
 signal buttons_disabled_requested(disabled: bool)
+
+# -- Visibility --
+## Emitted to request setting the visibility of a UI element by VisibilityManager.UIElement enum.
+## See VisibilityManager.UIElement for all available targets.
+signal ui_visibility_requested(element: int, visible: bool)
+## Emitted to request setting the visibility of a specific track's sprites.
+signal track_sprites_visibility_requested(track: int, visible: bool)
+
+
+## Emitted to request setting the visibility of the clap/stomp interaction UI.
+signal continue_button_pressed()
+
+# ── Tutorial Beat Control ──
+## Emitted to request forcing a specific beat slot to be active/free, used by tutorial.
+signal beat_set_free_requested(track: int, beat: int, free: bool)
+
+# ── Tutorial Chaos Pad ──
+## Emitted to request snapping the chaos pad knob to the given world position.
+signal chaos_pad_knob_position_set_requested(position: Vector2)
+## Emitted to request stopping the chaos pad activation button's animation player.
+signal chaos_pad_button_animation_stop_requested()
+## Emitted to request stopping the record button's animation player.
+signal record_button_animation_stop_requested()
+
+

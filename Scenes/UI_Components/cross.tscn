@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://b6s0khhagnd4j"]
+
+[sub_resource type="Curve" id="Curve_3ahwd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[node name="Cross" type="Node2D"]
+
+[node name="Line 0" type="Line2D" parent="."]
+position = Vector2(0, 1)
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 45" type="Line2D" parent="."]
+rotation = 0.7853982
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 90" type="Line2D" parent="."]
+rotation = 1.5707964
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 135" type="Line2D" parent="."]
+rotation = 2.3561945
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 180" type="Line2D" parent="."]
+rotation = 3.1415927
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 225" type="Line2D" parent="."]
+rotation = 3.9269907
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 270" type="Line2D" parent="."]
+rotation = 4.712389
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 315" type="Line2D" parent="."]
+rotation = 5.497787
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)

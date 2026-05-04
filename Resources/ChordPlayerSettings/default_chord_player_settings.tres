@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="ChordPlayerSettings" format=3 uid="uid://gj7nhtsggdey"]
+
+[ext_resource type="Script" uid="uid://u6uoammlr3ut" path="res://Scripts/DataClasses/SoundBanks/chord_player_settings.gd" id="1_plqal"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="2_nwmne"]
+[ext_resource type="Texture2D" uid="uid://d1p572at3xdfl" path="res://Resources/Textures_New_Correct/Icons-_28_0029_Leaf.png" id="3_j4fbb"]
+[ext_resource type="Texture2D" uid="uid://4ya0wvejosg8" path="res://Resources/Textures_New_Correct/Icons-_28_0028_Verse.png" id="4_d5mvn"]
+[ext_resource type="Texture2D" uid="uid://cqjk65y1w8rj0" path="res://Resources/Textures_New_Correct/Icons-_28_0025_Riser.png" id="5_vwmbk"]
+[ext_resource type="Texture2D" uid="uid://dwtxa54rwoa2w" path="res://Resources/Textures_New_Correct/Icons-_28_0026_Blast.png" id="6_bf7qy"]
+[ext_resource type="Texture2D" uid="uid://tmeewpnhrbis" path="res://Resources/Textures_New_Correct/Icons-_28_0021_Flag.png" id="7_rk7pe"]
+
+[sub_resource type="Resource" id="Resource_gsvbx"]
+script = ExtResource("2_nwmne")
+metadata/_custom_type_script = "uid://dcyn302mcq1vm"
+
+[sub_resource type="Resource" id="Resource_bv80c"]
+script = ExtResource("2_nwmne")
+offset = 2
+metadata/_custom_type_script = "uid://dcyn302mcq1vm"
+
+[sub_resource type="Resource" id="Resource_2daye"]
+script = ExtResource("2_nwmne")
+progression = 1
+metadata/_custom_type_script = "uid://dcyn302mcq1vm"
+
+[sub_resource type="Resource" id="Resource_1semv"]
+script = ExtResource("2_nwmne")
+progression = 1
+offset = 2
+metadata/_custom_type_script = "uid://dcyn302mcq1vm"
+
+[sub_resource type="Resource" id="Resource_2060n"]
+script = ExtResource("2_nwmne")
+progression = 2
+metadata/_custom_type_script = "uid://dcyn302mcq1vm"
+
+[resource]
+script = ExtResource("1_plqal")
+tex_lookup = Dictionary[Texture2D, ExtResource("2_nwmne")]({
+ExtResource("3_j4fbb"): SubResource("Resource_gsvbx"),
+ExtResource("4_d5mvn"): SubResource("Resource_bv80c"),
+ExtResource("5_vwmbk"): SubResource("Resource_2daye"),
+ExtResource("6_bf7qy"): SubResource("Resource_1semv"),
+ExtResource("7_rk7pe"): SubResource("Resource_2060n")
+})
+chordDuration = 8
+metadata/_custom_type_script = "uid://u6uoammlr3ut"

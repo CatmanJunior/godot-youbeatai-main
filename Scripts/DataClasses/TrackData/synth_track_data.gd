@@ -27,7 +27,7 @@ func rebuild_sequence() -> void:
 func set_sequence(new_sequence: Sequence) -> void:
 	sequence = new_sequence
 	if new_sequence:
-		sequence_notes = new_sequence.notes.duplicate()
+		sequence_notes = new_sequence.notes.duplicate_deep()
 	else:
 		sequence_notes.clear()
 
@@ -39,7 +39,7 @@ func duplicate_track() -> TrackData:
 	copy.master_volume = master_volume
 	copy.weights = weights
 	if sequence_notes:
-		copy.sequence_notes = sequence_notes.duplicate()
+		copy.sequence_notes = sequence_notes.duplicate_deep()
 	if sequence:
 		copy.sequence = sequence
 	if synth_waveform_visualizer:

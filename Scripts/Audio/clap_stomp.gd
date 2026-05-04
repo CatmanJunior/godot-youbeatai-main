@@ -36,7 +36,7 @@ func _process(_delta: float):
 		
 
 func _get_magnitude(_freq_min: float, _freq_max: float) -> float:
-	return MicrophoneRecorder.get_magnitude( _freq_min, _freq_max)
+	return MicrophoneRecorder.get_magnitude(_freq_min, _freq_max)
 
 enum InteractionType {
 	CLAP,
@@ -48,18 +48,26 @@ func _ready():
 
 func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 	# Emit signals for next beat
-	var next_beat = (GameState.current_beat + 1) % SongState.total_beats
 	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
-	if  SongState.current_section.get_beat(track_index, next_beat):
+	var on_beat: bool = _is_clap_stomp_next_beat(interaction_type)
+	if on_beat:
 		if interaction_type == InteractionType.CLAP:
 			clapped_on_beat_amount += 1
+			EventBus.clap_on_beat_detected.emit()
 		else:
 			stomped_on_beat_amount += 1
+			EventBus.stomp_on_beat_detected.emit()
 	else:
 		if interaction_type == InteractionType.CLAP:
 			clapped_amount += 1
 		else:
 			stomped_amount += 1
 
-	if GameState.button_is_clap:
+	if GameState.clap_adds_beats and interaction_type == InteractionType.CLAP:
 		EventBus.beat_set_requested.emit(track_index, GameState.current_beat, true)
+
+
+func _is_clap_stomp_next_beat(interaction_type: InteractionType) -> bool:
+	var next_beat = (GameState.current_beat + 1) % SongState.total_beats
+	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
+	return SongState.current_section.get_beat(track_index, next_beat)

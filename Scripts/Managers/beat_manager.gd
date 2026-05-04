@@ -8,7 +8,8 @@ var beats_per_bar = 4.0
 var bpm: int:
 	get: return SongState.bpm
 	set(value):
-		GameState.beat_duration = 60.0 / value / SongState.total_beats * beats_per_bar
+		GameState.beat_duration = round((60.0 / value) * 1000 / SongState.total_beats * beats_per_bar) / 1000
+		GameState.beat_duration = snapped(GameState.beat_duration, 0.001)
 		EventBus.bpm_changed.emit(value)
 
 var total_beats: int:
@@ -36,9 +37,10 @@ var beat_duration: float:
 	set(value): GameState.beat_duration = value
 
 var beat_elapsed: float = 0.0
-
 var beat_progress: float = 0.0
 var bar_progress: float = 0.0
+
+var last_beat_time = Time.get_ticks_msec()
 
 func _ready():
 	if track_settings_registry == null:
@@ -78,6 +80,7 @@ func get_bar_progress() -> float:
 
 func _on_play_pause_toggled():
 	playing = not playing
+
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
@@ -86,20 +89,24 @@ func _on_playing_change_requested(is_playing: bool):
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
-func _process(delta: float):
-	
+func _process(_delta: float):
 	beat_progress = get_beat_progress()
 	bar_progress = get_bar_progress()
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
-
-	if playing:
-		beat_elapsed += delta
+	
+	if playing:		
+		var current_time = Time.get_ticks_msec()
+		var elapsed = current_time - last_beat_time
 		var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
-		if beat_elapsed > swing_adjusted_duration:
-			beat_elapsed -= swing_adjusted_duration
+		beat_elapsed = elapsed / 1000.0
+	
+		if elapsed >= (swing_adjusted_duration - 0.005) * 1000:
+			beat_elapsed = 0
 			current_beat = (current_beat + 1) % total_beats
 			EventBus.beat_triggered.emit(current_beat)
+			last_beat_time = current_time
+
 
 func _get_swing_offset() -> float:
 	if current_beat % 2 == 1:

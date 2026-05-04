@@ -1,4 +1,4 @@
-# 🏗️ YouBeatAI Architecture
+﻿# 🏗️ YouBeatAI Architecture
 
 ## 🎯 Design Philosophy
 

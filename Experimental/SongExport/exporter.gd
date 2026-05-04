@@ -1,5 +1,5 @@
 extends Node
-class_name Exporter
+# class_name Exporter
 
 enum ExportMode {NONE, BEAT, SONG, INTERACTIVE}
 

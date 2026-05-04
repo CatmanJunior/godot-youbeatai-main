@@ -132,7 +132,7 @@ corner_radius_bottom_left = 60
 [sub_resource type="LabelSettings" id="LabelSettings_g4ckg"]
 font_size = 21
 
-[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "clap_adds_beats_toggle", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
 top_level = true
 light_mask = 2
 z_index = 1000
@@ -148,6 +148,7 @@ settings_back_button = NodePath("Panel/Buttons2/Back")
 button_is_clap = NodePath("Panel/right/ButtonIsClap")
 button_add_beats = NodePath("Panel/right/Knop adds beat")
 clap_bias_slider = NodePath("Sliders/ClapStompBias")
+clap_adds_beats_toggle = NodePath("Panel/right/AddBeatsToggle")
 recording_volume_threshold_slider = NodePath("Sliders/VolumeTreshold")
 microphone_volume_progress_bar = NodePath("Sliders/VolumeTreshold/ProgressBar")
 recording_delay_slider = NodePath("Panel/delay/RecordingDelaySlider")

@@ -26,9 +26,7 @@
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
-[ext_resource type="PackedScene" uid="uid://c3nr8ha1wge0p" path="res://Scenes/UI_Components/rec_button.tscn" id="38_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
-[ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="43_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
 [ext_resource type="PackedScene" uid="uid://1drhlix6kj7f" path="res://Scenes/UI_Components/background.tscn" id="47_jut3y"]
@@ -125,10 +123,9 @@ script = ExtResource("10_o2owy")
 [node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
 script = ExtResource("99_sslm1")
 
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading", "rec_button")]
+[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading")]
 script = ExtResource("65_87bhu")
 loading = NodePath("../../UserInterface/LoadingContainer")
-rec_button = NodePath("../../UserInterface/RecButton")
 metadata/_custom_type_script = "uid://c6xnic6xfnewu"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
@@ -139,7 +136,7 @@ metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
 [node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/Exporter/ListenToLastExport" unique_id=723625077]
 playback_type = 1
 
-[node name="PreviewExportsManager" type="Node2D" parent="Managers/Exporter" unique_id=1232035288]
+[node name="PreviewExportsManager" type="Node" parent="Managers/Exporter" unique_id=1007844038]
 
 [node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1270233026]
 
@@ -275,14 +272,6 @@ offset_bottom = 364.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="RecButton" parent="UserInterface" unique_id=342405439 instance=ExtResource("38_s8vy0")]
-visible = false
-layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 100.0
-offset_bottom = 50.0
-
 [node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
 visible = false
 layout_mode = 1
@@ -401,7 +390,6 @@ hue_variation_max = 0.55
 [node name="SwitchSectionButtons" parent="UserInterface" unique_id=1068760052 instance=ExtResource("49_v2nl5")]
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
-section_button_prefab = ExtResource("43_kqrg6")
 
 [node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
 visible = false

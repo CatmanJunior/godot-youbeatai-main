@@ -16,6 +16,7 @@ config/features=PackedStringArray("4.6", "Mobile")
 run/max_fps=60
 run/low_processor_mode=true
 run/delta_smoothing=false
+boot_splash/bg_color=Color(0.05882353, 0.078431375, 0.19215687, 1)
 config/icon="uid://bw7qlsn2o2s82"
 
 [audio]
@@ -86,3 +87,4 @@ bs_test_key={
 
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.05882353, 0.078431375, 0.19215687, 1)

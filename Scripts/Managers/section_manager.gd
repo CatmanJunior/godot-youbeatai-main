@@ -22,10 +22,10 @@ var beats_amount:
 
 # Clipboard for copy/paste
 var clipboard_section: SectionData = null
-
 var _sections_initialized: bool = false
-
 var loop_cursor: int = 0
+
+@export var initial_sections: Array[Texture2D]
 
 func _ready() -> void:
 	# Connect to EventBus
@@ -40,36 +40,36 @@ func _ready() -> void:
 	call_deferred("spawn_initial_sections")
 		
 
-
 func spawn_initial_sections():
 	"""Spawn the initial set of sections (data only)."""
 	if _sections_initialized:
 		return
 
-	for i in range(SECTIONS_AMOUNT_INITIAL):
-		add_section(i)
+	for i in range(len(initial_sections)):
+		var tex = initial_sections[i]
+		add_section(i, tex)
 
 	switch_section_next_frame(0)
 	_sections_initialized = true
 
-func add_section(section_index: int, emoji: String = ""):
+func add_section(section_index: int, tex: Texture2D):
 	"""Add a new section at the specified index"""
 	if sections.size() == SECTIONS_AMOUNT_MAX:
 		push_warning("Maximum sections reached, cannot add more.")
 		return
 
 	# Create a new SectionData instance and populate its default tracks
-	var new_section: SectionData = SectionData.new(section_index, emoji)
+	var new_section: SectionData = SectionData.new(tex, section_index)
 	new_section.create_default_tracks()
 	sections.insert(section_index, new_section)
 
 	SongState.sections = sections
-	EventBus.section_added.emit(section_index, emoji)
+	EventBus.section_added.emit(section_index, tex)
 	if _sections_initialized:
 		EventBus.section_switched.emit(SongState.get_section(section_index))
 
-func _on_add_section_requested(emoji: String):
-	add_section(sections.size(), emoji)
+func _on_add_section_requested(tex: Texture2D):
+	add_section(sections.size(), tex)
 
 func remove_section(section_index: int):
 	"""Remove a section at the specified index"""

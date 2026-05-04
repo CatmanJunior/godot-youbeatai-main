@@ -11,16 +11,16 @@ extends TrackPlayerBase
 ##
 ## Bus layout (3 sub-buses via TrackPlayerBase):
 ##   SongTrack6_VoiceOver  → plays the voice-over recording
-##   SongTrack6_Master     → plays the master bus recording (for preview/export)
+##   SongTrack6_Chord      → plays the chord progression
 ##   SongTrack6_Mix        → reserved for real-time mixed output
 
 enum SongLayer {
 	VOICE_OVER = 0,
-	MASTER = 1,
+	CHORD = 1,
 	MIX = 2
 }
 
-var BUS_SUFFIXES: Array[String] = ["VoiceOver", "Master", "Mix"]
+var BUS_SUFFIXES: Array[String] = ["VoiceOver", "Chord", "Mix"]
 var BUS_PREFIX: String = "Song"
 
 ## Recording timer (for progress calculation).
@@ -30,6 +30,9 @@ var recording_timer: float = 0.0
 var is_song_recording: bool = false
 
 var _is_playing: bool = false
+
+#Chord Noteplayer object
+var chords: Chords
 
 # ── TrackPlayerBase overrides ────────────────────────────────────────────────
 
@@ -74,6 +77,12 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 
 # ── TrackPlayerBase overrides ────────────────────────────────────────────────
 
+func setup(index: int, parent_bus: String, _settings = null) -> void:
+	super.setup(index, parent_bus, _settings)
+	chords = Chords.new()
+	
+	chords.set_settings(_settings, sub_bus_names[1] )
+	add_child(chords)
 
 func _on_beat_triggered(_beat: int) -> void:
 	if SongState.selected_track_index != track_index:
@@ -82,12 +91,11 @@ func _on_beat_triggered(_beat: int) -> void:
 	if _beat != 1:
 		return
 
+	EventBus.section_next_requested.emit()
+
 	if SongState.current_section_index == 0 and not _is_playing:
 		play()
 		return
-
-	EventBus.section_next_requested.emit()
-
 
 ## Song track is NOT per-section — ignore section switches for stream loading.
 ## (The voice_over lives on SongState.song_track, not on sections.)
@@ -97,7 +105,7 @@ func _on_section_switched(_new) -> void:
 
 # ── Section add/remove handlers ──────────────────────────────────────────────
 
-func _on_section_added(section_index: int, _emoji: String) -> void:
+func _on_section_added(section_index: int, _tex: Texture2D) -> void:
 	if track_data.has_recording():
 		track_data.insert_silence_for_section(section_index, SongState.total_beats, GameState.beat_duration)
 

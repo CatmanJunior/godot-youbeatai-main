@@ -4,19 +4,24 @@ extends Node
 @onready var talking = $"../Robot/SubViewportContainer/SubViewport/Klappy"
 
 func _ready() -> void:
-	klappy_response.change_panel_visibility(true)
-	klappy_response.fill_response_label(message)
+	EventBus.utterance_started.connect(start_speaking)	
+	EventBus.utterance_ended.connect(done_speaking)
+	EventBus.utterance_content_changed.connect(update_bubble)
+	klappy_response.change_panel_visibility(false)
+	
 	speak()
-	talking.talking = true
 	
 func speak():
 	TTSHelper.speak(message)
 
-func _process(_delta: float) -> void:
-	if not DisplayServer.tts_is_speaking():
-		_on_timeout()
+func start_speaking(id: int):
+	klappy_response.change_panel_visibility(true)
+	talking.talking = true
 
-func _on_timeout():
+func update_bubble(text: String):
+	klappy_response.fill_response_label(text)
+
+func done_speaking(id: int):
 	klappy_response.change_panel_visibility(false)
-	DisplayServer.tts_stop()
 	talking.talking = false
+	DisplayServer.tts_stop()

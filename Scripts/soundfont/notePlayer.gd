@@ -19,8 +19,10 @@ func apply_settings(settings: NotePlayerSettings) -> void:
 	gate = settings.gate
 	volume_db = settings.volume_db
 	instrument = settings.instrument
+	gain = settings.gain
 
 func _ready():
+	setup()
 	# select instrument
 	channel_set_presetindex(0, 0, instrument)
 

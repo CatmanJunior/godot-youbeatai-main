@@ -6,18 +6,12 @@
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
+[ext_resource type="PackedScene" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
-bg_color = Color(0.176471, 0.176471, 0.176471, 1)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
 
-[node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "play_pause_button", "pointer")]
+[node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "pointer", "play_pause_button")]
 physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 15
@@ -30,11 +24,11 @@ offset_bottom = -360.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_wrqyy")
-beat_button_prefab = ExtResource("2_5lvir")
 beat_ring_pivot_point = NodePath("PivotPoint")
-track_settings = ExtResource("3_mgl8v")
-play_pause_button = NodePath("PlayPauseButton")
 pointer = NodePath("Pointer")
+play_pause_button = NodePath("PlayPauseButton")
+beat_button_prefab = ExtResource("2_5lvir")
+track_settings = ExtResource("3_mgl8v")
 
 [node name="PlayPauseButton" type="Button" parent="." unique_id=2061116021]
 z_index = 1
@@ -47,22 +41,10 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("1_b7oj2")
 theme_override_font_sizes/font_size = 34
+shortcut_in_tooltip = false
 text = "⏯️
 "
 flat = true
-metadata/_edit_use_anchors_ = true
-
-[node name="Panel" type="Panel" parent="PlayPauseButton" unique_id=1954679283]
-modulate = Color(1, 1, 1, 0.7254902)
-show_behind_parent = true
-z_index = -1
-layout_mode = 0
-offset_left = -7.5
-offset_top = -17.5
-offset_right = 62.5
-offset_bottom = 52.5
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
 metadata/_edit_use_anchors_ = true
 
 [node name="Cross" type="Control" parent="." unique_id=1328617350]
@@ -75,13 +57,17 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Cross" parent="Cross" unique_id=912512629 instance=ExtResource("5_5gnhr")]
+
 [node name="Vertical" type="Sprite2D" parent="Cross" unique_id=912789113]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
 [node name="Horizontal" type="Sprite2D" parent="Cross" unique_id=1103298008]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 1.5708
@@ -89,6 +75,7 @@ scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
 [node name="Vertical2" type="Sprite2D" parent="Cross" unique_id=841252515]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = 0.785398
@@ -96,6 +83,7 @@ scale = Vector2(4, 484)
 texture = SubResource("CanvasTexture_b5jd4")
 
 [node name="Horizontal2" type="Sprite2D" parent="Cross" unique_id=1226630070]
+visible = false
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 rotation = -0.785398

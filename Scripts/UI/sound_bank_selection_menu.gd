@@ -21,6 +21,8 @@ var chosen_themes_emojis: Array[String] = []
 @export var emotion_placeholders: Array[Sprite2D]
 @export var theme_placeholders: Array[Sprite2D]
 
+var _update := false
+
 func _ready() -> void:
 	if GameState.tutorialActivated:
 		selected_emotion_labels[0].text = "😁"
@@ -56,7 +58,8 @@ func _on_emotion_toggle(buttons: Array[BaseButton]) -> void:
 		selected_emotion_labels[i].text = emoji
 		emotion_placeholders[i].visible = false
 
-	check_ready_condition()
+	_update = true
+	update_button_state()
 
 func _on_theme_toggle(buttons: Array[BaseButton]) -> void:
 	amount_themes_selected = buttons.size()
@@ -73,15 +76,19 @@ func _on_theme_toggle(buttons: Array[BaseButton]) -> void:
 		selected_theme_labels[i].text = emoji
 		theme_placeholders[i].visible = false
 
-	check_ready_condition()
+	_update = true
+	update_button_state()
 
-func check_ready_condition() -> bool:
+func update_button_state():
 	if amount_emotions_selected == 2 and amount_themes_selected == 2:
 		gebruik_button.disabled = false
-		return false
 	else:
 		gebruik_button.disabled = true
-		return true
+
+func check_ready_condition() -> bool:
+	var last_update = _update
+	_update = false # reset
+	return last_update
 	
 func get_label_text(button: BaseButton) -> String:
 	var label = button.get_child(0) as Label
@@ -94,7 +101,7 @@ func end_soundbank_selection() -> void:
 	if DisplayServer.tts_is_speaking():
 		DisplayServer.tts_stop()
 	
-	EventBus.soundbank_selected.emit(chosen_emotions_emojis, chosen_themes_emojis)
+	EventBus.soundbank_selected.emit(chosen_themes_emojis, chosen_emotions_emojis)
 	await get_tree().create_timer(0.5).timeout
 	change_to_main()
 	

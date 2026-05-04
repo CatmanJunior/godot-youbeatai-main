@@ -14,7 +14,7 @@ func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> 
 		stop_speaking()
 	
 	EventBus.utterance_content_changed.emit(text)
-	DisplayServer.tts_speak(text, voices[0], volume, BASE_PITCH, rate)
+	DisplayServer.tts_speak(text_without_emoticons(text), voices[0], volume, BASE_PITCH, rate)
 
 func get_voices():
 	var voices := DisplayServer.tts_get_voices_for_language("nl")

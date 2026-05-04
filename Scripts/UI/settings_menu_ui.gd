@@ -20,6 +20,7 @@ var is_visible: bool:
 @export var button_is_clap: CheckButton
 @export var button_add_beats: CheckButton
 @export var clap_bias_slider: Slider
+@export var clap_adds_beats_toggle: CheckButton
 
 # --- Recording ---
 @export_category("Recording")
@@ -61,7 +62,7 @@ func _ready():
 	button_add_beats.toggled.connect(_on_button_add_beats_toggled)
 	recording_volume_threshold_slider.value_changed.connect(_on_volume_threshold_changed)
 	clap_bias_slider.value_changed.connect(_on_clap_bias_changed)
-
+	clap_adds_beats_toggle.toggled.connect(_on_clap_adds_beats_toggled)
 	# BPM
 	bpm_up_button.pressed.connect(_on_bpm_up_pressed)
 	bpm_down_button.pressed.connect(_on_bpm_down_pressed)
@@ -123,6 +124,9 @@ func _on_button_is_clap_toggled(button_pressed: bool):
 
 func _on_button_add_beats_toggled(button_pressed: bool):
 	GameState.track_button_add_beats = button_pressed
+
+func _on_clap_adds_beats_toggled(button_pressed: bool):
+	GameState.clap_adds_beats = button_pressed
 
 func _on_volume_threshold_changed(value: float):
 	GameState.recording_volume_threshold = value

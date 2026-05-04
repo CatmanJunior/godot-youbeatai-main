@@ -171,6 +171,8 @@ signal open_export_dialog_requested(mode_export_song: bool)
 ## Emitted when the export button is pressed. [code]mode_export_song[/code]: false for beat, true for song.
 signal export_button_pressed(mode_export_song: bool)
 
+signal on_song_mode_changed()
+
 # ── Achievements ──
 ## Emitted when an achievement has been completed, carrying its ID.
 signal achievement_done(achievement_id: int)

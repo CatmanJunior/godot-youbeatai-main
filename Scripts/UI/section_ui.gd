@@ -144,7 +144,7 @@ func _update_section_ui() -> void:
 
 	section_buttons_container.size = Vector2(section_buttons.size() * SECTION_BUTTON_SIZE, SECTION_BUTTON_SIZE)
 	#section_buttons_container.position.x = - section_buttons_container.size.x / 2
-	song_recording_progress_bar.visible = SongState.selected_track_index == SongState.song_track.SONG_TRACK_INDEX
+	song_recording_progress_bar.visible = GameState.song_mode
 	
 	if song_recording_progress_bar:
 		var back_panel_over_size = Vector2(16, 8)

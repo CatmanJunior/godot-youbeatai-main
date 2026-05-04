@@ -47,15 +47,12 @@ func on_beat(beat: int):
 	var section: SectionData = SongState.current_section
 	var length = len(section.progression.chords)
 	var divider: int = length * settings.chordDuration / float(SongState.total_beats)
-	print(length, divider)
 
 	@warning_ignore("integer_division")
 	song_cursor = (beat / settings.chordDuration) % (length / divider)
 	song_cursor += section.progression_offset.offset
 
 	var chord: Chord = section.progression.chords[song_cursor % length]
-	print(chord.base_note)
-
 	play_chord_object(chord, settings.chordDuration * GameState.beat_duration)
 
 func play_chord_object(chord: Chord, duration: float):
@@ -73,7 +70,7 @@ func play_chord_object(chord: Chord, duration: float):
 
 
 func play_chord(intervals, duration = 0.5) -> void:
-	var t = get_time()
+	var t = get_time() -.005
 	for i in range(intervals.size()):
 		channel_note_on(t, 0, base_note.id + intervals[i], 0.5)
 		channel_note_off(t + duration, 0, base_note.id + intervals[i])

@@ -49,6 +49,7 @@ func _ready() -> void:
 	EventBus.track_selected.connect(_on_track_selected)
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
+	EventBus.pre_beat_triggered.connect(pre_on_beat)
 
 
 func _process(delta: float) -> void:
@@ -84,14 +85,16 @@ func setup(index: int, parent_bus: String, _settings = null) -> void:
 	chords.set_settings(_settings, sub_bus_names[1] )
 	add_child(chords)
 
+func pre_on_beat(beat:int):
+	if beat == 0:
+		EventBus.section_next_requested.emit()
+
 func _on_beat_triggered(_beat: int) -> void:
 	if SongState.selected_track_index != track_index:
 		return
 
 	if _beat != 1:
 		return
-
-	EventBus.section_next_requested.emit()
 
 	if SongState.current_section_index == 0 and not _is_playing:
 		play()

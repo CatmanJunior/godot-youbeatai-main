@@ -38,6 +38,8 @@ signal swing_changed(new_swing: float)
 # ── Beat Clock ──
 ## Emitted on every beat tick with the current beat index.
 signal beat_triggered(beat: int)
+## Emitted on every beat tick before beat_triggered
+signal pre_beat_triggered(beat: int)
 ## Emitted to request seeking the beat clock to a specific beat.
 signal beat_seek_requested(beat: int)
 

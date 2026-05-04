@@ -28,8 +28,8 @@ grow_vertical = 2
 [node name="SettingsButton" type="Button" parent="." unique_id=754926829]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.725
-anchor_top = -0.725
+anchor_left = -0.9749998
+anchor_top = -0.975
 anchor_right = -0.9749998
 anchor_bottom = -0.975
 offset_right = 59.999992
@@ -45,5 +45,5 @@ metadata/_edit_use_anchors_ = true
 layout_mode = 1
 offset_right = 212.76611
 offset_bottom = 212.76611
-scale = Vector2(0.235, 0.235)
+scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_x67wp")

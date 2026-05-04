@@ -256,12 +256,13 @@ offset_top = 2.0
 offset_right = 947.0
 offset_bottom = 719.0
 theme_override_fonts/font = ExtResource("4_16hvj")
-theme_override_font_sizes/font_size = 27
+theme_override_font_sizes/font_size = 25
 text = "Monobanda.nl	
 
 Simon van der Linden	
 Sjoerd Wouterse 	
 Jesse van Leeuwen
+René 't Hart
 Roland MacDonald
 Keano Dussel	
 Esmée Veldhuizen	

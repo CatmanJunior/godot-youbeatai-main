@@ -109,6 +109,9 @@ offset_right = 91.384766
 offset_bottom = 88.30762
 scale = Vector2(0.6, 0.6)
 
+[node name="ChaosIconBack" parent="ChaosPadTriangle/PointLeft/ChaosIconMain" index="0" unique_id=389055289]
+stretch_mode = 5
+
 [node name="PointTop" type="Control" parent="ChaosPadTriangle" unique_id=400839598]
 anchors_preset = 0
 offset_left = 251.00002
@@ -139,6 +142,9 @@ offset_top = -90.76953
 offset_right = 88.30762
 offset_bottom = 85.23047
 scale = Vector2(0.6, 0.6)
+
+[node name="ChaosIconBack" parent="ChaosPadTriangle/PointRight/ChaosIconAlt" index="0" unique_id=389055289]
+stretch_mode = 5
 
 [node name="Knob" type="Control" parent="ChaosPadTriangle" unique_id=1796748661]
 layout_mode = 1

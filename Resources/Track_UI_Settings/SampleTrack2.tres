@@ -2,18 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="1_jp6c6"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="2_6wxeo"]
-[ext_resource type="Texture2D" uid="uid://crt2x1wnsgqdm" path="res://Resources/Textures_New/Icons/_0001s_0008_Clap.png" id="3_axypi"]
-[ext_resource type="Texture2D" uid="uid://qnocxgea5s0w" path="res://Resources/Textures_New/Icons/_0001s_0004_Tambourine-.png" id="4_6556q"]
+[ext_resource type="Texture2D" uid="uid://bi5fhmeif3l3p" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="3_kwicd"]
+[ext_resource type="Texture2D" uid="uid://cpvm416ibr3d5" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="4_afs4e"]
 [ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/DataClasses/Track_UI_Settings/sample_track_UI_settings.gd" id="5_kwicd"]
 
 [resource]
 script = ExtResource("5_kwicd")
 beat_outline_texture = ExtResource("2_6wxeo")
 beat_filled_texture = ExtResource("1_jp6c6")
-button_icon_texture = ExtResource("3_axypi")
+button_icon_texture = ExtResource("3_kwicd")
 button_outline_texture = ExtResource("2_6wxeo")
 button_filled_texture = ExtResource("1_jp6c6")
-chaos_pad_main_icon = ExtResource("3_axypi")
-chaos_pad_alt_icon = ExtResource("4_6556q")
+chaos_pad_main_icon = ExtResource("3_kwicd")
+chaos_pad_alt_icon = ExtResource("4_afs4e")
 track_color = Color(0.972549, 0.52156866, 0.17254902, 1)
 metadata/_custom_type_script = "uid://c8umjx1f0tc6n"

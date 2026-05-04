@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c78m8ijn10kwh"]
 
+[ext_resource type="Texture2D" uid="uid://m6q7i764vuvw" path="res://Resources/Textures_New/Layout 18 jan26.png" id="1_bv80c"]
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
@@ -59,6 +60,21 @@
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=929999586]
+visible = false
+z_index = -5
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -640.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_bv80c")
+expand_mode = 2
 
 [node name="Camera" type="Camera2D" parent="." unique_id=980598397]
 scale = Vector2(4.12, 1)
@@ -146,10 +162,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BeatRing" parent="UserInterface" unique_id=192422746 instance=ExtResource("45_owhal")]
 layout_mode = 1
-offset_left = -125.0
-offset_top = 1.0
-offset_right = -125.0
-offset_bottom = 1.0
+offset_left = -108.0
+offset_top = 49.0
+offset_right = -108.0
+offset_bottom = 49.0
 mouse_filter = 1
 
 [node name="PlayPauseButton" parent="UserInterface/BeatRing" index="1" unique_id=2061116021]
@@ -177,10 +193,10 @@ tint_progress = Color(1, 1, 1, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.0
-offset_left = 306.0
-offset_top = -341.0
-offset_right = 306.0
-offset_bottom = -341.0
+offset_left = 281.0
+offset_top = -312.0
+offset_right = 281.0
+offset_bottom = -312.0
 scale = Vector2(0.505, 0.505)
 mix_star_marker = NodePath("ChaosPadTriangle/Star")
 outside_star_marker = NodePath("ChaosPadTriangle/Star2")
@@ -237,15 +253,31 @@ metadata/_edit_group_ = true
 [node name="Star" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="8" unique_id=1742236932]
 visible = true
 
+[node name="PointRight" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="3" unique_id=1203642698]
+offset_left = 27.722797
+offset_top = 69.30694
+offset_right = 27.722797
+offset_bottom = 69.30694
+
+[node name="Knob" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="4" unique_id=1796748661]
+offset_left = 304.95053
+offset_top = 164.35641
+offset_right = -48.0495
+offset_bottom = -190.64355
+
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 layout_mode = 1
-offset_left = -593.00006
-offset_top = -342.0
-offset_right = -508.80414
-offset_bottom = 379.6797
+offset_left = -574.0
+offset_top = -14.999999
+offset_right = -574.0
+offset_bottom = -14.999999
 scale = Vector2(0.91453314, 0.91453314)
 
-[node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" parent_id_path=PackedInt32Array(2075389560, 154923035) index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
+[node name="VBoxContainer" parent="UserInterface/TrackSelectButtons" index="0" unique_id=154923035]
+offset_top = -346.0
+offset_bottom = 346.0
+
+[node name="SongTrackSelectButton_6" parent="UserInterface/TrackSelectButtons/VBoxContainer" index="0" unique_id=703475495 node_paths=PackedStringArray("song_section_progress_bar")]
 song_section_progress_bar = NodePath("../../../SwitchSectionButtons/RealTimeAudioRecordingProgressBar")
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
@@ -390,22 +422,14 @@ angle_max = 90.0
 hue_variation_max = 0.55
 
 [node name="SwitchSectionButtons" parent="UserInterface" unique_id=1068760052 instance=ExtResource("49_v2nl5")]
+custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
-offset_left = -257.0
-offset_top = 57.0
-offset_right = -257.0
-offset_bottom = 57.0
 section_button_prefab = ExtResource("43_kqrg6")
 
-[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="1" unique_id=2103297005]
-visible = false
-offset_left = 2.0
-offset_top = -300.0
-offset_right = 292.0
-offset_bottom = -255.0
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
 alignment = 0
 
-[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=569761149]
+[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
 offset_left = -1002.0
 offset_top = -605.0
 offset_right = -554.0
@@ -423,10 +447,10 @@ layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
-offset_left = 561.0
-offset_top = 282.0
-offset_right = 561.0
-offset_bottom = 282.0
+offset_left = 574.0
+offset_top = 300.0
+offset_right = 574.0
+offset_bottom = 300.0
 grow_horizontal = 1
 grow_vertical = 1
 
@@ -438,8 +462,6 @@ script = ExtResource("48_v2nl5")
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
 [editable path="UserInterface/TrackSelectButtons"]
-[editable path="UserInterface/TrackSelectButtons/VBoxContainer/SongTrackSelectButton_6"]
-[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_0"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_1"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3"]

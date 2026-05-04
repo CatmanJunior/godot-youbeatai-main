@@ -190,5 +190,14 @@ func _reset_scales() -> void:
 
 ## Set the sprites for a specific track visible 
 func _set_track_sprites_visible(track: int, visible: bool) -> void:
-	if track >= 0 and track < _track_controls.size():
-		_track_controls[track].visible = visible
+	for beat in range(_beat_buttons[track].size()):
+		var sprite: BeatButton = _get_beat_button(track, beat)
+		if sprite:
+			sprite.visible = visible
+
+func _on_ui_visibility_requested(element: int, visible: bool) -> void:
+	match element:
+		VisibilityManager.UIElement.BEAT_POINTER:
+			pointer.visible = visible
+		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
+			play_pause_button.visible = visible

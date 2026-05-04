@@ -47,7 +47,7 @@ func _ready() -> void:
 		KlappyEnergy.value_changed.connect(on_klappy_energy)
 		
 	assert(GameState!= null,"manger not found")
-	if not GameState.tutorialActivated:
+	if not GameState.tutorial_activated:
 		EventBus.utterance_ended.connect(_on_utterance_end)
 
 func _on_gui_input(event: InputEvent) -> void:
@@ -126,7 +126,7 @@ func _achievement_panel_visibility(_utterance_id:int):
 		achievement_panel.visible = true
 		
 func _start_tts(message:String):
-	TTSHelper.speak(TTSHelper.Text_without_emoticons(message))
+	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
 
 func _on_utterance_end(_utterance):
 	achievement_panel.visible = false

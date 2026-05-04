@@ -20,7 +20,8 @@ func reset() -> void:
 var notes: Notes
 
 # -- TO BE IMPLEMENTED --
-var tutorialActivated: bool = false
+var tutorial_activated: bool = false
+var use_tutorial: bool = true
 var loop_sections: bool = false
 
 # -- Export settings --

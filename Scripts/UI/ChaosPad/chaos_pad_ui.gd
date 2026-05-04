@@ -10,6 +10,11 @@ class_name ChaosPadUI
 @export var main_icon: TextureRect
 @export var alt_icon: TextureRect
 
+# Tutorial zone markers — hidden by default, shown by TutorialOutcomes
+@export var mix_star_marker: TextureRect
+@export var outside_star_marker: TextureRect
+@export var star3: TextureRect
+
 # Curves for visual feedback
 @export var synth_mixing_line_scale_curve: Curve
 @export var synth_mixing_line_color_curve: Curve

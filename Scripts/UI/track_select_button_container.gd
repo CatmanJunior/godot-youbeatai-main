@@ -12,7 +12,18 @@ func _ready():
 
 		button.track_button_pressed.connect(_on_track_button_pressed)
 
+	EventBus.track_select_button_visibility_requested.connect(_on_track_select_button_visibility_requested)
+	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
 	call_deferred("_set_initial_track")
+
+func _on_ui_visibility_requested(p_element: int, p_visible: bool) -> void:
+	if p_element == UIVisibilityListener.UIElement.ENTIRE_INTERFACE:
+		for button in track_buttons:
+			button.visible = p_visible
+
+func _on_track_select_button_visibility_requested(p_track: int, p_visible: bool) -> void:
+	if p_track >= 0 and p_track < track_buttons.size():
+		track_buttons[p_track].visible = p_visible
 
 func _set_initial_track():
 	track_buttons[0].set_button_selected(true)
@@ -38,3 +49,10 @@ func _on_track_button_pressed(track_index: int):
 		EventBus.beat_set_requested.emit(track_index, GameState.current_beat, true)
 
 	EventBus.track_selected.emit(track_index)
+
+	if GameState.tutorial_activated:
+		if track_index == 0:
+			EventBus.clap_stomp_detected.emit(0)
+		elif track_index == 1:
+			EventBus.clap_stomp_detected.emit(1)
+			

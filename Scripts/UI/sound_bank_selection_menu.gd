@@ -24,7 +24,7 @@ var chosen_themes_emojis: Array[String] = []
 var _update := false
 
 func _ready() -> void:
-	if GameState.tutorialActivated:
+	if GameState.tutorial_activated:
 		selected_emotion_labels[0].text = "😁"
 		selected_theme_labels[0].text = "💔"
 		chosen_emotions_emojis.append("😁")

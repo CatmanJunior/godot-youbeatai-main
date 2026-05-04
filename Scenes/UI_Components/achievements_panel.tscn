@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://cfh02va7cdmw5"]
 
-[ext_resource type="Script" uid="uid://crkbx6652t3pi" path="res://Scenes/UI_Components/achievements_panel_ui.gd" id="1_n5e2k"]
+[ext_resource type="Script" uid="uid://d0oh2kfmsgmal" path="res://Scripts/UI/achievements_panel_ui.gd" id="1_n5e2k"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_rgnfl"]
 [ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/Klappy/continue.gd" id="2_dcbcy"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="2_qi7lb"]
 [ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="2_twvmx"]
 [ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_hc54m"]
 
@@ -61,6 +62,12 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_twvmx")
 script = ExtResource("1_n5e2k")
 metadata/_edit_use_anchors_ = true
+
+[node name="VisibilitySetter" type="Control" parent="." unique_id=1684750056 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("2_qi7lb")
+ui_element = 11
+ui_reference = NodePath("..")
 
 [node name="Title" type="Label" parent="." unique_id=914827527]
 layout_mode = 0

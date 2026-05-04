@@ -48,6 +48,7 @@ func _on_knob_position_changed(knobPos: Vector2) -> void:
 	if SongState.selected_track_index == track_index and track_data:
 		track_data.knob_position = knobPos
 
+
 func _on_mixing_weights_changed(trackIndex: int, weights: Vector3) -> void:
 	if trackIndex == track_index:
 		set_weights(weights)

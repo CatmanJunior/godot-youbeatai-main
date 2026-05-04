@@ -4,20 +4,26 @@
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="1_wrqyy"]
 [ext_resource type="PackedScene" uid="uid://chblk160rw0iy" path="res://Scenes/Prefab/BeatButton.tscn" id="2_5lvir"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
-[ext_resource type="Texture2D" uid="uid://d3ccxl7xq02gg" path="res://Resources/Textures/cone.png" id="3_cj5h8"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="4_5gnhr"]
+[ext_resource type="Texture2D" uid="uid://c2qqxcx85b1tx" path="res://Resources/Textures_New/Icons/Icons-_28_0030_Play.png" id="4_24ovn"]
 [ext_resource type="PackedScene" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
+[ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="7_5lvir"]
+[ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
+[ext_resource type="Texture2D" uid="uid://u4byodwrk6aw" path="res://Resources/Textures_New_Correct/Icons-_28_0031_Pause.png" id="7_wrqyy"]
+[ext_resource type="Texture2D" uid="uid://bfdnrlkcp5y8u" path="res://Resources/Icons/Icons-_28_0030_Play.png" id="8_5lvir"]
+[ext_resource type="PackedScene" uid="uid://cx30roke8u7g2" path="res://Scenes/UI_Components/Beam.tscn" id="9_nbgc4"]
+[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="9_wrqyy"]
+[ext_resource type="Texture2D" uid="uid://ch1ydacs6lt0n" path="res://Resources/Textures/cirkel3.png" id="9_ywh4c"]
+[ext_resource type="Script" uid="uid://dphj063nkqh6" path="res://Scenes/UI_Components/SectionProgress.gd" id="13_0ra3y"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_b5jd4"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_536cc"]
-bg_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nbgc4"]
+shader = ExtResource("7_a7d6b")
+shader_parameter/fill_amount = 0.9150000434625
+shader_parameter/start_angle = 119.26400566504
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/clockwise = 1.0
 
 [node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "pointer", "play_pause_button")]
 physics_interpolation_mode = 0
@@ -25,18 +31,19 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 640.0
-offset_top = 360.0
-offset_right = -640.0
-offset_bottom = -360.0
+offset_right = -1280.0
+offset_bottom = -720.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_wrqyy")
 beat_ring_pivot_point = NodePath("PivotPoint")
 pointer = NodePath("Pointer")
 play_pause_button = NodePath("PlayPauseButton")
 beat_button_prefab = ExtResource("2_5lvir")
 track_settings = ExtResource("3_mgl8v")
+play_icon = ExtResource("4_24ovn")
+pause_icon = ExtResource("7_wrqyy")
 
 [node name="VisibilitySetter" type="Control" parent="." unique_id=1845062889 node_paths=PackedStringArray("ui_reference")]
 anchors_preset = 0
@@ -46,18 +53,30 @@ ui_reference = NodePath("..")
 [node name="PlayPauseButton" type="Button" parent="." unique_id=2061116021]
 z_index = 1
 layout_mode = 1
-offset_left = -27.5
-offset_top = -20.5
-offset_right = 27.5
-offset_bottom = 20.5
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("1_b7oj2")
+theme_override_constants/icon_max_width = 50
 theme_override_font_sizes/font_size = 34
+shortcut = ExtResource("7_5lvir")
 shortcut_in_tooltip = false
-text = "⏯️
+text = "
 "
+icon = ExtResource("8_5lvir")
 flat = true
+icon_alignment = 1
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="VisibilitySetter" type="Control" parent="PlayPauseButton" unique_id=145324735 node_paths=PackedStringArray("ui_reference")]
@@ -66,18 +85,39 @@ script = ExtResource("4_5gnhr")
 ui_element = 2
 ui_reference = NodePath("..")
 
-[node name="Panel" type="Panel" parent="PlayPauseButton" unique_id=1954679283]
-modulate = Color(1, 1, 1, 0.7254902)
-show_behind_parent = true
-z_index = -1
-layout_mode = 0
-offset_left = -7.5
-offset_top = -17.5
-offset_right = 62.5
-offset_bottom = 52.5
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_536cc")
-metadata/_edit_use_anchors_ = true
+[node name="TextureRect" type="TextureRect" parent="PlayPauseButton" unique_id=545279654]
+material = SubResource("ShaderMaterial_nbgc4")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -35.0
+offset_top = -35.0
+offset_right = 35.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("2_bt3xi")
+expand_mode = 1
+stretch_mode = 5
+script = ExtResource("13_0ra3y")
+
+[node name="TextureRect" type="TextureRect" parent="PlayPauseButton/TextureRect" unique_id=318319674]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -5.0
+offset_top = -4.0
+offset_right = 5.0
+offset_bottom = 6.0
+grow_horizontal = 2
+texture = ExtResource("9_wrqyy")
+expand_mode = 1
+stretch_mode = 4
 
 [node name="Cross" type="Control" parent="." unique_id=1328617350]
 layout_mode = 1
@@ -91,50 +131,13 @@ grow_vertical = 2
 
 [node name="Cross" parent="Cross" unique_id=912512629 instance=ExtResource("5_5gnhr")]
 
-[node name="Vertical" type="Sprite2D" parent="Cross" unique_id=912789113]
-visible = false
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal" type="Sprite2D" parent="Cross" unique_id=1103298008]
-visible = false
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 1.5708
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Vertical2" type="Sprite2D" parent="Cross" unique_id=841252515]
-visible = false
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = 0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
-[node name="Horizontal2" type="Sprite2D" parent="Cross" unique_id=1226630070]
-visible = false
-modulate = Color(0.78, 0.78, 0.78, 1)
-z_index = -1
-rotation = -0.785398
-scale = Vector2(4, 484)
-texture = SubResource("CanvasTexture_b5jd4")
-
 [node name="Pointer" type="Sprite2D" parent="." unique_id=57170616]
 modulate = Color(0.78, 0.78, 0.78, 1)
 z_index = -1
 scale = Vector2(0.6, 0.85)
 offset = Vector2(0, -150)
 
-[node name="PointLight2D" type="PointLight2D" parent="Pointer" unique_id=378491608]
-color = Color(1, 1, 0.698039, 1)
-energy = 2.37
-range_z_min = -100
-range_z_max = -1
-texture = ExtResource("3_cj5h8")
-offset = Vector2(0, -150)
+[node name="Sprite2D" parent="Pointer" unique_id=1004547291 instance=ExtResource("9_nbgc4")]
 
 [node name="VisibilitySetter" type="Control" parent="Pointer" unique_id=2092152354 node_paths=PackedStringArray("ui_reference")]
 layout_mode = 3
@@ -166,12 +169,11 @@ anchors_preset = 0
 
 [node name="Waveform_visualisers" type="Control" parent="." unique_id=1117100626 node_paths=PackedStringArray("progress_bars", "waveform_lines")]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 mouse_filter = 2
 script = ExtResource("5_wuuqw")
 progress_bars = [NodePath("TextureProgressBar0"), NodePath("TextureProgressBar1")]
 waveform_lines = [NodePath("BigLine0"), NodePath("BigLine1")]
+track_settings = ExtResource("3_mgl8v")
 
 [node name="BigLine0" type="Line2D" parent="Waveform_visualisers" unique_id=866994840]
 closed = true
@@ -184,19 +186,27 @@ width = 5.0
 antialiased = true
 
 [node name="TextureProgressBar0" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1277010803]
-layout_mode = 0
-offset_left = -265.0
-offset_top = -267.0
-offset_right = 247.0
-offset_bottom = 245.0
-scale = Vector2(1.05, 1.05)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.15, 1.15)
+pivot_offset_ratio = Vector2(0.5, 0.5)
 mouse_filter = 2
 max_value = 1.0
 step = 0.01
+value = 1.0
 fill_mode = 4
-texture_progress = ExtResource("2_bt3xi")
+texture_progress = ExtResource("9_ywh4c")
 tint_progress = Color(1, 1, 0, 1)
-metadata/_edit_lock_ = true
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1981743700]
 layout_mode = 1
@@ -205,17 +215,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -276.0
-offset_top = -276.0
-offset_right = 236.0
-offset_bottom = 236.0
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.3, 0.3)
+scale = Vector2(0.25, 0.25)
 pivot_offset = Vector2(256, 256)
 mouse_filter = 2
 max_value = 1.0
 step = 0.01
+value = 1.0
 fill_mode = 4
 texture_progress = ExtResource("2_bt3xi")
 tint_progress = Color(0.5176471, 0, 1, 1)

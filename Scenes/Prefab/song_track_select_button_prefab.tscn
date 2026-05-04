@@ -14,9 +14,9 @@ gradient = SubResource("Gradient_wnx8s")
 width = 1
 
 [node name="SongTrackSelectButton_6" type="Button" unique_id=1740880555 node_paths=PackedStringArray("song_track_line_texture", "outline_rect", "glow_rect", "icon_rect")]
-custom_minimum_size = Vector2(80, 80)
-offset_right = 80.0
-offset_bottom = 80.0
+custom_minimum_size = Vector2(72, 72)
+offset_right = 72.0
+offset_bottom = 72.0
 action_mode = 0
 flat = true
 script = ExtResource("2_ygwhu")
@@ -30,10 +30,10 @@ metadata/_edit_group_ = true
 [node name="IconTex" type="TextureRect" parent="." unique_id=968006323]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.2
-anchor_top = 0.2
-anchor_right = 0.8
-anchor_bottom = 0.8
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_wnx8s")
@@ -68,16 +68,16 @@ stretch_mode = 5
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1830768980]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
-anchor_right = 1.0
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -2.0
-offset_top = -1.0
-offset_right = 103.0
-offset_bottom = 4.0
-grow_horizontal = 0
+offset_left = 34.135002
+offset_top = -2.5
+offset_right = 137.0
+offset_bottom = 2.5
+grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture1D_ygwhu")
 expand_mode = 1

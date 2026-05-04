@@ -18,29 +18,31 @@
 layout_mode = 3
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 80.0
+offset_right = 1280.0
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_pe0j6")
 track_UI_settings = ExtResource("2_b7hqm")
 track_buttons = [NodePath("VBoxContainer/TrackSelectButton_0"), NodePath("VBoxContainer/TrackSelectButton_1"), NodePath("VBoxContainer/TrackSelectButton_2"), NodePath("VBoxContainer/TrackSelectButton_3"), NodePath("VBoxContainer/TrackSelectButton_4"), NodePath("VBoxContainer/TrackSelectButton_5"), NodePath("VBoxContainer/SongTrackSelectButton_6")]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=154923035]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_right = 80.0
-offset_bottom = -28.0
-grow_vertical = 2
-theme_override_constants/separation = 22
+offset_left = 62.385
+offset_top = 23.985
+offset_right = 134.385
+offset_bottom = 677.985
+theme_override_constants/separation = 25
 metadata/_edit_group_ = true
 
 [node name="SongTrackSelectButton_6" parent="VBoxContainer" unique_id=703475495 instance=ExtResource("2_i7akj")]
 layout_mode = 2
 
 [node name="TrackSelectButton_0" parent="VBoxContainer" unique_id=814915734 instance=ExtResource("3_tyigl")]
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 
 [node name="TrackSelectButton_1" parent="VBoxContainer" unique_id=1401429003 instance=ExtResource("3_tyigl")]
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_1" index="0" unique_id=1380255650]
@@ -50,6 +52,7 @@ texture = ExtResource("6_ojmv1")
 texture = ExtResource("7_i7akj")
 
 [node name="TrackSelectButton_2" parent="VBoxContainer" unique_id=1024189698 instance=ExtResource("3_tyigl")]
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_2" index="0" unique_id=1380255650]
@@ -59,6 +62,7 @@ texture = ExtResource("8_tyigl")
 texture = ExtResource("9_pe0j6")
 
 [node name="TrackSelectButton_3" parent="VBoxContainer" unique_id=1077184116 instance=ExtResource("3_tyigl")]
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_3" index="0" unique_id=1380255650]
@@ -74,6 +78,7 @@ offset_bottom = 55.0
 texture = ExtResource("11_egu1i")
 
 [node name="TrackSelectButton_4" parent="VBoxContainer" unique_id=1274099305 instance=ExtResource("12_pe0j6")]
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 
 [node name="BgTex" parent="VBoxContainer/TrackSelectButton_4" index="1" unique_id=1431828313]
@@ -83,6 +88,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TrackSelectButton_5" parent="VBoxContainer" unique_id=1681121463 instance=ExtResource("12_pe0j6")]
+custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_5" index="0" unique_id=1229799027]

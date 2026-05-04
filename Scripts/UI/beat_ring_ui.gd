@@ -13,6 +13,9 @@ class_name BeatRingUI
 @export var beat_button_prefab: PackedScene
 @export var track_settings: TrackUISettingsRegistry
 
+@export var play_icon: Texture2D
+@export var pause_icon: Texture2D
+
 
 const BEAT_SCALE_32: float = 1.0
 const BEAT_SCALE_16: float = 1.6
@@ -80,7 +83,7 @@ func _update_pointer_rotation() -> void:
 		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
 
 func _update_play_pause_button(is_playing: bool) -> void:
-	play_pause_button.text = "⏸️" if is_playing else "▶️"
+	play_pause_button.icon = pause_icon if is_playing else play_icon
 
 func _init_beat_button_positions() -> void:
 	var beats_amount = SongState.total_beats

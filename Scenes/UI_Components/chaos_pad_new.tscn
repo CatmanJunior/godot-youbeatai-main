@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://d2wo3w1udljai" path="res://Resources/Textures/fingerprint.png" id="4_bd6tm"]
 [ext_resource type="Script" uid="uid://bnjoutq6fdow2" path="res://Scripts/UI/Buttons/record_sample_button.gd" id="8_i8wdk"]
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="11_cfhpg"]
-[ext_resource type="Script" uid="uid://bi23kcj8rmhbw" path="res://Scripts/Trail.gd" id="12_f0ro3"]
+[ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="12_f0ro3"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Texture2D" uid="uid://b2dhvdui64kb" path="res://Resources/Textures_New/Icons/Icons-_28_0004_Microphone.png" id="13_objle"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/UI/ChaosPad/choas_pad_knob.gd" id="22_ds0f1"]

@@ -144,7 +144,7 @@ func _outcome_show_bass_layer() -> void:
 
 func _outcome_setup_bass_recorder() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD, true)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIC_RECORDER, true)
 	if tutorial.chaos_pad_knob_top_position:
 		EventBus.chaos_pad_knob_position_set_requested.emit(

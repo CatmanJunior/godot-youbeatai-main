@@ -1,7 +1,7 @@
 extends Panel
 class_name EmailPrompt
 
-var do_mail: bool = true
+var do_mail: bool = false
 var export_song: bool = false
 
 @export var name_field: LineEdit
@@ -20,7 +20,7 @@ func _on_mail_button_pressed():
 		mail_field.modulate = Color.RED
 		return
 	
-	EventBus.export_requested.emit(do_mail)
+	EventBus.export_requested.emit(false, export_song)
 	close_export_dialog()
 	
 func on_mail_toggle_changed(value: bool):

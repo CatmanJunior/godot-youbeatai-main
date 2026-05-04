@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://d38plcpfw0kp8" path="res://Resources/Textures_Settings/Settings__0013_Note.png" id="14_o6j77"]
 [ext_resource type="Texture2D" uid="uid://cr4otco1wltik" path="res://Resources/Textures_Settings/Settings__0012_Beat-Ring-Icon.png" id="15_bbulw"]
 [ext_resource type="Texture2D" uid="uid://c46agdfmouhob" path="res://Resources/Textures_Settings/Settings__0011_X.png" id="16_aa32w"]
+[ext_resource type="Script" uid="uid://nst1cl6b3w8" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
 
@@ -583,6 +584,8 @@ text = "Hele liedje opslaan?"
 icon = ExtResource("14_o6j77")
 autowrap_mode = 2
 icon_alignment = 2
+script = ExtResource("16_g4ckg")
+mode = true
 
 [node name="SaveToWavButton" type="Button" parent="Panel/Buttons2" unique_id=409124706]
 custom_minimum_size = Vector2(250, 0)
@@ -601,6 +604,7 @@ text = "Beat ring opslaan?"
 icon = ExtResource("15_bbulw")
 autowrap_mode = 2
 icon_alignment = 2
+script = ExtResource("16_g4ckg")
 
 [node name="RestartButton" type="Button" parent="Panel/Buttons2" unique_id=32174646]
 custom_minimum_size = Vector2(250, 0)

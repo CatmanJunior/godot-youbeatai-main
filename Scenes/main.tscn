@@ -23,13 +23,14 @@
 [ext_resource type="Script" uid="uid://b8fkn5kfy3sd5" path="res://Scripts/Tutorial/tutorial.gd" id="28_ux43w"]
 [ext_resource type="Resource" uid="uid://bhm2jpomt47pe" path="res://Scripts/Tutorial/tutorial_steps.tres" id="29_n7cmr"]
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
+[ext_resource type="Script" uid="uid://bocpgiluuvko5" path="res://Scripts/Exporters/Exporter.gd" id="33_55jeb"]
+[ext_resource type="Script" uid="uid://dgve2eeehfcib" path="res://Scripts/Exporters/FileExporter.gd" id="34_2daye"]
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring_pivot_point.tscn" id="45_owhal"]
-[ext_resource type="PackedScene" uid="uid://1drhlix6kj7f" path="res://Scenes/UI_Components/background.tscn" id="47_jut3y"]
 [ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
 [ext_resource type="Script" uid="uid://cbjnj08au0vy8" path="res://Scripts/Tutorial/VisibilityManager.gd" id="48_v2nl5"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
@@ -40,6 +41,7 @@
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="52_ojylq"]
 [ext_resource type="Texture2D" uid="uid://dy2xx2vdev35q" path="res://Resources/Textures_New/back.png" id="53_2daye"]
 [ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="53_fle1e"]
+[ext_resource type="Script" uid="uid://bhyonrmhfadlg" path="res://Scripts/Exporters/Export_ui.gd" id="54_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
@@ -51,7 +53,6 @@
 [ext_resource type="AudioStream" uid="uid://dw2mfmy8d7704" path="res://Resources/Audio/metronome-alt.wav" id="60_dllok"]
 [ext_resource type="AudioStream" uid="uid://cph5mjckc1htb" path="res://Resources/Audio/achievement.wav" id="61_0t4jf"]
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
-[ext_resource type="Script" uid="uid://c6xnic6xfnewu" path="res://Experimental/SongExport/exporter.gd" id="65_87bhu"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
@@ -125,10 +126,14 @@ script = ExtResource("10_o2owy")
 [node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
 script = ExtResource("99_sslm1")
 
-[node name="Exporter" type="Node" parent="Managers" unique_id=944798366 node_paths=PackedStringArray("loading")]
-script = ExtResource("65_87bhu")
-loading = NodePath("../../UserInterface/LoadingContainer")
-metadata/_custom_type_script = "uid://c6xnic6xfnewu"
+[node name="Exporter" type="Node" parent="Managers" unique_id=500233961]
+script = ExtResource("33_55jeb")
+metadata/_custom_type_script = "uid://bocpgiluuvko5"
+
+[node name="ExportUI" type="Node" parent="Managers/Exporter" unique_id=775381750 node_paths=PackedStringArray("loading")]
+script = ExtResource("54_gsvbx")
+loading = NodePath("../../../UserInterface/LoadingContainer")
+metadata/_custom_type_script = "uid://bhyonrmhfadlg"
 
 [node name="ListenToLastExport" type="Node" parent="Managers/Exporter" unique_id=219028165 node_paths=PackedStringArray("player")]
 script = ExtResource("66_33qc4")
@@ -138,11 +143,9 @@ metadata/_custom_type_script = "uid://bwupnu0bu7hdn"
 [node name="lastExportPlayer" type="AudioStreamPlayer" parent="Managers/Exporter/ListenToLastExport" unique_id=723625077]
 playback_type = 1
 
-[node name="PreviewExportsManager" type="Node" parent="Managers/Exporter" unique_id=1007844038]
-
-[node name="AudioStreamPlayerSong" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1270233026]
-
-[node name="AudioStreamPlayerBeat" type="AudioStreamPlayer" parent="Managers/Exporter/PreviewExportsManager" unique_id=1661558996]
+[node name="FileExporter" type="Node" parent="Managers/Exporter" unique_id=1326891481]
+script = ExtResource("34_2daye")
+metadata/_custom_type_script = "uid://dgve2eeehfcib"
 
 [node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
 script = ExtResource("28_ux43w")

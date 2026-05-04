@@ -33,7 +33,7 @@ script = ExtResource("1_8j0pk")
 name_field = NodePath("Naam")
 mail_field = NodePath("EmailField")
 mail_toggle = NodePath("CheckButton")
-mail_button = NodePath("Buttons/Enter")
+mail_button = NodePath("Buttons/Enter2")
 
 [node name="Title" type="Label" parent="." unique_id=1338360888]
 layout_mode = 1
@@ -51,6 +51,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EmailField" type="LineEdit" parent="." unique_id=36543817]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -64,6 +65,7 @@ offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 28
+text = " "
 placeholder_text = "jouwemailadress@gmail.com"
 alignment = 1
 emoji_menu_enabled = false
@@ -86,6 +88,7 @@ placeholder_text = "Wat is je naam?"
 alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="." unique_id=376458185]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -98,7 +101,6 @@ offset_right = 302.0
 offset_bottom = 62.0
 grow_horizontal = 2
 grow_vertical = 2
-button_pressed = true
 
 [node name="Buttons" type="HFlowContainer" parent="." unique_id=1892319195]
 layout_mode = 1
@@ -117,6 +119,7 @@ theme_override_constants/h_separation = 21
 alignment = 1
 
 [node name="Enter" type="Button" parent="Buttons" unique_id=1252579344]
+visible = false
 custom_minimum_size = Vector2(150, 60)
 layout_mode = 2
 focus_mode = 0
@@ -145,3 +148,4 @@ icon_alignment = 1
 expand_icon = true
 
 [connection signal="toggled" from="CheckButton" to="EmailField" method="reset_from_toggle"]
+[connection signal="pressed" from="Button" to="." method="close_export_dialog"]

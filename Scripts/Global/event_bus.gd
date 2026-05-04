@@ -152,6 +152,9 @@ signal mute_all_requested(mute: bool)
 # ── Saving / Exporting ──
 ## Emitted to request starting audio recording.
 signal export_recording_requested(recording_data: ExportRecordingData)
+
+signal export_progress_update(progress: float)
+
 ## Emitted when saving has completed successfully, carrying the output file path.
 signal saving_completed(path: String)
 ## Emitted to request saving the current song data to disk.

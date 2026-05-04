@@ -43,8 +43,8 @@ knob = NodePath("ChaosPadTriangle/Knob")
 track_settings = ExtResource("2_a3b2x")
 main_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconMain/ChaosIconBack")
 alt_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconAlt/ChaosIconBack")
-mix_star_marker = NodePath("ChaosPadTriangle/MixStar")
-outside_star_marker = NodePath("ChaosPadTriangle/OutsideStar")
+mix_star_marker = NodePath("ChaosPadTriangle/Star/MixStar")
+outside_star_marker = NodePath("ChaosPadTriangle/Star2/OutsideStar")
 
 [node name="VisibilitySetter" type="Control" parent="." unique_id=863757447 node_paths=PackedStringArray("ui_reference")]
 anchors_preset = 0
@@ -248,7 +248,9 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("15_ldfg3")
 expand_mode = 1
-metadata/_edit_group_ = true
+
+[node name="OutsideStar" type="Marker2D" parent="ChaosPadTriangle/Star2" unique_id=1900000002]
+position = Vector2(36, 41)
 
 [node name="TextureRect" type="TextureRect" parent="ChaosPadTriangle/Star2" unique_id=225166776]
 layout_mode = 1
@@ -287,7 +289,9 @@ grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("15_ldfg3")
 expand_mode = 1
-metadata/_edit_group_ = true
+
+[node name="MixStar" type="Marker2D" parent="ChaosPadTriangle/Star" unique_id=1900000001]
+position = Vector2(34, 39)
 
 [node name="TextureRect" type="TextureRect" parent="ChaosPadTriangle/Star" unique_id=48249998]
 layout_mode = 1
@@ -307,13 +311,6 @@ anchors_preset = 0
 script = ExtResource("3_vhj50")
 ui_element = 12
 ui_reference = NodePath("..")
-
-[node name="MixStar" type="Marker2D" parent="ChaosPadTriangle" unique_id=1900000001]
-position = Vector2(255, 204)
-
-[node name="OutsideStar" type="Marker2D" parent="ChaosPadTriangle" unique_id=1900000002]
-visible = false
-position = Vector2(530, 30)
 
 [editable path="ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="ChaosPadTriangle/PointRight/ChaosIconAlt"]

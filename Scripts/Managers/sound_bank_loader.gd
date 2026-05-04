@@ -68,7 +68,7 @@ static func _create_apply_note_player_settings(bank: SoundBank) -> Array[NotePla
 	var new_noteplayer_settings : Array[NotePlayerSettings] = []
 	for i in range(bank.noteplayer_settings.size()):
 		new_noteplayer_settings.append(
-		NotePlayerSettings.create(bank.synth_soundfonts[i], bank.noteplayer_settings[i].notes, bank.synth_instrument_ids[i], bank.noteplayer_settings[i].base_note, bank.noteplayer_settings[i].allow_key_input, bank.noteplayer_settings[i].gate, bank.noteplayer_settings[i].volume_db),
+		NotePlayerSettings.create(bank.synth_soundfonts[i], bank.noteplayer_settings[i].notes, bank.synth_instrument_ids[i], bank.noteplayer_settings[i].base_note, bank.noteplayer_settings[i].allow_key_input, bank.noteplayer_settings[i].gate, bank.noteplayer_settings[i].volume_db, bank.noteplayer_settings[i].gain),
 		)
 	bank.noteplayer_settings = new_noteplayer_settings
 	return new_noteplayer_settings

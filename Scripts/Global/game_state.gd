@@ -73,3 +73,4 @@ func _ready() -> void:
 	EventBus.recording_started.connect(func(_rd: RecordingData): is_recording = true)
 	EventBus.recording_stopped.connect(func(_rd: RecordingData): is_recording = false)
 	EventBus.restart_requested.connect(reset)
+

@@ -67,6 +67,7 @@ func _process(_delta: float) -> void:
 
 # Creates sub-nodes, builds the condition/outcome dispatch maps, and subscribes to EventBus signals.
 func _ready() -> void:
+
 	_conditions = TutorialConditions.new()
 	_conditions.tutorial = self
 	add_child(_conditions)
@@ -83,6 +84,12 @@ func _ready() -> void:
 	EventBus.stomp_on_beat_detected.connect(_on_has_stomped_on_beat)
 	try_activate_tutorial()
 
+
+
+func _turn_off_stars():
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, false)
 
 func _on_has_clapped_on_beat() -> void:
 	clapped_on_beat += 1
@@ -165,7 +172,9 @@ func try_activate_tutorial() -> void:
 		EventBus.bpm_set_requested.emit(60)
 		EventBus.continue_button_pressed.connect(_tutorial_continue)
 		setup_tutorial()
-		call_deferred("_set_interface_invisible_initial")
+		_set_interface_invisible_initial.call_deferred()
+	else:
+		_turn_off_stars.call_deferred()
 
 func _set_interface_invisible_initial() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, false)

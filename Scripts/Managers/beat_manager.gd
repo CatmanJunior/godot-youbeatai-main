@@ -104,6 +104,7 @@ func _process(_delta: float):
 		if elapsed >= (swing_adjusted_duration - 0.005) * 1000:
 			beat_elapsed = 0
 			current_beat = (current_beat + 1) % total_beats
+			EventBus.pre_beat_triggered.emit(current_beat)
 			EventBus.beat_triggered.emit(current_beat)
 			last_beat_time = current_time
 

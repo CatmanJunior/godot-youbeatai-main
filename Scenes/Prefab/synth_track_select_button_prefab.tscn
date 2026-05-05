@@ -2,15 +2,15 @@
 
 [ext_resource type="Texture2D" uid="uid://dcutt8vbgv0ku" path="res://Resources/Textures_New/Icons/Icons-_28_0010_Bear.png" id="2_16ta1"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="2_lhsuy"]
-[ext_resource type="Texture2D" uid="uid://c41bh5ji1dvuc" path="res://Resources/Textures_New_Correct/Icons-_28_0016_vHigh_Hat-.png" id="3_lhsuy"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="3_sylab"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_mey70"]
 [ext_resource type="Texture2D" uid="uid://lciputn21oeq" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Yellow_Empty.png" id="5_16ta1"]
 
 [node name="TrackSelectButton_4" type="Button" unique_id=1681121463 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_rect", "background")]
-custom_minimum_size = Vector2(100, 120)
-offset_right = 128.0
-offset_bottom = 128.0
+custom_minimum_size = Vector2(80, 80)
+offset_right = 150.0
+offset_bottom = 150.0
+action_mode = 0
 flat = true
 script = ExtResource("2_lhsuy")
 outline_rect = NodePath("OutlineTex")
@@ -23,53 +23,63 @@ track_index = 4
 [node name="IconTex" type="TextureRect" parent="." unique_id=1229799027]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -3.3840027
-offset_top = -5.0
-offset_right = 92.472
-offset_bottom = 1.0
-pivot_offset = Vector2(32, 30)
+anchor_left = 0.2
+anchor_top = 0.2
+anchor_right = 0.8
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_16ta1")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="BgTex" type="TextureRect" parent="." unique_id=1431828313]
 visible = false
 self_modulate = Color(1, 1, 1, 0.19215687)
 z_index = -1
-layout_mode = 0
-offset_right = 108.291466
-offset_bottom = 111.0871
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_sylab")
 expand_mode = 1
-stretch_mode = 4
+stretch_mode = 5
 
 [node name="GlowTex" type="TextureRect" parent="." unique_id=814267231]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 76.776
-offset_bottom = 9.0
-pivot_offset = Vector2(32, 30)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_mey70")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="OutlineTex" type="TextureRect" parent="." unique_id=946711568]
 z_index = -1
-layout_mode = 0
-offset_left = 9.836066
-offset_top = 5.114746
-offset_right = 122.01138
-offset_bottom = 116.35605
-scale = Vector2(1.405, 1.405)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("5_16ta1")
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5

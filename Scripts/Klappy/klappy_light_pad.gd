@@ -24,16 +24,11 @@ func _ready() -> void:
 	# TODO: GET THIS THE HELL OUT OF HERE
 	bus_index = AudioServer.get_bus_index("SubMaster")
 
-	phaser = AudioEffectPhaser.new()
-	distortion = AudioEffectDistortion.new()
-	highpass = AudioEffectHighPassFilter.new()
-	lowpass = AudioEffectLowPassFilter.new()
+	phaser = AudioServer.get_bus_effect(bus_index, 0)
+	distortion = AudioServer.get_bus_effect(bus_index, 1)
+	highpass = AudioServer.get_bus_effect(bus_index, 2)
+	lowpass = AudioServer.get_bus_effect(bus_index, 3)
 
-	AudioServer.add_bus_effect(bus_index, phaser)
-	AudioServer.add_bus_effect(bus_index, distortion)
-	AudioServer.add_bus_effect(bus_index, highpass)
-	AudioServer.add_bus_effect(bus_index, lowpass)
-	
 	AudioServer.set_bus_effect_enabled(bus_index, 0, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 1, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
@@ -54,10 +49,10 @@ func _on_gui_input(event: InputEvent) -> void:
 	if unlocked == true:
 		klappyLight.energy = 0.5
 		if event is InputEventMouseButton:
+			AudioServer.set_bus_effect_enabled(bus_index, 0, event.is_pressed())
 			AudioServer.set_bus_effect_enabled(bus_index, 1, event.is_pressed())
 			AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
 			AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
-			AudioServer.set_bus_effect_enabled(bus_index, 4, event.is_pressed())
 			
 			if event.is_released(): #wanneer muis losgelaten word pos 100,100 en klaplight normaal 
 				var pos = Vector2(100, 100)

@@ -5,6 +5,16 @@ const BASE_RATE : float = 1.0
 const BASE_VOLUME : int = 100
 const BASE_PITCH : float= 1.0
 
+var initialized := false
+
+func init():
+	if initialized:
+		return
+
+	initialized = true
+	# try to speak, it wont play but will enable the tts
+	speak("test")
+
 func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> void:
 	var voices = get_voices()
 	if voices.is_empty():
@@ -14,7 +24,7 @@ func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> 
 		stop_speaking()
 	
 	EventBus.utterance_content_changed.emit(text)
-	DisplayServer.tts_speak(text, voices[0], volume, BASE_PITCH, rate)
+	DisplayServer.tts_speak(text_without_emoticons(text), voices[0], volume, BASE_PITCH, rate)
 
 func get_voices():
 	var voices := DisplayServer.tts_get_voices_for_language("nl")

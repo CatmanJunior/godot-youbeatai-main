@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://icjhd0tmmomt"]
+[gd_scene format=3 uid="uid://cx30roke8u7g2"]
 
-[ext_resource type="Texture2D" uid="uid://byc17yeo8eu4v" path="res://Resources/Shapes/Beat-Ring-Beam.png" id="1_7nkju"]
+[ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="1_7nkju"]
 
-[node name="Sprite2D" type="Sprite2D"]
+[node name="Sprite2D" type="Sprite2D" unique_id=1639601864]
 z_index = -1
 scale = Vector2(1, 0.8)
 texture = ExtResource("1_7nkju")

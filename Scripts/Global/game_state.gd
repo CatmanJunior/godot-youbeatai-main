@@ -3,20 +3,6 @@ extends Node
 ## Global game state singleton (autoload).
 ## Provides easy access to session state.
 
-func reset() -> void:
-	SongState.reset()
-
-	# Playback
-	playing = false
-	current_beat = 0
-	beat_progress = 0.0
-	bar_progress = 0.0
-	beat_duration = 0.5
-
-	# Recording
-	is_recording = false
-	SceneChanger.restart()
-
 var notes: Notes
 
 # -- TO BE IMPLEMENTED --
@@ -62,9 +48,23 @@ var bar_progress: float = 0.0
 var beat_duration: float = 0.5
 
 # -- Recording --
-
 var is_recording: bool = false
+var song_mode: bool = false
 
+
+func reset() -> void:
+	SongState.reset()
+
+	# Playback
+	playing = false
+	current_beat = 0
+	beat_progress = 0.0
+	bar_progress = 0.0
+	beat_duration = 0.5
+
+	# Recording
+	is_recording = false
+	SceneChanger.restart()
 
 # -- Initialization --
 func _ready() -> void:

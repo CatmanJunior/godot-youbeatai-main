@@ -31,6 +31,8 @@ func _ready():
 	EventBus.section_cleared.connect(_on_section_cleared)
 	EventBus.song_loaded.connect(_on_song_loaded)
 
+	EventBus.track_selected.connect(func (_i): _update_section_ui())
+
 	init_section_button_actions()
 
 func _process(delta: float) -> void:
@@ -141,8 +143,9 @@ func _update_section_ui() -> void:
 		return
 
 	section_buttons_container.size = Vector2(section_buttons.size() * SECTION_BUTTON_SIZE, SECTION_BUTTON_SIZE)
-	section_buttons_container.position.x = - section_buttons_container.size.x / 2
-
+	#section_buttons_container.position.x = - section_buttons_container.size.x / 2
+	song_recording_progress_bar.visible = GameState.song_mode
+	
 	if song_recording_progress_bar:
 		var back_panel_over_size = Vector2(16, 8)
 		song_recording_progress_bar.size = section_buttons_container.size + back_panel_over_size

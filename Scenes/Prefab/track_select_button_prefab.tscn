@@ -6,14 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="4_br66b"]
 
 [node name="TrackSelectButton_0" type="Button" unique_id=1401429003 node_paths=PackedStringArray("outline_rect", "glow_rect", "icon_rect")]
-custom_minimum_size = Vector2(100, 100)
-anchors_preset = -1
-anchor_right = 0.093
-anchor_bottom = 0.147
-offset_left = 1.0
-offset_top = 1.0
-offset_right = 17.96
-offset_bottom = 31.160004
+custom_minimum_size = Vector2(80, 80)
+offset_right = 80.0
+offset_bottom = 80.0
+action_mode = 0
 flat = true
 script = ExtResource("2_xp7bp")
 outline_rect = NodePath("OutlineTex")
@@ -24,41 +20,43 @@ metadata/_edit_group_ = true
 [node name="IconTex" type="TextureRect" parent="." unique_id=1380255650]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -8.000004
-offset_top = -11.000001
-offset_right = 104.472
-offset_bottom = 6.0
-scale = Vector2(0.8, 0.8)
-pivot_offset = Vector2(32, 30)
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_3gj1q")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="GlowTex" type="TextureRect" parent="." unique_id=522525537]
 visible = false
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 83.537994
-offset_bottom = 9.0
-pivot_offset = Vector2(32, 30)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_uqlj7")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="OutlineTex" type="TextureRect" parent="." unique_id=51465376]
 z_index = -1
-layout_mode = 0
-offset_left = 4.0
-offset_top = 1.0
-offset_right = 116.175316
-offset_bottom = 112.2413
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.1800003
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_br66b")
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5

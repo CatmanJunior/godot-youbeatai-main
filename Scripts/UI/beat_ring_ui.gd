@@ -13,6 +13,9 @@ class_name BeatRingUI
 @export var beat_button_prefab: PackedScene
 @export var track_settings: TrackUISettingsRegistry
 
+@export var play_icon: Texture2D
+@export var pause_icon: Texture2D
+
 
 const BEAT_SCALE_32: float = 1.0
 const BEAT_SCALE_16: float = 1.6
@@ -80,7 +83,7 @@ func _update_pointer_rotation() -> void:
 		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
 
 func _update_play_pause_button(is_playing: bool) -> void:
-	play_pause_button.text = "⏸️" if is_playing else "▶️"
+	play_pause_button.icon = pause_icon if is_playing else play_icon
 
 func _init_beat_button_positions() -> void:
 	var beats_amount = SongState.total_beats
@@ -190,5 +193,14 @@ func _reset_scales() -> void:
 
 ## Set the sprites for a specific track visible 
 func _set_track_sprites_visible(track: int, visible: bool) -> void:
-	if track >= 0 and track < _track_controls.size():
-		_track_controls[track].visible = visible
+	for beat in range(_beat_buttons[track].size()):
+		var sprite: BeatButton = _get_beat_button(track, beat)
+		if sprite:
+			sprite.visible = visible
+
+func _on_ui_visibility_requested(element: int, visible: bool) -> void:
+	match element:
+		VisibilityManager.UIElement.BEAT_POINTER:
+			pointer.visible = visible
+		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
+			play_pause_button.visible = visible

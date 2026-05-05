@@ -13,24 +13,30 @@ config_version=5
 config/name="Ritme Robot"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
+run/max_fps=60
+run/low_processor_mode=true
+run/delta_smoothing=false
+boot_splash/bg_color=Color(0.05882353, 0.078431375, 0.19215687, 1)
 config/icon="uid://bw7qlsn2o2s82"
 
 [audio]
 
 buses/default_bus_layout="uid://cc7g4ekfye5tq"
+general/default_playback_type.web=0
 general/text_to_speech=true
 driver/enable_input=true
 
 [autoload]
 
-FFT="*res://addons/fft/Fft.gd"
 EventBus="*uid://bj8qgtrwxpsxm"
 GameState="*res://Scripts/Global/game_state.gd"
 SongState="*res://Scripts/Global/song_state.gd"
 TTSHelper="*res://Scripts/Global/tts_helper.gd"
+FFT="*uid://xq15anvbve8x"
 
 [debug]
 
+settings/stdout/print_fps=true
 file_logging/enable_file_logging=true
 
 [display]
@@ -38,6 +44,7 @@ file_logging/enable_file_logging=true
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
+window/vsync/vsync_mode=0
 
 [dotnet]
 
@@ -80,3 +87,4 @@ bs_test_key={
 
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.05882353, 0.078431375, 0.19215687, 1)

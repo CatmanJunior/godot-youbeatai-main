@@ -4,7 +4,6 @@
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_8s4wd"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Resources/Klappy/Klappy.tscn" id="3_7cjo4"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_dcvsp"]
-[ext_resource type="Texture2D" uid="uid://cr4v0wkvt72mj" path="res://Resources/Textures/grijs.png" id="5_m0m82"]
 
 [node name="Robot" type="Sprite2D" unique_id=509510474]
 z_index = 4
@@ -62,13 +61,6 @@ color = Color(1, 0.911449, 0.665059, 1)
 energy = 0.0
 texture = ExtResource("4_dcvsp")
 texture_scale = 1.71
-
-[node name="Grijs" type="Sprite2D" parent="SubViewportContainer" unique_id=1036315322]
-z_index = -20
-position = Vector2(-1190.9, -283.484)
-scale = Vector2(26.7019, 41.8954)
-texture = ExtResource("5_m0m82")
-metadata/_edit_lock_ = true
 
 [editable path="AchievementsPanel"]
 [editable path="SubViewportContainer/SubViewport/Klappy"]

@@ -38,6 +38,8 @@ signal swing_changed(new_swing: float)
 # ── Beat Clock ──
 ## Emitted on every beat tick with the current beat index.
 signal beat_triggered(beat: int)
+## Emitted on every beat tick before beat_triggered
+signal pre_beat_triggered(beat: int)
 ## Emitted to request seeking the beat clock to a specific beat.
 signal beat_seek_requested(beat: int)
 
@@ -150,6 +152,9 @@ signal mute_all_requested(mute: bool)
 # ── Saving / Exporting ──
 ## Emitted to request starting audio recording.
 signal export_recording_requested(recording_data: ExportRecordingData)
+
+signal export_progress_update(progress: float)
+
 ## Emitted when saving has completed successfully, carrying the output file path.
 signal saving_completed(path: String)
 ## Emitted to request saving the current song data to disk.
@@ -160,14 +165,15 @@ signal load_song_requested()
 ## Handlers should rebuild any runtime objects (section buttons, waveform visualizers)
 ## before the section_switch_requested signal fires the full UI cascade.
 signal song_loaded()
-## Emitted to request saving the current project as an MP3 file.
-signal save_to_mp3_requested()
+
 ## Emitted to request exporting the project. [code]mode_export_song[/code]: false for beat, true for song.
 signal export_requested(mail: bool, mode_export_song: bool)
 ## Emitted to request opening the export dialog. [code]mode_export_song[/code]: false for beat, true for song.
 signal open_export_dialog_requested(mode_export_song: bool)
 ## Emitted when the export button is pressed. [code]mode_export_song[/code]: false for beat, true for song.
 signal export_button_pressed(mode_export_song: bool)
+
+signal on_song_mode_changed()
 
 # ── Achievements ──
 ## Emitted when an achievement has been completed, carrying its ID.

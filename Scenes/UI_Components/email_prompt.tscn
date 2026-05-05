@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b3s2s16qvthd8" path="res://Scripts/UI/email_prompt.gd" id="1_8j0pk"]
 [ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_jeaa2"]
+[ext_resource type="Texture2D" uid="uid://diqxn0oohcpk7" path="res://Resources/Textures_New_Extra/_0001_Cross.png" id="3_xf0ds"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -32,7 +33,7 @@ script = ExtResource("1_8j0pk")
 name_field = NodePath("Naam")
 mail_field = NodePath("EmailField")
 mail_toggle = NodePath("CheckButton")
-mail_button = NodePath("Enter")
+mail_button = NodePath("Buttons/Enter2")
 
 [node name="Title" type="Label" parent="." unique_id=1338360888]
 layout_mode = 1
@@ -50,6 +51,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="EmailField" type="LineEdit" parent="." unique_id=36543817]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,26 +65,10 @@ offset_bottom = 75.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 28
+text = " "
 placeholder_text = "jouwemailadress@gmail.com"
 alignment = 1
 emoji_menu_enabled = false
-
-[node name="Enter" type="Button" parent="." unique_id=1252579344]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -119.5
-offset_top = -60.0
-offset_right = 119.5
-offset_bottom = -11.0
-grow_horizontal = 2
-grow_vertical = 0
-focus_mode = 0
-theme_override_font_sizes/font_size = 24
-text = "Doorgaan"
 
 [node name="Naam" type="LineEdit" parent="." unique_id=1212393333]
 layout_mode = 1
@@ -102,6 +88,7 @@ placeholder_text = "Wat is je naam?"
 alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="." unique_id=376458185]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -114,6 +101,51 @@ offset_right = 302.0
 offset_bottom = 62.0
 grow_horizontal = 2
 grow_vertical = 2
-button_pressed = true
+
+[node name="Buttons" type="HFlowContainer" parent="." unique_id=1892319195]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -272.0
+offset_top = -68.0
+offset_right = 272.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 1)
+theme_override_constants/h_separation = 21
+alignment = 1
+
+[node name="Enter" type="Button" parent="Buttons" unique_id=1252579344]
+visible = false
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Email"
+
+[node name="Enter2" type="Button" parent="Buttons" unique_id=538905878]
+custom_minimum_size = Vector2(150, 60)
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 24
+text = "Download"
+
+[node name="Button" type="Button" parent="." unique_id=1085402421]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_bottom = 60.0
+grow_horizontal = 0
+theme_override_constants/icon_max_width = 50
+icon = ExtResource("3_xf0ds")
+icon_alignment = 1
+expand_icon = true
 
 [connection signal="toggled" from="CheckButton" to="EmailField" method="reset_from_toggle"]
+[connection signal="pressed" from="Button" to="." method="close_export_dialog"]

@@ -5,7 +5,7 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_55idt"]
 shader = ExtResource("2_cdsnb")
-shader_parameter/primary_color = Color(1, 1, 1, 1)
+shader_parameter/primary_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 shader_parameter/outline_color = Color(0, 0, 0, 1)
 shader_parameter/unfilled_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
 shader_parameter/value = 0.33999999240032
@@ -15,7 +15,6 @@ shader_parameter/width_out = 0.95
 shader_parameter/border_width = 0.0
 
 [node name="LoadingContainer" type="CenterContainer" unique_id=617797876 node_paths=PackedStringArray("progress")]
-visible = false
 z_index = 1000
 z_as_relative = false
 anchors_preset = 15

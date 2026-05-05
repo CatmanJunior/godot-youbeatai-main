@@ -4,19 +4,23 @@
 [ext_resource type="Script" uid="uid://bx801a1b0kfin" path="res://Scripts/UI/Buttons/song_select_button.gd" id="2_ygwhu"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_ygwhu"]
 [ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="4_3kt86"]
-[ext_resource type="Script" path="res://Scripts/UI/song_mode_line.gd" id="5_lnidl"]
+[ext_resource type="Script" uid="uid://bvrty4qsew0sx" path="res://Scripts/UI/song_mode_line.gd" id="5_lnidl"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_hr2ek"]
+[sub_resource type="Gradient" id="Gradient_wnx8s"]
+colors = PackedColorArray(0.61960787, 0.6117647, 0.8980392, 1, 0.61960787, 0.6117647, 0.8980392, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ygwhu"]
+gradient = SubResource("Gradient_wnx8s")
+width = 1
 
 [node name="SongTrackSelectButton_6" type="Button" unique_id=1740880555 node_paths=PackedStringArray("song_track_line_texture", "outline_rect", "glow_rect", "icon_rect")]
-custom_minimum_size = Vector2(100, 100)
-offset_left = -34.0
-offset_top = -23.0
-offset_right = 95.0
-offset_bottom = 100.0
+custom_minimum_size = Vector2(72, 72)
+offset_right = 72.0
+offset_bottom = 72.0
+action_mode = 0
 flat = true
 script = ExtResource("2_ygwhu")
-song_track_line_texture = NodePath("Song mode line")
+song_track_line_texture = NodePath("TextureRect")
 outline_rect = NodePath("OutlineTex")
 glow_rect = NodePath("GlowTex")
 icon_rect = NodePath("IconTex")
@@ -26,48 +30,55 @@ metadata/_edit_group_ = true
 [node name="IconTex" type="TextureRect" parent="." unique_id=968006323]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 0.298
-anchor_bottom = 1.0
-offset_left = -3.3840027
-offset_top = -5.0
-offset_right = 92.472
-offset_bottom = 1.0
-pivot_offset = Vector2(32, 30)
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.9
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("1_wnx8s")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="GlowTex" type="TextureRect" parent="." unique_id=522525537]
 visible = false
+custom_minimum_size = Vector2(100, 100)
 layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.298
+anchors_preset = 15
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -10.0
-offset_top = -8.0
-offset_right = 76.776
-offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
 pivot_offset = Vector2(32, 30)
 texture = ExtResource("3_ygwhu")
-expand_mode = 3
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
 [node name="OutlineTex" type="TextureRect" parent="." unique_id=51465376]
 z_index = -1
-layout_mode = 0
-offset_left = 4.000002
-offset_top = -0.9999981
-offset_right = 132.0
-offset_bottom = 127.0
-scale = Vector2(1.405, 1.405)
-pivot_offset_ratio = Vector2(0.5, 0.5)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_3kt86")
-stretch_mode = 4
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Song mode line" type="MeshInstance2D" parent="." unique_id=683439111]
-visible = false
-self_modulate = Color(0.61960787, 0.6117647, 0.8980392, 1)
-position = Vector2(285.00003, 59)
-scale = Vector2(285.97632, 14.999997)
-mesh = SubResource("BoxMesh_hr2ek")
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1830768980]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 34.135002
+offset_top = -2.5
+offset_right = 134.13501
+offset_bottom = 2.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture1D_ygwhu")
+expand_mode = 1
 script = ExtResource("5_lnidl")

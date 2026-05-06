@@ -97,6 +97,7 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	var p := AudioStreamPlayer.new()
 	p.name = bus
 	p.bus = bus
+	p.max_polyphony = 2
 	add_child(p)
 	return p
 

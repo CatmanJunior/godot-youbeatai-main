@@ -22,7 +22,7 @@ var color_is_changing: bool = false
 signal track_button_pressed(track_index: int)
 
 func _ready():
-	self.button_up.connect(_on_press)
+	self.pressed.connect(_on_press)
 
 func init(p_track_index: int, p_track_ui_settings: TrackUISettingsBase):
 	self.track_index = p_track_index

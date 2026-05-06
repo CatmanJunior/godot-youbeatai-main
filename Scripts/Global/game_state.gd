@@ -8,6 +8,8 @@ var notes: Notes
 # -- TO BE IMPLEMENTED --
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
+var show_template: bool = false
+var added_layer: bool = false
 var loop_sections: bool = false
 
 # -- Export settings --

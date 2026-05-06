@@ -74,6 +74,7 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 
 func _on_add_section_requested(tex: Texture2D) -> void:
 	add_section(sections.size(), tex)
+	GameState.added_layer = true
 
 func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
 	"""Populate section.progression and section.progression_offset from the active soundbank."""

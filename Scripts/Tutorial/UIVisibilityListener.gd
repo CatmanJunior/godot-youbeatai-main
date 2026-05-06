@@ -23,6 +23,7 @@ enum UIElement {
 	STAR1,
 	STAR2,
 	STAR3,
+	AMOUNT_LEFT,
 }
 
 @export var ui_element: UIVisibilityListener.UIElement = UIVisibilityListener.UIElement.BEAT_RING

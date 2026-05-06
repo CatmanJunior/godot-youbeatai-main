@@ -87,6 +87,8 @@ func _start_timer(seconds: float) -> void:
 
 func _outcome_stomp_setup() -> void:
 	tutorial._in_stomp_phase = true
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
+	EventBus.amount_left_text_requested.emit("Goed gestampt %d / 5" % tutorial.clap_stomp.stomped_on_beat_amount)
 	tutorial.play_achievement_sfx()
 
 # ── Clap ring ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -118,6 +120,8 @@ func _outcome_listen_again() -> void:
 
 func _outcome_clap_count_setup() -> void:
 	tutorial._in_clap_phase = true
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
+	EventBus.amount_left_text_requested.emit("Goed geklapt %d / 5" % tutorial.clap_stomp.clapped_on_beat_amount)
 
 # ── Shared helper: end an interaction phase (stomp or clap) ─────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -126,6 +130,8 @@ func _end_interaction_phase(is_stomp: bool) -> void:
 		tutorial._in_stomp_phase = false
 	else:
 		tutorial._in_clap_phase = false
+	EventBus.amount_left_text_requested.emit("")
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, false)
 	EventBus.playing_change_requested.emit(false)
 	tutorial.play_achievement_sfx()
 

@@ -149,5 +149,5 @@ static func calculate_time_until_top() -> float:
 	return duration_until_top
 
 static func calculate_beat_duration(p_bpm: int, p_total_beats: int, beats_per_bar: int) -> float:
-	var _beat_duration = snapped((60.0 / p_bpm) * 1000 / p_total_beats * beats_per_bar, 0.001)
+	var _beat_duration: float = snapped((60.0 / p_bpm) / p_total_beats * beats_per_bar, 0.001)
 	return _beat_duration

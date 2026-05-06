@@ -199,8 +199,9 @@ func _reach_knob_target(marker: TextureRect) -> void:
 # ── End tutorial ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 func _outcome_end_tutorial() -> void:
-	tutorial.tutorial_level = -1
+	tutorial.tutorial_level = -2
 	GameState.use_tutorial = false
+	_write_use_achievements()
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
@@ -209,3 +210,11 @@ func _outcome_end_tutorial() -> void:
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()
+
+# Writes "True" to user://use_achievements.txt so the achievements system
+# is enabled on the next session (read by achievements.gd at startup).
+func _write_use_achievements() -> void:
+	var file := FileAccess.open("user://use_achievements.txt", FileAccess.WRITE)
+	if file:
+		file.store_string("True")
+		file.close()

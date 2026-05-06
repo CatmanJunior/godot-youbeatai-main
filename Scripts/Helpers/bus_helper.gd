@@ -1,5 +1,6 @@
 class_name BusHelper
 
+const SILENT_DB : float = -80.0
 
 static func save_layout() -> void:
     var layout = AudioServer.generate_bus_layout()
@@ -58,10 +59,10 @@ static func crossfade3(
     var total := weights.x + weights.y + weights.z
     for i in range(bus_names.size()):
         if total < 0.0001:
-            set_volume(bus_names[i], -80.0) # silence
+            set_volume(bus_names[i], SILENT_DB) # silence
         else:
             weights[i] /= total
-            var vol := linear_to_db(sqrt(weights[i])) if weights[i] > 0.0001 else -80.0
+            var vol := linear_to_db(sqrt(weights[i])) if weights[i] > 0.001 else SILENT_DB
             set_volume(bus_names[i], vol)
     return weights
 

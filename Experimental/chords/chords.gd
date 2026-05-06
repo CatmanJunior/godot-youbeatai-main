@@ -49,14 +49,14 @@ func on_beat(beat: int):
 
 	var section: SectionData = SongState.current_section
 	var length = len(section.progression.chords)
-	var divider: int = length * settings.chordDuration / float(SongState.total_beats)
+	var divider: int = length * settings.chordDuration / float(SongState.beats_per_section)
 
 	@warning_ignore("integer_division")
 	song_cursor = (beat / settings.chordDuration) % (length / divider)
 	song_cursor += section.progression_offset.offset
 
 	var chord: Chord = section.progression.chords[song_cursor % length]
-	play_chord_object(chord, settings.chordDuration * GameState.beat_duration)
+	play_chord_object(chord, settings.chordDuration * SongState.beat_duration)
 
 func play_chord_object(chord: Chord, duration: float):
 	match chord.type:

@@ -1,9 +1,9 @@
 extends Node
 
+
 # Section management constants
 const SECTIONS_AMOUNT_MAX: int = 8
 const SECTIONS_AMOUNT_INITIAL: int = 4
-const SECTION_BUTTON_SIZE: int = 72
 
 # Section state
 var current_section_index: int:
@@ -17,8 +17,8 @@ var sections: Array[SectionData]:
 	set(value): SongState.sections = value
 
 var beats_amount:
-	get: return SongState.total_beats
-	set(value): SongState.total_beats = value
+	get: return SongState.beats_per_section
+	set(value): SongState.beats_per_section = value
 
 # Clipboard for copy/paste
 var clipboard_section: SectionData = null

@@ -8,6 +8,7 @@ extends Resource
 const SAMPLE_TRACKS_PER_SECTION: int = 4
 const SYNTH_TRACKS_PER_SECTION: int = 2
 const TRACKS_PER_SECTION: int = SAMPLE_TRACKS_PER_SECTION + SYNTH_TRACKS_PER_SECTION
+const LOOP_COUNT_MAX: int = 8
 
 static var last_id: int = 0
 static func get_next_id() -> int:

@@ -28,7 +28,7 @@ func _on_beat(beat: int):
     if SongState.current_section_index != index:  
         return
 
-    var fill = float(beat) / SongState.total_beats
+    var fill = float(beat) / SongState.beats_per_section
     active_ring.set_fill( fill )
 
 func _on_new_section(section: SectionData):

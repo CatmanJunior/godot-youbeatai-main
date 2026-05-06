@@ -2,8 +2,6 @@
 class_name TrackPlayerBase
 extends Node
 
-
-const SILENT_DB: float = -80.0
 const SUB_TRACK_PLAYER_COUNT = 3
 
 var track_index: int

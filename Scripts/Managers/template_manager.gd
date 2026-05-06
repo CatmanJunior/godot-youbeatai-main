@@ -56,14 +56,14 @@ func _load_text_files_in_directory(folder: String) -> Dictionary:
 func _to_actives(content: String) -> Array:
 	var lines = content.strip_edges().split("\n")
 
-	if lines.size() != 4:
-		push_error("Invalid number of lines: %d. Expected 4." % lines.size())
+	if lines.size() != SectionData.SAMPLE_TRACKS_PER_SECTION: # Expecting one line per sample track
+		push_error("Invalid number of lines: %d. Expected %d." % [lines.size(), SectionData.SAMPLE_TRACKS_PER_SECTION])
 		return []
 
-	var beats_amount: int = SongState.total_beats
+	var beats_amount: int = SongState.beats_per_section
 	var bool_array: Array = []
 
-	for i in range(4):
+	for i in range(lines.size()):
 		var row: Array[bool] = []
 		var line = lines[i].strip_edges()
 		for j in range(beats_amount):

@@ -3,6 +3,10 @@ class_name SectionUI
 
 const CLOSE_BUTTONS_HOLD_TIME: float = 3.5
 const SECTION_BUTTON_SIZE: int = 72
+const PROGRESS_BAR_PADDING : Vector2 = Vector2(16, 8)
+const OUTLINE_ROTATION_OFFSET: float = -7.0
+
+const DARKEN_AMOUNT: float = 0.6
 
 @export var section_button_prefab: PackedScene
 @export var section_buttons_container: HBoxContainer
@@ -31,7 +35,7 @@ func _ready():
 	EventBus.section_cleared.connect(_on_section_cleared)
 	EventBus.song_loaded.connect(_on_song_loaded)
 
-	EventBus.track_selected.connect(func (_i): _update_section_ui())
+	EventBus.track_selected.connect(func(_i): _update_section_ui())
 
 	init_section_button_actions()
 
@@ -66,12 +70,13 @@ func init_section_button_actions():
 	)
 
 	down_loop_count_button.pressed.connect(func():
-		var count = max(1,SongState.current_section.loop_count - 1)
+		var count = max(1, SongState.current_section.loop_count - 1)
 		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
 	)
 
 	up_loop_count_button.pressed.connect(func():
-		var count = min(8,SongState.current_section.loop_count + 1)
+		var count = min(SectionData.LOOP_COUNT_MAX, SongState.current_section.loop_count + 1)
+
 		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
 	)
 
@@ -143,11 +148,10 @@ func _update_section_ui() -> void:
 		return
 
 	section_buttons_container.size = Vector2(section_buttons.size() * SECTION_BUTTON_SIZE, SECTION_BUTTON_SIZE)
-	#section_buttons_container.position.x = - section_buttons_container.size.x / 2
-	song_recording_progress_bar.visible = GameState.song_mode
+	song_recording_progress_bar.visible = GameState.song_mode_active
 	
 	if song_recording_progress_bar:
-		var back_panel_over_size = Vector2(16, 8)
+		var back_panel_over_size = PROGRESS_BAR_PADDING
 		song_recording_progress_bar.size = section_buttons_container.size + back_panel_over_size
 		song_recording_progress_bar.position = section_buttons_container.position - back_panel_over_size / 2
 
@@ -156,7 +160,7 @@ func _update_section_ui() -> void:
 func _update_section_outline_sprite_rotation():
 	if SongState.current_section_index < 0 or SongState.current_section_index >= section_buttons.size(): return
 	var clock_rot = GameState.bar_progress
-	section_buttons[SongState.current_section_index].rotate_outline(clock_rot * 360.0 - 7.0)
+	section_buttons[SongState.current_section_index].rotate_outline(clock_rot * 360.0 + OUTLINE_ROTATION_OFFSET)
 
 func _update_copy_paste_buttons(delta: float) -> void:
 	copy_paste_clear_button_holder_time_since_activation += delta
@@ -171,7 +175,7 @@ func update_section_switch_buttons_colors() -> void:
 		button.modulate = Color(1, 1, 1, 1)
 
 		if i != SongState.current_section_index:
-			button.modulate = button.modulate.darkened(0.6)
+			button.modulate = button.modulate.darkened(DARKEN_AMOUNT)
 			
 func set_copy_paste_clear_buttons_active(active: bool) -> void:
 	copy_paste_clear_buttons_holder.visible = active

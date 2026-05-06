@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://cy33axifo2vk7" path="res://Experimental/chords/chord.gd" id="2_8kq63"]
 [ext_resource type="AudioStream" uid="uid://bjbinjdadad4r" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Clap DoubleDutch 3.wav" id="2_rv86u"]
 [ext_resource type="AudioStream" uid="uid://bv2qaff10jto7" path="res://Resources/Audio/SoundBanks/4_pop/ClosedHH Modern 2.wav" id="2_wywju"]
-[ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_6s00r"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_6s00r"]
 [ext_resource type="AudioStream" uid="uid://csoufanqc2frv" path="res://Resources/Audio/SoundBanks/4_pop/mineur/ClosedHH Omg 2.wav" id="3_wywju"]
 [ext_resource type="AudioStream" uid="uid://ctntur8hp4j4n" path="res://Resources/Audio/SoundBanks/4_pop/Kick Rooftop.wav" id="4_3h66m"]
 [ext_resource type="AudioStream" uid="uid://c0ab64ar4pabh" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Kick TwoTone.wav" id="4_aqegv"]

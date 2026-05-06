@@ -86,11 +86,11 @@ func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = nul
 	add_child(chords)
 
 func pre_on_beat(beat:int):
-	if beat == 0 and GameState.song_mode:
+	if beat == 0 and GameState.song_mode_active:
 		EventBus.section_next_requested.emit()
 
 func _on_beat_triggered(_beat: int) -> void:
-	if not GameState.song_mode:
+	if not GameState.song_mode_active:
 		return
 
 	if _beat != 1:
@@ -110,12 +110,12 @@ func _on_section_switched(_new) -> void:
 
 func _on_section_added(section_index: int, _tex: Texture2D) -> void:
 	if track_data.has_recording():
-		track_data.insert_silence_for_section(section_index, SongState.total_beats, GameState.beat_duration)
+		track_data.insert_silence_for_section(section_index, SongState.beats_per_section, SongState.beat_duration)
 
 
 func _on_section_removed(section_index: int) -> void:
 	if track_data.has_recording():
-		track_data.remove_audio_for_section(section_index, SongState.total_beats, GameState.beat_duration)
+		track_data.remove_audio_for_section(section_index, SongState.beats_per_section, SongState.beat_duration)
 
 # When another track is selected stop playback of the songtrack
 func _on_track_selected(new_track_index: int) -> void:

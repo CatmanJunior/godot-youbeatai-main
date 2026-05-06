@@ -15,7 +15,7 @@ extends TrackData
 func _init(track_index: int = -1, p_section_index: int = -1, knob_pos: Vector2 = TrackData.KNOB_POSITION_UNSET) -> void:
 	super._init(track_index, p_section_index, knob_pos, TrackType.SAMPLE)
 	if beats.is_empty():
-		var beats_amount = SongState.total_beats
+		var beats_amount = SongState.beats_per_section
 		for i in range(beats_amount):
 			beats.append(false)
 

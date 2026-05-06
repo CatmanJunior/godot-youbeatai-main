@@ -228,7 +228,7 @@ func _active_beats_per_ring(index_ring: int) -> int:
 	if SongState.current_section == null:
 		return 0
 	var amount: int = 0
-	for beat: int in range(SongState.total_beats):
+	for beat: int in range(SongState.beats_per_section):
 		if SongState.current_section.get_beat(index_ring, beat):
 			amount += 1
 	return amount

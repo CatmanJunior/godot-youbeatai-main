@@ -6,7 +6,8 @@ class_name ChaosPadCalculator
 ## 0.0 dB = full volume (knob on triangle edge), OUTER_VOLUME_FLOOR_DB at max range.
 ## Adjust to taste — more negative = more aggressive outer attenuation.
 const OUTER_VOLUME_FLOOR_DB: float = -30.0
-
+## Exponent applied to the raw barycentric weights to create a more natural blend.
+const FALLOFF_EXPONENT = 2.0  
 
 ## Clamp [param knob_position] so it stays inside or within
 ## [param max_distance] pixels of the triangle defined by [param corners].
@@ -77,10 +78,9 @@ static func calc_weights(
 	w = sqrt(w)
 
 	# --- Apply exponential falloff ---
-	var falloff_exponent = 2.0  # Adjust this value (e.g., 2, 3, or 4)
-	u = u ** falloff_exponent
-	v = v ** falloff_exponent
-	w = w ** falloff_exponent
+	u = u ** FALLOFF_EXPONENT
+	v = v ** FALLOFF_EXPONENT
+	w = w ** FALLOFF_EXPONENT
 	# --- End of exponential falloff ---
 	
 	var total := u + v + w

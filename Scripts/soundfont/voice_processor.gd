@@ -217,7 +217,7 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 
 	var sample_rate := float(wav.mix_rate)
 
-	var length: int = int(SongState.total_beats)
+	var length: int = int(SongState.beats_per_section)
 
 	if length <= 0:
 		printerr("invalid beat length")
@@ -240,10 +240,10 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 
 		# Skip silent beats — push a sentinel with note id -1
 		if vol < silence_threshold:
-			result.push_back(Vector3(-1, 0.0, float(i) * GameState.beat_duration))
+			result.push_back(Vector3(-1, 0.0, float(i) * SongState.beat_duration))
 			continue
 
-		var time := float(i) * GameState.beat_duration
+		var time := float(i) * SongState.beat_duration
 
 		# Clamp frequency to closest note in octave range
 		var closest_diff: float = 9999

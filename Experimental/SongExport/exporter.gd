@@ -16,7 +16,7 @@ var _target_section_count: int = 0
 
 
 # func _ready():
-# 	var bus = AudioServer.get_bus_index("SubMaster")
+# 	var bus = AudioServer.get_bus_index("BusNames.SUBMASTER_BUS")
 # 	recorder = AudioServer.get_bus_effect(bus, 4)
 # 	# EventBus.export_requested.connect(_on_export_requested)
 # 	# EventBus.beat_triggered.connect(_on_beat)

@@ -27,9 +27,12 @@ var bpm: int:
 	get: return data.bpm
 	set(value): data.bpm = value
 
-var total_beats: int:
-	get: return data.total_beats
-	set(value): data.total_beats = value
+var beat_duration: float:
+	get: return BeatManager.calculate_beat_duration(bpm, beats_per_section, BeatManager.BEATS_PER_BAR)
+
+var beats_per_section: int:
+	get: return data.beats_per_section
+	set(value): data.beats_per_section = value
 
 var swing: float:
 	get: return data.swing
@@ -37,7 +40,17 @@ var swing: float:
 
 # ── Runtime-only state ──────────────────────────────────────────────────────
 
-var current_section: SectionData = null
+func get_current_section() -> SectionData:
+	if current_section:
+		return current_section
+	if data.sections.size() > 0:
+		return data.sections[0]
+	push_error("SongState: No current section and no sections in data!")
+	return null
+
+var current_section: SectionData:
+	get: return get_current_section()
+	set(value): current_section = value
 
 var current_section_index: int:
 	get:
@@ -66,16 +79,15 @@ func _ready() -> void:
 
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.bpm_changed.connect(_on_bpm_changed)
+	EventBus.swing_changed.connect(func(value): swing = value)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 	EventBus.soundbank_loaded.connect(func(bank: SoundBank): selected_soundbank = bank)
 	EventBus.soundbank_selected.connect(func (th, em): chosen_emoij = "".join(th) + "".join(em) )
 
-## Ensure data has sensible runtime defaults (song_track, total_beats).
+## Ensure data has sensible runtime defaults (song_track).
 func _apply_data_defaults() -> void:
 	if data.song_track == null:
 		data.song_track = SongTrackData.new()
-	if data.total_beats == 0:
-		data.total_beats = BEATS_AMOUNT_DEFAULT
 
 
 func _on_bpm_changed(new_bpm: int) -> void:

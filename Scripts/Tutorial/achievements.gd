@@ -336,7 +336,7 @@ func _active_beats_per_ring(ring_index: int) -> int:
 	if section == null or ring_index < 0 or ring_index >= SectionData.SAMPLE_TRACKS_PER_SECTION:
 		return 0
 	var count: int = 0
-	for beat_index in range(SongState.total_beats):
+	for beat_index in range(SongState.beats_per_section):
 		if section.get_beat(ring_index, beat_index):
 			count += 1
 	return count

@@ -32,6 +32,10 @@ static func remove_bus(bus_name: String) -> void:
 static func set_volume(bus_name: String, db: float) -> void:
     AudioServer.set_bus_volume_db(AudioServer.get_bus_index(bus_name), db)
 
+static func set_volume_linear(bus_name: String, db: float) -> float:
+    AudioServer.set_bus_volume_linear(AudioServer.get_bus_index(bus_name), db)
+    return AudioServer.get_bus_volume_db(AudioServer.get_bus_index(bus_name))
+
 static func set_mute(bus_name: String, muted: bool) -> void:
     AudioServer.set_bus_mute(AudioServer.get_bus_index(bus_name), muted)
 

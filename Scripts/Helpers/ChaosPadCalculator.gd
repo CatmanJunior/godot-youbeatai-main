@@ -111,7 +111,7 @@ static func calc_weights(
 	outer_triangle_size -= 10
 
 	var linear_t := clampf(1.0 - (distance_from_triangle / outer_triangle_size), 0.0, 1.0)
-	var master_volume := lerpf(OUTER_VOLUME_FLOOR_DB, 0.0, linear_t * linear_t)
+	var master_volume := linear_t #lerpf(OUTER_VOLUME_FLOOR_DB, 0.0, linear_t * linear_t)
 
 	return {
 		"master_volume": master_volume,

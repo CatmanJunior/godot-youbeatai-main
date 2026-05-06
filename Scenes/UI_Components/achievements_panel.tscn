@@ -122,7 +122,7 @@ disabled = true
 text = "🚫 Stop"
 metadata/_edit_use_anchors_ = true
 
-[node name="Continue" type="Button" parent="." unique_id=1432263596 node_paths=PackedStringArray("anim")]
+[node name="Continue" type="Button" parent="." unique_id=1432263596]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -150,8 +150,6 @@ action_mode = 0
 text = " Doorgaan ✅ "
 flat = true
 script = ExtResource("2_dcbcy")
-anim = NodePath("AnimationPlayer")
-animation = ExtResource("3_hc54m")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Continue" unique_id=438592116]
 libraries/ = SubResource("AnimationLibrary_hc54m")

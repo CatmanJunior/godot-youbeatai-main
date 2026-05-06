@@ -6,10 +6,11 @@
 script/source = "extends Button
 
 func _ready():
-    pressed.connect(_on_pressed)
+	pressed.connect(_on_pressed)
 
 func _on_pressed():
-    EventBus.toggle_settings_menu_requested.emit()"
+	EventBus.toggle_settings_menu_requested.emit()
+"
 
 [node name="SettingsButton" type="Button" unique_id=1234210137]
 anchors_preset = -1

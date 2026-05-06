@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://cj75wpl34yjn6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Orange-Star.png" id="1_jp6c6"]
 [ext_resource type="Texture2D" uid="uid://ognojold4bjw" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Orange_Empty.png" id="2_6wxeo"]
-[ext_resource type="Texture2D" uid="uid://bq2uee15c4dbg" path="res://Resources/Textures_New_Correct/Icons-_28_0014_Clap.png" id="3_kwicd"]
-[ext_resource type="Texture2D" uid="uid://ts4xbkhqw1g" path="res://Resources/Textures_New_Correct/Icons-_28_0017_Tamborine.png" id="4_afs4e"]
+[ext_resource type="Texture2D" uid="uid://bq2uee15c4dbg" path="res://Resources/Icons/Icons-_28_0014_Clap.png" id="3_kwicd"]
+[ext_resource type="Texture2D" uid="uid://ts4xbkhqw1g" path="res://Resources/Icons/Icons-_28_0017_Tamborine.png" id="4_afs4e"]
 [ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/DataClasses/Track_UI_Settings/sample_track_UI_settings.gd" id="5_kwicd"]
 
 [resource]

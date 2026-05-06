@@ -458,8 +458,8 @@ autowrap_mode = 1
 script = ExtResource("56_ptfg5")
 
 [editable path="UserInterface/ChaosPad"]
-[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
-[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconAlt"]
+[editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconMain"]
 [editable path="UserInterface/Robot"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]

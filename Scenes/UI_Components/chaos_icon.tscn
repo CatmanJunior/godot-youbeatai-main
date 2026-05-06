@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://c2pg35cd8uvsv"]
 
 [ext_resource type="Texture2D" uid="uid://bq4li42b0ls7w" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Icon_Background.png" id="2_i8wtc"]
-[ext_resource type="Texture2D" uid="uid://dlteab6232hoa" path="res://Resources/Textures/white.png" id="2_nil27"]
 
 [node name="ChaosIcon" type="TextureRect" unique_id=131396460]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
 offset_right = 176.0
 offset_bottom = 176.0
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -22,4 +22,3 @@ offset_right = 44.0
 offset_bottom = 44.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_nil27")

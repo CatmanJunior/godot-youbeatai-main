@@ -41,8 +41,8 @@ script = ExtResource("1_43llw")
 chaos_pad_triangle_sprite = NodePath("ChaosPadTriangle/TriangleSprite")
 knob = NodePath("ChaosPadTriangle/Knob")
 track_settings = ExtResource("2_a3b2x")
-main_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconMain/ChaosIconBack")
-alt_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconAlt/ChaosIconBack")
+main_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconMain/ChaosIconBack")
+alt_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconAlt/ChaosIconBack")
 mix_star_marker = NodePath("ChaosPadTriangle/Star/MixStar")
 outside_star_marker = NodePath("ChaosPadTriangle/Star2/OutsideStar")
 
@@ -101,7 +101,7 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.31, 1.31)
 
-[node name="ChaosIconMain" parent="ChaosPadTriangle/PointLeft" unique_id=371519950 instance=ExtResource("3_ajioc")]
+[node name="ChaosIconAlt" parent="ChaosPadTriangle/PointLeft" unique_id=371519950 instance=ExtResource("3_ajioc")]
 layout_mode = 0
 offset_left = -84.615234
 offset_top = -87.69238
@@ -109,7 +109,7 @@ offset_right = 91.384766
 offset_bottom = 88.30762
 scale = Vector2(0.6, 0.6)
 
-[node name="ChaosIconBack" parent="ChaosPadTriangle/PointLeft/ChaosIconMain" index="0" unique_id=389055289]
+[node name="ChaosIconBack" parent="ChaosPadTriangle/PointLeft/ChaosIconAlt" index="0" unique_id=389055289]
 stretch_mode = 5
 
 [node name="PointTop" type="Control" parent="ChaosPadTriangle" unique_id=400839598]
@@ -135,7 +135,7 @@ offset_right = 35.0
 offset_bottom = 74.0
 scale = Vector2(1.31, 1.31)
 
-[node name="ChaosIconAlt" parent="ChaosPadTriangle/PointRight" unique_id=1470349372 instance=ExtResource("3_ajioc")]
+[node name="ChaosIconMain" parent="ChaosPadTriangle/PointRight" unique_id=1470349372 instance=ExtResource("3_ajioc")]
 layout_mode = 0
 offset_left = -87.69238
 offset_top = -90.76953
@@ -143,7 +143,7 @@ offset_right = 88.30762
 offset_bottom = 85.23047
 scale = Vector2(0.6, 0.6)
 
-[node name="ChaosIconBack" parent="ChaosPadTriangle/PointRight/ChaosIconAlt" index="0" unique_id=389055289]
+[node name="ChaosIconBack" parent="ChaosPadTriangle/PointRight/ChaosIconMain" index="0" unique_id=389055289]
 stretch_mode = 5
 
 [node name="ChaosButtonMic" type="Button" parent="ChaosPadTriangle" unique_id=806900459 node_paths=PackedStringArray("fillTexture")]
@@ -168,6 +168,7 @@ fillTexture = NodePath("ChaosIconMicBg/Rec_mic_Fill")
 metadata/_edit_group_ = true
 
 [node name="ChaosIconMicBg" type="Sprite2D" parent="ChaosPadTriangle/ChaosButtonMic" unique_id=452880462]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
 show_behind_parent = true
 z_index = 1
 z_as_relative = false
@@ -325,5 +326,5 @@ script = ExtResource("3_vhj50")
 ui_element = 12
 ui_reference = NodePath("..")
 
-[editable path="ChaosPadTriangle/PointLeft/ChaosIconMain"]
-[editable path="ChaosPadTriangle/PointRight/ChaosIconAlt"]
+[editable path="ChaosPadTriangle/PointLeft/ChaosIconAlt"]
+[editable path="ChaosPadTriangle/PointRight/ChaosIconMain"]

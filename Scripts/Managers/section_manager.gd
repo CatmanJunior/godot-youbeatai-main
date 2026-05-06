@@ -40,7 +40,8 @@ func _ready() -> void:
 	EventBus.section_remove_requested.connect(remove_section)
 	EventBus.section_next_requested.connect(next_section)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
-	call_deferred("spawn_initial_sections")
+	await get_tree().process_frame
+	spawn_initial_sections()
 		
 
 func spawn_initial_sections():
@@ -49,6 +50,7 @@ func spawn_initial_sections():
 		return
 
 	for i in range(len(initial_sections)):
+		print(i)
 		var tex = initial_sections[i]
 		add_section(i, tex)
 
@@ -64,12 +66,12 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 	# Create a new SectionData instance and populate its default tracks
 	var new_section: SectionData = SectionData.new(tex, section_index)
 	new_section.create_default_tracks()
+	# should this be here?
 	_resolve_section_progression(new_section, tex)
 	sections.insert(section_index, new_section)
-
 	_resolve_section_indexes()
-
 	SongState.sections = sections
+
 	EventBus.section_added.emit(section_index, tex)
 	if _sections_initialized:
 		EventBus.section_switched.emit(SongState.get_section(section_index))

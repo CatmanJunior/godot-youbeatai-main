@@ -14,7 +14,9 @@ func _ready():
 
 	EventBus.track_select_button_visibility_requested.connect(_on_track_select_button_visibility_requested)
 	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
-	call_deferred("_set_initial_track")
+	await get_tree().process_frame
+	_set_initial_track.call_deferred()
+
 
 func _on_ui_visibility_requested(p_element: int, p_visible: bool) -> void:
 	if p_element == UIVisibilityListener.UIElement.ENTIRE_INTERFACE:

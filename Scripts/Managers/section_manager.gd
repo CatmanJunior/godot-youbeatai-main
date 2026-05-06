@@ -71,7 +71,7 @@ func add_section(section_index: int, tex: Texture2D):
 		EventBus.section_switched.emit(SongState.get_section(section_index))
 
 func _on_add_section_requested(tex: Texture2D):
-	add_section(current_section_index, tex)
+	add_section(current_section_index + 1, tex)
 
 func remove_section(section_index: int):
 	"""Remove a section at the specified index"""

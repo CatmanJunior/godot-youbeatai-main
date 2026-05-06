@@ -15,8 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
 [ext_resource type="ButtonGroup" uid="uid://bnx6ah57t5lrt" path="res://Resources/ButtonGroups/BeatAmountSelectionGroup.tres" id="8_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_bt16w"]
+[ext_resource type="Texture2D" uid="uid://h0nis3rbt2fe" path="res://Resources/Textures_New_Extra/MenuShapes128_0005_8_Purple.png" id="11_18n7q"]
 [ext_resource type="Texture2D" uid="uid://c5gdkspinjfqe" path="res://Resources/Textures_New_Extra/MenuShapes128_0004_16_Purple.png" id="12_k1x81"]
-[ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="13_grpai"]
 [ext_resource type="Texture2D" uid="uid://b5e8xiymsptlh" path="res://Resources/Textures_New_Extra/MenuShapes128_0003_32_Purple.png" id="13_k11aq"]
 [ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
@@ -815,7 +815,7 @@ theme_override_constants/separation = 15
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("8_dsbnb")
-texture_normal = ExtResource("13_grpai")
+texture_normal = ExtResource("11_18n7q")
 texture_pressed = ExtResource("16_grpai")
 
 [node name="Label" type="Label" parent="SoundBankSelectionMenu/beats/HBoxContainer/Beat_8" unique_id=906441170]
@@ -950,7 +950,7 @@ light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 246976813) index="0" unique_id=25550152]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 118098534) index="0" unique_id=1128806749]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]

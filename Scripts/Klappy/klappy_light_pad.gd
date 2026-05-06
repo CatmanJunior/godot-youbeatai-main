@@ -7,8 +7,9 @@ var distortion
 var highpass
 var lowpass
 
-@export var klappyLight: PointLight2D 
+@export var KlappyLight: OmniLight3D
 @export var KlappyEnergy: ProgressBar
+@export var FaceLight: SpotLight3D
 
 var unlocked:= false
 var start_energy
@@ -17,26 +18,29 @@ var flicker_done = false
 var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
 
 @export var instruction_label:Label
-
 @export var achievement_panel:Panel
+@export var colormapje: Node3D
 
 func _ready() -> void:
 	# TODO: GET THIS THE HELL OUT OF HERE
 	bus_index = AudioServer.get_bus_index(BusNames.SUBMASTER_BUS)
 
-	phaser = AudioServer.get_bus_effect(bus_index, 0)
-	distortion = AudioServer.get_bus_effect(bus_index, 1)
-	highpass = AudioServer.get_bus_effect(bus_index, 2)
-	lowpass = AudioServer.get_bus_effect(bus_index, 3)
+	phaser = AudioServer.get_bus_effect(bus_index, 0) as AudioEffectPhaser
+	distortion = AudioServer.get_bus_effect(bus_index, 1) as AudioEffectDistortion
+	highpass = AudioServer.get_bus_effect(bus_index, 2) as AudioEffectHighPassFilter
+	lowpass = AudioServer.get_bus_effect(bus_index, 3) as AudioEffectLowPassFilter
 
 	AudioServer.set_bus_effect_enabled(bus_index, 0, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 1, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
 	
-	start_energy = klappyLight.energy
-	
+	start_energy = KlappyLight.light_energy
+
 	unlocked = false
+	KlappyLight.visible = true
+	colormapje.visible = false
+
 	
 	if KlappyEnergy != null:
 		KlappyEnergy.value_changed.connect(on_klappy_energy)
@@ -47,7 +51,7 @@ func _ready() -> void:
 
 func _on_gui_input(event: InputEvent) -> void:
 	if unlocked == true:
-		klappyLight.energy = 0.5
+		colormapje.visible = true
 		if event is InputEventMouseButton:
 			AudioServer.set_bus_effect_enabled(bus_index, 0, event.is_pressed())
 			AudioServer.set_bus_effect_enabled(bus_index, 1, event.is_pressed())
@@ -57,7 +61,9 @@ func _on_gui_input(event: InputEvent) -> void:
 			if event.is_released(): #wanneer muis losgelaten word pos 100,100 en klaplight normaal 
 				var pos = Vector2(100, 100)
 				$cursor.position = pos
-				klappyLight.color = Color("#ffe8aa")
+				colormapje.visible = true
+				KlappyLight.visible = false
+
 		
 		if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
 			var pos = event.position
@@ -76,7 +82,8 @@ func _on_gui_input(event: InputEvent) -> void:
 			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
 			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
-			
+			KlappyLight.visible = true
+			FaceLight.light_color = KlappyLight.light_color
 			#klappys lampje word veranderd van kleur op basis van muis positie in het vak
 			var color := Color("#ffe8aa")
 			var strength := 0.8
@@ -90,24 +97,27 @@ func _on_gui_input(event: InputEvent) -> void:
 			if pos.y <= 70:
 				color = color.lerp(Color.YELLOW, strength)
 
-			klappyLight.color = color 
+			KlappyLight.light_color = color 
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
 func on_klappy_energy(value):
-	if value >= 100 and not flicker_done:  
+	if value >= 0 and not flicker_done:  
 		unlocked = true
 		flicker_done = true
 		_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
 		lightFlicker()
+		await get_tree().create_timer(7.0).timeout
+		achievement_panel.visible = false
 	
 func lightFlicker():
 	for i in colors:
-		klappyLight.color = i
-		klappyLight.energy = 2
-		await get_tree().create_timer(0.3).timeout
-		klappyLight.energy = start_energy
+		KlappyLight.light_color = i
 		
-	klappyLight.color = Color("#ffe8aa")
+		await get_tree().create_timer(0.3).timeout
+		KlappyLight.light_energy = start_energy
+		
+	colormapje.visible = true
+	KlappyLight.visible = false
 	
 	
 func _fill_instruction_label(_name:String):

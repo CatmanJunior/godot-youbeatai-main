@@ -15,7 +15,14 @@ func _ready():
 
 func _on_tutorial_button_pressed():
 	GameState.use_tutorial = true
+	_write_use_tutorial()
 	_on_pro_button_pressed()
+
+func _write_use_tutorial() -> void:
+	var file := FileAccess.open("user://use_tutorial.txt", FileAccess.WRITE)
+	if file:
+		file.store_string("True")
+		file.close()
 
 func _on_pro_button_pressed():
 	if OS.has_feature("web"):

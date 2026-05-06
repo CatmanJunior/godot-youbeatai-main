@@ -82,6 +82,7 @@ func _ready() -> void:
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
 	EventBus.clap_on_beat_detected.connect(_on_has_clapped_on_beat)
 	EventBus.stomp_on_beat_detected.connect(_on_has_stomped_on_beat)
+	check_if_tutorial_was_chosen()
 	try_activate_tutorial()
 
 
@@ -149,11 +150,11 @@ func reset() -> void:
 	_first_tts_done = false
 	_last_knob_pos = Vector2.ZERO
 
-#when . is pressed goto next tutorial step
+#when F7 is pressed, advance to the next tutorial step
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var i_event : InputEventKey = event
-		if i_event.keycode == Key.KEY_0 and i_event.pressed:
+		if i_event.keycode == Key.KEY_F7 and i_event.pressed:
 			if _outcome.is_valid():
 				_outcome.call()
 			if tutorial_level >= tutorial_steps.size():
@@ -161,6 +162,21 @@ func _input(event: InputEvent) -> void:
 			tutorial_level += 1
 			_speak_tutorial_instruction(tutorial_level)
 			_update_lists()
+
+# Reads user://use_tutorial.txt to enable the tutorial across sessions.
+# If the file exists and contains "True" (case-insensitive), sets GameState.use_tutorial to true.
+# Deletes the file after reading so the tutorial does not re-run on subsequent restarts.
+func check_if_tutorial_was_chosen() -> void:
+	var virtual_path := "user://use_tutorial.txt"
+	var glob_path := ProjectSettings.globalize_path("user://").path_join("use_tutorial.txt")
+	if FileAccess.file_exists(virtual_path):
+		var file := FileAccess.open(virtual_path, FileAccess.READ)
+		if file:
+			var content := file.get_as_text().strip_edges()
+			if content.to_lower() == "true":
+				GameState.use_tutorial = true
+			file.close()
+		DirAccess.remove_absolute(glob_path)
 
 # Activates the tutorial if GameState.use_tutorial is set.
 # Sets the BPM to 60, hides the beat pointer, wires up continue and instrument buttons.
@@ -207,7 +223,7 @@ func update_tutorial() -> void:
 
 	_update_interaction_sfx()
 
-	if tutorial_level != -1 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
+	if tutorial_level >= 0 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
 		_update_lists()
 		if _condition.is_valid() and _condition.call():
 			_next_line()

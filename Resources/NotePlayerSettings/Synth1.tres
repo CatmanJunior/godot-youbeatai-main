@@ -13,4 +13,5 @@ instrument = 4
 base_note = ExtResource("1_gh2ix")
 gate = 0.1
 volume_db = 8.0
+gain = 10.0
 metadata/_custom_type_script = "uid://cx6op5amucrek"

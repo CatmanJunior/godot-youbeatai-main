@@ -10,10 +10,10 @@ var clapped_on_beat_amount: int = 0
 var stomped_amount: int = 0
 var stomped_on_beat_amount: int = 0
 
-@export var clap_freq_min: float = 7000.0
-@export var clap_threshold: float = 0.01
+@export var clap_freq_min: float = 2000.0
+@export var clap_threshold: float = 0.03
 @export var stamp_freq_max: float = 150.0
-@export var stamp_threshold: float = 0.01
+@export var stamp_threshold: float = 0.25
 
 var is_clapping: bool:
 	get: return clap_volume > clap_threshold and clap_volume > stamp_volume
@@ -30,10 +30,10 @@ func _process(_delta: float):
 	clap_volume = _get_magnitude(clap_freq_min, 20000.0)
 	if is_clapping:
 		EventBus.clap_stomp_detected.emit(InteractionType.CLAP)
-		print("clap")
+		print("clap at volume ", clap_volume)
 	elif is_stamping:
 		EventBus.clap_stomp_detected.emit(InteractionType.STOMP)
-		print("stomp")
+		print("stomp at volume ", stamp_volume)
 		
 
 func _get_magnitude(_freq_min: float, _freq_max: float) -> float:

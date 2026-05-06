@@ -442,13 +442,16 @@ grow_vertical = 1
 
 [node name="ChosenEmoij\'s" type="Label" parent="UserInterface" unique_id=572018697]
 layout_mode = 0
-offset_left = 581.0
-offset_top = 114.0
-offset_right = 608.0
-offset_bottom = 266.0
-theme_override_constants/line_spacing = 11
-theme_override_font_sizes/font_size = 24
-text = "💔🌴🤔😢"
+offset_left = 569.0
+offset_top = 45.0
+offset_right = 620.0
+offset_bottom = 264.0
+theme_override_constants/line_spacing = 14
+theme_override_constants/paragraph_spacing = -16
+theme_override_font_sizes/font_size = 37
+text = "💔🌴
+
+🤔😢"
 horizontal_alignment = 1
 autowrap_mode = 1
 script = ExtResource("56_ptfg5")

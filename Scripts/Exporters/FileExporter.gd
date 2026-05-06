@@ -14,12 +14,17 @@ func on_export(context: ExportRecordingData):
 	else:
 		export_wav_to_file(context.audio_stream, _name)   
 
+		
+
 func export_wav_to_file(stream_wav: AudioStreamWAV, _name: String = "soundtrack.wav"):
-	# Save the WAV stream to a temporary file
-	var documents_path = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS)
-	documents_path += "/Ritme Robot/%s" % _name
-	print("saved to: ", documents_path)
-	stream_wav.save_to_wav(documents_path)
+	var dir_path: String = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + "/Ritme Robot"
+	DirAccess.make_dir_recursive_absolute(dir_path)
+	var full_path: String = dir_path + "/%s" % _name
+	var error: int = stream_wav.save_to_wav(full_path)
+	if error != OK:
+		push_error("FileExporter: save_to_wav failed with error %d at: %s" % [error, full_path])
+	else:
+		print("saved to: ", full_path)
 
 func download_wav_file(stream_wav: AudioStreamWAV, _name: String):
 	if OS.has_feature("web"):

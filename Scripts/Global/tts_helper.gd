@@ -37,9 +37,13 @@ func stop_speaking():
 	DisplayServer.tts_stop()
 
 func text_without_emoticons(text: String) -> String:
-	var regex = RegEx.new()
-	regex.compile(r":[^:\s]+:")
-	return regex.sub(text, "")
+	var colon_regex := RegEx.new()
+	colon_regex.compile(r":[^:\s]+:")
+	var result := colon_regex.sub(text, "", true)
+
+	var emoji_regex := RegEx.new()
+	emoji_regex.compile(r"\p{Emoji_Presentation}|\p{Extended_Pictographic}")
+	return emoji_regex.sub(result, "", true)
 
 func _ready():
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)

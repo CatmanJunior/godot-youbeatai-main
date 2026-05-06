@@ -10,6 +10,7 @@
 custom_minimum_size = Vector2(80, 80)
 offset_right = 150.0
 offset_bottom = 150.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 action_mode = 0
 flat = true
 script = ExtResource("2_lhsuy")

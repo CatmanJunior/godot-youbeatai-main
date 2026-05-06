@@ -1,6 +1,8 @@
 extends Button
 class_name TrackSelectButton
 
+
+
 @export_category("Components")
 @export var outline_rect: TextureRect
 @export var glow_rect: TextureRect
@@ -9,6 +11,9 @@ class_name TrackSelectButton
 @export_category("Synth Only")
 @export var background: TextureRect
 @export var is_synth_track: bool = false
+@export var scale_factor_on_select: float = 1.1
+@export var scale_tween_duration: float = 0.3
+
 
 @export_category("Track Info")
 @export var track_index: int = 0
@@ -43,6 +48,14 @@ func set_button_selected(active: bool) -> void:
 
 	if is_synth_track:
 		background.visible = active
+		#scale up the button a bit when selected, do a pulse, but only for synth tracks, to give more visual feedback. Use tween
+		var target_scale = Vector2.ONE * scale_factor_on_select if active else Vector2.ONE
+		var tween = create_tween()
+		#also tween it back
+		tween.tween_property(self, "scale", target_scale, scale_tween_duration)
+		tween.tween_property(self, "scale", Vector2.ONE, scale_tween_duration)
+
+		
 
 func _on_press():
 	emit_signal("track_button_pressed", track_index)

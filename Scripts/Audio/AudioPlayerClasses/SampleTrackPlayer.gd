@@ -30,6 +30,8 @@ func _ready() -> void:
 	EventBus.play_track_requested.connect(_on_play_track_requested)
 
 func _on_soundbank_loaded(bank: SoundBank) -> void:
+	#wait a frame to ensure everything is initialized before trying to set streams on players
+	await get_tree().process_frame
 	match track_index:
 		0:
 			set_streams(bank.kick, bank.kick_alt)

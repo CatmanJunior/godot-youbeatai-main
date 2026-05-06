@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://jsbttb3fa3uy"]
 
 [ext_resource type="Script" uid="uid://b3s2s16qvthd8" path="res://Scripts/UI/email_prompt.gd" id="1_8j0pk"]
-[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_jeaa2"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_jeaa2"]
 [ext_resource type="Texture2D" uid="uid://diqxn0oohcpk7" path="res://Resources/Textures_New_Extra/_0001_Cross.png" id="3_xf0ds"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]

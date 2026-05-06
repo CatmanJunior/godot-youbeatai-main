@@ -41,21 +41,23 @@ var swing: float:
 # ── Runtime-only state ──────────────────────────────────────────────────────
 
 func get_current_section() -> SectionData:
-	if current_section:
-		return current_section
+	if _current_section:
+		return _current_section
 	if data.sections.size() > 0:
 		return data.sections[0]
 	push_error("SongState: No current section and no sections in data!")
 	return null
 
+var _current_section: SectionData = null
+
 var current_section: SectionData:
 	get: return get_current_section()
-	set(value): current_section = value
+	set(value): _current_section = value
 
 var current_section_index: int:
 	get:
-		if current_section:
-			return current_section.index
+		if _current_section:
+			return _current_section.index
 		else:
 			return 0
 

@@ -209,7 +209,7 @@ func _set_track_sprites_visible(track: int, visible: bool) -> void:
 
 func _on_ui_visibility_requested(element: int, visible: bool) -> void:
 	match element:
-		VisibilityManager.UIElement.BEAT_POINTER:
+		UIVisibilityListener.UIElement.BEAT_POINTER:
 			pointer.visible = visible
-		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
+		UIVisibilityListener.UIElement.PLAY_PAUSE_BUTTON:
 			play_pause_button.visible = visible

@@ -82,7 +82,7 @@ func _stop_recording() -> void:
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 	match track_type:
 		TrackData.TrackType.SAMPLE:
-			return GameState.beat_duration * 1.2 # allow some extra time beyond 1 beat for user to finish playing
+			return GameState.beat_duration * 2.1 # allow some extra time beyond 1 beat for user to finish playing
 		TrackData.TrackType.SYNTH:
 			return GameState.beat_duration * SongState.total_beats 
 		TrackData.TrackType.SONG:
@@ -127,7 +127,7 @@ func _post_process_sample(recording_data: RecordingData) -> void:
 	# scan on a small window around that point to find the precise attack onset.
 	var silent_lead_time: float = audio.get_length() - recording_data.actual_recording_length
 	audio = AudioHelpers.trim_sample_smart(audio, silent_lead_time)
-	audio = AudioHelpers.cap_audio_duration(audio, GameState.beat_duration)
+	audio = AudioHelpers.cap_audio_duration(audio, _calculate_max_recording_length(current_recording_data.track_type) )
 	recording_data.audio_stream = audio
 	recording_data.state = RecordingData.State.RECORDING_DONE
 

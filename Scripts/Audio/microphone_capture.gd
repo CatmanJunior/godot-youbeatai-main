@@ -64,4 +64,9 @@ func _stop_recording(recording_data: RecordingData) -> void:
 # -- Helpers -------------------------------------------------------------------
 static func get_magnitude(freq_min: float, freq_max: float, p_analyzer: AudioEffectSpectrumAnalyzerInstance = analyzer) -> float:
 	var rms: Vector2 = p_analyzer.get_magnitude_for_frequency_range(freq_min, freq_max)
-	return (rms.x + rms.y) * 0.5
+	var rms_value = (rms.x + rms.y) * 0.5
+	var log_value = 20.0 * (log( sqrt(rms_value) / 0.1) / log(10))
+
+	# convert to value around 0-1
+	# capped becasue soundfont does not play well with higher values
+	return pow(10, log_value / 10)

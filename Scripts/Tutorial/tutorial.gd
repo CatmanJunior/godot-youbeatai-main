@@ -149,22 +149,29 @@ func reset() -> void:
 	_first_tts_done = false
 	_last_knob_pos = Vector2.ZERO
 
-#when . is pressed goto next tutorial step
+# Press F7 to advance to the next tutorial step (skip current condition).
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
-		var i_event : InputEventKey = event
-		if i_event.keycode == Key.KEY_0 and i_event.pressed:
+		var i_event: InputEventKey = event
+		if i_event.keycode == Key.KEY_F7 and i_event.pressed:
+			if not GameState.use_tutorial:
+				return
+			if tutorial_level < 0 or tutorial_level >= tutorial_steps.size():
+				return
 			if _outcome.is_valid():
 				_outcome.call()
-			if tutorial_level >= tutorial_steps.size():
+			# Re-check after outcome: FINISH_TUTORIAL sets tutorial_level = -1.
+			if tutorial_level < 0 or tutorial_level >= tutorial_steps.size():
 				return
 			tutorial_level += 1
 			_speak_tutorial_instruction(tutorial_level)
 			_update_lists()
 
 # Activates the tutorial if GameState.use_tutorial is set.
+# Also checks user://use_tutorial.txt for file-based activation (C# compatibility).
 # Sets the BPM to 60, hides the beat pointer, wires up continue and instrument buttons.
 func try_activate_tutorial() -> void:
+	_check_tutorial_file()
 	if GameState.use_tutorial:
 		GameState.tutorial_activated = true
 
@@ -321,3 +328,20 @@ func _get_condition_callable(c: TutorialStepData.TutorialCondition) -> Callable:
 # Returns the outcome callable mapped to the given enum value, falling back to an empty Callable.
 func _get_outcome_callable(o: TutorialStepData.TutorialOutcome) -> Callable:
 	return _outcome_map.get(o, Callable())
+
+# ── Persistence helpers ─────────────────────────────────────────────────────────────────────────────────────────────
+
+# Reads user://use_tutorial.txt and activates the tutorial if the file contains "True".
+# This provides C#-compatible file-based activation alongside the in-game UI button.
+func _check_tutorial_file() -> void:
+	if GameState.use_tutorial:
+		return  # already activated via the UI button; no need to read the file
+	if FileAccess.file_exists("user://use_tutorial.txt"):
+		var file: FileAccess = FileAccess.open("user://use_tutorial.txt", FileAccess.READ)
+		if file:
+			var content: String = file.get_as_text().strip_edges()
+			if content.to_lower() == "true":
+				GameState.use_tutorial = true
+			file.close()
+		else:
+			push_warning("Tutorial: could not open user://use_tutorial.txt (error %d)" % FileAccess.get_open_error())

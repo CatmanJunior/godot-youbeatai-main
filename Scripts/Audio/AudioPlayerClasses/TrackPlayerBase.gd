@@ -114,7 +114,7 @@ func _set_track_volume(track: int, volume: float):
 	set_volume_linear(volume)
 	
 
-func apply_effect_profile(effect_profile: EffectProfile) -> void:
+func apply_effect_profile(_effect_profile: EffectProfile) -> void:
 	pass
 
 func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> void: pass

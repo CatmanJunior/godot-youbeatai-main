@@ -9,11 +9,11 @@
 
 [resource]
 script = ExtResource("1_3744s")
-button_background_color = Color(1, 1, 0, 0.34901962)
+button_background_color = Color(0.99, 0.87714005, 0.23760001, 0.34901962)
 button_icon_texture = ExtResource("2_c118j")
 button_outline_texture = ExtResource("3_gdrvd")
 button_filled_texture = ExtResource("1_o27hs")
 chaos_pad_main_icon = ExtResource("5_owkpa")
 chaos_pad_alt_icon = ExtResource("4_al8ww")
-track_color = Color(1, 1, 0, 1)
+track_color = Color(0.9882353, 0.8784314, 0.23529412, 1)
 metadata/_custom_type_script = "uid://c8a4ts2urwcjm"

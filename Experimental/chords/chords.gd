@@ -9,12 +9,11 @@ func _ready():
 	super._ready()
 	base_note = Note.new()
 	gain = 0.0
-	
-	EventBus.section_added.connect(_on_new_section)
+
 	EventBus.beat_triggered.connect(on_beat)
+	print("chord player ready")
 
 func _exit_tree():
-	EventBus.section_added.disconnect(_on_new_section)
 	EventBus.beat_triggered.disconnect(on_beat)
 
 func set_settings(_settings: ChordPlayerSettings, _bus: StringName) -> void:
@@ -28,17 +27,6 @@ func set_settings(_settings: ChordPlayerSettings, _bus: StringName) -> void:
 	soundfont = soundbank.chord_progressions.soundFont
 	instrument = soundbank.chord_progressions.instrument
 	bus = _bus
-
-func _on_new_section(_new_section_index: int, _tex: Texture2D):
-	if _tex not in settings.tex_lookup:
-		printerr("invalid layer emoji, no chord progression known. Fallback to default (0)")
-		_tex = settings.tex_lookup.keys()[0]
-
-	var progression_offset: ProgressionOffset = settings.tex_lookup[_tex]
-	var progression = SongState.selected_soundbank.chord_progressions.progressions[progression_offset.progression]
-
-	SongState.sections[_new_section_index].progression = progression
-	SongState.sections[_new_section_index].progression_offset = progression_offset
 
 func on_beat(beat: int):
 	if SongState.song_track.recorded_audio_stream == null:

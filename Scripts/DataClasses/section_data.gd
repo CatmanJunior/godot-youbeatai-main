@@ -37,6 +37,7 @@ func _init(section_tex: Texture2D, new_index: int = 0) -> void:
 	self.id = get_next_id()
 	self.index = new_index
 	tex = section_tex
+	
 
 ## Populate [member tracks] with the default set of [SampleTrackData] and
 ## [SynthTrackData] instances. Must be called explicitly after constructing a

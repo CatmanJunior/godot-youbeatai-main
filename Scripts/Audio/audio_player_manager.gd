@@ -19,7 +19,7 @@ var sfx_player: AudioStreamPlayer
 @export var chord_player_settings: ChordPlayerSettings
 
 func _ready():
-	_init_audio_players()
+	_init_audio_players().call_deferred() # initialize audio players after the scene is ready to ensure everything is set up
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
@@ -32,7 +32,7 @@ func _init_sfx_player():
 
 func _init_audio_players():
 	# Create sample track players
-	await get_tree().process_frame # wait a frame to ensure everything is initialized before creating track players
+	
 	for i in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
 		var player = SampleTrackPlayer.new()
 		player.setup(i, BusNames.SUBMASTER_BUS)

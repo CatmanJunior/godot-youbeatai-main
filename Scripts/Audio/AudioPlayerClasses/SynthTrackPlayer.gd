@@ -137,3 +137,10 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	add_child(new_player)
 	
 	return new_player
+
+func apply_effect_profile(effect_profile: EffectProfile) -> void:
+	var bus_idx = AudioServer.get_bus_index(bus_name)
+	if bus_idx == -1:
+		push_error("Bus '%s' not found for applying effect profile." % bus_name)
+		return
+	effect_profile.apply_effects(bus_idx)

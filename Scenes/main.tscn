@@ -114,6 +114,7 @@ script = ExtResource("21_s8vy0")
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")
 initial_sections = Array[Texture2D]([ExtResource("22_54nrm"), ExtResource("23_55jeb"), ExtResource("24_gsvbx"), ExtResource("25_bv80c"), ExtResource("26_ptfg5")])
+chord_player_settings = ExtResource("17_55jeb")
 
 [node name="BeatManager" type="Node" parent="Managers" unique_id=540173422]
 script = ExtResource("8_urine")

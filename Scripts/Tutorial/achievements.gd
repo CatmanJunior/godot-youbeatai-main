@@ -1,10 +1,14 @@
 extends Node
 # Manages blocker-based achievements that unlock UI elements.
+#
+# Energy accumulation rule:
+#   _energy_points increments by +1.0 per on-beat clap (clap_on_beat_detected).
+#   Achievement worth values are 50 (Snare ring / blue ring) and 70 (bigLine reveal),
+#   meaning the player needs that many on-beat claps to accumulate enough energy to
+#   press the blocker and unlock the reward.
 
 var use_achievements: bool = false
 var _done_late_ready: bool = false
-var _paused: bool = true
-var _timer: SceneTreeTimer = null
 ## Accumulated energy points earned by clapping on beat.
 var _energy_points: float = 0.0
 
@@ -18,8 +22,11 @@ var _energy_points: float = 0.0
 @export var unlockable_nodes: Array[Node2D] = []
 
 # Voice-over layers (optional; checked via null guards).
-@export var layer_voice_over_0: Node  ## green layer voice over
-@export var layer_voice_over_1: Node  ## purple layer voice over
+@export var layer_voice_over_1: Node  ## layer voice over for bigLine reveal
+
+# Audio players for recording-based achievements (assign from the editor).
+@export var first_audio_player_rec: AudioStreamPlayer
+@export var second_audio_player_rec: AudioStreamPlayer
 
 # Achievement definition helper class
 class AchievementDef:
@@ -59,66 +66,56 @@ func _get_achievements() -> Array[AchievementDef]:
 
 	var list: Array[AchievementDef] = []
 
-	# 0 – Place 4 beats on ring 0 → unlock ring 2 (Snare)
+	# 0 – Snare ring unlock (worth 50 energy)
 	list.append(AchievementDef.new(
-		func() -> bool: return _active_beats_per_ring(0) >= 4,
-		"Door 4 beats te plaatsen op de rode ring speel je deze Snare vrij.",
-		-1.0,
+		func() -> bool: return true,
+		"Verzamel meer energie om de Snare ring vrij te spelen",
+		50.0,
 		func(): EventBus.track_sprites_visibility_requested.emit(2, true)
 	))
 
-	# 1 – Clap along, earn 20 energy points → unlock ring 3 (Hi-hat)
+	# 1 – bigLine reveal (worth 70 energy)
 	list.append(AchievementDef.new(
 		func() -> bool: return true,
-		"klap 👏 mee op de beat, verzamel 20 energie punten⚡voor een Hi-hat geluid.",
-		20.0,
-		func(): EventBus.track_sprites_visibility_requested.emit(3, true)
-	))
-
-	# 2 – Record green ring → unlock purple synth ring
-	list.append(AchievementDef.new(
-		func() -> bool:
-			if layer_voice_over_0 == null:
-				return false
-			return layer_voice_over_0.get_current_layer_voice_over() != null and _pause_between_synth_unlock(),
-		"Door de groene ring 🐻 op te nemen speel je de paarse drukke 🐦 Synth ring vrij.",
-		-1.0,
+		"Verzamel meer energie om een hoger geluid op te kunnen nemen",
+		70.0,
 		func():
 			if layer_voice_over_1 and layer_voice_over_1.get("big_line") != null:
 				layer_voice_over_1.big_line.visible = true
 	))
 
-	# 3 – Record purple ring → enable adding new layers
+	# 2 – Show template tip
 	list.append(AchievementDef.new(
-		func() -> bool:
-			if layer_voice_over_1 == null:
-				return false
-			return layer_voice_over_1.get_current_layer_voice_over() != null,
-		"Als je de paarse ring 🐦 op neemt kan je daarna hier nieuwe lagen toevoegen."
+		func() -> bool: return GameState.show_template,
+		"In de instellingen kan je op tip klikken, dan laat ik een voorbeeld liedje zien"
 	))
 
-	# 4 – Add a layer → enable full song recording
+	# 3 – Added a layer
 	list.append(AchievementDef.new(
-		func() -> bool: return SongState.sections.size() > 1,
+		func() -> bool: return GameState.added_layer,
 		"Als je een nieuwe laag toevoegt, kan je hier een heel liedje opnemen."
 	))
 
-	# 5 – First recorded sample → gift unlock
+	# 4 – First recorded sample
 	list.append(AchievementDef.new(
 		func() -> bool:
-			if SongState.current_section == null or SongState.current_section.tracks.size() <= 2:
-				return false
-			return SongState.current_section.tracks[2].recording_data != null,
+			return first_audio_player_rec != null and first_audio_player_rec.stream != null,
 		"Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
 	))
 
-	# 6 – Second recorded sample
+	# 5 – Second recorded sample
 	list.append(AchievementDef.new(
 		func() -> bool:
-			if SongState.current_section == null or SongState.current_section.tracks.size() <= 3:
-				return false
-			return SongState.current_section.tracks[3].recording_data != null,
+			return second_audio_player_rec != null and second_audio_player_rec.stream != null,
 		"Kan je hier voor mij een kort gek geluid opnemen?"
+	))
+
+	# 6 – Blue ring unlock (worth 50 energy)
+	list.append(AchievementDef.new(
+		func() -> bool: return true,
+		"Verzamel meer energie om de blauwe ring vrij te spelen",
+		50.0,
+		func(): EventBus.track_sprites_visibility_requested.emit(3, true)
 	))
 
 	return list
@@ -264,15 +261,7 @@ func _speak_tooltip(index: int) -> void:
 	var achievements := _get_achievements()
 	if index < 0 or index >= achievements.size():
 		return
-	TTSHelper.speak(_extract_emoticons(achievements[index].tooltip))
-
-
-func _extract_emoticons(input: String) -> String:
-	# Strip emoji / symbol characters via regex
-	var regex := RegEx.new()
-	# Match common emoji ranges (surrogate pairs, symbols, modifiers, ZWJ)
-	regex.compile("[\\u200D\\uFE0F\\u{1F000}-\\u{1FFFF}\\u{2600}-\\u{27BF}\\u{2B50}\\u{23CF}-\\u{23FA}\\u{2934}-\\u{2935}\\u{25AA}-\\u{25FE}]")
-	return regex.sub(input, "", true)
+	TTSHelper.speak(TTSHelper.text_without_emoticons(achievements[index].tooltip))
 
 
 # ── Blocker helpers ──────────────────────────────────────────────────────────
@@ -305,22 +294,8 @@ func _setup_default_ui_state() -> void:
 	EventBus.track_sprites_visibility_requested.emit(3, false)
 	if layer_voice_over_1 and layer_voice_over_1.get("big_line") != null:
 		layer_voice_over_1.big_line.visible = false
-
-
-# ── Pause timer between synth unlock ─────────────────────────────────────────
-
-func _pause_between_synth_unlock() -> bool:
-	if layer_voice_over_0 and layer_voice_over_0.get_current_layer_voice_over() != null:
-		if _timer == null:
-			_timer = get_tree().create_timer(3.0)
-			_timer.timeout.connect(_on_pause_timeout)
-		if not _paused:
-			return true
-	return false
-
-
-func _on_pause_timeout() -> void:
-	_paused = false
+	if achievements_panel:
+		achievements_panel.visible = false
 
 
 # ── SFX helper ───────────────────────────────────────────────────────────────
@@ -336,7 +311,7 @@ func _active_beats_per_ring(ring_index: int) -> int:
 	if section == null or ring_index < 0 or ring_index >= SectionData.SAMPLE_TRACKS_PER_SECTION:
 		return 0
 	var count: int = 0
-	for beat_index in range(SongState.total_beats):
+	for beat_index in range(SongState.beats_per_section):
 		if section.get_beat(ring_index, beat_index):
 			count += 1
 	return count
@@ -365,6 +340,4 @@ func check_if_achievements_mode_should_be_active() -> void:
 func reset() -> void:
 	check_if_achievements_mode_should_be_active()
 	_done_late_ready = false
-	_paused = true
-	_timer = null
 	_energy_points = 0.0

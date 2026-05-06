@@ -8,6 +8,7 @@ extends Resource
 const SAMPLE_TRACKS_PER_SECTION: int = 4
 const SYNTH_TRACKS_PER_SECTION: int = 2
 const TRACKS_PER_SECTION: int = SAMPLE_TRACKS_PER_SECTION + SYNTH_TRACKS_PER_SECTION
+const LOOP_COUNT_MAX: int = 8
 
 static var last_id: int = 0
 static func get_next_id() -> int:
@@ -36,6 +37,7 @@ func _init(section_tex: Texture2D, new_index: int = 0) -> void:
 	self.id = get_next_id()
 	self.index = new_index
 	tex = section_tex
+	
 
 ## Populate [member tracks] with the default set of [SampleTrackData] and
 ## [SynthTrackData] instances. Must be called explicitly after constructing a

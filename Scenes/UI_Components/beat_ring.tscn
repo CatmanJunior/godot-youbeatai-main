@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dwakilip8uiac"]
 
-[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="1_b7oj2"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_b7oj2"]
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="1_wrqyy"]
 [ext_resource type="PackedScene" uid="uid://chblk160rw0iy" path="res://Scenes/Prefab/BeatButton.tscn" id="2_5lvir"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]

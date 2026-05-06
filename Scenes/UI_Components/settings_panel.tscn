@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://cnl15vf13mia8" path="res://Resources/Textures_New/Backgrounds/_0003_BG-1080p.png" id="1_e2x6l"]
 [ext_resource type="Script" uid="uid://v62uubacsyqx" path="res://Scripts/UI/settings_menu_ui.gd" id="2_17eq1"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://default_theme.tres" id="2_yaket"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_yaket"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_5tpfg"]
 [ext_resource type="Texture2D" uid="uid://bvxoaqrsw68b8" path="res://Resources/Textures_Settings/Settings__0008_Slider-empty.png" id="4_xbhen"]
 [ext_resource type="Script" uid="uid://cwhmhfr83v837" path="res://Scripts/UI/template_button.gd" id="5_17eq1"]
@@ -112,10 +112,6 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8yhq"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2m8tu"]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eo6gy"]
 content_margin_left = 20.0
 content_margin_right = 20.0
@@ -133,7 +129,7 @@ corner_radius_bottom_left = 60
 [sub_resource type="LabelSettings" id="LabelSettings_g4ckg"]
 font_size = 21
 
-[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_bias_slider", "clap_adds_beats_toggle", "recording_volume_threshold_slider", "microphone_volume_progress_bar", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "all_sections_to_mp3", "save_to_wav_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_adds_beats_toggle", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "save_song_button", "save_beat_button", "restart_button", "metronome_toggle", "mute_speech")]
 top_level = true
 light_mask = 2
 z_index = 1000
@@ -145,15 +141,12 @@ offset_bottom = 723.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
 script = ExtResource("2_17eq1")
 settings_panel = NodePath(".")
-settings_back_button = NodePath("Panel/Buttons2/Back")
-button_is_clap = NodePath("Panel/right/ButtonIsClap")
-button_add_beats = NodePath("Panel/right/Knop adds beat")
-clap_bias_slider = NodePath("Sliders/ClapStompBias")
-clap_adds_beats_toggle = NodePath("Panel/right/AddBeatsToggle")
-recording_volume_threshold_slider = NodePath("Sliders/VolumeTreshold")
-microphone_volume_progress_bar = NodePath("Sliders/VolumeTreshold/ProgressBar")
+settings_back_button = NodePath("Panel/bot_buttons_h_container/CloseSettingsButton")
+button_is_clap = NodePath("Panel/toggle_v_container/ButtonIsClap")
+button_add_beats = NodePath("Panel/toggle_v_container/Knop adds beat")
+clap_adds_beats_toggle = NodePath("Panel/toggle_v_container/AddBeatsToggle")
 recording_delay_slider = NodePath("Panel/delay/RecordingDelaySlider")
-recording_delay_label = NodePath("Panel/delay/Shadows0000s0008SmallButtonGlowShadow/recordingDelayLabel")
+recording_delay_label = NodePath("Panel/delay/delay_label_circle/recordingDelayLabel")
 bpm_label = NodePath("Panel/bpm/bpm slider/BpmLabel")
 bpm_up_button = NodePath("Panel/bpm/BpmUpButton")
 bpm_down_button = NodePath("Panel/bpm/BpmDownButton")
@@ -162,14 +155,14 @@ bpm_progress_bar = NodePath("Panel/bpm/bpmProgressBar")
 swing_up_button = NodePath("Panel/swing/swingUpButton2")
 swing_down_button = NodePath("Panel/swing/swingDownButton2")
 swing_slider = NodePath("Panel/swing/SwingSlider")
-swing_label = NodePath("Panel/SwingLabel")
+swing_label = NodePath("Panel/swing/SwingText")
 swing_progress_bar = NodePath("Panel/swing/ProgressBar")
-template_button = NodePath("Buttons/tip_doe/TemplateButton")
-all_sections_to_mp3 = NodePath("Panel/Buttons2/AllLayersToMp3")
-save_to_wav_button = NodePath("Panel/Buttons2/SaveToWavButton")
-restart_button = NodePath("Panel/Buttons2/RestartButton")
-metronome_toggle = NodePath("Panel/right/MetronomeToggle")
-mute_speech = NodePath("Panel/right/MuteSpeachToggle")
+template_button = NodePath("Panel/stijl_tip/TemplateButton")
+save_song_button = NodePath("Panel/bot_buttons_h_container/SaveSongButton")
+save_beat_button = NodePath("Panel/bot_buttons_h_container/SaveBeatButton")
+restart_button = NodePath("Panel/bot_buttons_h_container/RestartGameButton")
+metronome_toggle = NodePath("Panel/toggle_v_container/MetronomeToggle")
+mute_speech = NodePath("Panel/toggle_v_container/MuteSpeachToggle")
 
 [node name="Panel" type="Panel" parent="." unique_id=1205068931]
 light_mask = 2
@@ -271,6 +264,20 @@ icon = ExtResource("6_mvuv7")
 flat = true
 expand_icon = true
 
+[node name="BPMText" type="Label" parent="Panel/bpm" unique_id=1191003587]
+light_mask = 2
+layout_mode = 0
+offset_left = 72.0
+offset_top = -57.0
+offset_right = 215.0
+offset_bottom = -14.0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "BPM"
+metadata/_edit_use_anchors_ = true
+
 [node name="swing" type="Control" parent="Panel" unique_id=1661127305]
 anchors_preset = 0
 offset_left = 61.0
@@ -306,7 +313,7 @@ scale = Vector2(0.7, 0.7)
 theme_override_icons/grabber = ExtResource("7_ryerx")
 theme_override_icons/grabber_highlight = ExtResource("7_ryerx")
 theme_override_styles/slider = SubResource("StyleBoxFlat_qv1an")
-max_value = 2.0
+max_value = 0.5
 step = 0.01
 metadata/_edit_use_anchors_ = true
 
@@ -360,6 +367,20 @@ flat = true
 icon_alignment = 1
 expand_icon = true
 
+[node name="SwingText" type="Label" parent="Panel/swing" unique_id=1853889709]
+light_mask = 2
+layout_mode = 0
+offset_left = 71.0
+offset_top = -48.0
+offset_right = 214.0
+offset_bottom = -5.0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 35
+text = "Swing"
+metadata/_edit_use_anchors_ = true
+
 [node name="delay" type="Control" parent="Panel" unique_id=2030069879]
 anchors_preset = 0
 offset_left = 679.0
@@ -400,17 +421,17 @@ step = 0.01
 value = 0.45
 metadata/_edit_use_anchors_ = true
 
-[node name="Shadows0000s0008SmallButtonGlowShadow2" type="Sprite2D" parent="Panel/delay" unique_id=1900299613]
+[node name="delay_sprite_clock" type="Sprite2D" parent="Panel/delay" unique_id=1900299613]
 position = Vector2(9.000122, 33)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("10_mthl7")
 
-[node name="Shadows0000s0008SmallButtonGlowShadow" type="Sprite2D" parent="Panel/delay" unique_id=1637106568]
+[node name="delay_label_circle" type="Sprite2D" parent="Panel/delay" unique_id=1637106568]
 position = Vector2(281.00012, 33)
 scale = Vector2(0.7, 0.7)
 texture = ExtResource("11_von1x")
 
-[node name="recordingDelayLabel" type="Label" parent="Panel/delay/Shadows0000s0008SmallButtonGlowShadow" unique_id=1269911775]
+[node name="recordingDelayLabel" type="Label" parent="Panel/delay/delay_label_circle" unique_id=1269911775]
 offset_left = -44.28588
 offset_top = -38.571426
 offset_right = 48.515663
@@ -421,7 +442,7 @@ text = "0.4s"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="right" type="VBoxContainer" parent="Panel" unique_id=688920235]
+[node name="toggle_v_container" type="VBoxContainer" parent="Panel" unique_id=688920235]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -437,7 +458,7 @@ grow_vertical = 2
 scale = Vector2(0.75, 0.75)
 theme_override_constants/separation = -45
 
-[node name="MetronomeToggle" type="CheckButton" parent="Panel/right" unique_id=1708949378]
+[node name="MetronomeToggle" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1708949378]
 light_mask = 2
 layout_mode = 2
 focus_mode = 0
@@ -447,7 +468,7 @@ theme_override_icons/unchecked = ExtResource("13_rs3bn")
 vertical_icon_alignment = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/right/MetronomeToggle" unique_id=175385891]
+[node name="Label" type="Label" parent="Panel/toggle_v_container/MetronomeToggle" unique_id=175385891]
 light_mask = 2
 layout_mode = 0
 offset_left = -2.0
@@ -459,7 +480,7 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Metronoom"
 
-[node name="Knop adds beat" type="CheckButton" parent="Panel/right" unique_id=1549939005]
+[node name="Knop adds beat" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1549939005]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -471,7 +492,7 @@ theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/right/Knop adds beat" unique_id=1596923273]
+[node name="Label" type="Label" parent="Panel/toggle_v_container/Knop adds beat" unique_id=1596923273]
 light_mask = 2
 layout_mode = 0
 offset_top = 45.0
@@ -482,7 +503,7 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Knop maakt beat"
 
-[node name="ButtonIsClap" type="CheckButton" parent="Panel/right" unique_id=860283575]
+[node name="ButtonIsClap" type="CheckButton" parent="Panel/toggle_v_container" unique_id=860283575]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -496,7 +517,7 @@ theme_override_icons/unchecked = ExtResource("13_rs3bn")
 button_pressed = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/right/ButtonIsClap" unique_id=1035969502]
+[node name="Label" type="Label" parent="Panel/toggle_v_container/ButtonIsClap" unique_id=1035969502]
 light_mask = 2
 layout_mode = 0
 offset_top = 45.0
@@ -507,7 +528,7 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Knop maakt klap"
 
-[node name="AddBeatsToggle" type="CheckButton" parent="Panel/right" unique_id=2078575210]
+[node name="AddBeatsToggle" type="CheckButton" parent="Panel/toggle_v_container" unique_id=2078575210]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -519,7 +540,7 @@ theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/right/AddBeatsToggle" unique_id=131516433]
+[node name="Label" type="Label" parent="Panel/toggle_v_container/AddBeatsToggle" unique_id=131516433]
 light_mask = 2
 layout_mode = 0
 offset_top = 45.0
@@ -530,7 +551,7 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Klap maakt beat"
 
-[node name="MuteSpeachToggle" type="CheckButton" parent="Panel/right" unique_id=1064535899]
+[node name="MuteSpeachToggle" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1064535899]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
@@ -542,7 +563,7 @@ theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/right/MuteSpeachToggle" unique_id=1766770326]
+[node name="Label" type="Label" parent="Panel/toggle_v_container/MuteSpeachToggle" unique_id=1766770326]
 light_mask = 2
 layout_mode = 0
 offset_top = 45.0
@@ -553,7 +574,7 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Klappy stil"
 
-[node name="Buttons2" type="HBoxContainer" parent="Panel" unique_id=696631749]
+[node name="bot_buttons_h_container" type="HBoxContainer" parent="Panel" unique_id=696631749]
 light_mask = 2
 layout_mode = 1
 anchors_preset = 7
@@ -570,7 +591,7 @@ grow_vertical = 0
 theme_override_constants/separation = 20
 alignment = 1
 
-[node name="AllLayersToMp3" type="Button" parent="Panel/Buttons2" unique_id=1439104028]
+[node name="SaveSongButton" type="Button" parent="Panel/bot_buttons_h_container" unique_id=1439104028]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 focus_mode = 0
@@ -589,7 +610,7 @@ icon_alignment = 2
 script = ExtResource("16_g4ckg")
 mode = true
 
-[node name="SaveToWavButton" type="Button" parent="Panel/Buttons2" unique_id=409124706]
+[node name="SaveBeatButton" type="Button" parent="Panel/bot_buttons_h_container" unique_id=409124706]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 focus_mode = 0
@@ -608,7 +629,7 @@ autowrap_mode = 2
 icon_alignment = 2
 script = ExtResource("16_g4ckg")
 
-[node name="RestartButton" type="Button" parent="Panel/Buttons2" unique_id=32174646]
+[node name="RestartGameButton" type="Button" parent="Panel/bot_buttons_h_container" unique_id=32174646]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 focus_mode = 0
@@ -626,7 +647,7 @@ icon = ExtResource("16_aa32w")
 autowrap_mode = 2
 icon_alignment = 2
 
-[node name="Back" type="Button" parent="Panel/Buttons2" unique_id=286806211]
+[node name="CloseSettingsButton" type="Button" parent="Panel/bot_buttons_h_container" unique_id=286806211]
 custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 focus_mode = 0
@@ -642,35 +663,12 @@ text = "Terug
 autowrap_mode = 2
 icon_alignment = 2
 
-[node name="bpm2" type="Label" parent="Panel" unique_id=1191003587]
-light_mask = 2
-layout_mode = 0
-offset_left = 132.0
-offset_top = 13.0
-offset_right = 275.0
-offset_bottom = 56.0
-theme = ExtResource("2_yaket")
-theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 35
-text = "BPM"
-metadata/_edit_use_anchors_ = true
+[node name="stijl_tip" type="Control" parent="Panel" unique_id=2100332595]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="SwingLabel" type="Label" parent="Panel" unique_id=1853889709]
-light_mask = 2
-layout_mode = 0
-offset_left = 132.0
-offset_top = 171.0
-offset_right = 275.0
-offset_bottom = 214.0
-theme = ExtResource("2_yaket")
-theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 35
-text = "Swing"
-metadata/_edit_use_anchors_ = true
-
-[node name="style" type="Label" parent="Panel" unique_id=502296905]
+[node name="stijl_tip_text" type="Label" parent="Panel/stijl_tip" unique_id=502296905]
 light_mask = 2
 layout_mode = 0
 offset_left = 132.0
@@ -682,7 +680,69 @@ theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 text = "Stijl Tip"
-metadata/_edit_use_anchors_ = true
+
+[node name="TemplateButton" type="Button" parent="Panel/stijl_tip" unique_id=1526642944 node_paths=PackedStringArray("previous_template_button", "next_template_button", "tip_template_button", "set_template_button")]
+layout_mode = 0
+offset_left = 74.00012
+offset_top = 389.0
+offset_right = 234.00012
+offset_bottom = 421.0
+scale = Vector2(1.597, 1.597)
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_styles/normal = SubResource("StyleBoxFlat_o2owy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_o2owy")
+text = ".........."
+script = ExtResource("5_17eq1")
+previous_template_button = NodePath("TemplateLeftButton")
+next_template_button = NodePath("TemplateRightButton")
+tip_template_button = NodePath("ShowTemplateButton")
+set_template_button = NodePath(".")
+
+[node name="TemplateLeftButton" type="Button" parent="Panel/stijl_tip/TemplateButton" unique_id=1884172626]
+layout_mode = 0
+offset_left = 27.306335
+offset_top = -18.155617
+offset_right = 95.306335
+offset_bottom = 49.844383
+scale = Vector2(-1, 1)
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 60
+icon = ExtResource("17_vlckr")
+flat = true
+
+[node name="TemplateRightButton" type="Button" parent="Panel/stijl_tip/TemplateButton" unique_id=1965643518]
+layout_mode = 0
+offset_left = 134.98785
+offset_top = -18.155617
+offset_right = 202.98785
+offset_bottom = 49.844383
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 60
+icon = ExtResource("17_vlckr")
+flat = true
+
+[node name="ShowTemplateButton" type="Button" parent="Panel/stijl_tip/TemplateButton" unique_id=1911187870]
+layout_mode = 0
+offset_left = 180.30377
+offset_top = -20.03376
+offset_right = 253.30377
+offset_bottom = 52.96624
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.9882353, 0.9764706, 0.8666667, 1)
+theme_override_constants/icon_max_width = 60
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rlvxq")
+theme_override_styles/hover = SubResource("StyleBoxFlat_rlvxq")
+text = "TIP"
+icon = ExtResource("18_sm01b")
+flat = true
+icon_alignment = 1
 
 [node name="Title" type="Label" parent="Panel" unique_id=502402695]
 layout_mode = 0
@@ -698,7 +758,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="delay" type="Label" parent="." unique_id=1065496162]
+[node name="DelayText" type="Label" parent="." unique_id=1065496162]
 light_mask = 2
 layout_mode = 1
 anchors_preset = -1
@@ -717,239 +777,6 @@ theme_override_font_sizes/font_size = 35
 text = "Vertraging"
 metadata/_edit_use_anchors_ = true
 
-[node name="Buttons" type="Node2D" parent="." unique_id=1829239205]
-position = Vector2(-1006, -32)
-scale = Vector2(1.8903, 1.8903)
-
-[node name="ListenSongExportButton" type="Button" parent="Buttons" unique_id=1404813126]
-offset_left = 78.29445
-offset_top = 134.8992
-offset_right = 118.29445
-offset_bottom = 174.8992
-focus_mode = 0
-theme = ExtResource("2_yaket")
-text = "▶️"
-
-[node name="ListenBeatExportButton" type="Button" parent="Buttons" unique_id=991533812]
-offset_left = 88.345764
-offset_top = 202.08432
-offset_right = 128.34576
-offset_bottom = 242.08432
-focus_mode = 0
-theme = ExtResource("2_yaket")
-text = "▶️"
-
-[node name="tip_doe" type="Node2D" parent="Buttons" unique_id=1478037291]
-position = Vector2(-75.000015, 47)
-
-[node name="TemplateButton" type="Button" parent="Buttons/tip_doe" unique_id=1526642944 node_paths=PackedStringArray("previous_template_button", "next_template_button", "tip_template_button", "set_template_button")]
-offset_left = 706.1168
-offset_top = 222.79843
-offset_right = 866.1168
-offset_bottom = 254.79843
-scale = Vector2(0.845, 0.845)
-focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_colors/font_disabled_color = Color(0.8745098, 0.8745098, 0.8745098, 1)
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_styles/normal = SubResource("StyleBoxFlat_o2owy")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_o2owy")
-text = ".........."
-script = ExtResource("5_17eq1")
-previous_template_button = NodePath("TemplateLeftButton")
-next_template_button = NodePath("TemplateRightButton")
-tip_template_button = NodePath("ShowTemplateButton")
-set_template_button = NodePath(".")
-
-[node name="TemplateLeftButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1884172626]
-layout_mode = 0
-offset_left = 27.306335
-offset_top = -18.155617
-offset_right = 95.306335
-offset_bottom = 49.844383
-scale = Vector2(-1, 1)
-focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_constants/icon_max_width = 60
-icon = ExtResource("17_vlckr")
-flat = true
-
-[node name="TemplateRightButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1965643518]
-layout_mode = 0
-offset_left = 134.98785
-offset_top = -18.155617
-offset_right = 202.98785
-offset_bottom = 49.844383
-focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_constants/icon_max_width = 60
-icon = ExtResource("17_vlckr")
-flat = true
-
-[node name="ShowTemplateButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1911187870]
-layout_mode = 0
-offset_left = 180.30377
-offset_top = -20.03376
-offset_right = 253.30377
-offset_bottom = 52.96624
-focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_colors/font_color = Color(0.9882353, 0.9764706, 0.8666667, 1)
-theme_override_constants/icon_max_width = 60
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_rlvxq")
-theme_override_styles/hover = SubResource("StyleBoxFlat_rlvxq")
-text = "TIP"
-icon = ExtResource("18_sm01b")
-flat = true
-icon_alignment = 1
-
-[node name="SetTemplateButton" type="Button" parent="Buttons/tip_doe/TemplateButton" unique_id=1247118301]
-layout_mode = 0
-offset_left = 77.0
-offset_top = 183.43411
-offset_right = 150.0
-offset_bottom = 223.43411
-focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_fonts/font = ExtResource("3_5tpfg")
-text = "Doe 🤖
-"
-
-[node name="Sliders" type="Node2D" parent="." unique_id=656894523]
-position = Vector2(-594, 531)
-scale = Vector2(1.485, 1.485)
-
-[node name="VolumeTreshold" type="HSlider" parent="Sliders" unique_id=917690287]
-z_index = 4096
-z_as_relative = false
-offset_left = -75.0
-offset_top = 84.0
-offset_right = 75.0
-offset_bottom = 108.0
-focus_mode = 0
-max_value = 1.0
-step = 0.001
-value = 0.1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Sliders/VolumeTreshold" unique_id=484500895]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("2_yaket")
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 15
-text = "🎙️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ProgressBar" type="ProgressBar" parent="Sliders/VolumeTreshold" unique_id=641471240]
-z_index = 1001
-z_as_relative = false
-layout_mode = 0
-offset_top = 4.216562
-offset_right = 151.34888
-offset_bottom = 20.0
-mouse_filter = 2
-max_value = 1.0
-value = 0.1
-show_percentage = false
-
-[node name="ClapStompBias" type="HSlider" parent="Sliders" unique_id=1882241039]
-offset_left = -75.0
-offset_top = 104.0
-offset_right = 75.0
-offset_bottom = 128.0
-focus_mode = 0
-theme_override_styles/grabber_area = SubResource("StyleBoxEmpty_y8yhq")
-theme_override_styles/grabber_area_highlight = SubResource("StyleBoxEmpty_2m8tu")
-min_value = 100.0
-max_value = 1400.0
-step = 50.0
-value = 800.0
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Sliders/ClapStompBias" unique_id=1452742482]
-layout_mode = 0
-offset_left = 151.0
-offset_right = 176.0
-offset_bottom = 20.0
-theme = ExtResource("2_yaket")
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 15
-text = "👟"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="Sliders/ClapStompBias" unique_id=747237103]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("2_yaket")
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 15
-text = "🖐🏼"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="ReverbSlider" type="HSlider" parent="Sliders" unique_id=1381816311]
-offset_left = -75.0
-offset_top = 144.0
-offset_right = 75.0
-offset_bottom = 168.0
-max_value = 0.5
-step = 0.01
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Sliders/ReverbSlider" unique_id=2086577272]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("2_yaket")
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 15
-text = "🏛️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="DelaySlider" type="HSlider" parent="Sliders" unique_id=1398828883]
-offset_left = -75.0
-offset_top = 164.0
-offset_right = 75.0
-offset_bottom = 188.0
-max_value = 0.5
-step = 0.01
-metadata/_edit_use_anchors_ = true
-
-[node name="Label" type="Label" parent="Sliders/DelaySlider" unique_id=864663077]
-layout_mode = 0
-offset_left = -24.41
-offset_right = 0.59
-offset_bottom = 20.0
-theme = ExtResource("2_yaket")
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 15
-text = "⛰️"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="soundtesttext" type="Label" parent="." unique_id=369322797]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 691.0
-offset_right = 55.0
-offset_bottom = 716.0
-theme_override_font_sizes/font_size = 25
-
 [node name="SettingsUitleg" type="Label" parent="." unique_id=126812650]
 visible = false
 layout_mode = 0
@@ -964,5 +791,3 @@ label_settings = SubResource("LabelSettings_g4ckg")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
-
-[connection signal="value_changed" from="Panel/bpm/bpmProgressBar" to="Panel/bpm" method="_on_bpm_progress_bar_value_changed"]

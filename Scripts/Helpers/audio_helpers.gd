@@ -12,7 +12,7 @@ static func cap_audio_duration(original: AudioStream, max_duration: float) -> Au
 	var is_stereo: bool = original.stereo
 	var fmt: int = original.format
 	var channels: int = 2 if is_stereo else 1
-	var bytes_per_sample: int = 2 if fmt == 1 else 1
+	var bytes_per_sample: int = 2 if fmt == AudioStreamWAV.FORMAT_16_BITS else 1
 	var frame_size: int = channels * bytes_per_sample
 
 	var max_frames: int = int(max_duration * float(original.mix_rate))
@@ -36,7 +36,7 @@ static func trim_audio_by_time_offset(original: AudioStream, offset_seconds: flo
 	var is_stereo: bool = original.stereo
 	var fmt: int = original.format
 	var channels: int = 2 if is_stereo else 1
-	var bytes_per_sample: int = 2 if fmt == 1 else 1
+	var bytes_per_sample: int = 2 if fmt == AudioStreamWAV.FORMAT_16_BITS else 1
 	var frame_size: int = channels * bytes_per_sample
 
 	var offset_bytes: int = int(offset_seconds * float(original.mix_rate)) * frame_size
@@ -85,7 +85,7 @@ static func trim_audio_stream(original: AudioStream, silence_threshold: float = 
 	var is_stereo: bool = original.stereo
 	var fmt: int = original.format          # 0 = 8-bit, 1 = 16-bit
 	var channels: int = 2 if is_stereo else 1
-	var bytes_per_sample: int = 2 if fmt == 1 else 1
+	var bytes_per_sample: int = 2 if fmt == AudioStreamWAV.FORMAT_16_BITS else 1
 	var frame_size: int = channels * bytes_per_sample
 	@warning_ignore("integer_division")
 	var total_frames: int = original_data.size() / frame_size
@@ -98,7 +98,7 @@ static func trim_audio_stream(original: AudioStream, silence_threshold: float = 
 		for ch in range(channels):
 			var s_off: int = offset + ch * bytes_per_sample
 			var amplitude: float
-			if fmt == 1: # 16-bit signed little-endian
+			if fmt == AudioStreamWAV.FORMAT_16_BITS: # 16-bit signed little-endian
 				var raw: int = original_data[s_off] | (original_data[s_off + 1] << 8)
 				if raw >= 32768:
 					raw -= 65536

@@ -16,11 +16,20 @@ class_name BeatRingUI
 @export var play_icon: Texture2D
 @export var pause_icon: Texture2D
 
+const GLOBAL_SPRITE_SCALE_FACTOR: float = 0.28
+
+const BEAT_SCALE_8: float = 1.6
+const RING_STEP_8: int = 45
+const RING_BASE_8: int = 56
+
+const BEAT_SCALE_16: float = 1.6
+const RING_STEP_16: int = 45
+const RING_BASE_16: int = 56
 
 const BEAT_SCALE_32: float = 1.0
-const BEAT_SCALE_16: float = 1.6
-const BEAT_SCALE_8: float = 1.6
-const GLOBAL_SPRITE_SCALE_FACTOR: float = 0.28
+const RING_STEP_32: int = 30
+const RING_BASE_32: int = 110
+
 
 var _beat_buttons: Array = [] # 2D array [ring][beat]
 var _track_controls: Array = [] # Array of Control nodes, one per track, that hold the beat buttons for that track
@@ -86,7 +95,7 @@ func _update_play_pause_button(is_playing: bool) -> void:
 	play_pause_button.icon = pause_icon if is_playing else play_icon
 
 func _init_beat_button_positions() -> void:
-	var beats_amount = SongState.total_beats
+	var beats_amount = SongState.beats_per_section
 
 	_beat_buttons = []
 	for track_index in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
@@ -134,11 +143,11 @@ func _sprite_position(beat: int, track_index: int, beats_amount: int) -> Vector2
 	var angle = PI * 2.0 * beat / beats_amount - PI / 2.0
 	var distance = 0.0
 	if beats_amount == 32:
-		distance = (4 - track_index) * 30 + 110
+		distance = (4 - track_index) * RING_STEP_32 + RING_BASE_32
 	elif beats_amount == 16:
-		distance = (4 - track_index) * 45 + 56
+		distance = (4 - track_index) * RING_STEP_16 + RING_BASE_16
 	elif beats_amount == 8:
-		distance = (4 - track_index) * 45 + 56
+		distance = (4 - track_index) * RING_STEP_8 + RING_BASE_8
 	return Vector2(cos(angle), sin(angle)) * distance
 
 func _sprite_rotation(beat: int, _track_index: int, beats_amount: int) -> float:
@@ -152,7 +161,7 @@ func _create_template_sprite(beat: int, track_index: int, beats_amount: int) -> 
 	return sprite
 
 func _update_beat_sprites(current_beat: int) -> void:
-	var beats_amount = SongState.total_beats
+	var beats_amount = SongState.beats_per_section
 
 	for track in range(_beat_buttons.size()):
 		for beat in range(_beat_buttons[track].size()):
@@ -182,7 +191,7 @@ func _tween_beat_button_scale(beatButton: BeatButton, active: bool, beats_amount
 
 # Reset all beat sprite scales (called after a section switch)
 func _reset_scales() -> void:
-	var beats_amount = SongState.total_beats
+	var beats_amount = SongState.beats_per_section
 	for track in range(_beat_buttons.size()):
 		for beat in range(_beat_buttons[track].size()):
 			var sprite: BeatButton = _get_beat_button(track, beat)
@@ -200,7 +209,7 @@ func _set_track_sprites_visible(track: int, visible: bool) -> void:
 
 func _on_ui_visibility_requested(element: int, visible: bool) -> void:
 	match element:
-		VisibilityManager.UIElement.BEAT_POINTER:
+		UIVisibilityListener.UIElement.BEAT_POINTER:
 			pointer.visible = visible
-		VisibilityManager.UIElement.PLAY_PAUSE_BUTTON:
+		UIVisibilityListener.UIElement.PLAY_PAUSE_BUTTON:
 			play_pause_button.visible = visible

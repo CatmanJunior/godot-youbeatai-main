@@ -14,7 +14,7 @@ extends Node
 	{"points": 40, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]
 
-var _sample_track_amount: int = AudioPlayerManager.SAMPLE_TRACKS_COUNT  # Number of sample tracks to offset synth track indices
+var _sample_track_amount: int = SectionData.SAMPLE_TRACKS_PER_SECTION  # Number of sample tracks to offset synth track indices
 
 func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)

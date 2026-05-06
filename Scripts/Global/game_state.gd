@@ -8,6 +8,8 @@ var notes: Notes
 # -- TO BE IMPLEMENTED --
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
+var show_template: bool = false
+var added_layer: bool = false
 var loop_sections: bool = false
 
 # -- Export settings --
@@ -44,13 +46,26 @@ var beat_progress: float = 0.0
 ## This is a value from 0 to 1 representing how far along the current bar is.
 var bar_progress: float = 0.0
 
-## Duration of one beat subdivision in seconds (60 / bpm / beats_per_bar).
-var beat_duration: float = 0.5
-
 # -- Recording --
 var is_recording: bool = false
 var song_mode: bool = false
 
+#-- Song mode (vs. track mode) --
+var song_mode_active: bool = false
+
+
+func reset() -> void:
+	SongState.reset()
+
+	# Playback
+	playing = false
+	current_beat = 0
+	beat_progress = 0.0
+	bar_progress = 0.0
+
+	# Recording
+	is_recording = false
+	SceneChanger.restart()
 
 func reset() -> void:
 	SongState.reset()

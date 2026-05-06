@@ -14,16 +14,19 @@ extends Resource
 ## Load:  var song := SongData.load_from_file("user://songs/my_song.tres")
 ##        song.apply_to_current()
 
-@export var song_track: SongTrackData = null
+const DEFAULT_BPM: int = 120
+const DEFAULT_BEATS_PER_SECTION: int = 16
+const DEFAULT_SWING: float = 0.05
+
 
 # ── Playback ─────────────────────────────────────────────────────────────────
 
-@export var bpm: int = 120
-@export var total_beats: int = 16
-@export var swing: float = 0.05
-@export var playing: bool = false
+@export var bpm: int = DEFAULT_BPM
+@export var beats_per_section: int = DEFAULT_BEATS_PER_SECTION
+@export var swing: float = DEFAULT_SWING
 
-# ── Sections ─────────────────────────────────────────────────────────────────
+# ── Sections & song track ─────────────────────────────────────────────────────
+@export var song_track: SongTrackData = null
 
 ## Full section resources — each contains its tracks, beats, knob positions, and recordings.
 @export var sections: Array[SectionData] = []
@@ -68,12 +71,11 @@ static func from_current() -> SongData:
 
 	# Copy value-type fields from the live data
 	song.bpm = live.bpm
-	song.total_beats = live.total_beats
+	song.beats_per_section = live.beats_per_section
 	song.swing = live.swing
 	song.current_section_index = SongState.current_section_index
 
 	# State originating outside SongData
-	song.playing = GameState.playing
 	song.soundbank = live.soundbank
 	song.soundbank_name = live.soundbank_name
 	song.created_at = Time.get_datetime_string_from_system(true)
@@ -101,7 +103,7 @@ func apply_to_current() -> void:
 
 	# BeatManager has its own swing var and does NOT echo back to SongState,
 	# so we also write directly to keep data in sync.
-	SongState.total_beats = total_beats
+	SongState.beats_per_section = beats_per_section
 	SongState.swing = swing
 
 	# Restore song track
@@ -127,7 +129,6 @@ func apply_to_current() -> void:
 	SongState.data.title = title
 	SongState.data.created_at = created_at
 	SongState.data.version = version
-	SongState.data.playing = playing
 
 	# Notify listeners (SectionUI, TrackWaveformVisualizer) to rebuild runtime objects
 	# before the section_switch_requested signal triggers the full UI cascade below.
@@ -140,10 +141,6 @@ func apply_to_current() -> void:
 	# Restore soundbank
 	if soundbank:
 		EventBus.soundbank_loaded.emit(soundbank)
-
-	# Restore playback last
-	if playing:
-		EventBus.playing_change_requested.emit(true)
 
 
 # ══════════════════════════════════════════════════════════════════════════════

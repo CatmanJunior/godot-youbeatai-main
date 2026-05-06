@@ -227,7 +227,7 @@ func _active_beats_per_ring(index_ring: int) -> int:
 	if SongState.current_section == null:
 		return 0
 	var amount: int = 0
-	for beat: int in range(SongState.total_beats):
+	for beat: int in range(SongState.beats_per_section):
 		if SongState.current_section.get_beat(index_ring, beat):
 			amount += 1
 	return amount
@@ -266,9 +266,13 @@ func _update_interaction_sfx() -> void:
 	if _in_stomp_phase and stomping and clap_stomp.stomped_on_beat_amount > _previous_stomp:
 		play_achievement_sfx()
 		_previous_stomp = clap_stomp.stomped_on_beat_amount
+		EventBus.amount_left_text_requested.emit(
+			"Goed gestampt %d / 5" % clap_stomp.stomped_on_beat_amount)
 	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
 		_previous_clap = clap_stomp.clapped_on_beat_amount
+		EventBus.amount_left_text_requested.emit(
+			"Goed geklapt %d / 5" % clap_stomp.clapped_on_beat_amount)
 
 # Speaks the instruction text for the given step index via TTS.
 # Strips emoticons from the text and uses a faster rate if _increased_speed is set.

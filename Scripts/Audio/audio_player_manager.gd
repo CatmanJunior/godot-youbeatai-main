@@ -1,9 +1,7 @@
 extends Node
 class_name AudioPlayerManager
 
-static var TRACK_COUNT = 6
-static var SYNTH_TRACKS_COUNT = 2
-static var SAMPLE_TRACKS_COUNT = 4
+
 
 var track_players: Array[TrackPlayerBase] = []
 var song_track_player: SongTrackPlayer
@@ -21,7 +19,7 @@ var sfx_player: AudioStreamPlayer
 @export var chord_player_settings: ChordPlayerSettings
 
 func _ready():
-	_init_audio_players()
+	_init_audio_players().call_deferred() # initialize audio players after the scene is ready to ensure everything is set up
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
@@ -34,23 +32,24 @@ func _init_sfx_player():
 
 func _init_audio_players():
 	# Create sample track players
-	for i in range(SAMPLE_TRACKS_COUNT):
+	
+	for i in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
 		var player = SampleTrackPlayer.new()
-		player.setup(i, "SubMaster")
+		player.setup(i, BusNames.SUBMASTER_BUS)
 		player.set_streams(main_audio_files[i], alt_audio_files[i]) # set initial streams from exported arrays
 		track_players.append(player)
 		add_child(player)
 
 	# Create synth track players
-	for i in range(SYNTH_TRACKS_COUNT):
+	for i in range(SectionData.SYNTH_TRACKS_PER_SECTION):
 		var player : SynthTrackPlayer = SynthTrackPlayer.new()
-		player.setup(track_players.size(), "SubMaster", note_player_settings[i]) # pass settings for note player
+		player.setup(track_players.size(), BusNames.SUBMASTER_BUS, note_player_settings[i]) # pass settings for note player
 		track_players.append(player)
 		add_child(player)
 
 	# Create the song track player
 	song_track_player = SongTrackPlayer.new()
-	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, "SubMaster", chord_player_settings)
+	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, BusNames.SUBMASTER_BUS, chord_player_settings)
 	add_child(song_track_player)
 
 func play_sfx(stream: AudioStream):
@@ -59,10 +58,3 @@ func play_sfx(stream: AudioStream):
 		sfx_player.stream = stream
 		sfx_player.play()
 
-##--- Debugging method to get current track volumes (not used for actual volume control) ---
-func get_track_volume(track: int) -> float:
-	if track < 0 or track >= TRACK_COUNT:
-		printerr("Invalid track index %d for get_track_volume" % track)
-		return 0.0
-	
-	return BusHelper.get_volume(track_players[track].bus_name)

@@ -4,7 +4,7 @@ extends Node
 ## Manages the microphone: live spectrum analysis (clap/stamp detection,
 ## volume level) AND audio recording via AudioEffectRecord.
 
-@export var bus_name: String = "Microphone"
+@export var bus_name: String = BusNames.MICROPHONE_BUS
 
 static var analyzer: AudioEffectSpectrumAnalyzerInstance
 

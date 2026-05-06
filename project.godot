@@ -56,7 +56,7 @@ enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://ad
 
 [gui]
 
-theme/custom="uid://bcft5y5bq2s2m"
+theme/custom="uid://c0bwj08madm3f"
 theme/custom_font="uid://d1cp3vkc5el5b"
 
 [input]

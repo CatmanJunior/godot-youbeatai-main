@@ -8,8 +8,6 @@ enum SynthLayer {
 	REC = 2
 }
 
-var SAMPLE_TRACK_COUNT = 4 # number of sample tracks before synth tracks, used to index into audio bank settings
-
 var note_player: NotePlayer:
 	get:
 		return players[SynthLayer.NOTE] as NotePlayer
@@ -54,10 +52,10 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 
 
 func _on_soundbank_loaded(bank: SoundBank) -> void:
-	var effect_profile = bank.synth_effect_profiles[track_index - SAMPLE_TRACK_COUNT]
+	var effect_profile = bank.synth_effect_profiles[track_index - SectionData.SAMPLE_TRACKS_PER_SECTION]
 	if effect_profile:
 		apply_effect_profile(effect_profile) # apply the synth's specific effect profile from the bank
-	apply_note_player_settings(bank.noteplayer_settings[track_index - SAMPLE_TRACK_COUNT])
+	apply_note_player_settings(bank.noteplayer_settings[track_index - SectionData.SAMPLE_TRACKS_PER_SECTION])
 
 func _on_section_switched(_new) -> void:
 	# Clear stale scheduled notes when switching sections
@@ -139,3 +137,10 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	add_child(new_player)
 	
 	return new_player
+
+func apply_effect_profile(effect_profile: EffectProfile) -> void:
+	var bus_idx = AudioServer.get_bus_index(bus_name)
+	if bus_idx == -1:
+		push_error("Bus '%s' not found for applying effect profile." % bus_name)
+		return
+	effect_profile.apply_effects(bus_idx)

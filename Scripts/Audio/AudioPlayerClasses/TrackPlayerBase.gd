@@ -2,8 +2,6 @@
 class_name TrackPlayerBase
 extends Node
 
-
-const SILENT_DB: float = -80.0
 const SUB_TRACK_PLAYER_COUNT = 3
 
 var track_index: int
@@ -116,11 +114,7 @@ func _set_track_volume(track: int, volume: float):
 	
 
 func apply_effect_profile(effect_profile: EffectProfile) -> void:
-	var bus_idx = AudioServer.get_bus_index(bus_name)
-	if bus_idx == -1:
-		push_error("Bus '%s' not found for applying effect profile." % bus_name)
-		return
-	effect_profile.apply_effects(bus_idx)
+	pass
 
 func set_streams(_a: AudioStream, _b: AudioStream, _rec: AudioStream = null) -> void: pass
 func _set_recorded_stream(_recording_data: RecordingData) -> void: pass

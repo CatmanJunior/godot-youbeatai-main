@@ -220,6 +220,8 @@ signal synth_progress_bar_visible_requested(bar: int, visible: bool)
 signal continue_button_pressed()
 ## Emitted to request showing a tutorial instruction text, carrying the instruction string.
 signal tutorial_instruction_text_requested(instruction_text: String)
+## Emitted to request setting the text of the AmountLeft tutorial counter label.
+signal amount_left_text_requested(text: String)
 
 # ── Tutorial Chaos Pad ──
 ## Emitted to request snapping the chaos pad knob to the given world position.

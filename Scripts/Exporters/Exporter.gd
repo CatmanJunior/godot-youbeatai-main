@@ -32,7 +32,7 @@ func start_recording(mail: bool, mode_export_song: bool):
 
 	EventBus.beat_seek_requested.emit(0)
 	if song_mode:
-		GameState.song_mode = true
+		GameState.song_mode_active = true
 		EventBus.on_song_mode_changed.emit()
 		EventBus.section_switch_requested.emit(0)
 
@@ -58,7 +58,7 @@ func on_beat(beat: int):
 	if not recording:
 		return
 
-	data.actual_recording_length += GameState.beat_duration
+	data.actual_recording_length += SongState.beat_duration
 	EventBus.export_progress_update.emit( data.actual_recording_length / data.max_recording_length)
 
 	if song_mode: 
@@ -83,7 +83,7 @@ func section_switched(section: SectionData):
 		stop_recording()
 
 func _get_recorder():
-	var sub_master = AudioServer.get_bus_index("SubMaster")
+	var sub_master = AudioServer.get_bus_index(BusNames.SUBMASTER_BUS)
 	var count = AudioServer.get_bus_effect_count(sub_master)
 	# recorder should be the last effect
 	recorder = AudioServer.get_bus_effect(sub_master, count - 1) 
@@ -101,9 +101,9 @@ func _create_data_object() -> ExportRecordingData:
 
 	result.state = RecordingData.State.RECORDING
 	if song_mode:
-		result.max_recording_length = GameState.beat_duration * SongState.total_beats * SongState.section_count()
+		result.max_recording_length = SongState.beat_duration * SongState.beats_per_section * SongState.section_count()
 	else:
-		result.max_recording_length = SongState.total_beats * GameState.beat_duration
+		result.max_recording_length = SongState.beats_per_section * SongState.beat_duration
 
 	result.actual_recording_length = 0
 	return result

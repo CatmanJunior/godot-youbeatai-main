@@ -1,6 +1,6 @@
 extends Control
 
-var bus_index = AudioServer.get_bus_index("Master")
+var bus_index = AudioServer.get_bus_index(BusNames.MASTER_BUS)
 
 var phaser
 var distortion
@@ -22,7 +22,7 @@ var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
 
 func _ready() -> void:
 	# TODO: GET THIS THE HELL OUT OF HERE
-	bus_index = AudioServer.get_bus_index("SubMaster")
+	bus_index = AudioServer.get_bus_index(BusNames.SUBMASTER_BUS)
 
 	phaser = AudioServer.get_bus_effect(bus_index, 0)
 	distortion = AudioServer.get_bus_effect(bus_index, 1)

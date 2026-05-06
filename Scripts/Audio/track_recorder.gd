@@ -1,6 +1,8 @@
 extends Node
 
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
+const RECORDING_GRACE_FACTOR: float = 1.2
+const RECORDING_FALLBACK_BEATS: float = 2.0
 
 var recording: bool:
 	get: return GameState.is_recording
@@ -82,12 +84,12 @@ func _stop_recording() -> void:
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 	match track_type:
 		TrackData.TrackType.SAMPLE:
-			return GameState.beat_duration * 2.1 # allow some extra time beyond 1 beat for user to finish playing
+			return SongState.beat_duration * 2.1 # allow some extra time beyond 1 beat for user to finish playing
 		TrackData.TrackType.SYNTH:
-			return GameState.beat_duration * SongState.total_beats 
+			return SongState.beat_duration * SongState.beats_per_section 
 		TrackData.TrackType.SONG:
-			return GameState.beat_duration * SongState.total_beats * SongState.section_count() 
-	return GameState.beat_duration * 2.0 # default max length
+			return SongState.beat_duration * SongState.beats_per_section * SongState.section_count() 
+	return SongState.beat_duration * RECORDING_FALLBACK_BEATS # default max length
 
 
 

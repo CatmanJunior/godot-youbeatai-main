@@ -23,6 +23,7 @@ enum UIElement {
 	STAR1,
 	STAR2,
 	STAR3,
+	AMOUNT_LEFT,
 }
 
 @export var ui_element: UIVisibilityListener.UIElement = UIVisibilityListener.UIElement.BEAT_RING
@@ -33,10 +34,8 @@ func _ready() -> void:
 	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
 
 func _on_ui_visibility_requested(element: int, vis: bool) -> void:
-	print("UIVisibilityListener: Received visibility request for element ", element, " with value ", vis)
 	if element == ui_element or element == UIVisibilityListener.UIElement.ENTIRE_INTERFACE:
 		if target_self:
 			visible = vis
 		else:
 			ui_reference.visible = vis
-		print("UIVisibilityListener: Set visibility of ", ui_element, " to ", vis)

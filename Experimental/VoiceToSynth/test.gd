@@ -7,7 +7,7 @@ var recorder: AudioEffectRecord
 
 func _ready():
 	# We get the index of the "Record" bus.
-	var idx = AudioServer.get_bus_index("Microphone")
+	var idx = AudioServer.get_bus_index(BusNames.MICROPHONE_BUS)
 	# And use it to retrieve its first effect, which has been defined
 	# as an "AudioEffectRecord" resource.
 	recorder = AudioServer.get_bus_effect(idx, 1) 

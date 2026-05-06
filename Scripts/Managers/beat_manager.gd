@@ -3,18 +3,17 @@ class_name BeatManager
 
 @export var track_settings_registry: TrackUISettingsRegistry
 
-var beats_per_bar = 4.0
+const BEATS_PER_BAR : int = 4
+const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
 
 var bpm: int:
 	get: return SongState.bpm
 	set(value):
-		GameState.beat_duration = round((60.0 / value) * 1000 / SongState.total_beats * beats_per_bar) / 1000
-		GameState.beat_duration = snapped(GameState.beat_duration, 0.001)
 		EventBus.bpm_changed.emit(value)
 
 var total_beats: int:
-	get: return SongState.total_beats
-	set(value): SongState.total_beats = value
+	get: return SongState.beats_per_section
+	set(value): SongState.beats_per_section = value
 
 var playing: bool:
 	set(value):
@@ -30,11 +29,12 @@ var current_beat: int:
 
 var swing: float:
 	get: return SongState.swing
-	set(value): SongState.swing = value
+	set(value): 
+		EventBus.swing_changed.emit(value)
 
 var beat_duration: float:
-	get: return GameState.beat_duration
-	set(value): GameState.beat_duration = value
+	get: return SongState.beat_duration
+	set(value): SongState.beat_duration = value
 
 var beat_elapsed: float = 0.0
 var beat_progress: float = 0.0
@@ -101,7 +101,7 @@ func _process(_delta: float):
 		var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
 		beat_elapsed = elapsed / 1000.0
 	
-		if elapsed >= (swing_adjusted_duration - 0.005) * 1000:
+		if elapsed >= (swing_adjusted_duration - BEAT_EARLY_FIRE_TOLERANCE_SWING) * 1000:
 			beat_elapsed = 0
 			current_beat = (current_beat + 1) % total_beats
 			EventBus.pre_beat_triggered.emit(current_beat)
@@ -144,6 +144,10 @@ func get_beat(track: int, beat: int) -> bool:
 
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
-	var beats_until_top: int = SongState.total_beats - cur_beat - 1
-	var duration_until_top := (beats_until_top + 1 - GameState.beat_progress) * GameState.beat_duration
+	var beats_until_top: int = SongState.beats_per_section - cur_beat - 1
+	var duration_until_top := (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
 	return duration_until_top
+
+static func calculate_beat_duration(p_bpm: int, p_total_beats: int, beats_per_bar: int) -> float:
+	var _beat_duration: float = snapped((60.0 / p_bpm) / p_total_beats * beats_per_bar, 0.001)
+	return _beat_duration

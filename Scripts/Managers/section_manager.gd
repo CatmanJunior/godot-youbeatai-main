@@ -1,9 +1,9 @@
 extends Node
 
+
 # Section management constants
 const SECTIONS_AMOUNT_MAX: int = 8
 const SECTIONS_AMOUNT_INITIAL: int = 4
-const SECTION_BUTTON_SIZE: int = 72
 
 # Section state
 var current_section_index: int:
@@ -17,8 +17,8 @@ var sections: Array[SectionData]:
 	set(value): SongState.sections = value
 
 var beats_amount:
-	get: return SongState.total_beats
-	set(value): SongState.total_beats = value
+	get: return SongState.beats_per_section
+	set(value): SongState.beats_per_section = value
 
 # Clipboard for copy/paste
 var clipboard_section: SectionData = null
@@ -26,6 +26,9 @@ var _sections_initialized: bool = false
 var loop_cursor: int = 0
 
 @export var initial_sections: Array[Texture2D]
+## Used to resolve section texture → chord progression mapping.
+## Per-soundbank overrides live in ChordSettings.tex_lookup; this is the global fallback.
+@export var chord_player_settings: ChordPlayerSettings
 
 func _ready() -> void:
 	# Connect to EventBus
@@ -52,7 +55,7 @@ func spawn_initial_sections():
 	switch_section_next_frame(0)
 	_sections_initialized = true
 
-func add_section(section_index: int, tex: Texture2D):
+func add_section(section_index: int, tex: Texture2D) -> void:
 	"""Add a new section at the specified index"""
 	if sections.size() == SECTIONS_AMOUNT_MAX:
 		push_warning("Maximum sections reached, cannot add more.")
@@ -61,6 +64,7 @@ func add_section(section_index: int, tex: Texture2D):
 	# Create a new SectionData instance and populate its default tracks
 	var new_section: SectionData = SectionData.new(tex, section_index)
 	new_section.create_default_tracks()
+	_resolve_section_progression(new_section, tex)
 	sections.insert(section_index, new_section)
 
 	_resolve_section_indexes()
@@ -72,6 +76,37 @@ func add_section(section_index: int, tex: Texture2D):
 
 func _on_add_section_requested(tex: Texture2D):
 	add_section(current_section_index + 1, tex)
+	GameState.added_layer = true
+
+func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
+	"""Populate section.progression and section.progression_offset from the active soundbank."""
+	var soundbank: SoundBank = SongState.selected_soundbank
+	if soundbank == null or chord_player_settings == null:
+		return
+
+	# Prefer per-soundbank tex_lookup; fall back to the global ChordPlayerSettings mapping.
+	var tex_lookup: Dictionary
+	if not soundbank.chord_progressions.tex_lookup.is_empty():
+		tex_lookup = soundbank.chord_progressions.tex_lookup
+	else:
+		tex_lookup = chord_player_settings.tex_lookup
+
+	if tex_lookup.is_empty():
+		return
+
+	var lookup_tex: Texture2D = tex
+	if lookup_tex not in tex_lookup:
+		push_warning("SectionManager: unknown section texture, falling back to first key for progression lookup.")
+		lookup_tex = tex_lookup.keys()[0]
+
+	var progression_offset: ProgressionOffset = tex_lookup[lookup_tex]
+	var progressions: Array[ChordProgression] = soundbank.chord_progressions.progressions
+	if progression_offset.progression >= progressions.size():
+		push_warning("SectionManager: progression index %d out of bounds." % progression_offset.progression)
+		return
+
+	section.progression = progressions[progression_offset.progression]
+	section.progression_offset = progression_offset
 
 func remove_section(section_index: int):
 	"""Remove a section at the specified index"""

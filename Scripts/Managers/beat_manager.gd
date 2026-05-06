@@ -156,7 +156,7 @@ func trigger_beat(beat: int):
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
 	var beats_until_top: int = SongState.beats_per_section - cur_beat - 1
-	var duration_until_top := (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
+	var duration_until_top: float = (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
 	return duration_until_top
 
 static func calculate_beat_duration(p_bpm: int, p_total_beats: int, beats_per_bar: int) -> float:

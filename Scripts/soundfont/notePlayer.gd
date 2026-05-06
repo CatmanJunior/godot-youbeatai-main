@@ -65,6 +65,14 @@ func _process_midi_input(event: InputEventMIDI):
 		channel_note_off(0, event.channel, event.pitch)
 
 func play_note(sequence_note: SequenceNote) -> void:
+	var log_value = 20.0 * (log( sqrt(sequence_note.velocity) / 0.1) / log(10))
+
+	# convert to value around 0-1
+	# capped becasue soundfont does not play well with higher values
+	log_value = min(1, pow(10, log_value / 10))
+	if log_value < gate:
+		return
+	
 	var t = get_time()
 	channel_note_on(t, 0, sequence_note.note, sequence_note.velocity)
 	channel_note_off(t + gate, 0, sequence_note.note)

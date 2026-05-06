@@ -7,12 +7,12 @@
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="4_5gnhr"]
 [ext_resource type="Texture2D" uid="uid://c2qqxcx85b1tx" path="res://Resources/Textures_New/Icons/Icons-_28_0030_Play.png" id="4_24ovn"]
-[ext_resource type="PackedScene" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
+[ext_resource type="PackedScene" uid="uid://mes3y20b5kk2" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="7_5lvir"]
 [ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
 [ext_resource type="Texture2D" uid="uid://u4byodwrk6aw" path="res://Resources/Textures_New_Correct/Icons-_28_0031_Pause.png" id="7_wrqyy"]
-[ext_resource type="Texture2D" uid="uid://bfdnrlkcp5y8u" path="res://Resources/Icons/Icons-_28_0030_Play.png" id="8_5lvir"]
+[ext_resource type="Texture2D" uid="uid://bfdnrlkcp5y8u" path="res://Resources/Textures_New_Correct/Icons-_28_0030_Play.png" id="8_5lvir"]
 [ext_resource type="PackedScene" uid="uid://cx30roke8u7g2" path="res://Scenes/UI_Components/Beam.tscn" id="9_nbgc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="9_wrqyy"]
 [ext_resource type="Texture2D" uid="uid://ch1ydacs6lt0n" path="res://Resources/Textures/cirkel3.png" id="9_ywh4c"]
@@ -207,7 +207,7 @@ step = 0.01
 value = 1.0
 fill_mode = 4
 texture_progress = ExtResource("9_ywh4c")
-tint_progress = Color(1, 1, 0, 1)
+tint_progress = Color(0.9882353, 0.8784314, 0.23529412, 1)
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1981743700]
 layout_mode = 1
@@ -230,5 +230,5 @@ step = 0.01
 value = 1.0
 fill_mode = 4
 texture_progress = ExtResource("2_bt3xi")
-tint_progress = Color(0.5176471, 0, 1, 1)
+tint_progress = Color(0.5294118, 0.11764706, 0.8235294, 1)
 metadata/_edit_use_anchors_ = true

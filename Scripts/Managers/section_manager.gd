@@ -70,6 +70,7 @@ func add_section(section_index: int, tex: Texture2D):
 
 func _on_add_section_requested(tex: Texture2D):
 	add_section(sections.size(), tex)
+	GameState.added_layer = true
 
 func remove_section(section_index: int):
 	"""Remove a section at the specified index"""

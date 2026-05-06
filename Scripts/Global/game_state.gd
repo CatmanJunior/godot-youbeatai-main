@@ -67,20 +67,6 @@ func reset() -> void:
 	is_recording = false
 	SceneChanger.restart()
 
-func reset() -> void:
-	SongState.reset()
-
-	# Playback
-	playing = false
-	current_beat = 0
-	beat_progress = 0.0
-	bar_progress = 0.0
-	beat_duration = 0.5
-
-	# Recording
-	is_recording = false
-	SceneChanger.restart()
-
 # -- Initialization --
 func _ready() -> void:
 	EventBus.playing_changed.connect(func(value: bool): playing = value)

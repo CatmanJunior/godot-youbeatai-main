@@ -117,7 +117,6 @@ func _on_has_clapped_or_stomped(interaction_type: int) -> void:
 	else:
 		clapping = true
 		stomping = false
-	print("clapping: %s, stomping: %s" % [clapping, stomping])
 
 # ── Public API ────────────────────────────────────────────────────────────────────────────────────────────
 

@@ -111,6 +111,9 @@ fallback_bank = ExtResource("19_s8vy0")
 
 [node name="ClapStomp" type="Node" parent="Managers/AudioManagers" unique_id=958670281]
 script = ExtResource("21_s8vy0")
+clap_threshold = 0.3
+stamp_freq_max = 40.0
+stamp_threshold = 0.008
 
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")

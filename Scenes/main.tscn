@@ -28,6 +28,8 @@
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
+[ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
+[ext_resource type="Texture2D" uid="uid://dnd1hcw7es3ty" path="res://Resources/Icons/Icons-_28_0008_Lock.png" id="40_2daye"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://dwakilip8uiac" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
@@ -154,6 +156,20 @@ achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
+
+[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("energy_progress_bar", "achievements_panel", "instruction_label", "mute_speech_button", "btn_template_tip", "btn_add_section", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
+script = ExtResource("39_ptfg5")
+energy_progress_bar = NodePath("../../../UserInterface/Robot/EnergyProgressBar")
+achievements_panel = NodePath("../../../UserInterface/Robot/AchievementsPanel")
+instruction_label = NodePath("../../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
+mute_speech_button = NodePath("../../../UserInterface/SettingsPanel/Panel/toggle_v_container/MuteSpeachToggle")
+achievement_sfx = ExtResource("61_0t4jf")
+lock_icon_texture = ExtResource("40_2daye")
+btn_template_tip = NodePath("../../../UserInterface/SettingsPanel/Panel/stijl_tip/TemplateButton/ShowTemplateButton")
+btn_add_section = NodePath("../../../UserInterface/SwitchSectionButtons/CopyPasteClearButtons/AddSectionButton")
+btn_track_2 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2")
+btn_track_3 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3")
+btn_synth_track_2 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5")
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false
@@ -460,8 +476,15 @@ script = ExtResource("56_ptfg5")
 [editable path="UserInterface/ChaosPad"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconMain"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconAlt"]
+[editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_1"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/Robot"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/Robot/AchievementsPanel"]
+[editable path="UserInterface/SettingsPanel"]
 [editable path="UserInterface/SwitchSectionButtons"]

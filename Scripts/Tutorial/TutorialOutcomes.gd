@@ -207,6 +207,8 @@ func _reach_knob_target(marker: TextureRect) -> void:
 func _outcome_end_tutorial() -> void:
 	tutorial.tutorial_level = -1
 	GameState.use_tutorial = false
+	GameState.achievement_active = true
+	GameState.use_achievements = true
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
@@ -215,3 +217,4 @@ func _outcome_end_tutorial() -> void:
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()
+	EventBus.on_tutorial_done.emit()

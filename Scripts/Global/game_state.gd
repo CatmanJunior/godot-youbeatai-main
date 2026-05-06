@@ -2,15 +2,16 @@ extends Node
 
 ## Global game state singleton (autoload).
 ## Provides easy access to session state.
-
 var notes: Notes
 
-# -- TO BE IMPLEMENTED --
+##Set to true to use achievements after tutorial.
+var use_achievements: bool = true
+
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
+var achievement_active: bool = true
 var show_template: bool = false
 var added_layer: bool = false
-var loop_sections: bool = false
 
 # -- Export settings --
 var export_name: String = ""

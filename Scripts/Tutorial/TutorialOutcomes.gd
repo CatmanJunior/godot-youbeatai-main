@@ -209,3 +209,10 @@ func _outcome_end_tutorial() -> void:
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()
+	# Enable achievements mode on the next session by writing the flag file.
+	var file: FileAccess = FileAccess.open("user://use_achievements.txt", FileAccess.WRITE)
+	if file:
+		file.store_string("True")
+		file.close()
+	else:
+		push_warning("Tutorial: could not write user://use_achievements.txt (error %d)" % FileAccess.get_open_error())

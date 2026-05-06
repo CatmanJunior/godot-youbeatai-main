@@ -19,7 +19,7 @@ var sfx_player: AudioStreamPlayer
 @export var chord_player_settings: ChordPlayerSettings
 
 func _ready():
-	_init_audio_players().call_deferred() # initialize audio players after the scene is ready to ensure everything is set up
+	_init_audio_players()#.call_deferred() # initialize audio players after the scene is ready to ensure everything is set up
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
@@ -57,4 +57,3 @@ func play_sfx(stream: AudioStream):
 	if stream:
 		sfx_player.stream = stream
 		sfx_player.play()
-

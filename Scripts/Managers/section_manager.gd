@@ -50,7 +50,6 @@ func spawn_initial_sections():
 		return
 
 	for i in range(len(initial_sections)):
-		print(i)
 		var tex = initial_sections[i]
 		add_section(i, tex)
 

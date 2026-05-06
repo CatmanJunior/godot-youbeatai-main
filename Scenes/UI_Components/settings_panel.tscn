@@ -311,6 +311,7 @@ step = 0.01
 metadata/_edit_use_anchors_ = true
 
 [node name="SwingLabel" type="Label" parent="Panel/swing/SwingSlider" unique_id=123390123]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.28773436
@@ -356,6 +357,7 @@ theme = ExtResource("2_yaket")
 theme_override_constants/icon_max_width = 640
 icon = ExtResource("9_oqudy")
 flat = true
+icon_alignment = 1
 expand_icon = true
 
 [node name="delay" type="Control" parent="Panel" unique_id=2030069879]

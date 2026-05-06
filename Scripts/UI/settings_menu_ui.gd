@@ -83,6 +83,7 @@ func _ready():
 	EventBus.toggle_settings_menu_requested.connect(_on_settings_button_pressed)
 	EventBus.bpm_changed.connect(_bpm_changed)
 	EventBus.swing_changed.connect(_on_swing_changed)
+	EventBus.soundbank_loaded.connect(initial_values)
 
 
 func _process(_delta: float) -> void:
@@ -108,6 +109,10 @@ func _update_labels() -> void:
 	bpm_label.text = str(SongState.bpm)
 	recording_delay_label.text = "%.2fs" % recording_delay_slider.value
 	swing_label.text = "Swing: %.2f%%" % (swing_slider.value * 100.0)
+
+func initial_values(bank: SoundBank):
+	_on_swing_changed(bank.swing)
+	_bpm_changed(bank.bpm)
 
 # --- Event Handlers ---
 func _on_mute_speech_toggled(button_pressed: bool):

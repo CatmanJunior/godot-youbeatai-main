@@ -372,23 +372,29 @@ hue_variation_max = 0.55
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
 
-[node name="VisibilitySetter" type="Control" parent="UserInterface/SwitchSectionButtons" unique_id=1851349150 node_paths=PackedStringArray("ui_reference")]
-anchors_preset = 0
-script = ExtResource("54_2daye")
-ui_element = 17
-ui_reference = NodePath("..")
-
-[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=2103297005]
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
 visible = false
 show_behind_parent = false
 top_level = false
 alignment = 0
 
-[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="5" unique_id=569761149]
+[node name="DownLoopCount" parent="UserInterface/SwitchSectionButtons/CopyPasteClearButtons" index="4" unique_id=1472787063]
+tooltip_text = "Herhaal deze laag meer"
+
+[node name="UpLoopCount" parent="UserInterface/SwitchSectionButtons/CopyPasteClearButtons" index="5" unique_id=1702701368]
+tooltip_text = "Herhaal deze laag meer"
+
+[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
 offset_left = -1002.0
 offset_top = -605.0
 offset_right = -554.0
 offset_bottom = -415.0
+
+[node name="VisibilitySetter" type="Control" parent="UserInterface/SwitchSectionButtons" unique_id=1851349150 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("54_2daye")
+ui_element = 17
+ui_reference = NodePath("..")
 
 [node name="Background" type="TextureRect" parent="UserInterface" unique_id=62213821]
 modulate = Color(0.8732984, 0.8732984, 0.8732984, 1)

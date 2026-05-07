@@ -14,6 +14,34 @@
 [ext_resource type="Texture2D" uid="uid://brvrjnfnm3mjt" path="res://Resources/Textures/Icons-_28_0010_Bird_white.png" id="12_tpu77"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="14_0b0kd"]
 
+[sub_resource type="InputEventAction" id="InputEventAction_tpu77"]
+action = &"Stomp"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_ojmv1"]
+events = [SubResource("InputEventAction_tpu77")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_ojmv1"]
+action = &"Clap"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_i7akj"]
+events = [SubResource("InputEventAction_ojmv1")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_i7akj"]
+action = &"Horn"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_tyigl"]
+events = [SubResource("InputEventAction_i7akj")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_tyigl"]
+action = &"Hihat"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_pe0j6"]
+events = [SubResource("InputEventAction_tyigl")]
+
 [node name="TrackSelectButtons" type="Control" unique_id=2075389560 node_paths=PackedStringArray("track_buttons")]
 layout_mode = 3
 anchors_preset = 9
@@ -40,10 +68,14 @@ layout_mode = 2
 [node name="TrackSelectButton_0" parent="VBoxContainer" unique_id=814915734 instance=ExtResource("3_tyigl")]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_ojmv1")
+shortcut_in_tooltip = false
 
 [node name="TrackSelectButton_1" parent="VBoxContainer" unique_id=1401429003 instance=ExtResource("3_tyigl")]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_i7akj")
+shortcut_in_tooltip = false
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_1" index="0" unique_id=1380255650]
 texture = ExtResource("6_ojmv1")
@@ -54,6 +86,8 @@ texture = ExtResource("7_i7akj")
 [node name="TrackSelectButton_2" parent="VBoxContainer" unique_id=1024189698 instance=ExtResource("3_tyigl")]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_tyigl")
+shortcut_in_tooltip = false
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_2" index="0" unique_id=1380255650]
 texture = ExtResource("8_tyigl")
@@ -64,6 +98,8 @@ texture = ExtResource("9_pe0j6")
 [node name="TrackSelectButton_3" parent="VBoxContainer" unique_id=1077184116 instance=ExtResource("3_tyigl")]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
+shortcut = SubResource("Shortcut_pe0j6")
+shortcut_in_tooltip = false
 
 [node name="IconTex" parent="VBoxContainer/TrackSelectButton_3" index="0" unique_id=1380255650]
 offset_top = 5.0

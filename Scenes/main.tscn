@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Resource" uid="uid://gj7nhtsggdey" path="res://Resources/ChordPlayerSettings/default_chord_player_settings.tres" id="17_55jeb"]
+[ext_resource type="Script" uid="uid://b4epao7gloc0h" path="res://Scripts/Audio/metronome.gd" id="18_2daye"]
 [ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
@@ -82,6 +83,12 @@ metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
 note_player_settings = Array[ExtResource("14_s8vy0")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
 chord_player_settings = ExtResource("17_55jeb")
+
+[node name="Metronome" type="AudioStreamPlayer" parent="Managers/AudioManagers/AudioPlayerManager" unique_id=862151484]
+stream = ExtResource("9_5vy51")
+max_polyphony = 2
+script = ExtResource("18_2daye")
+metadata/_custom_type_script = "uid://b4epao7gloc0h"
 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
 script = ExtResource("62_daoo8")

@@ -28,12 +28,11 @@ func _process(_delta: float):
 	# Live volume analysis
 	stamp_volume = _get_magnitude(0.0, stamp_freq_max)
 	clap_volume = _get_magnitude(clap_freq_min, 20000.0)
+
 	if is_clapping:
 		EventBus.clap_stomp_detected.emit(InteractionType.CLAP)
-		print("clap at volume ", clap_volume)
 	elif is_stamping:
 		EventBus.clap_stomp_detected.emit(InteractionType.STOMP)
-		print("stomp at volume ", stamp_volume)
 		
 
 func _get_magnitude(_freq_min: float, _freq_max: float) -> float:

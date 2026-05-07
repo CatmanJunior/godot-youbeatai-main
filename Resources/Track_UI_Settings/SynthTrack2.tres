@@ -2,17 +2,18 @@
 
 [ext_resource type="Texture2D" uid="uid://lhsxje3ui4o5" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Purple-Ring.png" id="1_4ad4h"]
 [ext_resource type="Script" uid="uid://c8a4ts2urwcjm" path="res://Scripts/DataClasses/Track_UI_Settings/synth_track_UI_settings.gd" id="1_mqs16"]
-[ext_resource type="Texture2D" uid="uid://dngxesg5b62g8" path="res://Resources/Textures_New_Correct/Icons-_28_0011_Bird.png" id="2_4ad4h"]
-[ext_resource type="Texture2D" uid="uid://de31wdhoca1nf" path="res://Resources/Textures_New_Correct/Icons-_28_0012_Robot.png" id="3_qj05e"]
+[ext_resource type="Texture2D" uid="uid://cdve28shwcaag" path="res://Resources/Icons/Icons-_28_0011_Bird.png" id="2_4ad4h"]
+[ext_resource type="Texture2D" uid="uid://brvrjnfnm3mjt" path="res://Resources/Textures/Icons-_28_0010_Bird_white.png" id="2_wqkqk"]
+[ext_resource type="Texture2D" uid="uid://dvhh0gnre6i3b" path="res://Resources/Icons/Icons-_28_0012_Robot.png" id="3_qj05e"]
 [ext_resource type="Texture2D" uid="uid://cc4xs3ou1nw8j" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Purple_empty.png" id="3_wqkqk"]
 
 [resource]
 script = ExtResource("1_mqs16")
-button_background_color = Color(0.5176471, 0, 1, 0.35686275)
-button_icon_texture = ExtResource("2_4ad4h")
+button_background_color = Color(0.52616674, 0.114799984, 0.82, 0.34901962)
+button_icon_texture = ExtResource("2_wqkqk")
 button_outline_texture = ExtResource("3_wqkqk")
 button_filled_texture = ExtResource("1_4ad4h")
 chaos_pad_main_icon = ExtResource("2_4ad4h")
 chaos_pad_alt_icon = ExtResource("3_qj05e")
-track_color = Color(0.5176471, 0, 1, 1)
+track_color = Color(0.5294118, 0.11764706, 0.8235294, 1)
 metadata/_custom_type_script = "uid://c8a4ts2urwcjm"

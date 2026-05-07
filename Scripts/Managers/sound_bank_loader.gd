@@ -22,7 +22,7 @@ func _load_and_apply_bank() -> void:
 		fallback_bank_name = bank.resource_name
 		EventBus.soundbank_loaded.emit(bank)
 	else:
-		push_warning("No soundbank selected, emitting fallback bank '%s'." % fallback_bank.resource_name)
+		push_warning("No soundbank selected, emitting fallback bank '%s'." % fallback_bank.resource_path.split("/")[-1])
 		fallback_bank_name = fallback_bank.resource_name
 		EventBus.soundbank_loaded.emit(fallback_bank)
 

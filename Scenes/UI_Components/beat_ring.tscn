@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://dwakilip8uiac"]
+[gd_scene format=3 uid="uid://cqp8xc386gq2b"]
 
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_b7oj2"]
 [ext_resource type="Script" uid="uid://cyuhbnfiplg5x" path="res://Scripts/UI/beat_ring_ui.gd" id="1_wrqyy"]
@@ -6,14 +6,13 @@
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="4_5gnhr"]
-[ext_resource type="Texture2D" uid="uid://c2qqxcx85b1tx" path="res://Resources/Textures_New/Icons/Icons-_28_0030_Play.png" id="4_24ovn"]
 [ext_resource type="PackedScene" uid="uid://mes3y20b5kk2" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="7_5lvir"]
-[ext_resource type="Shader" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
-[ext_resource type="Texture2D" uid="uid://beaufoqdk1g75" path="res://Resources/Textures_New_Correct/Icons-_28_0031_Pause.png" id="7_wrqyy"]
-[ext_resource type="Texture2D" uid="uid://dpqq1wxs4ly0j" path="res://Resources/Textures_New_Correct/Icons-_28_0030_Play.png" id="8_5lvir"]
-[ext_resource type="PackedScene" uid="uid://icjhd0tmmomt" path="res://Scenes/UI_Components/Beam.tscn" id="9_nbgc4"]
+[ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
+[ext_resource type="Texture2D" uid="uid://beaufoqdk1g75" path="res://Resources/Icons/Icons-_28_0031_Pause.png" id="7_wrqyy"]
+[ext_resource type="Texture2D" uid="uid://dpqq1wxs4ly0j" path="res://Resources/Icons/Icons-_28_0030_Play.png" id="8_5lvir"]
+[ext_resource type="PackedScene" uid="uid://cx30roke8u7g2" path="res://Scenes/UI_Components/Beam.tscn" id="9_nbgc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="9_wrqyy"]
 [ext_resource type="Texture2D" uid="uid://ch1ydacs6lt0n" path="res://Resources/Textures/cirkel3.png" id="9_ywh4c"]
 [ext_resource type="Script" uid="uid://dphj063nkqh6" path="res://Scripts/UI/SectionProgress.gd" id="13_0ra3y"]
@@ -42,7 +41,7 @@ pointer = NodePath("Pointer")
 play_pause_button = NodePath("PlayPauseButton")
 beat_button_prefab = ExtResource("2_5lvir")
 track_settings = ExtResource("3_mgl8v")
-play_icon = ExtResource("4_24ovn")
+play_icon = ExtResource("8_5lvir")
 pause_icon = ExtResource("7_wrqyy")
 
 [node name="VisibilitySetter" type="Control" parent="." unique_id=1845062889 node_paths=PackedStringArray("ui_reference")]
@@ -175,6 +174,17 @@ script = ExtResource("5_wuuqw")
 progress_bars = [NodePath("TextureProgressBar0"), NodePath("TextureProgressBar1")]
 waveform_lines = [NodePath("BigLine0"), NodePath("BigLine1")]
 track_settings = ExtResource("3_mgl8v")
+LINE_CONFIGS = [{
+"base_dist": 270,
+"points": 100,
+"reversed": false,
+"volume_dist": 50
+}, {
+"base_dist": 50,
+"points": 40,
+"reversed": false,
+"volume_dist": 35
+}]
 
 [node name="BigLine0" type="Line2D" parent="Waveform_visualisers" unique_id=866994840]
 closed = true
@@ -183,10 +193,11 @@ antialiased = true
 
 [node name="BigLine1" type="Line2D" parent="Waveform_visualisers" unique_id=916269959]
 closed = true
-width = 5.0
+width = 4.0
 antialiased = true
 
 [node name="TextureProgressBar0" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1277010803]
+self_modulate = Color(0.9882353, 0.8784314, 0.23529412, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -199,7 +210,7 @@ offset_right = 256.0
 offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(1.15, 1.15)
+scale = Vector2(1.1, 1.1)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 mouse_filter = 2
 max_value = 1.0
@@ -207,9 +218,9 @@ step = 0.01
 value = 1.0
 fill_mode = 4
 texture_progress = ExtResource("9_ywh4c")
-tint_progress = Color(1, 1, 0, 1)
 
 [node name="TextureProgressBar1" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1981743700]
+self_modulate = Color(0.5294118, 0.11764706, 0.8235294, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -230,5 +241,4 @@ step = 0.01
 value = 1.0
 fill_mode = 4
 texture_progress = ExtResource("2_bt3xi")
-tint_progress = Color(0.5176471, 0, 1, 1)
 metadata/_edit_use_anchors_ = true

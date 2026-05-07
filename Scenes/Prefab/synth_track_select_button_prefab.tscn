@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cdvmdek6n3ciy"]
 
-[ext_resource type="Texture2D" uid="uid://dcutt8vbgv0ku" path="res://Resources/Textures_New/Icons/Icons-_28_0010_Bear.png" id="2_16ta1"]
+[ext_resource type="Texture2D" uid="uid://bf2xjjf4nx60u" path="res://Resources/Textures/Icons-_28_0010_Bear_white.png" id="2_16ta1"]
 [ext_resource type="Script" uid="uid://maw11oys7gbv" path="res://Scripts/UI/Buttons/track_select_button.gd" id="2_lhsuy"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="3_sylab"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_mey70"]
@@ -22,6 +22,7 @@ is_synth_track = true
 track_index = 4
 
 [node name="IconTex" type="TextureRect" parent="." unique_id=1229799027]
+self_modulate = Color(0.9882353, 0.8784314, 0.23529412, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2

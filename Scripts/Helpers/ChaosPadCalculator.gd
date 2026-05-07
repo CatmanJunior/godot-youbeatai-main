@@ -5,9 +5,8 @@ class_name ChaosPadCalculator
 ## Volume (in dB) applied when the knob is at maximum outer distance.
 ## 0.0 dB = full volume (knob on triangle edge), OUTER_VOLUME_FLOOR_DB at max range.
 ## Adjust to taste — more negative = more aggressive outer attenuation.
-const OUTER_VOLUME_FLOOR_DB: float = -30.0
-## Exponent applied to the raw barycentric weights to create a more natural blend.
-const FALLOFF_EXPONENT = 2.0  
+const OUTER_VOLUME_FLOOR_DB: float = -80.0
+
 
 ## Clamp [param knob_position] so it stays inside or within
 ## [param max_distance] pixels of the triangle defined by [param corners].
@@ -78,9 +77,10 @@ static func calc_weights(
 	w = sqrt(w)
 
 	# --- Apply exponential falloff ---
-	u = u ** FALLOFF_EXPONENT
-	v = v ** FALLOFF_EXPONENT
-	w = w ** FALLOFF_EXPONENT
+	var falloff_exponent = 2.5  # Adjust this value (e.g., 2, 3, or 4)
+	u = u ** falloff_exponent
+	v = v ** falloff_exponent
+	w = w ** falloff_exponent
 	# --- End of exponential falloff ---
 	
 	var total := u + v + w
@@ -89,8 +89,12 @@ static func calc_weights(
 		v /= total
 		w /= total
 
-	var calculation_weights := Vector3(u, v, w)
-
+	var calculation_weights := Vector3(
+		snapped(u, 0.01),
+		snapped(v, 0.01),
+		snapped(w, 0.01)
+	)
+	
 	# master_volume is returned as dB because set_volume_db() on TrackPlayerBase
 	# feeds it directly to the audio bus (and stores it in track_data.master_volume).
 	# When inside the triangle distance is 0 (full volume). Outside: square-law
@@ -101,8 +105,13 @@ static func calc_weights(
 		var closest := _closest_point_on_triangle(knob_global_position, p1, p2, p3)
 		distance_from_triangle = knob_global_position.distance_to(closest)
 	
-	var linear_t := maxf(0.0, 1.0 - (distance_from_triangle / outer_triangle_size))
-	var master_volume := lerpf(OUTER_VOLUME_FLOOR_DB, 0.0, linear_t * linear_t)
+	# allow some spce outside the triangle so a user can place the Knob over
+	# the icon without changing the volume
+	distance_from_triangle -= 10
+	outer_triangle_size -= 10
+
+	var linear_t := clampf(1.0 - (distance_from_triangle / outer_triangle_size), 0.0, 1.0)
+	var master_volume := linear_t #lerpf(OUTER_VOLUME_FLOOR_DB, 0.0, linear_t * linear_t)
 
 	return {
 		"master_volume": master_volume,

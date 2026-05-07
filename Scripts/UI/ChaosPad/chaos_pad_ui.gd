@@ -60,5 +60,5 @@ func start_triangle_color_change(new_color: Color, duration: float):
 
 func update_track_icons(track_index: int):
 		var settings := track_settings.get_track(track_index)
-		main_icon.texture = settings.button_icon_texture
+		main_icon.texture = settings.chaos_pad_main_icon
 		alt_icon.texture = settings.chaos_pad_alt_icon

@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://d38plcpfw0kp8" path="res://Resources/Textures_Settings/Settings__0013_Note.png" id="14_o6j77"]
 [ext_resource type="Texture2D" uid="uid://cr4otco1wltik" path="res://Resources/Textures_Settings/Settings__0012_Beat-Ring-Icon.png" id="15_bbulw"]
 [ext_resource type="Texture2D" uid="uid://c46agdfmouhob" path="res://Resources/Textures_Settings/Settings__0011_X.png" id="16_aa32w"]
-[ext_resource type="Script" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
+[ext_resource type="Script" uid="uid://nst1cl6b3w8" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
 
@@ -129,7 +129,7 @@ corner_radius_bottom_left = 60
 [sub_resource type="LabelSettings" id="LabelSettings_g4ckg"]
 font_size = 21
 
-[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_adds_beats_toggle", "recording_delay_slider", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "save_song_button", "save_beat_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_adds_beats_toggle", "recording_delay_slider", "recording_delay_progress", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "save_song_button", "save_beat_button", "restart_button", "metronome_toggle", "mute_speech")]
 top_level = true
 light_mask = 2
 z_index = 1000
@@ -146,6 +146,7 @@ button_is_clap = NodePath("Panel/toggle_v_container/ButtonIsClap")
 button_add_beats = NodePath("Panel/toggle_v_container/Knop adds beat")
 clap_adds_beats_toggle = NodePath("Panel/toggle_v_container/AddBeatsToggle")
 recording_delay_slider = NodePath("Panel/delay/RecordingDelaySlider")
+recording_delay_progress = NodePath("Panel/delay/ProgressBar")
 recording_delay_label = NodePath("Panel/delay/delay_label_circle/recordingDelayLabel")
 bpm_label = NodePath("Panel/bpm/bpm slider/BpmLabel")
 bpm_up_button = NodePath("Panel/bpm/BpmUpButton")
@@ -294,7 +295,7 @@ offset_bottom = 60.0
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_mfvrx")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ilwxp")
-max_value = 2.0
+max_value = 0.5
 show_percentage = false
 
 [node name="SwingSlider" type="HSlider" parent="Panel/swing" unique_id=553197593]
@@ -318,6 +319,7 @@ step = 0.01
 metadata/_edit_use_anchors_ = true
 
 [node name="SwingLabel" type="Label" parent="Panel/swing/SwingSlider" unique_id=123390123]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.28773436
@@ -363,6 +365,7 @@ theme = ExtResource("2_yaket")
 theme_override_constants/icon_max_width = 640
 icon = ExtResource("9_oqudy")
 flat = true
+icon_alignment = 1
 expand_icon = true
 
 [node name="SwingText" type="Label" parent="Panel/swing" unique_id=1853889709]
@@ -396,7 +399,7 @@ mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_8dylv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0wopu")
 max_value = 0.8
-value = 0.45
+value = 0.5
 show_percentage = false
 
 [node name="RecordingDelaySlider" type="HSlider" parent="Panel/delay" unique_id=56271380]
@@ -416,7 +419,7 @@ theme_override_icons/grabber_highlight = ExtResource("4_xbhen")
 theme_override_styles/slider = SubResource("StyleBoxFlat_na2ur")
 max_value = 0.8
 step = 0.01
-value = 0.45
+value = 0.23
 metadata/_edit_use_anchors_ = true
 
 [node name="delay_sprite_clock" type="Sprite2D" parent="Panel/delay" unique_id=1900299613]

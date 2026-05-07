@@ -24,6 +24,7 @@ func _gui_input(event: InputEvent) -> void:
 				accept_event()
 			_dragging = false
 			_mouse_down = false
+			_mouse_released()
 
 	elif event is InputEventMouseMotion and _mouse_down:
 		var delta := get_global_mouse_position() - _press_pos
@@ -32,6 +33,9 @@ func _gui_input(event: InputEvent) -> void:
 		if _dragging:
 			accept_event()
 			_move_handle_constrained()
+
+func _mouse_released():
+	EventBus.play_track_requested.emit(SongState.selected_track_index)
 
 func _move_handle_constrained() -> void:
 	var local_mouse := container.get_local_mouse_position()

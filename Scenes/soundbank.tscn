@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://1f8481edq5sv" path="res://Scripts/Managers/sound_bank_selector.gd" id="1_h74sy"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="2_avjdi"]
 [ext_resource type="Script" uid="uid://7wcck2o43vy5" path="res://Scripts/UI/sound_bank_selection_menu.gd" id="2_h74sy"]
-[ext_resource type="Theme" uid="uid://bcft5y5bq2s2m" path="res://Themes/default_theme.tres" id="2_ie3tb"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_ie3tb"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="3_a7rio"]
 [ext_resource type="Resource" uid="uid://bfv1qc8vipcip" path="res://Resources/ButtonGroups/ThemeSelectionButtonGroup.tres" id="3_grpai"]
 [ext_resource type="Texture2D" uid="uid://b6tuxknqbe7q8" path="res://Resources/Icons/SelectedEmoticion128.png" id="4_k11aq"]
@@ -15,8 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
 [ext_resource type="ButtonGroup" uid="uid://bnx6ah57t5lrt" path="res://Resources/ButtonGroups/BeatAmountSelectionGroup.tres" id="8_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_bt16w"]
+[ext_resource type="Texture2D" uid="uid://h0nis3rbt2fe" path="res://Resources/Textures_New_Extra/MenuShapes128_0005_8_Purple.png" id="11_18n7q"]
 [ext_resource type="Texture2D" uid="uid://c5gdkspinjfqe" path="res://Resources/Textures_New_Extra/MenuShapes128_0004_16_Purple.png" id="12_k1x81"]
-[ext_resource type="Texture2D" uid="uid://b8hhn1mkmc377" path="res://Resources/Textures_New_Extra/KlappyAppShapes_0000_Song-Empty.png" id="13_grpai"]
 [ext_resource type="Texture2D" uid="uid://b5e8xiymsptlh" path="res://Resources/Textures_New_Extra/MenuShapes128_0003_32_Purple.png" id="13_k11aq"]
 [ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
@@ -815,7 +815,7 @@ theme_override_constants/separation = 15
 layout_mode = 2
 toggle_mode = true
 button_group = ExtResource("8_dsbnb")
-texture_normal = ExtResource("13_grpai")
+texture_normal = ExtResource("11_18n7q")
 texture_pressed = ExtResource("16_grpai")
 
 [node name="Label" type="Label" parent="SoundBankSelectionMenu/beats/HBoxContainer/Beat_8" unique_id=906441170]

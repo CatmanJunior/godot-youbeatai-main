@@ -42,7 +42,8 @@ func _ready() -> void:
 	EventBus.section_remove_requested.connect(remove_section)
 	EventBus.section_next_requested.connect(next_section)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
-	call_deferred("spawn_initial_sections")
+	await get_tree().process_frame
+	spawn_initial_sections()
 		
 
 func spawn_initial_sections():
@@ -68,17 +69,20 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 	# Create a new SectionData instance and populate its default tracks
 	var new_section: SectionData = SectionData.new(tex, section_index)
 	new_section.create_default_tracks()
+	# should this be here?
 	_resolve_section_progression(new_section, tex)
 	sections.insert(section_index, new_section)
 	if tex == null:
 		tex = initial_sections[0] if initial_sections.size() > 0 else null
+	_resolve_section_indexes()
 	SongState.sections = sections
+
 	EventBus.section_added.emit(section_index, tex)
 	if _sections_initialized:
 		EventBus.section_switched.emit(SongState.get_section(section_index))
 
-func _on_add_section_requested(tex: Texture2D) -> void:
-	add_section(sections.size(), tex)
+func _on_add_section_requested(tex: Texture2D):
+	add_section(current_section_index + 1, tex)
 	GameState.added_layer = true
 
 func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
@@ -117,7 +121,7 @@ func remove_section(section_index: int):
 		return
 
 	sections.remove_at(section_index)
-	
+	_resolve_section_indexes()
 	# If the deleted section was the current one, go to first section
 	if section_index == current_section_index:
 		switch_section(0)
@@ -141,7 +145,7 @@ func _paste_section():
 	for i in range(SectionData.TRACKS_PER_SECTION):
 		current_section.tracks[i] = clipboard_section.tracks[i].duplicate_track()
 	EventBus.template_set.emit(current_section.get_beat_actives())
-	
+	EventBus.section_switched.emit(SongState.get_section(current_section_index))
 
 func clear_section():
 	"""Clear all beats from the current section"""
@@ -159,6 +163,10 @@ func _set_loop_count_requested(section_index: int, loop_count: int):
 	sections[section_index].loop_count = loop_count
 	EventBus.on_set_loop_count.emit(section_index, loop_count)
 
+func _resolve_section_indexes():
+	# resolve indices
+	for i in range(sections.size()):
+		sections[i].index = i
 
 ##Switch to a different section
 func switch_section(section_index: int):

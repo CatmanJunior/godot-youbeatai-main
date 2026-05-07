@@ -9,7 +9,7 @@ extends Node
 @export var track_settings: TrackUISettingsRegistry
 
 
-const LINE_CONFIGS = [
+@export var LINE_CONFIGS = [
 	{"points": 100, "base_dist": 280, "volume_dist": 28, "reversed": false},  # Track 0 (4) – big line
 	{"points": 40, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]

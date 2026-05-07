@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TutorialStepsCollection" format=3 uid="uid://bhm2jpomt47pe"]
 
-[ext_resource type="Script" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
+[ext_resource type="Script" uid="uid://dlkqmmap7jbvw" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
 [ext_resource type="Script" uid="uid://drurbmsmnjvp3" path="res://Scripts/Tutorial/TutorialStepData.gd" id="2_step"]
 
 [sub_resource type="Resource" id="Step_1"]

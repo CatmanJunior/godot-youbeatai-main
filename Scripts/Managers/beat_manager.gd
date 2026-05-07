@@ -6,6 +6,8 @@ class_name BeatManager
 const BEATS_PER_BAR : int = 4
 const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
 
+@onready var KlappyAnim = $"../../UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"
+
 var bpm: int:
 	get: return SongState.bpm
 	set(value):
@@ -59,6 +61,9 @@ func _ready():
 	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
 	EventBus.beat_set_requested.connect(_set_beat)
 	EventBus.template_set.connect(_on_template_set)
+
+	EventBus.beat_triggered.connect(trigger_beat)
+
 
 func _on_template_set(actives: Array) -> void:
 	SongState.current_section.set_beat_actives(actives)
@@ -127,7 +132,6 @@ func _on_beat_sprite_clicked(p_track: int, beat: int):
 	if was_active:
 		_set_beat(p_track, beat, false)
 		EventBus.play_track_requested.emit(p_track)
-
 		EventBus.particles_requested.emit(Vector2.ZERO, track_settings_registry.get_track(p_track).track_color)
 	else:
 		_set_beat(p_track, beat, true)
@@ -138,15 +142,22 @@ func _set_beat(track: int, beat: int, active: bool):
 	SongState.current_section.set_beat(track, beat, active)
 	EventBus.beat_state_changed.emit(track, beat, active)
 
+
 func get_beat(track: int, beat: int) -> bool:
 	"""Get whether a beat is active"""
 	return SongState.current_section.get_beat(track, beat)
 
 
+func trigger_beat(beat: int):
+	if SongState.current_section.get_beat(0, beat):
+		KlappyAnim.on_stamp()
+	if SongState.current_section.get_beat(1, beat):
+		KlappyAnim.on_clap()
+
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
 	var beats_until_top: int = SongState.beats_per_section - cur_beat - 1
-	var duration_until_top := (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
+	var duration_until_top: float = (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
 	return duration_until_top
 
 static func calculate_beat_duration(p_bpm: int, p_total_beats: int, beats_per_bar: int) -> float:

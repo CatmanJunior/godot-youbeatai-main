@@ -2,9 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://brwspl8u31nk6" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Pink_ROUND.png" id="1_tv5jv"]
 [ext_resource type="Texture2D" uid="uid://crr3p27hj7ieg" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Pink_Empty.png" id="2_endoi"]
-[ext_resource type="Texture2D" uid="uid://buvdeomiilf8q" path="res://Resources/Textures_New_Correct/Icons-_28_0006_Drum.png" id="3_1qly3"]
-[ext_resource type="Texture2D" uid="uid://bxs67puxjmfpw" path="res://Resources/Textures_New_Correct/Icons-_28_0019_Snare_Drum.png" id="4_fbaqb"]
-[ext_resource type="Texture2D" uid="uid://dkxja3rlansr6" path="res://Resources/Textures_New_Correct/Icons-_28_0007_Kick_Drum.png" id="5_tijka"]
+[ext_resource type="Texture2D" uid="uid://c3gntpx3vachv" path="res://Resources/Icons/Icons-_28_0006_Drum.png" id="3_1qly3"]
+[ext_resource type="Texture2D" uid="uid://76fon02ek433" path="res://Resources/Icons/Icons-_28_0019_Snare_Drum.png" id="4_fbaqb"]
+[ext_resource type="Texture2D" uid="uid://dmqviulcn2yxq" path="res://Resources/Icons/Icons-_28_0007_Kick_Drum.png" id="5_tijka"]
 [ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/DataClasses/Track_UI_Settings/sample_track_UI_settings.gd" id="6_1qly3"]
 
 [resource]

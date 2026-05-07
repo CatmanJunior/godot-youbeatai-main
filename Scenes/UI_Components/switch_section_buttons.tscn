@@ -4,12 +4,14 @@
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_mka03"]
 [ext_resource type="PackedScene" uid="uid://7ihp2yx2750i" path="res://Scenes/Prefab/sectionButtonPrefab.tscn" id="2_r54ui"]
 [ext_resource type="Texture2D" uid="uid://m6q7i764vuvw" path="res://Resources/Textures_New/Layout 18 jan26.png" id="3_r54ui"]
-[ext_resource type="Texture2D" uid="uid://dnrsnokeidh62" path="res://Resources/Textures_New_Correct/Icons-_28_0002_Bin.png" id="4_2ivto"]
+[ext_resource type="Texture2D" uid="uid://btkj75tpspr5q" path="res://Resources/Icons/Icons-_28_0002_Bin.png" id="4_2ivto"]
 [ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="5_8duxt"]
-[ext_resource type="Texture2D" uid="uid://ml681mo0sr5a" path="res://Resources/Textures_New/Icons/copy.png" id="5_r0nxd"]
-[ext_resource type="Texture2D" uid="uid://dqa7rjhcgqcoh" path="res://Resources/Textures_New_Correct/Icons-_28_0000_Paste.png" id="6_0g022"]
-[ext_resource type="Texture2D" uid="uid://da2j55ggfvjrj" path="res://Resources/Textures_New/Icons/Icons-_28_0003_+.png" id="7_r0nxd"]
-[ext_resource type="Texture2D" uid="uid://v75gi03uf3bs" path="res://Resources/Textures_New/Icons/Icons-_28_0003_-.png" id="8_0g022"]
+[ext_resource type="Texture2D" uid="uid://ml681mo0sr5a" path="res://Resources/Icons/copy.png" id="5_r0nxd"]
+[ext_resource type="Texture2D" uid="uid://dkr6t8qfcy51c" path="res://Resources/Icons/Icons-_28_0000_Paste.png" id="6_0g022"]
+[ext_resource type="Texture2D" uid="uid://dtgplsb2hpjva" path="res://Resources/Textures/Hex_white.png" id="8_mmmhy"]
+[ext_resource type="Texture2D" uid="uid://dnh46jdw08xp3" path="res://Resources/Textures/repeat_less.png" id="9_dbo0n"]
+[ext_resource type="Texture2D" uid="uid://d3y1f26r02w7d" path="res://Resources/Textures/+_white.png" id="9_nympg"]
+[ext_resource type="Texture2D" uid="uid://dr1j2okov3cbl" path="res://Resources/Textures/repeat.png" id="12_dbo0n"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8duxt"]
 bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
@@ -190,19 +192,21 @@ text = "♻️
 "
 metadata/_edit_use_anchors_ = true
 
-[node name="AddSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
+[node name="DownLoopCount" type="Button" parent="CopyPasteClearButtons" unique_id=1472787063]
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_colors/icon_normal_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
-theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/normal = SubResource("StyleBoxFlat_r54ui")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mmmhy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r54ui")
 action_mode = 0
-icon = ExtResource("7_r0nxd")
+icon = ExtResource("9_dbo0n")
 icon_alignment = 1
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
 [node name="UpLoopCount" type="Button" parent="CopyPasteClearButtons" unique_id=1702701368]
@@ -210,30 +214,57 @@ custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_colors/icon_normal_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_r54ui")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_mmmhy")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r54ui")
 action_mode = 0
-icon = ExtResource("7_r0nxd")
+icon = ExtResource("12_dbo0n")
 icon_alignment = 1
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
-[node name="DownLoopCount" type="Button" parent="CopyPasteClearButtons" unique_id=1472787063]
+[node name="AddSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1747445524]
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_mka03")
+theme_override_colors/icon_normal_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_colors/icon_focus_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_colors/icon_pressed_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_colors/icon_hover_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_colors/icon_hover_pressed_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
-theme_override_styles/normal = SubResource("StyleBoxFlat_r54ui")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_mmmhy")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r54ui")
+theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
+theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
-icon = ExtResource("8_0g022")
+icon = ExtResource("8_mmmhy")
 icon_alignment = 1
+expand_icon = true
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect3" type="TextureRect" parent="CopyPasteClearButtons/AddSectionButton" unique_id=1738624]
+self_modulate = Color(0.16862746, 0.16862746, 0.16862746, 1)
+custom_minimum_size = Vector2(21, 21)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.5
+offset_top = -19.5
+offset_right = 17.5
+offset_bottom = 18.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_nympg")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="RealTimeAudioRecordingProgressBar" type="ProgressBar" parent="." unique_id=798254824]
 visible = false

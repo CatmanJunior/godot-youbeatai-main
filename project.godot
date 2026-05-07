@@ -36,7 +36,6 @@ FFT="*uid://xq15anvbve8x"
 
 [debug]
 
-settings/stdout/print_fps=true
 file_logging/enable_file_logging=true
 
 [display]

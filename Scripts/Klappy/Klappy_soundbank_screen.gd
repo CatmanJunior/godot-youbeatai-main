@@ -8,23 +8,20 @@ func _ready() -> void:
 	EventBus.utterance_ended.connect(done_speaking)
 	EventBus.utterance_content_changed.connect(update_bubble)
 	klappy_response.change_panel_visibility(false)
-
-
 	speak()
-
 
 
 func speak():
 	TTSHelper.speak(message)
 
-func start_speaking(id: int):
+func start_speaking(_id: int):
 	klappy_response.change_panel_visibility(true)
 	talking.talking = true
 
 func update_bubble(text: String):
 	klappy_response.fill_response_label(text)
 
-func done_speaking(id: int):
+func done_speaking(_id: int):
 	klappy_response.change_panel_visibility(false)
 	talking.talking = false
 	DisplayServer.tts_stop()

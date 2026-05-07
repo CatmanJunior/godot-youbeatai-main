@@ -19,7 +19,7 @@ func on_export(context: ExportRecordingData):
 func export_wav_to_file(stream_wav: AudioStreamWAV, _name: String = "soundtrack.wav"):
 	var dir_path: String = OS.get_system_dir(OS.SYSTEM_DIR_DOCUMENTS) + "/Ritme Robot"
 	DirAccess.make_dir_recursive_absolute(dir_path)
-	var full_path: String = dir_path + "/%s" % _name
+	var full_path: String = dir_path + "/" + _name
 	var error: int = stream_wav.save_to_wav(full_path)
 	if error != OK:
 		push_error("FileExporter: save_to_wav failed with error %d at: %s" % [error, full_path])

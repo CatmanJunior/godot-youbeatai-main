@@ -97,6 +97,7 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	var p := AudioStreamPlayer.new()
 	p.name = bus
 	p.bus = bus
+	p.max_polyphony = 2
 	add_child(p)
 	return p
 
@@ -110,7 +111,7 @@ func setup(index: int, parent_bus: String, _settings = null) -> void:
 func _set_track_volume(track: int, volume: float):
 	if track != track_index:
 		return
-	set_volume_db(volume)
+	set_volume_linear(volume)
 	
 
 func apply_effect_profile(_effect_profile: EffectProfile) -> void:
@@ -135,6 +136,9 @@ func stop() -> void:
 func set_volume_db(db: float) -> void:
 	BusHelper.set_volume(bus_name, db)
 	track_data.master_volume = db
+
+func set_volume_linear(db: float) -> void:
+	track_data.master_volume = BusHelper.set_volume_linear(bus_name, db)
 
 func set_muted(muted: bool) -> void:
 	BusHelper.set_mute(bus_name, muted)

@@ -41,7 +41,7 @@ func duplicate_track() -> TrackData:
 	if sequence_notes:
 		copy.sequence_notes = sequence_notes.duplicate_deep()
 	if sequence:
-		copy.sequence = sequence
+		copy.sequence = sequence.duplicate_sequence()
 	if synth_waveform_visualizer:
 		copy.synth_waveform_visualizer = synth_waveform_visualizer
 	return copy

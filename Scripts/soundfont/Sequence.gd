@@ -15,3 +15,6 @@ func build_beat_map() -> void:
 
 func get_note_at_beat(beat: int) -> SequenceNote:
     return _beat_map.get(beat, null)
+
+func duplicate_sequence() -> Sequence:
+    return Sequence.new(notes.duplicate_deep())

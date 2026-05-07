@@ -29,6 +29,7 @@
 [ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Icons/SHAPES_Lock.png" id="39_bv80c"]
 [ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="42_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://cqp8xc386gq2b" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
 [ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
@@ -186,6 +187,15 @@ offset_left = 27.722797
 offset_top = 69.30694
 offset_right = 27.722797
 offset_bottom = 69.30694
+
+[node name="Rec_mic_Fill" parent="UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic/ChaosIconMicBg" parent_id_path=PackedInt32Array(2043765558, 452880462) index="0" unique_id=551040892]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.64, 0.64)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_progress = ExtResource("42_ptfg5")
 
 [node name="Knob" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="5" unique_id=1796748661]
 offset_left = 304.95053

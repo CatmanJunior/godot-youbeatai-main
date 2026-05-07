@@ -5,8 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_rcijy"]
 [ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="4_dm53t"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="5_7m7ed"]
-[ext_resource type="Script" uid="uid://cbvyl5iyxiilh" path="res://Scripts/UI/instruction_label.gd" id="6_dm53t"]
+[ext_resource type="Script" path="res://Scripts/UI/instruction_label.gd" id="6_dm53t"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="6_q1u4v"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="7_7m7ed"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="7_g650j"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/Klappy_components/klappy_reaction.tscn" id="8_wcpyi"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/Klappy_components/klappy_light_pad.tscn" id="9_rcijy"]
@@ -101,6 +102,12 @@ script = ExtResource("6_dm53t")
 
 [node name="Continue" parent="AchievementsPanel" index="4" unique_id=1432263596]
 metadata/_edit_use_anchors_ = true
+
+[node name="VisibilitySetter" type="Control" parent="AchievementsPanel/Continue" index="1" unique_id=810093401 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("7_7m7ed")
+ui_element = 3
+ui_reference = NodePath("..")
 
 [node name="Button" parent="AchievementsPanel" index="5" unique_id=734105471]
 metadata/_edit_use_anchors_ = true
@@ -251,13 +258,12 @@ position = Vector2(1239.05, -302)
 achievement_panel = NodePath("../AchievementsPanel")
 instruction_label = NodePath("../AchievementsPanel/InstructionLabel")
 
-[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("KlappyLight", "KlappyEnergy", "FaceLight", "instruction_label", "achievement_panel", "colormapje") instance=ExtResource("9_rcijy")]
+[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("KlappyLight", "FaceLight", "instruction_label", "achievement_panel", "colormapje") instance=ExtResource("9_rcijy")]
 offset_left = -106.5
 offset_top = -187.5
 offset_right = 93.5
 offset_bottom = 12.5
 KlappyLight = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
-KlappyEnergy = NodePath("../ProgressBar")
 FaceLight = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
 instruction_label = NodePath("../AchievementsPanel/InstructionLabel")
 achievement_panel = NodePath("../AchievementsPanel")

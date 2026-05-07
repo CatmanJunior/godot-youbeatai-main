@@ -188,6 +188,7 @@ func _set_interface_invisible_initial() -> void:
 		EventBus.track_select_button_visibility_requested.emit(1, true)
 	EventBus.synth_progress_bar_visible_requested.emit(0, false)
 	EventBus.synth_progress_bar_visible_requested.emit(1, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.SECTION_UI,false)
 
 # Creates the tutorial timer and loads the ordered list of steps from the assigned resource.
 # Must be called before update_tutorial() is first ticked.
@@ -201,7 +202,7 @@ func setup_tutorial() -> void:
 # Per-frame update: triggers the first TTS on the initial frame, fires per-beat sfx feedback
 # for stomp/clap phases, and checks the current condition callable to advance the tutorial.
 func update_tutorial() -> void:
-	# _continue_button_visible(_active)
+	_continue_button_visible(_active)
 
 	if not _first_tts_done and GameState.use_tutorial:
 		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, true)

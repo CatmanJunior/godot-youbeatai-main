@@ -25,6 +25,7 @@ enum UIElement {
 	OUTSIDE_TARGET,
 	AMOUNT_LEFT,
 	SECTION_CONTEXT_MENU,
+	SECTION_UI,
 }
 
 @export var ui_element: UIVisibilityListener.UIElement = UIVisibilityListener.UIElement.BEAT_RING

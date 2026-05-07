@@ -41,11 +41,12 @@
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="52_ojylq"]
 [ext_resource type="Texture2D" uid="uid://dy2xx2vdev35q" path="res://Resources/Textures_New/back.png" id="53_2daye"]
 [ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="53_fle1e"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="54_2daye"]
 [ext_resource type="Script" uid="uid://bhyonrmhfadlg" path="res://Scripts/Exporters/Export_ui.gd" id="54_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
-[ext_resource type="Script" uid="uid://c76hgacdcbr2k" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
+[ext_resource type="Script" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
 [ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
@@ -55,7 +56,7 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -371,13 +372,19 @@ hue_variation_max = 0.55
 custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
 
-[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
+[node name="VisibilitySetter" type="Control" parent="UserInterface/SwitchSectionButtons" unique_id=1851349150 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("54_2daye")
+ui_element = 17
+ui_reference = NodePath("..")
+
+[node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="3" unique_id=2103297005]
 visible = false
 show_behind_parent = false
 top_level = false
 alignment = 0
 
-[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
+[node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="5" unique_id=569761149]
 offset_left = -1002.0
 offset_top = -605.0
 offset_right = -554.0

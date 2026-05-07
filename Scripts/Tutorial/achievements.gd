@@ -10,7 +10,7 @@ class_name AchievementManager
 
 
 #---Static ----
-static var energy_points: float = 50.0
+static var energy_points: float = 0.0
 
 
 # -- Constants --
@@ -51,6 +51,8 @@ const TIMEOUT_AFTER_TOOLTIP_OPEN: float = 2.0
 @export var btn_synth_track_2: BaseButton
 @export_group("")
 
+var btn_section_2: BaseButton
+
 ## Built from the named exports above — do not edit directly.
 var locked_buttons: Dictionary[int, BaseButton] = {}
 
@@ -69,8 +71,10 @@ func _ready() -> void:
 	EventBus.on_tutorial_done.connect(_on_tutorial_done)
 	if not GameState.use_achievements:
 		return
+
 	if GameState.achievement_active:
-		activate_achievements.call_deferred()
+		await get_tree().create_timer(0.2).timeout
+		activate_achievements()
 
 
 func _process(_delta: float) -> void:
@@ -136,23 +140,21 @@ func _on_tutorial_done() -> void:
 
 func activate_achievements() -> void:
 	_setup_default_ui_state()
-	_build_locked_buttons_map()
 	change_energy_points(START_ENERGY_POINTS)
 		
 	var list := AchievementList.new()
 	list.tracker = self
 	_achievements = list.build()
 
-	# Add the initial second section upfront and lock its button as the ADD_SECTION unlock target.
-	if section_ui:
-		print("Spawning initial section for achievements")
-		EventBus.section_added.connect(
-			func(idx: int, _tex: Texture2D) -> void:
-				if idx < section_ui.section_buttons.size():
-					locked_buttons[AchievementDef.AchievementNode.ADD_SECTION] = section_ui.section_buttons[idx]
-		, CONNECT_ONE_SHOT)
+
 	EventBus.add_section_requested.emit(null)
 	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
+	# Add the initial second section upfront and lock its button as the ADD_SECTION unlock target.
+	btn_section_2 = section_ui.section_buttons[1]
+	_build_locked_buttons_map()
+
+	_init_tooltip_actions()
+	_setup_locks()
 
 	EventBus.clap_on_beat_detected.connect(_on_clap_stomp_on_beat)
 	EventBus.stomp_on_beat_detected.connect(_on_clap_stomp_on_beat)
@@ -161,7 +163,6 @@ func activate_achievements() -> void:
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.not_enough_energy.connect(_on_not_enough_energy)
-	_setup_locks()
 	print("Achievements activated")
 	GameState.achievement_active = true
 
@@ -181,10 +182,7 @@ func _update_achievements() -> void:
 			continue # not registered or already unlocked
 		_try_unlock(ach, button)
 
-	if not _late_ready_done:
-		_init_tooltip_actions()
-		_setup_default_ui_state()
-		_late_ready_done = true
+
 
 
 func _try_unlock(ach: AchievementDef, button: BaseButton) -> void:
@@ -214,6 +212,8 @@ func _init_tooltip_actions() -> void:
 		if button == null:
 			continue
 		button.gui_input.connect(func(event: InputEvent) -> void:
+			if not button.disabled:
+				return
 			if not (event is InputEventMouseButton):
 				return
 			var mb := event as InputEventMouseButton
@@ -314,6 +314,8 @@ func _build_locked_buttons_map() -> void:
 		[N.SECOND_SAMPLE, btn_second_sample],
 		[N.TRACK_3, btn_track_3],
 	]
+	if btn_section_2:
+		pairs.append([N.ADD_SECTION, btn_section_2])
 	# Build the locked_buttons map from the exported button variables. 
 	for pair: Array in pairs:
 		# Only register non-null buttons, so we can have achievements without locked buttons.

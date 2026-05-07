@@ -1,7 +1,9 @@
 extends Node
 @export var klappy_response : Node
 @export var message:String
+@export var tutmessage: String
 @export var talking : Node
+
 
 func _ready() -> void:
 	EventBus.utterance_started.connect(start_speaking)	
@@ -12,7 +14,11 @@ func _ready() -> void:
 
 
 func speak():
-	TTSHelper.speak(message)
+	if GameState.use_tutorial == true:
+		TTSHelper.speak(tutmessage)
+	else:
+		TTSHelper.speak(message)
+
 
 func start_speaking(_id: int):
 	klappy_response.change_panel_visibility(true)

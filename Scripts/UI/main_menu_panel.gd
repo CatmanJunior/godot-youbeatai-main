@@ -18,9 +18,10 @@ func _on_tutorial_button_pressed():
 	_on_pro_button_pressed()
 
 func _on_pro_button_pressed():
+	GameState.use_tutorial = true
 	if OS.has_feature("web"):
 		TTSHelper.init()
-
+		
 	await get_tree().create_timer(0.1).timeout
 	SceneChanger.go_to_soundbank()
 

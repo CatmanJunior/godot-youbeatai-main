@@ -37,6 +37,7 @@ anchor_bottom = -0.975
 offset_right = 59.999992
 offset_bottom = 60.0
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("1_q3fpn")
 theme_type_variation = &"FlatButton"
 theme_override_font_sizes/font_size = 25

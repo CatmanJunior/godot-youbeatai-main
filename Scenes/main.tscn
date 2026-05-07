@@ -188,7 +188,13 @@ offset_top = 69.30694
 offset_right = 27.722797
 offset_bottom = 69.30694
 
-[node name="Rec_mic_Fill" parent="UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic/ChaosIconMicBg" parent_id_path=PackedInt32Array(2043765558, 452880462) index="0" unique_id=551040892]
+[node name="ChaosButtonMic" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="4" unique_id=806900459]
+mouse_default_cursor_shape = 2
+
+[node name="ChaosIconMicBg" parent="UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic" index="0" unique_id=452880462]
+physics_interpolation_mode = 2
+
+[node name="Rec_mic_Fill" parent="UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic/ChaosIconMicBg" index="0" unique_id=551040892]
 offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
@@ -202,6 +208,7 @@ offset_left = 304.95053
 offset_top = 164.35641
 offset_right = -48.0495
 offset_bottom = -190.64355
+mouse_default_cursor_shape = 2
 
 [node name="OutsideTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=1674202449]
 mouse_filter = 2
@@ -365,7 +372,6 @@ custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
 
 [node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
-visible = false
 alignment = 0
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]

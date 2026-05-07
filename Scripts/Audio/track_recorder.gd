@@ -9,6 +9,7 @@ var recording: bool:
 
 var current_recording_data: RecordingData = null
 var _thread: Thread = null
+var pre_recording_volume: float = 0
 
 @export var song_recording_progress_bar: ProgressBar
 @export var recording_sample_button: RecordSampleButton
@@ -54,22 +55,37 @@ func _start_recording() -> void:
 	current_recording_data.max_recording_length = _calculate_max_recording_length(current_recording_data.track_type)
 
 	# Step 2: Mute all tracks
-	EventBus.mute_all_requested.emit(true)
+	# EventBus.mute_all_requested.emit(true)
+	pre_recording_volume = AudioServer.get_bus_volume_db(0)
+	EventBus.set_master_volume_db.emit(-20)
 
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true)
+		GameState.metronome_enabled = true
 		#Wait for 4 seconds (countdown duration) before starting recording
-		var amount_to_wait = BeatManager.calculate_time_until_top() + 0.1
+		var amount_to_wait = BeatManager.calculate_time_until_top()
 		await get_tree().create_timer(amount_to_wait).timeout
+		
+		GameState.metronome_enabled = false
 		EventBus.countdown_close_requested.emit()
 		print("Starting recording after countdown, waited for: " + str(amount_to_wait) + " seconds")
 
-	if current_recording_data.track_type == TrackData.TrackType.SONG:
-		GameState.song_mode_active = true
-		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
+	elif current_recording_data.track_type == TrackData.TrackType.SONG:
+		GameState.song_mode_active = false
+		GameState.metronome_enabled = true
+		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true) # start playing
+		
+		var amount_to_wait = BeatManager.calculate_time_until_top()
+		await get_tree().create_timer(amount_to_wait).timeout
+		GameState.song_mode_active = true
+		GameState.metronome_enabled = false
+		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
+		EventBus.countdown_close_requested.emit()
+	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
+		await get_tree().create_timer(0.4).timeout
 		
 
 	# Step 4: Announce to the world that recording has started
@@ -79,6 +95,7 @@ func _start_recording() -> void:
 func _stop_recording() -> void:
 	GameState.is_recording = false
 	EventBus.mute_all_requested.emit(false)
+	EventBus.set_master_volume_db.emit(pre_recording_volume)
 	EventBus.stop_recording_requested.emit(current_recording_data)	
 	current_recording_data = null
 

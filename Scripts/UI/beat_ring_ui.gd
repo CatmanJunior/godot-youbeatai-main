@@ -89,7 +89,7 @@ func _get_beat_button(track: int, beat: int) -> BeatButton:
 ## Rotate the pointer based on the current bar progress
 func _update_pointer_rotation() -> void:
 	if GameState.playing:
-		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
+		pointer.rotation_degrees = GameState.bar_progress * 360.0
 
 func _update_play_pause_button(is_playing: bool) -> void:
 	play_pause_button.icon = pause_icon if is_playing else play_icon

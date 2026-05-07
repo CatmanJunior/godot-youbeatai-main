@@ -128,6 +128,9 @@ offset_top = -40.0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_4" index="2" unique_id=814267231]
+self_modulate = Color(0.99, 0.87714005, 0.23760001, 0.5019608)
+
 [node name="TrackSelectButton_5" parent="VBoxContainer" unique_id=1681121463 instance=ExtResource("12_pe0j6")]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
@@ -142,6 +145,9 @@ offset_left = -40.0
 offset_top = -40.0
 offset_right = 40.0
 offset_bottom = 40.0
+
+[node name="GlowTex" parent="VBoxContainer/TrackSelectButton_5" index="2" unique_id=814267231]
+self_modulate = Color(0.52616674, 0.114799984, 0.82, 0.5019608)
 
 [node name="OutlineTex" parent="VBoxContainer/TrackSelectButton_5" index="3" unique_id=946711568]
 texture = ExtResource("14_0b0kd")

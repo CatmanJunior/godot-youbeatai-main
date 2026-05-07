@@ -156,6 +156,8 @@ signal set_stream_requested(track: int, audio_layer: int, audio: AudioStream)
 ## Emitted to request muting or unmuting all audio tracks.
 signal mute_all_requested(mute: bool)
 
+signal set_master_volume_db(value: float)
+
 # ── Saving / Exporting ──
 ## Emitted to request starting audio recording.
 signal export_recording_requested(recording_data: ExportRecordingData)

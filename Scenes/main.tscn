@@ -372,6 +372,9 @@ custom_minimum_size = Vector2(1280, 720)
 layout_mode = 1
 
 [node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
+visible = false
+show_behind_parent = false
+top_level = false
 alignment = 0
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]

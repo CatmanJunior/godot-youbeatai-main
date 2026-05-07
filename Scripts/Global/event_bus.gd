@@ -182,6 +182,12 @@ signal achievement_done(achievement_id: int)
 signal all_achievements_unlocked()
 ## Emitted to request skipping the tutorial.
 signal skip_tutorial_requested()
+## Emitted when the tutorial has been completed.
+signal on_tutorial_done()
+## Emitted when energy points have changed, carrying the new total.
+signal energy_points_changed(points: int)
+## Emitted when an action is attempted that requires more energy than the player currently has.
+signal not_enough_energy()
 
 # ── TTS ──
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.

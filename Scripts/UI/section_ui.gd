@@ -181,6 +181,14 @@ func set_copy_paste_clear_buttons_active(active: bool) -> void:
 	copy_paste_clear_buttons_holder.visible = active
 	copy_paste_clear_button_holder_time_since_activation = 0
 
+
+## Show or hide the section button at [param index].
+## Does nothing if [param index] is out of range.
+func set_section_button_visible(index: int, visible: bool) -> void:
+	if index < 0 or index >= section_buttons.size():
+		return
+	section_buttons[index].visible = visible
+
 func _open_emoji_prompt():
 	emoji_prompt.visible = true
 
@@ -209,6 +217,8 @@ func _on_switch_section_ui(section_index: int) -> void:
 	_update_section_ui()
 	set_copy_paste_clear_buttons_active(true)
 	var i = new_section.index
+	if i < 0 or i >= section_buttons.size():
+		return
 	copy_paste_clear_buttons_holder.global_position.x = section_buttons[i].global_position.x
 
 	# for button in section_buttons:

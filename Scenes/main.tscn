@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://c78m8ijn10kwh"]
 
-[ext_resource type="Texture2D" uid="uid://m6q7i764vuvw" path="res://Resources/Textures_New/Layout 18 jan26.png" id="1_bv80c"]
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
@@ -25,9 +24,10 @@
 [ext_resource type="Script" uid="uid://bmenwdflaskgk" path="res://Scripts/Managers/sound_bank_loader.gd" id="29_s8vy0"]
 [ext_resource type="Script" uid="uid://bocpgiluuvko5" path="res://Scripts/Exporters/Exporter.gd" id="33_55jeb"]
 [ext_resource type="Script" uid="uid://dgve2eeehfcib" path="res://Scripts/Exporters/FileExporter.gd" id="34_2daye"]
-[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="35_8ctj7"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
+[ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Textures_New/Icons/SHAPES_Lock.png" id="39_bv80c"]
+[ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://cqp8xc386gq2b" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
@@ -58,22 +58,6 @@
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
-
-[node name="TextureRect" type="TextureRect" parent="." unique_id=929999586]
-visible = false
-z_index = -5
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -640.0
-offset_top = -360.0
-offset_right = 640.0
-offset_bottom = 360.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_bv80c")
-expand_mode = 1
-stretch_mode = 4
 
 [node name="Camera" type="Camera2D" parent="." unique_id=980598397]
 scale = Vector2(4.12, 1)
@@ -150,13 +134,28 @@ playback_type = 1
 script = ExtResource("34_2daye")
 metadata/_custom_type_script = "uid://dgve2eeehfcib"
 
-[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
+[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui", "count_label")]
 script = ExtResource("28_ux43w")
 tutorial_steps_resource = ExtResource("29_n7cmr")
 achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
+count_label = NodePath("../../UserInterface/Robot/AchievementsPanel/AmountLef")
+
+[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("energy_progress_bar", "achievements_panel", "instruction_label", "mute_speech_button", "section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
+script = ExtResource("39_ptfg5")
+energy_progress_bar = NodePath("../../../UserInterface/Robot/EnergyProgressBar")
+achievements_panel = NodePath("../../../UserInterface/Robot/AchievementsPanel")
+instruction_label = NodePath("../../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
+mute_speech_button = NodePath("../../../UserInterface/SettingsPanel/Panel/toggle_v_container/MuteSpeachToggle")
+achievement_sfx = ExtResource("61_0t4jf")
+lock_icon_texture = ExtResource("39_bv80c")
+section_ui = NodePath("../../../UserInterface/SwitchSectionButtons")
+btn_template_tip = NodePath("../../../UserInterface/SettingsPanel/Panel/stijl_tip/TemplateButton/ShowTemplateButton")
+btn_track_2 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2")
+btn_track_3 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3")
+btn_synth_track_2 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5")
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false
@@ -172,7 +171,7 @@ offset_right = -108.0
 offset_bottom = 47.205
 mouse_filter = 1
 
-[node name="ChaosPad" parent="UserInterface" unique_id=2043765558 node_paths=PackedStringArray("mix_star_marker", "outside_star_marker", "star3") instance=ExtResource("1_fg68e")]
+[node name="ChaosPad" parent="UserInterface" unique_id=2043765558 instance=ExtResource("1_fg68e")]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.0
@@ -181,9 +180,6 @@ offset_top = -312.0
 offset_right = 281.0
 offset_bottom = -312.0
 scale = Vector2(0.505, 0.505)
-mix_star_marker = NodePath("ChaosPadTriangle/Star")
-outside_star_marker = NodePath("ChaosPadTriangle/Star2")
-star3 = NodePath("ChaosPadTriangle/Star3")
 
 [node name="PointRight" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="4" unique_id=1203642698]
 offset_left = 27.722797
@@ -264,9 +260,6 @@ grow_horizontal = 2
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
-
-[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
-visible = false
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 visible = false
@@ -464,4 +457,5 @@ script = ExtResource("56_ptfg5")
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/Robot/AchievementsPanel"]
+[editable path="UserInterface/SettingsPanel"]
 [editable path="UserInterface/SwitchSectionButtons"]

@@ -135,7 +135,7 @@ func _cond_knob_at_outside_star() -> bool:
 	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
 
 func _cond_knob_at_star() -> bool:
-	var marker := tutorial.chaos_pad_ui.star3
+	var marker := tutorial.chaos_pad_ui.main_star_marker
 	if marker == null:
 		return false
 	print ("Checking knob distance to star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))

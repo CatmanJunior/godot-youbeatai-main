@@ -13,7 +13,7 @@ var stomped_on_beat_amount: int = 0
 @export var clap_freq_min: float = 2000.0
 @export var clap_threshold: float = 0.03
 @export var stamp_freq_max: float = 150.0
-@export var stamp_threshold: float = 0.25
+@export var stamp_threshold: float = 0.1
 
 var is_clapping: bool:
 	get: return clap_volume > clap_threshold and clap_volume > stamp_volume

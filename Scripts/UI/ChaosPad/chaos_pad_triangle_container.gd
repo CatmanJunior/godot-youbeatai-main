@@ -16,6 +16,8 @@ func _ready() -> void:
 		queue_redraw()
 
 func _draw() -> void:
+	if not OS.is_debug_build():
+		return
 	if tri.size() < 3:
 		return
 	draw_colored_polygon(PackedVector2Array(tri), Color(0.2, 0.2, 0.3, 0.3))

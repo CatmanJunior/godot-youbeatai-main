@@ -85,6 +85,8 @@ func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = nul
 	chords.set_settings(_settings, sub_bus_names[1] )
 	add_child(chords)
 
+	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
+
 func pre_on_beat(beat:int):
 	if beat == 0 and GameState.song_mode_active:
 		EventBus.section_next_requested.emit()
@@ -105,6 +107,15 @@ func _on_beat_triggered(_beat: int) -> void:
 func _on_section_switched(_new) -> void:
 	pass
 
+func apply_effect_profile(effect_profile: EffectProfile) -> void:
+	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[1]), effect_profile)
+	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[2]), effect_profile)
+
+func _set_bus_effect(bus_idx: int, effect_profile: EffectProfile):
+	if bus_idx == -1:
+		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[1])
+		return
+	effect_profile.apply_effects(bus_idx)
 
 # ── Section add/remove handlers ──────────────────────────────────────────────
 

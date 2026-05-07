@@ -60,16 +60,28 @@ func _start_recording() -> void:
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true)
+		GameState.metronome_enabled = true
 		#Wait for 4 seconds (countdown duration) before starting recording
-		var amount_to_wait = BeatManager.calculate_time_until_top() + 0.1
+		var amount_to_wait = BeatManager.calculate_time_until_top()
 		await get_tree().create_timer(amount_to_wait).timeout
+		
+		GameState.metronome_enabled = false
 		EventBus.countdown_close_requested.emit()
 		print("Starting recording after countdown, waited for: " + str(amount_to_wait) + " seconds")
 
 	if current_recording_data.track_type == TrackData.TrackType.SONG:
-		GameState.song_mode_active = true
-		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
+		GameState.song_mode_active = false
+		GameState.metronome_enabled = true
+		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true) # start playing
+		
+		var amount_to_wait = BeatManager.calculate_time_until_top()
+		await get_tree().create_timer(amount_to_wait).timeout
+		GameState.song_mode_active = true
+		GameState.metronome_enabled = false
+		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
+		EventBus.countdown_close_requested.emit()
+		
 		
 
 	# Step 4: Announce to the world that recording has started

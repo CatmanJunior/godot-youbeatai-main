@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://p7huqo8hkmpg" path="res://Resources/Textures_Settings/Settings__0000_Hare-Button--no-glow.png" id="5_gx8v5"]
 [ext_resource type="Texture2D" uid="uid://dumxi28qepc74" path="res://Resources/Textures_Settings/Settings__0001_Tortoise-Button-no-glow.png" id="6_mvuv7"]
 [ext_resource type="Texture2D" uid="uid://d0tcoodnl8uvx" path="res://Resources/Textures_Settings/Settings__0010_Slider.png" id="7_ryerx"]
+[ext_resource type="PackedScene" uid="uid://b55hvfu55aayn" path="res://Scenes/UI_Components/setting_button.tscn" id="8_8qhib"]
 [ext_resource type="Texture2D" uid="uid://dwnfwdawnl7v1" path="res://Resources/Textures_Settings/Settings__0000_Swinging-Pendulum.png" id="8_r42af"]
 [ext_resource type="Texture2D" uid="uid://n1dnssx3f5r0" path="res://Resources/Textures_Settings/Settings__0001_Pendulum.png" id="9_oqudy"]
 [ext_resource type="Texture2D" uid="uid://bbnkybehc7hv3" path="res://Resources/Textures_Settings/Time.png" id="10_mthl7"]
@@ -267,7 +268,10 @@ expand_icon = true
 
 [node name="BPMText" type="Label" parent="Panel/bpm" unique_id=1191003587]
 light_mask = 2
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.008
+anchor_right = -0.01
 offset_left = 72.0
 offset_top = -57.0
 offset_right = 215.0
@@ -278,6 +282,18 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 text = "BPM"
 metadata/_edit_use_anchors_ = true
+
+[node name="SettingButton" parent="Panel/bpm/BPMText" unique_id=1184962439 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 77.0
+offset_bottom = 43.0
+grow_horizontal = 1
+grow_vertical = 1
+uitleg = "Hier bepaal je de snelheid, van de Beats Per Minuut, de meeste pop liedjes zijn 120 BPM."
+tekstvak = NodePath("../../../../SettingsUitleg")
 
 [node name="swing" type="Control" parent="Panel" unique_id=1661127305]
 anchors_preset = 0
@@ -382,6 +398,12 @@ theme_override_font_sizes/font_size = 35
 text = "Swing"
 metadata/_edit_use_anchors_ = true
 
+[node name="SettingButton" parent="Panel/swing/SwingText" unique_id=11594776 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+layout_mode = 1
+offset_right = -29.0
+uitleg = "Zet je Swing helemaal op 0 dan is het heel strak zoals Techno. Doe je hem iets naar rechts dan Swingt je liedje wat meer."
+tekstvak = NodePath("../../../../SettingsUitleg")
+
 [node name="delay" type="Control" parent="Panel" unique_id=2030069879]
 anchors_preset = 0
 offset_left = 679.0
@@ -481,6 +503,11 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Metronoom"
 
+[node name="SettingButton" parent="Panel/toggle_v_container/MetronomeToggle/Label" unique_id=1354041970 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+layout_mode = 1
+uitleg = "Zet dit aan om een muzikale klok te horen. Dit tikgeluid helpt je om het ritme te horen."
+tekstvak = NodePath("../../../../../SettingsUitleg")
+
 [node name="Knop adds beat" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1549939005]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
@@ -503,6 +530,11 @@ theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 46
 text = "Knop maakt beat"
+
+[node name="SettingButton" parent="Panel/toggle_v_container/Knop adds beat/Label" unique_id=325749334 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+layout_mode = 1
+uitleg = "Als je deze aan zet dan kan je met de knoppen op je toetsenboard, A, S, D, F, ook beats plaatsen."
+tekstvak = NodePath("../../../../../SettingsUitleg")
 
 [node name="ButtonIsClap" type="CheckButton" parent="Panel/toggle_v_container" unique_id=860283575]
 light_mask = 2
@@ -682,6 +714,12 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 text = "Stijl Tip"
 
+[node name="SettingButton" parent="Panel/stijl_tip/stijl_tip_text" unique_id=1090108789 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+layout_mode = 1
+offset_right = -14.0
+uitleg = "Ik heb een paar patronen gemaakt om je te inspireren! Ben benieuwd wat je er zelf mee kan maken."
+tekstvak = NodePath("../../../../SettingsUitleg")
+
 [node name="TemplateButton" type="Button" parent="Panel/stijl_tip" unique_id=1526642944 node_paths=PackedStringArray("previous_template_button", "next_template_button", "tip_template_button", "set_template_button")]
 layout_mode = 0
 offset_left = 74.00012
@@ -777,6 +815,11 @@ theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 text = "Vertraging"
 metadata/_edit_use_anchors_ = true
+
+[node name="SettingButton" parent="DelayText" unique_id=1078443100 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+layout_mode = 1
+uitleg = "Soms kan de microfoon een beetje laat lijken te reageren, heb je een oud apparaat dan is het handig om de balkje naar rechts te schuiven."
+tekstvak = NodePath("../../SettingsUitleg")
 
 [node name="SettingsUitleg" type="Label" parent="." unique_id=126812650]
 visible = false

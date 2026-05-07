@@ -101,7 +101,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
 			
 func on_klappy_energy(value):
-	if value >= 0 and not flicker_done:  
+	if value >= 100 and not flicker_done:  
 		unlocked = true
 		flicker_done = true
 		_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")

@@ -7,10 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="4_ce3w2"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_opfnp"]
+[ext_resource type="Texture2D" path="res://Resources/Textures/Klappy_backgroudn.png" id="7_vr1f0"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]
-[ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_vr1f0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
 bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
@@ -78,6 +78,8 @@ offset_bottom = 177.345
 grow_horizontal = 2
 theme = ExtResource("2_1ehe0")
 theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_colors/font_outline_color = Color(0.050980393, 0.06666667, 0.16470589, 1)
+theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("3_trj04")
 theme_override_font_sizes/font_size = 48
 text = "Klappy 
@@ -163,12 +165,12 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -121.0
-offset_top = -172.0
+offset_top = -174.27502
 offset_right = 121.0
-offset_bottom = -36.359985
+offset_bottom = -18.275024
 grow_horizontal = 2
 grow_vertical = 0
-theme_override_constants/separation = 16
+theme_override_constants/separation = 28
 metadata/_edit_group_ = true
 
 [node name="TutorialButton" type="Button" parent="MainMenuPanel/VBoxContainer" unique_id=1542674455]
@@ -210,7 +212,7 @@ offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("10_vr1f0")
+texture = ExtResource("7_vr1f0")
 expand_mode = 1
 stretch_mode = 5
 

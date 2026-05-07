@@ -29,6 +29,7 @@ signal track_button_pressed(track_index: int)
 func _ready():
 	self.pressed.connect(_on_press)
 	EventBus.beat_triggered.connect(_on_beat)
+	EventBus.playing_changed.connect(_play_state)
 
 func init(p_track_index: int, p_track_ui_settings: TrackUISettingsBase):
 	self.track_index = p_track_index
@@ -58,6 +59,9 @@ func set_button_selected(active: bool) -> void:
 		tween.tween_property(self, "scale", target_scale, scale_tween_duration)
 		tween.tween_property(self, "scale", Vector2.ONE, scale_tween_duration)
 
+func _play_state(playing: bool):
+	if not playing:
+		glow_rect.visible = false
 
 func _on_beat(beat: int):
 	var track = SongState.get_track(SongState.current_section_index, track_index)

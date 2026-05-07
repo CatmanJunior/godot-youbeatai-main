@@ -55,7 +55,9 @@ func _ready():
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
 	EventBus.beat_seek_requested.connect(func(beat): 
 		current_beat = beat
-		EventBus.beat_triggered.emit(0)
+		
+		if playing:
+			EventBus.beat_triggered.emit(0)
 	)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 

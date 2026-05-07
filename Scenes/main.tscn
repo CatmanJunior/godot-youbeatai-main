@@ -274,11 +274,10 @@ offset_bottom = 5.0
 
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false
+top_level = false
 layout_mode = 1
-offset_left = -1278.0
-offset_top = -560.0
-offset_right = -6.0
-offset_bottom = -210.0
+offset_top = -241.66
+offset_bottom = 108.34
 
 [node name="CountDown" parent="UserInterface" unique_id=2019424404 instance=ExtResource("52_6ml46")]
 visible = false

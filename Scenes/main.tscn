@@ -181,25 +181,25 @@ offset_right = 281.0
 offset_bottom = -312.0
 scale = Vector2(0.505, 0.505)
 
-[node name="PointRight" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="4" unique_id=1203642698]
+[node name="PointRight" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="3" unique_id=1203642698]
 offset_left = 27.722797
 offset_top = 69.30694
 offset_right = 27.722797
 offset_bottom = 69.30694
 
-[node name="Knob" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=1796748661]
+[node name="Knob" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="5" unique_id=1796748661]
 offset_left = 304.95053
 offset_top = 164.35641
 offset_right = -48.0495
 offset_bottom = -190.64355
 
-[node name="OutsideTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="7" unique_id=1674202449]
+[node name="OutsideTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=1674202449]
 mouse_filter = 2
 
-[node name="MixTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="8" unique_id=1742236932]
+[node name="MixTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="7" unique_id=1742236932]
 mouse_filter = 2
 
-[node name="MainTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="9" unique_id=3955043]
+[node name="MainTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="8" unique_id=3955043]
 mouse_filter = 2
 
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]

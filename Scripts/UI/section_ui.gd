@@ -135,9 +135,10 @@ func _add_section_button(index: int, tex: Texture2D) -> void:
 
 	var section_button = section_button_prefab.instantiate() as SectionButton
 	section_button.index = index
+	section_button.sectionData = SongState.get_section(index)
 	section_button.icon = tex
 	section_button.pressed.connect(func():
-		EventBus.section_switch_requested.emit(section_button.index)
+		EventBus.section_switch_requested.emit(section_button.sectionData.index)
 	)
 
 	section_buttons.insert(index, section_button)

@@ -73,12 +73,6 @@ pivot_offset_ratio = Vector2(0.5, 0.5)
 script = ExtResource("25_gu6ag")
 corners = [NodePath("PointLeft"), NodePath("PointRight"), NodePath("PointTop")]
 
-[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle" unique_id=631358537 node_paths=PackedStringArray("ui_reference")]
-anchors_preset = 0
-script = ExtResource("3_vhj50")
-ui_element = 9
-ui_reference = NodePath("../TriangleSprite")
-
 [node name="TriangleSprite" type="TextureRect" parent="ChaosPadTriangle" unique_id=2129523945]
 layout_mode = 1
 anchors_preset = 15
@@ -89,6 +83,16 @@ grow_vertical = 2
 rotation = 3.1415927
 pivot_offset_ratio = Vector2(0.5, 0.5)
 texture = ExtResource("2_7ufgw")
+
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle/TriangleSprite" unique_id=631358537 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+offset_left = 505.00003
+offset_top = 504.99997
+offset_right = 505.00003
+offset_bottom = 504.99997
+script = ExtResource("3_vhj50")
+ui_element = 9
+ui_reference = NodePath("..")
 
 [node name="PointLeft" type="Control" parent="ChaosPadTriangle" unique_id=1773935740]
 layout_mode = 1
@@ -115,6 +119,16 @@ scale = Vector2(0.6, 0.6)
 
 [node name="ChaosIconBack" parent="ChaosPadTriangle/PointLeft/ChaosIconAlt" index="0" unique_id=389055289]
 stretch_mode = 5
+
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle/PointLeft" unique_id=1480325712 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+offset_left = 505.00003
+offset_top = 504.99997
+offset_right = 505.00003
+offset_bottom = 504.99997
+script = ExtResource("3_vhj50")
+ui_element = 9
+ui_reference = NodePath("..")
 
 [node name="PointTop" type="Control" parent="ChaosPadTriangle" unique_id=400839598]
 anchors_preset = 0
@@ -149,6 +163,16 @@ scale = Vector2(0.6, 0.6)
 
 [node name="ChaosIconBack" parent="ChaosPadTriangle/PointRight/ChaosIconMain" index="0" unique_id=389055289]
 stretch_mode = 5
+
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle/PointRight" unique_id=104014989 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+offset_left = 505.00003
+offset_top = 504.99997
+offset_right = 505.00003
+offset_bottom = 504.99997
+script = ExtResource("3_vhj50")
+ui_element = 9
+ui_reference = NodePath("..")
 
 [node name="ChaosButtonMic" type="Button" parent="ChaosPadTriangle" unique_id=806900459 node_paths=PackedStringArray("fillTexture")]
 z_index = 3
@@ -248,6 +272,16 @@ width_curve = SubResource("Curve_f0ro3")
 gradient = SubResource("Gradient_vhj50")
 script = ExtResource("12_f0ro3")
 
+[node name="VisibilitySetter" type="Control" parent="ChaosPadTriangle/Knob" unique_id=1643753076 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+offset_left = 505.00003
+offset_top = 504.99997
+offset_right = 505.00003
+offset_bottom = 504.99997
+script = ExtResource("3_vhj50")
+ui_element = 9
+ui_reference = NodePath("..")
+
 [node name="OutsideTarget" type="TextureRect" parent="ChaosPadTriangle" unique_id=1674202449]
 layout_mode = 1
 anchors_preset = 8
@@ -255,10 +289,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 137.5
-offset_top = -25.5
-offset_right = 265.5
-offset_bottom = 102.5
+offset_left = 129.5
+offset_top = 4.5
+offset_right = 257.5
+offset_bottom = 132.5
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -316,29 +350,6 @@ target_self = true
 
 [node name="MainMarker" type="Marker2D" parent="ChaosPadTriangle/MainTarget" unique_id=11790167]
 position = Vector2(68, 64)
-
-[node name="MainMarker2" type="Marker2D" parent="ChaosPadTriangle/MainTarget" unique_id=229373716]
-position = Vector2(68, 64)
-
-[node name="MainTarget2" type="TextureRect" parent="ChaosPadTriangle" unique_id=1033993723]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -248.5
-offset_top = -217.5
-offset_right = -120.5
-offset_bottom = -89.5
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("11_3lp0m")
-expand_mode = 1
-script = ExtResource("12_uk2yi")
-ui_element = 12
-target_self = true
 
 [editable path="ChaosPadTriangle/PointLeft/ChaosIconAlt"]
 [editable path="ChaosPadTriangle/PointRight/ChaosIconMain"]

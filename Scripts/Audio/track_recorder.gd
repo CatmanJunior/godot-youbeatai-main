@@ -67,7 +67,9 @@ func _start_recording() -> void:
 		print("Starting recording after countdown, waited for: " + str(amount_to_wait) + " seconds")
 
 	if current_recording_data.track_type == TrackData.TrackType.SONG:
+		GameState.song_mode_active = true
 		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
+		EventBus.playing_change_requested.emit(true) # start playing
 		
 
 	# Step 4: Announce to the world that recording has started
@@ -77,7 +79,7 @@ func _start_recording() -> void:
 func _stop_recording() -> void:
 	GameState.is_recording = false
 	EventBus.mute_all_requested.emit(false)
-	EventBus.stop_recording_requested.emit(current_recording_data)
+	EventBus.stop_recording_requested.emit(current_recording_data)	
 	current_recording_data = null
 
 

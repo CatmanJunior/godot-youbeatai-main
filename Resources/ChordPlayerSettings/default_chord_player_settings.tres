@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="ChordPlayerSettings" format=3 uid="uid://gj7nhtsggdey"]
 
 [ext_resource type="Resource" uid="uid://duu4xfosamul2" path="res://Resources/Audio/SoundBanks/4_pop/4_pop.tres" id="1_nwmne"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/chord_player_settings.gd" id="1_plqal"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="2_nwmne"]
+[ext_resource type="Script" uid="uid://u6uoammlr3ut" path="res://Scripts/DataClasses/SoundBanks/chord_player_settings.gd" id="1_plqal"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="2_nwmne"]
 [ext_resource type="Texture2D" uid="uid://cify72xi008cm" path="res://Resources/Icons/Icons-_28_0029_Leaf.png" id="3_j4fbb"]
 [ext_resource type="Texture2D" uid="uid://clgvascwc8we6" path="res://Resources/Icons/Icons-_28_0028_Verse.png" id="4_d5mvn"]
 [ext_resource type="Texture2D" uid="uid://biyvk8ycmxqn" path="res://Resources/Icons/Icons-_28_0025_Riser.png" id="5_vwmbk"]

@@ -53,7 +53,12 @@ func _ready():
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
 	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
-	EventBus.beat_seek_requested.connect(func(beat): current_beat = beat)
+	EventBus.beat_seek_requested.connect(func(beat): 
+		current_beat = beat
+		
+		if playing:
+			EventBus.beat_triggered.emit(0)
+	)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 
 	EventBus.soundbank_loaded.connect(_on_soundbank_loaded)
@@ -63,6 +68,7 @@ func _ready():
 	EventBus.template_set.connect(_on_template_set)
 
 	EventBus.beat_triggered.connect(trigger_beat)
+	# current_beat = 0
 
 
 func _on_template_set(actives: Array) -> void:
@@ -86,11 +92,18 @@ func get_bar_progress() -> float:
 func _on_play_pause_toggled():
 	playing = not playing
 
+	if playing: 
+		EventBus.beat_triggered.emit(current_beat)
+
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
 func _on_playing_change_requested(is_playing: bool):
 	playing = is_playing
+
+	if playing:
+		EventBus.beat_triggered.emit(current_beat)
+	
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
@@ -122,19 +135,18 @@ func _get_swing_offset() -> float:
 
 # --- Beat manager functions ---
 func _on_beat_sprite_clicked(p_track: int, beat: int):
-	var was_active = get_beat(p_track, beat)
-	if GameState.use_achievements:
-		if not AchievementManager.has_energy_for_beat_addition() and not was_active:
-			EventBus.beat_state_changed.emit(p_track, beat, was_active) 
-			EventBus.not_enough_energy.emit()
-			return
+	var is_active = get_beat(p_track, beat)
+	if not is_active and not AchievementManager.has_energy_for_beat_addition():
+		EventBus.beat_state_changed.emit(p_track, beat, is_active) 
+		EventBus.not_enough_energy.emit()
+		return
+	
+	_set_beat(p_track, beat, not is_active)
 
-	if not was_active:
-		_set_beat(p_track, beat, true)
+	if not is_active:
 		EventBus.play_track_requested.emit(p_track)
 		EventBus.particles_requested.emit(Vector2.ZERO, track_settings_registry.get_track(p_track).track_color)
-	else:
-		_set_beat(p_track, beat, false)
+
 	EventBus.track_selected.emit(p_track)
 
 func _set_beat(track: int, beat: int, active: bool):

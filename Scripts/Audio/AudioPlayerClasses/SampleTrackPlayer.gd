@@ -29,6 +29,11 @@ func _ready() -> void:
 	super._ready()
 	EventBus.play_track_requested.connect(_on_play_track_requested)
 
+func setup(index: int, parent_bus: String, _settings = null) -> void:
+	super.setup(index, parent_bus, _settings)
+
+	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
+
 func _on_soundbank_loaded(bank: SoundBank) -> void:
 	#wait a frame to ensure everything is initialized before trying to set streams on players
 	await get_tree().process_frame
@@ -45,6 +50,13 @@ func _on_soundbank_loaded(bank: SoundBank) -> void:
 func _on_play_track_requested(trackIndex: int) -> void:
 	if trackIndex == track_index:
 		play()
+
+func apply_effect_profile(effect_profile: EffectProfile) -> void:
+	var bus_idx = AudioServer.get_bus_index(sub_bus_names[2]) # synth effect profile is applied to the ALT bus, which is the one with the effects on it
+	if bus_idx == -1:
+		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[2])
+		return
+	effect_profile.apply_effects(bus_idx)
 
 func _on_section_switched(_new : SectionData) -> void:
 	

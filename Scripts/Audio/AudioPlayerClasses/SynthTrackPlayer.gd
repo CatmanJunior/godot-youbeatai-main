@@ -32,10 +32,13 @@ func apply_note_player_settings(new_settings: NotePlayerSettings) -> void:
 
 func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) -> void:
 	super.setup(index, parent_bus, settings)
+
 	if settings:
 		apply_note_player_settings(settings)
 	else:
 		push_warning("Warning: No note player settings provided for SynthTrackPlayer %d, using defaults." % index)
+	
+	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
 
 func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
@@ -139,8 +142,12 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	return new_player
 
 func apply_effect_profile(effect_profile: EffectProfile) -> void:
-	var bus_idx = AudioServer.get_bus_index(sub_bus_names[SynthLayer.ALT]) # synth effect profile is applied to the ALT bus, which is the one with the effects on it
+	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[SynthLayer.ALT]), effect_profile)
+	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[SynthLayer.NOTE]), effect_profile)
+
+func _set_bus_effect(bus_idx: int, effect_profile: EffectProfile):
 	if bus_idx == -1:
-		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[SynthLayer.ALT])
+		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[1])
 		return
+	print("apply effects to %s" % bus_idx)
 	effect_profile.apply_effects(bus_idx)

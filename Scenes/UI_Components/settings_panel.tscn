@@ -21,6 +21,7 @@
 [ext_resource type="Script" uid="uid://nst1cl6b3w8" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
+[ext_resource type="Texture2D" uid="uid://duxksnnig6727" path="res://Resources/Textures_Settings/Settings__0007_Small-Button-Glow.png" id="21_8qhib"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
 texture = ExtResource("1_e2x6l")
@@ -701,6 +702,7 @@ previous_template_button = NodePath("TemplateLeftButton")
 next_template_button = NodePath("TemplateRightButton")
 tip_template_button = NodePath("ShowTemplateButton")
 set_template_button = NodePath(".")
+tip_toggle_icons = Array[Texture2D]([ExtResource("18_sm01b"), ExtResource("21_8qhib")])
 
 [node name="TemplateLeftButton" type="Button" parent="Panel/stijl_tip/TemplateButton" unique_id=1884172626]
 layout_mode = 0
@@ -740,6 +742,7 @@ theme_override_constants/icon_max_width = 60
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_rlvxq")
 theme_override_styles/hover = SubResource("StyleBoxFlat_rlvxq")
+toggle_mode = true
 text = "TIP"
 icon = ExtResource("18_sm01b")
 flat = true

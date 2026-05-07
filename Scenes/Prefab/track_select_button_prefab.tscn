@@ -26,6 +26,7 @@ anchor_right = 0.9
 anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
 texture = ExtResource("2_3gj1q")
 expand_mode = 1
 stretch_mode = 5

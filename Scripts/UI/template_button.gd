@@ -13,6 +13,8 @@ var template_names: Array[String]:
 @export var tip_template_button: Button
 @export var set_template_button: Button
 
+@export var tip_toggle_icons: Array[Texture2D]
+
 
 func _ready():
 	if current_template >= 0 and current_template < template_names.size():
@@ -28,18 +30,22 @@ func _previous_template():
 	if current_template < 0:
 		current_template = template_names.size() - 1
 	set_template_text(template_names[current_template])
+	EventBus.template_set_requested.emit(current_template)
 
 func _next_template():
 	current_template += 1
 	if current_template >= template_names.size():
 		current_template = 0
 	set_template_text(template_names[current_template])
+	EventBus.template_set_requested.emit(current_template)
 
 func _toggle_show_template():
-	GameState.show_template = not GameState.show_template
+	GameState.show_template = tip_template_button.button_pressed
+	tip_template_button.icon = tip_toggle_icons[ int(GameState.show_template) ] 
+	EventBus.template_show_requested.emit(tip_template_button.button_pressed)
 
 func _set_template():
-	EventBus.template_set_requested.emit(current_template)
+	EventBus.template_set_apply.emit()
 
 func set_template_text(file_name: String):
 	text = file_name

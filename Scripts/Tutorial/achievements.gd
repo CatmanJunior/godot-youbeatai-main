@@ -10,7 +10,7 @@ class_name AchievementManager
 
 
 #---Static ----
-static var energy_points: float = 0.0
+static var energy_points: float = 50.0
 
 
 # -- Constants --

@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://csoufanqc2frv" path="res://Resources/Audio/SoundBanks/4_pop/mineur/ClosedHH Omg 2.wav" id="3_wywju"]
 [ext_resource type="AudioStream" uid="uid://ctntur8hp4j4n" path="res://Resources/Audio/SoundBanks/4_pop/Kick Rooftop.wav" id="4_3h66m"]
 [ext_resource type="AudioStream" uid="uid://c0ab64ar4pabh" path="res://Resources/Audio/SoundBanks/4_pop/mineur/Kick TwoTone.wav" id="4_aqegv"]
-[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_8kq63"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_8kq63"]
 [ext_resource type="Resource" uid="uid://djshow0qurpom" path="res://Resources/Audio/SoundBanks/4_pop/EffectProfile.tres" id="5_527mg"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_rv86u"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_527mg"]

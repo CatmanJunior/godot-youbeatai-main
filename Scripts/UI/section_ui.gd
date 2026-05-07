@@ -27,6 +27,21 @@ var emoji_prompt_cancel_button: Button
 
 var copy_paste_clear_button_holder_time_since_activation: float = 0.0
 
+func hide_all_context_buttons():
+	add_section_button.visible = false
+	clear_section_button.visible = false
+	save_section_button.visible = false
+	remove_section_button.visible = false
+	load_section_button.visible = false
+
+
+func show_all_context_buttons():
+	add_section_button.visible = true
+	clear_section_button.visible = true
+	save_section_button.visible = true
+	remove_section_button.visible = true
+	load_section_button.visible = true
+
 func _ready():
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)

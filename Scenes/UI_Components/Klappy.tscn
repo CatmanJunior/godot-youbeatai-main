@@ -29,9 +29,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -240.5
-offset_top = -152.5
+offset_top = -141.235
 offset_right = 162.5
-offset_bottom = 136.5
+offset_bottom = 147.765
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(1.2, 1.2)
@@ -251,13 +251,12 @@ position = Vector2(1239.05, -302)
 achievement_panel = NodePath("../AchievementsPanel")
 instruction_label = NodePath("../AchievementsPanel/InstructionLabel")
 
-[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("KlappyLight", "KlappyEnergy", "FaceLight", "instruction_label", "achievement_panel", "colormapje") instance=ExtResource("9_rcijy")]
+[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("KlappyLight", "FaceLight", "instruction_label", "achievement_panel", "colormapje") instance=ExtResource("9_rcijy")]
 offset_left = -106.5
 offset_top = -187.5
 offset_right = 93.5
 offset_bottom = 12.5
 KlappyLight = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
-KlappyEnergy = NodePath("../ProgressBar")
 FaceLight = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
 instruction_label = NodePath("../AchievementsPanel/InstructionLabel")
 achievement_panel = NodePath("../AchievementsPanel")

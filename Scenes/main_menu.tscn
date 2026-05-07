@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="4_ce3w2"]
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_opfnp"]
-[ext_resource type="Texture2D" path="res://Resources/Textures/Klappy_backgroudn.png" id="7_vr1f0"]
+[ext_resource type="Texture2D" uid="uid://d3avwn0b5a15c" path="res://Resources/Textures/Klappy_background.png" id="7_vr1f0"]
 [ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
 [ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]

@@ -69,27 +69,33 @@ func init_section_button_actions():
 	emoji_prompt.cancel_button.button_up.connect(_close_emoji_prompt)
 
 	load_section_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_paste_section_button_pressed()
 	)
 
 	save_section_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_copy_section_button_pressed()
 	)
 
 	clear_section_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_clear_section_button_pressed()
 	)
 
 	add_section_button.button_up.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_open_emoji_prompt()
 	)
 
 	down_loop_count_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		var count = max(1, SongState.current_section.loop_count - 1)
 		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
 	)
 
 	up_loop_count_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		var count = min(SectionData.LOOP_COUNT_MAX, SongState.current_section.loop_count + 1)
 
 		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
@@ -100,6 +106,7 @@ func init_section_button_actions():
 		remove_section_button.pressed.connect(_on_remove_section_button_pressed)
 
 func _on_remove_section_button_pressed():
+	copy_paste_clear_button_holder_time_since_activation = 0
 	if SongState.sections.size() > 0:
 		EventBus.section_remove_requested.emit(SongState.current_section_index)
 

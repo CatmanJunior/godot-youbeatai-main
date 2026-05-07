@@ -10,8 +10,8 @@ extends Node
 
 
 @export var LINE_CONFIGS = [
-	{"points": 100, "base_dist": 280, "volume_dist": 28, "reversed": false},  # Track 0 (4) – big line
-	{"points": 40, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
+	{"points": 196, "base_dist": 280, "volume_dist": 28, "reversed": false},  # Track 0 (4) – big line
+	{"points": 80, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]
 
 var _sample_track_amount: int = SectionData.SAMPLE_TRACKS_PER_SECTION  # Number of sample tracks to offset synth track indices

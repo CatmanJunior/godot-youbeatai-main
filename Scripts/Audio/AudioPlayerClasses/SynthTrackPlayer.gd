@@ -139,8 +139,8 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	return new_player
 
 func apply_effect_profile(effect_profile: EffectProfile) -> void:
-	var bus_idx = AudioServer.get_bus_index(bus_name)
+	var bus_idx = AudioServer.get_bus_index(sub_bus_names[SynthLayer.ALT]) # synth effect profile is applied to the ALT bus, which is the one with the effects on it
 	if bus_idx == -1:
-		push_error("Bus '%s' not found for applying effect profile." % bus_name)
+		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[SynthLayer.ALT])
 		return
 	effect_profile.apply_effects(bus_idx)

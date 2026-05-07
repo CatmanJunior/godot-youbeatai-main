@@ -20,10 +20,11 @@ enum UIElement {
 	CHAOS_PAD_TRIANGLE,
 	ENTIRE_INTERFACE,
 	ACHIEVEMENTS_PANEL,
-	STAR1,
-	STAR2,
-	STAR3,
+	MAIN_TARGET,
+	MIX_TARGET,
+	OUTSIDE_TARGET,
 	AMOUNT_LEFT,
+	SECTION_CONTEXT_MENU,
 }
 
 @export var ui_element: UIVisibilityListener.UIElement = UIVisibilityListener.UIElement.BEAT_RING

@@ -122,19 +122,20 @@ func _get_swing_offset() -> float:
 
 # --- Beat manager functions ---
 func _on_beat_sprite_clicked(p_track: int, beat: int):
-	"""Handle beat sprite click via EventBus"""
-	toggle_beat(p_track, beat)
-	var is_active = get_beat(p_track, beat)
-	if is_active:
+	var was_active = get_beat(p_track, beat)
+		
+	if not AchievementManager.has_energy_for_beat_addition() and not was_active:
+		EventBus.beat_state_changed.emit(p_track, beat, was_active) 
+		EventBus.not_enough_energy.emit()
+		return
+	
+	if was_active:
+		_set_beat(p_track, beat, false)
 		EventBus.play_track_requested.emit(p_track)
 		EventBus.particles_requested.emit(Vector2.ZERO, track_settings_registry.get_track(p_track).track_color)
+	else:
+		_set_beat(p_track, beat, true)
 	EventBus.track_selected.emit(p_track)
-
-func toggle_beat(track: int, beat: int):
-	"""Toggle a beat on or off"""
-	SongState.current_section.toggle_beat(track, beat)
-	var is_active = SongState.current_section.get_beat(track, beat)
-	EventBus.beat_state_changed.emit(track, beat, is_active)
 
 func _set_beat(track: int, beat: int, active: bool):
 	"""Set a beat to active or inactive"""

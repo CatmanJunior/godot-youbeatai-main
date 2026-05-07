@@ -3,8 +3,9 @@
 [ext_resource type="Texture2D" uid="uid://ble37lkbs2x2" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Green_Empty.png" id="1_40pej"]
 [ext_resource type="Texture2D" uid="uid://8bjnkspgipvh" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Green-Clover.png" id="2_c86x6"]
 [ext_resource type="Script" uid="uid://b1g7nwjqognfg" path="res://Scripts/UI/Buttons/beat_button.gd" id="3_r17hn"]
+[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="4_c86x6"]
 
-[node name="BeatButton" type="TextureButton" unique_id=1956853531]
+[node name="BeatButton" type="TextureButton" unique_id=1956853531 node_paths=PackedStringArray("tip_marker")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -23,3 +24,19 @@ texture_normal = ExtResource("1_40pej")
 texture_pressed = ExtResource("2_c86x6")
 stretch_mode = 5
 script = ExtResource("3_r17hn")
+tip_marker = NodePath("marker")
+
+[node name="marker" type="TextureRect" parent="." unique_id=190834967]
+visible = false
+self_modulate = Color(0.9, 0.9, 0.9, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.35
+anchor_top = 0.35
+anchor_right = 0.65
+anchor_bottom = 0.65
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_c86x6")
+expand_mode = 1
+stretch_mode = 5

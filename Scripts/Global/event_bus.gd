@@ -54,6 +54,13 @@ signal beat_set_requested(track: int, beat: int, active: bool)
 signal template_set(actives: Array)
 ## Emitted to request applying a beat template by its index.
 signal template_set_requested(template_index: int)
+## Emitted to request applying a beat template by its index.
+signal template_set_apply()
+
+## show tip button
+signal template_show_requested(active: bool)
+## show tip
+signal template_show(active: bool, template: Array)
 
 # ── Beat Interaction ──
 signal clap_stomp_detected(interaction_type: int)

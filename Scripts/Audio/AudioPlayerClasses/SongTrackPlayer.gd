@@ -15,12 +15,12 @@ extends TrackPlayerBase
 ##   SongTrack6_Mix        → reserved for real-time mixed output
 
 enum SongLayer {
-	VOICE_OVER = 0,
+	MIX = 0,
 	CHORD = 1,
-	MIX = 2
+	VOICE_OVER = 2,
 }
 
-var BUS_SUFFIXES: Array[String] = ["VoiceOver", "Chord", "Mix"]
+var BUS_SUFFIXES: Array[String] = ["Mix", "Chord", "VoiceOver"]
 var BUS_PREFIX: String = "Song"
 
 ## Recording timer (for progress calculation).
@@ -50,6 +50,7 @@ func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.pre_beat_triggered.connect(pre_on_beat)
+	EventBus.section_switch_requested.connect(seek_to_position)
 
 
 func _process(delta: float) -> void:
@@ -62,6 +63,7 @@ func play(offset: float = 0.0) -> void:
 	if track_data and track_data.recorded_audio_stream:
 		_is_playing = true
 		players[SongLayer.VOICE_OVER].play(offset)
+		players[SongLayer.MIX].play(offset)
 
 func stop() -> void:
 	_is_playing = false
@@ -72,7 +74,9 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
 		return
 	track_data.recorded_audio_stream = recording_data.audio_stream
+
 	players[SongLayer.VOICE_OVER].stream = recording_data.audio_stream
+	players[SongLayer.MIX].stream = recording_data.audio_stream # alt version with effects
 	_has_recording = true
 	set_weights(_weights)
 
@@ -82,7 +86,7 @@ func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = nul
 	super.setup(index, parent_bus, _settings)
 	chords = Chords.new()
 	
-	chords.set_settings(_settings, sub_bus_names[1] )
+	chords.set_settings(_settings, sub_bus_names[SongLayer.CHORD] )
 	add_child(chords)
 
 	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
@@ -95,25 +99,36 @@ func _on_beat_triggered(_beat: int) -> void:
 	if not GameState.song_mode_active:
 		return
 
-	if _beat != 1:
-		return
+	if not players[SongLayer.VOICE_OVER].playing:
+		play(_calculate_play_offset(SongState.current_section_index) )
 
-	if SongState.current_section_index == 0 and not _is_playing:
-		play()
-		return
+func seek_to_position(section_index: int):
+	if players[SongLayer.VOICE_OVER].playing:
+		stop()
+		play( _calculate_play_offset(section_index) )
+
+
+func _calculate_play_offset(section_index: int) -> float:
+	if section_index == 0:
+		return 0
+
+	var sections = SongState.sections.filter( func(e:SectionData): return e.index < section_index )
+	var lengths = sections.map( func(e:SectionData): return e.loop_count * SongState.beats_per_section )
+	var offset_in_beats = lengths.reduce( func(accum, e): return accum + e );
+	return offset_in_beats * SongState.beat_duration + SongState.beat_duration * GameState.current_beat
 
 ## Song track is NOT per-section — ignore section switches for stream loading.
 ## (The voice_over lives on SongState.song_track, not on sections.)
-func _on_section_switched(_new) -> void:
+func _on_section_switched(_new: SectionData) -> void:
 	pass
 
 func apply_effect_profile(effect_profile: EffectProfile) -> void:
-	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[1]), effect_profile)
-	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[2]), effect_profile)
+	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[SongLayer.MIX]), effect_profile,sub_bus_names[SongLayer.MIX])
+	_set_bus_effect(AudioServer.get_bus_index(sub_bus_names[SongLayer.CHORD]), effect_profile,sub_bus_names[SongLayer.CHORD])
 
-func _set_bus_effect(bus_idx: int, effect_profile: EffectProfile):
+func _set_bus_effect(bus_idx: int, effect_profile: EffectProfile, bus: String):
 	if bus_idx == -1:
-		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[1])
+		push_error("Bus '%s' not found for applying effect profile." % bus)
 		return
 	effect_profile.apply_effects(bus_idx)
 

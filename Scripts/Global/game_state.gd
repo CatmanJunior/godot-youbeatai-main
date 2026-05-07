@@ -49,7 +49,8 @@ var bar_progress: float = 0.0
 
 # -- Recording --
 var is_recording: bool = false
-var song_mode: bool = false
+
+var loop_cursor: int = 0
 
 #-- Song mode (vs. track mode) --
 var song_mode_active: bool = false

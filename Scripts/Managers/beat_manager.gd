@@ -53,7 +53,10 @@ func _ready():
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
 	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
-	EventBus.beat_seek_requested.connect(func(beat): current_beat = beat)
+	EventBus.beat_seek_requested.connect(func(beat): 
+		current_beat = beat
+		EventBus.beat_triggered.emit(0)
+	)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 
 	EventBus.soundbank_loaded.connect(_on_soundbank_loaded)
@@ -63,6 +66,7 @@ func _ready():
 	EventBus.template_set.connect(_on_template_set)
 
 	EventBus.beat_triggered.connect(trigger_beat)
+	# current_beat = 0
 
 
 func _on_template_set(actives: Array) -> void:
@@ -86,11 +90,18 @@ func get_bar_progress() -> float:
 func _on_play_pause_toggled():
 	playing = not playing
 
+	if playing: 
+		EventBus.beat_triggered.emit(current_beat)
+
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
 func _on_playing_change_requested(is_playing: bool):
 	playing = is_playing
+
+	if playing:
+		EventBus.beat_triggered.emit(current_beat)
+	
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 

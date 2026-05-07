@@ -72,6 +72,8 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 	# should this be here?
 	_resolve_section_progression(new_section, tex)
 	sections.insert(section_index, new_section)
+	if tex == null:
+		tex = initial_sections[0] if initial_sections.size() > 0 else null
 	_resolve_section_indexes()
 	SongState.sections = sections
 

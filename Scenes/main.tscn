@@ -187,62 +187,13 @@ offset_top = 69.30694
 offset_right = 27.722797
 offset_bottom = 69.30694
 
-[node name="Star3" type="TextureRect" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=2107912249]
-self_modulate = Color(0.32172823, 0.3217279, 0.3217278, 1)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -36.658417
-offset_top = -232.69803
-offset_right = 36.341583
-offset_bottom = -159.69803
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("20_tvghb")
-expand_mode = 1
 
-[node name="OutsideStar2" type="Marker2D" parent="UserInterface/ChaosPad/ChaosPadTriangle/Star3" unique_id=612860120]
-position = Vector2(36, 41)
-
-[node name="TextureRect2" type="TextureRect" parent="UserInterface/ChaosPad/ChaosPadTriangle/Star3" unique_id=420981683]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -6.6500015
-offset_bottom = -7.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("20_tvghb")
-stretch_mode = 5
-
-[node name="VisibilitySetter2" type="Control" parent="UserInterface/ChaosPad/ChaosPadTriangle/Star3" unique_id=1927247439 node_paths=PackedStringArray("ui_reference")]
-anchors_preset = 0
-script = ExtResource("35_8ctj7")
-ui_element = 14
-ui_reference = NodePath("..")
 
 [node name="Knob" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="7" unique_id=1796748661]
 offset_left = 304.95053
 offset_top = 164.35641
 offset_right = -48.0495
 offset_bottom = -190.64355
-
-[node name="Star2" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="8" unique_id=842200770]
-visible = true
-offset_left = 101.955444
-offset_top = -117.84653
-offset_right = 174.95544
-offset_bottom = -44.846527
-metadata/_edit_group_ = true
-
-[node name="Star" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="9" unique_id=1742236932]
-visible = true
 
 [node name="TrackSelectButtons" parent="UserInterface" unique_id=2075389560 instance=ExtResource("1_qax2n")]
 custom_minimum_size = Vector2(1280, 720)
@@ -451,6 +402,13 @@ autowrap_mode = 1
 script = ExtResource("56_ptfg5")
 
 [editable path="UserInterface/ChaosPad"]
+
+[editable path="UserInterface/TrackSelectButtons"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_1"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
+[editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointLeft/ChaosIconAlt"]
 [editable path="UserInterface/ChaosPad/ChaosPadTriangle/PointRight/ChaosIconMain"]
 [editable path="UserInterface/Robot"]

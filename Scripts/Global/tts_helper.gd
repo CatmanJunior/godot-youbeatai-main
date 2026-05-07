@@ -16,6 +16,9 @@ func init():
 	speak("test")
 
 func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> void:
+	if GameState.mute_speech:
+		return
+
 	var voices = get_voices()
 	if voices.is_empty():
 		return

@@ -14,12 +14,14 @@ static var energy_points: float = 0.0
 
 
 # -- Constants --
-const START_ENERGY_POINTS: float = 5.0
+const START_ENERGY_POINTS: float = 25.0
 const ENERGY_COST_PER_BEAT_ADDED: float = 1.0
-const ENERGY_REWARD_PER_CLAP_STOMP_ON_BEAT: float = 1.0
+const ENERGY_REWARD_PER_CLAP_STOMP_ON_BEAT: float = 3.0
 const ENERGY_REWARD_PER_BEAT_REMOVED: float = 1.0
-const ENERGY_COST_REWARD_FULL_SECTION_PLAYED: float = 1.0
-const ENERGY_THRESHOLD_LIGHT_PAD: float = 100
+const ENERGY_COST_REWARD_FULL_SECTION_PLAYED: float = 2.0
+const ENERGY_COST_TEMPLATE_SET: float = 50.0
+const ENERGY_THRESHOLD_LIGHT_PAD: float = 100.0
+
 
 const LOCK_ICON_NODE_NAME: StringName = &"__lock_icon"
 
@@ -35,6 +37,8 @@ const TIMEOUT_AFTER_TOOLTIP_OPEN: float = 2.0
 @export var achievement_sfx: AudioStream
 ## Icon shown on a locked button. Assign a small padlock texture in the editor.
 @export var lock_icon_texture: Texture2D
+## Reference to SectionUI — used to retrieve the newly created section button after unlock.
+@export var section_ui: SectionUI
 
 ## One export per AchievementNode — assign the button to lock in the inspector.
 ## Leave a slot empty (null) if that achievement has no button to lock.
@@ -42,7 +46,6 @@ const TIMEOUT_AFTER_TOOLTIP_OPEN: float = 2.0
 @export var btn_first_sample: BaseButton
 @export var btn_second_sample: BaseButton
 @export var btn_template_tip: BaseButton
-@export var btn_add_section: BaseButton
 @export var btn_track_2: BaseButton
 @export var btn_track_3: BaseButton
 @export var btn_synth_track_2: BaseButton
@@ -65,23 +68,7 @@ var _late_ready_done: bool = false
 func _ready() -> void:
 	if not GameState.use_achievements:
 		return
-
-	_build_locked_buttons_map()
-	change_energy_points(START_ENERGY_POINTS)
-		
-	var list := AchievementList.new()
-	list.tracker = self
-	_achievements = list.build()
-
-	EventBus.clap_on_beat_detected.connect(_on_clap_stomp_on_beat)
-	EventBus.stomp_on_beat_detected.connect(_on_clap_stomp_on_beat)
-	EventBus.beat_state_changed.connect(_on_beat_state_change)
-	EventBus.recording_stopped.connect(_on_recording_stopped)
-	EventBus.add_section_requested.connect(_on_add_section_requested)
-	EventBus.on_tutorial_done.connect(_on_tutorial_done)
-	EventBus.beat_triggered.connect(_on_beat_triggered)
-	EventBus.not_enough_energy.connect(_on_not_enough_energy)
-	_setup_locks()
+	activate_achievements.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -89,6 +76,17 @@ func _process(_delta: float) -> void:
 		_update_achievements()
 
 
+func _input(event: InputEvent) -> void:
+	if not OS.is_debug_build():
+		return
+	if event is InputEventKey:
+		var i_event: InputEventKey = event
+		if i_event.keycode == Key.KEY_9 and i_event.pressed:
+			change_energy_points(10.0)
+		if i_event.keycode == Key.KEY_8 and i_event.pressed:
+			change_energy_points(-10.0)
+		if i_event.keycode == Key.KEY_7 and i_event.pressed:
+			unlock_all_achievements()
 
 func _on_beat_triggered(_beat_index: int) -> void:
 	# Reward energy for playing a full section, to encourage using the new sections.
@@ -132,14 +130,43 @@ func _on_recording_stopped(rec: RecordingData) -> void:
 		samples_recorded += 1
 
 func _on_tutorial_done() -> void:
-	pass # TODO: activate achievements
+	activate_achievements()
 
+func activate_achievements() -> void:
+
+	_build_locked_buttons_map()
+	change_energy_points(START_ENERGY_POINTS)
+		
+	var list := AchievementList.new()
+	list.tracker = self
+	_achievements = list.build()
+
+	# Add the initial second section upfront and lock its button as the ADD_SECTION unlock target.
+	if section_ui:
+		print("Spawning initial section for achievements")
+		EventBus.section_added.connect(
+			func(idx: int, _tex: Texture2D) -> void:
+				if idx < section_ui.section_buttons.size():
+					locked_buttons[AchievementDef.AchievementNode.ADD_SECTION] = section_ui.section_buttons[idx]
+		, CONNECT_ONE_SHOT)
+	EventBus.add_section_requested.emit(null)
+
+	EventBus.clap_on_beat_detected.connect(_on_clap_stomp_on_beat)
+	EventBus.stomp_on_beat_detected.connect(_on_clap_stomp_on_beat)
+	EventBus.beat_state_changed.connect(_on_beat_state_change)
+	EventBus.recording_stopped.connect(_on_recording_stopped)
+	EventBus.add_section_requested.connect(_on_add_section_requested)
+	EventBus.on_tutorial_done.connect(_on_tutorial_done)
+	EventBus.beat_triggered.connect(_on_beat_triggered)
+	EventBus.not_enough_energy.connect(_on_not_enough_energy)
+	_setup_locks()
+	GameState.achievement_active = true
+
+	
 
 # ── Achievement update loop ───────────────────────────────────────────────────
 
 func _setup_locks() -> void:
-	if not GameState.achievement_active:
-		return
 	for button: BaseButton in locked_buttons.values():
 		_lock_button(button)
 
@@ -240,7 +267,8 @@ func _setup_default_ui_state() -> void:
 	EventBus.track_sprites_visibility_requested.emit(2, false)
 	EventBus.track_sprites_visibility_requested.emit(3, false)
 	EventBus.synth_progress_bar_visible_requested.emit(1, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
+	if not GameState.use_tutorial:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	
 
 # ── Lock / unlock helpers ─────────────────────────────────────────────────────
@@ -253,10 +281,10 @@ func _lock_button(button: BaseButton) -> void:
 	icon.name = LOCK_ICON_NODE_NAME
 	icon.texture = lock_icon_texture
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	# FULL_RECT fills the button so the TextureRect has a real size;
-	# STRETCH_KEEP_ASPECT_CENTERED then draws the icon centred within it.
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.scale = Vector2.ONE * 0.5
+	# Anchor to the center of the button, then size it to 60% of the button.
+	icon.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	icon.position = icon.size /2.5
+	icon.scale = Vector2.ONE * 0.6
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(icon)
 
@@ -278,7 +306,6 @@ func _build_locked_buttons_map() -> void:
 		[N.TRACK_2, btn_track_2],
 		[N.SYNTH_2, btn_synth_track_2],
 		[N.TEMPLATE_TIP, btn_template_tip],
-		[N.ADD_SECTION, btn_add_section],
 		[N.FIRST_SAMPLE, btn_first_sample],
 		[N.SECOND_SAMPLE, btn_second_sample],
 		[N.TRACK_3, btn_track_3],

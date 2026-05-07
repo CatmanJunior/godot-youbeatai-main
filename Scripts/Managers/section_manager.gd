@@ -3,7 +3,9 @@ extends Node
 
 # Section management constants
 const SECTIONS_AMOUNT_MAX: int = 8
-const SECTIONS_AMOUNT_INITIAL: int = 4
+const SECTIONS_AMOUNT_INITIAL: int = 5
+const SECTIONS_AMOUNT_TUTORIAL: int = 1
+
 
 # Section state
 var current_section_index: int:
@@ -48,7 +50,9 @@ func spawn_initial_sections():
 	if _sections_initialized:
 		return
 
-	for i in range(len(initial_sections)):
+	var initial_amount = SECTIONS_AMOUNT_TUTORIAL if GameState.use_tutorial or GameState.use_achievements else SECTIONS_AMOUNT_INITIAL
+
+	for i in range(min(initial_sections.size(), initial_amount)):
 		var tex = initial_sections[i]
 		add_section(i, tex)
 
@@ -66,7 +70,8 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 	new_section.create_default_tracks()
 	_resolve_section_progression(new_section, tex)
 	sections.insert(section_index, new_section)
-
+	if tex == null:
+		tex = initial_sections[0] if initial_sections.size() > 0 else null
 	SongState.sections = sections
 	EventBus.section_added.emit(section_index, tex)
 	if _sections_initialized:

@@ -25,11 +25,15 @@ func build() -> Array[AchievementDef]:
 
 		_def(N.TEMPLATE_TIP,
 			"In de instellingen kan je op tip klikken, dan laat ik een voorbeeld liedje zien",
-			func() -> bool: return GameState.show_template),
+			func() -> bool: return true,
+			50.0,),
 
 		_def(N.ADD_SECTION,
 			"Als je een nieuwe sectie toevoegt, kan je hier een heel liedje opnemen.",
-			func() -> bool: return tracker.sections_added >= 1),
+			func() -> bool: return true,
+			50.0,
+			_unlock_sections,
+		),
 
 		_def(N.FIRST_SAMPLE,
 			"Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring.",
@@ -49,6 +53,10 @@ func build() -> Array[AchievementDef]:
 
 
 # ── Unlock callbacks ──────────────────────────────────────────────────────────
+
+func _unlock_sections() -> void:
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.SECTION_CONTEXT_MENU, true)
+	
 
 func _unlock_big_line() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.SYNTH2_LAYER, true)

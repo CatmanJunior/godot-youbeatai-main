@@ -7,6 +7,7 @@ extends Node
 @export var clap_stomp: ClapStompDetector
 @export var chaos_pad_ui: ChaosPadUI
 @export var chaos_pad_knob_top_position: Node2D
+@export var count_label: Label
 
 # ── Constants ─────────────────────────────────────────────
 
@@ -87,9 +88,9 @@ func _ready() -> void:
 
 
 func _turn_off_stars():
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
 
 func _on_has_clapped_on_beat() -> void:
 	clapped_on_beat += 1
@@ -149,7 +150,7 @@ func reset() -> void:
 	_first_tts_done = false
 	_last_knob_pos = Vector2.ZERO
 
-#when . is pressed goto next tutorial step
+#when 0 is pressed goto next tutorial step
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var i_event : InputEventKey = event
@@ -202,6 +203,7 @@ func update_tutorial() -> void:
 	# _continue_button_visible(_active)
 
 	if not _first_tts_done and GameState.use_tutorial:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, true)
 		_speak_tutorial_instruction(tutorial_level)
 		_first_tts_done = true
 
@@ -268,11 +270,21 @@ func _update_interaction_sfx() -> void:
 		_previous_stomp = clap_stomp.stomped_on_beat_amount
 		EventBus.amount_left_text_requested.emit(
 			"Goed gestampt %d / 5" % clap_stomp.stomped_on_beat_amount)
+		_set_count_label(CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount)
 	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
 		_previous_clap = clap_stomp.clapped_on_beat_amount
 		EventBus.amount_left_text_requested.emit(
 			"Goed geklapt %d / 5" % clap_stomp.clapped_on_beat_amount)
+		_set_count_label(CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount)
+
+func _set_count_label(remaining: int) -> void:
+	if remaining > 0:
+		count_label.visible = true
+	else:
+		count_label.visible = false
+	if count_label:
+		count_label.text = "Nog %d te gaan" % remaining
 
 # Speaks the instruction text for the given step index via TTS.
 # Strips emoticons from the text and uses a faster rate if _increased_speed is set.

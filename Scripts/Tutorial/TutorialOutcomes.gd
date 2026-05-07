@@ -32,12 +32,12 @@ func get_map() -> Dictionary:
 		O.ON_BASS_RECORDING_STARTED: _outcome_on_bass_recording_started,
 		O.END_FAST_TTS_AND_WAIT:   _outcome_voice_over_done,
 		O.SHOW_CHAOS_TRIANGLE:     EventBus.ui_visibility_requested.emit.bind(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true),
-		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star.bind(2), # start with star 1
+		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star.bind(0), # start with star 1
 		O.ON_CHAOSPAD_STAR_REACHED: _outcome_chaospad_star_reached,
 		O.ON_CHAOSPAD_LISTENED:    _outcome_chaospad_listened,
-		O.SHOW_MIX_STAR:           _outcome_show_chaospad_star.bind(0),
+		O.SHOW_MIX_STAR:           _outcome_show_chaospad_star.bind(1),
 		O.ON_MIX_STAR_REACHED:     _reach_knob_target.bind(tutorial.chaos_pad_ui.mix_star_marker),
-		O.SHOW_OUTSIDE_STAR:       _outcome_show_chaospad_star.bind(1),
+		O.SHOW_OUTSIDE_STAR:       _outcome_show_chaospad_star.bind(2),
 		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
 		O.FINISH_TUTORIAL:         _outcome_end_tutorial,
 	}
@@ -89,6 +89,7 @@ func _outcome_stomp_setup() -> void:
 	tutorial._in_stomp_phase = true
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
 	EventBus.amount_left_text_requested.emit("Goed gestampt %d / 5" % tutorial.clap_stomp.stomped_on_beat_amount)
+	tutorial._set_count_label(Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.stomped_on_beat_amount)
 	tutorial.play_achievement_sfx()
 
 # ── Clap ring ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -122,6 +123,7 @@ func _outcome_clap_count_setup() -> void:
 	tutorial._in_clap_phase = true
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
 	EventBus.amount_left_text_requested.emit("Goed geklapt %d / 5" % tutorial.clap_stomp.clapped_on_beat_amount)
+	tutorial._set_count_label(Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount)
 
 # ── Shared helper: end an interaction phase (stomp or clap) ─────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -132,6 +134,7 @@ func _end_interaction_phase(is_stomp: bool) -> void:
 		tutorial._in_clap_phase = false
 	EventBus.amount_left_text_requested.emit("")
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, false)
+	tutorial._set_count_label(0)
 	EventBus.playing_change_requested.emit(false)
 	tutorial.play_achievement_sfx()
 
@@ -170,16 +173,16 @@ func _outcome_voice_over_done() -> void:
 
 # ── Chaos pad ────────────────────────────────────────────────────────────────────────────────────────────────
 
-func _outcome_show_chaospad_star(starID:int) -> void:
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, false)
-	if starID == 0:
-		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, true)
-	elif starID == 1:
-		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, true)
-	elif starID == 2:
-		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, true)
+func _outcome_show_chaospad_star(targetID:int) -> void:
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
+	if targetID == 0:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, true)
+	elif targetID == 1:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, true)
+	elif targetID == 2:
+		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, true)
 	
 
 func _outcome_chaospad_star_reached() -> void:
@@ -207,13 +210,12 @@ func _reach_knob_target(marker: TextureRect) -> void:
 func _outcome_end_tutorial() -> void:
 	tutorial.tutorial_level = -1
 	GameState.use_tutorial = false
-	GameState.achievement_active = true
 	GameState.use_achievements = true
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR1, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR2, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STAR3, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()

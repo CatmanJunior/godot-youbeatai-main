@@ -9,6 +9,7 @@ var recording: bool:
 
 var current_recording_data: RecordingData = null
 var _thread: Thread = null
+var pre_recording_volume: float = 0
 
 @export var song_recording_progress_bar: ProgressBar
 @export var recording_sample_button: RecordSampleButton
@@ -54,7 +55,9 @@ func _start_recording() -> void:
 	current_recording_data.max_recording_length = _calculate_max_recording_length(current_recording_data.track_type)
 
 	# Step 2: Mute all tracks
-	EventBus.mute_all_requested.emit(true)
+	# EventBus.mute_all_requested.emit(true)
+	pre_recording_volume = AudioServer.get_bus_volume_db(0)
+	EventBus.set_master_volume_db.emit(-20)
 
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
@@ -91,6 +94,7 @@ func _start_recording() -> void:
 func _stop_recording() -> void:
 	GameState.is_recording = false
 	EventBus.mute_all_requested.emit(false)
+	EventBus.set_master_volume_db.emit(pre_recording_volume)
 	EventBus.stop_recording_requested.emit(current_recording_data)	
 	current_recording_data = null
 

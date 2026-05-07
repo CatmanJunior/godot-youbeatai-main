@@ -18,7 +18,7 @@ func _on_tutorial_button_pressed():
 	_on_pro_button_pressed()
 
 func _on_pro_button_pressed():
-	GameState.use_tutorial = true
+	GameState.use_tutorial = false
 	if OS.has_feature("web"):
 		TTSHelper.init()
 		

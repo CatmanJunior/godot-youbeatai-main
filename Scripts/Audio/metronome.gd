@@ -9,4 +9,5 @@ func on_beat(_beat:int):
     if not GameState.metronome_enabled:
         return
 
-    play()
+    if _beat % (SongState.beats_per_section / 4) == 0:
+        play()

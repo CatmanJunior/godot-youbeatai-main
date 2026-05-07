@@ -410,12 +410,12 @@ grow_vertical = 1
 
 [node name="ChosenEmoij\'s" type="Label" parent="UserInterface" unique_id=1899097748]
 layout_mode = 0
-offset_left = 583.0
-offset_top = 113.0
-offset_right = 610.0
-offset_bottom = 282.0
+offset_left = 582.0
+offset_top = 62.515
+offset_right = 609.0
+offset_bottom = 301.51514
 theme_override_constants/line_spacing = 11
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "🤔😢💔🌴"
 horizontal_alignment = 1
 autowrap_mode = 1

@@ -186,6 +186,7 @@ func _outcome_show_chaospad_star(targetID:int) -> void:
 	
 
 func _outcome_chaospad_star_reached() -> void:
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
 	tutorial.play_achievement_sfx()
 	tutorial._skip_play()
 
@@ -201,6 +202,7 @@ func _show_knob_target(marker: Node2D) -> void:
 	marker.visible = true
 
 func _reach_knob_target(marker: TextureRect) -> void:
+	
 	tutorial._active = true
 	marker.visible = false
 	tutorial.play_achievement_sfx()
@@ -208,6 +210,7 @@ func _reach_knob_target(marker: TextureRect) -> void:
 # ── End tutorial ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 func _outcome_end_tutorial() -> void:
+	print("Tutorial completed! Unlocking achievements and showing main interface.")
 	tutorial.tutorial_level = -1
 	GameState.use_tutorial = false
 	GameState.use_achievements = true

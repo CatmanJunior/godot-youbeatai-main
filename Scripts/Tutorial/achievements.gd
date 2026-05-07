@@ -65,10 +65,12 @@ var _late_ready_done: bool = false
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
-func _ready() -> void:
+func _ready() -> void:	
+	EventBus.on_tutorial_done.connect(_on_tutorial_done)
 	if not GameState.use_achievements:
 		return
-	activate_achievements.call_deferred()
+	if GameState.achievement_active:
+		activate_achievements.call_deferred()
 
 
 func _process(_delta: float) -> void:
@@ -133,7 +135,7 @@ func _on_tutorial_done() -> void:
 	activate_achievements()
 
 func activate_achievements() -> void:
-
+	_setup_default_ui_state()
 	_build_locked_buttons_map()
 	change_energy_points(START_ENERGY_POINTS)
 		
@@ -150,16 +152,17 @@ func activate_achievements() -> void:
 					locked_buttons[AchievementDef.AchievementNode.ADD_SECTION] = section_ui.section_buttons[idx]
 		, CONNECT_ONE_SHOT)
 	EventBus.add_section_requested.emit(null)
+	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
 
 	EventBus.clap_on_beat_detected.connect(_on_clap_stomp_on_beat)
 	EventBus.stomp_on_beat_detected.connect(_on_clap_stomp_on_beat)
 	EventBus.beat_state_changed.connect(_on_beat_state_change)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
-	EventBus.on_tutorial_done.connect(_on_tutorial_done)
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.not_enough_energy.connect(_on_not_enough_energy)
 	_setup_locks()
+	print("Achievements activated")
 	GameState.achievement_active = true
 
 	
@@ -267,6 +270,7 @@ func _setup_default_ui_state() -> void:
 	EventBus.track_sprites_visibility_requested.emit(2, false)
 	EventBus.track_sprites_visibility_requested.emit(3, false)
 	EventBus.synth_progress_bar_visible_requested.emit(1, false)
+	section_ui.hide_all_context_buttons()
 	if not GameState.use_tutorial:
 		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	

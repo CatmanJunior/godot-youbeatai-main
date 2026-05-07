@@ -184,7 +184,8 @@ func _set_interface_invisible_initial() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.BEAT_RING, true)
 	EventBus.track_select_button_visibility_requested.emit(0, true)
-	EventBus.track_select_button_visibility_requested.emit(1, true)
+	if OS.is_debug_build():
+		EventBus.track_select_button_visibility_requested.emit(1, true)
 	EventBus.synth_progress_bar_visible_requested.emit(0, false)
 	EventBus.synth_progress_bar_visible_requested.emit(1, false)
 

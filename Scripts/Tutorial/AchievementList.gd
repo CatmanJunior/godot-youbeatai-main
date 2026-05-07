@@ -55,7 +55,7 @@ func build() -> Array[AchievementDef]:
 # ── Unlock callbacks ──────────────────────────────────────────────────────────
 
 func _unlock_sections() -> void:
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.SECTION_CONTEXT_MENU, true)
+	tracker.section_ui.show_all_context_buttons()
 	
 
 func _unlock_big_line() -> void:

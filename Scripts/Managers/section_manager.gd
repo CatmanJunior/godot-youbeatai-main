@@ -65,7 +65,9 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 	if sections.size() == SECTIONS_AMOUNT_MAX:
 		push_warning("Maximum sections reached, cannot add more.")
 		return
-
+	if section_index < 0 or section_index > sections.size():
+		push_warning("Invalid section index %d, cannot add." % section_index)
+		return
 	# Create a new SectionData instance and populate its default tracks
 	var new_section: SectionData = SectionData.new(tex, section_index)
 	new_section.create_default_tracks()

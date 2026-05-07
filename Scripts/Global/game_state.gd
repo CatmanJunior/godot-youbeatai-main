@@ -5,11 +5,11 @@ extends Node
 var notes: Notes
 
 ##Set to true to use achievements after tutorial.
-var use_achievements: bool = true
+var use_achievements: bool = false
 
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
-var achievement_active: bool = true
+var achievement_active: bool = false
 var show_template: bool = false
 var added_layer: bool = false
 

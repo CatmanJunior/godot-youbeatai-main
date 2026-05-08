@@ -7,6 +7,7 @@ class_name SectionButton
 @export var active_ring: SectionRingGraphic
 
 var index: int
+var sectionData: SectionData
 
 func _ready():
     outline.visible = false
@@ -25,28 +26,28 @@ func rotate_outline(outline_rotation_angle: float):
     outline.rotation_degrees = outline_rotation_angle
 
 func _on_beat(beat: int):
-    if SongState.current_section_index != index:  
+    if SongState.current_section_index != sectionData.index:  
         return
 
     var fill = float(beat) / SongState.beats_per_section
     active_ring.set_fill( fill )
 
 func _on_new_section(section: SectionData):
-    if index != section.index:
+    if sectionData.index != section.index:
         return
 
     active_ring.set_repeating(0)
     active_ring.set_fill(0)
 
 func _on_loop_count_set(section: int, count: int):
-    if index != section:
+    if sectionData.index != section:
         return
 
     inactive_ring.set_repeating(count)
     inactive_ring.set_fill(0)
 
 func _on_next_section(section: int, cursor: int):
-    if index != section:
+    if sectionData.index != section:
         # make sure to reset progress
         return
 

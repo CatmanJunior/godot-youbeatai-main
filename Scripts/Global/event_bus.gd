@@ -54,6 +54,13 @@ signal beat_set_requested(track: int, beat: int, active: bool)
 signal template_set(actives: Array)
 ## Emitted to request applying a beat template by its index.
 signal template_set_requested(template_index: int)
+## Emitted to request applying a beat template by its index.
+signal template_set_apply()
+
+## show tip button
+signal template_show_requested(active: bool)
+## show tip
+signal template_show(active: bool, template: Array)
 
 # ── Beat Interaction ──
 signal clap_stomp_detected(interaction_type: int)
@@ -148,6 +155,8 @@ signal sequence_ready(sequence: Sequence, track_data: TrackData)
 signal set_stream_requested(track: int, audio_layer: int, audio: AudioStream)
 ## Emitted to request muting or unmuting all audio tracks.
 signal mute_all_requested(mute: bool)
+
+signal set_master_volume_db(value: float)
 
 # ── Saving / Exporting ──
 ## Emitted to request starting audio recording.

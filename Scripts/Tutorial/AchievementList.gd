@@ -29,7 +29,7 @@ func build() -> Array[AchievementDef]:
 			50.0,),
 
 		_def(N.ADD_SECTION,
-			"Als je een nieuwe sectie toevoegt, kan je hier een heel liedje opnemen.",
+			"Als je een nieuwe patroon toevoegt, kan je hier een heel liedje opnemen.",
 			func() -> bool: return true,
 			50.0,
 			_unlock_sections,

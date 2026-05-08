@@ -25,7 +25,6 @@ var beats_amount:
 # Clipboard for copy/paste
 var clipboard_section: SectionData = null
 var _sections_initialized: bool = false
-var loop_cursor: int = 0
 
 @export var initial_sections: Array[Texture2D]
 ## Used to resolve section texture → chord progression mapping.
@@ -38,7 +37,7 @@ func _ready() -> void:
 	EventBus.section_paste_requested.connect(_paste_section)
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
-	EventBus.section_switch_requested.connect(switch_section)
+	EventBus.section_switch_requested.connect(switch_section_ui)
 	EventBus.section_remove_requested.connect(remove_section)
 	EventBus.section_next_requested.connect(next_section)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
@@ -86,6 +85,7 @@ func add_section(section_index: int, tex: Texture2D) -> void:
 func _on_add_section_requested(tex: Texture2D):
 	add_section(current_section_index + 1, tex)
 	GameState.added_layer = true
+	switch_section_next_frame(current_section_index)
 
 func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
 	"""Populate section.progression and section.progression_offset from the active soundbank."""
@@ -170,6 +170,10 @@ func _resolve_section_indexes():
 	for i in range(sections.size()):
 		sections[i].index = i
 
+func switch_section_ui(section_index: int):
+	EventBus.beat_seek_requested.emit(0)
+	switch_section(section_index)
+
 ##Switch to a different section
 func switch_section(section_index: int):
 	# Switch to new section
@@ -177,7 +181,7 @@ func switch_section(section_index: int):
 		push_warning("Invalid section index %d, cannot switch." % section_index)
 		return
 
-	loop_cursor = 0
+	GameState.loop_cursor = 0
 	EventBus.section_switched.emit(SongState.get_section(section_index))
 
 func switch_section_next_frame(section_index: int):
@@ -187,10 +191,10 @@ func switch_section_next_frame(section_index: int):
 
 func next_section():
 	# Loop current section
-	loop_cursor += 1
-	if loop_cursor < current_section.loop_count:
+	GameState.loop_cursor += 1
+	if GameState.loop_cursor < current_section.loop_count:
 		print("loop")
-		EventBus.section_loop.emit(current_section_index, loop_cursor)
+		EventBus.section_loop.emit(current_section_index, GameState.loop_cursor)
 		return
 
 	"""Switch to the next section (or loop to first)"""

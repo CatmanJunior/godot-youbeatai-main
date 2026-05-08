@@ -90,9 +90,9 @@ static func calc_weights(
 		w /= total
 
 	var calculation_weights := Vector3(
-		snapped(u, 0.01),
-		snapped(v, 0.01),
-		snapped(w, 0.01)
+		snapped(u, 0.03),
+		snapped(v, 0.03),
+		snapped(w, 0.03)
 	)
 	
 	# master_volume is returned as dB because set_volume_db() on TrackPlayerBase

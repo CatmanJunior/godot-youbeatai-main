@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="5_8duxt"]
 [ext_resource type="Texture2D" uid="uid://ml681mo0sr5a" path="res://Resources/Icons/copy.png" id="5_r0nxd"]
 [ext_resource type="Texture2D" uid="uid://dkr6t8qfcy51c" path="res://Resources/Icons/Icons-_28_0000_Paste.png" id="6_0g022"]
+[ext_resource type="Script" uid="uid://b76tsxl82rnvo" path="res://Scenes/UI_Components/shortcut_button.gd" id="7_4t4de"]
 [ext_resource type="Texture2D" uid="uid://dtgplsb2hpjva" path="res://Resources/Textures/Hex_white.png" id="8_mmmhy"]
 [ext_resource type="Texture2D" uid="uid://dnh46jdw08xp3" path="res://Resources/Textures/repeat_less.png" id="9_dbo0n"]
 [ext_resource type="Texture2D" uid="uid://d3y1f26r02w7d" path="res://Resources/Textures/+_white.png" id="9_nympg"]
@@ -32,6 +33,20 @@ corner_radius_top_left = 16
 corner_radius_top_right = 16
 corner_radius_bottom_right = 16
 corner_radius_bottom_left = 16
+
+[sub_resource type="InputEventAction" id="InputEventAction_nympg"]
+action = &"ui_copy"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_4t4de"]
+events = [SubResource("InputEventAction_nympg")]
+
+[sub_resource type="InputEventAction" id="InputEventAction_4t4de"]
+action = &"ui_paste"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_dbo0n"]
+events = [SubResource("InputEventAction_4t4de")]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r54ui"]
 bg_color = Color(0.16862746, 0.16862746, 0.16862746, 1)
@@ -65,14 +80,14 @@ corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0g022"]
-bg_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.61960787, 0.6117647, 0.8980392, 1)
+bg_color = Color(0.4509804, 0.4392157, 0.6509804, 1)
+border_color = Color(0.6216, 0.612, 0.9, 1)
 corner_radius_top_left = 100
 corner_radius_top_right = 100
 corner_radius_bottom_right = 100
@@ -122,6 +137,8 @@ mouse_filter = 2
 theme_override_constants/separation = 1
 
 [node name="CopyPasteClearButtons" type="HBoxContainer" parent="." unique_id=2103297005]
+show_behind_parent = true
+top_level = true
 layout_mode = 1
 offset_left = 223.0
 offset_top = 107.0
@@ -134,6 +151,7 @@ alignment = 1
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
@@ -149,6 +167,7 @@ metadata/_edit_use_anchors_ = true
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
@@ -156,16 +175,20 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
+shortcut = SubResource("Shortcut_4t4de")
+shortcut_in_tooltip = false
 text = "
 "
 icon = ExtResource("5_r0nxd")
 icon_alignment = 1
+script = ExtResource("7_4t4de")
 metadata/_edit_use_anchors_ = true
 
 [node name="PasteSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=1172480617]
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_constants/icon_max_width = 35
 theme_override_font_sizes/font_size = 28
@@ -173,8 +196,11 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_2ivto")
 theme_override_styles/hover = SubResource("StyleBoxFlat_8duxt")
 action_mode = 0
+shortcut = SubResource("Shortcut_dbo0n")
+shortcut_in_tooltip = false
 icon = ExtResource("6_0g022")
 icon_alignment = 1
+script = ExtResource("7_4t4de")
 metadata/_edit_use_anchors_ = true
 
 [node name="ClearSectionButton" type="Button" parent="CopyPasteClearButtons" unique_id=2008335968]
@@ -182,6 +208,7 @@ visible = false
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_8duxt")
@@ -196,6 +223,7 @@ metadata/_edit_use_anchors_ = true
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_colors/icon_normal_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_constants/icon_max_width = 35
@@ -213,6 +241,7 @@ metadata/_edit_use_anchors_ = true
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_colors/icon_normal_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_constants/icon_max_width = 35
@@ -230,6 +259,7 @@ metadata/_edit_use_anchors_ = true
 custom_minimum_size = Vector2(45, 45)
 layout_mode = 2
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = ExtResource("2_mka03")
 theme_override_colors/icon_normal_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_colors/icon_focus_color = Color(0.972549, 0.95686275, 0.8117647, 1)

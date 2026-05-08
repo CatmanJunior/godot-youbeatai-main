@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Resource" uid="uid://gj7nhtsggdey" path="res://Resources/ChordPlayerSettings/default_chord_player_settings.tres" id="17_55jeb"]
+[ext_resource type="Script" uid="uid://b4epao7gloc0h" path="res://Scripts/Audio/metronome.gd" id="18_2daye"]
 [ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
@@ -29,8 +30,9 @@
 [ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Icons/SHAPES_Lock.png" id="39_bv80c"]
 [ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="42_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
-[ext_resource type="PackedScene" uid="uid://dlfpswxhmq12d" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
+[ext_resource type="PackedScene" uid="uid://cqp8xc386gq2b" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
 [ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
@@ -40,6 +42,7 @@
 [ext_resource type="AudioStream" uid="uid://68v8ks153pak" path="res://Resources/Audio/kick.wav" id="52_ojylq"]
 [ext_resource type="Texture2D" uid="uid://dy2xx2vdev35q" path="res://Resources/Textures_New/back.png" id="53_2daye"]
 [ext_resource type="AudioStream" uid="uid://cnyej43x46lnm" path="res://Resources/Audio/clap.wav" id="53_fle1e"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="54_2daye"]
 [ext_resource type="Script" uid="uid://bhyonrmhfadlg" path="res://Scripts/Exporters/Export_ui.gd" id="54_gsvbx"]
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
@@ -81,6 +84,12 @@ metronome_alt_sfx = ExtResource("60_dllok")
 achievement_sfx = ExtResource("61_0t4jf")
 note_player_settings = Array[ExtResource("14_s8vy0")]([ExtResource("26_dmskm"), ExtResource("27_lx3vj")])
 chord_player_settings = ExtResource("17_55jeb")
+
+[node name="Metronome" type="AudioStreamPlayer" parent="Managers/AudioManagers/AudioPlayerManager" unique_id=862151484]
+stream = ExtResource("9_5vy51")
+max_polyphony = 2
+script = ExtResource("18_2daye")
+metadata/_custom_type_script = "uid://b4epao7gloc0h"
 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
 script = ExtResource("62_daoo8")
@@ -187,11 +196,27 @@ offset_top = 69.30694
 offset_right = 27.722797
 offset_bottom = 69.30694
 
+[node name="ChaosButtonMic" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="4" unique_id=806900459]
+mouse_default_cursor_shape = 2
+
+[node name="ChaosIconMicBg" parent="UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic" index="0" unique_id=452880462]
+physics_interpolation_mode = 2
+
+[node name="Rec_mic_Fill" parent="UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic/ChaosIconMicBg" index="0" unique_id=551040892]
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+scale = Vector2(0.64, 0.64)
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture_progress = ExtResource("42_ptfg5")
+
 [node name="Knob" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="5" unique_id=1796748661]
 offset_left = 304.95053
 offset_top = 164.35641
 offset_right = -48.0495
 offset_bottom = -190.64355
+mouse_default_cursor_shape = 2
 
 [node name="OutsideTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=1674202449]
 mouse_filter = 2
@@ -250,11 +275,10 @@ offset_bottom = 5.0
 
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false
+top_level = false
 layout_mode = 1
-offset_left = -1278.0
-offset_top = -560.0
-offset_right = -6.0
-offset_bottom = -210.0
+offset_top = -241.66
+offset_bottom = 108.34
 
 [node name="CountDown" parent="UserInterface" unique_id=2019424404 instance=ExtResource("52_6ml46")]
 visible = false
@@ -356,13 +380,27 @@ layout_mode = 1
 
 [node name="CopyPasteClearButtons" parent="UserInterface/SwitchSectionButtons" index="2" unique_id=2103297005]
 visible = false
+show_behind_parent = false
+top_level = false
 alignment = 0
+
+[node name="DownLoopCount" parent="UserInterface/SwitchSectionButtons/CopyPasteClearButtons" index="4" unique_id=1472787063]
+tooltip_text = "Herhaal deze laag meer"
+
+[node name="UpLoopCount" parent="UserInterface/SwitchSectionButtons/CopyPasteClearButtons" index="5" unique_id=1702701368]
+tooltip_text = "Herhaal deze laag meer"
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
 offset_left = -1002.0
 offset_top = -605.0
 offset_right = -554.0
 offset_bottom = -415.0
+
+[node name="VisibilitySetter" type="Control" parent="UserInterface/SwitchSectionButtons" unique_id=1851349150 node_paths=PackedStringArray("ui_reference")]
+anchors_preset = 0
+script = ExtResource("54_2daye")
+ui_element = 17
+ui_reference = NodePath("..")
 
 [node name="Background" type="TextureRect" parent="UserInterface" unique_id=62213821]
 modulate = Color(0.8732984, 0.8732984, 0.8732984, 1)
@@ -400,12 +438,12 @@ grow_vertical = 1
 
 [node name="ChosenEmoij\'s" type="Label" parent="UserInterface" unique_id=1899097748]
 layout_mode = 0
-offset_left = 583.0
-offset_top = 113.0
-offset_right = 610.0
-offset_bottom = 282.0
+offset_left = 582.0
+offset_top = 62.515
+offset_right = 609.0
+offset_bottom = 301.51514
 theme_override_constants/line_spacing = 11
-theme_override_font_sizes/font_size = 26
+theme_override_font_sizes/font_size = 40
 text = "🤔😢💔🌴"
 horizontal_alignment = 1
 autowrap_mode = 1

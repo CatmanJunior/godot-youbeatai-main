@@ -28,6 +28,8 @@ func _ready():
 	# Connect to EventBus instead of direct manager references
 	EventBus.play_sfx_requested.connect(play_sfx)
 
+	EventBus.set_master_volume_db.connect(set_volume_db)
+
 func _init_sfx_player():
 	sfx_player = AudioStreamPlayer.new()
 	sfx_player.name = "SFXPlayer"
@@ -35,7 +37,6 @@ func _init_sfx_player():
 
 func _init_audio_players():
 	# Create sample track players
-	
 	for i in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
 		var player = SampleTrackPlayer.new()
 		player.setup(i, BusNames.SUBMASTER_BUS)
@@ -54,6 +55,9 @@ func _init_audio_players():
 	song_track_player = SongTrackPlayer.new()
 	song_track_player.setup(SongTrackData.SONG_TRACK_INDEX, BusNames.SUBMASTER_BUS, chord_player_settings)
 	add_child(song_track_player)
+
+func set_volume_db(volume: float):
+	AudioServer.set_bus_volume_db(0, volume) # master bus is 0
 
 func play_sfx(stream: AudioStream):
 	"""Play a sound effect"""

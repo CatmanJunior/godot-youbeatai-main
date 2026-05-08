@@ -15,6 +15,7 @@ const DARKEN_AMOUNT: float = 0.6
 @export var save_section_button: Button
 @export var remove_section_button: Button
 @export var load_section_button: Button
+
 @export var copy_paste_clear_buttons_holder: Control
 @export var emoji_prompt: EmojiPrompt
 @export var song_recording_progress_bar: ProgressBar
@@ -29,7 +30,8 @@ var copy_paste_clear_button_holder_time_since_activation: float = 0.0
 
 func hide_all_context_buttons():
 	add_section_button.visible = false
-	clear_section_button.visible = false
+	up_loop_count_button.visible = false
+	down_loop_count_button.visible = false
 	save_section_button.visible = false
 	remove_section_button.visible = false
 	load_section_button.visible = false
@@ -37,7 +39,8 @@ func hide_all_context_buttons():
 
 func show_all_context_buttons():
 	add_section_button.visible = true
-	clear_section_button.visible = true
+	up_loop_count_button.visible = true
+	down_loop_count_button.visible = true
 	save_section_button.visible = true
 	remove_section_button.visible = true
 	load_section_button.visible = true
@@ -69,27 +72,33 @@ func init_section_button_actions():
 	emoji_prompt.cancel_button.button_up.connect(_close_emoji_prompt)
 
 	load_section_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_paste_section_button_pressed()
 	)
 
 	save_section_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_copy_section_button_pressed()
 	)
 
 	clear_section_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_clear_section_button_pressed()
 	)
 
 	add_section_button.button_up.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		_open_emoji_prompt()
 	)
 
 	down_loop_count_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		var count = max(1, SongState.current_section.loop_count - 1)
 		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
 	)
 
 	up_loop_count_button.pressed.connect(func():
+		copy_paste_clear_button_holder_time_since_activation = 0
 		var count = min(SectionData.LOOP_COUNT_MAX, SongState.current_section.loop_count + 1)
 
 		EventBus.set_loop_count_requested.emit(SongState.current_section_index, count)
@@ -100,6 +109,7 @@ func init_section_button_actions():
 		remove_section_button.pressed.connect(_on_remove_section_button_pressed)
 
 func _on_remove_section_button_pressed():
+	copy_paste_clear_button_holder_time_since_activation = 0
 	if SongState.sections.size() > 0:
 		EventBus.section_remove_requested.emit(SongState.current_section_index)
 
@@ -135,9 +145,10 @@ func _add_section_button(index: int, tex: Texture2D) -> void:
 
 	var section_button = section_button_prefab.instantiate() as SectionButton
 	section_button.index = index
+	section_button.sectionData = SongState.get_section(index)
 	section_button.icon = tex
 	section_button.pressed.connect(func():
-		EventBus.section_switch_requested.emit(section_button.index)
+		EventBus.section_switch_requested.emit(section_button.sectionData.index)
 	)
 
 	section_buttons.insert(index, section_button)

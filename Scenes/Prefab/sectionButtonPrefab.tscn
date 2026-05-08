@@ -68,6 +68,7 @@ grow_vertical = 2
 scale = Vector2(0.9939638, 0.9964413)
 pivot_offset = Vector2(32, 32)
 focus_mode = 0
+mouse_default_cursor_shape = 2
 theme = SubResource("Theme_eueij")
 theme_override_constants/icon_max_width = 48
 theme_override_font_sizes/font_size = 25

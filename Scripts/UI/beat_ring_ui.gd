@@ -2,7 +2,7 @@ extends Node
 class_name BeatRingUI
 
 @export_category("Scale Tweens")
-@export var scale_tween_duration: float = 0.2
+@export var scale_tween_duration: float = 0.1
 @export var scale_tween_factor: float = 1.4
 
 @export_category("References")
@@ -89,7 +89,7 @@ func _get_beat_button(track: int, beat: int) -> BeatButton:
 ## Rotate the pointer based on the current bar progress
 func _update_pointer_rotation() -> void:
 	if GameState.playing:
-		pointer.rotation_degrees = GameState.bar_progress * 360.0 - 7.0
+		pointer.rotation_degrees = GameState.bar_progress * 360.0
 
 func _update_play_pause_button(is_playing: bool) -> void:
 	play_pause_button.icon = pause_icon if is_playing else play_icon
@@ -165,29 +165,28 @@ func _update_beat_sprites(current_beat: int) -> void:
 
 	for track in range(_beat_buttons.size()):
 		for beat in range(_beat_buttons[track].size()):
+			#scale up the beat button if it's the current beat and active, and scale back down if it's not
 			var on_beat = (beat == current_beat)
 			var active = SongState.is_beat_active(track, beat)
-
 			var beatButton: BeatButton = _get_beat_button(track, beat)
-			var color = track_settings.get_sample_track(track).track_color
 
-			#scale up the beat button if it's the current beat and active, and scale back down if it's not
-			if on_beat:
-				_tween_beat_button_scale(beatButton, active, beats_amount)
+			if on_beat and active:
+				beatButton.modulate *= 1.3
 			else:
-				color = color.lightened(0.75)
-				_tween_beat_button_scale(beatButton, false, beats_amount)
+				beatButton.modulate = Color.WHITE
+			
+			_tween_beat_button_scale(beatButton, on_beat and active, beats_amount)
 
-			beatButton.modulate = color
 
 func _tween_beat_button_scale(beatButton: BeatButton, active: bool, beats_amount: int) -> void:
 		var scale_factor: float = _scale_factor_for_beats_amount(beats_amount)
 		var tween: Tween = get_tree().create_tween()
+
 		var target_scale: Vector2 = Vector2.ONE * scale_factor * GLOBAL_SPRITE_SCALE_FACTOR
 		if active:
 			target_scale *= scale_tween_factor
 		
-		tween.tween_property(beatButton, "scale", target_scale, scale_tween_duration)
+		tween.tween_property(beatButton, "scale", target_scale, scale_tween_duration).set_trans(Tween.TRANS_EXPO)
 
 # Reset all beat sprite scales (called after a section switch)
 func _reset_scales() -> void:

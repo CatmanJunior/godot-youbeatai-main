@@ -10,6 +10,8 @@ var show_template: bool = false
 
 func _ready():
 	EventBus.template_set_requested.connect(_set_template)
+	EventBus.template_show_requested.connect(_show_template)
+	EventBus.template_set_apply.connect(_apply_template)
 	read_templates()
 
 func read_templates() -> Array[String]:
@@ -72,9 +74,16 @@ func _to_actives(content: String) -> Array:
 
 	return bool_array
 
+func _apply_template():
+	EventBus.template_set.emit(actives[current_template])	
+
 func _set_template(template_index: int):
 	current_template = template_index
-	EventBus.template_set.emit(actives[current_template])
+	EventBus.template_show.emit(show_template, actives[current_template])
+
+func _show_template(show: bool):
+	show_template = show
+	EventBus.template_show.emit(show, actives[current_template])
 
 func _toggle_show_template():
 	show_template = !show_template

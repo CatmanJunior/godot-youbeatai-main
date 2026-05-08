@@ -5,11 +5,12 @@ extends Node
 var notes: Notes
 
 ##Set to true to use achievements after tutorial.
-var use_achievements: bool = false
+var use_achievements: bool = true
+## used to set when to activate the achievements (after tutorial or immediately)
+var achievement_active: bool = true
 
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
-var achievement_active: bool = false
 var show_template: bool = false
 var added_layer: bool = false
 
@@ -49,7 +50,8 @@ var bar_progress: float = 0.0
 
 # -- Recording --
 var is_recording: bool = false
-var song_mode: bool = false
+
+var loop_cursor: int = 0
 
 #-- Song mode (vs. track mode) --
 var song_mode_active: bool = false

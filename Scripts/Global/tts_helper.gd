@@ -12,6 +12,10 @@ func init():
 		return
 
 	initialized = true
+	
+	if not OS.has_feature("web"):
+		return
+	
 	# try to speak, it wont play but will enable the tts
 	speak("test")
 

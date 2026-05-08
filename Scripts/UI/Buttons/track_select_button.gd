@@ -67,7 +67,6 @@ func _play_state(playing: bool):
 
 func _on_beat(beat: int):
 	var track = SongState.get_track(SongState.current_section_index, track_index)
-	glow_rect.self_modulate.a = 0.6 * track.master_volume
 	if track is SampleTrackData:
 		glow_rect.visible = track.get_beat_active(beat)
 	elif track is SynthTrackData:

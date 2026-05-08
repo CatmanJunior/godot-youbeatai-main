@@ -105,6 +105,7 @@ script = ExtResource("21_s8vy0")
 clap_threshold = 0.3
 stamp_freq_max = 40.0
 stamp_threshold = 0.008
+beat_on_beat_window = 0.5
 
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")

@@ -230,4 +230,5 @@ func _outcome_end_tutorial() -> void:
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()
+	EventBus.section_switch_requested.emit(0)
 	EventBus.on_tutorial_done.emit()

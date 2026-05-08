@@ -66,7 +66,7 @@ func on_talking():
 func _on_utterance_end(_utterance: int):
 	talking = false
 	first_talk = false
-	animation_tree.advance(100)
+	animation_tree.set("parameters/talkingTrigger/seek_request", 10000.0)
 
 # adjust animation speed to match bpm
 func on_bpm_changed(bpm: float):

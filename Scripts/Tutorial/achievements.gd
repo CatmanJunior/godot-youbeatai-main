@@ -74,7 +74,7 @@ func _ready() -> void:
 	if GameState.achievements_active:
 		activate_achievements()
 	elif not GameState.use_tutorial:
-		change_energy_points(100)
+		change_energy_points(START_ENERGY_POINTS)
 		EventBus.set_klappy_speech_bubble.emit("", "", false)
 
 func _input(event: InputEvent) -> void:

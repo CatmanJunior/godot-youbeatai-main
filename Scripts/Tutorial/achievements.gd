@@ -225,9 +225,10 @@ func _init_tooltip_actions() -> void:
 func show_and_speak_tooltip(text: String, cost: float = 0) -> void:
 	var cost_text : String = ""
 	if cost > 0:
-		cost_text = "Dit kost " + str(cost) + " energie"
+		cost_text = "Dit kost " + str(int(cost)) + " energie"
 	
-	EventBus.set_klappy_speech_bubble.emit(text, cost_text, false)
+	text = text + "\n" + cost_text if cost_text != "" else text
+	EventBus.set_klappy_speech_bubble.emit(text, "", false)
 	
 	if not (GameState.mute_speech or text == ""):
 		TTSHelper.speak(TTSHelper.text_without_emoticons(text))

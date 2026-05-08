@@ -21,6 +21,7 @@ func _ready() -> void:
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.song_loaded.connect(_on_song_loaded)
 	EventBus.synth_progress_bar_visible_requested.connect(_set_progress_bar_visible)
+	EventBus.track_selected.connect(_on_track_selected)
 	for i in range(progress_bars.size()):
 		var bar = progress_bars[i]
 		if bar:
@@ -35,7 +36,20 @@ func _on_section_switched(new_section_data: SectionData):
 		if waveform_lines[i]:
 			if new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer:
 				waveform_lines[i].points = new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer.offsets  # Update waveform points for new section
+
+func _on_track_selected(track_index: int):
+	if track_index >= _sample_track_amount:  # Only update colors for SYNTH tracks
+		var synth_index = track_index - _sample_track_amount
+		#pulse the scale of the progress bar with a tween
+		if synth_index >= 0 and synth_index < progress_bars.size() and progress_bars[synth_index]:
+			var bar = progress_bars[synth_index]
+			var tween = create_tween()
+			var current_size = bar.scale
+			tween.tween_property(bar, "scale", current_size * 1.2, 0.2)
+			tween.tween_property(bar, "scale", current_size, 0.2)	
 			
+			
+
 
 func _on_song_loaded() -> void:
 	# Rebuild SynthWaveform visualizer instances for every loaded section, and

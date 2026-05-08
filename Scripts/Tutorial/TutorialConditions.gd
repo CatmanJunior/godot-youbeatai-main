@@ -123,20 +123,28 @@ func _cond_knob_at_mix_star() -> bool:
 	if marker == null:
 		return false
 #print distance
-	print ("Checking knob distance to mix star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))
-	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
+	#distance should be pivot position
+	var distance :float = tutorial._last_knob_pos.distance_to(marker.position+marker.size/2)
+
+	print ("Checking knob distance to mix star: " + str(distance))
+	return distance < KNOB_ZONE_RADIUS
 
 ## True when the knob is within [constant KNOB_ZONE_RADIUS] of the outside-star marker.
 func _cond_knob_at_outside_star() -> bool:
 	var marker := tutorial.chaos_pad_ui.outside_star_marker
 	if marker == null:
 		return false
-	print ("Checking knob distance to outside star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))
-	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
+	#distance should be pivot position
+	var distance :float = tutorial._last_knob_pos.distance_to(marker.position+marker.size/2)
+
+	print ("Checking knob distance to outside star: " + str(distance))
+	return distance < KNOB_ZONE_RADIUS
 
 func _cond_knob_at_star() -> bool:
 	var marker := tutorial.chaos_pad_ui.main_star_marker
 	if marker == null:
 		return false
-	print ("Checking knob distance to star: " + str(tutorial._last_knob_pos.distance_to(marker.position)))
-	return tutorial._last_knob_pos.distance_to(marker.position) < KNOB_ZONE_RADIUS
+	#distance should be pivot position
+	var distance :float = tutorial._last_knob_pos.distance_to(marker.position+marker.size/2)
+	print ("Checking knob distance to star: " + str(distance))
+	return distance < KNOB_ZONE_RADIUS

@@ -61,6 +61,8 @@ var _outcomes: TutorialOutcomes
 
 # Resets per-frame clap/stomp flags each tick so they are only true during the frame the interaction was detected.
 func _process(_delta: float) -> void:
+	if GameState.use_tutorial == false:
+		return
 	update_tutorial()
 	clapping = false
 	stomping = false
@@ -202,6 +204,8 @@ func setup_tutorial() -> void:
 # Per-frame update: triggers the first TTS on the initial frame, fires per-beat sfx feedback
 # for stomp/clap phases, and checks the current condition callable to advance the tutorial.
 func update_tutorial() -> void:
+	if GameState.use_tutorial == false:
+		return
 	_continue_button_visible(_active)
 
 	if not _first_tts_done and GameState.use_tutorial:
@@ -286,6 +290,8 @@ func _update_interaction_sfx() -> void:
 # Strips emoticons from the text and uses a faster rate if _increased_speed is set.
 # Does nothing if TTS text is suppressed, speech is muted, or the index is out of bounds.
 func _speak_tutorial_instruction(instruction_index: int) -> void:
+	if not GameState.use_tutorial:
+		return
 	if not _text_allowed:
 		return
 	if GameState.mute_speech:

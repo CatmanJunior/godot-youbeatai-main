@@ -24,6 +24,7 @@ func _ready():
 
 	EventBus.bpm_changed.connect(on_bpm_changed)
 	EventBus.utterance_ended.connect(_on_utterance_end)
+	EventBus.utterance_started.connect(_on_callback_)
 	# default speed for 120 bpm
 	if beat_time == 0:
 		on_bpm_changed(120.0)
@@ -54,6 +55,8 @@ func _on_callback_(_i: int):
 			talking = true
 			first_talk = true
 			animation_tree.set("parameters/talkingTrigger/seek_request", 0)
+
+
 
 func on_talking():
 	if !talking:

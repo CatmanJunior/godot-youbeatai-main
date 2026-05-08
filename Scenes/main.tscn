@@ -215,6 +215,7 @@ mouse_default_cursor_shape = 2
 
 [node name="OutsideTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=1674202449]
 mouse_filter = 2
+metadata/_edit_group_ = true
 
 [node name="MixTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="7" unique_id=1742236932]
 mouse_filter = 2
@@ -422,6 +423,7 @@ mouse_filter = 2
 texture = ExtResource("53_2daye")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_lock_ = true
 
 [node name="SettingsButtonControl" parent="UserInterface" unique_id=641439858 instance=ExtResource("48_jut3y")]
 layout_mode = 0

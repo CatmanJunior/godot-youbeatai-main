@@ -43,7 +43,8 @@ func _on_section_switched(new_section_data: SectionData):
 func _on_track_selected(track_index: int):
 
 	if track_index >= _sample_track_amount:  # Only update colors for SYNTH tracks
-		var synth_index = track_index - _sample_track_amount
+		var synth_index = track_index - _sample_track_amount - 1
+		
 		if tween[synth_index] != null and tween[synth_index].is_running():
 			return
 		#pulse the scale of the progress bar with a tween

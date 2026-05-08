@@ -44,6 +44,7 @@ func _on_track_button_pressed(track_index: int):
 	if track_buttons[track_index].is_synth_track:
 		track_buttons[track_index].background.modulate = track_UI_settings.get_track(track_index).track_color
 
+
 	if not track_buttons[track_index].is_synth_track:
 		EventBus.play_track_requested.emit(track_index)
 

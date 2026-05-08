@@ -44,7 +44,7 @@ func build() -> Array[AchievementDef]:
 			func() -> bool: return tracker.samples_recorded >= 2),
 
 		_def(N.TRACK_3,
-			"Verzamel meer energie om de blauwe ring vrij te spelen",
+			"Verzamel meer energie om de hi-hat vrij te spelen",
 			func() -> bool: return true,
 			50.0,
 			func(): EventBus.track_sprites_visibility_requested.emit(3, true)),

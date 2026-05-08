@@ -22,7 +22,7 @@ var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
 @export var colormapje: Node3D
 
 func _ready() -> void:
-	# TODO: GET THIS THE HELL OUT OF HERE
+	EventBus.energy_points_changed.connect(on_klappy_energy)
 	bus_index = AudioServer.get_bus_index(BusNames.SUBMASTER_BUS)
 
 	phaser = AudioServer.get_bus_effect(bus_index, 0) as AudioEffectPhaser
@@ -42,10 +42,6 @@ func _ready() -> void:
 	colormapje.visible = false
 
 	
-	if KlappyEnergy != null:
-		KlappyEnergy.value_changed.connect(on_klappy_energy)
-		
-	assert(GameState!= null,"manger not found")
 	if not GameState.tutorial_activated:
 		EventBus.utterance_ended.connect(_on_utterance_end)
 

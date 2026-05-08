@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://d0oh2kfmsgmal" path="res://Scripts/UI/achievements_panel_ui.gd" id="1_n5e2k"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_rgnfl"]
 [ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/Klappy/continue.gd" id="2_dcbcy"]
-[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="2_qi7lb"]
 [ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="2_twvmx"]
 [ext_resource type="Animation" uid="uid://2gtfsc53h0j7" path="res://Other/continue_button_pulse.res" id="3_hc54m"]
 
@@ -47,7 +46,7 @@ _data = {
 &"continue_button_pulse": ExtResource("3_hc54m")
 }
 
-[node name="AchievementsPanel" type="Panel" unique_id=37829949]
+[node name="AchievementsPanel" type="Panel" unique_id=37829949 node_paths=PackedStringArray("instruction_label", "title_label", "continue_button")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -61,13 +60,12 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_twvmx")
 script = ExtResource("1_n5e2k")
-metadata/_edit_use_anchors_ = true
-
-[node name="VisibilitySetter" type="Control" parent="." unique_id=1684750056 node_paths=PackedStringArray("ui_reference")]
-anchors_preset = 0
-script = ExtResource("2_qi7lb")
+instruction_label = NodePath("InstructionLabel")
+title_label = NodePath("AmountLef")
+continue_button = NodePath("Continue")
 ui_element = 11
-ui_reference = NodePath("..")
+target_self = true
+metadata/_edit_use_anchors_ = true
 
 [node name="Title" type="Label" parent="." unique_id=914827527]
 layout_mode = 0
@@ -153,16 +151,6 @@ script = ExtResource("2_dcbcy")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Continue" unique_id=438592116]
 libraries/ = SubResource("AnimationLibrary_hc54m")
-
-[node name="Button" type="Button" parent="." unique_id=734105471]
-modulate = Color(1, 1, 1, 0)
-self_modulate = Color(1, 1, 1, 0)
-layout_mode = 0
-offset_left = 65.5
-offset_top = 292.5
-offset_right = 193.5
-offset_bottom = 456.5
-action_mode = 0
 
 [node name="AmountLef" type="Label" parent="." unique_id=389681954]
 layout_mode = 1

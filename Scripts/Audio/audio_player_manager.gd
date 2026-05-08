@@ -21,13 +21,13 @@ var sfx_player: AudioStreamPlayer
 func _ready():
 	await get_tree().process_frame
 	await get_tree().process_frame
-	
-	_init_audio_players()#.call_deferred() # initialize audio players after the scene is ready to ensure everything is set up
+
+
+	_init_audio_players() # initialize audio players after the scene is ready to ensure everything is set up
 	_init_sfx_player()
 
 	# Connect to EventBus instead of direct manager references
 	EventBus.play_sfx_requested.connect(play_sfx)
-
 	EventBus.set_master_volume_db.connect(set_volume_db)
 
 func _init_sfx_player():

@@ -9,7 +9,7 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Resource" uid="uid://gj7nhtsggdey" path="res://Resources/ChordPlayerSettings/default_chord_player_settings.tres" id="17_55jeb"]
-[ext_resource type="Script" path="res://Scripts/Audio/metronome.gd" id="18_2daye"]
+[ext_resource type="Script" uid="uid://b4epao7gloc0h" path="res://Scripts/Audio/metronome.gd" id="18_2daye"]
 [ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
@@ -47,7 +47,7 @@
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
-[ext_resource type="Script" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
+[ext_resource type="Script" uid="uid://c76hgacdcbr2k" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
 [ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
@@ -57,7 +57,7 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -242,6 +242,7 @@ grow_horizontal = 2
 position = Vector2(406, 139)
 
 [node name="KlappyLight" parent="UserInterface/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1025278274, 1162549337) index="1" unique_id=44086381]
+z_index = -4096
 energy = 0.55
 
 [node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "face_light")]
@@ -263,6 +264,7 @@ grow_vertical = 1
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
 visible = false
+z_index = 4096
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.49400002

@@ -149,7 +149,6 @@ func activate_achievements() -> void:
 
 
 	EventBus.add_section_requested.emit(null)
-	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
 	# Add the initial second section upfront and lock its button as the ADD_SECTION unlock target.
 	btn_section_2 = section_ui.section_buttons[1]
 	_build_locked_buttons_map()
@@ -166,6 +165,7 @@ func activate_achievements() -> void:
 	EventBus.not_enough_energy.connect(_on_not_enough_energy)
 	print("Achievements activated")
 	GameState.achievements_active = true
+	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
 
 	
 
@@ -225,9 +225,10 @@ func _init_tooltip_actions() -> void:
 func show_and_speak_tooltip(text: String, cost: float = 0) -> void:
 	var cost_text : String = ""
 	if cost > 0:
-		cost_text = "Dit kost " + str(cost) + " energie"
+		cost_text = "Dit kost " + str(int(cost)) + " energie"
 	
-	EventBus.set_klappy_speech_bubble.emit(text, cost_text, false)
+	text = text + "\n" + cost_text if cost_text != "" else text
+	EventBus.set_klappy_speech_bubble.emit(text, "", false)
 	
 	if not (GameState.mute_speech or text == ""):
 		TTSHelper.speak(TTSHelper.text_without_emoticons(text))

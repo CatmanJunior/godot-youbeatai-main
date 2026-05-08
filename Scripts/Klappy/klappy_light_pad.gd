@@ -115,20 +115,13 @@ func lightFlicker():
 		
 		await get_tree().create_timer(0.3).timeout
 		
-		
 	colormapje.visible = true
 	klappy_light.color = Color.WHITE	
 	
 func _fill_instruction_label(_name: String):
-	if instruction_label == null: push_error("Label not found")
-	instruction_label.text = _name
-	_achievement_panel_visibility(0)
+	EventBus.set_klappy_speech_bubble.emit(_name,"",false)
 	_start_tts(_name)
 	
-func _achievement_panel_visibility(_utterance_id: int):
-	if not achievement_panel.visible:
-		achievement_panel.visible = true
-		
 func _start_tts(message: String):
 	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
 

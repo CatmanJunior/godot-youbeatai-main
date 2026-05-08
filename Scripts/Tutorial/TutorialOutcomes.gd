@@ -210,7 +210,6 @@ func _show_knob_target(marker: Node2D) -> void:
 	marker.visible = true
 
 func _reach_knob_target(marker: TextureRect) -> void:
-	
 	tutorial._active = true
 	marker.visible = false
 	tutorial.play_achievement_sfx()
@@ -219,9 +218,10 @@ func _reach_knob_target(marker: TextureRect) -> void:
 
 func _outcome_end_tutorial() -> void:
 	print("Tutorial completed! Unlocking achievements and showing main interface.")
-	tutorial.tutorial_level = -1
 	GameState.use_tutorial = false
 	GameState.use_achievements = true
+	EventBus.set_klappy_speech_bubble.emit("", "", false)
+	EventBus.utterance_ended.emit(0) # ensure any waiting TTS is unblocked
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
@@ -230,4 +230,5 @@ func _outcome_end_tutorial() -> void:
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()
+	EventBus.section_switch_requested.emit(0)
 	EventBus.on_tutorial_done.emit()

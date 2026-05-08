@@ -24,7 +24,7 @@ func build() -> Array[AchievementDef]:
 			_unlock_big_line),
 
 		_def(N.TEMPLATE_TIP,
-			"In de instellingen kan je op tip klikken, dan laat ik een voorbeeld liedje zien",
+			"Als je hier op klikt, dan laat ik een voorbeeld liedje zien",
 			func() -> bool: return true,
 			50.0,),
 

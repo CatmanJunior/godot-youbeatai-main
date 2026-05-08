@@ -14,6 +14,7 @@ var stomped_on_beat_amount: int = 0
 @export var clap_threshold: float = 0.03
 @export var stamp_freq_max: float = 150.0
 @export var stamp_threshold: float = 0.1
+@export var beat_on_beat_window: float = 0.25
 
 var is_clapping: bool:
 	get: return clap_volume > clap_threshold and clap_volume > stamp_volume
@@ -68,6 +69,19 @@ func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 
 
 func _is_clap_stomp_next_beat(interaction_type: InteractionType) -> bool:
-	var next_beat = (GameState.current_beat + 1) % SongState.beats_per_section
-	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
-	return SongState.current_section.get_beat(track_index, next_beat)
+	if not GameState.playing:
+		return false
+	var progress: float = GameState.beat_progress
+	var track_index: int = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
+
+	# Head window: beat just fired, check if current beat is set
+	if progress < beat_on_beat_window:
+		return SongState.current_section.get_beat(track_index, GameState.current_beat)
+
+	# Tail window: approaching next beat, check if next beat is set
+	if progress > 1.0 - beat_on_beat_window:
+		var next_beat: int = (GameState.current_beat + 1) % SongState.beats_per_section
+		return SongState.current_section.get_beat(track_index, next_beat)
+
+	# Outside both windows — not on beat
+	return false

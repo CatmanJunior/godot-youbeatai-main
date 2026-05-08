@@ -13,14 +13,18 @@ extends Node
 	{"points": 196, "base_dist": 280, "volume_dist": 28, "reversed": false},  # Track 0 (4) – big line
 	{"points": 80, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]
+var tween : Array[Tween] = []
 
 var _sample_track_amount: int = SectionData.SAMPLE_TRACKS_PER_SECTION  # Number of sample tracks to offset synth track indices
 
 func _ready() -> void:
+	for i in range(progress_bars.size()):
+		tween.append(null)
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.song_loaded.connect(_on_song_loaded)
 	EventBus.synth_progress_bar_visible_requested.connect(_set_progress_bar_visible)
+	EventBus.track_selected.connect(_on_track_selected)
 	for i in range(progress_bars.size()):
 		var bar = progress_bars[i]
 		if bar:
@@ -35,7 +39,24 @@ func _on_section_switched(new_section_data: SectionData):
 		if waveform_lines[i]:
 			if new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer:
 				waveform_lines[i].points = new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer.offsets  # Update waveform points for new section
+
+func _on_track_selected(track_index: int):
+
+	if track_index >= _sample_track_amount:  # Only update colors for SYNTH tracks
+		var synth_index = track_index - _sample_track_amount
+		if tween[synth_index] != null and tween[synth_index].is_running():
+			return
+		#pulse the scale of the progress bar with a tween
+		if synth_index >= 0 and synth_index < progress_bars.size() and progress_bars[synth_index]:
+			var bar = progress_bars[synth_index]
+			var current_size = bar.scale
+			var t := create_tween()
+			tween[synth_index] = t
+			t.tween_property(bar, "scale", current_size * 1.2, 0.2)
+			t.tween_property(bar, "scale", current_size, 0.2)	
 			
+			
+
 
 func _on_song_loaded() -> void:
 	# Rebuild SynthWaveform visualizer instances for every loaded section, and

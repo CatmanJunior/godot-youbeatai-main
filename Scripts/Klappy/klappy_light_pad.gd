@@ -7,18 +7,17 @@ var distortion
 var highpass
 var lowpass
 
-@export var KlappyLight: OmniLight3D
-@export var KlappyEnergy: ProgressBar
-@export var FaceLight: SpotLight3D
+@export var klappy_light: PointLight2D
+@export var face_light: SpotLight3D
 
-var unlocked:= false
+var unlocked := false
 var start_energy
 var flicker_done = false
 
-var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
+var colors_string :Array[String] = ["green", "red", "blue", "yellow", "green", "red", "blue", "yellow"]
 
-@export var instruction_label:Label
-@export var achievement_panel:Panel
+@export var instruction_label: Label
+@export var achievement_panel: Panel
 @export var colormapje: Node3D
 
 func _ready() -> void:
@@ -35,10 +34,10 @@ func _ready() -> void:
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
 	
-	start_energy = KlappyLight.light_energy
+	start_energy = klappy_light.energy
 
 	unlocked = false
-	KlappyLight.visible = true
+	klappy_light.visible = true
 	colormapje.visible = false
 
 	
@@ -54,22 +53,22 @@ func _on_gui_input(event: InputEvent) -> void:
 			AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
 			AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
 			
-			if event.is_released(): #wanneer muis losgelaten word pos 100,100 en klaplight normaal 
+			if event.is_released(): # wanneer muis losgelaten word pos 100,100 en klaplight normaal
 				var pos = Vector2(100, 100)
 				$cursor.position = pos
 				colormapje.visible = true
-				KlappyLight.visible = false
+				klappy_light.visible = false
 
 		
 		if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
 			var pos = event.position
 			
-			pos.x = clamp(pos.x, 0, size.x) #zorgt dat je binnen het grid blijft
+			pos.x = clamp(pos.x, 0, size.x) # zorgt dat je binnen het grid blijft
 			pos.y = clamp(pos.y, 0, size.y)
 			
-			$cursor.position = pos 
+			$cursor.position = pos
 			
-			var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
+			var x_percent = pos.x / size.x # ipv pixels maakt hij er 200/0 van
 			var y_percent = 1.0 - (pos.y / size.y)
 			
 			phaser.depth = clamp(1.0 - x_percent * 2.0, 0.0, 1.0)
@@ -78,8 +77,8 @@ func _on_gui_input(event: InputEvent) -> void:
 			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
 			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
-			KlappyLight.visible = true
-			FaceLight.light_color = KlappyLight.light_color
+			klappy_light.visible = true
+			face_light.light_color = klappy_light.color
 			#klappys lampje word veranderd van kleur op basis van muis positie in het vak
 			var color := Color("#ffe8aa")
 			var strength := 0.8
@@ -93,40 +92,44 @@ func _on_gui_input(event: InputEvent) -> void:
 			if pos.y <= 70:
 				color = color.lerp(Color.YELLOW, strength)
 
-			KlappyLight.light_color = color 
-			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
-			
-func on_klappy_energy(value):
-	if value >= 0 and not flicker_done:  
+			klappy_light.color = color
+			$cursor/Trail.default_color = color # trail word dezelfde kleur als light
+
+func _set_klappy_light_energy(value: float) -> void:
+	klappy_light.energy = value / 50.0
+
+func on_klappy_energy(value: float) -> void:
+	_set_klappy_light_energy(value)
+	if value >= AchievementManager.ENERGY_THRESHOLD_LIGHT_PAD and not flicker_done:
 		unlocked = true
 		flicker_done = true
-		_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
+		if GameState.achievements_active:
+			_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
 		lightFlicker()
 		await get_tree().create_timer(7.0).timeout
 		achievement_panel.visible = false
 	
 func lightFlicker():
-	for i in colors:
-		KlappyLight.light_color = i
+	for i in colors_string:
+		klappy_light.color = Color(i)
 		
 		await get_tree().create_timer(0.3).timeout
-		KlappyLight.light_energy = start_energy
+		
 		
 	colormapje.visible = true
-	KlappyLight.visible = false
+	klappy_light.color = Color.WHITE	
 	
-	
-func _fill_instruction_label(_name:String):
-	if instruction_label == null : push_error("Label not found")
+func _fill_instruction_label(_name: String):
+	if instruction_label == null: push_error("Label not found")
 	instruction_label.text = _name
 	_achievement_panel_visibility(0)
 	_start_tts(_name)
 	
-func _achievement_panel_visibility(_utterance_id:int):
-	if not achievement_panel.visible :
+func _achievement_panel_visibility(_utterance_id: int):
+	if not achievement_panel.visible:
 		achievement_panel.visible = true
 		
-func _start_tts(message:String):
+func _start_tts(message: String):
 	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
 
 func _on_utterance_end(_utterance):

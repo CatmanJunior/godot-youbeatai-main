@@ -18,7 +18,7 @@ func get_map() -> Dictionary:
 		O.START_SHORT_TIMER:       _start_timer.bind(2.0),
 		O.BEGIN_STOMP_PHASE:       _outcome_stomp_setup,
 		O.END_STOMP_PHASE:         _outcome_stomp_done,
-		O.SHOW_CLAP_RING:          EventBus.track_sprites_visibility_requested.emit.bind(Tutorial.INDEX_CLAP_TRACK, true),
+		O.SHOW_CLAP_RING:          _outcome_show_clap_ring_setup,
 		O.PLACE_CLAP_BEATS:        _outcome_clap_ring_setup,
 		O.START_CLAP_LISTEN_TIMER: _outcome_clap_listen,
 		O.STOP_PLAYBACK:           EventBus.playing_change_requested.emit.bind(false),
@@ -96,11 +96,16 @@ func _outcome_stomp_setup() -> void:
 
 # ── Clap ring ────────────────────────────────────────────────────────────────────────────────────────────────
 
+func _outcome_show_clap_ring_setup() -> void:
+	EventBus.track_select_button_visibility_requested.emit(Tutorial.INDEX_CLAP_TRACK, true)
+	EventBus.track_sprites_visibility_requested.emit(Tutorial.INDEX_CLAP_TRACK, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CLAP_UI, true)
+
+
 ## Unlocks the preset clap-ring beat positions and shows the clap UI.
 func _outcome_clap_ring_setup() -> void:
 	for beat_idx: int in Tutorial.CLAP_PRESET_BEAT_INDICES:
 		EventBus.beat_set_requested.emit(Tutorial.INDEX_CLAP_TRACK, beat_idx, true)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CLAP_UI, true)
 	tutorial._skip_play()
 
 func _outcome_clap_listen() -> void:

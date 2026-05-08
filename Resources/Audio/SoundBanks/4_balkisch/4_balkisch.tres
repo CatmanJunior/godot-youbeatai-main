@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://ojnoc65b86bw" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/ClosedHH Discaux.wav" id="4_achl6"]
 [ext_resource type="AudioStream" uid="uid://ckvcmf4axgphh" path="res://Resources/Audio/SoundBanks/4_balkisch/Kick Breeze.wav" id="4_kj5q1"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_2an5y"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_t7lk8"]
 [ext_resource type="Resource" uid="uid://65isouwqh4er" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile_Bass.tres" id="6_8lexy"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_achl6"]
 [ext_resource type="AudioStream" uid="uid://dp7rwu7lkypjn" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Kick Rainbow 1.wav" id="7_8lexy"]

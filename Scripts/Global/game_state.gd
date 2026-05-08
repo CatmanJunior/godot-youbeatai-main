@@ -7,7 +7,7 @@ var notes: Notes
 ##Set to true to use achievements after tutorial.
 var use_achievements: bool = true
 ## used to set when to activate the achievements (after tutorial or immediately)
-var achievements_active: bool = true
+var achievements_active: bool = false
 
 var tutorial_activated: bool = false
 var use_tutorial: bool = false

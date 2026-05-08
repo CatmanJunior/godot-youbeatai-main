@@ -50,7 +50,7 @@ func spawn_initial_sections():
 	if _sections_initialized:
 		return
 
-	var initial_amount = SECTIONS_AMOUNT_TUTORIAL if GameState.use_tutorial or GameState.use_achievements else SECTIONS_AMOUNT_INITIAL
+	var initial_amount = SECTIONS_AMOUNT_TUTORIAL if GameState.use_tutorial or GameState.achievements_active else SECTIONS_AMOUNT_INITIAL
 
 	for i in range(min(initial_sections.size(), initial_amount)):
 		var tex = initial_sections[i]

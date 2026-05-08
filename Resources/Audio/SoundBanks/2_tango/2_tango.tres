@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://b6fwcswa2okoi" path="res://Resources/Audio/SoundBanks/2_tango/ClosedHH Aluminium.wav" id="3_numgs"]
 [ext_resource type="AudioStream" uid="uid://bumvtvdmtp6n4" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Closed_Perc Sini.wav" id="4_numgs"]
 [ext_resource type="Resource" uid="uid://c6gqhf86kj0cj" path="res://Resources/Audio/SoundBanks/2_tango/EffectProfile.tres" id="5_70ug5"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_g7rqx"]
 [ext_resource type="AudioStream" uid="uid://dsf1y2droce3o" path="res://Resources/Audio/SoundBanks/2_tango/Kick BB 2.wav" id="6_i3r8b"]
 [ext_resource type="AudioStream" uid="uid://bqfufsfbjqp5f" path="res://Resources/Audio/SoundBanks/2_tango/mineur/Kick Hoba.wav" id="7_i3r8b"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="8_iytk1"]

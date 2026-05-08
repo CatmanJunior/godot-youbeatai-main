@@ -70,9 +70,12 @@ var _late_ready_done: bool = false
 func _ready() -> void:	
 	EventBus.on_tutorial_done.connect(_on_tutorial_done)
 
+	await get_tree().create_timer(0.2).timeout
 	if GameState.achievements_active:
-		await get_tree().create_timer(0.2).timeout
 		activate_achievements()
+	elif not GameState.use_tutorial:
+		change_energy_points(100)
+		EventBus.set_klappy_speech_bubble.emit("", "", false)
 
 func _input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
@@ -97,13 +100,16 @@ func _on_not_enough_energy() -> void:
 	change_energy_points(-1.0) # Small penalty to prevent spamming
 
 func change_energy_points(delta: float) -> void:
-	energy_points = maxf(0.0, energy_points + delta)
+	energy_points = clampf(energy_points + delta, 0.0, 100.0)
+
 	if energy_progress_bar:
 		energy_progress_bar.value = energy_points
 	EventBus.energy_points_changed.emit(energy_points)
 
 
 static func has_energy_for_beat_addition() -> bool:
+	if GameState.use_tutorial:
+		return true
 	return energy_points >= ENERGY_COST_PER_BEAT_ADDED
 
 static func has_energy_for_light_pad() -> bool:

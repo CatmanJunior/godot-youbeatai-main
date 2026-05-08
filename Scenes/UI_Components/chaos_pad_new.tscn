@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="12_f0ro3"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Script" uid="uid://ditubfr1oouhm" path="res://Scenes/UI_Components/tutorial_chaospad_target.gd" id="12_uk2yi"]
-[ext_resource type="Script" uid="uid://2omguqbuwwo0" path="res://Scenes/UI_Components/microphone_feedback.gd" id="13_ckr5n"]
+[ext_resource type="Script" path="res://Scenes/UI_Components/microphone_feedback.gd" id="13_ckr5n"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/UI/ChaosPad/choas_pad_knob.gd" id="22_ds0f1"]
 [ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/UI/ChaosPad/chaos_pad_triangle_container.gd" id="25_gu6ag"]
 

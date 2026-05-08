@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_06527"]
 [ext_resource type="AudioStream" uid="uid://dy4ueh523rpqx" path="res://Resources/Audio/SoundBanks/2_keuken/ClosedHH Butter 1.wav" id="3_bwyu4"]
 [ext_resource type="AudioStream" uid="uid://dj82d8v1i10vv" path="res://Resources/Audio/SoundBanks/2_keuken/mineur/ClosedHH Denim.wav" id="4_bwyu4"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_awnwu"]
 [ext_resource type="Resource" uid="uid://cghnjaymt16h1" path="res://Resources/Audio/SoundBanks/2_keuken/EffectProfile.tres" id="5_bwyu4"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Resources/SoundFonts/Jvbass.sfo" id="5_tc6nb"]
 [ext_resource type="AudioStream" uid="uid://odobipxdwoem" path="res://Resources/Audio/SoundBanks/2_keuken/Kick Glory 1.wav" id="6_5bui3"]

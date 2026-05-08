@@ -18,7 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://d38plcpfw0kp8" path="res://Resources/Textures_Settings/Settings__0013_Note.png" id="14_o6j77"]
 [ext_resource type="Texture2D" uid="uid://cr4otco1wltik" path="res://Resources/Textures_Settings/Settings__0012_Beat-Ring-Icon.png" id="15_bbulw"]
 [ext_resource type="Texture2D" uid="uid://c46agdfmouhob" path="res://Resources/Textures_Settings/Settings__0011_X.png" id="16_aa32w"]
-[ext_resource type="Script" uid="uid://nst1cl6b3w8" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
+[ext_resource type="Script" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
 [ext_resource type="Texture2D" uid="uid://duxksnnig6727" path="res://Resources/Textures_Settings/Settings__0007_Small-Button-Glow.png" id="21_8qhib"]

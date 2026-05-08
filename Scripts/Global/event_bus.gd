@@ -2,6 +2,12 @@ extends Node
 
 @warning_ignore_start("unused_signal")
 
+signal level_loaded()
+
+signal post_ready()
+signal section_data_initialized()
+signal players_initialized()
+
 ## Emitted when a full application restart is requested.
 signal restart_requested()
 

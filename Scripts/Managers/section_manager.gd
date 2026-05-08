@@ -41,9 +41,12 @@ func _ready() -> void:
 	EventBus.section_remove_requested.connect(remove_section)
 	EventBus.section_next_requested.connect(next_section)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
-	await get_tree().process_frame
+	EventBus.post_ready.connect(post_ready)
+
+func post_ready():
 	spawn_initial_sections()
-		
+
+	EventBus.section_data_initialized.emit.call_deferred()
 
 func spawn_initial_sections():
 	"""Spawn the initial set of sections (data only)."""

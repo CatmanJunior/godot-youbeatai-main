@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c78m8ijn10kwh"]
 
+[ext_resource type="Script" uid="uid://cpd4e3o87ptpj" path="res://scripts/post_ready_emitter.gd" id="1_2060n"]
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
@@ -69,6 +70,7 @@ scale = Vector2(4.12, 1)
 current = true
 
 [node name="Managers" type="Node" parent="." unique_id=205411252]
+script = ExtResource("1_2060n")
 
 [node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
 

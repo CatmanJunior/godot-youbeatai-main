@@ -19,16 +19,17 @@ var sfx_player: AudioStreamPlayer
 @export var chord_player_settings: ChordPlayerSettings
 
 func _ready():
-	await get_tree().process_frame
-	await get_tree().process_frame
-
-
-	_init_audio_players() # initialize audio players after the scene is ready to ensure everything is set up
-	_init_sfx_player()
-
 	# Connect to EventBus instead of direct manager references
 	EventBus.play_sfx_requested.connect(play_sfx)
 	EventBus.set_master_volume_db.connect(set_volume_db)
+	EventBus.section_data_initialized.connect(sections_loaded)
+
+func sections_loaded():
+	# initialize audio players after the scene is ready to ensure everything is set up
+	_init_audio_players() 
+	_init_sfx_player()
+
+	EventBus.players_initialized.emit.call_deferred()
 
 func _init_sfx_player():
 	sfx_player = AudioStreamPlayer.new()

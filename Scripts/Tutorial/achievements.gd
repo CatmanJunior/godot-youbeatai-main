@@ -165,7 +165,11 @@ func activate_achievements() -> void:
 	EventBus.not_enough_energy.connect(_on_not_enough_energy)
 	print("Achievements activated")
 	GameState.achievements_active = true
-	await get_tree().process_frame # Wait for the deferred section switch in section_manager to complete first.
+	#await get_tree().process_frame # Wait for the deferred section switch in section_manager to complete first.
+	
+	# wait for SongState sections to be initialized
+	await EventBus.section_data_initialized
+
 	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
 
 	

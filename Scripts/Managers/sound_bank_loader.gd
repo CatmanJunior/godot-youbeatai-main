@@ -13,12 +13,8 @@ static var fallback_bank_name: String = ""
 @export var fallback_bank: SoundBank
 
 func _ready() -> void:
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
-	await get_tree().process_frame
 	# Defer loading the bank until the main scene is fully initialized, to ensure SongState and EventBus are ready to receive the loaded data.
-	_load_and_apply_bank()
+	EventBus.players_initialized.connect(_load_and_apply_bank)
 
 func _load_and_apply_bank() -> void:
 	# print(SongState.selected_soundbank.resource_path)

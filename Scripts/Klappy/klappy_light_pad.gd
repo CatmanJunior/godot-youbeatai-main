@@ -7,9 +7,9 @@ var distortion
 var highpass
 var lowpass
 
-@export var KlappyLight: OmniLight3D
-@export var KlappyEnergy: ProgressBar
-@export var FaceLight: SpotLight3D
+@export var klappy_light: OmniLight3D
+@export var klappy_energy: ProgressBar
+@export var face_light: SpotLight3D
 
 var unlocked:= false
 var start_energy
@@ -35,10 +35,10 @@ func _ready() -> void:
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
 	
-	start_energy = KlappyLight.light_energy
+	#start_energy = klappy_light.light_energy
 
 	unlocked = false
-	KlappyLight.visible = true
+	klappy_light.visible = true
 	colormapje.visible = false
 
 	
@@ -58,7 +58,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				var pos = Vector2(100, 100)
 				$cursor.position = pos
 				colormapje.visible = true
-				KlappyLight.visible = false
+				klappy_light.visible = false
 
 		
 		if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
@@ -78,8 +78,8 @@ func _on_gui_input(event: InputEvent) -> void:
 			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
 			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
-			KlappyLight.visible = true
-			FaceLight.light_color = KlappyLight.light_color
+			klappy_light.visible = true
+			face_light.light_color = klappy_light.light_color
 			#klappys lampje word veranderd van kleur op basis van muis positie in het vak
 			var color := Color("#ffe8aa")
 			var strength := 0.8
@@ -93,11 +93,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			if pos.y <= 70:
 				color = color.lerp(Color.YELLOW, strength)
 
-			klappy_light.color = color
+			klappy_light.light_color = color
 			$cursor/Trail.default_color = color # trail word dezelfde kleur als light
 
 func _set_klappy_light_energy(value: float) -> void:
-	klappy_light.energy = value / 50.0
+	klappy_light.light_energy = value / 50.0
 
 func on_klappy_energy(value: float) -> void:
 	_set_klappy_light_energy(value)
@@ -112,12 +112,12 @@ func on_klappy_energy(value: float) -> void:
 	
 func lightFlicker():
 	for i in colors_string:
-		klappy_light.color = Color(i)
+		klappy_light.light_color = Color(i)
 		
 		await get_tree().create_timer(0.3).timeout
 		
 	colormapje.visible = true
-	klappy_light.color = Color.WHITE	
+	klappy_light.light_color = Color.WHITE	
 	
 func _fill_instruction_label(_name: String):
 	EventBus.set_klappy_speech_bubble.emit(_name,"",false)

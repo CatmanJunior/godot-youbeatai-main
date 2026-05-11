@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://p7huqo8hkmpg" path="res://Resources/Textures_Settings/Settings__0000_Hare-Button--no-glow.png" id="5_gx8v5"]
 [ext_resource type="Texture2D" uid="uid://dumxi28qepc74" path="res://Resources/Textures_Settings/Settings__0001_Tortoise-Button-no-glow.png" id="6_mvuv7"]
 [ext_resource type="Texture2D" uid="uid://d0tcoodnl8uvx" path="res://Resources/Textures_Settings/Settings__0010_Slider.png" id="7_ryerx"]
-[ext_resource type="PackedScene" uid="uid://b55hvfu55aayn" path="res://Scenes/UI_Components/setting_button.tscn" id="8_8qhib"]
+[ext_resource type="PackedScene" uid="uid://5wfi4gwjddtp" path="res://Scenes/UI_Components/setting_button.tscn" id="8_8qhib"]
 [ext_resource type="Texture2D" uid="uid://dwnfwdawnl7v1" path="res://Resources/Textures_Settings/Settings__0000_Swinging-Pendulum.png" id="8_r42af"]
 [ext_resource type="Texture2D" uid="uid://n1dnssx3f5r0" path="res://Resources/Textures_Settings/Settings__0001_Pendulum.png" id="9_oqudy"]
 [ext_resource type="Texture2D" uid="uid://bbnkybehc7hv3" path="res://Resources/Textures_Settings/Time.png" id="10_mthl7"]
@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://d38plcpfw0kp8" path="res://Resources/Textures_Settings/Settings__0013_Note.png" id="14_o6j77"]
 [ext_resource type="Texture2D" uid="uid://cr4otco1wltik" path="res://Resources/Textures_Settings/Settings__0012_Beat-Ring-Icon.png" id="15_bbulw"]
 [ext_resource type="Texture2D" uid="uid://c46agdfmouhob" path="res://Resources/Textures_Settings/Settings__0011_X.png" id="16_aa32w"]
-[ext_resource type="Script" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
+[ext_resource type="Script" uid="uid://nst1cl6b3w8" path="res://Scripts/UI/Buttons/export_button.gd" id="16_g4ckg"]
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
 [ext_resource type="Texture2D" uid="uid://duxksnnig6727" path="res://Resources/Textures_Settings/Settings__0007_Small-Button-Glow.png" id="21_8qhib"]
@@ -222,9 +222,9 @@ value = 120.0
 [node name="BpmLabel" type="Label" parent="Panel/bpm/bpm slider" unique_id=1382470317]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.28773436
+anchor_left = 0.1139082
 anchor_top = -2.1829972
-anchor_right = 0.3353903
+anchor_right = 0.1615641
 anchor_bottom = -2.1524413
 offset_left = 141.4128
 offset_top = 286.38895
@@ -234,7 +234,7 @@ theme = ExtResource("2_yaket")
 theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 50
-text = "bpm"
+text = "120"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
@@ -271,17 +271,17 @@ expand_icon = true
 light_mask = 2
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.008
+anchor_left = -0.01
 anchor_right = -0.01
-offset_left = 72.0
+offset_left = 76.0
 offset_top = -57.0
-offset_right = 215.0
+offset_right = 219.0
 offset_bottom = -14.0
 theme = ExtResource("2_yaket")
 theme_override_colors/font_color = Color(0.58431375, 0.5686275, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
-text = "BPM"
+text = "BPM:"
 metadata/_edit_use_anchors_ = true
 
 [node name="SettingButton" parent="Panel/bpm/BPMText" unique_id=1184962439 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
@@ -298,16 +298,16 @@ tekstvak = NodePath("../../../../SettingsUitleg")
 
 [node name="swing" type="Control" parent="Panel" unique_id=1661127305]
 anchors_preset = 0
-offset_left = 61.0
+offset_left = 60.0
 offset_top = 219.0
-offset_right = 561.0
+offset_right = 560.0
 offset_bottom = 289.0
 
 [node name="ProgressBar" type="ProgressBar" parent="Panel/swing" unique_id=1555317528]
 layout_mode = 0
-offset_left = 1.0
+offset_left = -1.0
 offset_top = 10.0
-offset_right = 467.0
+offset_right = 465.0
 offset_bottom = 60.0
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_mfvrx")
@@ -323,9 +323,9 @@ anchor_left = -0.04624646
 anchor_top = -0.6842262
 anchor_right = -0.04624646
 anchor_bottom = -0.6842261
-offset_left = 12.123222
-offset_top = 30.895834
-offset_right = 727.1232
+offset_left = 9.12323
+offset_top = 30.895836
+offset_right = 724.1232
 offset_bottom = 180.89583
 scale = Vector2(0.7, 0.7)
 theme_override_icons/grabber = ExtResource("7_ryerx")
@@ -358,9 +358,9 @@ metadata/_edit_use_anchors_ = true
 
 [node name="swingUpButton2" type="Button" parent="Panel/swing" unique_id=904268492]
 layout_mode = 0
-offset_left = 415.0
+offset_left = 417.0
 offset_top = -16.0
-offset_right = 615.0
+offset_right = 617.0
 offset_bottom = 184.0
 scale = Vector2(0.5, 0.5)
 focus_mode = 0
@@ -372,9 +372,9 @@ expand_icon = true
 
 [node name="swingDownButton2" type="Button" parent="Panel/swing" unique_id=1158822682]
 layout_mode = 0
-offset_left = -49.0
+offset_left = -47.0
 offset_top = -16.0
-offset_right = 151.0
+offset_right = 153.0
 offset_bottom = 184.0
 scale = Vector2(0.5, 0.5)
 focus_mode = 0

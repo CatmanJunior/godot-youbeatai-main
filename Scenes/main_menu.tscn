@@ -125,7 +125,6 @@ scale = Vector2(1, 1)
 size = Vector2i(403, 376)
 
 [node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" index="1" unique_id=1195742085]
-visible = false
 energy = 1.71
 texture_scale = 2.41
 
@@ -265,6 +264,8 @@ metadata/_edit_lock_ = true
 
 [node name="CreditsPanel" type="Panel" parent="." unique_id=913167759]
 visible = false
+light_mask = 2
+visibility_layer = 2
 z_index = 1000
 offset_left = -640.0
 offset_top = -360.0

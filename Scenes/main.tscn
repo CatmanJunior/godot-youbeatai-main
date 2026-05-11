@@ -247,6 +247,12 @@ position = Vector2(406, 139)
 z_index = -4096
 energy = 0.55
 
+[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+offset_left = -234.5
+offset_top = -199.5
+offset_right = 46.5
+offset_bottom = -11.5
+
 [node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "klappy_energy", "face_light")]
 klappy_light = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
 klappy_energy = NodePath("../EnergyProgressBar")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TutorialStepsCollection" format=3 uid="uid://bhm2jpomt47pe"]
 
-[ext_resource type="Script" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
+[ext_resource type="Script" uid="uid://dlkqmmap7jbvw" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
 [ext_resource type="Script" uid="uid://drurbmsmnjvp3" path="res://Scripts/Tutorial/TutorialStepData.gd" id="2_step"]
 
 [sub_resource type="Resource" id="Step_1"]
@@ -32,7 +32,7 @@ condition = 4
 
 [sub_resource type="Resource" id="Step_6"]
 script = ExtResource("2_step")
-instruction = "Druk op ⏸️ om de Beat op pauze te zetten"
+instruction = "Druk op de 2 streepjes om de Beat op pauze te zetten"
 condition = 3
 outcome = 5
 
@@ -193,7 +193,7 @@ condition = 1
 
 [sub_resource type="Resource" id="Step_35"]
 script = ExtResource("2_step")
-instruction = "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖aan je sample geven"
+instruction = "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖 aan je sample geven"
 condition = 1
 outcome = 24
 

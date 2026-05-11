@@ -124,6 +124,7 @@ scale = Vector2(1, 1)
 size = Vector2i(403, 376)
 
 [node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" index="1" unique_id=1195742085]
+visible = false
 energy = 1.71
 texture_scale = 2.41
 

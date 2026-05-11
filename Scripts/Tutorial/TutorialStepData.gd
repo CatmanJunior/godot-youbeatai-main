@@ -59,6 +59,7 @@ enum TutorialOutcome {
 	SHOW_OUTSIDE_STAR,
 	ON_OUTSIDE_STAR_REACHED,
 	FINISH_TUTORIAL,
+	START_PLAYBACK,
 }
 
 @export var instruction: String = ""

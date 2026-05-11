@@ -40,6 +40,7 @@ func get_map() -> Dictionary:
 		O.SHOW_OUTSIDE_STAR:       _outcome_show_chaospad_star.bind(2),
 		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
 		O.FINISH_TUTORIAL:         _outcome_end_tutorial,
+		O.START_PLAYBACK:          EventBus.playing_change_requested.emit.bind(true),
 	}
 
 # ── No-op ────────────────────────────────────────────────────────────────────────────────────────────────

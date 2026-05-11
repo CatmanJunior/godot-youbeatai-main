@@ -173,6 +173,7 @@ outcome = 22
 [sub_resource type="Resource" id="Step_31"]
 script = ExtResource("2_step")
 condition = 5
+outcome = 32
 
 [sub_resource type="Resource" id="Step_32"]
 script = ExtResource("2_step")

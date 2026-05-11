@@ -8,19 +8,30 @@ var export_song: bool = false
 @export var mail_field: LineEdit
 @export var mail_toggle: CheckButton
 @export var mail_button: Button
+@export var download_button: Button
 
 func _ready():
 	mail_button.pressed.connect(_on_mail_button_pressed)
+	download_button.pressed.connect(_on_download_button_pressed)
 	mail_toggle.toggled.connect(on_mail_toggle_changed)
 	EventBus.export_button_pressed.connect(open_export_dialog)
 
 func _on_mail_button_pressed():
+	do_mail = true
+	_on_export_button_pressed()
+
+func _on_download_button_pressed():
+	do_mail = false
+	_on_export_button_pressed()
+
+
+func _on_export_button_pressed():
 	if not validate_form():
 		name_field.modulate = Color.RED
 		mail_field.modulate = Color.RED
 		return
 	
-	EventBus.export_requested.emit(false, export_song)
+	EventBus.export_requested.emit(do_mail, export_song)
 	close_export_dialog()
 	
 func on_mail_toggle_changed(value: bool):

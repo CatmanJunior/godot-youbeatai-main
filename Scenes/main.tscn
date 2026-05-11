@@ -28,6 +28,7 @@
 [ext_resource type="Script" uid="uid://dgve2eeehfcib" path="res://Scripts/Exporters/FileExporter.gd" id="34_2daye"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
+[ext_resource type="Script" uid="uid://3rst3pwp34yb" path="res://Scripts/Exporters/EmailExporter.gd" id="38_6ml46"]
 [ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Icons/SHAPES_Lock.png" id="39_bv80c"]
 [ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
@@ -58,7 +59,7 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -144,6 +145,10 @@ playback_type = 1
 [node name="FileExporter" type="Node" parent="Managers/Exporter" unique_id=1326891481]
 script = ExtResource("34_2daye")
 metadata/_custom_type_script = "uid://dgve2eeehfcib"
+
+[node name="EmailExporter" type="Node" parent="Managers/Exporter" unique_id=833394152]
+script = ExtResource("38_6ml46")
+metadata/_custom_type_script = "uid://3rst3pwp34yb"
 
 [node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
 script = ExtResource("28_ux43w")
@@ -284,9 +289,6 @@ offset_left = -1.6799927
 offset_top = -8.679962
 offset_right = 6.0
 offset_bottom = 5.0
-
-[node name="BPMText" parent="UserInterface/SettingsPanel/Panel/bpm" parent_id_path=PackedInt32Array(248245984, 1292344551) index="4" unique_id=1191003587]
-anchor_left = -0.01
 
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false

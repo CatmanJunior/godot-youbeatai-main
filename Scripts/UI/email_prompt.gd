@@ -34,8 +34,7 @@ func open_export_dialog(mode_export_song: bool):
 	export_song = mode_export_song
 
 func validate_form() -> bool:
-	if name_field.text == "":
-		return false
+	#removed name field validation to allow default name exporting
 
 	if mail_field.text == "" and do_mail:
 		return false

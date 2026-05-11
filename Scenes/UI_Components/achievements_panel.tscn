@@ -82,7 +82,7 @@ metadata/_edit_use_anchors_ = true
 [node name="InstructionLabel" type="Label" parent="." unique_id=813716848]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.03380783
+anchor_left = 0.023131672
 anchor_top = -0.1143617
 anchor_right = -0.03024911
 anchor_bottom = -0.1143617

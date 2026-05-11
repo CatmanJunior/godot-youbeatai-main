@@ -259,6 +259,10 @@ offset_right = 46.5
 offset_bottom = -11.5
 
 [node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "klappy_energy", "face_light")]
+offset_left = -97.5
+offset_top = -163.5
+offset_right = 102.5
+offset_bottom = 36.5
 klappy_light = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
 klappy_energy = NodePath("../EnergyProgressBar")
 face_light = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")

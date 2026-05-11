@@ -32,13 +32,13 @@ condition = 4
 
 [sub_resource type="Resource" id="Step_6"]
 script = ExtResource("2_step")
-instruction = "Druk op de 2 streepjes om de Beat op pauze te zetten"
+instruction = "Druk op de 2 streepjes ⏸️ om de Beat op pauze te zetten"
 condition = 3
 outcome = 5
 
 [sub_resource type="Resource" id="Step_7"]
 script = ExtResource("2_step")
-instruction = "Nu jij!, vul nog 2 cirkels door er op te drukken"
+instruction = "Nu jij! Vul nog 2 cirkels door er op te drukken"
 condition = 6
 outcome = 6
 
@@ -141,7 +141,7 @@ condition = 14
 
 [sub_resource type="Resource" id="Step_25"]
 script = ExtResource("2_step")
-instruction = "Druk op de microfoon 🎙️en neem een baslijn op! Ik tel af van 4 naar 0"
+instruction = "Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af van 4 naar 0"
 condition = 15
 outcome = 21
 
@@ -178,7 +178,6 @@ condition = 5
 script = ExtResource("2_step")
 instruction = "Super gedaan, het klinkt al leuk"
 condition = 1
-outcome = 13
 
 [sub_resource type="Resource" id="Step_33"]
 script = ExtResource("2_step")

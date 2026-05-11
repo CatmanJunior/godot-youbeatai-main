@@ -11,8 +11,6 @@
 [ext_resource type="Script" uid="uid://dymf0ccqr3c14" path="res://Scripts/UI/Buttons/dual_select_button.gd" id="5_7sjhg"]
 [ext_resource type="Resource" uid="uid://dr07qidpgsf71" path="res://Resources/ButtonGroups/EmotionSelectionButtonGroup.tres" id="5_dsbnb"]
 [ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy/Klappy_soundbank_screen.gd" id="5_pd2wx"]
-[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="6_lmhht"]
-[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
 [ext_resource type="ButtonGroup" uid="uid://bnx6ah57t5lrt" path="res://Resources/ButtonGroups/BeatAmountSelectionGroup.tres" id="8_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_bt16w"]
 [ext_resource type="Texture2D" uid="uid://h0nis3rbt2fe" path="res://Resources/Textures_New_Extra/MenuShapes128_0005_8_Purple.png" id="11_18n7q"]
@@ -22,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
 [ext_resource type="Texture2D" uid="uid://bndvo0vsvj7ns" path="res://Resources/Textures_New_Extra/MenuShapes128_0008_8_Green.png" id="16_grpai"]
 [ext_resource type="Texture2D" uid="uid://d3avwn0b5a15c" path="res://Resources/Textures/Klappy_background.png" id="17_h74sy"]
+[ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="20_18n7q"]
 [ext_resource type="Texture2D" uid="uid://dl6eu7qv8vsk8" path="res://Resources/Textures_New_Extra/NoEmoticon128.png" id="22_18n7q"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8jt4r"]
@@ -1001,15 +1000,7 @@ light_mask = 2
 z_index = -2
 texture_filter = 2
 texture_repeat = 1
-texture = ExtResource("6_lmhht")
-metadata/_edit_lock_ = true
-
-[node name="Gradient" type="Sprite2D" parent="." unique_id=342217268]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -2
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("7_avjdi")
+texture = ExtResource("20_18n7q")
 metadata/_edit_lock_ = true
 
 [node name="ClappyBG" type="Sprite2D" parent="." unique_id=1470871126]

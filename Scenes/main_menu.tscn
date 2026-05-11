@@ -8,10 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
 [ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_opfnp"]
 [ext_resource type="Texture2D" uid="uid://d3avwn0b5a15c" path="res://Resources/Textures/Klappy_background.png" id="7_vr1f0"]
-[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="7_yhxw7"]
 [ext_resource type="Texture2D" uid="uid://ym1jq7ayco4s" path="res://Resources/Textures/fullscreen.png" id="8_t1dhk"]
-[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="8_trj04"]
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]
+[ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="10_t1dhk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
 bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
@@ -252,15 +251,7 @@ modulate = Color(0.85, 0.85, 0.85, 1)
 z_index = -2
 texture_filter = 2
 texture_repeat = 1
-texture = ExtResource("7_yhxw7")
-metadata/_edit_lock_ = true
-
-[node name="Gradient" type="Sprite2D" parent="." unique_id=1446900614]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -2
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("8_trj04")
+texture = ExtResource("10_t1dhk")
 metadata/_edit_lock_ = true
 
 [node name="CreditsPanel" type="Panel" parent="." unique_id=913167759]

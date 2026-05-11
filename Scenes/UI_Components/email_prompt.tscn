@@ -2,9 +2,8 @@
 
 [ext_resource type="Script" uid="uid://b3s2s16qvthd8" path="res://Scripts/UI/email_prompt.gd" id="1_8j0pk"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_jeaa2"]
+[ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="2_at82w"]
 [ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_4ov2l"]
-[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="3_f3bqg"]
-[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="5_at82w"]
 [ext_resource type="Texture2D" uid="uid://gqjji3gx3jmf" path="res://Resources/Textures_New_Extra/_0001_Cross_white.png" id="6_f3bqg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aqgau"]
@@ -21,6 +20,7 @@ corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xf0ds"]
 bg_color = Color(0.57565, 0.56549996, 0.87, 0)
+draw_center = false
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -94,17 +94,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_at82w")
-expand_mode = 1
-
-[node name="TextureRect2" type="TextureRect" parent="TextureRect" unique_id=484930958]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_f3bqg")
+texture = ExtResource("2_at82w")
 expand_mode = 1
 
 [node name="Panel" type="Panel" parent="TextureRect" unique_id=83362213]
@@ -171,7 +161,7 @@ theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_colors/font_placeholder_color = Color(0.97, 0.95351, 0.8051, 0.6)
 theme_override_font_sizes/font_size = 28
 theme_override_styles/normal = SubResource("StyleBoxFlat_xf0ds")
-placeholder_text = "..."
+placeholder_text = "Geef het een naam"
 alignment = 1
 
 [node name="CheckButton" type="CheckButton" parent="." unique_id=376458185]

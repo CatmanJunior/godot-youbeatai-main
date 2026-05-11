@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://qaph84l46wo0"]
 
-[ext_resource type="Texture2D" uid="uid://cnl15vf13mia8" path="res://Resources/Textures_New/Backgrounds/_0003_BG-1080p.png" id="1_e2x6l"]
+[ext_resource type="Texture2D" uid="uid://dy2xx2vdev35q" path="res://Resources/Textures_New/back.png" id="1_8qhib"]
 [ext_resource type="Script" uid="uid://v62uubacsyqx" path="res://Scripts/UI/settings_menu_ui.gd" id="2_17eq1"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_yaket"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_5tpfg"]
@@ -25,7 +25,7 @@
 [ext_resource type="Texture2D" uid="uid://duxksnnig6727" path="res://Resources/Textures_Settings/Settings__0007_Small-Button-Glow.png" id="21_8qhib"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
-texture = ExtResource("1_e2x6l")
+texture = ExtResource("1_8qhib")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ylsbi"]
 bg_color = Color(0.5690333, 0.559, 0.86, 0.09803922)
@@ -76,7 +76,12 @@ border_color = Color(0.52156866, 0.8509804, 0.47058824, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_na2ur"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ceghn"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 21.0
+content_margin_bottom = 7.0
 bg_color = Color(0.57565, 0.56549996, 0.87, 0.09803922)
+draw_center = false
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -88,6 +93,10 @@ corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3h4bx"]
+content_margin_left = 7.0
+content_margin_top = 7.0
+content_margin_right = 21.0
+content_margin_bottom = 7.0
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
@@ -136,17 +145,15 @@ top_level = true
 light_mask = 2
 z_index = 1000
 z_as_relative = false
-offset_left = 3.0
-offset_top = 3.0
-offset_right = 1283.0
-offset_bottom = 723.0
+offset_right = 1280.0
+offset_bottom = 720.0
 theme_override_styles/panel = SubResource("StyleBoxTexture_p4gyq")
 script = ExtResource("2_17eq1")
 settings_panel = NodePath(".")
 settings_back_button = NodePath("Panel/bot_buttons_h_container/CloseSettingsButton")
-button_is_clap = NodePath("Panel/toggle_v_container/ButtonIsClap")
-button_add_beats = NodePath("Panel/toggle_v_container/Knop adds beat")
-clap_adds_beats_toggle = NodePath("Panel/toggle_v_container/AddBeatsToggle")
+button_is_clap = NodePath("Panel/MarginContainer/toggle_v_container/ButtonIsClap")
+button_add_beats = NodePath("Panel/MarginContainer/toggle_v_container/Knop adds beat")
+clap_adds_beats_toggle = NodePath("Panel/MarginContainer/toggle_v_container/AddBeatsToggle")
 recording_delay_slider = NodePath("Panel/delay/RecordingDelaySlider")
 recording_delay_progress = NodePath("Panel/delay/ProgressBar")
 recording_delay_label = NodePath("Panel/delay/delay_label_circle/recordingDelayLabel")
@@ -164,8 +171,8 @@ template_button = NodePath("Panel/stijl_tip/TemplateButton")
 save_song_button = NodePath("Panel/bot_buttons_h_container/SaveSongButton")
 save_beat_button = NodePath("Panel/bot_buttons_h_container/SaveBeatButton")
 restart_button = NodePath("Panel/bot_buttons_h_container/RestartGameButton")
-metronome_toggle = NodePath("Panel/toggle_v_container/MetronomeToggle")
-mute_speech = NodePath("Panel/toggle_v_container/MuteSpeachToggle")
+metronome_toggle = NodePath("Panel/MarginContainer/toggle_v_container/MetronomeToggle")
+mute_speech = NodePath("Panel/MarginContainer/toggle_v_container/MuteSpeachToggle")
 
 [node name="Panel" type="Panel" parent="." unique_id=1205068931]
 light_mask = 2
@@ -466,147 +473,154 @@ text = "0.4s"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="toggle_v_container" type="VBoxContainer" parent="Panel" unique_id=688920235]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -435.0
-offset_top = -263.0
-offset_right = 115.0
-offset_bottom = 237.0
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(0.75, 0.75)
-theme_override_constants/separation = -45
+[node name="MarginContainer" type="MarginContainer" parent="Panel" unique_id=1954620830]
+layout_mode = 0
+offset_left = 620.0
+offset_top = 2.0
+offset_right = 1051.0
+offset_bottom = 347.0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
 
-[node name="MetronomeToggle" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1708949378]
+[node name="toggle_v_container" type="VBoxContainer" parent="Panel/MarginContainer" unique_id=688920235]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MetronomeToggle" type="CheckButton" parent="Panel/MarginContainer/toggle_v_container" unique_id=1708949378]
 light_mask = 2
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 90
 theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
 vertical_icon_alignment = 0
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/toggle_v_container/MetronomeToggle" unique_id=175385891]
+[node name="Label" type="Label" parent="Panel/MarginContainer/toggle_v_container/MetronomeToggle" unique_id=175385891]
 light_mask = 2
 layout_mode = 0
-offset_left = -2.0
-offset_top = 51.0
-offset_right = 195.0
-offset_bottom = 94.0
+offset_right = 300.0
+offset_bottom = 50.0
 theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 33
 text = "Metronoom"
+vertical_alignment = 1
 
-[node name="SettingButton" parent="Panel/toggle_v_container/MetronomeToggle/Label" unique_id=1354041970 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+[node name="SettingButton" parent="Panel/MarginContainer/toggle_v_container/MetronomeToggle/Label" unique_id=1354041970 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
 layout_mode = 1
 uitleg = "Zet dit aan om een muzikale klok te horen. Dit tikgeluid helpt je om het ritme te horen."
-tekstvak = NodePath("../../../../../SettingsUitleg")
+tekstvak = NodePath("../../../../../../SettingsUitleg")
 
-[node name="Knop adds beat" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1549939005]
+[node name="Knop adds beat" type="CheckButton" parent="Panel/MarginContainer/toggle_v_container" unique_id=1549939005]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 90
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/toggle_v_container/Knop adds beat" unique_id=1596923273]
+[node name="Label" type="Label" parent="Panel/MarginContainer/toggle_v_container/Knop adds beat" unique_id=1596923273]
 light_mask = 2
 layout_mode = 0
-offset_top = 45.0
-offset_right = 201.0
-offset_bottom = 88.0
+offset_right = 300.0
+offset_bottom = 50.0
 theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 33
 text = "Knop maakt beat"
+vertical_alignment = 1
 
-[node name="SettingButton" parent="Panel/toggle_v_container/Knop adds beat/Label" unique_id=325749334 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
+[node name="SettingButton" parent="Panel/MarginContainer/toggle_v_container/Knop adds beat/Label" unique_id=325749334 node_paths=PackedStringArray("tekstvak") instance=ExtResource("8_8qhib")]
 layout_mode = 1
 uitleg = "Als je deze aan zet dan kan je met de knoppen op je toetsenboard, A, S, D, F, ook beats plaatsen."
-tekstvak = NodePath("../../../../../SettingsUitleg")
+tekstvak = NodePath("../../../../../../SettingsUitleg")
 
-[node name="ButtonIsClap" type="CheckButton" parent="Panel/toggle_v_container" unique_id=860283575]
+[node name="ButtonIsClap" type="CheckButton" parent="Panel/MarginContainer/toggle_v_container" unique_id=860283575]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
 theme_override_colors/font_focus_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_constants/icon_max_width = 90
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
 button_pressed = true
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/toggle_v_container/ButtonIsClap" unique_id=1035969502]
+[node name="Label" type="Label" parent="Panel/MarginContainer/toggle_v_container/ButtonIsClap" unique_id=1035969502]
 light_mask = 2
 layout_mode = 0
-offset_top = 45.0
-offset_right = 296.0
-offset_bottom = 88.0
+offset_right = 300.0
+offset_bottom = 50.0
 theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 33
 text = "Knop maakt klap"
+vertical_alignment = 1
 
-[node name="AddBeatsToggle" type="CheckButton" parent="Panel/toggle_v_container" unique_id=2078575210]
+[node name="AddBeatsToggle" type="CheckButton" parent="Panel/MarginContainer/toggle_v_container" unique_id=2078575210]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 90
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/toggle_v_container/AddBeatsToggle" unique_id=131516433]
+[node name="Label" type="Label" parent="Panel/MarginContainer/toggle_v_container/AddBeatsToggle" unique_id=131516433]
 light_mask = 2
 layout_mode = 0
-offset_top = 45.0
-offset_right = 282.0
-offset_bottom = 88.0
+offset_right = 300.0
+offset_bottom = 50.0
 theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 33
 text = "Klap maakt beat"
+vertical_alignment = 1
 
-[node name="MuteSpeachToggle" type="CheckButton" parent="Panel/toggle_v_container" unique_id=1064535899]
+[node name="MuteSpeachToggle" type="CheckButton" parent="Panel/MarginContainer/toggle_v_container" unique_id=1064535899]
 light_mask = 2
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
+theme_override_constants/icon_max_width = 90
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
 theme_override_icons/checked = ExtResource("12_eyme4")
 theme_override_icons/unchecked = ExtResource("13_rs3bn")
+expand_icon = true
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="Panel/toggle_v_container/MuteSpeachToggle" unique_id=1766770326]
+[node name="Label" type="Label" parent="Panel/MarginContainer/toggle_v_container/MuteSpeachToggle" unique_id=1766770326]
 light_mask = 2
 layout_mode = 0
-offset_top = 45.0
-offset_right = 170.0
-offset_bottom = 88.0
+offset_right = 300.0
+offset_bottom = 50.0
 theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
 theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 46
+theme_override_font_sizes/font_size = 33
 text = "Klappy stil"
+vertical_alignment = 1
 
 [node name="bot_buttons_h_container" type="HBoxContainer" parent="Panel" unique_id=696631749]
 light_mask = 2
@@ -631,13 +645,14 @@ layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
 theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
-theme_override_constants/icon_max_width = 82
+theme_override_constants/icon_max_width = 61
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 25
 theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
-text = "Hele liedje opslaan?"
+text = "liedje opslaan
+"
 icon = ExtResource("14_o6j77")
 autowrap_mode = 2
 icon_alignment = 2
@@ -650,14 +665,14 @@ layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
 theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
-theme_override_constants/icon_max_width = 82
+theme_override_constants/icon_max_width = 61
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 25
 theme_override_icons/icon = SubResource("CanvasTexture_3h4bx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
 theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
-text = "Beat ring opslaan?"
+text = "Beat ring opslaan"
 icon = ExtResource("15_bbulw")
 autowrap_mode = 2
 icon_alignment = 2
@@ -669,7 +684,7 @@ layout_mode = 2
 focus_mode = 0
 theme = ExtResource("2_yaket")
 theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
-theme_override_constants/icon_max_width = 82
+theme_override_constants/icon_max_width = 61
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 25
 theme_override_icons/icon = SubResource("CanvasTexture_3h4bx")
@@ -686,6 +701,7 @@ custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_constants/icon_max_width = 61
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 25
 theme_override_icons/icon = SubResource("CanvasTexture_3h4bx")

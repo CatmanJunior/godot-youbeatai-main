@@ -5,9 +5,9 @@
 [ext_resource type="Script" uid="uid://81gjarb3j1hq" path="res://Scripts/UI/Buttons/section_button.gd" id="2_vlsjc"]
 [ext_resource type="Texture2D" uid="uid://cxs76icuutmpb" path="res://Resources/Textures/default.png" id="3_f4ak3"]
 [ext_resource type="Texture2D" uid="uid://dgki5hjiy4i76" path="res://Resources/Textures_New_Extra/Hex_0002_Layer-1.png" id="5_4om38"]
-[ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="6_6664a"]
+[ext_resource type="Shader" path="res://Shaders/RadialFill.gdshader" id="6_6664a"]
 [ext_resource type="Texture2D" uid="uid://pgbevn8kf0kd" path="res://Resources/Textures_New_Extra/Hex_ring_white.png" id="6_vnog6"]
-[ext_resource type="Script" uid="uid://cy7mkayqgle35" path="res://Scripts/UI/section_ring_graphic.gd" id="8_6664a"]
+[ext_resource type="Script" path="res://Scripts/UI/section_ring_graphic.gd" id="8_6664a"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jf038"]
 texture = ExtResource("1_jf038")

@@ -21,5 +21,10 @@ func set_button_selected(_active: bool) -> void:
 func _on_press():
 	print("pressed")
 	GameState.song_mode_active = !GameState.song_mode_active
+
+	
+	if GameState.song_mode_active:
+		EventBus.beat_seek_requested.emit(0)
+
 	set_button_selected(GameState.song_mode_active)
 	super._on_press()

@@ -15,14 +15,14 @@ var unlocked:= false
 var start_energy
 var flicker_done = false
 
-var colors = ["green", "red", "blue", "yellow","green", "red", "blue", "yellow"]
+var colors_string :Array[String] = ["green", "red", "blue", "yellow", "green", "red", "blue", "yellow"]
 
 @export var instruction_label:Label
 @export var achievement_panel:Panel
 @export var colormapje: Node3D
 
 func _ready() -> void:
-	# TODO: GET THIS THE HELL OUT OF HERE
+	EventBus.energy_points_changed.connect(on_klappy_energy)
 	bus_index = AudioServer.get_bus_index(BusNames.SUBMASTER_BUS)
 
 	phaser = AudioServer.get_bus_effect(bus_index, 0) as AudioEffectPhaser
@@ -42,10 +42,6 @@ func _ready() -> void:
 	colormapje.visible = false
 
 	
-	if KlappyEnergy != null:
-		KlappyEnergy.value_changed.connect(on_klappy_energy)
-		
-	assert(GameState!= null,"manger not found")
 	if not GameState.tutorial_activated:
 		EventBus.utterance_ended.connect(_on_utterance_end)
 
@@ -97,40 +93,37 @@ func _on_gui_input(event: InputEvent) -> void:
 			if pos.y <= 70:
 				color = color.lerp(Color.YELLOW, strength)
 
-			KlappyLight.light_color = color 
-			$cursor/Trail.default_color = color #trail word dezelfde kleur als light
-			
-func on_klappy_energy(value):
-	if value >= 100 and not flicker_done:  
+			klappy_light.color = color
+			$cursor/Trail.default_color = color # trail word dezelfde kleur als light
+
+func _set_klappy_light_energy(value: float) -> void:
+	klappy_light.energy = value / 50.0
+
+func on_klappy_energy(value: float) -> void:
+	_set_klappy_light_energy(value)
+	if value >= AchievementManager.ENERGY_THRESHOLD_LIGHT_PAD and not flicker_done:
 		unlocked = true
 		flicker_done = true
-		_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
+		if GameState.achievements_active:
+			_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
 		lightFlicker()
 		await get_tree().create_timer(7.0).timeout
 		achievement_panel.visible = false
 	
 func lightFlicker():
-	for i in colors:
-		KlappyLight.light_color = i
+	for i in colors_string:
+		klappy_light.color = Color(i)
 		
 		await get_tree().create_timer(0.3).timeout
-		KlappyLight.light_energy = start_energy
 		
 	colormapje.visible = true
-	KlappyLight.visible = false
+	klappy_light.color = Color.WHITE	
 	
-	
-func _fill_instruction_label(_name:String):
-	if instruction_label == null : push_error("Label not found")
-	instruction_label.text = _name
-	_achievement_panel_visibility(0)
+func _fill_instruction_label(_name: String):
+	EventBus.set_klappy_speech_bubble.emit(_name,"",false)
 	_start_tts(_name)
 	
-func _achievement_panel_visibility(_utterance_id:int):
-	if not achievement_panel.visible :
-		achievement_panel.visible = true
-		
-func _start_tts(message:String):
+func _start_tts(message: String):
 	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
 
 func _on_utterance_end(_utterance):

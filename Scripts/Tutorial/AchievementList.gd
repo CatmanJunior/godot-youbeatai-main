@@ -24,7 +24,7 @@ func build() -> Array[AchievementDef]:
 			_unlock_big_line),
 
 		_def(N.TEMPLATE_TIP,
-			"In de instellingen kan je op tip klikken, dan laat ik een voorbeeld liedje zien",
+			"Als je hier op klikt, dan laat ik een voorbeeld liedje zien",
 			func() -> bool: return true,
 			50.0,),
 
@@ -44,7 +44,7 @@ func build() -> Array[AchievementDef]:
 			func() -> bool: return tracker.samples_recorded >= 2),
 
 		_def(N.TRACK_3,
-			"Verzamel meer energie om de blauwe ring vrij te spelen",
+			"Verzamel meer energie om de hi-hat vrij te spelen",
 			func() -> bool: return true,
 			50.0,
 			func(): EventBus.track_sprites_visibility_requested.emit(3, true)),

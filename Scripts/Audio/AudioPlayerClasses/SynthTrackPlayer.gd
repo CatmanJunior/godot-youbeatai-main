@@ -37,8 +37,6 @@ func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) 
 		apply_note_player_settings(settings)
 	else:
 		push_warning("Warning: No note player settings provided for SynthTrackPlayer %d, using defaults." % index)
-	
-	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
 
 func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data.track_data.index != track_index:

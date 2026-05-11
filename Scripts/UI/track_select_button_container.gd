@@ -14,9 +14,14 @@ func _ready():
 
 	EventBus.track_select_button_visibility_requested.connect(_on_track_select_button_visibility_requested)
 	EventBus.ui_visibility_requested.connect(_on_ui_visibility_requested)
-	await get_tree().process_frame
-	_set_initial_track.call_deferred()
+	EventBus.beat_sprite_clicked.connect(_on_beat_sprite_clicked)
+	EventBus.section_data_initialized.connect(_set_initial_track)
 
+func _on_beat_sprite_clicked(track_index: int, _beat_index: int):
+	for button in track_buttons:
+		button.set_button_selected(false)
+	track_buttons[track_index].set_button_selected(true)
+	EventBus.track_selected.emit(track_index)
 
 func _on_ui_visibility_requested(p_element: int, p_visible: bool) -> void:
 	if p_element == UIVisibilityListener.UIElement.ENTIRE_INTERFACE:
@@ -43,6 +48,7 @@ func _on_track_button_pressed(track_index: int):
 
 	if track_buttons[track_index].is_synth_track:
 		track_buttons[track_index].background.modulate = track_UI_settings.get_track(track_index).track_color
+
 
 	if not track_buttons[track_index].is_synth_track:
 		EventBus.play_track_requested.emit(track_index)

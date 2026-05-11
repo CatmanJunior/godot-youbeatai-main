@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c78m8ijn10kwh"]
 
+[ext_resource type="Script" uid="uid://cpd4e3o87ptpj" path="res://scripts/post_ready_emitter.gd" id="1_2060n"]
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
@@ -47,7 +48,7 @@
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
-[ext_resource type="Script" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
+[ext_resource type="Script" uid="uid://c76hgacdcbr2k" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
 [ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
@@ -57,7 +58,7 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -69,6 +70,7 @@ scale = Vector2(4.12, 1)
 current = true
 
 [node name="Managers" type="Node" parent="." unique_id=205411252]
+script = ExtResource("1_2060n")
 
 [node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
 
@@ -89,7 +91,6 @@ chord_player_settings = ExtResource("17_55jeb")
 stream = ExtResource("9_5vy51")
 max_polyphony = 2
 script = ExtResource("18_2daye")
-metadata/_custom_type_script = "uid://b4epao7gloc0h"
 
 [node name="TrackRecorder" type="Node" parent="Managers/AudioManagers" unique_id=317992763 node_paths=PackedStringArray("song_recording_progress_bar", "recording_sample_button", "waveform_visualizer")]
 script = ExtResource("62_daoo8")
@@ -106,6 +107,7 @@ script = ExtResource("21_s8vy0")
 clap_threshold = 0.3
 stamp_freq_max = 40.0
 stamp_threshold = 0.008
+beat_on_beat_window = 0.5
 
 [node name="SectionManager" type="Node" parent="Managers" unique_id=710188850]
 script = ExtResource("7_b4mik")
@@ -143,21 +145,17 @@ playback_type = 1
 script = ExtResource("34_2daye")
 metadata/_custom_type_script = "uid://dgve2eeehfcib"
 
-[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui", "count_label")]
+[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
 script = ExtResource("28_ux43w")
 tutorial_steps_resource = ExtResource("29_n7cmr")
 achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
 achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
-count_label = NodePath("../../UserInterface/Robot/AchievementsPanel/AmountLef")
 
-[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("energy_progress_bar", "achievements_panel", "instruction_label", "mute_speech_button", "section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
+[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("energy_progress_bar", "section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
 script = ExtResource("39_ptfg5")
 energy_progress_bar = NodePath("../../../UserInterface/Robot/EnergyProgressBar")
-achievements_panel = NodePath("../../../UserInterface/Robot/AchievementsPanel")
-instruction_label = NodePath("../../../UserInterface/Robot/AchievementsPanel/InstructionLabel")
-mute_speech_button = NodePath("../../../UserInterface/SettingsPanel/Panel/toggle_v_container/MuteSpeachToggle")
 achievement_sfx = ExtResource("61_0t4jf")
 lock_icon_texture = ExtResource("39_bv80c")
 section_ui = NodePath("../../../UserInterface/SwitchSectionButtons")
@@ -220,6 +218,7 @@ mouse_default_cursor_shape = 2
 
 [node name="OutsideTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="6" unique_id=1674202449]
 mouse_filter = 2
+metadata/_edit_group_ = true
 
 [node name="MixTarget" parent="UserInterface/ChaosPad/ChaosPadTriangle" parent_id_path=PackedInt32Array(2043765558, 316722474) index="7" unique_id=1742236932]
 mouse_filter = 2
@@ -244,8 +243,13 @@ grow_horizontal = 2
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
 
-[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
-visible = false
+[node name="KlappyLight" parent="UserInterface/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1025278274, 1162549337) index="1" unique_id=44086381]
+z_index = -4096
+energy = 0.55
+
+[node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "face_light")]
+klappy_light = NodePath("../SubViewportContainer/KlappyLight")
+face_light = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 visible = false
@@ -262,6 +266,7 @@ grow_vertical = 1
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
 visible = false
+z_index = 4096
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.49400002
@@ -423,6 +428,7 @@ mouse_filter = 2
 texture = ExtResource("53_2daye")
 expand_mode = 1
 stretch_mode = 5
+metadata/_edit_lock_ = true
 
 [node name="SettingsButtonControl" parent="UserInterface" unique_id=641439858 instance=ExtResource("48_jut3y")]
 layout_mode = 0

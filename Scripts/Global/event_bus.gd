@@ -2,6 +2,12 @@ extends Node
 
 @warning_ignore_start("unused_signal")
 
+signal level_loaded()
+
+signal post_ready()
+signal section_data_initialized()
+signal players_initialized()
+
 ## Emitted when a full application restart is requested.
 signal restart_requested()
 
@@ -197,6 +203,8 @@ signal on_tutorial_done()
 signal energy_points_changed(points: int)
 ## Emitted when an action is attempted that requires more energy than the player currently has.
 signal not_enough_energy()
+## Emitted to request showing the achievements panel. If instruction_text is "", panel is closed.
+signal set_klappy_speech_bubble(instruction: String, title: String, show_continue: bool)
 
 # ── TTS ──
 ## Emitted when a text-to-speech utterance has finished, carrying its utterance ID.

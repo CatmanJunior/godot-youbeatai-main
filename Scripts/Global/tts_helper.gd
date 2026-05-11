@@ -12,6 +12,10 @@ func init():
 		return
 
 	initialized = true
+	
+	if not OS.has_feature("web"):
+		return
+	
 	# try to speak, it wont play but will enable the tts
 	speak("test")
 
@@ -47,7 +51,7 @@ func text_without_emoticons(text: String) -> String:
 	var emoji_regex := RegEx.new()
 	emoji_regex.compile(r"\p{Emoji_Presentation}|\p{Extended_Pictographic}")
 	result = emoji_regex.sub(result, "", true)
-	return result.replace("!", "")
+	return result.replace("!", "").replace("'", "").replace('"', "")
 
 func _ready():
 	DisplayServer.tts_set_utterance_callback(DisplayServer.TTS_UTTERANCE_ENDED, utterance_end)

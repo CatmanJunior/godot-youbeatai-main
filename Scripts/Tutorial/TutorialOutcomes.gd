@@ -18,7 +18,7 @@ func get_map() -> Dictionary:
 		O.START_SHORT_TIMER:       _start_timer.bind(2.0),
 		O.BEGIN_STOMP_PHASE:       _outcome_stomp_setup,
 		O.END_STOMP_PHASE:         _outcome_stomp_done,
-		O.SHOW_CLAP_RING:          EventBus.track_sprites_visibility_requested.emit.bind(Tutorial.INDEX_CLAP_TRACK, true),
+		O.SHOW_CLAP_RING:          _outcome_show_clap_ring_setup,
 		O.PLACE_CLAP_BEATS:        _outcome_clap_ring_setup,
 		O.START_CLAP_LISTEN_TIMER: _outcome_clap_listen,
 		O.STOP_PLAYBACK:           EventBus.playing_change_requested.emit.bind(false),
@@ -88,17 +88,24 @@ func _start_timer(seconds: float) -> void:
 func _outcome_stomp_setup() -> void:
 	tutorial._in_stomp_phase = true
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
-	EventBus.amount_left_text_requested.emit("Goed gestampt %d / 5" % tutorial.clap_stomp.stomped_on_beat_amount)
-	tutorial._set_count_label(Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.stomped_on_beat_amount)
+	EventBus.set_klappy_speech_bubble.emit(
+		tutorial._instruction,
+		"Nog %d te gaan" % (Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.stomped_on_beat_amount),
+		false)
 	tutorial.play_achievement_sfx()
 
 # ── Clap ring ────────────────────────────────────────────────────────────────────────────────────────────────
+
+func _outcome_show_clap_ring_setup() -> void:
+	EventBus.track_select_button_visibility_requested.emit(Tutorial.INDEX_CLAP_TRACK, true)
+	EventBus.track_sprites_visibility_requested.emit(Tutorial.INDEX_CLAP_TRACK, true)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CLAP_UI, true)
+
 
 ## Unlocks the preset clap-ring beat positions and shows the clap UI.
 func _outcome_clap_ring_setup() -> void:
 	for beat_idx: int in Tutorial.CLAP_PRESET_BEAT_INDICES:
 		EventBus.beat_set_requested.emit(Tutorial.INDEX_CLAP_TRACK, beat_idx, true)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CLAP_UI, true)
 	tutorial._skip_play()
 
 func _outcome_clap_listen() -> void:
@@ -122,8 +129,10 @@ func _outcome_listen_again() -> void:
 func _outcome_clap_count_setup() -> void:
 	tutorial._in_clap_phase = true
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
-	EventBus.amount_left_text_requested.emit("Goed geklapt %d / 5" % tutorial.clap_stomp.clapped_on_beat_amount)
-	tutorial._set_count_label(Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount)
+	EventBus.set_klappy_speech_bubble.emit(
+		tutorial._instruction,
+		"Nog %d te gaan" % (Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount),
+		false)
 
 # ── Shared helper: end an interaction phase (stomp or clap) ─────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -132,9 +141,8 @@ func _end_interaction_phase(is_stomp: bool) -> void:
 		tutorial._in_stomp_phase = false
 	else:
 		tutorial._in_clap_phase = false
-	EventBus.amount_left_text_requested.emit("")
+	EventBus.set_klappy_speech_bubble.emit(tutorial._instruction, "", false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, false)
-	tutorial._set_count_label(0)
 	EventBus.playing_change_requested.emit(false)
 	tutorial.play_achievement_sfx()
 
@@ -202,7 +210,6 @@ func _show_knob_target(marker: Node2D) -> void:
 	marker.visible = true
 
 func _reach_knob_target(marker: TextureRect) -> void:
-	
 	tutorial._active = true
 	marker.visible = false
 	tutorial.play_achievement_sfx()
@@ -211,9 +218,10 @@ func _reach_knob_target(marker: TextureRect) -> void:
 
 func _outcome_end_tutorial() -> void:
 	print("Tutorial completed! Unlocking achievements and showing main interface.")
-	tutorial.tutorial_level = -1
 	GameState.use_tutorial = false
 	GameState.use_achievements = true
+	EventBus.set_klappy_speech_bubble.emit("", "", false)
+	EventBus.utterance_ended.emit(0) # ensure any waiting TTS is unblocked
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
@@ -222,4 +230,5 @@ func _outcome_end_tutorial() -> void:
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
 	DisplayServer.tts_stop()
+	EventBus.section_switch_requested.emit(0)
 	EventBus.on_tutorial_done.emit()

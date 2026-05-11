@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://dwadswxfwulyk" path="res://Resources/Audio/SoundBanks/1_new-age/ClosedHH Andromeda 1.wav" id="3_6rnhg"]
 [ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_cr3du"]
 [ext_resource type="AudioStream" uid="uid://dna32y08gey1l" path="res://Resources/Audio/SoundBanks/1_new-age/mineur/ClosedHH Elegance.wav" id="4_6rnhg"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_2ma85"]
 [ext_resource type="Resource" uid="uid://dbp748a7nyv05" path="res://Resources/Audio/SoundBanks/1_new-age/EffectProfile.tres" id="5_6rnhg"]
 [ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Resources/SoundFonts/Jvbass.sfo" id="5_kvqfu"]
 [ext_resource type="AudioStream" uid="uid://bsrugmpssatfv" path="res://Resources/Audio/SoundBanks/1_new-age/Kick Elegance 2.wav" id="6_iog55"]

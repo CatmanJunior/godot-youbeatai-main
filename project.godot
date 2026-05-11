@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Ritme Robot"
+config/version="1.13"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
 run/max_fps=60
@@ -44,7 +45,7 @@ file_logging/enable_file_logging=true
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/mode=3
+window/size/mode=4
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 

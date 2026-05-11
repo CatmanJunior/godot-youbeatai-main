@@ -15,10 +15,12 @@ static var energy_points: float = 0.0
 
 # -- Constants --
 const START_ENERGY_POINTS: float = 25.0
-const ENERGY_COST_PER_BEAT_ADDED: float = 1.0
+
 const ENERGY_REWARD_PER_CLAP_STOMP_ON_BEAT: float = 3.0
 const ENERGY_REWARD_PER_BEAT_REMOVED: float = 1.0
-const ENERGY_COST_REWARD_FULL_SECTION_PLAYED: float = 2.0
+const ENERGY_REWARD_FULL_SECTION_PLAYED: float = 2.0
+
+const ENERGY_COST_PER_BEAT_ADDED: float = 1.0
 const ENERGY_COST_TEMPLATE_SET: float = 50.0
 const ENERGY_THRESHOLD_LIGHT_PAD: float = 100.0
 
@@ -31,9 +33,6 @@ const TIMEOUT_AFTER_TOOLTIP_OPEN: float = 2.0
 #---- EXPORTS ----
 @export var energy_progress_bar: ProgressBar
 
-@export var achievements_panel: Panel
-@export var instruction_label: Label
-@export var mute_speech_button: BaseButton
 @export var achievement_sfx: AudioStream
 ## Icon shown on a locked button. Assign a small padlock texture in the editor.
 @export var lock_icon_texture: Texture2D
@@ -61,6 +60,7 @@ var samples_recorded: int = 0
 var sections_added: int = 0
 
 var _achievements: Array[AchievementDef] = []
+var _gui_input_callables: Dictionary[int, Callable] = {}
 ## Ensures one-time setup (tooltip wiring, default UI) runs after the first frame.
 var _late_ready_done: bool = false
 
@@ -69,18 +69,13 @@ var _late_ready_done: bool = false
 
 func _ready() -> void:	
 	EventBus.on_tutorial_done.connect(_on_tutorial_done)
-	if not GameState.use_achievements:
-		return
 
-	if GameState.achievement_active:
-		await get_tree().create_timer(0.2).timeout
+	await get_tree().create_timer(0.2).timeout
+	if GameState.achievements_active:
 		activate_achievements()
-
-
-func _process(_delta: float) -> void:
-	if GameState.achievement_active:
-		_update_achievements()
-
+	elif not GameState.use_tutorial:
+		change_energy_points(START_ENERGY_POINTS)
+		EventBus.set_klappy_speech_bubble.emit("", "", false)
 
 func _input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
@@ -97,7 +92,7 @@ func _input(event: InputEvent) -> void:
 func _on_beat_triggered(_beat_index: int) -> void:
 	# Reward energy for playing a full section, to encourage using the new sections.
 	if _beat_index == SongState.beats_per_section - 1:
-		change_energy_points(ENERGY_COST_REWARD_FULL_SECTION_PLAYED)
+		change_energy_points(ENERGY_REWARD_FULL_SECTION_PLAYED)
 
 # ── Energy ────────────────────────────────────────────────────────────────────
 func _on_not_enough_energy() -> void:
@@ -105,13 +100,16 @@ func _on_not_enough_energy() -> void:
 	change_energy_points(-1.0) # Small penalty to prevent spamming
 
 func change_energy_points(delta: float) -> void:
-	energy_points = maxf(0.0, energy_points + delta)
+	energy_points = clampf(energy_points + delta, 0.0, 100.0)
+
 	if energy_progress_bar:
 		energy_progress_bar.value = energy_points
 	EventBus.energy_points_changed.emit(energy_points)
 
 
 static func has_energy_for_beat_addition() -> bool:
+	if GameState.use_tutorial:
+		return true
 	return energy_points >= ENERGY_COST_PER_BEAT_ADDED
 
 static func has_energy_for_light_pad() -> bool:
@@ -139,6 +137,9 @@ func _on_tutorial_done() -> void:
 	activate_achievements()
 
 func activate_achievements() -> void:
+	if _late_ready_done:
+		return
+	_late_ready_done = true
 	_setup_default_ui_state()
 	change_energy_points(START_ENERGY_POINTS)
 		
@@ -148,7 +149,6 @@ func activate_achievements() -> void:
 
 
 	EventBus.add_section_requested.emit(null)
-	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
 	# Add the initial second section upfront and lock its button as the ADD_SECTION unlock target.
 	btn_section_2 = section_ui.section_buttons[1]
 	_build_locked_buttons_map()
@@ -164,7 +164,13 @@ func activate_achievements() -> void:
 	EventBus.beat_triggered.connect(_on_beat_triggered)
 	EventBus.not_enough_energy.connect(_on_not_enough_energy)
 	print("Achievements activated")
-	GameState.achievement_active = true
+	GameState.achievements_active = true
+	#await get_tree().process_frame # Wait for the deferred section switch in section_manager to complete first.
+	
+	# wait for SongState sections to be initialized
+	await EventBus.section_data_initialized
+
+	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
 
 	
 
@@ -173,16 +179,6 @@ func activate_achievements() -> void:
 func _setup_locks() -> void:
 	for button: BaseButton in locked_buttons.values():
 		_lock_button(button)
-
-
-func _update_achievements() -> void:
-	for ach: AchievementDef in _achievements:
-		var button := _button_for(ach)
-		if button == null or not button.disabled:
-			continue # not registered or already unlocked
-		_try_unlock(ach, button)
-
-
 
 
 func _try_unlock(ach: AchievementDef, button: BaseButton) -> void:
@@ -196,22 +192,25 @@ func _try_unlock(ach: AchievementDef, button: BaseButton) -> void:
 func _do_unlock(ach: AchievementDef, button: BaseButton) -> void:
 	_unlock_button(button)
 	if ach.worth > 0.0:
-		energy_points = maxf(0.0, energy_points - ach.worth)
-		EventBus.energy_points_changed.emit(energy_points)
+		change_energy_points(-ach.worth)
 	if ach.result.is_valid():
 		ach.result.call()
 	_play_achievement_sfx()
 	EventBus.achievement_done.emit(ach.node_id)
+	var callable: Callable = _gui_input_callables.get(ach.node_id, Callable())
+	if callable.is_valid() and button.gui_input.is_connected(callable):
+		button.gui_input.disconnect(callable)
+	_gui_input_callables.erase(ach.node_id)
 
 
 # ── Tooltip ───────────────────────────────────────────────────────────────────
 
 func _init_tooltip_actions() -> void:
 	for ach: AchievementDef in _achievements:
-		var button := _button_for(ach)
+		var button := _get_locked_button(ach)
 		if button == null:
 			continue
-		button.gui_input.connect(func(event: InputEvent) -> void:
+		var callable := func(event: InputEvent) -> void:
 			if not button.disabled:
 				return
 			if not (event is InputEventMouseButton):
@@ -219,30 +218,30 @@ func _init_tooltip_actions() -> void:
 			var mb := event as InputEventMouseButton
 			if not (mb.pressed and mb.button_index == MOUSE_BUTTON_LEFT):
 				return
-			if achievements_panel and achievements_panel.visible:
-				close_tooltip()
-			open_tooltip(ach)
-			_start_tooltip_close_timer()
-		)
+			close_tooltip()
+			# Attempt unlock on click; only show tooltip if still locked.
+			_try_unlock(ach, button)
+			if button.disabled:
+				show_and_speak_tooltip(ach.tooltip, ach.worth)
+		_gui_input_callables[ach.node_id] = callable
+		button.gui_input.connect(callable)
 
 
-func open_tooltip(ach: AchievementDef) -> void:
-	show_and_speak_tooltip(ach.tooltip)
-
-func show_and_speak_tooltip(text: String) -> void:
-	if achievements_panel:
-		achievements_panel.visible = true
-	if instruction_label:
-		instruction_label.text = text
-	if not (mute_speech_button and mute_speech_button.button_pressed):
+func show_and_speak_tooltip(text: String, cost: float = 0) -> void:
+	var cost_text : String = ""
+	if cost > 0:
+		cost_text = "Dit kost " + str(int(cost)) + " energie"
+	
+	text = text + "\n" + cost_text if cost_text != "" else text
+	EventBus.set_klappy_speech_bubble.emit(text, "", false)
+	
+	if not (GameState.mute_speech or text == ""):
 		TTSHelper.speak(TTSHelper.text_without_emoticons(text))
+		_start_tooltip_close_timer()
 
 
 func close_tooltip() -> void:
-	if achievements_panel:
-		achievements_panel.visible = false
-	if instruction_label:
-		instruction_label.text = ""
+	EventBus.set_klappy_speech_bubble.emit("", "", false)
 	if DisplayServer.tts_is_speaking():
 		DisplayServer.tts_stop()
 
@@ -300,7 +299,7 @@ func _unlock_button(button: BaseButton) -> void:
 		icon.visible = false
 
 
-func _button_for(ach: AchievementDef) -> BaseButton:
+func _get_locked_button(ach: AchievementDef) -> BaseButton:
 	return locked_buttons.get(ach.node_id, null) as BaseButton
 
 
@@ -330,6 +329,6 @@ func _play_achievement_sfx() -> void:
 # ── Reset ─────────────────────────────────────────────────────────────────────
 
 func reset() -> void:
-	GameState.achievement_active = false
+	GameState.achievements_active = false
 	_late_ready_done = false
 	energy_points = 0.0

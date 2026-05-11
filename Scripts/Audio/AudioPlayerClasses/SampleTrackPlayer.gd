@@ -31,12 +31,12 @@ func _ready() -> void:
 
 func setup(index: int, parent_bus: String, _settings = null) -> void:
 	super.setup(index, parent_bus, _settings)
-
-	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
+	
 
 func _on_soundbank_loaded(bank: SoundBank) -> void:
 	#wait a frame to ensure everything is initialized before trying to set streams on players
 	await get_tree().process_frame
+	apply_effect_profile(bank.synth_effect_profiles[0])
 	match track_index:
 		0:
 			set_streams(bank.kick, bank.kick_alt)

@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cb4887dwqn4yw" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Kick WatchOut 2.wav" id="4_5x8qn"]
 [ext_resource type="AudioStream" uid="uid://btbacjr6irux4" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Closed_Perc Am.wav" id="4_hgown"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_7xnpc"]
+[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_hyamu"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_hgown"]
 [ext_resource type="Resource" uid="uid://bkw52bqhi76nt" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile_Bass.tres" id="6_loxld"]
 [ext_resource type="AudioStream" uid="uid://sefuiwp4k82o" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Snare Bling.wav" id="7_05f0b"]

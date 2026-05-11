@@ -36,7 +36,7 @@ func init(p_track_index: int, p_track_ui_settings: TrackUISettingsBase):
 	self.track_ui_settings = p_track_ui_settings
 	self.icon_rect.texture = track_ui_settings.button_icon_texture
 	self.outline_rect.texture = track_ui_settings.button_outline_texture
-	
+	self.icon_rect.modulate = track_ui_settings.track_color
 	self.glow_rect.self_modulate = p_track_ui_settings.track_color.lightened(.4)
 	self.glow_rect.self_modulate.a = 0.5
 
@@ -46,8 +46,10 @@ func update_outline(progression:float) -> void:
 
 func set_button_selected(active: bool) -> void:
 	if active:
+		icon_rect.modulate = Color.WHITE
 		outline_rect.texture = track_ui_settings.button_filled_texture
 	else:
+		icon_rect.modulate = track_ui_settings.track_color
 		outline_rect.texture = track_ui_settings.button_outline_texture
 
 	if is_synth_track:

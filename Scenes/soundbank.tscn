@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
 [ext_resource type="Texture2D" uid="uid://bndvo0vsvj7ns" path="res://Resources/Textures_New_Extra/MenuShapes128_0008_8_Green.png" id="16_grpai"]
+[ext_resource type="Texture2D" uid="uid://d3avwn0b5a15c" path="res://Resources/Textures/Klappy_background.png" id="17_h74sy"]
 [ext_resource type="Texture2D" uid="uid://dl6eu7qv8vsk8" path="res://Resources/Textures_New_Extra/NoEmoticon128.png" id="22_18n7q"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8jt4r"]
@@ -940,6 +941,25 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 16.0
 
+[node name="KlappyBackground" type="TextureRect" parent="SoundBankSelectionMenu" unique_id=179915471]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 539.057
+offset_top = 69.14899
+offset_right = 744.057
+offset_bottom = 274.14807
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("17_h74sy")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Robot" parent="." unique_id=399824719 instance=ExtResource("3_a7rio")]
 position = Vector2(474, 152)
 
@@ -994,6 +1014,7 @@ texture = ExtResource("7_avjdi")
 metadata/_edit_lock_ = true
 
 [node name="ClappyBG" type="Sprite2D" parent="." unique_id=1470871126]
+visible = false
 position = Vector2(477, 215)
 scale = Vector2(2, 2)
 texture = ExtResource("10_bt16w")

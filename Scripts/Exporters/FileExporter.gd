@@ -44,8 +44,7 @@ func download_wav_file(stream_wav: AudioStreamWAV, _name: String):
 
 func _get_file_name(_name: String) -> String:
 	var date = Time.get_date_string_from_system().split("-")
-	var time = Time.get_time_string_from_system().replace(":", "-")
-	
+	var bpm = "%sbpm" % SongState.bpm
 	# {name} dd-mm-yyyy_HH-mm-ss.wav
-	var filename = "%s %s-%s-%s_%s.wav" % [_name, date[2], date[1], date[0], time]
+	var filename = "%s %s-%s-%s_%s.wav" % [_name, date[2], date[1], date[0], bpm]
 	return filename

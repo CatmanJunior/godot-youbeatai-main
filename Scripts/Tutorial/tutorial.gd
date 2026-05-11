@@ -7,7 +7,6 @@ extends Node
 @export var clap_stomp: ClapStompDetector
 @export var chaos_pad_ui: ChaosPadUI
 @export var chaos_pad_knob_top_position: Node2D
-@export var count_label: Label
 
 # ── Constants ─────────────────────────────────────────────
 
@@ -62,6 +61,8 @@ var _outcomes: TutorialOutcomes
 
 # Resets per-frame clap/stomp flags each tick so they are only true during the frame the interaction was detected.
 func _process(_delta: float) -> void:
+	if GameState.use_tutorial == false:
+		return
 	update_tutorial()
 	clapping = false
 	stomping = false
@@ -177,18 +178,19 @@ func try_activate_tutorial() -> void:
 		_turn_off_stars.call_deferred()
 
 func _set_interface_invisible_initial() -> void:
+	# Hide everything first
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, false)
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.SECTION_UI, false)
 	for i in range(SectionData.SAMPLE_TRACKS_PER_SECTION):
 		EventBus.track_sprites_visibility_requested.emit(i, false)
-	EventBus.track_sprites_visibility_requested.emit(INDEX_KICK_TRACK, false)
+	EventBus.synth_progress_bar_visible_requested.emit(0, false)
+	EventBus.synth_progress_bar_visible_requested.emit(1, false)
+	# Show only what is needed for the tutorial start
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.BEAT_RING, true)
 	EventBus.track_select_button_visibility_requested.emit(0, true)
 	if OS.is_debug_build():
 		EventBus.track_select_button_visibility_requested.emit(1, true)
-	EventBus.synth_progress_bar_visible_requested.emit(0, false)
-	EventBus.synth_progress_bar_visible_requested.emit(1, false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.SECTION_UI,false)
 
 # Creates the tutorial timer and loads the ordered list of steps from the assigned resource.
 # Must be called before update_tutorial() is first ticked.
@@ -202,6 +204,8 @@ func setup_tutorial() -> void:
 # Per-frame update: triggers the first TTS on the initial frame, fires per-beat sfx feedback
 # for stomp/clap phases, and checks the current condition callable to advance the tutorial.
 func update_tutorial() -> void:
+	if GameState.use_tutorial == false:
+		return
 	_continue_button_visible(_active)
 
 	if not _first_tts_done and GameState.use_tutorial:
@@ -270,28 +274,24 @@ func _update_interaction_sfx() -> void:
 	if _in_stomp_phase and stomping and clap_stomp.stomped_on_beat_amount > _previous_stomp:
 		play_achievement_sfx()
 		_previous_stomp = clap_stomp.stomped_on_beat_amount
-		EventBus.amount_left_text_requested.emit(
-			"Goed gestampt %d / 5" % clap_stomp.stomped_on_beat_amount)
-		_set_count_label(CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount)
+		EventBus.set_klappy_speech_bubble.emit(
+			_instruction,
+			"Nog %d te gaan" % (CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
+			false)
 	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
 		_previous_clap = clap_stomp.clapped_on_beat_amount
-		EventBus.amount_left_text_requested.emit(
-			"Goed geklapt %d / 5" % clap_stomp.clapped_on_beat_amount)
-		_set_count_label(CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount)
-
-func _set_count_label(remaining: int) -> void:
-	if remaining > 0:
-		count_label.visible = true
-	else:
-		count_label.visible = false
-	if count_label:
-		count_label.text = "Nog %d te gaan" % remaining
+		EventBus.set_klappy_speech_bubble.emit(
+			_instruction,
+			"Nog %d te gaan" % (CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
+			false)
 
 # Speaks the instruction text for the given step index via TTS.
 # Strips emoticons from the text and uses a faster rate if _increased_speed is set.
 # Does nothing if TTS text is suppressed, speech is muted, or the index is out of bounds.
 func _speak_tutorial_instruction(instruction_index: int) -> void:
+	if not GameState.use_tutorial:
+		return
 	if not _text_allowed:
 		return
 	if GameState.mute_speech:

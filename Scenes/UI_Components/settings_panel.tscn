@@ -81,7 +81,6 @@ content_margin_top = 7.0
 content_margin_right = 21.0
 content_margin_bottom = 7.0
 bg_color = Color(0.57565, 0.56549996, 0.87, 0.09803922)
-draw_center = false
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4

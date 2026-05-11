@@ -254,6 +254,10 @@ offset_right = 46.5
 offset_bottom = -11.5
 
 [node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "klappy_energy", "face_light")]
+offset_left = -97.5
+offset_top = -163.5
+offset_right = 102.5
+offset_bottom = 36.5
 klappy_light = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
 klappy_energy = NodePath("../EnergyProgressBar")
 face_light = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
@@ -284,9 +288,6 @@ offset_left = -1.6799927
 offset_top = -8.679962
 offset_right = 6.0
 offset_bottom = 5.0
-
-[node name="BPMText" parent="UserInterface/SettingsPanel/Panel/bpm" parent_id_path=PackedInt32Array(248245984, 1292344551) index="4" unique_id=1191003587]
-anchor_left = -0.01
 
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false

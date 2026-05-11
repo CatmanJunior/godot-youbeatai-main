@@ -65,7 +65,7 @@ corner_radius_bottom_left = 50
 
 [node name="EmailPrompt" type="Panel" unique_id=958757390 node_paths=PackedStringArray("name_field", "mail_field", "mail_toggle", "mail_button")]
 top_level = true
-clip_children = 2
+clip_children = 1
 z_index = 20
 anchors_preset = 8
 anchor_left = 0.5

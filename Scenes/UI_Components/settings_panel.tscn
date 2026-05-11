@@ -241,10 +241,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="BpmUpButton" type="Button" parent="Panel/bpm" unique_id=105996143]
 layout_mode = 0
-offset_left = 417.0
-offset_top = -20.0
-offset_right = 617.0
-offset_bottom = 180.0
+offset_left = 435.0
+offset_top = -2.0
+offset_right = 565.0
+offset_bottom = 128.0
 scale = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("2_yaket")
@@ -255,10 +255,10 @@ expand_icon = true
 
 [node name="BpmDownButton" type="Button" parent="Panel/bpm" unique_id=1928230477]
 layout_mode = 0
-offset_left = -47.0
-offset_top = -20.0
-offset_right = 153.0
-offset_bottom = 180.0
+offset_left = -29.0
+offset_top = -2.0
+offset_right = 101.0
+offset_bottom = 128.0
 scale = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("2_yaket")
@@ -358,10 +358,10 @@ metadata/_edit_use_anchors_ = true
 
 [node name="swingUpButton2" type="Button" parent="Panel/swing" unique_id=904268492]
 layout_mode = 0
-offset_left = 417.0
-offset_top = -16.0
-offset_right = 617.0
-offset_bottom = 184.0
+offset_left = 435.0
+offset_top = 2.0
+offset_right = 565.0
+offset_bottom = 132.0
 scale = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("2_yaket")
@@ -372,10 +372,10 @@ expand_icon = true
 
 [node name="swingDownButton2" type="Button" parent="Panel/swing" unique_id=1158822682]
 layout_mode = 0
-offset_left = -47.0
-offset_top = -16.0
-offset_right = 153.0
-offset_bottom = 184.0
+offset_left = -29.0
+offset_top = 2.0
+offset_right = 101.0
+offset_bottom = 132.0
 scale = Vector2(0.5, 0.5)
 focus_mode = 0
 theme = ExtResource("2_yaket")

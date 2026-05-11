@@ -7,17 +7,18 @@ var distortion
 var highpass
 var lowpass
 
-@export var klappy_light: PointLight2D
+@export var klappy_light: OmniLight3D
+@export var klappy_energy: ProgressBar
 @export var face_light: SpotLight3D
 
-var unlocked := false
+var unlocked:= false
 var start_energy
 var flicker_done = false
 
 var colors_string :Array[String] = ["green", "red", "blue", "yellow", "green", "red", "blue", "yellow"]
 
-@export var instruction_label: Label
-@export var achievement_panel: Panel
+@export var instruction_label:Label
+@export var achievement_panel:Panel
 @export var colormapje: Node3D
 
 func _ready() -> void:
@@ -34,7 +35,7 @@ func _ready() -> void:
 	AudioServer.set_bus_effect_enabled(bus_index, 2, false)
 	AudioServer.set_bus_effect_enabled(bus_index, 3, false)
 	
-	start_energy = klappy_light.energy
+	#start_energy = klappy_light.light_energy
 
 	unlocked = false
 	klappy_light.visible = true
@@ -53,7 +54,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			AudioServer.set_bus_effect_enabled(bus_index, 2, event.is_pressed())
 			AudioServer.set_bus_effect_enabled(bus_index, 3, event.is_pressed())
 			
-			if event.is_released(): # wanneer muis losgelaten word pos 100,100 en klaplight normaal
+			if event.is_released(): #wanneer muis losgelaten word pos 100,100 en klaplight normaal 
 				var pos = Vector2(100, 100)
 				$cursor.position = pos
 				colormapje.visible = true
@@ -63,12 +64,12 @@ func _on_gui_input(event: InputEvent) -> void:
 		if event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
 			var pos = event.position
 			
-			pos.x = clamp(pos.x, 0, size.x) # zorgt dat je binnen het grid blijft
+			pos.x = clamp(pos.x, 0, size.x) #zorgt dat je binnen het grid blijft
 			pos.y = clamp(pos.y, 0, size.y)
 			
-			$cursor.position = pos
+			$cursor.position = pos 
 			
-			var x_percent = pos.x / size.x # ipv pixels maakt hij er 200/0 van
+			var x_percent = pos.x / size.x #ipv pixels maakt hij er 200/0 van
 			var y_percent = 1.0 - (pos.y / size.y)
 			
 			phaser.depth = clamp(1.0 - x_percent * 2.0, 0.0, 1.0)
@@ -78,7 +79,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))
 			
 			klappy_light.visible = true
-			face_light.light_color = klappy_light.color
+			face_light.light_color = klappy_light.light_color
 			#klappys lampje word veranderd van kleur op basis van muis positie in het vak
 			var color := Color("#ffe8aa")
 			var strength := 0.8
@@ -92,11 +93,11 @@ func _on_gui_input(event: InputEvent) -> void:
 			if pos.y <= 70:
 				color = color.lerp(Color.YELLOW, strength)
 
-			klappy_light.color = color
+			klappy_light.light_color = color
 			$cursor/Trail.default_color = color # trail word dezelfde kleur als light
 
 func _set_klappy_light_energy(value: float) -> void:
-	klappy_light.energy = value / 50.0
+	klappy_light.light_energy = value / 50.0
 
 func on_klappy_energy(value: float) -> void:
 	_set_klappy_light_energy(value)
@@ -111,12 +112,12 @@ func on_klappy_energy(value: float) -> void:
 	
 func lightFlicker():
 	for i in colors_string:
-		klappy_light.color = Color(i)
+		klappy_light.light_color = Color(i)
 		
 		await get_tree().create_timer(0.3).timeout
 		
 	colormapje.visible = true
-	klappy_light.color = Color.WHITE	
+	klappy_light.light_color = Color.WHITE	
 	
 func _fill_instruction_label(_name: String):
 	EventBus.set_klappy_speech_bubble.emit(_name,"",false)

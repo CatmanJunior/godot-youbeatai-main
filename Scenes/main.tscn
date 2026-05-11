@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c78m8ijn10kwh"]
 
-[ext_resource type="Script" uid="uid://cpd4e3o87ptpj" path="res://scripts/post_ready_emitter.gd" id="1_2060n"]
+[ext_resource type="Script" uid="uid://cpd4e3o87ptpj" path="res://Scripts/post_ready_emitter.gd" id="1_2060n"]
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
@@ -58,7 +58,7 @@
 [ext_resource type="Script" uid="uid://yuvjvbimrmip" path="res://Scripts/Audio/track_recorder.gd" id="62_daoo8"]
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
-[ext_resource type="Script" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -247,8 +247,15 @@ position = Vector2(406, 139)
 z_index = -4096
 energy = 0.55
 
-[node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "face_light")]
-klappy_light = NodePath("../SubViewportContainer/KlappyLight")
+[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+offset_left = -234.5
+offset_top = -199.5
+offset_right = 46.5
+offset_bottom = -11.5
+
+[node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "klappy_energy", "face_light")]
+klappy_light = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
+klappy_energy = NodePath("../EnergyProgressBar")
 face_light = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
@@ -277,6 +284,9 @@ offset_left = -1.6799927
 offset_top = -8.679962
 offset_right = 6.0
 offset_bottom = 5.0
+
+[node name="BPMText" parent="UserInterface/SettingsPanel/Panel/bpm" parent_id_path=PackedInt32Array(248245984, 1292344551) index="4" unique_id=1191003587]
+anchor_left = -0.01
 
 [node name="EmailPrompt" parent="UserInterface" unique_id=958757390 instance=ExtResource("52_1semv")]
 visible = false

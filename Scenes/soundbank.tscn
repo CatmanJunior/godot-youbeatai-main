@@ -93,6 +93,7 @@ corner_radius_bottom_left = 30
 script = ExtResource("5_pd2wx")
 klappy_response = NodePath("Klappy respons bubble")
 message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
+tutmessage = "Wij gaan kiezen wat voor liedje we willen maken, ik heb er al 2 ingevuld, kies nog 1 emotie en 1 thema."
 talking = NodePath("Robot/SubViewportContainer/SubViewport/Klappy")
 
 [node name="SoundBankSelector" type="Node" parent="." unique_id=760179130 node_paths=PackedStringArray("soundbank_selection_menu")]
@@ -964,19 +965,21 @@ position = Vector2(474, 152)
 [node name="AchievementsPanel" parent="Robot" index="0" unique_id=1497439872]
 visible = false
 
+[node name="InstructionLabel" parent="Robot/AchievementsPanel" index="1" unique_id=813716848]
+anchor_left = -0.03024911
+
 [node name="SubViewportContainer" parent="Robot" index="1" unique_id=2110113658]
 light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 246976813) index="0" unique_id=25550152]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 118098534) index="0" unique_id=1128806749]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]
 transform = Transform3D(0.98480767, 0.0030305798, 0.1736215, -0.17144132, -0.14190595, 0.9749207, 0.027592069, -0.9898756, -0.13923067, 0, -3.29693, 0)
 
 [node name="KlappyLight" parent="Robot/SubViewportContainer" index="1" unique_id=1195742085]
-visible = false
 light_mask = 2
 position = Vector2(202.5, 57.499996)
 scale = Vector2(0.6, 0.6)

@@ -43,7 +43,7 @@ func _on_section_switched(new_section_data: SectionData):
 func _on_track_selected(track_index: int):
 
 	if track_index >= _sample_track_amount:  # Only update colors for SYNTH tracks
-		var synth_index = track_index - _sample_track_amount - 1
+		var synth_index = track_index - _sample_track_amount #er stond hier '- 1' waardoor dat als je op vogel klikte, de beer ring groter werd. dit heb ik weggehaald maar als het nu breekt ligt dus hier het probleem prob
 		
 		if tween[synth_index] != null and tween[synth_index].is_running():
 			return

@@ -23,7 +23,7 @@ func _on_achievement_done(i: int) -> void:
 			AchievementDef.AchievementNode.SECOND_SAMPLE:
 				_fill_instruction_label("Wat een leuke sample, daar krijg ik energie ⚡ van !")
 			AchievementDef.AchievementNode.TEMPLATE_TIP:
-				_fill_instruction_label("Nu kan ik een tip geven over wat een leuke beat is voor het liedje!")
+				_fill_instruction_label("Ik weet een leuke beat voor je, in de beat ring staan nu stipjes die je een hint geven")
 
 
 func _on_tutorial_done() -> void:

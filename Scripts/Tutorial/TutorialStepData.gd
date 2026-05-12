@@ -24,6 +24,7 @@ enum TutorialCondition {
 	KNOB_AT_MIX_TARGET = 19,
 	KNOB_AT_OUTSIDE_TARGET = 20,
 	KNOB_AT_TARGET = 21,
+	COUNTDOWN_CLOSED = 22,
 }
 
 enum TutorialOutcome {

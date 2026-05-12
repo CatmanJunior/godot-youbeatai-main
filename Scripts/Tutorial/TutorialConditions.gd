@@ -8,6 +8,7 @@ var tutorial: Tutorial
 
 func _ready() -> void:
 	EventBus.countdown_tick.connect(_on_countdown_tick)
+	EventBus.countdown_close_requested.connect(_on_countdown_closed)
 
 func get_map() -> Dictionary:
 	var C := TutorialStepData.TutorialCondition
@@ -29,6 +30,7 @@ func get_map() -> Dictionary:
 		C.BASS_RECORDING_OR_TTS_DONE:     _cond_bass_ring_record_or_tts_done,
 		C.BASS_RECORDING_ACTIVE:          _cond_bass_ring_recording_active,
 		C.COUNTDOWN_TICK:                 _cond_countdown_tick,
+		C.COUNTDOWN_CLOSED:               _cond_countdown_closed,
 		C.ALWAYS:                         _cond_always,
 		C.NEVER:                          _cond_never,
 		C.KNOB_AT_MIX_TARGET:               _cond_knob_at_star.bind(tutorial.mix_target),
@@ -108,6 +110,7 @@ func _cond_bass_ring_recording_active() -> bool:
 # ── Countdown tick ────────────────────────────────────────────────────────────────────────────────────────────────
 
 var _countdown_ticked: bool = false
+var _countdown_closed: bool = false
 
 func _on_countdown_tick(seconds: int) -> void:
 	_countdown_ticked = true
@@ -119,6 +122,15 @@ func _on_countdown_tick(seconds: int) -> void:
 func _cond_countdown_tick() -> bool:
 	var fired := _countdown_ticked
 	_countdown_ticked = false
+	return fired
+
+func _on_countdown_closed() -> void:
+	_countdown_closed = true
+
+## True for the one frame in which the countdown panel was closed.
+func _cond_countdown_closed() -> bool:
+	var fired := _countdown_closed
+	_countdown_closed = false
 	return fired
 
 # ── Sentinels ─────────────────────────────────────────────────────────────────────────────────────────────────────

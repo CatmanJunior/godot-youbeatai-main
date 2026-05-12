@@ -146,29 +146,9 @@ instruction = "Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af va
 condition = 15
 outcome = 21
 
-[sub_resource type="Resource" id="Step_26"]
-script = ExtResource("2_step")
-instruction = "4"
-condition = 17
-
-[sub_resource type="Resource" id="Step_27"]
-script = ExtResource("2_step")
-instruction = "3"
-condition = 17
-
-[sub_resource type="Resource" id="Step_28"]
-script = ExtResource("2_step")
-instruction = "2"
-condition = 17
-
-[sub_resource type="Resource" id="Step_29"]
-script = ExtResource("2_step")
-instruction = "1"
-condition = 17
-
 [sub_resource type="Resource" id="Step_30"]
 script = ExtResource("2_step")
-condition = 16
+condition = 22
 outcome = 22
 
 [sub_resource type="Resource" id="Step_31"]
@@ -243,4 +223,4 @@ outcome = 31
 
 [resource]
 script = ExtResource("1_col")
-steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2"), SubResource("Step_3"), SubResource("Step_4"), SubResource("Step_5"), SubResource("Step_6"), SubResource("Step_7"), SubResource("Step_8"), SubResource("Step_9"), SubResource("Step_10"), SubResource("Step_11"), SubResource("Step_12"), SubResource("Step_13"), SubResource("Step_14"), SubResource("Step_15"), SubResource("Step_16"), SubResource("Step_17"), SubResource("Step_18"), SubResource("Step_19"), SubResource("Step_20"), SubResource("Step_21"), SubResource("Step_22"), SubResource("Step_23"), SubResource("Step_24"), SubResource("Step_25"), SubResource("Step_26"), SubResource("Step_27"), SubResource("Step_28"), SubResource("Step_29"), SubResource("Step_30"), SubResource("Step_31"), SubResource("Step_32"), SubResource("Step_33"), SubResource("Step_34"), SubResource("Step_35"), SubResource("Step_36"), SubResource("Step_37"), SubResource("Step_38"), SubResource("Step_39"), SubResource("Step_40"), SubResource("Step_41"), SubResource("Step_42"), SubResource("Step_43")])
+steps = Array[ExtResource("2_step")]([SubResource("Step_1"), SubResource("Step_2"), SubResource("Step_3"), SubResource("Step_4"), SubResource("Step_5"), SubResource("Step_6"), SubResource("Step_7"), SubResource("Step_8"), SubResource("Step_9"), SubResource("Step_10"), SubResource("Step_11"), SubResource("Step_12"), SubResource("Step_13"), SubResource("Step_14"), SubResource("Step_15"), SubResource("Step_16"), SubResource("Step_17"), SubResource("Step_18"), SubResource("Step_19"), SubResource("Step_20"), SubResource("Step_21"), SubResource("Step_22"), SubResource("Step_23"), SubResource("Step_24"), SubResource("Step_25"), SubResource("Step_30"), SubResource("Step_31"), SubResource("Step_32"), SubResource("Step_33"), SubResource("Step_34"), SubResource("Step_35"), SubResource("Step_36"), SubResource("Step_37"), SubResource("Step_38"), SubResource("Step_39"), SubResource("Step_40"), SubResource("Step_41"), SubResource("Step_42"), SubResource("Step_43")])

@@ -189,7 +189,7 @@ func _outcome_skip_bass_intro() -> void:
 	if not (SongState.selected_track_index == 4 and GameState.is_recording):
 		return
 	tutorial.play_achievement_sfx()
-	tutorial.tutorial_level += 4  # skip 4 steps; _goto_next_step adds 1 more = 5 total
+	tutorial.tutorial_level += 1  # skip Step_25 (mic prompt); _goto_next_step adds 1 more = 2 total
 	TTSHelper.stop_speaking()
 
 func _outcome_voice_over_done() -> void:

@@ -61,6 +61,7 @@ var sections_added: int = 0
 
 var _achievements: Array[AchievementDef] = []
 var _gui_input_callables: Dictionary[int, Callable] = {}
+var _unlocked_node_ids: Array[int] = []
 ## Ensures one-time setup (tooltip wiring, default UI) runs after the first frame.
 var _late_ready_done: bool = false
 
@@ -143,6 +144,9 @@ func _on_add_section_requested(_tex: Texture2D) -> void:
 func _on_recording_stopped(rec: RecordingData) -> void:
 	if rec != null and rec.track_type == TrackData.TrackType.SAMPLE:
 		samples_recorded += 1
+		for ach: AchievementDef in _achievements:
+			if ach.worth <= 0.0 and not ach.node_id in _unlocked_node_ids and ach.condition.call():
+				_do_unlock(ach, _get_locked_button(ach))
 
 func _on_tutorial_done() -> void:
 	activate_achievements()
@@ -181,16 +185,11 @@ func activate_achievements() -> void:
 	# wait for SongState sections to be initialized
 	await EventBus.section_data_initialized
 
-
-
-	
-
 # ── Achievement update loop ───────────────────────────────────────────────────
 
 func _setup_locks() -> void:
 	for button: BaseButton in locked_buttons.values():
 		_lock_button(button)
-
 
 func _try_unlock(ach: AchievementDef, button: BaseButton) -> void:
 	if not ach.condition.call():
@@ -201,16 +200,21 @@ func _try_unlock(ach: AchievementDef, button: BaseButton) -> void:
 
 
 func _do_unlock(ach: AchievementDef, button: BaseButton) -> void:
-	_unlock_button(button)
+	if ach.node_id in _unlocked_node_ids:
+		return
+	_unlocked_node_ids.append(ach.node_id)
+	if button != null:
+		_unlock_button(button)
 	if ach.worth > 0.0:
 		change_energy_points(-ach.worth)
 	if ach.result.is_valid():
 		ach.result.call()
 	_play_achievement_sfx()
 	EventBus.achievement_done.emit(ach.node_id)
-	var callable: Callable = _gui_input_callables.get(ach.node_id, Callable())
-	if callable.is_valid() and button.gui_input.is_connected(callable):
-		button.gui_input.disconnect(callable)
+	if button != null:
+		var callable: Callable = _gui_input_callables.get(ach.node_id, Callable())
+		if callable.is_valid() and button.gui_input.is_connected(callable):
+			button.gui_input.disconnect(callable)
 	_gui_input_callables.erase(ach.node_id)
 
 
@@ -343,3 +347,4 @@ func reset() -> void:
 	GameState.achievements_active = false
 	_late_ready_done = false
 	energy_points = 0.0
+	_unlocked_node_ids.clear()

@@ -2,12 +2,14 @@ extends Node
 
 
 func _ready() -> void:
+	EventBus.achievement_done.connect(_on_achievement_done)
 	if not GameState.tutorial_activated:
 		_connect_signals()
 	else:
 		EventBus.on_tutorial_done.connect(_on_tutorial_done)
 
 func _on_achievement_done(i: int) -> void:
+	print("Achievement %d done, showing instruction for it" % i)
 	if GameState.achievements_active:
 		match i:
 			AchievementDef.AchievementNode.TRACK_2:
@@ -20,6 +22,8 @@ func _on_achievement_done(i: int) -> void:
 				_fill_instruction_label("Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven")
 			AchievementDef.AchievementNode.SONG_MODE:
 				_fill_instruction_label("Oke nu gaat het echte werk beginnen met de 🎵 Song Mode, alle rondjes worden achter elkaar afgespeeld, en met de microfoon kan je een hele lange opname maken")
+			AchievementDef.AchievementNode.FIRST_SAMPLE:
+				_fill_instruction_label("Gaaf! Je hebt je eerste 🎤 geluid opgenomen, zet hem in de ring!")
 			AchievementDef.AchievementNode.SECOND_SAMPLE:
 				_fill_instruction_label("Wat een leuke sample, daar krijg ik energie ⚡ van !")
 			AchievementDef.AchievementNode.TEMPLATE_TIP:
@@ -27,14 +31,15 @@ func _on_achievement_done(i: int) -> void:
 
 
 func _on_tutorial_done() -> void:
+	print("Tutorial done, connecting signals for klappy reaction")
 	_connect_signals()
 
 func _connect_signals() -> void:
-	EventBus.achievement_done.connect(_on_achievement_done)
 	EventBus.utterance_ended.connect(_on_utterance_end)
 
 
 func _fill_instruction_label(_name: String):
+	print ("Filling instruction label with message for achievement %s" % _name)
 	EventBus.set_klappy_speech_bubble.emit(_name, "", false)
 	_start_tts(_name)
 

@@ -19,11 +19,11 @@ enum TutorialCondition {
 	BASS_RECORDING_OR_TTS_DONE,
 	BASS_RECORDING_ACTIVE,
 	ALWAYS,
-	TTS_DONE_AFTER_KNOB,
-	NEVER,
-	KNOB_AT_MIX_STAR,
-	KNOB_AT_OUTSIDE_STAR,
-	KNOB_AT_STAR,
+	COUNTDOWN_TICK = 17,
+	NEVER = 18,
+	KNOB_AT_MIX_TARGET = 19,
+	KNOB_AT_OUTSIDE_TARGET = 20,
+	KNOB_AT_TARGET = 21,
 }
 
 enum TutorialOutcome {
@@ -59,6 +59,8 @@ enum TutorialOutcome {
 	SHOW_OUTSIDE_STAR,
 	ON_OUTSIDE_STAR_REACHED,
 	FINISH_TUTORIAL,
+	## Skips the TTS countdown steps when bass recording starts early.
+	SKIP_BASS_INTRO,
 }
 
 @export var instruction: String = ""

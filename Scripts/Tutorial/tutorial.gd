@@ -8,6 +8,13 @@ extends Node
 @export var chaos_pad_ui: ChaosPadUI
 @export var chaos_pad_knob_top_position: Node2D
 
+var mix_target: TextureRect:
+	get: return chaos_pad_ui.mix_target
+var outside_target: TextureRect:
+	get: return chaos_pad_ui.outside_target
+var target: TextureRect:
+	get: return chaos_pad_ui.first_target
+
 # ── Constants ─────────────────────────────────────────────
 
 ## Track indices for the two main beat rings.
@@ -21,7 +28,7 @@ const KICK_PRESET_BEAT_INDICES: Array[int] = [0, 4, 8]   # top, right, bottom
 const CLAP_PRESET_BEAT_INDICES: Array[int] = [4, 12]     # right, left
 
 ## Number of on-beat claps/stomps required to complete the interaction phase.
-const CLAP_REQUIRED_ON_BEAT_COUNT: int = 5
+const CLAP_STOMP_REQUIRED_ON_BEAT_COUNT: int = 5
 
 # ── Tutorial state ────────────────────────────────────────────
 
@@ -39,8 +46,6 @@ var _previous_clap: int = -1
 var _previous_stomp: int = -1
 var stomping: bool = false
 var clapping: bool = false
-var clapped_on_beat: int = 0
-var stomped_on_beat: int = 0
 
 var _in_stomp_phase: bool = false
 var _in_clap_phase: bool = false
@@ -82,8 +87,6 @@ func _ready() -> void:
 	EventBus.chaos_pad_dragging.connect(_on_chaos_pad_knob_dragged)
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
-	EventBus.clap_on_beat_detected.connect(_on_has_clapped_on_beat)
-	EventBus.stomp_on_beat_detected.connect(_on_has_stomped_on_beat)
 	try_activate_tutorial()
 
 
@@ -93,14 +96,6 @@ func _turn_off_stars():
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
 
-func _on_has_clapped_on_beat() -> void:
-	clapped_on_beat += 1
-	print("clapped on beat: %d" % clapped_on_beat)
-
-func _on_has_stomped_on_beat() -> void:
-	stomped_on_beat += 1
-	print("stomped on beat: %d" % stomped_on_beat)
-	
 
 # ── EventBus handlers ───────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -156,13 +151,10 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var i_event : InputEventKey = event
 		if i_event.keycode == Key.KEY_0 and i_event.pressed:
-			if _outcome.is_valid():
-				_outcome.call()
-			if tutorial_level >= tutorial_steps.size():
-				return
-			tutorial_level += 1
-			_speak_tutorial_instruction(tutorial_level)
-			_update_lists()
+			_goto_next_step()
+
+
+
 
 # Activates the tutorial if GameState.use_tutorial is set.
 # Sets the BPM to 60, hides the beat pointer, wires up continue and instrument buttons.
@@ -218,7 +210,7 @@ func update_tutorial() -> void:
 	if tutorial_level != -1 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
 		_update_lists()
 		if _condition.is_valid() and _condition.call():
-			_next_line()
+			_goto_next_step()
 
 # ── Private helpers ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -249,18 +241,14 @@ func _continue_button_visible(vis : bool) -> void:
 func _tutorial_continue() -> void:
 	if not _active:
 		return
-	_next_line()
-
-# Advances the tutorial when the Klappy robot's continue button is pressed.
-func _klappy_continue() -> void:
-	_next_line()
+	_goto_next_step()
 
 func _on_chaos_pad_knob_dragged(pos: Vector2) -> void:
 	_last_knob_pos = pos
 
 # Fires the current outcome callable, increments the step index, speaks the next instruction,
 # and refreshes the active condition and outcome callables for the new step.
-func _next_line() -> void:
+func _goto_next_step() -> void:
 	if _outcome.is_valid():
 		_outcome.call()
 	if tutorial_level >= tutorial_steps.size():
@@ -276,14 +264,14 @@ func _update_interaction_sfx() -> void:
 		_previous_stomp = clap_stomp.stomped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % (CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
+			"Nog %d te gaan" % (CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
 			false)
 	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
 		_previous_clap = clap_stomp.clapped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % (CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
+			"Nog %d te gaan" % (CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
 			false)
 
 # Speaks the instruction text for the given step index via TTS.

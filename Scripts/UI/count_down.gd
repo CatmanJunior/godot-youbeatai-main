@@ -4,6 +4,7 @@ extends Node
 @export var count_down_label: Label
 
 var is_showing_count_down: bool = false
+var _last_tick: int = -1
 
 func _ready():
 	EventBus.countdown_show_requested.connect(show_count_down)
@@ -15,6 +16,7 @@ func _process(_delta: float):
 
 func show_count_down():
 	is_showing_count_down = true
+	_last_tick = -1
 	count_down_panel.visible = true
 
 
@@ -25,4 +27,8 @@ func close_count_down():
 
 func update_count_down_label():
 	var time_until_top = BeatManager.calculate_time_until_top()
+	var seconds: int = int(ceil(time_until_top))
 	count_down_label.text = str(snapped(time_until_top, 1))
+	if seconds != _last_tick and seconds > 0:
+		_last_tick = seconds
+		EventBus.countdown_tick.emit(seconds)

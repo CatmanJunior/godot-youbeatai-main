@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="TutorialStepsCollection" format=3 uid="uid://bhm2jpomt47pe"]
 
-[ext_resource type="Script" uid="uid://dlkqmmap7jbvw" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
+[ext_resource type="Script" path="res://Scripts/Tutorial/TutorialStepsCollection.gd" id="1_col"]
 [ext_resource type="Script" uid="uid://drurbmsmnjvp3" path="res://Scripts/Tutorial/TutorialStepData.gd" id="2_step"]
 
 [sub_resource type="Resource" id="Step_1"]
@@ -138,6 +138,7 @@ outcome = 20
 script = ExtResource("2_step")
 instruction = "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!"
 condition = 14
+outcome = 32
 
 [sub_resource type="Resource" id="Step_25"]
 script = ExtResource("2_step")
@@ -148,22 +149,22 @@ outcome = 21
 [sub_resource type="Resource" id="Step_26"]
 script = ExtResource("2_step")
 instruction = "4"
-condition = 1
+condition = 17
 
 [sub_resource type="Resource" id="Step_27"]
 script = ExtResource("2_step")
 instruction = "3"
-condition = 1
+condition = 17
 
 [sub_resource type="Resource" id="Step_28"]
 script = ExtResource("2_step")
 instruction = "2"
-condition = 1
+condition = 17
 
 [sub_resource type="Resource" id="Step_29"]
 script = ExtResource("2_step")
 instruction = "1"
-condition = 1
+condition = 17
 
 [sub_resource type="Resource" id="Step_30"]
 script = ExtResource("2_step")
@@ -182,7 +183,7 @@ condition = 1
 [sub_resource type="Resource" id="Step_33"]
 script = ExtResource("2_step")
 instruction = "Laten we je sample nog leuker maken!"
-condition = 17
+condition = 1
 outcome = 23
 
 [sub_resource type="Resource" id="Step_34"]

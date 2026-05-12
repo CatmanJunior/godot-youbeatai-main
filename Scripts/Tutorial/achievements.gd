@@ -77,6 +77,15 @@ func _ready() -> void:
 		change_energy_points(START_ENERGY_POINTS)
 		EventBus.set_klappy_speech_bubble.emit("", "", false)
 
+
+func _process(delta: float) -> void:
+	##if section 2 is not yet unlocked, and selected section is 2, set selected section back to 0 to avoid confusion, since section 2 button is locked and not visibly selectable.
+	if not btn_section_2:
+		return
+	if btn_section_2.disabled and SongState.current_section_index == 1:
+		print("Selected section 2 while it was locked; switching back to section 1")
+		EventBus.section_switch_requested.emit(0)
+
 func _input(event: InputEvent) -> void:
 	if not OS.is_debug_build():
 		return
@@ -105,6 +114,8 @@ func change_energy_points(delta: float) -> void:
 	if energy_progress_bar:
 		energy_progress_bar.value = energy_points
 	EventBus.energy_points_changed.emit(energy_points)
+
+
 
 
 static func has_energy_for_beat_addition() -> bool:
@@ -170,7 +181,7 @@ func activate_achievements() -> void:
 	# wait for SongState sections to be initialized
 	await EventBus.section_data_initialized
 
-	EventBus.section_switch_requested.emit(0) # Switch to the first section, so the new section button appears in the UI and can be locked.
+
 
 	
 

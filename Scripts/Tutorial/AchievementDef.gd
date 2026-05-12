@@ -13,6 +13,7 @@ enum AchievementNode {
 	FIRST_SAMPLE =  4,
 	SECOND_SAMPLE=  5,
 	TRACK_3    =  6,
+	SONG_MODE   =  7,
 }
 
 ## Callable () -> bool  evaluated every frame while blocked.

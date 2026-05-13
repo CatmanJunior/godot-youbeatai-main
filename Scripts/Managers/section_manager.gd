@@ -199,6 +199,12 @@ func next_section():
 		print("loop")
 		EventBus.section_loop.emit(current_section_index, GameState.loop_cursor)
 		return
+	else:
+		GameState.loop_cursor = 0
+		EventBus.section_loop.emit(current_section_index, GameState.loop_cursor)
+
+	if not GameState.song_mode_active:
+		return
 
 	"""Switch to the next section (or loop to first)"""
 	if current_section_index == sections.size() - 1:

@@ -93,7 +93,7 @@ func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = nul
 	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
 
 func pre_on_beat(beat:int):
-	if beat == 0 and GameState.song_mode_active:
+	if beat == 0:
 		EventBus.section_next_requested.emit()
 
 func _on_beat_triggered(_beat: int) -> void:

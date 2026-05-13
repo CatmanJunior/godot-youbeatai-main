@@ -184,12 +184,12 @@ progress_bars = [NodePath("TextureProgressBar0"), NodePath("TextureProgressBar1"
 waveform_lines = [NodePath("BigLine0"), NodePath("BigLine1")]
 track_settings = ExtResource("3_mgl8v")
 LINE_CONFIGS = [{
-"base_dist": 270,
+"base_dist": 280,
 "points": 200,
 "reversed": false,
 "volume_dist": 80
 }, {
-"base_dist": 50,
+"base_dist": 60,
 "points": 80,
 "reversed": false,
 "volume_dist": 35

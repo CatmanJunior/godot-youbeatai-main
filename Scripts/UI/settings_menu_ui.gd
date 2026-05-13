@@ -164,7 +164,7 @@ func _on_save_beat_pressed():
 	settings_panel.visible = false
 	
 func _on_restart_button() -> void:
-	EventBus.restart_requested.emit()
+	EventBus.open_prompt.emit(EventBus.restart_requested.emit)
 
 func _on_metronome_toggle_toggled(button_pressed: bool):
 	GameState.metronome_enabled = button_pressed

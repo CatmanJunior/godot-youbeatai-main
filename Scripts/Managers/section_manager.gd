@@ -91,6 +91,9 @@ func _on_add_section_requested(tex: Texture2D):
 	switch_section_next_frame(current_section_index)
 
 func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
+	if not SongState.selected_soundbank:
+		await EventBus.soundbank_loaded
+		
 	"""Populate section.progression and section.progression_offset from the active soundbank."""
 	var soundbank: SoundBank = SongState.selected_soundbank
 	if soundbank == null or chord_player_settings == null:

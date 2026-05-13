@@ -9,13 +9,13 @@
 [ext_resource type="PackedScene" uid="uid://mes3y20b5kk2" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="7_5lvir"]
-[ext_resource type="Shader" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
+[ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
 [ext_resource type="Texture2D" uid="uid://beaufoqdk1g75" path="res://Resources/Icons/Icons-_28_0031_Pause.png" id="7_wrqyy"]
 [ext_resource type="Texture2D" uid="uid://dpqq1wxs4ly0j" path="res://Resources/Icons/Icons-_28_0030_Play.png" id="8_5lvir"]
 [ext_resource type="PackedScene" uid="uid://icjhd0tmmomt" path="res://Scenes/UI_Components/Beam.tscn" id="9_nbgc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="9_wrqyy"]
 [ext_resource type="Texture2D" uid="uid://ch1ydacs6lt0n" path="res://Resources/Textures/cirkel3.png" id="9_ywh4c"]
-[ext_resource type="Script" path="res://Scripts/UI/SectionProgress.gd" id="13_0ra3y"]
+[ext_resource type="Script" uid="uid://dphj063nkqh6" path="res://Scripts/UI/SectionProgress.gd" id="13_0ra3y"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nbgc4"]
 shader = ExtResource("7_a7d6b")
@@ -23,6 +23,15 @@ shader_parameter/fill_amount = 0.9150000434625
 shader_parameter/start_angle = 119.26400566504
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/clockwise = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ndnxm"]
+offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4qf81"]
+gradient = SubResource("Gradient_ndnxm")
+fill_from = Vector2(0.5, 0)
+fill_to = Vector2(0.5, 1)
 
 [node name="BeatRing" type="Control" unique_id=192422746 node_paths=PackedStringArray("beat_ring_pivot_point", "pointer", "play_pause_button")]
 physics_interpolation_mode = 0
@@ -176,24 +185,28 @@ waveform_lines = [NodePath("BigLine0"), NodePath("BigLine1")]
 track_settings = ExtResource("3_mgl8v")
 LINE_CONFIGS = [{
 "base_dist": 270,
-"points": 100,
+"points": 200,
 "reversed": false,
-"volume_dist": 50
+"volume_dist": 80
 }, {
 "base_dist": 50,
-"points": 40,
+"points": 80,
 "reversed": false,
 "volume_dist": 35
 }]
 
 [node name="BigLine0" type="Line2D" parent="Waveform_visualisers" unique_id=866994840]
 closed = true
-width = 4.0
+width = 5.0
+texture = SubResource("GradientTexture2D_4qf81")
+texture_mode = 2
 antialiased = true
 
 [node name="BigLine1" type="Line2D" parent="Waveform_visualisers" unique_id=916269959]
 closed = true
-width = 4.0
+width = 5.0
+texture = SubResource("GradientTexture2D_4qf81")
+texture_mode = 2
 antialiased = true
 
 [node name="TextureProgressBar0" type="TextureProgressBar" parent="Waveform_visualisers" unique_id=1277010803]

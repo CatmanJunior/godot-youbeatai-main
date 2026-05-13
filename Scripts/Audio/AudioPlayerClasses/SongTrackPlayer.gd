@@ -81,7 +81,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if not _has_recording:
 		track_data.knob_position = Vector2(252.8054, 462.0462)
 		set_weights(Vector3(0,0,1))
-
+		TTSHelper.speak("ik heb een accorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept")
 
 	_has_recording = true
 	set_weights(_weights)

@@ -66,7 +66,7 @@ func _send_file_to_api(file_path: String, api_url: String, user_email: String) -
     if request_error != OK:
         push_error("HTTPRequest failed: %d" % request_error)
 
-func _on_request_completed(result: int, response_code: int, headers: Array, body: PackedByteArray) -> void:
+func _on_request_completed(_result: int, response_code: int, headers: Array, body: PackedByteArray) -> void:
     if response_code == 200:
         print("File uploaded successfully!")
         print("Response: ", body.get_string_from_utf8())

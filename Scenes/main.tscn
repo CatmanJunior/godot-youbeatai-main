@@ -313,7 +313,6 @@ offset_right = -161.0
 offset_bottom = -449.0
 
 [node name="ConfirmationPrompt" parent="UserInterface" unique_id=111843129 instance=ExtResource("45_kqrg6")]
-visible = false
 z_index = 4000
 layout_mode = 1
 offset_left = -862.945

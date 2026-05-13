@@ -15,7 +15,7 @@
 [ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="12_f0ro3"]
 [ext_resource type="Texture2D" uid="uid://da4odwl7iv8pu" path="res://Resources/Textures/stip.png" id="12_i2dwl"]
 [ext_resource type="Script" uid="uid://ditubfr1oouhm" path="res://Scenes/UI_Components/tutorial_chaospad_target.gd" id="12_uk2yi"]
-[ext_resource type="Script" uid="uid://2omguqbuwwo0" path="res://Scenes/UI_Components/microphone_feedback.gd" id="13_ckr5n"]
+[ext_resource type="Script" path="res://Scenes/UI_Components/microphone_feedback.gd" id="13_ckr5n"]
 [ext_resource type="Script" uid="uid://crahdh4vm2sdb" path="res://Scripts/UI/ChaosPad/choas_pad_knob.gd" id="22_ds0f1"]
 [ext_resource type="Script" uid="uid://btrc5liyq5v3i" path="res://Scripts/UI/ChaosPad/chaos_pad_triangle_container.gd" id="25_gu6ag"]
 
@@ -26,7 +26,7 @@ point_count = 2
 [sub_resource type="Gradient" id="Gradient_vhj50"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 0.5372549)
 
-[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon", "mix_star_marker", "outside_star_marker", "main_star_marker")]
+[node name="ChaosPad" type="Control" unique_id=2043765558 node_paths=PackedStringArray("chaos_pad_triangle_sprite", "knob", "main_icon", "alt_icon", "first_target", "mix_target", "outside_target")]
 physics_interpolation_mode = 0
 layout_mode = 3
 anchors_preset = 8
@@ -46,9 +46,9 @@ knob = NodePath("ChaosPadTriangle/Knob")
 track_settings = ExtResource("2_a3b2x")
 main_icon = NodePath("ChaosPadTriangle/PointRight/ChaosIconMain/ChaosIconBack")
 alt_icon = NodePath("ChaosPadTriangle/PointLeft/ChaosIconAlt/ChaosIconBack")
-mix_star_marker = NodePath("ChaosPadTriangle/MixTarget")
-outside_star_marker = NodePath("ChaosPadTriangle/OutsideTarget")
-main_star_marker = NodePath("ChaosPadTriangle/MainTarget")
+first_target = NodePath("ChaosPadTriangle/MainTarget")
+mix_target = NodePath("ChaosPadTriangle/MixTarget")
+outside_target = NodePath("ChaosPadTriangle/OutsideTarget")
 
 [node name="VisibilitySetter" type="Control" parent="." unique_id=863757447 node_paths=PackedStringArray("ui_reference")]
 anchors_preset = 0
@@ -263,10 +263,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 210.00002
-offset_top = 218.99998
-offset_right = -143.0
-offset_bottom = -136.0
+offset_left = 178.0
+offset_top = 264.0
+offset_right = -175.0
+offset_bottom = -91.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset_ratio = Vector2(0.5, 0.5)
@@ -306,9 +306,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 77.5
+offset_left = 110.5
 offset_top = -27.5
-offset_right = 205.5
+offset_right = 238.5
 offset_bottom = 100.5
 grow_horizontal = 2
 grow_vertical = 2

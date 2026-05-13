@@ -4,42 +4,47 @@ extends Node
 ## All outcome callables for the tutorial step machine.
 ## Set [member tutorial] before calling [method get_map].
 
+const STAR_MAIN: int = 0
+const STAR_MIX: int = 1
+const STAR_OUTSIDE: int = 2
+
 var tutorial: Tutorial
 
 func get_map() -> Dictionary:
 	var O := TutorialStepData.TutorialOutcome
 	return {
-		O.NOOP:                    _outcome_noop,
-		O.SHOW_INTRO:              _outcome_intro,
-		O.PLACE_KICK_BEATS:        _outcome_kick_place,
-		O.START_TIMER_AND_UNLOCK:  _outcome_start_timer_allowed,
-		O.ON_PAUSED:               _outcome_pause_beat,
-		O.ON_KICK_RING_FILLED:     _outcome_kick_ring_filled,
-		O.START_SHORT_TIMER:       _start_timer.bind(2.0),
-		O.BEGIN_STOMP_PHASE:       _outcome_stomp_setup,
-		O.END_STOMP_PHASE:         _outcome_stomp_done,
-		O.SHOW_CLAP_RING:          _outcome_show_clap_ring_setup,
-		O.PLACE_CLAP_BEATS:        _outcome_clap_ring_setup,
+		O.NOOP: _outcome_noop,
+		O.SHOW_INTRO: _outcome_intro,
+		O.PLACE_KICK_BEATS: _outcome_kick_place,
+		O.START_TIMER_AND_UNLOCK: _outcome_start_default_timer,
+		O.ON_PAUSED: _outcome_pause_beat,
+		O.ON_KICK_RING_FILLED: _outcome_kick_ring_filled,
+		O.START_SHORT_TIMER: _start_timer.bind(2.0),
+		O.BEGIN_STOMP_PHASE: _outcome_clap_stomp_setup.bind(true),
+		O.END_STOMP_PHASE: _outcome_stomp_done,
+		O.SHOW_CLAP_RING: _outcome_show_clap_ring_setup,
+		O.PLACE_CLAP_BEATS: _outcome_clap_ring_setup,
 		O.START_CLAP_LISTEN_TIMER: _outcome_clap_listen,
-		O.STOP_PLAYBACK:           EventBus.playing_change_requested.emit.bind(false),
-		O.ON_CLAP_RING_FILLED:     _outcome_clap_ring_filled,
-		O.ON_BEAT_REMOVED:         _outcome_beat_removed,
+		O.STOP_PLAYBACK: _outcome_stop_playback,
+		O.ON_CLAP_RING_FILLED: _outcome_clap_ring_filled,
+		O.ON_BEAT_REMOVED: _outcome_beat_removed,
 		O.START_LISTEN_AGAIN_TIMER: _outcome_listen_again,
-		O.BEGIN_CLAP_COUNT:        _outcome_clap_count_setup,
-		O.END_CLAP_PHASE:          _outcome_clap_done,
-		O.SHOW_BASS_LAYER:         _outcome_show_bass_layer,
-		O.SETUP_BASS_RECORDER:     _outcome_setup_bass_recorder,
+		O.BEGIN_CLAP_COUNT: _outcome_clap_stomp_setup.bind(false),
+		O.END_CLAP_PHASE: _outcome_clap_done,
+		O.SHOW_BASS_LAYER: _outcome_show_bass_layer,
+		O.SETUP_BASS_RECORDER: _outcome_setup_bass_recorder,
 		O.ON_BASS_RECORDING_STARTED: _outcome_on_bass_recording_started,
-		O.END_FAST_TTS_AND_WAIT:   _outcome_voice_over_done,
-		O.SHOW_CHAOS_TRIANGLE:     EventBus.ui_visibility_requested.emit.bind(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true),
-		O.SHOW_CHAOSPAD_STAR:      _outcome_show_chaospad_star.bind(0), # start with star 1
+		O.END_FAST_TTS_AND_WAIT: _outcome_voice_over_done,
+		O.SHOW_CHAOS_TRIANGLE: _outcome_show_chaos_triangle,
+		O.SHOW_CHAOSPAD_STAR: _outcome_show_chaospad_star.bind(STAR_MAIN),
 		O.ON_CHAOSPAD_STAR_REACHED: _outcome_chaospad_star_reached,
-		O.ON_CHAOSPAD_LISTENED:    _outcome_chaospad_listened,
-		O.SHOW_MIX_STAR:           _outcome_show_chaospad_star.bind(1),
-		O.ON_MIX_STAR_REACHED:     _reach_knob_target.bind(tutorial.chaos_pad_ui.mix_star_marker),
-		O.SHOW_OUTSIDE_STAR:       _outcome_show_chaospad_star.bind(2),
-		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_star_marker),
-		O.FINISH_TUTORIAL:         _outcome_end_tutorial,
+		O.ON_CHAOSPAD_LISTENED: _outcome_chaospad_listened,
+		O.SHOW_MIX_STAR: _outcome_show_chaospad_star.bind(STAR_MIX),
+		O.ON_MIX_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.mix_target),
+		O.SHOW_OUTSIDE_STAR: _outcome_show_chaospad_star.bind(STAR_OUTSIDE),
+		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_target),
+		O.FINISH_TUTORIAL: _outcome_end_tutorial,
+		O.SKIP_BASS_INTRO: _outcome_skip_bass_intro,
 	}
 
 # ── No-op ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -64,7 +69,7 @@ func _outcome_kick_place() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.PLAY_PAUSE_BUTTON, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.STOMP_UI, true)
 
-func _outcome_start_timer_allowed() -> void:
+func _outcome_start_default_timer() -> void:
 	tutorial._timer.start(tutorial._timer.wait_time)
 
 
@@ -85,14 +90,24 @@ func _start_timer(seconds: float) -> void:
 
 # ── Stomp phase ──────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-func _outcome_stomp_setup() -> void:
-	tutorial._in_stomp_phase = true
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
+func _outcome_clap_stomp_setup(stomp_mode: bool) -> void:
+	var amount_left: int
+	if stomp_mode:
+		tutorial._in_stomp_phase = true
+		amount_left = Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.stomped_on_beat_amount
+	else:
+		tutorial._in_clap_phase = true
+		amount_left = Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount
+		
+	# EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
+	
 	EventBus.set_klappy_speech_bubble.emit(
 		tutorial._instruction,
-		"Nog %d te gaan" % (Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.stomped_on_beat_amount),
+		"Nog %d te gaan" % amount_left,
 		false)
 	tutorial.play_achievement_sfx()
+
+
 
 # ── Clap ring ────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -124,15 +139,8 @@ func _outcome_beat_removed() -> void:
 func _outcome_listen_again() -> void:
 	tutorial._text_allowed = true
 	tutorial.play_achievement_sfx()
-	tutorial._timer.start(2)
+	_start_timer(2.0)
 
-func _outcome_clap_count_setup() -> void:
-	tutorial._in_clap_phase = true
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
-	EventBus.set_klappy_speech_bubble.emit(
-		tutorial._instruction,
-		"Nog %d te gaan" % (Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount),
-		false)
 
 # ── Shared helper: end an interaction phase (stomp or clap) ─────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -172,16 +180,33 @@ func _outcome_setup_bass_recorder() -> void:
 func _outcome_on_bass_recording_started() -> void:
 	tutorial.play_achievement_sfx()
 	tutorial._increased_speed = true
-	DisplayServer.tts_stop()
+	TTSHelper.stop_speaking()
 	EventBus.record_button_animation_stop_requested.emit()
+
+## Called when the bass-intro step advances.
+## If bass recording was already started, skips the TTS countdown steps and stops speech.
+func _outcome_skip_bass_intro() -> void:
+	if not (SongState.selected_track_index == 4 and GameState.is_recording):
+		return
+	tutorial.play_achievement_sfx()
+	tutorial.tutorial_level += 1  # skip Step_25 (mic prompt); _goto_next_step adds 1 more = 2 total
+	TTSHelper.stop_speaking()
 
 func _outcome_voice_over_done() -> void:
 	tutorial._increased_speed = false
 	tutorial._timer.start(3)
 
+# ── Playback / chaos triangle ───────────────────────────────────────────────────────────────────
+
+func _outcome_stop_playback() -> void:
+	EventBus.playing_change_requested.emit(false)
+
+func _outcome_show_chaos_triangle() -> void:
+	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.CHAOS_PAD_TRIANGLE, true)
+
 # ── Chaos pad ────────────────────────────────────────────────────────────────────────────────────────────────
 
-func _outcome_show_chaospad_star(targetID:int) -> void:
+func _outcome_show_chaospad_star(targetID: int) -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
@@ -229,6 +254,6 @@ func _outcome_end_tutorial() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
-	DisplayServer.tts_stop()
+	TTSHelper.stop_speaking()
 	EventBus.section_switch_requested.emit(0)
 	EventBus.on_tutorial_done.emit()

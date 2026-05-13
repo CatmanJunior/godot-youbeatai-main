@@ -219,6 +219,8 @@ signal utterance_content_changed(text: String)
 signal countdown_show_requested()
 ## Emitted to request closing the countdown overlay.
 signal countdown_close_requested()
+## Emitted each time the displayed countdown integer decrements (e.g. 4→3→2→1).
+signal countdown_tick(seconds_remaining: int)
 
 # ── Keyboard ──
 ## Emitted to request toggling fullscreen mode.

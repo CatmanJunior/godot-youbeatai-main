@@ -73,7 +73,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			var y_percent = 1.0 - (pos.y / size.y)
 			
 			phaser.depth = clamp(1.0 - x_percent * 2.0, 0.0, 1.0)
-			distortion.drive = clamp((x_percent - 0.5) * 2.0, 0.0, 1.0)
+			distortion.drive = clamp((x_percent - 0.5) * 2.0, 0.0, 0.5)
 			highpass.resonance = 0.5
 			highpass.cutoff_hz = lerp(20.0, 2000.0, clamp((y_percent - 0.5) * 2.0, 0.0, 1.0))
 			lowpass.cutoff_hz = lerp(20000.0, 200.0, clamp((0.5 - y_percent) * 2.0, 0.0, 1.0))

@@ -14,6 +14,9 @@ extends Node
 	{"points": 80, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]
 var tween : Array[Tween] = []
+var _counting_down: bool = false
+var _countdown_total_time: float = 0.0
+var _countdown_bar_index: int = -1
 
 var _sample_track_amount: int = SectionData.SAMPLE_TRACKS_PER_SECTION  # Number of sample tracks to offset synth track indices
 
@@ -25,10 +28,34 @@ func _ready() -> void:
 	EventBus.song_loaded.connect(_on_song_loaded)
 	EventBus.synth_progress_bar_visible_requested.connect(_set_progress_bar_visible)
 	EventBus.track_selected.connect(_on_track_selected)
+	EventBus.countdown_show_requested.connect(_on_countdown_show_requested)
+	EventBus.countdown_close_requested.connect(_on_countdown_close_requested)
 	for i in range(progress_bars.size()):
 		var bar = progress_bars[i]
 		if bar:
 			bar.self_modulate = track_settings.get_synth_track(i).track_color
+
+
+func _process(_delta: float) -> void:
+	if not _counting_down:
+		return
+	var time_left: float = BeatManager.calculate_time_until_top()
+	var pct: float = time_left / _countdown_total_time if _countdown_total_time > 0.0 else 0.0
+	if _countdown_bar_index >= 0 and _countdown_bar_index < progress_bars.size() and progress_bars[_countdown_bar_index]:
+		progress_bars[_countdown_bar_index].value = pct
+
+
+func _on_countdown_show_requested() -> void:
+	_countdown_bar_index = SongState.selected_track_index - _sample_track_amount
+	_countdown_total_time = BeatManager.calculate_time_until_top()
+	_counting_down = true
+	if _countdown_bar_index >= 0 and _countdown_bar_index < progress_bars.size() and progress_bars[_countdown_bar_index]:
+		progress_bars[_countdown_bar_index].value = 1
+
+
+func _on_countdown_close_requested() -> void:
+	_counting_down = false
+
 
 func _set_progress_bar_visible(bar: int, visible: bool) -> void:
 	if bar >= 0 and bar < progress_bars.size() and progress_bars[bar]:
@@ -43,7 +70,7 @@ func _on_section_switched(new_section_data: SectionData):
 func _on_track_selected(track_index: int):
 
 	if track_index >= _sample_track_amount:  # Only update colors for SYNTH tracks
-		var synth_index = track_index - _sample_track_amount - 1
+		var synth_index = track_index - _sample_track_amount
 		
 		if tween[synth_index] != null and tween[synth_index].is_running():
 			return
@@ -56,7 +83,7 @@ func _on_track_selected(track_index: int):
 			t.tween_property(bar, "scale", current_size * 1.2, 0.2)
 			t.tween_property(bar, "scale", current_size, 0.2)	
 			
-			
+
 
 
 func _on_song_loaded() -> void:

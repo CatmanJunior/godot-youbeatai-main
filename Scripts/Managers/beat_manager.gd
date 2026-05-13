@@ -3,6 +3,8 @@ class_name BeatManager
 
 @export var track_settings_registry: TrackUISettingsRegistry
 
+@export var swing_reduce_amount: float = 0.5
+
 const BEATS_PER_BAR : int = 4
 const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
 
@@ -77,7 +79,7 @@ func _on_template_set(actives: Array) -> void:
 func _on_soundbank_loaded(bank: SoundBank) -> void:
 	print("Soundbank loaded: %s" % bank)
 	bpm = bank.bpm
-	swing = bank.swing
+	swing = bank.swing * swing_reduce_amount
 
 # --- BPM functions ---
 func get_beat_progress() -> float:

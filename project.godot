@@ -19,7 +19,7 @@ run/low_processor_mode=true
 run/delta_smoothing=false
 boot_splash/bg_color=Color(0.05882353, 0.078431375, 0.19215687, 1)
 boot_splash/stretch_mode=3
-boot_splash/image="uid://c14pbvcc8bgpu"
+boot_splash/image="uid://cmv4ornhe2tof"
 config/icon="uid://bw7qlsn2o2s82"
 
 [audio]
@@ -55,7 +55,7 @@ project/assembly_name="youbeatai-godot"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/synth/plugin.cfg")
+enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg")
 
 [gui]
 

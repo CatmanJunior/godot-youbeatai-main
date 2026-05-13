@@ -4,6 +4,8 @@ class_name TrackSelectButtonContainer
 @export var track_UI_settings: TrackUISettingsRegistry
 @export var track_buttons: Array[TrackSelectButton]
 
+var _active_tweens: Dictionary = {}
+
 func _ready():
 	for i in range(track_buttons.size()):
 		var button = track_buttons[i]
@@ -42,13 +44,21 @@ func _process(_delta: float) -> void:
 	track_buttons[SongState.selected_track_index].update_outline(progression)
 
 func _on_track_button_pressed(track_index: int):
-	for button in track_buttons:
-		button.set_button_selected(false)
+	var button := track_buttons[track_index]
+	if not _active_tweens.has(track_index) or not (_active_tweens[track_index] as Tween).is_running():
+		var base_scale := button.scale
+		var t := create_tween()
+		_active_tweens[track_index] = t
+		t.tween_property(button, "scale", base_scale * 1.2, 0.1)
+		t.tween_property(button, "scale", base_scale, 0.1)
+
+
+	for btn in track_buttons:
+		btn.set_button_selected(false)
 	track_buttons[track_index].set_button_selected(true)
 
 	if track_buttons[track_index].is_synth_track:
 		track_buttons[track_index].background.modulate = track_UI_settings.get_track(track_index).track_color
-
 
 	if not track_buttons[track_index].is_synth_track:
 		EventBus.play_track_requested.emit(track_index)
@@ -62,5 +72,4 @@ func _on_track_button_pressed(track_index: int):
 		if track_index == 0:
 			EventBus.clap_stomp_detected.emit(0)
 		elif track_index == 1:
-			EventBus.clap_stomp_detected.emit(1)
-			
+			EventBus.clap_stomp_detected.emit(1)			

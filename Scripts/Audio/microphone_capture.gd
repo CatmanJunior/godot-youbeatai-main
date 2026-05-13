@@ -25,10 +25,6 @@ func _ready():
 
 	var bus_index: int = AudioServer.get_bus_index(bus_name)
 
-	# Spectrum analyzer (appended as last effect)
-	var spectrum := AudioEffectSpectrumAnalyzer.new()
-	AudioServer.add_bus_effect(bus_index, spectrum)
-
 	analyzer = AudioServer.get_bus_effect_instance(
 		bus_index, AudioServer.get_bus_effect_count(bus_index) - 1
 	) as AudioEffectSpectrumAnalyzerInstance

@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://bhg6yg7hs1a8o" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/ClosedHH Fit 1.wav" id="4_a5cut"]
 [ext_resource type="Resource" uid="uid://v8ueoeyarkdk" path="res://Resources/Audio/SoundBanks/3_raggae/EffectProfile.tres" id="5_1al31"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_5i1t3"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_onkgs"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_onkgs"]
 [ext_resource type="AudioStream" uid="uid://be37oruasvm8u" path="res://Resources/Audio/SoundBanks/3_raggae/Kick Bandits.wav" id="6_ftxhs"]
 [ext_resource type="AudioStream" uid="uid://bspcfiukoeorw" path="res://Resources/Audio/SoundBanks/3_raggae/mineur/Kick Shapednoise 1.wav" id="7_f2swm"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="8_cp1vu"]
@@ -104,4 +104,3 @@ synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("11_eprof")]([ExtResource("5_1al31"), ExtResource("5_1al31")])
 noteplayer_settings = Array[ExtResource("9_7qwu2")]([ExtResource("12_bass"), ExtResource("13_syn1")])
 chord_progressions = SubResource("Resource_45pbc")
-metadata/_custom_type_script = "uid://d0cv5il7l6laj"

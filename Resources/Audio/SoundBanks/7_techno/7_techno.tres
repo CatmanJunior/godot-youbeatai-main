@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://xmh8mieolg8w" path="res://Resources/Audio/SoundBanks/7_techno/Kick Elektrocuted 2.wav" id="4_470u0"]
 [ext_resource type="AudioStream" uid="uid://cqno1pepig43l" path="res://Resources/Audio/SoundBanks/7_techno/mineur/ClosedHH BackOut.wav" id="4_kmdtp"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_iwmnv"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_ksd7x"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_ksd7x"]
 [ext_resource type="Resource" uid="uid://dry8m7r2tj6dq" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile_Bass.tres" id="6_g7ebr"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_kmdtp"]
 [ext_resource type="AudioStream" uid="uid://c0vncoipende0" path="res://Resources/Audio/SoundBanks/7_techno/Snare Elektrocuted 2.wav" id="7_g7ebr"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="12_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="13_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="14_syn1"]
+[ext_resource type="Resource" uid="uid://bnni7b03po2n0" path="res://Resources/Audio/SoundBanks/7_techno/EffectProfile.tres" id="19_1yego"]
 
 [sub_resource type="Resource" id="Resource_0ds2n"]
 script = ExtResource("2_ksd7x")
@@ -104,7 +105,6 @@ closed_alt = ExtResource("4_kmdtp")
 synth_soundfonts = Array[Resource]([ExtResource("5_iwmnv"), ExtResource("5_iwmnv")])
 synth_instrument_ids = Array[int]([4, 12])
 synth_beats = Array[float]([0.0, 0.0])
-synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("6_g7ebr"), ExtResource("6_g7ebr")])
+synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("6_g7ebr"), ExtResource("19_1yego")])
 noteplayer_settings = Array[ExtResource("9_kmdtp")]([ExtResource("13_bass"), ExtResource("14_syn1")])
 chord_progressions = SubResource("Resource_40enh")
-metadata/_custom_type_script = "uid://d0cv5il7l6laj"

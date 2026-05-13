@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://ojnoc65b86bw" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/ClosedHH Discaux.wav" id="4_achl6"]
 [ext_resource type="AudioStream" uid="uid://ckvcmf4axgphh" path="res://Resources/Audio/SoundBanks/4_balkisch/Kick Breeze.wav" id="4_kj5q1"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_2an5y"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_t7lk8"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_t7lk8"]
 [ext_resource type="Resource" uid="uid://65isouwqh4er" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile_Bass.tres" id="6_8lexy"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_achl6"]
 [ext_resource type="AudioStream" uid="uid://dp7rwu7lkypjn" path="res://Resources/Audio/SoundBanks/4_balkisch/mineur/Kick Rainbow 1.wav" id="7_8lexy"]
@@ -20,6 +20,7 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="12_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="13_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="14_syn1"]
+[ext_resource type="Resource" uid="uid://k0dg58vddl4l" path="res://Resources/Audio/SoundBanks/4_balkisch/EffectProfile.tres" id="19_3hm7g"]
 
 [sub_resource type="Resource" id="Resource_u7ueg"]
 script = ExtResource("2_t7lk8")
@@ -107,7 +108,6 @@ closed_alt = ExtResource("4_achl6")
 synth_soundfonts = Array[Resource]([ExtResource("7_xq0bs"), ExtResource("5_2an5y")])
 synth_instrument_ids = Array[int]([0, 4])
 synth_beats = Array[float]([0.0, 0.0])
-synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("6_8lexy"), ExtResource("6_8lexy")])
+synth_effect_profiles = Array[ExtResource("12_eprof")]([ExtResource("6_8lexy"), ExtResource("19_3hm7g")])
 noteplayer_settings = Array[ExtResource("9_fvvum")]([ExtResource("13_bass"), ExtResource("14_syn1")])
 chord_progressions = SubResource("Resource_c2bfy")
-metadata/_custom_type_script = "uid://d0cv5il7l6laj"

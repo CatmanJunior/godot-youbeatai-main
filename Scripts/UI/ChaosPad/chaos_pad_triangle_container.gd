@@ -5,8 +5,9 @@ class_name TriangleContainer
 var tri: Array[Vector2] = []  # local-space triangle vertices
 
 func _ready() -> void:
-	# Defer so Control layout is resolved before reading positions
-	await get_tree().process_frame
+	EventBus.level_loaded.connect(level_loaded)
+
+func level_loaded():
 	if corners.size() >= 3:
 		tri = [
 			corners[0].position,

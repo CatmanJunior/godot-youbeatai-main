@@ -89,8 +89,10 @@ func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = nul
 	chords.set_settings(_settings, sub_bus_names[SongLayer.CHORD] )
 	add_child(chords)
 
-	await EventBus.soundbank_loaded
-	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
+
+func _on_soundbank_loaded(bank: SoundBank) -> void:
+	super._on_soundbank_loaded(bank)
+	apply_effect_profile(bank.synth_effect_profiles[0])
 
 func pre_on_beat(beat:int):
 	if beat == 0:

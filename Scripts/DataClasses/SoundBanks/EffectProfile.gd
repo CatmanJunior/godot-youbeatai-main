@@ -42,7 +42,6 @@ func apply_effects(bus_index: int) -> void:
 		i += 1
 
 func _add_effect_bus(effect: AudioEffect, bus_index: int, effect_index: int, value):
-	
 	AudioServer.add_bus_effect(bus_index, effect)
 	if value > 0:
 		AudioServer.set_bus_effect_enabled(bus_index, effect_index, true)

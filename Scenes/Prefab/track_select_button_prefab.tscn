@@ -9,6 +9,7 @@
 custom_minimum_size = Vector2(80, 80)
 offset_right = 80.0
 offset_bottom = 80.0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 action_mode = 0
 flat = true
 script = ExtResource("2_xp7bp")

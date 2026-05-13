@@ -38,7 +38,7 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section_ui)
-	EventBus.section_remove_requested.connect(remove_section)
+	EventBus.section_remove_requested.connect(remove_section_request)
 	EventBus.section_next_requested.connect(next_section)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
 	EventBus.post_ready.connect(post_ready)
@@ -119,6 +119,9 @@ func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
 
 	section.progression = progressions[progression_offset.progression]
 	section.progression_offset = progression_offset
+
+func remove_section_request(section_index: int):
+	EventBus.open_prompt.emit(func(): remove_section(section_index) )
 
 func remove_section(section_index: int):
 	"""Remove a section at the specified index"""

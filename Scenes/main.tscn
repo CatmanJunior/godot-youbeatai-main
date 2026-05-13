@@ -315,10 +315,10 @@ offset_bottom = -449.0
 [node name="ConfirmationPrompt" parent="UserInterface" unique_id=111843129 instance=ExtResource("45_kqrg6")]
 visible = false
 layout_mode = 1
-offset_left = -974.0
-offset_top = -319.0
-offset_right = -526.0
-offset_bottom = -129.0
+offset_left = -862.0
+offset_top = -452.0
+offset_right = -414.0
+offset_bottom = -262.0
 
 [node name="SavingLabel" parent="UserInterface" unique_id=945421672 instance=ExtResource("54_qax2n")]
 visible = false

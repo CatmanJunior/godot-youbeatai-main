@@ -5,9 +5,12 @@ extends Panel
 
 var _cached_agree_action: Callable = Callable()
 
+func _ready():
+	EventBus.open_prompt.connect(open)
+
 func open(agree_action: Callable) -> void:
 	# show confirmation prompt
-	position = Vector2(-224.0, -112.0)
+	visible = true
 
 	# set agree button action
 	_cached_agree_action = agree_action
@@ -20,8 +23,7 @@ func open(agree_action: Callable) -> void:
 
 func close() -> void:
 	# set aside confirmation prompt
-	position = Vector2(-224.0, -2000.0)
-
+	visible = false
 	# reset agree button action
 	confirmation_button_agree.button_up.disconnect(close)
 	confirmation_button_agree.button_up.disconnect(_cached_agree_action)

@@ -2,8 +2,8 @@ extends Node
 
 @warning_ignore_start("unused_signal")
 
+## level loading signals
 signal level_loaded()
-
 signal post_ready()
 signal section_data_initialized()
 signal players_initialized()
@@ -11,6 +11,8 @@ signal players_initialized()
 ## Emitted when a full application restart is requested.
 signal restart_requested()
 
+## confirm popup signals
+signal open_prompt(action: Callable)
 
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
 signal soundbank_selected(themes: Array[String], emotions: Array[String])

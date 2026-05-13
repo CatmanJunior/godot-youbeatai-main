@@ -316,9 +316,9 @@ offset_bottom = -449.0
 visible = false
 z_index = 4000
 layout_mode = 1
-offset_left = -971.975
+offset_left = -862.945
 offset_top = -452.0
-offset_right = -523.97473
+offset_right = -414.94452
 offset_bottom = -262.0
 
 [node name="SavingLabel" parent="UserInterface" unique_id=945421672 instance=ExtResource("54_qax2n")]

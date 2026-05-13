@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://b6map0f7l4emx" path="res://Scenes/UI_Components/section_emoji_prompt.tscn" id="5_8duxt"]
 [ext_resource type="Texture2D" uid="uid://ml681mo0sr5a" path="res://Resources/Icons/copy.png" id="5_r0nxd"]
 [ext_resource type="Texture2D" uid="uid://dkr6t8qfcy51c" path="res://Resources/Icons/Icons-_28_0000_Paste.png" id="6_0g022"]
-[ext_resource type="Script" path="res://Scenes/UI_Components/shortcut_button.gd" id="7_4t4de"]
+[ext_resource type="Script" uid="uid://b76tsxl82rnvo" path="res://Scenes/UI_Components/shortcut_button.gd" id="7_4t4de"]
 [ext_resource type="Texture2D" uid="uid://dtgplsb2hpjva" path="res://Resources/Textures/Hex_white.png" id="8_mmmhy"]
 [ext_resource type="Texture2D" uid="uid://dnh46jdw08xp3" path="res://Resources/Textures/repeat_less.png" id="9_dbo0n"]
 [ext_resource type="Texture2D" uid="uid://d3y1f26r02w7d" path="res://Resources/Textures/+_white.png" id="9_nympg"]
@@ -324,7 +324,7 @@ metadata/_edit_use_anchors_ = true
 [node name="EmojiPrompt" parent="." unique_id=569761149 instance=ExtResource("5_8duxt")]
 visible = false
 layout_mode = 1
-offset_left = -303.0
-offset_top = -69.0
-offset_right = 145.0
-offset_bottom = 121.0
+offset_left = -238.5
+offset_top = -112.5
+offset_right = 238.5
+offset_bottom = 112.5

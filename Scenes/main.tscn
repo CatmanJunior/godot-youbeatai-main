@@ -285,7 +285,7 @@ grow_vertical = 1
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
 visible = false
-z_index = 4096
+z_index = 3999
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.49400002
@@ -314,10 +314,11 @@ offset_bottom = -449.0
 
 [node name="ConfirmationPrompt" parent="UserInterface" unique_id=111843129 instance=ExtResource("45_kqrg6")]
 visible = false
+z_index = 4000
 layout_mode = 1
-offset_left = -862.0
+offset_left = -971.975
 offset_top = -452.0
-offset_right = -414.0
+offset_right = -523.97473
 offset_bottom = -262.0
 
 [node name="SavingLabel" parent="UserInterface" unique_id=945421672 instance=ExtResource("54_qax2n")]
@@ -415,10 +416,10 @@ tooltip_text = "Herhaal deze laag meer"
 tooltip_text = "Herhaal deze laag meer"
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
-offset_left = -1002.0
-offset_top = -605.0
-offset_right = -554.0
-offset_bottom = -415.0
+offset_left = -987.0
+offset_top = -614.0
+offset_right = -510.0
+offset_bottom = -389.0
 
 [node name="VisibilitySetter" type="Control" parent="UserInterface/SwitchSectionButtons" unique_id=1851349150 node_paths=PackedStringArray("ui_reference")]
 anchors_preset = 0

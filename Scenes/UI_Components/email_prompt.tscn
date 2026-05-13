@@ -190,9 +190,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -272.0
-offset_top = -80.000244
+offset_top = -73.11023
 offset_right = 272.0
-offset_bottom = -12.000244
+offset_bottom = -5.1102295
 grow_horizontal = 2
 grow_vertical = 0
 pivot_offset_ratio = Vector2(0.5, 1)
@@ -200,7 +200,7 @@ theme_override_constants/h_separation = 21
 alignment = 1
 
 [node name="Enter" type="Button" parent="Buttons" unique_id=1252579344]
-custom_minimum_size = Vector2(180, 60)
+custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
@@ -212,7 +212,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_at82w")
 text = "Email"
 
 [node name="Enter2" type="Button" parent="Buttons" unique_id=538905878]
-custom_minimum_size = Vector2(180, 60)
+custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
 focus_mode = 0
 theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)

@@ -2,10 +2,13 @@
 
 [ext_resource type="Script" uid="uid://cjx5hltdcaljj" path="res://Scripts/UI/emoji_prompt.gd" id="1_tssnp"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_1pkca"]
+[ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="2_tlq35"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="3_tlq35"]
 [ext_resource type="Texture2D" uid="uid://cify72xi008cm" path="res://Resources/Icons/Icons-_28_0029_Leaf.png" id="4_56yf2"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="5_56yf2"]
 [ext_resource type="Texture2D" uid="uid://clgvascwc8we6" path="res://Resources/Icons/Icons-_28_0028_Verse.png" id="5_rgnj4"]
 [ext_resource type="Texture2D" uid="uid://biyvk8ycmxqn" path="res://Resources/Icons/Icons-_28_0025_Riser.png" id="6_0ixf2"]
+[ext_resource type="Texture2D" uid="uid://dgki5hjiy4i76" path="res://Resources/Textures_New_Extra/Hex_0002_Layer-1.png" id="6_tlq35"]
 [ext_resource type="Texture2D" uid="uid://00laejpqxwks" path="res://Resources/Icons/Icons-_28_0026_Blast.png" id="7_k7goj"]
 [ext_resource type="Texture2D" uid="uid://cuwbg6xil5777" path="res://Resources/Icons/Icons-_28_0021_Flag.png" id="8_34gcy"]
 
@@ -14,10 +17,56 @@ bg_color = Color(0.176471, 0.176471, 0.176471, 1)
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.0862745, 0.0862745, 0.0862745, 1)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_56yf2"]
+bg_color = Color(0.57565, 0.56549996, 0.87, 0)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.58431375, 0.57254905, 0.8666667, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgnj4"]
+bg_color = Color(0.57565, 0.56549996, 0.87, 0)
+draw_center = false
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.58431375, 0.57254905, 0.8666667, 1)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ixf2"]
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7goj"]
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abtdn"]
 bg_color = Color(0.12941177, 0.12941177, 0.12941177, 1)
@@ -28,7 +77,9 @@ corner_radius_bottom_left = 1000
 
 [node name="EmojiPrompt" type="Panel" unique_id=569761149 node_paths=PackedStringArray("emoji_buttons", "cancel_button")]
 top_level = true
+clip_children = 1
 z_index = 20
+custom_minimum_size = Vector2(477, 225)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -36,8 +87,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -640.0
 offset_top = -360.0
-offset_right = -192.0
-offset_bottom = -170.0
+offset_right = -163.0
+offset_bottom = -135.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_6nm1e")
@@ -45,97 +96,201 @@ script = ExtResource("1_tssnp")
 emoji_buttons = [NodePath("HBoxContainer/Emoji_0"), NodePath("HBoxContainer/Emoji_1"), NodePath("HBoxContainer/Emoji_2"), NodePath("HBoxContainer/Emoji_3"), NodePath("HBoxContainer/Emoji_4")]
 cancel_button = NodePath("Cancel")
 
-[node name="Title" type="Label" parent="." unique_id=1817552164]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=267626251]
+show_behind_parent = true
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -218.0
-offset_top = -99.0
-offset_right = 220.0
-offset_bottom = -20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+texture = ExtResource("2_tlq35")
+expand_mode = 1
+
+[node name="Panel" type="Panel" parent="TextureRect" unique_id=922459225]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_56yf2")
+
+[node name="Title" type="Label" parent="." unique_id=1817552164]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -219.0
+offset_right = 219.0
+offset_bottom = 79.0
+grow_horizontal = 2
 scale = Vector2(1, 1.0232327)
 theme = ExtResource("2_1pkca")
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
 theme_override_fonts/font = ExtResource("3_tlq35")
 theme_override_font_sizes/font_size = 24
 text = "Wat voor een nieuwe laag wil je?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Cancel" type="Button" parent="." unique_id=351501750]
+[node name="Cancel" type="Button" parent="." unique_id=1033061404]
+custom_minimum_size = Vector2(120, 30)
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.41517857
-anchor_top = 0.8
-anchor_right = 0.41517857
-anchor_bottom = 0.8
-offset_right = 76.56
-offset_bottom = 30.62
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -90.0
+offset_top = -68.44
+offset_right = 90.0
+offset_bottom = -18.440002
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
 focus_mode = 0
-theme = ExtResource("2_1pkca")
-theme_override_fonts/font = ExtResource("3_tlq35")
-theme_override_font_sizes/font_size = 16
-text = "Sluiten"
-metadata/_edit_use_anchors_ = true
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_fonts/font = ExtResource("5_56yf2")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_rgnj4")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0ixf2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_k7goj")
+text = "SLUITEN"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=94268396]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 72.0
-offset_right = 450.0
-offset_bottom = 122.0
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/separation = 20
 alignment = 1
 
 [node name="Emoji_0" type="Button" parent="HBoxContainer" unique_id=1943212942]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 focus_mode = 0
-theme_override_constants/icon_max_width = 50
+theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_abtdn")
 icon = ExtResource("4_56yf2")
+flat = true
 icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Emoji_0" unique_id=296207397]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_tlq35")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Emoji_1" type="Button" parent="HBoxContainer" unique_id=203521473]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 focus_mode = 0
-theme_override_constants/icon_max_width = 50
+theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_abtdn")
 icon = ExtResource("5_rgnj4")
+flat = true
 icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Emoji_1" unique_id=1798063745]
+show_behind_parent = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_tlq35")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Emoji_2" type="Button" parent="HBoxContainer" unique_id=1819145041]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 focus_mode = 0
-theme_override_constants/icon_max_width = 50
+theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_abtdn")
 icon = ExtResource("6_0ixf2")
+flat = true
+icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Emoji_2" unique_id=220593950]
+show_behind_parent = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_tlq35")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Emoji_3" type="Button" parent="HBoxContainer" unique_id=1573292999]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 focus_mode = 0
-theme_override_constants/icon_max_width = 50
+theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_abtdn")
 icon = ExtResource("7_k7goj")
+flat = true
 icon_alignment = 1
 metadata/_edit_use_anchors_ = true
 
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Emoji_3" unique_id=776449517]
+show_behind_parent = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_tlq35")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Emoji_4" type="Button" parent="HBoxContainer" unique_id=1697558627]
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 focus_mode = 0
-theme_override_constants/icon_max_width = 50
+theme_override_constants/icon_max_width = 45
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_abtdn")
 icon = ExtResource("8_34gcy")
+flat = true
 icon_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/Emoji_4" unique_id=2080827882]
+show_behind_parent = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_tlq35")
+expand_mode = 1
+stretch_mode = 5

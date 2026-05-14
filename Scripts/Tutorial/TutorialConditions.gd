@@ -9,6 +9,10 @@ var tutorial: Tutorial
 func _ready() -> void:
 	EventBus.countdown_tick.connect(_on_countdown_tick)
 	EventBus.countdown_close_requested.connect(_on_countdown_closed)
+	EventBus.section_loop.connect(_on_section_loop)
+	EventBus.recording_stopped.connect(_on_recording_stopped)
+	EventBus.utterance_started.connect(_on_tts_utterance_started)
+	EventBus.utterance_ended.connect(_on_tts_utterance_ended)
 
 func get_map() -> Dictionary:
 	var C := TutorialStepData.TutorialCondition
@@ -36,6 +40,8 @@ func get_map() -> Dictionary:
 		C.KNOB_AT_MIX_TARGET:               _cond_knob_at_star.bind(tutorial.mix_target),
 		C.KNOB_AT_OUTSIDE_TARGET:           _cond_knob_at_star.bind(tutorial.outside_target),
 		C.KNOB_AT_TARGET:                   _cond_knob_at_star.bind(tutorial.target),
+		C.SECTION_PLAYED_ONCE:              _cond_section_played_once,
+		C.RECORDING_STOPPED:                _cond_recording_stopped,
 	}
 
 # ── Playback ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -48,8 +54,27 @@ func _cond_not_playing() -> bool:
 
 # ── TTS ──────────────────────────────────────────────────────────────────────────────────────────────────────
 
+var _tts_speaking: bool = false
+var _tts_just_finished: bool = false
+
+func _on_tts_utterance_started(_id: int) -> void:
+	if GameState.use_tutorial:
+		_tts_speaking = true
+		_tts_just_finished = false
+
+func _on_tts_utterance_ended(_id: int) -> void:
+	if GameState.use_tutorial and _tts_speaking:
+		_tts_speaking = false
+		_tts_just_finished = true
+
+## True once on the frame after TTS finishes.
+## Falls back to immediate pass when speech is muted or no voices are available.
 func _cond_tts_done() -> bool:
-	return not DisplayServer.tts_is_speaking()
+	if GameState.mute_speech or TTSHelper.get_voices().is_empty():
+		return true
+	var fired := _tts_just_finished
+	_tts_just_finished = false
+	return fired
 
 # ── Timer ────────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -140,6 +165,30 @@ func _cond_always() -> bool:
 
 func _cond_never() -> bool:
 	return false
+
+# ── Section played once ─────────────────────────────────────────────────────────────────────
+
+func _on_section_loop(_section_index: int, _loop_cursor: int) -> void:
+	if GameState.use_tutorial:
+		tutorial._section_played_once = true
+
+## True once the section has looped at least once since START_PLAYING was triggered.
+func _cond_section_played_once() -> bool:
+	return tutorial._section_played_once
+
+# ── Recording stopped ────────────────────────────────────────────────────────────────────────
+
+var _recording_stopped: bool = false
+
+func _on_recording_stopped(_recording_data: RecordingData) -> void:
+	if GameState.use_tutorial:
+		_recording_stopped = true
+
+## True once after a recording has stopped. Auto-resets on read.
+func _cond_recording_stopped() -> bool:
+	var fired := _recording_stopped
+	_recording_stopped = false
+	return fired
 
 # ── Chaos pad knob zones ──────────────────────────────────────────────────────────────────────────────────────────────
 

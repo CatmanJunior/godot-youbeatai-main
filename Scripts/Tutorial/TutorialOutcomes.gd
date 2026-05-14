@@ -45,6 +45,7 @@ func get_map() -> Dictionary:
 		O.ON_OUTSIDE_STAR_REACHED: _reach_knob_target.bind(tutorial.chaos_pad_ui.outside_target),
 		O.FINISH_TUTORIAL: _outcome_end_tutorial,
 		O.SKIP_BASS_INTRO: _outcome_skip_bass_intro,
+		O.START_PLAYING:   _outcome_start_playing,
 	}
 
 # ── No-op ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -98,8 +99,6 @@ func _outcome_clap_stomp_setup(stomp_mode: bool) -> void:
 	else:
 		tutorial._in_clap_phase = true
 		amount_left = Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount
-		
-	# EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, true)
 	
 	EventBus.set_klappy_speech_bubble.emit(
 		tutorial._instruction,
@@ -150,7 +149,6 @@ func _end_interaction_phase(is_stomp: bool) -> void:
 	else:
 		tutorial._in_clap_phase = false
 	EventBus.set_klappy_speech_bubble.emit(tutorial._instruction, "", false)
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.AMOUNT_LEFT, false)
 	EventBus.playing_change_requested.emit(false)
 	tutorial.play_achievement_sfx()
 
@@ -195,6 +193,12 @@ func _outcome_skip_bass_intro() -> void:
 func _outcome_voice_over_done() -> void:
 	tutorial._increased_speed = false
 	tutorial._timer.start(3)
+
+## Starts playback and starts a timer so the next step waits a fixed duration instead of a full loop.
+func _outcome_start_playing() -> void:
+	tutorial._increased_speed = false
+	tutorial._timer.start(5.0)
+	EventBus.playing_change_requested.emit(true)
 
 # ── Playback / chaos triangle ───────────────────────────────────────────────────────────────────
 

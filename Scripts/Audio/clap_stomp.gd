@@ -25,6 +25,9 @@ var is_stamping: bool:
 var clap_volume: float = 0.0
 var stamp_volume: float = 0.0
 
+var _clap_on_beat_registered: bool = false
+var _stomp_on_beat_registered: bool = false
+
 func _process(_delta: float):
 	# Live volume analysis
 	stamp_volume = _get_magnitude(0.0, stamp_freq_max)
@@ -44,18 +47,26 @@ enum InteractionType {
 	CLAP
 }
 
-func _ready():
+func _ready() -> void:
 	EventBus.clap_stomp_detected.connect(_handle_clap_stomp)
+	EventBus.beat_triggered.connect(_on_beat_triggered)
+
+
+func _on_beat_triggered(_beat: int) -> void:
+	_clap_on_beat_registered = false
+	_stomp_on_beat_registered = false
 
 func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 	# Emit signals for next beat
 	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
 	var on_beat: bool = _is_clap_stomp_next_beat(interaction_type)
 	if on_beat:
-		if interaction_type == InteractionType.CLAP:
+		if interaction_type == InteractionType.CLAP and not _clap_on_beat_registered:
+			_clap_on_beat_registered = true
 			clapped_on_beat_amount += 1
 			EventBus.clap_on_beat_detected.emit()
-		else:
+		elif interaction_type == InteractionType.STOMP and not _stomp_on_beat_registered:
+			_stomp_on_beat_registered = true
 			stomped_on_beat_amount += 1
 			EventBus.stomp_on_beat_detected.emit()
 	else:

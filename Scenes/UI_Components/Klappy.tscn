@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="7_7m7ed"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="7_g650j"]
 [ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/Klappy_components/klappy_reaction.tscn" id="8_wcpyi"]
+[ext_resource type="Script" path="res://Scripts/UI/energy_progress_bar.gd" id="10_epbar"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/Klappy_components/klappy_light_pad.tscn" id="9_rcijy"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
@@ -113,6 +114,7 @@ ui_reference = NodePath("..")
 metadata/_edit_use_anchors_ = true
 
 [node name="EnergyProgressBar" type="ProgressBar" parent="." unique_id=580081017]
+script = ExtResource("10_epbar")
 z_index = 6
 offset_left = -156.0
 offset_top = 177.0

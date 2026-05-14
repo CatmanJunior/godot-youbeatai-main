@@ -69,6 +69,12 @@ func _on_beat(beat: int):
 	var track = SongState.get_track(SongState.current_section_index, track_index)
 	if track is SampleTrackData:
 		glow_rect.visible = track.get_beat_active(beat)
+		if glow_rect.visible:
+			var target_scale = Vector2.ONE * scale_factor_on_select
+			var tween = create_tween()
+			#also tween it back
+			tween.tween_property(self, "scale", target_scale, 0.1)
+			tween.tween_property(self, "scale", Vector2.ONE, 0.1)
 	elif track is SynthTrackData:
 		if len(track.sequence_notes) <= beat:
 			return

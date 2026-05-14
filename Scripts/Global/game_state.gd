@@ -24,7 +24,7 @@ var microphone_volume: float = 0.0
 
 var recording_delay_seconds: float = 0.0
 
-var recording_volume_threshold: float = 0.1
+var recording_volume_threshold: float = 0.3
 
 var track_button_add_beats: bool = false
 

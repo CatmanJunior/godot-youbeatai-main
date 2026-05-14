@@ -138,7 +138,7 @@ func _get_swing_offset() -> float:
 # --- Beat manager functions ---
 func _on_beat_sprite_clicked(p_track: int, beat: int):
 	var is_active = get_beat(p_track, beat)
-	if not is_active and not AchievementManager.has_energy_for_beat_addition():
+	if not is_active and not (GameState.use_tutorial or GameState.energy_points >= 1.0):
 		EventBus.beat_state_changed.emit(p_track, beat, is_active) 
 		EventBus.not_enough_energy.emit()
 		return

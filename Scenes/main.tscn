@@ -60,6 +60,7 @@
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" uid="uid://be7drcg3jjnc0" path="res://Scripts/Managers/energy_manager.gd" id="100_emgr1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -125,6 +126,9 @@ script = ExtResource("10_o2owy")
 [node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
 script = ExtResource("99_sslm1")
 
+[node name="EnergyManager" type="Node" parent="Managers" unique_id=234567891]
+script = ExtResource("100_emgr1")
+
 [node name="Exporter" type="Node" parent="Managers" unique_id=500233961]
 script = ExtResource("33_55jeb")
 metadata/_custom_type_script = "uid://bocpgiluuvko5"
@@ -158,9 +162,8 @@ achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
 
-[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("energy_progress_bar", "section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
+[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
 script = ExtResource("39_ptfg5")
-energy_progress_bar = NodePath("../../../UserInterface/Robot/EnergyProgressBar")
 achievement_sfx = ExtResource("61_0t4jf")
 lock_icon_texture = ExtResource("39_bv80c")
 section_ui = NodePath("../../../UserInterface/SwitchSectionButtons")

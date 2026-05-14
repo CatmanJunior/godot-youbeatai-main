@@ -25,6 +25,8 @@ enum TutorialCondition {
 	KNOB_AT_OUTSIDE_TARGET = 20,
 	KNOB_AT_TARGET = 21,
 	COUNTDOWN_CLOSED = 22,
+	SECTION_PLAYED_ONCE = 23,
+	RECORDING_STOPPED = 24,
 }
 
 enum TutorialOutcome {
@@ -62,6 +64,8 @@ enum TutorialOutcome {
 	FINISH_TUTORIAL,
 	## Skips the TTS countdown steps when bass recording starts early.
 	SKIP_BASS_INTRO,
+	## Starts playback and resets the section-played-once flag.
+	START_PLAYING,
 }
 
 @export var instruction: String = ""

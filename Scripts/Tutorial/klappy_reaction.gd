@@ -38,13 +38,15 @@ func _connect_signals() -> void:
 	EventBus.utterance_ended.connect(_on_utterance_end)
 
 
-func _fill_instruction_label(_name: String):
+func _fill_instruction_label(_name: String) -> void:
 	print ("Filling instruction label with message for achievement %s" % _name)
 	EventBus.set_klappy_speech_bubble.emit(_name, "", false)
 	_start_tts(_name)
 
-func _start_tts(message: String):
-	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
+func _start_tts(message: String) -> void:
+	TTSHelper.speak(message)
 
-func _on_utterance_end(_utterance):
+func _on_utterance_end(_utterance: int) -> void:
+	if GameState.use_tutorial:
+		return
 	EventBus.set_klappy_speech_bubble.emit("", "", false)

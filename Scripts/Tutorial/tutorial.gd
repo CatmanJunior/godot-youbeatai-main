@@ -59,6 +59,9 @@ var _outcome_map: Dictionary = {}
 
 var _last_knob_pos: Vector2 = Vector2.ZERO
 
+## Set to true when section_loop fires; reset by the START_PLAYING outcome.
+var _section_played_once: bool = false
+
 var _conditions: TutorialConditions
 var _outcomes: TutorialOutcomes
 
@@ -198,10 +201,8 @@ func setup_tutorial() -> void:
 func update_tutorial() -> void:
 	if GameState.use_tutorial == false:
 		return
-	_continue_button_visible(_active)
 
-	if not _first_tts_done and GameState.use_tutorial:
-		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, true)
+	if not _first_tts_done:
 		_speak_tutorial_instruction(tutorial_level)
 		_first_tts_done = true
 
@@ -232,10 +233,6 @@ func _active_beats_per_ring(index_ring: int) -> int:
 			amount += 1
 	return amount
 
-# Shows or hides the main continue button depending on whether the current step allows it.
-func _continue_button_visible(vis : bool) -> void:
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.KLAPPY_CONTINUE, vis)
-
 # Advances the tutorial when the main continue button is pressed,
 # but only if the current step has set _active = true.
 func _tutorial_continue() -> void:
@@ -264,14 +261,14 @@ func _update_interaction_sfx() -> void:
 		_previous_stomp = clap_stomp.stomped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % (CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
+			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
 			false)
 	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
 		_previous_clap = clap_stomp.clapped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % (CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
+			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
 			false)
 
 # Speaks the instruction text for the given step index via TTS.
@@ -287,11 +284,11 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return
 	var text: String = tutorial_steps[instruction_index].instruction
-	var clean_text: String = TTSHelper.text_without_emoticons(text)
+	EventBus.set_klappy_speech_bubble.emit(text, "", _active)
 	if _increased_speed:
-		TTSHelper.speak(clean_text, 2.5)
+		TTSHelper.speak(text, 2.5)
 	else:
-		TTSHelper.speak(clean_text)
+		TTSHelper.speak(text)
 
 # Suppresses TTS text output if the song is currently playing, so instructions don't
 # overlap with music. Returns true if playback is active, false otherwise.
@@ -310,7 +307,7 @@ func _update_lists() -> void:
 		_condition = _get_condition_callable(current_step.condition)
 		_outcome = _get_outcome_callable(current_step.outcome)
 
-		EventBus.tutorial_instruction_text_requested.emit(_instruction)
+		EventBus.set_klappy_speech_bubble.emit(_instruction, "", _active)
 
 # ── Enum dispatch ──────────────────────────────────────────────────────────────────────────────────────────────────
 

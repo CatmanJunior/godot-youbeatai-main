@@ -41,10 +41,6 @@ func _ready() -> void:
 	klappy_light.visible = true
 	colormapje.visible = false
 
-	
-	if not GameState.tutorial_activated:
-		EventBus.utterance_ended.connect(_on_utterance_end)
-
 func _on_gui_input(event: InputEvent) -> void:
 	if unlocked == true:
 		colormapje.visible = true
@@ -101,14 +97,15 @@ func _set_klappy_light_energy(value: float) -> void:
 
 func on_klappy_energy(value: float) -> void:
 	_set_klappy_light_energy(value)
-	if value >= AchievementManager.ENERGY_THRESHOLD_LIGHT_PAD and not flicker_done:
+	if value >= EnergyManager.ENERGY_THRESHOLD_LIGHT_PAD and not flicker_done:
 		unlocked = true
 		flicker_done = true
-		if GameState.achievements_active:
+		if not GameState.use_tutorial:
 			_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
 		lightFlicker()
 		await get_tree().create_timer(7.0).timeout
-		achievement_panel.visible = false
+		if achievement_panel:
+			achievement_panel.visible = false
 	
 func lightFlicker():
 	for i in colors_string:
@@ -124,7 +121,6 @@ func _fill_instruction_label(_name: String):
 	_start_tts(_name)
 	
 func _start_tts(message: String):
-	TTSHelper.speak(TTSHelper.text_without_emoticons(message))
+	TTSHelper.speak(message)
 
-func _on_utterance_end(_utterance):
-	achievement_panel.visible = false
+

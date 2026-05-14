@@ -203,6 +203,8 @@ signal on_tutorial_done()
 signal energy_points_changed(points: int)
 ## Emitted when an action is attempted that requires more energy than the player currently has.
 signal not_enough_energy()
+## Emitted to request a change in energy points by the given delta (positive = gain, negative = cost).
+signal energy_change_requested(delta: float)
 ## Emitted to request showing the achievements panel. If instruction_text is "", panel is closed.
 signal set_klappy_speech_bubble(instruction: String, title: String, show_continue: bool)
 

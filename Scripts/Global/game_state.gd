@@ -9,6 +9,9 @@ var use_achievements: bool = true
 ## used to set when to activate the achievements (after tutorial or immediately)
 var achievements_active: bool = false
 
+## Current energy points (0–100). Managed by EnergyManager.
+var energy_points: float = 0.0
+
 var tutorial_activated: bool = false
 var use_tutorial: bool = false
 var show_template: bool = false

@@ -15,6 +15,9 @@ var pre_recording_volume: float = 0
 @export var recording_sample_button: RecordSampleButton
 @export var waveform_visualizer: TrackWaveformVisualizer
 
+var timer: SceneTreeTimer 
+var timer_wait_time: float = 1.5
+
 func _ready():
 	EventBus.record_button_toggled.connect(_on_recording_button_toggled)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
@@ -22,6 +25,9 @@ func _ready():
 func _process(delta: float):
 	if recording and current_recording_data:
 		_handle_recording(delta)
+
+	if timer and timer.time_left > 0:
+		recording_sample_button.update_button(1 - (timer.time_left / timer_wait_time), Color.CORNSILK)
 
 func _handle_recording(delta: float) -> void:
 	if current_recording_data.state != RecordingData.State.RECORDING:
@@ -84,8 +90,10 @@ func _start_recording() -> void:
 		GameState.metronome_enabled = false
 		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
 		EventBus.countdown_close_requested.emit()
+
 	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
-		await get_tree().create_timer(0.4).timeout
+		timer = get_tree().create_timer(timer_wait_time)
+		await timer.timeout
 		
 	EventBus.set_master_volume_db.emit(-20)
 	# Step 4: Announce to the world that recording has started

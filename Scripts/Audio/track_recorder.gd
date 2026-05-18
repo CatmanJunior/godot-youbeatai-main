@@ -57,7 +57,7 @@ func _start_recording() -> void:
 	# Step 2: Mute all tracks
 	# EventBus.mute_all_requested.emit(true)
 	pre_recording_volume = AudioServer.get_bus_volume_db(0)
-	EventBus.set_master_volume_db.emit(-20)
+	
 
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
@@ -87,7 +87,7 @@ func _start_recording() -> void:
 	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
 		await get_tree().create_timer(0.4).timeout
 		
-
+	EventBus.set_master_volume_db.emit(-20)
 	# Step 4: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING
 	EventBus.recording_started.emit(current_recording_data)

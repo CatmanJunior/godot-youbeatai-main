@@ -7,38 +7,45 @@ const BASE_PITCH : float= 1.0
 
 var initialized := false
 
+var voice: String
+
 func init():
 	if initialized:
 		return
 
-	initialized = true
-	
+	initialized = true	
+
 	if not OS.has_feature("web"):
 		return
 	
 	# try to speak, it wont play but will enable the tts
-	speak("test")
+	speak("test", BASE_RATE, 100)
+	await get_tree().process_frame
+	stop_speaking()
 
 func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> void:
-	if GameState.mute_speech:
-		return
+	if len(voice) == 0:
+		voice = get_voice()
 
-	var voices = get_voices()
-	if voices.is_empty():
-		return
-	
-	if DisplayServer.tts_is_speaking():
-		stop_speaking()
+	# if DisplayServer.tts_is_speaking():
+	# 	stop_speaking()
 	
 	EventBus.utterance_content_changed.emit(text)
-	DisplayServer.tts_speak(text_without_emoticons(text), voices[0], volume, BASE_PITCH, rate)
 
-func get_voices():
+	var mute = 0 if GameState.mute_speech else 1
+	DisplayServer.tts_speak(text_without_emoticons(text), voice, volume * mute, BASE_PITCH, rate, 0, true)
+
+func get_voice():
 	var voices := DisplayServer.tts_get_voices_for_language("nl")
 	if voices.is_empty():
 		voices = DisplayServer.tts_get_voices_for_language("en")
+	print("available voices", voices)
 	
-	return voices
+	if voices.is_empty():
+		return ""
+
+	print("intialized tts voice: %s" % voices[0])
+	return voices[0]
 
 func stop_speaking():
 	DisplayServer.tts_stop()

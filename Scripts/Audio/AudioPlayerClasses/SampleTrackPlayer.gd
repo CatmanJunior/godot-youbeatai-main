@@ -49,12 +49,6 @@ func _on_play_track_requested(trackIndex: int) -> void:
 	if trackIndex == track_index:
 		play()
 
-func apply_effect_profile(effect_profile: EffectProfile) -> void:
-	var bus_idx = AudioServer.get_bus_index(sub_bus_names[2]) # synth effect profile is applied to the ALT bus, which is the one with the effects on it
-	if bus_idx == -1:
-		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[2])
-		return
-	effect_profile.apply_effects(bus_idx)
 
 func _on_section_switched(_new : SectionData) -> void:
 	

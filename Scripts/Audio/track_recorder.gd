@@ -8,7 +8,6 @@ var recording: bool:
 	get: return GameState.is_recording
 
 var current_recording_data: RecordingData = null
-var _thread: Thread = null
 var pre_recording_volume: float = 0
 
 @export var song_recording_progress_bar: ProgressBar
@@ -18,13 +17,22 @@ var pre_recording_volume: float = 0
 var timer: SceneTreeTimer 
 var timer_wait_time: float = 1.5
 
+## Incremental voice analyzer (replaces threaded VoiceProcessor).
+var _voice_analyzer: VoiceAnalyzer = null
+## AudioEffectCapture instance for streaming mic input during synth recording.
+var _audio_capture: AudioEffectCapture = null
+
 func _ready():
 	EventBus.record_button_toggled.connect(_on_recording_button_toggled)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
+	_init_audio_capture()
 
 func _process(delta: float):
 	if recording and current_recording_data:
 		_handle_recording(delta)
+		# Feed audio samples to voice analyzer during synth recording.
+		if _voice_analyzer and _voice_analyzer.is_active() and _audio_capture:
+			_feed_voice_analyzer()
 
 	if timer and timer.time_left > 0:
 		recording_sample_button.update_button(1 - (timer.time_left / timer_wait_time), Color.CORNSILK)
@@ -96,7 +104,10 @@ func _start_recording() -> void:
 		await timer.timeout
 		
 	EventBus.set_master_volume_db.emit(-20)
-	# Step 4: Announce to the world that recording has started
+	# Step 4: Start voice analyzer for synth tracks (incremental processing).
+	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
+		_start_voice_analyzer()
+	# Step 5: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING
 	EventBus.recording_started.emit(current_recording_data)
 
@@ -163,21 +174,82 @@ func _post_process_sample(recording_data: RecordingData) -> void:
 func _post_process_synth(recording_data: RecordingData) -> void:
 	waveform_visualizer.update_waveform(recording_data)
 	waveform_visualizer.reset_progress_bar(recording_data)
-	# State remains PROCESSING — thread sets RECORDING_DONE after voice analysis
-	_thread = Thread.new()
-	_thread.start(_run_voice_processing.bind(recording_data))
+	# Finalize incremental voice analysis (most work already done during recording).
+	_finalize_voice_analysis(recording_data)
 
-func _run_voice_processing(recording_data: RecordingData) -> void:
-	var sequence: Sequence = VoiceProcessor.process_audio(recording_data.audio_stream, NOTES)
-	call_deferred("_on_voice_processed", sequence, recording_data)
 
-func _on_voice_processed(sequence: Sequence, recording_data: RecordingData) -> void:
-	_thread.wait_to_finish()
-	_thread = null
-	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+func _finalize_voice_analysis(recording_data: RecordingData) -> void:
+	if _voice_analyzer and _voice_analyzer.is_active():
+		# Flush any remaining buffered samples from capture.
+		if _audio_capture:
+			var remaining := _audio_capture.get_frames_available()
+			if remaining > 0:
+				var buf := _audio_capture.get_buffer(remaining)
+				var mono := _stereo_to_mono(buf)
+				_voice_analyzer.push_samples(mono)
+			_audio_capture.clear_buffer()
+
+		var sequence: Sequence = _voice_analyzer.finalize()
+		_voice_analyzer = null
+		EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+	else:
+		# Fallback: no analyzer active, emit empty sequence.
+		var sequence := Sequence.new([])
+		EventBus.sequence_ready.emit(sequence, recording_data.track_data)
 
 func _post_process_song(recording_data: RecordingData) -> void:
 	recording_data.state = RecordingData.State.RECORDING_DONE
 
 func get_recording_volume() -> float:
 	return GameState.microphone_volume
+
+
+# ── Voice Analyzer Integration ───────────────────────────────────────────────
+
+## Initialize AudioEffectCapture reference from the Microphone bus.
+func _init_audio_capture() -> void:
+	var bus_index := AudioServer.get_bus_index(BusNames.MICROPHONE_BUS)
+	if bus_index < 0:
+		push_warning("TrackRecorder: Microphone bus not found.")
+		return
+	# AudioEffectCapture is at effect index 0 on the Microphone bus.
+	var effect := AudioServer.get_bus_effect(bus_index, 0)
+	if effect is AudioEffectCapture:
+		_audio_capture = effect as AudioEffectCapture
+	else:
+		push_warning("TrackRecorder: AudioEffectCapture not found at index 0 on Microphone bus.")
+
+
+## Start the voice analyzer when synth recording begins.
+func _start_voice_analyzer() -> void:
+	_voice_analyzer = VoiceAnalyzer.new()
+	var sample_rate := float(AudioServer.get_mix_rate())
+	_voice_analyzer.start(sample_rate, SongState.beats_per_section, SongState.beat_duration)
+
+	# Enable AudioEffectCapture for streaming.
+	if _audio_capture:
+		_audio_capture.clear_buffer()
+	else:
+		push_warning("TrackRecorder: No AudioEffectCapture available for streaming voice analysis.")
+
+
+## Feed available audio from capture buffer into the voice analyzer.
+func _feed_voice_analyzer() -> void:
+	if _audio_capture == null or _voice_analyzer == null:
+		return
+	var frames_available := _audio_capture.get_frames_available()
+	if frames_available <= 0:
+		return
+	# get_buffer returns PackedVector2Array (stereo frames).
+	var stereo_buf := _audio_capture.get_buffer(frames_available)
+	var mono := _stereo_to_mono(stereo_buf)
+	_voice_analyzer.push_samples(mono)
+
+
+## Convert stereo PackedVector2Array to mono PackedFloat32Array.
+func _stereo_to_mono(stereo: PackedVector2Array) -> PackedFloat32Array:
+	var mono := PackedFloat32Array()
+	mono.resize(stereo.size())
+	for i in range(stereo.size()):
+		mono[i] = (stereo[i].x + stereo[i].y) * 0.5
+	return mono

@@ -249,8 +249,7 @@ func _outcome_end_tutorial() -> void:
 	print("Tutorial completed! Unlocking achievements and showing main interface.")
 	GameState.use_tutorial = false
 	GameState.use_achievements = true
-	EventBus.set_klappy_speech_bubble.emit("", "", false)
-	EventBus.utterance_ended.emit(0) # ensure any waiting TTS is unblocked
+	TTSHelper.clear()
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ENTIRE_INTERFACE, true)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MAIN_TARGET, false)
@@ -258,6 +257,5 @@ func _outcome_end_tutorial() -> void:
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
 	tutorial.play_achievement_sfx()
 	EventBus.continue_button_pressed.disconnect(tutorial._tutorial_continue)
-	TTSHelper.stop_speaking()
 	EventBus.section_switch_requested.emit(0)
 	EventBus.on_tutorial_done.emit()

@@ -259,6 +259,7 @@ z_index = -4096
 energy = 0.55
 
 [node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
+visible = false
 offset_left = -234.5
 offset_top = -199.5
 offset_right = 46.5

@@ -106,8 +106,7 @@ func _turn_off_stars():
 func _on_skip_tutorial_requested() -> void:
 	GameState.use_tutorial = false
 	achievements_panel.visible = false
-	if DisplayServer.tts_is_speaking():
-		DisplayServer.tts_stop()
+	TTSHelper.clear()
 
 # Updates the per-frame clapping/stomping state flags when ClapStompDetector emits an interaction.
 func _on_has_clapped_or_stomped(interaction_type: int) -> void:
@@ -271,24 +270,19 @@ func _update_interaction_sfx() -> void:
 			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
 			false)
 
-# Speaks the instruction text for the given step index via TTS.
-# Strips emoticons from the text and uses a faster rate if _increased_speed is set.
-# Does nothing if TTS text is suppressed, speech is muted, or the index is out of bounds.
+# Speaks the instruction text for the given step index via TTS and shows it in the Klappy bubble.
+# Uses a faster rate if _increased_speed is set.
+# Does nothing if TTS text is suppressed or the index is out of bounds.
 func _speak_tutorial_instruction(instruction_index: int) -> void:
 	if not GameState.use_tutorial:
 		return
 	if not _text_allowed:
 		return
-	if GameState.mute_speech:
-		return
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return
 	var text: String = tutorial_steps[instruction_index].instruction
-	EventBus.set_klappy_speech_bubble.emit(text, "", _active)
-	if _increased_speed:
-		TTSHelper.speak(text, 2.5)
-	else:
-		TTSHelper.speak(text)
+	var uid: int = TTSHelper.say(text, "", _active, 2.5 if _increased_speed else TTSHelper.BASE_RATE)
+	EventBus.tutorial_utterance_started.emit(uid)
 
 # Suppresses TTS text output if the song is currently playing, so instructions don't
 # overlap with music. Returns true if playback is active, false otherwise.

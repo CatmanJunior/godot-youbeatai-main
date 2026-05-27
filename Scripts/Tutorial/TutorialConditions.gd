@@ -11,8 +11,9 @@ func _ready() -> void:
 	EventBus.countdown_close_requested.connect(_on_countdown_closed)
 	EventBus.section_loop.connect(_on_section_loop)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
-	EventBus.utterance_started.connect(_on_tts_utterance_started)
+	EventBus.tutorial_utterance_started.connect(_on_tutorial_utterance_started)
 	EventBus.utterance_ended.connect(_on_tts_utterance_ended)
+	EventBus.utterance_canceled.connect(_on_tts_utterance_ended)
 
 func get_map() -> Dictionary:
 	var C := TutorialStepData.TutorialCondition
@@ -56,13 +57,21 @@ func _cond_not_playing() -> bool:
 
 var _tts_speaking: bool = false
 var _tts_just_finished: bool = false
+var _tutorial_utterance_id: int = -1
 
-func _on_tts_utterance_started(_id: int) -> void:
-	if GameState.use_tutorial:
-		_tts_speaking = true
-		_tts_just_finished = false
+## Called when Tutorial.gd starts speaking a step — stores the utterance ID so we
+## only react to the tutorial's own TTS and ignore all other speech events.
+func _on_tutorial_utterance_started(id: int) -> void:
+	_tutorial_utterance_id = id
+	_tts_speaking = true
+	_tts_just_finished = false
 
-func _on_tts_utterance_ended(_id: int) -> void:
+## Shared handler for both utterance_ended and utterance_canceled.
+## Guarded by ID so achievement reactions, countdown numbers, and other
+## system speech cannot prematurely advance a tutorial step.
+func _on_tts_utterance_ended(id: int) -> void:
+	if id != _tutorial_utterance_id:
+		return
 	if GameState.use_tutorial and _tts_speaking:
 		_tts_speaking = false
 		_tts_just_finished = true
@@ -70,7 +79,7 @@ func _on_tts_utterance_ended(_id: int) -> void:
 ## True once on the frame after TTS finishes.
 ## Falls back to immediate pass when speech is muted or no voices are available.
 func _cond_tts_done() -> bool:
-	if GameState.mute_speech or TTSHelper.get_voices().is_empty():
+	if GameState.mute_speech or TTSHelper.get_voice().is_empty():
 		return true
 	var fired := _tts_just_finished
 	_tts_just_finished = false
@@ -139,9 +148,9 @@ var _countdown_closed: bool = false
 
 func _on_countdown_tick(seconds: int) -> void:
 	_countdown_ticked = true
-	var text := str(seconds)
-	EventBus.set_klappy_speech_bubble.emit(text, "", false)
-	TTSHelper.speak(text)
+	# Countdown numbers are shown in the bubble and spoken, but do NOT emit
+	# tutorial_utterance_started — they must not trigger _cond_tts_done.
+	TTSHelper.say(str(seconds))
 
 ## True for the one frame in which a beat-synced countdown tick was emitted.
 func _cond_countdown_tick() -> bool:

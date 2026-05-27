@@ -116,11 +116,7 @@ func lightFlicker():
 	colormapje.visible = true
 	klappy_light.light_color = Color.WHITE	
 	
-func _fill_instruction_label(_name: String):
-	EventBus.set_klappy_speech_bubble.emit(_name,"",false)
-	_start_tts(_name)
+func _fill_instruction_label(_name: String) -> void:
+	TTSHelper.say(_name)
 	
-func _start_tts(message: String):
-	TTSHelper.speak(message)
-
 

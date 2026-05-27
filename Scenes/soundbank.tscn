@@ -90,7 +90,6 @@ corner_radius_bottom_left = 30
 
 [node name="scene2" type="Node2D" unique_id=46128934]
 script = ExtResource("5_pd2wx")
-klappy_response = NodePath("Klappy respons bubble")
 message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 themas."
 tutmessage = "Wij gaan kiezen wat voor liedje we willen maken, ik heb er al 2 ingevuld, kies nog 1 emotie en 1 thema."
 
@@ -971,7 +970,7 @@ light_mask = 2
 offset_top = -133.5
 offset_bottom = 155.5
 
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 2076383238) index="0" unique_id=506770500]
+[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 1834571670) index="0" unique_id=557868767]
 transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
 
 [node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]

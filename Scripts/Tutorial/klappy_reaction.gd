@@ -1,5 +1,6 @@
 extends Node
 
+var _uid: int = -1
 
 func _ready() -> void:
 	EventBus.achievement_done.connect(_on_achievement_done)
@@ -13,21 +14,21 @@ func _on_achievement_done(i: int) -> void:
 	if GameState.achievements_active:
 		match i:
 			AchievementDef.AchievementNode.TRACK_2:
-				_fill_instruction_label("De 📣 Snare heeft een helder geluid, die wordt meestal op de lijntjes gezet.")
+				_say("De 📣 Snare heeft een helder geluid, die wordt meestal op de lijntjes gezet.")
 			AchievementDef.AchievementNode.TRACK_3:
-				_fill_instruction_label("Dit korte ⌚ Hi-hat geluid laat de boel lekker swingen, zet er maar eens een hele hoop neer")
+				_say("Dit korte ⌚ Hi-hat geluid laat de boel lekker swingen, zet er maar eens een hele hoop neer")
 			AchievementDef.AchievementNode.SYNTH_2:
-				_fill_instruction_label("Met de hoge 🐦 Synth, kan je het lekker druk maken, maar ook even een kort geluidje is die heel goed in.")
+				_say("Met de hoge 🐦 Synth, kan je het lekker druk maken, maar ook even een kort geluidje is die heel goed in.")
 			AchievementDef.AchievementNode.ADD_SECTION:
-				_fill_instruction_label("Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven")
+				_say("Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven")
 			AchievementDef.AchievementNode.SONG_MODE:
-				_fill_instruction_label("Oke nu gaat het echte werk beginnen met de 🎵 Song Mode, alle rondjes worden achter elkaar afgespeeld, en met de microfoon kan je een hele lange opname maken")
+				_say("Oke nu gaat het echte werk beginnen met de 🎵 Song Mode, alle rondjes worden achter elkaar afgespeeld, en met de microfoon kan je een hele lange opname maken")
 			AchievementDef.AchievementNode.FIRST_SAMPLE:
-				_fill_instruction_label("Gaaf! Je hebt je eerste 🎤 geluid opgenomen, zet hem in de ring!")
+				_say("Gaaf! Je hebt je eerste 🎤 geluid opgenomen, zet hem in de ring!")
 			AchievementDef.AchievementNode.SECOND_SAMPLE:
-				_fill_instruction_label("Wat een leuke sample, daar krijg ik energie ⚡ van !")
+				_say("Wat een leuke sample, daar krijg ik energie ⚡ van !")
 			AchievementDef.AchievementNode.TEMPLATE_TIP:
-				_fill_instruction_label("Ik weet een leuke beat voor je, in de beat ring staan nu stipjes die je een hint geven")
+				_say("Ik weet een leuke beat voor je, in de beat ring staan nu stipjes die je een hint geven")
 
 
 func _on_tutorial_done() -> void:
@@ -35,18 +36,17 @@ func _on_tutorial_done() -> void:
 	_connect_signals()
 
 func _connect_signals() -> void:
-	EventBus.utterance_ended.connect(_on_utterance_end)
+	if not EventBus.utterance_ended.is_connected(_on_utterance_end):
+		EventBus.utterance_ended.connect(_on_utterance_end)
 
 
-func _fill_instruction_label(_name: String) -> void:
-	print ("Filling instruction label with message for achievement %s" % _name)
-	EventBus.set_klappy_speech_bubble.emit(_name, "", false)
-	_start_tts(_name)
+func _say(text: String) -> void:
+	print("Filling instruction label with message: %s" % text)
+	_uid = TTSHelper.say(text)
 
-func _start_tts(message: String) -> void:
-	TTSHelper.speak(message)
-
-func _on_utterance_end(_utterance: int) -> void:
+func _on_utterance_end(utterance: int) -> void:
+	if utterance != _uid:
+		return
 	if GameState.use_tutorial:
 		return
-	EventBus.set_klappy_speech_bubble.emit("", "", false)
+	TTSHelper.clear()

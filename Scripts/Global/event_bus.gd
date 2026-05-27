@@ -216,7 +216,14 @@ signal utterance_ended(utterance_id: int)
 
 signal utterance_started(utterance_id: int)
 
+## Emitted when a text-to-speech utterance was interrupted before finishing.
+signal utterance_canceled(utterance_id: int)
+
 signal utterance_content_changed(text: String)
+
+## Emitted by Tutorial when it starts speaking a tutorial step, carrying the utterance ID.
+## Allows TutorialConditions to track only tutorial-owned TTS events.
+signal tutorial_utterance_started(utterance_id: int)
 
 # ── Countdown ──
 ## Emitted to request showing the countdown overlay.

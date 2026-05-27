@@ -5,26 +5,39 @@ extends Node
 
 const INTRO_MESSAGE: String = "hoi ik ben klappy en wij gaan samen een beat maken"
 
-var _intro_spoken: bool = false
+enum _State { IDLE, INTRO_PLAYING, DONE }
+var _state: _State = _State.IDLE
+var _uid: int = -1
 
 
 func _ready() -> void:
-	EventBus.utterance_ended.connect(_on_utterance_ended)
-	#wait for 0.5 seconds to make sure everything is loaded and ready before speaking, otherwise the tts might not work
+	EventBus.utterance_ended.connect(_on_utterance_settled)
+	EventBus.utterance_canceled.connect(_on_utterance_settled)
+	# Wait for everything to be ready before speaking; TTS may not work immediately on web.
 	await get_tree().create_timer(0.5).timeout
-	_speak_intro()
-
-func _speak_intro() -> void:
-	_speak_with_bubble(INTRO_MESSAGE)
-	_intro_spoken = true
-
-func _speak_with_bubble(text: String) -> void:
-	EventBus.set_klappy_speech_bubble.emit(text, "", false)
-	TTSHelper.speak(text)
+	_uid = TTSHelper.say(INTRO_MESSAGE)
+	_state = _State.INTRO_PLAYING
 
 
-func _on_utterance_ended(_id: int) -> void:
-	if _intro_spoken:
-		var msg: String = tutmessage if GameState.use_tutorial else message
-		_speak_with_bubble(msg)
+func _on_utterance_settled(id: int) -> void:
+	if id != _uid:
+		return
+	match _state:
+		_State.INTRO_PLAYING:
+			var msg: String = tutmessage if GameState.use_tutorial else message
+			if msg.is_empty():
+				_state = _State.DONE
+				_disconnect_listeners()
+				return
+			_state = _State.DONE
+			_uid = TTSHelper.say(msg)
+		_State.DONE:
+			_disconnect_listeners()
+
+
+func _disconnect_listeners() -> void:
+	if EventBus.utterance_ended.is_connected(_on_utterance_settled):
+		EventBus.utterance_ended.disconnect(_on_utterance_settled)
+	if EventBus.utterance_canceled.is_connected(_on_utterance_settled):
+		EventBus.utterance_canceled.disconnect(_on_utterance_settled)
 

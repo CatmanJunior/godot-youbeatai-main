@@ -172,22 +172,19 @@ func _init_tooltip_actions() -> void:
 
 
 func show_and_speak_tooltip(text: String, cost: float = 0) -> void:
-	var cost_text : String = ""
+	var cost_text: String = ""
 	if cost > 0:
 		cost_text = "Dit kost " + str(int(cost)) + " energie"
 	
 	text = text + "\n" + cost_text if cost_text != "" else text
-	EventBus.set_klappy_speech_bubble.emit(text, "", false)
-	
-	if not (GameState.mute_speech or text == ""):
-		TTSHelper.speak(text)
-		_start_tooltip_close_timer()
+	if text.is_empty():
+		return
+	TTSHelper.say(text)
+	_start_tooltip_close_timer()
 
 
 func close_tooltip() -> void:
-	EventBus.set_klappy_speech_bubble.emit("", "", false)
-	if DisplayServer.tts_is_speaking():
-		DisplayServer.tts_stop()
+	TTSHelper.clear()
 
 
 var _tooltip_timer: SceneTreeTimer = null

@@ -17,3 +17,5 @@ builds/
 # libs
 addons/soundfont/lib/~soundfont*
 addons/soundfont/lib/~libgdexample.windows.template_debug.x86_64.dll
+.github/copilot-instructions.md
+.github/instructions/gdscript.instructions.md

@@ -32,9 +32,8 @@
 [ext_resource type="Script" uid="uid://3rst3pwp34yb" path="res://Scripts/Exporters/EmailExporter.gd" id="38_6ml46"]
 [ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Icons/SHAPES_Lock.png" id="39_bv80c"]
 [ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
-[ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="PackedScene" path="res://Scenes/Klappy_components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="42_ptfg5"]
-[ext_resource type="Script" uid="uid://d4gpt5imqk7y0" path="res://Scripts/Tutorial/klappy_reaction.gd" id="43_qax2n"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://cqp8xc386gq2b" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
 [ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
@@ -158,10 +157,10 @@ metadata/_custom_type_script = "uid://dgve2eeehfcib"
 [node name="EmailExporter" type="Node" parent="Managers/Exporter" unique_id=833394152]
 script = ExtResource("38_6ml46")
 
-[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
+[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("klappy_speech_bubble", "clap_stomp", "chaos_pad_ui")]
 script = ExtResource("28_ux43w")
 tutorial_steps_resource = ExtResource("29_n7cmr")
-achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
+klappy_speech_bubble = NodePath("../../UserInterface/Robot/Robot/KlappySpeechBubble")
 achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
@@ -175,9 +174,6 @@ btn_template_tip = NodePath("../../../UserInterface/SettingsPanel/Panel/stijl_ti
 btn_track_2 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_2")
 btn_track_3 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_3")
 btn_synth_track_2 = NodePath("../../../UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5")
-
-[node name="Node" type="Node" parent="Managers/TutorialManager" unique_id=1891027783]
-script = ExtResource("43_qax2n")
 
 [node name="UserInterface" type="Control" parent="." unique_id=1163092724]
 z_as_relative = false
@@ -258,25 +254,15 @@ grow_horizontal = 2
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
 
-[node name="KlappyLight" parent="UserInterface/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1025278274, 1162549337) index="1" unique_id=44086381]
-z_index = -4096
-energy = 0.55
+[node name="EnergyIcon" parent="UserInterface/Robot/EnergyProgressBar" parent_id_path=PackedInt32Array(1025278274, 580081017) index="0" unique_id=1359310293]
+anchor_left = 0.11926259
+anchor_top = -5.702996
 
-[node name="AchievementsPanel" parent="UserInterface/Robot" index="2" unique_id=37829949]
-visible = false
-offset_left = -234.5
-offset_top = -199.5
-offset_right = 46.5
-offset_bottom = -11.5
-
-[node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "klappy_energy", "face_light")]
+[node name="KlappyLightPad" parent="UserInterface/Robot" index="2" unique_id=1352817312]
 offset_left = -97.5
 offset_top = -163.5
 offset_right = 102.5
 offset_bottom = 36.5
-klappy_light = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Klappylight")
-klappy_energy = NodePath("../EnergyProgressBar")
-face_light = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 visible = false
@@ -493,8 +479,8 @@ script = ExtResource("56_ptfg5")
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/Robot"]
-[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
-[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
-[editable path="UserInterface/Robot/AchievementsPanel"]
+[editable path="UserInterface/Robot/Robot"]
+[editable path="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/SettingsPanel"]
 [editable path="UserInterface/SwitchSectionButtons"]

@@ -3,18 +3,15 @@
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_pokpn"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Resources/Klappy/Klappy.tscn" id="2_wcpyi"]
 [ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_rcijy"]
-[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/UI_Components/achievements_panel.tscn" id="4_dm53t"]
+[ext_resource type="PackedScene" uid="uid://cfh02va7cdmw5" path="res://Scenes/Klappy_components/klappy_speech_buble.tscn" id="4_dm53t"]
 [ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="5_7m7ed"]
-[ext_resource type="Script" path="res://Scripts/UI/instruction_label.gd" id="6_dm53t"]
 [ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="6_q1u4v"]
-[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="7_7m7ed"]
 [ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="7_g650j"]
-[ext_resource type="PackedScene" uid="uid://hgqfyhhdm0ag" path="res://Scenes/Klappy_components/klappy_reaction.tscn" id="8_wcpyi"]
-[ext_resource type="Script" path="res://Scripts/UI/energy_progress_bar.gd" id="10_epbar"]
 [ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/Klappy_components/klappy_light_pad.tscn" id="9_rcijy"]
+[ext_resource type="Script" uid="uid://cobewqlkvtelv" path="res://Scripts/UI/energy_progress_bar.gd" id="10_epbar"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
-font_size = 80
+font_size = 46
 
 [node name="Robot" type="Sprite2D" unique_id=1025278274]
 z_index = 4
@@ -89,32 +86,7 @@ offset_top = -226.5
 offset_right = 50.5
 offset_bottom = -38.5
 
-[node name="Title" parent="AchievementsPanel" index="0" unique_id=914827527]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 0.17973857
-
-[node name="InstructionLabel" parent="AchievementsPanel" index="1" unique_id=813716848]
-anchor_left = 0.0032679802
-anchor_top = -0.1882353
-anchor_right = 0.0882353
-anchor_bottom = -0.1882353
-script = ExtResource("6_dm53t")
-
-[node name="Continue" parent="AchievementsPanel" index="3" unique_id=1432263596]
-metadata/_edit_use_anchors_ = true
-
-[node name="VisibilitySetter" type="Control" parent="AchievementsPanel/Continue" index="1" unique_id=810093401 node_paths=PackedStringArray("ui_reference")]
-anchors_preset = 0
-script = ExtResource("7_7m7ed")
-ui_element = 3
-ui_reference = NodePath("..")
-
-[node name="AmountLef" parent="AchievementsPanel" index="4" unique_id=389681954]
-metadata/_edit_use_anchors_ = true
-
 [node name="EnergyProgressBar" type="ProgressBar" parent="." unique_id=580081017]
-script = ExtResource("10_epbar")
 z_index = 6
 offset_left = -156.0
 offset_top = 177.0
@@ -126,20 +98,21 @@ theme_override_constants/outline_size = 2
 theme_override_styles/background = ExtResource("5_7m7ed")
 theme_override_styles/fill = ExtResource("6_q1u4v")
 rounded = true
+script = ExtResource("10_epbar")
 metadata/_edit_use_anchors_ = true
 
 [node name="EnergyIcon" type="Label" parent="EnergyProgressBar" unique_id=1359310293]
 z_index = 4
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 4.0429454
-anchor_top = -36.296215
-anchor_right = 4.0429454
-anchor_bottom = -36.296215
-offset_left = -17.0
-offset_top = 615.0
-offset_right = 156.0
-offset_bottom = 787.0
+anchor_left = 0.16345459
+anchor_top = -4.9747076
+anchor_right = 0.11926259
+anchor_bottom = -5.702996
+offset_left = 77.91736
+offset_top = 149.14006
+offset_right = 250.91736
+offset_bottom = 321.14008
 scale = Vector2(0.525, 0.525)
 theme = ExtResource("1_pokpn")
 text = "⚡"
@@ -148,120 +121,14 @@ horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Label" type="Label" parent="EnergyProgressBar" unique_id=724487320]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 550.0
-offset_right = 67.95
-offset_bottom = 625.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label2" type="Label" parent="EnergyProgressBar" unique_id=933419873]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 464.0
-offset_right = 67.95
-offset_bottom = 539.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label3" type="Label" parent="EnergyProgressBar" unique_id=1670974678]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 377.0
-offset_right = 67.95
-offset_bottom = 452.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label4" type="Label" parent="EnergyProgressBar" unique_id=1117935908]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 250.0
-offset_right = 67.95
-offset_bottom = 325.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label5" type="Label" parent="EnergyProgressBar" unique_id=770055428]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 163.0
-offset_right = 67.95
-offset_bottom = 238.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
-[node name="Label6" type="Label" parent="EnergyProgressBar" unique_id=2118879253]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 3.7179449
-anchor_top = -23.92587
-anchor_right = 3.7179449
-anchor_bottom = -23.92587
-offset_left = -15.05
-offset_top = 76.0
-offset_right = 67.95
-offset_bottom = 151.0
-theme_override_font_sizes/font_size = 30
-text = "🔒"
-horizontal_alignment = 1
-vertical_alignment = 1
-metadata/_edit_use_anchors_ = true
-
 [node name="ProgressBarAchievementNode" type="Node2D" parent="EnergyProgressBar" unique_id=915898225]
 position = Vector2(1239.05, -302)
 
-[node name="KlappyReaction" parent="." unique_id=1739815365 instance=ExtResource("8_wcpyi")]
-
-[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("instruction_label", "achievement_panel", "colormapje") instance=ExtResource("9_rcijy")]
+[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("colormapje") instance=ExtResource("9_rcijy")]
 offset_left = -106.5
 offset_top = -187.5
 offset_right = 93.5
 offset_bottom = 12.5
-instruction_label = NodePath("../AchievementsPanel/InstructionLabel")
-achievement_panel = NodePath("../AchievementsPanel")
 colormapje = NodePath("../SubViewportContainer/SubViewport/Klappy/model/Colors")
 
 [node name="Unlock Achievements" type="Button" parent="." unique_id=1964303893]
@@ -278,4 +145,3 @@ text = "Unlock achievements"
 
 [editable path="SubViewportContainer/SubViewport/Klappy"]
 [editable path="SubViewportContainer/SubViewport/Klappy/model"]
-[editable path="AchievementsPanel"]

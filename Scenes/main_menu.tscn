@@ -2,11 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bnxxorr3ahw75" path="res://Scripts/UI/main_menu_panel.gd" id="1_trj04"]
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_1ehe0"]
-[ext_resource type="FontFile" uid="uid://df7qbr6tjnep3" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_trj04"]
 [ext_resource type="FontFile" uid="uid://dw44nx8u73t20" path="res://Fonts/HeroLight-Regular.otf" id="4_16hvj"]
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="4_ce3w2"]
-[ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="5_n45e2"]
-[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="6_opfnp"]
 [ext_resource type="Texture2D" uid="uid://d3avwn0b5a15c" path="res://Resources/Textures/Klappy_background.png" id="7_vr1f0"]
 [ext_resource type="Texture2D" uid="uid://ym1jq7ayco4s" path="res://Resources/Textures/fullscreen.png" id="8_t1dhk"]
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]
@@ -107,59 +105,28 @@ theme_override_font_sizes/font_size = 34
 text = "Credits"
 flat = true
 
+[node name="KlappyBackground" type="TextureRect" parent="MainMenuPanel" unique_id=2086948664]
+z_index = 3
+custom_minimum_size = Vector2(320, 320)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -160.0
+offset_right = 160.0
+offset_bottom = 160.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("7_vr1f0")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Robot" parent="MainMenuPanel" unique_id=1062863753 instance=ExtResource("4_ce3w2")]
-position = Vector2(640, 363)
-
-[node name="AchievementsPanel" parent="MainMenuPanel/Robot" index="0" unique_id=1497439872]
-visible = false
-
-[node name="InstructionLabel" parent="MainMenuPanel/Robot/AchievementsPanel" index="1" unique_id=813716848]
-anchor_left = -0.03024911
-
-[node name="SubViewportContainer" parent="MainMenuPanel/Robot" index="1" unique_id=2110113658]
-offset_left = -196.275
-offset_top = -213.42
-offset_right = 206.725
-offset_bottom = 162.58
-scale = Vector2(1, 1)
-
-[node name="SubViewport" parent="MainMenuPanel/Robot/SubViewportContainer" index="0" unique_id=313279592]
-size = Vector2i(403, 376)
-
-[node name="KlappyLight" parent="MainMenuPanel/Robot/SubViewportContainer" index="1" unique_id=1195742085]
-visible = false
-energy = 1.71
-texture_scale = 2.41
-
-[node name="Tutorial explanition" type="Button" parent="MainMenuPanel" unique_id=340569872]
-visible = false
-layout_mode = 0
-offset_left = 361.08496
-offset_top = 140.88844
-offset_right = 881.08496
-offset_bottom = 660.8884
-scale = Vector2(0.05, 0.05)
-icon = ExtResource("5_n45e2")
-
-[node name="Muziek explanation" type="Button" parent="MainMenuPanel" unique_id=2055680309]
-visible = false
-layout_mode = 0
-offset_left = 361.085
-offset_top = 195.47105
-offset_right = 881.08496
-offset_bottom = 715.47107
-scale = Vector2(0.05, 0.05)
-icon = ExtResource("5_n45e2")
-
-[node name="Pro Explanation" type="Button" parent="MainMenuPanel" unique_id=1563316689]
-visible = false
-layout_mode = 0
-offset_left = 361.085
-offset_top = 242.58937
-offset_right = 881.08496
-offset_bottom = 762.58936
-scale = Vector2(0.05, 0.05)
-icon = ExtResource("5_n45e2")
+position = Vector2(634, 340)
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenuPanel" unique_id=337081655]
 layout_mode = 1
@@ -201,25 +168,6 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "Pro"
 
-[node name="KlappyBackground" type="TextureRect" parent="MainMenuPanel" unique_id=2086948664]
-custom_minimum_size = Vector2(320, 320)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -160.0
-offset_top = -160.0
-offset_right = 160.0
-offset_bottom = 160.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-texture = ExtResource("7_vr1f0")
-expand_mode = 1
-stretch_mode = 5
-
 [node name="FullScreenButton" type="Button" parent="MainMenuPanel" unique_id=221044974]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 1
@@ -242,10 +190,6 @@ icon = ExtResource("8_t1dhk")
 flat = true
 icon_alignment = 1
 expand_icon = true
-
-[node name="Klappy respons bubble" parent="." unique_id=73255284 instance=ExtResource("6_opfnp")]
-visible = false
-position = Vector2(276, -134)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1478547768]
 
@@ -314,13 +258,3 @@ KFHein fonds
 Stimuleringsfonds voor Creatieve Industrie"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[connection signal="pressed" from="MainMenuPanel/Tutorial explanition" to="MainMenuPanel" method="OnTutorialExplanitionPressed"]
-[connection signal="pressed" from="MainMenuPanel/Muziek explanation" to="MainMenuPanel" method="OnMuziekExplanation"]
-[connection signal="pressed" from="MainMenuPanel/Pro Explanation" to="MainMenuPanel" method="OnProExplanationa"]
-[connection signal="continue_pressed" from="Klappy respons bubble" to="MainMenuPanel" method="_on_klappy_respons_bubble_continue_pressed"]
-
-[editable path="MainMenuPanel/Robot"]
-[editable path="MainMenuPanel/Robot/AchievementsPanel"]
-[editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy"]
-[editable path="MainMenuPanel/Robot/SubViewportContainer/SubViewport/Klappy/model"]

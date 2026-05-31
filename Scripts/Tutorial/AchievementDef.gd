@@ -26,6 +26,8 @@ var worth: float
 var result: Callable
 ## Which entry in unlockable_nodes this achievement is coupled to.
 var node_id: int  # AchievementNode enum value
+## Klappy line spoken when this achievement unlocks (KlappyLine.Id, NONE = none).
+var unlock_message: int
 
 
 func _init(
@@ -33,10 +35,12 @@ func _init(
 	p_tooltip: String,
 	p_condition: Callable,
 	p_worth: float = -1.0,
-	p_result: Callable = Callable()
+	p_result: Callable = Callable(),
+	p_unlock_message: int = KlappyLine.Id.NONE
 ) -> void:
 	node_id   = p_node_id
 	tooltip   = p_tooltip
 	condition = p_condition
 	worth     = p_worth
 	result    = p_result
+	unlock_message = p_unlock_message

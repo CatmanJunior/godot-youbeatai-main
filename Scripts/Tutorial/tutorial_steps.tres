@@ -5,7 +5,7 @@
 
 [sub_resource type="Resource" id="Step_1"]
 script = ExtResource("2_step")
-instruction = "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen."
+line = 0
 condition = 1
 
 [sub_resource type="Resource" id="Resource_l8t4i"]
@@ -16,18 +16,18 @@ metadata/_custom_type_script = "uid://drurbmsmnjvp3"
 
 [sub_resource type="Resource" id="Step_2"]
 script = ExtResource("2_step")
-instruction = "Deze roze cirkels vormen een kick-ring"
+line = 1
 condition = 1
 
 [sub_resource type="Resource" id="Step_3"]
 script = ExtResource("2_step")
-instruction = "Op deze ring kun je de kick plaatsen van je Beat"
+line = 2
 condition = 1
 outcome = 3
 
 [sub_resource type="Resource" id="Step_4"]
 script = ExtResource("2_step")
-instruction = "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen"
+line = 3
 condition = 2
 outcome = 4
 
@@ -37,19 +37,19 @@ condition = 4
 
 [sub_resource type="Resource" id="Step_6"]
 script = ExtResource("2_step")
-instruction = "Druk op de 2 streepjes ⏸️ om de Beat op pauze te zetten"
+line = 4
 condition = 3
 outcome = 5
 
 [sub_resource type="Resource" id="Step_7"]
 script = ExtResource("2_step")
-instruction = "Nu jij! Vul nog 2 cirkels door er op te drukken"
+line = 5
 condition = 6
 outcome = 6
 
 [sub_resource type="Resource" id="Step_8"]
 script = ExtResource("2_step")
-instruction = "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️"
+line = 6
 condition = 7
 outcome = 7
 
@@ -60,31 +60,31 @@ outcome = 8
 
 [sub_resource type="Resource" id="Step_10"]
 script = ExtResource("2_step")
-instruction = "Stamp 👟 5 keer mee met de kick van je Beat!"
+line = 7
 condition = 8
 outcome = 9
 
 [sub_resource type="Resource" id="Step_11"]
 script = ExtResource("2_step")
-instruction = "Dat kickt er lekker in!"
+line = 8
 condition = 1
 outcome = 1
 
 [sub_resource type="Resource" id="Step_12"]
 script = ExtResource("2_step")
-instruction = "Op naar level 2!"
+line = 9
 condition = 1
 outcome = 10
 
 [sub_resource type="Resource" id="Step_13"]
 script = ExtResource("2_step")
-instruction = "Deze oranje ring is de clap-ring"
+line = 10
 condition = 1
 outcome = 11
 
 [sub_resource type="Resource" id="Step_14"]
 script = ExtResource("2_step")
-instruction = "Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!"
+line = 11
 condition = 2
 outcome = 12
 
@@ -94,25 +94,25 @@ condition = 4
 
 [sub_resource type="Resource" id="Step_16"]
 script = ExtResource("2_step")
-instruction = "Klinkt al leuk!"
+line = 12
 condition = 1
 outcome = 13
 
 [sub_resource type="Resource" id="Step_17"]
 script = ExtResource("2_step")
-instruction = "Jouw beurt! Vul nóg 2 oranje vormen in door er op te drukken"
+line = 13
 condition = 9
 outcome = 14
 
 [sub_resource type="Resource" id="Step_18"]
 script = ExtResource("2_step")
-instruction = "Haal nu ook 1 van de ingevulde vormen weg door er op te drukken"
+line = 14
 condition = 10
 outcome = 15
 
 [sub_resource type="Resource" id="Step_19"]
 script = ExtResource("2_step")
-instruction = "Ik ben benieuwd laat mij eens horen! ▶️"
+line = 15
 condition = 11
 outcome = 16
 
@@ -123,31 +123,31 @@ outcome = 17
 
 [sub_resource type="Resource" id="Step_21"]
 script = ExtResource("2_step")
-instruction = "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen"
+line = 16
 condition = 12
 outcome = 18
 
 [sub_resource type="Resource" id="Step_22"]
 script = ExtResource("2_step")
-instruction = "Super goed gedaan, je hebt talent!"
+line = 17
 condition = 1
 outcome = 19
 
 [sub_resource type="Resource" id="Step_23"]
 script = ExtResource("2_step")
-instruction = "Dit is de gele bass-ring. Klik op de beer 🐻 om de gele laag te kiezen en een brommende melodie toe te voegen"
+line = 18
 condition = 13
 outcome = 20
 
 [sub_resource type="Resource" id="Step_24"]
 script = ExtResource("2_step")
-instruction = "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!"
+line = 19
 condition = 14
 outcome = 32
 
 [sub_resource type="Resource" id="Step_25"]
 script = ExtResource("2_step")
-instruction = "Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af van 4 naar 0"
+line = 20
 condition = 15
 outcome = 21
 
@@ -162,68 +162,68 @@ condition = 4
 
 [sub_resource type="Resource" id="Step_32"]
 script = ExtResource("2_step")
-instruction = "Super gedaan, het klinkt al leuk"
+line = 21
 condition = 1
 
 [sub_resource type="Resource" id="Step_33"]
 script = ExtResource("2_step")
-instruction = "Laten we je sample nog leuker maken!"
+line = 22
 condition = 1
 outcome = 23
 
 [sub_resource type="Resource" id="Step_34"]
 script = ExtResource("2_step")
-instruction = "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen"
+line = 23
 condition = 1
 
 [sub_resource type="Resource" id="Step_35"]
 script = ExtResource("2_step")
-instruction = "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖 aan je sample geven"
+line = 24
 condition = 1
 outcome = 24
 
 [sub_resource type="Resource" id="Step_36"]
 script = ExtResource("2_step")
-instruction = "Beweeg het witte rondje met drie streepjes naar het target "
+line = 25
 condition = 21
 outcome = 25
 
 [sub_resource type="Resource" id="Step_37"]
 script = ExtResource("2_step")
-instruction = "Luister maar eens!▶️"
+line = 26
 condition = 2
 outcome = 26
 
 [sub_resource type="Resource" id="Step_38"]
 script = ExtResource("2_step")
-instruction = "Dit geeft een hele andere sfeer aan je beat"
+line = 27
 condition = 1
 outcome = 27
 
 [sub_resource type="Resource" id="Step_39"]
 script = ExtResource("2_step")
-instruction = "Beweeg het witte rondje met streepjes weer naar het target "
+line = 28
 condition = 19
 outcome = 28
 
 [sub_resource type="Resource" id="Step_40"]
 script = ExtResource("2_step")
-instruction = "Zo krijg je een mix tussen jouw sample en het instrument!"
+line = 29
 outcome = 29
 
 [sub_resource type="Resource" id="Step_41"]
 script = ExtResource("2_step")
-instruction = "Beweeg het witte rondje met streepjes nog 1 keer naar het target"
+line = 30
 condition = 20
 outcome = 30
 
 [sub_resource type="Resource" id="Step_42"]
 script = ExtResource("2_step")
-instruction = "Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer"
+line = 31
 
 [sub_resource type="Resource" id="Step_43"]
 script = ExtResource("2_step")
-instruction = "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!"
+line = 32
 outcome = 31
 
 [resource]

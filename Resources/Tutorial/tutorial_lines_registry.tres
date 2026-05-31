@@ -1,0 +1,173 @@
+[gd_resource type="Resource" script_class="KlappyLineLibrary" format=3 uid="uid://dfqf83hdggcvf"]
+
+[ext_resource type="Script" uid="uid://cq1uva3o5pt1l" path="res://Scripts/DataClasses/Klappy/klappy_line_library.gd" id="lib"]
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="line"]
+
+[sub_resource type="Resource" id="L0"]
+script = ExtResource("line")
+id = 0
+text = "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen."
+
+[sub_resource type="Resource" id="L1"]
+script = ExtResource("line")
+id = 1
+text = "Deze roze cirkels vormen een kick-ring"
+
+[sub_resource type="Resource" id="L2"]
+script = ExtResource("line")
+id = 2
+text = "Op deze ring kun je de kick plaatsen van je Beat"
+
+[sub_resource type="Resource" id="L3"]
+script = ExtResource("line")
+id = 3
+text = "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen"
+
+[sub_resource type="Resource" id="L4"]
+script = ExtResource("line")
+id = 4
+text = "Druk op de 2 streepjes ⏸️ om de Beat op pauze te zetten"
+
+[sub_resource type="Resource" id="L5"]
+script = ExtResource("line")
+id = 5
+text = "Nu jij! Vul nog 2 cirkels door er op te drukken"
+
+[sub_resource type="Resource" id="L6"]
+script = ExtResource("line")
+id = 6
+text = "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️"
+
+[sub_resource type="Resource" id="L7"]
+script = ExtResource("line")
+id = 7
+text = "Stamp 👟 5 keer mee met de kick van je Beat!"
+
+[sub_resource type="Resource" id="L8"]
+script = ExtResource("line")
+id = 8
+text = "Dat kickt er lekker in!"
+
+[sub_resource type="Resource" id="L9"]
+script = ExtResource("line")
+id = 9
+text = "Op naar level 2!"
+
+[sub_resource type="Resource" id="L10"]
+script = ExtResource("line")
+id = 10
+text = "Deze oranje ring is de clap-ring"
+
+[sub_resource type="Resource" id="L11"]
+script = ExtResource("line")
+id = 11
+text = "Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!"
+
+[sub_resource type="Resource" id="L12"]
+script = ExtResource("line")
+id = 12
+text = "Klinkt al leuk!"
+
+[sub_resource type="Resource" id="L13"]
+script = ExtResource("line")
+id = 13
+text = "Jouw beurt! Vul nóg 2 oranje vormen in door er op te drukken"
+
+[sub_resource type="Resource" id="L14"]
+script = ExtResource("line")
+id = 14
+text = "Haal nu ook 1 van de ingevulde vormen weg door er op te drukken"
+
+[sub_resource type="Resource" id="L15"]
+script = ExtResource("line")
+id = 15
+text = "Ik ben benieuwd laat mij eens horen! ▶️"
+
+[sub_resource type="Resource" id="L16"]
+script = ExtResource("line")
+id = 16
+text = "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen"
+
+[sub_resource type="Resource" id="L17"]
+script = ExtResource("line")
+id = 17
+text = "Super goed gedaan, je hebt talent!"
+
+[sub_resource type="Resource" id="L18"]
+script = ExtResource("line")
+id = 18
+text = "Dit is de gele bass-ring. Klik op de beer 🐻 om de gele laag te kiezen en een brommende melodie toe te voegen"
+
+[sub_resource type="Resource" id="L19"]
+script = ExtResource("line")
+id = 19
+text = "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!"
+
+[sub_resource type="Resource" id="L20"]
+script = ExtResource("line")
+id = 20
+text = "Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af van 4 naar 0"
+
+[sub_resource type="Resource" id="L21"]
+script = ExtResource("line")
+id = 21
+text = "Super gedaan, het klinkt al leuk"
+
+[sub_resource type="Resource" id="L22"]
+script = ExtResource("line")
+id = 22
+text = "Laten we je sample nog leuker maken!"
+
+[sub_resource type="Resource" id="L23"]
+script = ExtResource("line")
+id = 23
+text = "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen"
+
+[sub_resource type="Resource" id="L24"]
+script = ExtResource("line")
+id = 24
+text = "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖 aan je sample geven"
+
+[sub_resource type="Resource" id="L25"]
+script = ExtResource("line")
+id = 25
+text = "Beweeg het witte rondje met drie streepjes naar het target "
+
+[sub_resource type="Resource" id="L26"]
+script = ExtResource("line")
+id = 26
+text = "Luister maar eens!▶️"
+
+[sub_resource type="Resource" id="L27"]
+script = ExtResource("line")
+id = 27
+text = "Dit geeft een hele andere sfeer aan je beat"
+
+[sub_resource type="Resource" id="L28"]
+script = ExtResource("line")
+id = 28
+text = "Beweeg het witte rondje met streepjes weer naar het target "
+
+[sub_resource type="Resource" id="L29"]
+script = ExtResource("line")
+id = 29
+text = "Zo krijg je een mix tussen jouw sample en het instrument!"
+
+[sub_resource type="Resource" id="L30"]
+script = ExtResource("line")
+id = 30
+text = "Beweeg het witte rondje met streepjes nog 1 keer naar het target"
+
+[sub_resource type="Resource" id="L31"]
+script = ExtResource("line")
+id = 31
+text = "Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer"
+
+[sub_resource type="Resource" id="L32"]
+script = ExtResource("line")
+id = 32
+text = "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!"
+
+[resource]
+script = ExtResource("lib")
+lines = Array[ExtResource("line")]([SubResource("L0"), SubResource("L1"), SubResource("L2"), SubResource("L3"), SubResource("L4"), SubResource("L5"), SubResource("L6"), SubResource("L7"), SubResource("L8"), SubResource("L9"), SubResource("L10"), SubResource("L11"), SubResource("L12"), SubResource("L13"), SubResource("L14"), SubResource("L15"), SubResource("L16"), SubResource("L17"), SubResource("L18"), SubResource("L19"), SubResource("L20"), SubResource("L21"), SubResource("L22"), SubResource("L23"), SubResource("L24"), SubResource("L25"), SubResource("L26"), SubResource("L27"), SubResource("L28"), SubResource("L29"), SubResource("L30"), SubResource("L31"), SubResource("L32")])

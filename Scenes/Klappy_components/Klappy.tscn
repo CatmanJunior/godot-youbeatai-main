@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://ctdq5ex6oh6jx"]
+
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_pokpn"]
+[ext_resource type="StyleBox" uid="uid://hlnwgujjqktu" path="res://Other/background.tres" id="5_7m7ed"]
+[ext_resource type="StyleBox" uid="uid://dp8gkmm81bir0" path="res://Other/fill.tres" id="6_q1u4v"]
+[ext_resource type="Texture2D" uid="uid://cp8hnneeajdrs" path="res://Resources/Textures_New_Extra/podium.png" id="7_g650j"]
+[ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="7_x2nhf"]
+[ext_resource type="PackedScene" uid="uid://dkd4xm6dcj43i" path="res://Scenes/Klappy_components/klappy_light_pad.tscn" id="9_rcijy"]
+[ext_resource type="Script" uid="uid://cobewqlkvtelv" path="res://Scripts/UI/energy_progress_bar.gd" id="10_epbar"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_2x3a5"]
+font_size = 46
+
+[node name="Ingame Klappy" type="Sprite2D" unique_id=1025278274]
+z_index = 4
+
+[node name="Podium" type="Sprite2D" parent="." unique_id=594292625]
+position = Vector2(-8, 176.00003)
+scale = Vector2(0.90207714, 1.215)
+texture = ExtResource("7_g650j")
+
+[node name="EnergyProgressBar" type="ProgressBar" parent="." unique_id=580081017]
+z_index = 6
+offset_left = -156.0
+offset_top = 177.0
+offset_right = 138.16504
+offset_bottom = 211.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_styles/background = ExtResource("5_7m7ed")
+theme_override_styles/fill = ExtResource("6_q1u4v")
+rounded = true
+script = ExtResource("10_epbar")
+metadata/_edit_use_anchors_ = true
+
+[node name="EnergyIcon" type="Label" parent="EnergyProgressBar" unique_id=1359310293]
+z_index = 4
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.17639132
+anchor_top = 0.23535359
+anchor_right = 0.97239304
+anchor_bottom = 0.91435355
+offset_left = 0.111839294
+offset_top = -0.0019989014
+offset_right = 211.67032
+offset_bottom = 20.912003
+scale = Vector2(0.525, 0.525)
+theme = ExtResource("1_pokpn")
+text = "⚡"
+label_settings = SubResource("LabelSettings_2x3a5")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBarAchievementNode" type="Node2D" parent="EnergyProgressBar" unique_id=915898225]
+position = Vector2(1239.05, -302)
+
+[node name="KlappyLightPad" parent="." unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "klappy_energy", "face_light", "colormapje") instance=ExtResource("9_rcijy")]
+offset_left = -106.5
+offset_top = -187.5
+offset_right = 114.5
+offset_bottom = 12.5
+klappy_light = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy/model/Klappylight")
+klappy_energy = NodePath("../EnergyProgressBar")
+face_light = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy/SpotLight3D")
+colormapje = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy/model/Colors")
+
+[node name="Robot" parent="." unique_id=509510474 instance=ExtResource("7_x2nhf")]
+position = Vector2(12, 1)
+metadata/_edit_group_ = true
+
+[editable path="Robot"]
+[editable path="Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="Robot/SubViewportContainer/SubViewport/Klappy/model"]

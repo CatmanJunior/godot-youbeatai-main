@@ -97,7 +97,7 @@ tutmessage = "Wij gaan kiezen wat voor liedje we willen maken, ik heb er al 2 in
 script = ExtResource("1_h74sy")
 soundbank_selection_menu = NodePath("../SoundBankSelectionMenu")
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." unique_id=1866251115 node_paths=PackedStringArray("selected_emotion_labels", "selected_theme_labels", "gebruik_button", "gevonden_soundbank_label", "emotion_placeholders", "theme_placeholders")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." unique_id=1866251115 node_paths=PackedStringArray("selected_emotion_labels", "selected_theme_labels", "start_button", "current_soundbank_label", "emotion_placeholders", "theme_placeholders")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -116,8 +116,8 @@ emotion_toggles = ExtResource("5_dsbnb")
 theme_toggles = ExtResource("3_grpai")
 selected_emotion_labels = [NodePath("../Chosen_Emotion_label_0"), NodePath("../Chosen_Emotion_label_1")]
 selected_theme_labels = [NodePath("../Chosen_Theme_label_0"), NodePath("../Chosen_Theme_label_1")]
-gebruik_button = NodePath("Ready/Ready")
-gevonden_soundbank_label = NodePath("SelectieLabelTitle/SelectionLabel")
+start_button = NodePath("StartButtonSprite/StartButton")
+current_soundbank_label = NodePath("CurrentSoundBankLabel")
 beatSelectButtonGroup = ExtResource("8_dsbnb")
 emotion_placeholders = [NodePath("../Chosen_Emotion_label_0/Sprite2D"), NodePath("../Chosen_Emotion_label_1/Sprite2D")]
 theme_placeholders = [NodePath("../Chosen_Theme_label_0/Sprite2D"), NodePath("../Chosen_Theme_label_1/Sprite2D")]
@@ -882,39 +882,26 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_trim_flags = 128
 
-[node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu" unique_id=229279889]
-visible = false
+[node name="CurrentSoundBankLabel" type="Label" parent="SoundBankSelectionMenu" unique_id=229279889]
 layout_mode = 0
-offset_left = 538.9402
-offset_top = -13.1073
-offset_right = 848.9402
-offset_bottom = 24.8927
+offset_left = -36.237793
+offset_top = 501.9314
+offset_right = 424.88135
+offset_bottom = 525.8329
 theme = ExtResource("2_ie3tb")
 theme_override_fonts/font = ExtResource("2_avjdi")
-text = "Gevonden Soundbank:"
-horizontal_alignment = 1
+text = "DEBUG ONLY - Gevonden Soundbank:"
 vertical_alignment = 1
 
-[node name="SelectionLabel" type="Label" parent="SoundBankSelectionMenu/SelectieLabelTitle" unique_id=80078663]
-layout_mode = 0
-offset_left = -10.0
-offset_top = 30.0
-offset_right = 322.0
-offset_bottom = 72.0
-theme = ExtResource("2_ie3tb")
-text = "....."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Ready" type="Panel" parent="SoundBankSelectionMenu" unique_id=1484130741]
+[node name="StartButtonSprite" type="Panel" parent="SoundBankSelectionMenu" unique_id=1484130741]
 layout_mode = 0
 offset_left = 593.68225
 offset_top = 67.8494
-offset_right = 793.6823
+offset_right = 784.1233
 offset_bottom = 146.49304
 theme_override_styles/panel = SubResource("StyleBoxEmpty_18n7q")
 
-[node name="Ready" type="Button" parent="SoundBankSelectionMenu/Ready" unique_id=1703942918]
+[node name="StartButton" type="Button" parent="SoundBankSelectionMenu/StartButtonSprite" unique_id=1703942918]
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 78.0
@@ -931,11 +918,6 @@ theme_override_styles/focus = SubResource("StyleBoxEmpty_h74sy")
 disabled = true
 text = "Start "
 icon_alignment = 1
-
-[node name="Label" type="Label" parent="SoundBankSelectionMenu" unique_id=1617777208]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 16.0
 
 [node name="KlappyBackground" type="TextureRect" parent="SoundBankSelectionMenu" unique_id=179915471]
 custom_minimum_size = Vector2(100, 100)
@@ -956,36 +938,10 @@ texture = ExtResource("17_h74sy")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="Robot" parent="." unique_id=399824719 instance=ExtResource("3_a7rio")]
-position = Vector2(474, 152)
-
-[node name="AchievementsPanel" parent="Robot" index="0" unique_id=1497439872]
-visible = false
-
-[node name="InstructionLabel" parent="Robot/AchievementsPanel" index="1" unique_id=813716848]
-anchor_left = -0.03024911
-
-[node name="SubViewportContainer" parent="Robot" index="1" unique_id=2110113658]
-light_mask = 2
-offset_top = -133.5
-offset_bottom = 155.5
-
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 1834571670) index="0" unique_id=557868767]
-transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
-
-[node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]
-transform = Transform3D(0.98480767, 0.0030305798, 0.1736215, -0.17144132, -0.14190595, 0.9749207, 0.027592069, -0.9898756, -0.13923067, 0, -3.29693, 0)
-
-[node name="KlappyLight" parent="Robot/SubViewportContainer" index="1" unique_id=1195742085]
-light_mask = 2
-position = Vector2(202.5, 57.499996)
-scale = Vector2(0.6, 0.6)
-color = Color(1, 0.654902, 0.34117648, 1)
-energy = 2.66
-range_item_cull_mask = 2
-texture_scale = 2.41
-
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1519508310]
+
+[node name="Robot" parent="." unique_id=509510474 instance=ExtResource("3_a7rio")]
+position = Vector2(479, 156)
 
 [node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=808172695]
 modulate = Color(0.85, 0.85, 0.85, 1)
@@ -1061,8 +1017,3 @@ vertical_alignment = 1
 position = Vector2(51.8, 50.800003)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("22_18n7q")
-
-[editable path="Robot"]
-[editable path="Robot/AchievementsPanel"]
-[editable path="Robot/SubViewportContainer/SubViewport/Klappy"]
-[editable path="Robot/SubViewportContainer/SubViewport/Klappy/model"]

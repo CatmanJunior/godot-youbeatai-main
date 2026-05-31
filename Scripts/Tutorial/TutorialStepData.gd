@@ -68,7 +68,7 @@ enum TutorialOutcome {
 	START_PLAYING,
 }
 
-@export var instruction: String = ""
+@export var line: TutorialLine.Id = TutorialLine.Id.NONE
 @export var condition: TutorialCondition = TutorialCondition.NEVER
 
 @export var outcome: TutorialOutcome = TutorialOutcome.NONE

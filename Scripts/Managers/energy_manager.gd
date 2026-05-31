@@ -21,8 +21,6 @@ const ENERGY_THRESHOLD_LIGHT_PAD: float = 100.0
 
 # ── Private state ─────────────────────────────────────────────────────────────────────
 
-@export var not_enough_energy_message: String = "Je hebt niet genoeg energie om meer beats toe te voegen!"
-
 var _signals_connected: bool = false
 
 
@@ -93,7 +91,5 @@ func _on_beat_state_change(_track_id: int, _beat_index: int, active: bool) -> vo
 
 
 func _on_not_enough_energy() -> void:
-	EventBus.set_klappy_speech_bubble.emit(
-		not_enough_energy_message, "", false
-	)
+	KlappyVoice.say(KlappyLine.Id.NOT_ENOUGH_ENERGY)
 	change_energy_points(-1.0) # Small penalty to prevent spamming

@@ -69,7 +69,7 @@ const OCTAVE_MAX: int = 5
 ## MIDI note range corresponding to octave 3..5 (C3=48, B5=83 in standard MIDI).
 ## In this project, note IDs start at 0 for C1, so octave 3 starts at ID 36.
 const NOTE_ID_MIN: int = 36  # C3 in project's ID system (octave 3 * 12)
-const NOTE_ID_MAX: int = 71  # B5 in project's ID system (octave 5 * 12 + 11)
+const NOTE_ID_MAX: int = 83  # B5 in project's ID system (octave 5 * 12 + 11)
 
 # ── Internal state ───────────────────────────────────────────────────────────
 
@@ -94,7 +94,10 @@ var _min_lag: int = 0
 
 ## Reusable scratch arrays for NSDF computation.
 var _nsdf_buffer: PackedFloat32Array = PackedFloat32Array()
-var _frame_buffer: PackedFloat32Array = PackedFloat32Array()
+## Prefix sum of squared samples, reused per NSDF call (size FRAME_SIZE + 1).
+var _prefix_sq: PackedFloat32Array = PackedFloat32Array()
+## Reusable scratch for median filter (size MEDIAN_WINDOW).
+var _median_scratch: PackedFloat32Array = PackedFloat32Array()
 
 ## Per-hop analysis results.
 var _frame_results: Array[Dictionary] = []
@@ -144,8 +147,10 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 	# Scratch buffers.
 	_nsdf_buffer = PackedFloat32Array()
 	_nsdf_buffer.resize(_max_lag + 1)
-	_frame_buffer = PackedFloat32Array()
-	_frame_buffer.resize(FRAME_SIZE)
+	_prefix_sq = PackedFloat32Array()
+	_prefix_sq.resize(FRAME_SIZE + 1)
+	_median_scratch = PackedFloat32Array()
+	_median_scratch.resize(MEDIAN_WINDOW)
 
 	# Reset state.
 	_input_buffer = PackedFloat32Array()
@@ -180,25 +185,24 @@ func push_samples(samples: PackedFloat32Array) -> int:
 	if available <= 0:
 		return 0
 
-	# Simple decimation with linear interpolation.
-	var downsampled := _downsample(_input_buffer, ds_ratio, available)
+	# Downsample directly into the analysis buffer (linear interpolation),
+	# avoiding an intermediate array and a second copy loop. The actual number
+	# of samples written may be less than `available` if the analysis buffer
+	# filled up, so use the returned count to stay in sync.
+	var written := _downsample_into(_input_buffer, ds_ratio, available)
 
-	# Remove consumed input samples.
-	var consumed_input := int(float(available) * ds_ratio)
+	if written <= 0:
+		return 0
+
+	# Remove consumed input samples (only those actually downsampled).
+	var consumed_input := int(float(written) * ds_ratio)
 	if consumed_input >= _input_buffer.size():
 		_input_buffer = PackedFloat32Array()
 	else:
 		_input_buffer = _input_buffer.slice(consumed_input)
 
-	# Write downsampled data into analysis buffer.
-	for i in range(downsampled.size()):
-		if _analysis_write_pos < _analysis_buffer.size():
-			_analysis_buffer[_analysis_write_pos] = downsampled[i]
-			_analysis_write_pos += 1
-			_analysis_total_samples += 1
-
 	# Process any complete hops.
-	_samples_since_last_hop += downsampled.size()
+	_samples_since_last_hop += written
 	while _samples_since_last_hop >= HOP_SIZE:
 		var hop_start := _hops_processed * HOP_SIZE
 		if hop_start + FRAME_SIZE <= _analysis_total_samples:
@@ -241,19 +245,16 @@ func is_active() -> bool:
 # ── Frame Processing (called per hop) ───────────────────────────────────────
 
 func _process_frame(start_sample: int) -> void:
-	# Extract frame from analysis buffer.
-	for i in range(FRAME_SIZE):
-		_frame_buffer[i] = _analysis_buffer[start_sample + i]
-
+	# Read the frame directly from the analysis buffer (no copy).
 	# Compute RMS for voicing decision.
-	var rms := _compute_rms(_frame_buffer)
+	var rms := _compute_rms(_analysis_buffer, start_sample, FRAME_SIZE)
 
 	# Detect pitch using NSDF/MPM.
 	var pitch := 0.0
 	var clarity := 0.0
 
 	if rms >= SILENCE_THRESHOLD:
-		var result := _nsdf_pitch(_frame_buffer)
+		var result := _nsdf_pitch(_analysis_buffer, start_sample, FRAME_SIZE)
 		pitch = result.x  # Hz
 		clarity = result.y  # 0..1
 
@@ -306,8 +307,8 @@ func _process_frame(start_sample: int) -> void:
 
 ## Returns Vector2(frequency_hz, clarity) using Normalized Square Difference
 ## Function (McLeod Pitch Method).
-func _nsdf_pitch(frame: PackedFloat32Array) -> Vector2:
-	var n := frame.size()
+func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector2:
+	var n := length
 	var max_lag := mini(_max_lag, n - 1)
 	var min_lag := _min_lag
 
@@ -317,13 +318,12 @@ func _nsdf_pitch(frame: PackedFloat32Array) -> Vector2:
 	_nsdf_buffer.fill(0.0)
 
 	# Prefix sum of squared samples so m_left/m_right become O(1) per tau.
-	# prefix_sq[k] = sum_{i=0..k-1} frame[i]^2, length n+1.
-	var prefix_sq := PackedFloat32Array()
-	prefix_sq.resize(n + 1)
+	# prefix_sq[k] = sum_{i=0..k-1} frame[i]^2, length n+1. Reused across calls.
+	var prefix_sq := _prefix_sq
 	prefix_sq[0] = 0.0
 	var running := 0.0
 	for i in range(n):
-		var s := frame[i]
+		var s := buffer[offset + i]
 		running += s * s
 		prefix_sq[i + 1] = running
 
@@ -332,7 +332,7 @@ func _nsdf_pitch(frame: PackedFloat32Array) -> Vector2:
 		# Autocorrelation at lag tau.
 		var acf := 0.0
 		for i in range(limit):
-			acf += frame[i] * frame[i + tau]
+			acf += buffer[offset + i] * buffer[offset + i + tau]
 
 		# m_left = sum frame[i]^2 for i in [0, limit-1]
 		# m_right = sum frame[i]^2 for i in [tau, n-1]
@@ -398,28 +398,39 @@ func _nsdf_pitch(frame: PackedFloat32Array) -> Vector2:
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
-func _compute_rms(buffer: PackedFloat32Array) -> float:
+func _compute_rms(buffer: PackedFloat32Array, offset: int, length: int) -> float:
 	var sum := 0.0
-	for i in range(buffer.size()):
-		var s := buffer[i]
+	for i in range(length):
+		var s := buffer[offset + i]
 		sum += s * s
-	return sqrt(sum / float(buffer.size()))
+	return sqrt(sum / float(length))
 
 
-func _downsample(input: PackedFloat32Array, ratio: float, output_count: int) -> PackedFloat32Array:
-	var result := PackedFloat32Array()
-	result.resize(output_count)
+## Downsample `output_count` samples from `input` (linear interpolation) directly
+## into the analysis ring buffer at the current write position. Samples past the
+## buffer end are dropped (matching the prior bounds-checked behavior).
+## Returns the number of samples actually written to the analysis buffer, which
+## may be less than `output_count` if the buffer filled up.
+func _downsample_into(input: PackedFloat32Array, ratio: float, output_count: int) -> int:
+	var buf_size := _analysis_buffer.size()
+	var input_size := input.size()
+	var written := 0
 	for i in range(output_count):
+		if _analysis_write_pos >= buf_size:
+			break
 		var src_pos := float(i) * ratio
 		var idx := int(src_pos)
 		var frac := src_pos - float(idx)
-		if idx + 1 < input.size():
-			result[i] = input[idx] * (1.0 - frac) + input[idx + 1] * frac
-		elif idx < input.size():
-			result[i] = input[idx]
-		else:
-			result[i] = 0.0
-	return result
+		var sample := 0.0
+		if idx + 1 < input_size:
+			sample = input[idx] * (1.0 - frac) + input[idx + 1] * frac
+		elif idx < input_size:
+			sample = input[idx]
+		_analysis_buffer[_analysis_write_pos] = sample
+		_analysis_write_pos += 1
+		_analysis_total_samples += 1
+		written += 1
+	return written
 
 
 func _median_filter_pitch(pitch: float) -> float:
@@ -428,19 +439,24 @@ func _median_filter_pitch(pitch: float) -> float:
 		_pitch_history[i] = _pitch_history[i + 1]
 	_pitch_history[MEDIAN_WINDOW - 1] = pitch
 
-	# Collect non-zero values for median.
-	var valid: PackedFloat32Array = PackedFloat32Array()
+	# Insertion-sort non-zero values into reusable scratch (no allocation).
+	var count := 0
 	for i in range(MEDIAN_WINDOW):
-		if _pitch_history[i] > 0.0:
-			valid.append(_pitch_history[i])
+		var v := _pitch_history[i]
+		if v > 0.0:
+			var j := count - 1
+			while j >= 0 and _median_scratch[j] > v:
+				_median_scratch[j + 1] = _median_scratch[j]
+				j -= 1
+			_median_scratch[j + 1] = v
+			count += 1
 
-	if valid.size() == 0:
+	if count == 0:
 		return 0.0
 
-	# Sort and return median.
-	valid.sort()
+	# Return median (same index as the previous sort-based implementation).
 	@warning_ignore("integer_division")
-	return valid[valid.size() / 2]
+	return _median_scratch[count / 2]
 
 
 ## Convert frequency to MIDI note number (A4 = 69 = 440 Hz).

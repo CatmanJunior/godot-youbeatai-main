@@ -36,6 +36,7 @@ GameState="*res://Scripts/Global/game_state.gd"
 SongState="*res://Scripts/Global/song_state.gd"
 TTSHelper="*res://Scripts/Global/tts_helper.gd"
 FFT="*uid://xq15anvbve8x"
+KlappyVoice="*res://Scripts/Global/klappy_voice.gd"
 
 [debug]
 

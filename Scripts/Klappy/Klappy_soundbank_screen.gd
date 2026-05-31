@@ -3,8 +3,6 @@ extends Node
 @export var message: String
 @export var tutmessage: String
 
-const INTRO_MESSAGE: String = "hoi ik ben klappy en wij gaan samen een beat maken"
-
 enum _State { IDLE, INTRO_PLAYING, DONE }
 var _state: _State = _State.IDLE
 var _uid: int = -1
@@ -15,7 +13,7 @@ func _ready() -> void:
 	EventBus.utterance_canceled.connect(_on_utterance_settled)
 	# Wait for everything to be ready before speaking; TTS may not work immediately on web.
 	await get_tree().create_timer(0.5).timeout
-	_uid = TTSHelper.say(INTRO_MESSAGE)
+	_uid = TTSHelper.say(KlappyVoice.line_text(KlappyLine.Id.INTRO_GREETING))
 	_state = _State.INTRO_PLAYING
 
 

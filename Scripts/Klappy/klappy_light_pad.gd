@@ -17,8 +17,6 @@ var flicker_done = false
 
 var colors_string :Array[String] = ["green", "red", "blue", "yellow", "green", "red", "blue", "yellow"]
 
-@export var instruction_label:Label
-@export var achievement_panel:Panel
 @export var colormapje: Node3D
 
 func _ready() -> void:
@@ -101,11 +99,9 @@ func on_klappy_energy(value: float) -> void:
 		unlocked = true
 		flicker_done = true
 		if not GameState.use_tutorial:
-			_fill_instruction_label("Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!")
+			KlappyVoice.say(KlappyLine.Id.LIGHT_PAD_UNLOCK)
 		lightFlicker()
 		await get_tree().create_timer(7.0).timeout
-		if achievement_panel:
-			achievement_panel.visible = false
 	
 func lightFlicker():
 	for i in colors_string:
@@ -115,8 +111,3 @@ func lightFlicker():
 		
 	colormapje.visible = true
 	klappy_light.light_color = Color.WHITE	
-	
-func _fill_instruction_label(_name: String) -> void:
-	TTSHelper.say(_name)
-	
-

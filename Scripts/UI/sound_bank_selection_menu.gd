@@ -13,8 +13,8 @@ var chosen_themes_emojis: Array[String] = []
 @export var selected_emotion_labels: Array[Label]
 @export var selected_theme_labels: Array[Label]
 
-@export var gebruik_button: Button
-@export var gevonden_soundbank_label: Label
+@export var start_button: Button
+@export var current_soundbank_label: Label
 
 @export var beatSelectButtonGroup: ButtonGroup
 
@@ -24,6 +24,9 @@ var chosen_themes_emojis: Array[String] = []
 var _update := false
 
 func _ready() -> void:
+	if not OS.is_debug_build():
+		current_soundbank_label.visible = false
+
 	if GameState.use_tutorial:
 		#set 2 random emotions and themes for the tutorial that are pre-pressed
 		emotion_toggles.set_pressed_buttons([emotion_toggles._buttons[0]])
@@ -34,7 +37,7 @@ func _ready() -> void:
 	beatSelectButtonGroup.pressed.connect(_on_beat_button_group_pressed)
 	emotion_toggles.pressed.connect(_on_emotion_toggle)
 	theme_toggles.pressed.connect(_on_theme_toggle)
-	gebruik_button.pressed.connect(_on_gebruik_pressed)
+	start_button.pressed.connect(_on_gebruik_pressed)
 
 func _on_beat_button_group_pressed(button: BaseButton) -> void:
 	var beats := 0
@@ -82,9 +85,10 @@ func _on_theme_toggle(buttons: Array[BaseButton]) -> void:
 
 func update_button_state():
 	if amount_emotions_selected == 2 and amount_themes_selected == 2:
-		gebruik_button.disabled = false
+		start_button.disabled = false
 	else:
-		gebruik_button.disabled = true
+		start_button.disabled = true
+
 
 func check_ready_condition() -> bool:
 	var last_update = _update
@@ -99,8 +103,7 @@ func _on_gebruik_pressed() -> void:
 	end_soundbank_selection()
 
 func end_soundbank_selection() -> void:
-	if DisplayServer.tts_is_speaking():
-		DisplayServer.tts_stop()
+	TTSHelper.stop_speaking()
 	
 	EventBus.soundbank_selected.emit(chosen_themes_emojis, chosen_emotions_emojis)
 	await get_tree().create_timer(0.5).timeout
@@ -112,5 +115,5 @@ func change_to_main() -> void:
 func _set_beats(beats: int) -> void:
 	SongState.beats_per_section = beats
 
-func _on_soundbank_label_changed(label_text: String) -> void:
-	gevonden_soundbank_label.text = label_text
+func set_current_soundbank_label(soundfont_name: String) -> void:
+	current_soundbank_label.text = "DEBUG ONLY - Gevonden Soundbank: " + soundfont_name

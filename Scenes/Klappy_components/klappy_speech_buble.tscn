@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://ectokfb4nii4"]
+
+[ext_resource type="Script" uid="uid://d0oh2kfmsgmal" path="res://Scripts/UI/achievements_panel_ui.gd" id="1_liete"]
+[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_514rh"]
+[ext_resource type="FontFile" uid="uid://dn5h0rdrjr8i5" path="res://Fonts/KOMIKAX_.ttf" id="3_xloxe"]
+[ext_resource type="Script" uid="uid://dhbgwh6wj2hm8" path="res://Scripts/Klappy/continue.gd" id="4_3bx5w"]
+[ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="5_0c3mv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_twvmx"]
+bg_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+
+[sub_resource type="Theme" id="Theme_rgnfl"]
+/styles/background = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dcbcy"]
+bg_color = Color(3.281457, 3.281457, 3.281457, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rgnfl"]
+bg_color = Color(0.8509804, 0.8509804, 0.8509804, 0.63529414)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hc54m"]
+bg_color = Color(0.70796615, 0.7079666, 0.7079665, 0.85490197)
+
+[node name="KlappySpeechBubble" type="Panel" unique_id=37829949 node_paths=PackedStringArray("instruction_label", "title_label", "continue_button")]
+anchors_preset = -1
+anchor_left = 0.22000001
+anchor_top = 0.261
+anchor_right = 0.22000001
+anchor_bottom = 0.261
+offset_left = -281.6
+offset_top = -187.92
+offset_right = -0.6000061
+offset_bottom = 0.08000183
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_twvmx")
+script = ExtResource("1_liete")
+instruction_label = NodePath("InstructionLabel")
+title_label = NodePath("TitleBar")
+continue_button = NodePath("ContinueButton")
+ui_element = 11
+target_self = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Title" type="Label" parent="." unique_id=914827527]
+layout_mode = 0
+offset_top = 11.0
+offset_right = 250.0
+offset_bottom = 36.0
+theme = ExtResource("2_514rh")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="InstructionLabel" type="Label" parent="." unique_id=813716848]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = 22.5
+offset_right = -13.0
+offset_bottom = -30.0
+theme = ExtResource("2_514rh")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_xloxe")
+text = "..."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="ContinueButton" type="Button" parent="." unique_id=1432263596]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -31.5
+offset_right = 55.502502
+offset_bottom = -5.2462616
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(53, 13)
+theme = SubResource("Theme_rgnfl")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_xloxe")
+theme_override_styles/normal = SubResource("StyleBoxFlat_dcbcy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_rgnfl")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hc54m")
+action_mode = 0
+text = " Doorgaan ✅ "
+flat = true
+script = ExtResource("4_3bx5w")
+
+[node name="VisibilitySetter" type="Control" parent="ContinueButton" unique_id=549968420]
+anchors_preset = 0
+offset_left = 89.75125
+offset_top = 154.75374
+offset_right = 89.75125
+offset_bottom = 154.75374
+script = ExtResource("5_0c3mv")
+ui_element = 3
+target_self = true
+
+[node name="TitleBar" type="Label" parent="." unique_id=389681954]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.26900002
+anchor_right = 1.0
+offset_left = 26.5
+offset_top = 54.072006
+offset_right = -4.5
+offset_bottom = 54.5
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_xloxe")

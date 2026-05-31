@@ -2,6 +2,9 @@ extends Node
 
 @warning_ignore_start("unused_signal")
 
+##Animation trigger signal, carries an AnimationType enum value to specify which animation to play.
+signal trigger_animation_requested(animation_type: int)
+
 ## level loading signals
 signal level_loaded()
 signal post_ready()

@@ -51,7 +51,7 @@ var _late_ready_done: bool = false
 
 # ── Lifecycle ─────────────────────────────────────────────────────────────────
 
-func _ready() -> void:	
+func _ready() -> void:
 	EventBus.on_tutorial_done.connect(_on_tutorial_done)
 
 	await get_tree().create_timer(0.2).timeout
@@ -140,6 +140,8 @@ func _do_unlock(ach: AchievementDef, button: BaseButton) -> void:
 		ach.result.call()
 	_play_achievement_sfx()
 	EventBus.achievement_done.emit(ach.node_id)
+	if ach.unlock_message != KlappyLine.Id.NONE:
+		KlappyVoice.say(ach.unlock_message)
 	if button != null:
 		var callable: Callable = _gui_input_callables.get(ach.node_id, Callable())
 		if callable.is_valid() and button.gui_input.is_connected(callable):
@@ -233,7 +235,7 @@ func _lock_button(button: BaseButton) -> void:
 	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	# Anchor to the center of the button, then size it to 60% of the button.
 	icon.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	icon.position = icon.size /2.5
+	icon.position = icon.size / 2.5
 	icon.scale = Vector2.ONE * 0.6
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	button.add_child(icon)
@@ -251,17 +253,19 @@ func _get_locked_button(ach: AchievementDef) -> BaseButton:
 
 
 func _build_locked_buttons_map() -> void:
-	var N := AchievementDef.AchievementNode
+	var node := AchievementDef.AchievementNode
 	var pairs: Array = [
-		[N.TRACK_2, btn_track_2],
-		[N.SYNTH_2, btn_synth_track_2],
-		[N.TEMPLATE_TIP, btn_template_tip],
-		[N.FIRST_SAMPLE, btn_first_sample],
-		[N.SECOND_SAMPLE, btn_second_sample],
-		[N.TRACK_3, btn_track_3],
+		[node.TRACK_2, btn_track_2],
+		[node.SYNTH_2, btn_synth_track_2],
+		[node.TEMPLATE_TIP, btn_template_tip],
+		[node.FIRST_SAMPLE, btn_first_sample],
+		[node.SECOND_SAMPLE, btn_second_sample],
+		[node.TRACK_3, btn_track_3],
 	]
+
 	if btn_section_2:
-		pairs.append([N.ADD_SECTION, btn_section_2])
+		pairs.append([node.ADD_SECTION, btn_section_2])
+	
 	# Build the locked_buttons map from the exported button variables. 
 	for pair: Array in pairs:
 		# Only register non-null buttons, so we can have achievements without locked buttons.

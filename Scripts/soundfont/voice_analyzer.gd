@@ -15,19 +15,29 @@ extends RefCounted
 # ── Configuration ────────────────────────────────────────────────────────────
 
 ## Internal analysis sample rate (downsample to this from mic rate).
-const ANALYSIS_RATE: float = 22050.0
+## Lowered to 11 025 Hz so the NSDF inner loops are ~4× cheaper than at
+## 22 050 Hz. The vocal range we care about (60 Hz – 1 kHz) is still fully
+## resolvable: at 11 025 Hz the max lag is ~184 samples and the min lag is
+## ~11 samples, both well within FRAME_SIZE. Parabolic interpolation in
+## `_nsdf_pitch()` recovers sub-sample precision at the top of the range.
+const ANALYSIS_RATE: float = 11025.0
 
 ## NSDF frame size in samples at ANALYSIS_RATE (~93 ms, resolves down to ~80 Hz).
-const FRAME_SIZE: int = 2048
+const FRAME_SIZE: int = 1024
 
 ## Hop size in samples (half frame, ~46 ms).
-const HOP_SIZE: int = 1024
+const HOP_SIZE: int = 512
 
 ## Minimum fundamental frequency to search (Hz). Determines max lag.
-const MIN_FREQ: float = 60.0
+## Tightened to 80 Hz: the project quantizes results into octaves 3–5
+## (C3 ≈ 130 Hz upward), so anything below this band can't produce a note
+## anyway and only inflates the outer NSDF loop.
+const MIN_FREQ: float = 80.0
 
 ## Maximum fundamental frequency to search (Hz). Determines min lag.
-const MAX_FREQ: float = 1000.0
+## Tightened to 900 Hz (just below B5 ≈ 987 Hz, the top of the assignable
+## octave range), trimming the searched lag range further.
+const MAX_FREQ: float = 900.0
 
 ## RMS threshold below which a frame is considered silent.
 const SILENCE_THRESHOLD: float = 0.015
@@ -61,6 +71,16 @@ const PITCH_SMOOTH_ALPHA: float = 0.3
 
 ## Onset look-back compensation in seconds.
 const ONSET_LOOKBACK: float = 0.025
+
+## Maximum number of analysis hops to run inside a single push_samples() call.
+## Caps frame-time spikes on slow targets (web build, Chromebooks). Excess
+## samples remain in the analysis ring buffer and are processed on subsequent
+## push_samples() calls, with finalize() draining anything left over.
+## Maximum number of analysis hops to run inside a single push_samples() call.
+## Caps frame-time spikes on slow targets (web build, Chromebooks). Excess
+## samples remain in the analysis ring buffer and are processed on subsequent
+## push_samples() calls, with finalize() draining anything left over.
+const MAX_HOPS_PER_PUSH: int = 2
 
 ## Octave range for MIDI note output (inclusive). Maps to note IDs.
 const OCTAVE_MIN: int = 3
@@ -201,17 +221,38 @@ func push_samples(samples: PackedFloat32Array) -> int:
 	else:
 		_input_buffer = _input_buffer.slice(consumed_input)
 
-	# Process any complete hops.
+	# Track how many fresh analysis-rate samples are available since the
+	# last hop was emitted.
 	_samples_since_last_hop += written
-	while _samples_since_last_hop >= HOP_SIZE:
+
+	# Process any complete hops, but cap the number of hops processed per
+	# call so a single _process() frame on slow targets (web) cannot stall
+	# rendering. Leftover hops stay in the analysis buffer (its `_samples_since_last_hop`
+	# counter holds the per-hop debt) and are drained on subsequent calls;
+	# finalize() additionally walks any unprocessed hops still in the buffer.
+	var hops_this_call := 0
+	while _samples_since_last_hop >= HOP_SIZE and hops_this_call < MAX_HOPS_PER_PUSH:
 		var hop_start := _hops_processed * HOP_SIZE
 		if hop_start + FRAME_SIZE <= _analysis_total_samples:
 			_process_frame(hop_start)
 			_hops_processed += 1
 			new_hops += 1
 		_samples_since_last_hop -= HOP_SIZE
+		hops_this_call += 1
 
 	return new_hops
+
+
+## Update the assumed source (microphone) sample rate after start() has been
+## called. Used on web, where AudioServer.get_mix_rate() can disagree with
+## the actual per-second sample count delivered by the browser's mic worklet:
+## the recorder measures the real rate from frames pushed so far and calls
+## this so the downsample ratio stays in sync. Safe to call multiple times.
+func update_source_rate(source_sample_rate: float) -> void:
+	if source_sample_rate <= 0.0:
+		return
+	_source_rate = source_sample_rate
+	_downsample_ratio = _source_rate / ANALYSIS_RATE
 
 
 ## Finalize analysis and return the Sequence. Call after recording stops.
@@ -312,58 +353,75 @@ func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector
 	var max_lag := mini(_max_lag, n - 1)
 	var min_lag := _min_lag
 
+	# Copy the frame into a local PackedFloat32Array once. This both gives
+	# the inner loops contiguous, offset-free access and lets GDScript bind
+	# the buffer to a local (no repeated property lookup per iteration).
+	# The extra allocation is amortized across every (max_lag - min_lag) tau.
+	var frame := buffer.slice(offset, offset + n)
+
 	# Compute NSDF for each lag.
 	# NSDF(tau) = 2 * r(tau) / m(tau)
 	# where r(tau) = autocorrelation, m(tau) = energy normalization term.
-	_nsdf_buffer.fill(0.0)
+	var nsdf := _nsdf_buffer
+	nsdf.fill(0.0)
 
 	# Prefix sum of squared samples so m_left/m_right become O(1) per tau.
 	# prefix_sq[k] = sum_{i=0..k-1} frame[i]^2, length n+1. Reused across calls.
 	var prefix_sq := _prefix_sq
 	prefix_sq[0] = 0.0
 	var running := 0.0
-	for i in range(n):
-		var s := buffer[offset + i]
+	var i := 0
+	while i < n:
+		var s := frame[i]
 		running += s * s
 		prefix_sq[i + 1] = running
+		i += 1
 
-	for tau in range(min_lag, max_lag + 1):
+	var total_sq := prefix_sq[n]
+
+	var tau := min_lag
+	while tau <= max_lag:
 		var limit := n - tau
-		# Autocorrelation at lag tau.
+		# Autocorrelation at lag tau. A while-loop with hoisted indices is
+		# noticeably faster than `for i in range(limit)` in GDScript because
+		# it avoids allocating a Range iterator per tau and skips the
+		# repeated `offset + i` recomputation.
 		var acf := 0.0
-		for i in range(limit):
-			acf += buffer[offset + i] * buffer[offset + i + tau]
+		var j := 0
+		while j < limit:
+			acf += frame[j] * frame[j + tau]
+			j += 1
 
 		# m_left = sum frame[i]^2 for i in [0, limit-1]
 		# m_right = sum frame[i]^2 for i in [tau, n-1]
-		var m_left := prefix_sq[limit]
-		var m_right := prefix_sq[n] - prefix_sq[tau]
-		var m := m_left + m_right
+		var m := prefix_sq[limit] + (total_sq - prefix_sq[tau])
 
 		if m > 0.0:
-			_nsdf_buffer[tau] = 2.0 * acf / m
+			nsdf[tau] = 2.0 * acf / m
 		else:
-			_nsdf_buffer[tau] = 0.0
+			nsdf[tau] = 0.0
+		tau += 1
 
 	# Find the highest positive NSDF peak above threshold using MPM peak picking.
 	var best_lag := 0
 	var best_val := -1.0
 
 	# Find peaks: look for positive zero crossings then local maxima.
-	var in_positive := _nsdf_buffer[min_lag] > 0.0
+	var in_positive := nsdf[min_lag] > 0.0
 	var peak_lag := min_lag
-	var peak_val := _nsdf_buffer[min_lag]
+	var peak_val := nsdf[min_lag]
 
-	for tau in range(min_lag + 1, max_lag + 1):
-		var val := _nsdf_buffer[tau]
+	var t := min_lag + 1
+	while t <= max_lag:
+		var val := nsdf[t]
 		if not in_positive:
 			if val > 0.0:
 				in_positive = true
-				peak_lag = tau
+				peak_lag = t
 				peak_val = val
 		else:
 			if val > peak_val:
-				peak_lag = tau
+				peak_lag = t
 				peak_val = val
 			elif val < 0.0:
 				# Crossed back to negative — end of this peak region.
@@ -372,6 +430,7 @@ func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector
 					best_lag = peak_lag
 				in_positive = false
 				peak_val = 0.0
+		t += 1
 
 	# Check the last positive region.
 	if in_positive and peak_val > best_val:
@@ -384,9 +443,9 @@ func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector
 	# Parabolic interpolation around best_lag for sub-sample accuracy.
 	var refined_lag := float(best_lag)
 	if best_lag > min_lag and best_lag < max_lag:
-		var y_minus := _nsdf_buffer[best_lag - 1]
-		var y_zero := _nsdf_buffer[best_lag]
-		var y_plus := _nsdf_buffer[best_lag + 1]
+		var y_minus := nsdf[best_lag - 1]
+		var y_zero := nsdf[best_lag]
+		var y_plus := nsdf[best_lag + 1]
 		var denom := 2.0 * y_zero - y_minus - y_plus
 		if abs(denom) > 1e-10:
 			refined_lag = float(best_lag) + (y_minus - y_plus) / (2.0 * denom)

@@ -179,11 +179,15 @@ func _cond_never() -> bool:
 
 func _on_section_loop(_section_index: int, _loop_cursor: int) -> void:
 	if GameState.use_tutorial:
-		tutorial._section_played_once = true
+		tutorial.section_played_once = true
 
 ## True once the section has looped at least once since START_PLAYING was triggered.
 func _cond_section_played_once() -> bool:
-	return tutorial._section_played_once
+	if tutorial.section_played_once:
+		tutorial.section_played_once = false
+		return true
+	return false
+	
 
 # ── Recording stopped ────────────────────────────────────────────────────────────────────────
 

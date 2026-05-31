@@ -8,7 +8,7 @@ extends Resource
 @export var lines: Array[KlappyLineData] = []
 
 ## Returns the line whose [member KlappyLineData.id] matches [param line_id], or null.
-func get_line(line_id: KlappyLine.Id) -> KlappyLineData:
+func get_line(line_id : int) -> KlappyLineData:
 	for line in lines:
 		if line.id == line_id:
 			return line

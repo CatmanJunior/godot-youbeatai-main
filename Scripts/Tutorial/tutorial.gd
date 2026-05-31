@@ -62,7 +62,7 @@ var _outcome_map: Dictionary = {}
 
 var _last_knob_pos: Vector2 = Vector2.ZERO
 
-
+var section_played_once = false
 
 var _conditions: TutorialConditions
 var _outcomes: TutorialOutcomes
@@ -282,8 +282,10 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 		return
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return
-	var text: String = _line_text(tutorial_steps[instruction_index].line)
-	var uid: int = TTSHelper.say(text, "", _active, 2.5 if _increased_speed else TTSHelper.BASE_RATE)
+	var line: KlappyLineData = _line_data(tutorial_steps[instruction_index].line)
+	if line == null:
+		return
+	var uid: int = TTSHelper.say(line.text, "", line.show_continue, 2.5 if _increased_speed else TTSHelper.BASE_RATE)
 	EventBus.tutorial_utterance_started.emit(uid)
 
 # Suppresses TTS text output if the song is currently playing, so instructions don't
@@ -303,14 +305,16 @@ func _update_lists() -> void:
 		_condition = _get_condition_callable(current_step.condition)
 		_outcome = _get_outcome_callable(current_step.outcome)
 
-		EventBus.set_klappy_speech_bubble.emit(_instruction, "", _active)
-
 # Resolves the authored text for a tutorial line id, or "" when the step has no line.
 func _line_text(line_id: TutorialLine.Id) -> String:
-	if line_id < 0:
-		return ""
-	var line: KlappyLineData = TUTORIAL_LINES.get_line(line_id)
+	var line: KlappyLineData = _line_data(line_id)
 	return line.text if line != null else ""
+
+# Returns the full line resource for a tutorial line id, or null when the step has no line.
+func _line_data(line_id: TutorialLine.Id) -> KlappyLineData:
+	if line_id < 0:
+		return null
+	return TUTORIAL_LINES.get_line(line_id)
 
 # ── Enum dispatch ──────────────────────────────────────────────────────────────────────────────────────────────────
 

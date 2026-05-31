@@ -5,9 +5,17 @@ const BASE_RATE : float = 1.0
 const BASE_VOLUME : int = 100
 const BASE_PITCH : float= 1.0
 
+## How long the bubble lingers after a say()-spoken line finishes before auto-hiding.
+const AUTO_HIDE_LINGER_SEC : float = 0.6
+
 var initialized := false
 
 var voice: String
+
+## UID of the utterance whose bubble should auto-hide when it ends, or -1 if none.
+var _auto_hide_uid: int = -1
+## Bumped on every say()/clear() so stale auto-hide timers can detect they were superseded.
+var _auto_hide_generation: int = 0
 
 func init():
 	if initialized:
@@ -42,29 +50,40 @@ func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> 
 	return uid
 
 ## Shows the Klappy speech bubble with [param text] and speaks it via TTS in one atomic call.
+## The bubble auto-hides shortly after the utterance ends, unless [param show_continue] is set
+## (in which case it stays until something else clears it).
 ## Returns the utterance ID (same as [method speak]), or -1 if text is empty.
 func say(text: String, title: String = "", show_continue: bool = false, rate: float = BASE_RATE) -> int:
 	if text.strip_edges().is_empty():
 		return -1
+	_auto_hide_generation += 1
 	EventBus.set_klappy_speech_bubble.emit(text, title, show_continue)
-	return speak(text, rate)
+	var uid: int = speak(text, rate)
+	_auto_hide_uid = uid if not show_continue else -1
+	return uid
 
 ## Stops TTS and hides the Klappy speech bubble atomically.
 func clear() -> void:
+	_auto_hide_uid = -1
+	_auto_hide_generation += 1
 	stop_speaking()
 	EventBus.set_klappy_speech_bubble.emit("", "", false)
 
 func get_voice():
+	if not voice.is_empty():
+		return voice
+
 	var voices := DisplayServer.tts_get_voices_for_language("nl")
 	if voices.is_empty():
 		voices = DisplayServer.tts_get_voices_for_language("en")
 	print("available voices", voices)
-	
+
 	if voices.is_empty():
 		return ""
 
-	print("intialized tts voice: %s" % voices[0])
-	return voices[0]
+	voice = voices[0]
+	print("intialized tts voice: %s" % voice)
+	return voice
 
 func stop_speaking():
 	DisplayServer.tts_stop()
@@ -91,7 +110,20 @@ func utterance_start(utterance_id: int) -> void:
 func utterance_end(utterance_id: int) -> void:
 	print("done speaking")
 	EventBus.utterance_ended.emit(utterance_id)
+	_maybe_auto_hide(utterance_id)
 
 func utterance_cancel(utterance_id: int) -> void:
 	print("speaking canceled")
 	EventBus.utterance_canceled.emit(utterance_id)
+	_maybe_auto_hide(utterance_id)
+
+## Hides the say()-opened bubble shortly after its utterance settles, unless superseded.
+func _maybe_auto_hide(utterance_id: int) -> void:
+	if utterance_id != _auto_hide_uid:
+		return
+	_auto_hide_uid = -1
+	var gen: int = _auto_hide_generation
+	await get_tree().create_timer(AUTO_HIDE_LINGER_SEC).timeout
+	if gen != _auto_hide_generation:
+		return
+	EventBus.set_klappy_speech_bubble.emit("", "", false)

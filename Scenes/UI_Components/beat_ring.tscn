@@ -6,16 +6,15 @@
 [ext_resource type="Texture2D" uid="uid://bb782qvgu7cbs" path="res://Resources/Textures/radial.png" id="2_bt3xi"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="3_mgl8v"]
 [ext_resource type="Script" uid="uid://3umf8tthk01s" path="res://Scripts/Tutorial/UIVisibilityListener.gd" id="4_5gnhr"]
-[ext_resource type="PackedScene" uid="uid://mes3y20b5kk2" path="res://Scenes/UI_Components/cross.tscn" id="5_5gnhr"]
 [ext_resource type="Script" uid="uid://bq0jp4lgdls2x" path="res://Scripts/Audio/track_waveform_visualizer.gd" id="5_wuuqw"]
 [ext_resource type="Shortcut" uid="uid://c04ero7rv3vuk" path="res://Resources/InputActions/play_pause_shortcut.tres" id="7_5lvir"]
 [ext_resource type="Shader" uid="uid://4cca8tx8n3uw" path="res://Shaders/RadialFill.gdshader" id="7_a7d6b"]
 [ext_resource type="Texture2D" uid="uid://beaufoqdk1g75" path="res://Resources/Icons/Icons-_28_0031_Pause.png" id="7_wrqyy"]
 [ext_resource type="Texture2D" uid="uid://dpqq1wxs4ly0j" path="res://Resources/Icons/Icons-_28_0030_Play.png" id="8_5lvir"]
-[ext_resource type="PackedScene" uid="uid://icjhd0tmmomt" path="res://Scenes/UI_Components/Beam.tscn" id="9_nbgc4"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="9_wrqyy"]
 [ext_resource type="Texture2D" uid="uid://ch1ydacs6lt0n" path="res://Resources/Textures/cirkel3.png" id="9_ywh4c"]
 [ext_resource type="Script" uid="uid://dphj063nkqh6" path="res://Scripts/UI/SectionProgress.gd" id="13_0ra3y"]
+[ext_resource type="Texture2D" uid="uid://bnrkwdhdfs8oy" path="res://Resources/Textures_New/Beat-Ring-Beam.png" id="13_h47vu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nbgc4"]
 shader = ExtResource("7_a7d6b")
@@ -23,6 +22,10 @@ shader_parameter/fill_amount = 0.9150000434625
 shader_parameter/start_angle = 119.26400566504
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/clockwise = 1.0
+
+[sub_resource type="Curve" id="Curve_3ahwd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
 
 [sub_resource type="Gradient" id="Gradient_ndnxm"]
 offsets = PackedFloat32Array(0, 0.2, 0.8, 1)
@@ -138,7 +141,71 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Cross" parent="Cross" unique_id=912512629 instance=ExtResource("5_5gnhr")]
+[node name="Cross" type="Node2D" parent="Cross" unique_id=912512629]
+
+[node name="Line 0" type="Line2D" parent="Cross/Cross" unique_id=112202460]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+position = Vector2(0, 1)
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 45" type="Line2D" parent="Cross/Cross" unique_id=1968703859]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 0.7853982
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 90" type="Line2D" parent="Cross/Cross" unique_id=2137234150]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 1.5707964
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 135" type="Line2D" parent="Cross/Cross" unique_id=1628917811]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 2.3561945
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 180" type="Line2D" parent="Cross/Cross" unique_id=747772621]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 3.1415927
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 225" type="Line2D" parent="Cross/Cross" unique_id=869060811]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 3.9269907
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 270" type="Line2D" parent="Cross/Cross" unique_id=998197461]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 4.712389
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
+
+[node name="Line 315" type="Line2D" parent="Cross/Cross" unique_id=1365654515]
+self_modulate = Color(0.972549, 0.95686275, 0.8117647, 1)
+rotation = 5.497787
+points = PackedVector2Array(0, -95, 0, -234)
+width = 2.0
+width_curve = SubResource("Curve_3ahwd")
+default_color = Color(1, 1, 1, 0.5019608)
 
 [node name="Pointer" type="Sprite2D" parent="." unique_id=57170616]
 modulate = Color(0.78, 0.78, 0.78, 1)
@@ -146,7 +213,11 @@ z_index = -1
 scale = Vector2(0.6, 0.85)
 offset = Vector2(0, -150)
 
-[node name="Sprite2D" parent="Pointer" unique_id=1004547291 instance=ExtResource("9_nbgc4")]
+[node name="Sprite2D" type="Sprite2D" parent="Pointer" unique_id=1004547291]
+z_index = -1
+scale = Vector2(1, 0.8)
+texture = ExtResource("13_h47vu")
+offset = Vector2(0, -200)
 
 [node name="VisibilitySetter" type="Control" parent="Pointer" unique_id=2092152354 node_paths=PackedStringArray("ui_reference")]
 layout_mode = 3

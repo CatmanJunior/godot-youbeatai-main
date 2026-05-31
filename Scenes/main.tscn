@@ -32,7 +32,7 @@
 [ext_resource type="Script" uid="uid://3rst3pwp34yb" path="res://Scripts/Exporters/EmailExporter.gd" id="38_6ml46"]
 [ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Icons/SHAPES_Lock.png" id="39_bv80c"]
 [ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
-[ext_resource type="PackedScene" path="res://Scenes/Klappy_components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="PackedScene" uid="uid://ctdq5ex6oh6jx" path="res://Scenes/Klappy_components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="42_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://cqp8xc386gq2b" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
@@ -253,10 +253,6 @@ grow_horizontal = 2
 
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
-
-[node name="EnergyIcon" parent="UserInterface/Robot/EnergyProgressBar" parent_id_path=PackedInt32Array(1025278274, 580081017) index="0" unique_id=1359310293]
-anchor_left = 0.11926259
-anchor_top = -5.702996
 
 [node name="KlappyLightPad" parent="UserInterface/Robot" index="2" unique_id=1352817312]
 offset_left = -97.5

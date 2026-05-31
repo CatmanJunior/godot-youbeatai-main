@@ -38,12 +38,15 @@ func _ready() -> void:
 	EventBus.section_clear_requested.connect(clear_section)
 	EventBus.add_section_requested.connect(_on_add_section_requested)
 	EventBus.section_switch_requested.connect(switch_section_ui)
-	EventBus.section_remove_requested.connect(remove_section)
+	EventBus.section_remove_requested.connect(remove_section_request)
 	EventBus.section_next_requested.connect(next_section)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
-	await get_tree().process_frame
+	EventBus.post_ready.connect(post_ready)
+
+func post_ready():
 	spawn_initial_sections()
-		
+
+	EventBus.section_data_initialized.emit.call_deferred()
 
 func spawn_initial_sections():
 	"""Spawn the initial set of sections (data only)."""
@@ -88,6 +91,9 @@ func _on_add_section_requested(tex: Texture2D):
 	switch_section_next_frame(current_section_index)
 
 func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
+	if not SongState.selected_soundbank:
+		await EventBus.soundbank_loaded
+		
 	"""Populate section.progression and section.progression_offset from the active soundbank."""
 	var soundbank: SoundBank = SongState.selected_soundbank
 	if soundbank == null or chord_player_settings == null:
@@ -116,6 +122,9 @@ func _resolve_section_progression(section: SectionData, tex: Texture2D) -> void:
 
 	section.progression = progressions[progression_offset.progression]
 	section.progression_offset = progression_offset
+
+func remove_section_request(section_index: int):
+	EventBus.open_prompt.emit(func(): remove_section(section_index) )
 
 func remove_section(section_index: int):
 	"""Remove a section at the specified index"""
@@ -195,6 +204,12 @@ func next_section():
 	if GameState.loop_cursor < current_section.loop_count:
 		print("loop")
 		EventBus.section_loop.emit(current_section_index, GameState.loop_cursor)
+		return
+	else:
+		GameState.loop_cursor = 0
+		EventBus.section_loop.emit(current_section_index, GameState.loop_cursor)
+
+	if not GameState.song_mode_active:
 		return
 
 	"""Switch to the next section (or loop to first)"""

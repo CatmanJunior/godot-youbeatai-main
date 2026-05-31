@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://c78m8ijn10kwh"]
 
+[ext_resource type="Script" uid="uid://cpd4e3o87ptpj" path="res://Scripts/post_ready_emitter.gd" id="1_2060n"]
 [ext_resource type="PackedScene" uid="uid://bqky323kw7oj1" path="res://Scenes/UI_Components/chaos_pad_new.tscn" id="1_fg68e"]
 [ext_resource type="PackedScene" uid="uid://dijjqgkjlba4l" path="res://Scenes/UI_Components/track_select_buttons.tscn" id="1_qax2n"]
 [ext_resource type="Script" uid="uid://cmleytnmi467i" path="res://Scripts/Managers/section_manager.gd" id="7_b4mik"]
@@ -9,9 +10,10 @@
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="14_s8vy0"]
 [ext_resource type="Script" uid="uid://bdu4dto0gs2o" path="res://Scripts/UI/particle_manager.gd" id="14_xg142"]
 [ext_resource type="Resource" uid="uid://gj7nhtsggdey" path="res://Resources/ChordPlayerSettings/default_chord_player_settings.tres" id="17_55jeb"]
-[ext_resource type="Script" path="res://Scripts/Audio/metronome.gd" id="18_2daye"]
+[ext_resource type="Script" uid="uid://b4epao7gloc0h" path="res://Scripts/Audio/metronome.gd" id="18_2daye"]
 [ext_resource type="Resource" uid="uid://bg0wxntk7lvv1" path="res://Resources/Audio/SoundBanks/6_rock/6_rock.tres" id="19_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://b80lrad4guock" path="res://Resources/Textures/star.png" id="20_tvghb"]
+[ext_resource type="Script" uid="uid://dgya1l0nfr44k" path="res://Scripts/Audio/synth_voice_recorder.gd" id="21_my4ki"]
 [ext_resource type="Script" uid="uid://dn5lhlj3e7pi6" path="res://Scripts/Audio/clap_stomp.gd" id="21_s8vy0"]
 [ext_resource type="Texture2D" uid="uid://cify72xi008cm" path="res://Resources/Icons/Icons-_28_0029_Leaf.png" id="22_54nrm"]
 [ext_resource type="Texture2D" uid="uid://clgvascwc8we6" path="res://Resources/Icons/Icons-_28_0028_Verse.png" id="23_55jeb"]
@@ -27,9 +29,10 @@
 [ext_resource type="Script" uid="uid://dgve2eeehfcib" path="res://Scripts/Exporters/FileExporter.gd" id="34_2daye"]
 [ext_resource type="Resource" uid="uid://ls60qcnce7vy" path="res://Resources/Track_UI_Settings/default_track_UI_settings_registry.tres" id="36_qax2n"]
 [ext_resource type="PackedScene" uid="uid://br1pesld3l8lf" path="res://Scenes/UI_Components/loading_container.tscn" id="36_s8vy0"]
+[ext_resource type="Script" uid="uid://3rst3pwp34yb" path="res://Scripts/Exporters/EmailExporter.gd" id="38_6ml46"]
 [ext_resource type="Texture2D" uid="uid://bmsfxejgkif7w" path="res://Resources/Icons/SHAPES_Lock.png" id="39_bv80c"]
 [ext_resource type="Script" uid="uid://doxm5i2s8g7h4" path="res://Scripts/Tutorial/achievements.gd" id="39_ptfg5"]
-[ext_resource type="PackedScene" uid="uid://c3etasd6jbwwv" path="res://Scenes/UI_Components/Klappy.tscn" id="42_6ml46"]
+[ext_resource type="PackedScene" uid="uid://ctdq5ex6oh6jx" path="res://Scenes/Klappy_components/Klappy.tscn" id="42_6ml46"]
 [ext_resource type="Texture2D" uid="uid://dq1teqbr552sm" path="res://Resources/Textures/circle.png" id="42_ptfg5"]
 [ext_resource type="PackedScene" uid="uid://bbc3oy34ccrd8" path="res://Scenes/UI_Components/confirmation_prompt.tscn" id="45_kqrg6"]
 [ext_resource type="PackedScene" uid="uid://cqp8xc386gq2b" path="res://Scenes/UI_Components/beat_ring.tscn" id="45_owhal"]
@@ -47,7 +50,7 @@
 [ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="54_qax2n"]
 [ext_resource type="AudioStream" uid="uid://ccq2xyx050tvt" path="res://Resources/Audio/snare.wav" id="54_r1tr8"]
 [ext_resource type="AudioStream" uid="uid://dcgdta2ra65si" path="res://Resources/Audio/closed-hihat.wav" id="55_vlivj"]
-[ext_resource type="Script" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
+[ext_resource type="Script" uid="uid://c76hgacdcbr2k" path="res://Scripts/UI/chosen_emoijs.gd" id="56_ptfg5"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="56_wt5iu"]
 [ext_resource type="AudioStream" uid="uid://dmldhvmoh85ji" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Clap Rooftop 1.wav" id="57_pmnrr"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="58_s8cid"]
@@ -58,6 +61,7 @@
 [ext_resource type="Script" uid="uid://bwupnu0bu7hdn" path="res://Experimental/SongExport/listenToLastExport.gd" id="66_33qc4"]
 [ext_resource type="PackedScene" uid="uid://qaph84l46wo0" path="res://Scenes/UI_Components/settings_panel.tscn" id="90_658pa"]
 [ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="99_sslm1"]
+[ext_resource type="Script" uid="uid://be7drcg3jjnc0" path="res://Scripts/Managers/energy_manager.gd" id="100_emgr1"]
 
 [node name="scene" type="Node2D" unique_id=260053861]
 metadata/_edit_horizontal_guides_ = [-545.0]
@@ -69,6 +73,7 @@ scale = Vector2(4.12, 1)
 current = true
 
 [node name="Managers" type="Node" parent="." unique_id=205411252]
+script = ExtResource("1_2060n")
 
 [node name="AudioManagers" type="Node" parent="Managers" unique_id=1081391148]
 
@@ -96,6 +101,9 @@ song_recording_progress_bar = NodePath("../../../UserInterface/SwitchSectionButt
 recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic")
 waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
 
+[node name="SynthRecorder" type="Node" parent="Managers/AudioManagers" unique_id=30698243]
+script = ExtResource("21_my4ki")
+
 [node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
 script = ExtResource("29_s8vy0")
 fallback_bank = ExtResource("19_s8vy0")
@@ -122,6 +130,9 @@ script = ExtResource("10_o2owy")
 [node name="SongSaveLoadManager" type="Node" parent="Managers" unique_id=1447662220]
 script = ExtResource("99_sslm1")
 
+[node name="EnergyManager" type="Node" parent="Managers" unique_id=234567891]
+script = ExtResource("100_emgr1")
+
 [node name="Exporter" type="Node" parent="Managers" unique_id=500233961]
 script = ExtResource("33_55jeb")
 metadata/_custom_type_script = "uid://bocpgiluuvko5"
@@ -143,17 +154,19 @@ playback_type = 1
 script = ExtResource("34_2daye")
 metadata/_custom_type_script = "uid://dgve2eeehfcib"
 
-[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("achievements_panel", "clap_stomp", "chaos_pad_ui")]
+[node name="EmailExporter" type="Node" parent="Managers/Exporter" unique_id=833394152]
+script = ExtResource("38_6ml46")
+
+[node name="TutorialManager" type="Node" parent="Managers" unique_id=1809262903 node_paths=PackedStringArray("klappy_speech_bubble", "clap_stomp", "chaos_pad_ui")]
 script = ExtResource("28_ux43w")
 tutorial_steps_resource = ExtResource("29_n7cmr")
-achievements_panel = NodePath("../../UserInterface/Robot/AchievementsPanel")
+klappy_speech_bubble = NodePath("../../UserInterface/Robot/Robot/KlappySpeechBubble")
 achievements_fx_sound = ExtResource("61_0t4jf")
 clap_stomp = NodePath("../AudioManagers/ClapStomp")
 chaos_pad_ui = NodePath("../../UserInterface/ChaosPad")
 
-[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("energy_progress_bar", "section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
+[node name="AchievementManager" type="Node" parent="Managers/TutorialManager" unique_id=676746152 node_paths=PackedStringArray("section_ui", "btn_template_tip", "btn_track_2", "btn_track_3", "btn_synth_track_2")]
 script = ExtResource("39_ptfg5")
-energy_progress_bar = NodePath("../../../UserInterface/Robot/EnergyProgressBar")
 achievement_sfx = ExtResource("61_0t4jf")
 lock_icon_texture = ExtResource("39_bv80c")
 section_ui = NodePath("../../../UserInterface/SwitchSectionButtons")
@@ -241,12 +254,11 @@ grow_horizontal = 2
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
 
-[node name="KlappyLight" parent="UserInterface/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1025278274, 1162549337) index="1" unique_id=44086381]
-energy = 0.55
-
-[node name="KlappyLightPad" parent="UserInterface/Robot" index="5" unique_id=1352817312 node_paths=PackedStringArray("klappy_light", "face_light")]
-klappy_light = NodePath("../SubViewportContainer/KlappyLight")
-face_light = NodePath("../SubViewportContainer/SubViewport/Klappy/SpotLight3D")
+[node name="KlappyLightPad" parent="UserInterface/Robot" index="2" unique_id=1352817312]
+offset_left = -97.5
+offset_top = -163.5
+offset_right = 102.5
+offset_bottom = 36.5
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 visible = false
@@ -263,6 +275,7 @@ grow_vertical = 1
 
 [node name="SettingsPanel" parent="UserInterface" unique_id=248245984 instance=ExtResource("90_658pa")]
 visible = false
+z_index = 3999
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.49400002
@@ -291,11 +304,12 @@ offset_bottom = -449.0
 
 [node name="ConfirmationPrompt" parent="UserInterface" unique_id=111843129 instance=ExtResource("45_kqrg6")]
 visible = false
+z_index = 4000
 layout_mode = 1
-offset_left = -974.0
-offset_top = -319.0
-offset_right = -526.0
-offset_bottom = -129.0
+offset_left = -862.945
+offset_top = -452.0
+offset_right = -414.94452
+offset_bottom = -262.0
 
 [node name="SavingLabel" parent="UserInterface" unique_id=945421672 instance=ExtResource("54_qax2n")]
 visible = false
@@ -392,10 +406,10 @@ tooltip_text = "Herhaal deze laag meer"
 tooltip_text = "Herhaal deze laag meer"
 
 [node name="EmojiPrompt" parent="UserInterface/SwitchSectionButtons" index="4" unique_id=569761149]
-offset_left = -1002.0
-offset_top = -605.0
-offset_right = -554.0
-offset_bottom = -415.0
+offset_left = -987.0
+offset_top = -614.0
+offset_right = -510.0
+offset_bottom = -389.0
 
 [node name="VisibilitySetter" type="Control" parent="UserInterface/SwitchSectionButtons" unique_id=1851349150 node_paths=PackedStringArray("ui_reference")]
 anchors_preset = 0
@@ -461,8 +475,8 @@ script = ExtResource("56_ptfg5")
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/Robot"]
-[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"]
-[editable path="UserInterface/Robot/SubViewportContainer/SubViewport/Klappy/model"]
-[editable path="UserInterface/Robot/AchievementsPanel"]
+[editable path="UserInterface/Robot/Robot"]
+[editable path="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy"]
+[editable path="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model"]
 [editable path="UserInterface/SettingsPanel"]
 [editable path="UserInterface/SwitchSectionButtons"]

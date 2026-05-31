@@ -131,10 +131,12 @@ func _on_song_loaded() -> void:
 func _on_section_added(new_section_index: int, tex: Texture2D) -> void:
 	_add_section_button(new_section_index, tex)
 	_update_section_ui()
+	set_copy_paste_clear_buttons_active(false)
 
 func _on_section_removed(section_index: int) -> void:
 	_remove_section_button(section_index)
 	_update_section_ui()
+	set_copy_paste_clear_buttons_active(false)
 
 func _on_section_cleared() -> void:
 	update_section_switch_buttons_colors()

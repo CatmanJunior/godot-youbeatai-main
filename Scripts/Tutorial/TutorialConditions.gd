@@ -6,12 +6,20 @@ extends Node
 
 var tutorial: Tutorial
 
+func _ready() -> void:
+	EventBus.countdown_tick.connect(_on_countdown_tick)
+	EventBus.countdown_close_requested.connect(_on_countdown_closed)
+	EventBus.section_loop.connect(_on_section_loop)
+	EventBus.recording_stopped.connect(_on_recording_stopped)
+	EventBus.tutorial_utterance_started.connect(_on_tutorial_utterance_started)
+	EventBus.utterance_ended.connect(_on_tts_utterance_ended)
+	EventBus.utterance_canceled.connect(_on_tts_utterance_ended)
+
 func get_map() -> Dictionary:
 	var C := TutorialStepData.TutorialCondition
 	return {
 		C.IS_CLAPPING:                    _cond_clapped,
 		C.TTS_FINISHED:                   _cond_tts_done,
-		C.TTS_DONE_AFTER_KNOB:            _cond_tts_done,  # same as TTS_FINISHED
 		C.IS_PLAYING:                     _cond_playing,
 		C.IS_PAUSED:                      _cond_not_playing,
 		C.TIMER_AT_ZERO:                  _cond_timer_done,
@@ -26,11 +34,15 @@ func get_map() -> Dictionary:
 		C.BASS_TRACK_SELECTED:            _cond_bass_ring_selected,
 		C.BASS_RECORDING_OR_TTS_DONE:     _cond_bass_ring_record_or_tts_done,
 		C.BASS_RECORDING_ACTIVE:          _cond_bass_ring_recording_active,
+		C.COUNTDOWN_TICK:                 _cond_countdown_tick,
+		C.COUNTDOWN_CLOSED:               _cond_countdown_closed,
 		C.ALWAYS:                         _cond_always,
 		C.NEVER:                          _cond_never,
-		C.KNOB_AT_MIX_STAR:               _cond_knob_at_mix_star,
-		C.KNOB_AT_OUTSIDE_STAR:           _cond_knob_at_outside_star,
-		C.KNOB_AT_STAR:                   _cond_knob_at_star,
+		C.KNOB_AT_MIX_TARGET:               _cond_knob_at_star.bind(tutorial.mix_target),
+		C.KNOB_AT_OUTSIDE_TARGET:           _cond_knob_at_star.bind(tutorial.outside_target),
+		C.KNOB_AT_TARGET:                   _cond_knob_at_star.bind(tutorial.target),
+		C.SECTION_PLAYED_ONCE:              _cond_section_played_once,
+		C.RECORDING_STOPPED:                _cond_recording_stopped,
 	}
 
 # ── Playback ─────────────────────────────────────────────────────────────────────────────────────────────
@@ -43,8 +55,35 @@ func _cond_not_playing() -> bool:
 
 # ── TTS ──────────────────────────────────────────────────────────────────────────────────────────────────────
 
+var _tts_speaking: bool = false
+var _tts_just_finished: bool = false
+var _tutorial_utterance_id: int = -1
+
+## Called when Tutorial.gd starts speaking a step — stores the utterance ID so we
+## only react to the tutorial's own TTS and ignore all other speech events.
+func _on_tutorial_utterance_started(id: int) -> void:
+	_tutorial_utterance_id = id
+	_tts_speaking = true
+	_tts_just_finished = false
+
+## Shared handler for both utterance_ended and utterance_canceled.
+## Guarded by ID so achievement reactions, countdown numbers, and other
+## system speech cannot prematurely advance a tutorial step.
+func _on_tts_utterance_ended(id: int) -> void:
+	if id != _tutorial_utterance_id:
+		return
+	if GameState.use_tutorial and _tts_speaking:
+		_tts_speaking = false
+		_tts_just_finished = true
+
+## True once on the frame after TTS finishes.
+## Falls back to immediate pass when speech is muted or no voices are available.
 func _cond_tts_done() -> bool:
-	return not DisplayServer.tts_is_speaking()
+	if GameState.mute_speech or TTSHelper.get_voice().is_empty():
+		return true
+	var fired := _tts_just_finished
+	_tts_just_finished = false
+	return fired
 
 # ── Timer ────────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -63,9 +102,9 @@ func _cond_clapped() -> bool:
 func _cond_interaction_count_reached(is_stomp: bool) -> bool:
 	if is_stomp:
 		return tutorial.stomping \
-			and tutorial.clap_stomp.stomped_on_beat_amount >= Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT
+			and tutorial.clap_stomp.stomped_on_beat_amount >= Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT
 	return tutorial.clapping \
-		and tutorial.clap_stomp.clapped_on_beat_amount >= Tutorial.CLAP_REQUIRED_ON_BEAT_COUNT
+		and tutorial.clap_stomp.clapped_on_beat_amount >= Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT
 
 # ── Ring beat counts ────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -94,16 +133,39 @@ func _cond_beat_removed() -> bool:
 func _cond_bass_ring_selected() -> bool:
 	return SongState.selected_track_index == 4
 
+## True when bass recording has started early (skipping TTS countdown), or when TTS has finished normally.
 func _cond_bass_ring_record_or_tts_done() -> bool:
-	if SongState.selected_track_index == 4 and GameState.is_recording:
-		tutorial.play_achievement_sfx()
-		tutorial.tutorial_level += 4  # skip 4 steps; _next_line adds 1 more = 5 total
-		DisplayServer.tts_stop()
-		return true
-	return not DisplayServer.tts_is_speaking()
+	return (SongState.selected_track_index == 4 and GameState.is_recording) \
+		or not DisplayServer.tts_is_speaking()
 
 func _cond_bass_ring_recording_active() -> bool:
 	return SongState.selected_track_index == 4 and GameState.is_recording
+
+# ── Countdown tick ────────────────────────────────────────────────────────────────────────────────────────────────
+
+var _countdown_ticked: bool = false
+var _countdown_closed: bool = false
+
+func _on_countdown_tick(seconds: int) -> void:
+	_countdown_ticked = true
+	# Countdown numbers are shown in the bubble and spoken, but do NOT emit
+	# tutorial_utterance_started — they must not trigger _cond_tts_done.
+	TTSHelper.say(str(seconds))
+
+## True for the one frame in which a beat-synced countdown tick was emitted.
+func _cond_countdown_tick() -> bool:
+	var fired := _countdown_ticked
+	_countdown_ticked = false
+	return fired
+
+func _on_countdown_closed() -> void:
+	_countdown_closed = true
+
+## True for the one frame in which the countdown panel was closed.
+func _cond_countdown_closed() -> bool:
+	var fired := _countdown_closed
+	_countdown_closed = false
+	return fired
 
 # ── Sentinels ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -113,35 +175,39 @@ func _cond_always() -> bool:
 func _cond_never() -> bool:
 	return false
 
+# ── Section played once ─────────────────────────────────────────────────────────────────────
+
+func _on_section_loop(_section_index: int, _loop_cursor: int) -> void:
+	if GameState.use_tutorial:
+		tutorial.section_played_once = true
+
+## True once the section has looped at least once since START_PLAYING was triggered.
+func _cond_section_played_once() -> bool:
+	if tutorial.section_played_once:
+		tutorial.section_played_once = false
+		return true
+	return false
+	
+
+# ── Recording stopped ────────────────────────────────────────────────────────────────────────
+
+var _recording_stopped: bool = false
+
+func _on_recording_stopped(_recording_data: RecordingData) -> void:
+	if GameState.use_tutorial:
+		_recording_stopped = true
+
+## True once after a recording has stopped. Auto-resets on read.
+func _cond_recording_stopped() -> bool:
+	var fired := _recording_stopped
+	_recording_stopped = false
+	return fired
+
 # ── Chaos pad knob zones ──────────────────────────────────────────────────────────────────────────────────────────────
 
 const KNOB_ZONE_RADIUS: float = 50.0
 
-## True when the knob is within [constant KNOB_ZONE_RADIUS] of the mix-star marker (centre of triangle).
-func _cond_knob_at_mix_star() -> bool:
-	var marker := tutorial.chaos_pad_ui.mix_star_marker
-	if marker == null:
-		return false
-#print distance
-	#distance should be pivot position
-	var distance :float = tutorial._last_knob_pos.distance_to(marker.position+marker.size/2)
-
-	print ("Checking knob distance to mix star: " + str(distance))
-	return distance < KNOB_ZONE_RADIUS
-
-## True when the knob is within [constant KNOB_ZONE_RADIUS] of the outside-star marker.
-func _cond_knob_at_outside_star() -> bool:
-	var marker := tutorial.chaos_pad_ui.outside_star_marker
-	if marker == null:
-		return false
-	#distance should be pivot position
-	var distance :float = tutorial._last_knob_pos.distance_to(marker.position+marker.size/2)
-
-	print ("Checking knob distance to outside star: " + str(distance))
-	return distance < KNOB_ZONE_RADIUS
-
-func _cond_knob_at_star() -> bool:
-	var marker := tutorial.chaos_pad_ui.main_star_marker
+func _cond_knob_at_star(marker : TextureRect) -> bool:
 	if marker == null:
 		return false
 	#distance should be pivot position

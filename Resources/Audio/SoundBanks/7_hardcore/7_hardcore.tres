@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://bykf5m7qx3o1q" path="res://Resources/Audio/SoundBanks/7_hardcore/Kick Bazzazian 1.wav" id="4_kd4x3"]
 [ext_resource type="AudioStream" uid="uid://d2t6q8lum30iv" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Kick Fm LowLife.wav" id="4_nomca"]
 [ext_resource type="AudioStream" uid="uid://8rxdspna22wi" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/ClosedHH Acidy.wav" id="4_tm1gk"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_fgo6n"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_fgo6n"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_ytapi"]
 [ext_resource type="Resource" uid="uid://d4c5jcrp0ty32" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile_bass.tres" id="6_tm1gk"]
 [ext_resource type="AudioStream" uid="uid://tts26aq54llx" path="res://Resources/Audio/SoundBanks/7_hardcore/mineur/Snare Shapednoise 2.wav" id="7_kd4x3"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
+[ext_resource type="Resource" uid="uid://pgoewkr5e6g2" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile.tres" id="19_67gow"]
 
 [sub_resource type="Resource" id="Resource_fjs6r"]
 script = ExtResource("2_fgo6n")
@@ -103,6 +104,6 @@ closed_alt = ExtResource("4_tm1gk")
 synth_soundfonts = Array[Resource]([ExtResource("5_ytapi"), ExtResource("5_ytapi")])
 synth_instrument_ids = Array[int]([12, 9])
 synth_beats = Array[float]([0.0, 0.0])
-synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_tm1gk"), ExtResource("6_tm1gk")])
+synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_tm1gk"), ExtResource("19_67gow")])
 noteplayer_settings = Array[ExtResource("9_tm1gk")]([ExtResource("11_bass"), ExtResource("12_syn1")])
 chord_progressions = SubResource("Resource_itxl5")

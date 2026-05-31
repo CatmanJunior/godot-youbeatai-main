@@ -7,12 +7,9 @@
 [ext_resource type="PackedScene" uid="uid://wpiofc8iuhrj" path="res://Scenes/Klappy_components/robot.tscn" id="3_a7rio"]
 [ext_resource type="Resource" uid="uid://bfv1qc8vipcip" path="res://Resources/ButtonGroups/ThemeSelectionButtonGroup.tres" id="3_grpai"]
 [ext_resource type="Texture2D" uid="uid://b6tuxknqbe7q8" path="res://Resources/Icons/SelectedEmoticion128.png" id="4_k11aq"]
-[ext_resource type="PackedScene" uid="uid://bafxjikk2rjnh" path="res://Scenes/Klappy_components/klappy_respons_bubble.tscn" id="4_saqfl"]
 [ext_resource type="Script" uid="uid://dymf0ccqr3c14" path="res://Scripts/UI/Buttons/dual_select_button.gd" id="5_7sjhg"]
 [ext_resource type="Resource" uid="uid://dr07qidpgsf71" path="res://Resources/ButtonGroups/EmotionSelectionButtonGroup.tres" id="5_dsbnb"]
 [ext_resource type="Script" uid="uid://5y6btorxvw7l" path="res://Scripts/Klappy/Klappy_soundbank_screen.gd" id="5_pd2wx"]
-[ext_resource type="Texture2D" uid="uid://btqdvx8c68vf7" path="res://Resources/Textures_New/Backgrounds/_0003_BG-720p.png" id="6_lmhht"]
-[ext_resource type="Texture2D" uid="uid://bswdtrs8bvqo3" path="res://Resources/Textures_New/Backgrounds/Gradient Top Purple_720p.png" id="7_avjdi"]
 [ext_resource type="ButtonGroup" uid="uid://bnx6ah57t5lrt" path="res://Resources/ButtonGroups/BeatAmountSelectionGroup.tres" id="8_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://b40gyhwmw8ouv" path="res://Resources/Textures_New_Extra/MenuShapes128_0002_Klappy_BG.png" id="10_bt16w"]
 [ext_resource type="Texture2D" uid="uid://h0nis3rbt2fe" path="res://Resources/Textures_New_Extra/MenuShapes128_0005_8_Purple.png" id="11_18n7q"]
@@ -21,6 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://bgj0pqbf388g8" path="res://Resources/Textures_New_Extra/MenuShapes128_0007_16_Green.png" id="14_dsbnb"]
 [ext_resource type="Texture2D" uid="uid://ctljyx7otadkx" path="res://Resources/Textures_New_Extra/MenuShapes128_0006_32_Green.png" id="15_7sjhg"]
 [ext_resource type="Texture2D" uid="uid://bndvo0vsvj7ns" path="res://Resources/Textures_New_Extra/MenuShapes128_0008_8_Green.png" id="16_grpai"]
+[ext_resource type="Texture2D" uid="uid://d3avwn0b5a15c" path="res://Resources/Textures/Klappy_background.png" id="17_h74sy"]
+[ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="20_18n7q"]
 [ext_resource type="Texture2D" uid="uid://dl6eu7qv8vsk8" path="res://Resources/Textures_New_Extra/NoEmoticon128.png" id="22_18n7q"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8jt4r"]
@@ -89,17 +88,16 @@ corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h74sy"]
 
-[node name="scene2" type="Node2D" unique_id=46128934 node_paths=PackedStringArray("klappy_response", "talking")]
+[node name="scene2" type="Node2D" unique_id=46128934]
 script = ExtResource("5_pd2wx")
-klappy_response = NodePath("Klappy respons bubble")
-message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 thema's."
-talking = NodePath("Robot/SubViewportContainer/SubViewport/Klappy")
+message = "Hier gaan wij kiezen wat voor een liedje jij wilt hebben, kies 2 emoties en 2 themas."
+tutmessage = "Wij gaan kiezen wat voor liedje we willen maken, ik heb er al 2 ingevuld, kies nog 1 emotie en 1 thema."
 
 [node name="SoundBankSelector" type="Node" parent="." unique_id=760179130 node_paths=PackedStringArray("soundbank_selection_menu")]
 script = ExtResource("1_h74sy")
 soundbank_selection_menu = NodePath("../SoundBankSelectionMenu")
 
-[node name="SoundBankSelectionMenu" type="Panel" parent="." unique_id=1866251115 node_paths=PackedStringArray("selected_emotion_labels", "selected_theme_labels", "gebruik_button", "gevonden_soundbank_label", "emotion_placeholders", "theme_placeholders")]
+[node name="SoundBankSelectionMenu" type="Panel" parent="." unique_id=1866251115 node_paths=PackedStringArray("selected_emotion_labels", "selected_theme_labels", "start_button", "current_soundbank_label", "emotion_placeholders", "theme_placeholders")]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -118,8 +116,8 @@ emotion_toggles = ExtResource("5_dsbnb")
 theme_toggles = ExtResource("3_grpai")
 selected_emotion_labels = [NodePath("../Chosen_Emotion_label_0"), NodePath("../Chosen_Emotion_label_1")]
 selected_theme_labels = [NodePath("../Chosen_Theme_label_0"), NodePath("../Chosen_Theme_label_1")]
-gebruik_button = NodePath("Ready/Ready")
-gevonden_soundbank_label = NodePath("SelectieLabelTitle/SelectionLabel")
+start_button = NodePath("StartButtonSprite/StartButton")
+current_soundbank_label = NodePath("CurrentSoundBankLabel")
 beatSelectButtonGroup = ExtResource("8_dsbnb")
 emotion_placeholders = [NodePath("../Chosen_Emotion_label_0/Sprite2D"), NodePath("../Chosen_Emotion_label_1/Sprite2D")]
 theme_placeholders = [NodePath("../Chosen_Theme_label_0/Sprite2D"), NodePath("../Chosen_Theme_label_1/Sprite2D")]
@@ -884,39 +882,26 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_trim_flags = 128
 
-[node name="SelectieLabelTitle" type="Label" parent="SoundBankSelectionMenu" unique_id=229279889]
-visible = false
+[node name="CurrentSoundBankLabel" type="Label" parent="SoundBankSelectionMenu" unique_id=229279889]
 layout_mode = 0
-offset_left = 538.9402
-offset_top = -13.1073
-offset_right = 848.9402
-offset_bottom = 24.8927
+offset_left = -36.237793
+offset_top = 501.9314
+offset_right = 424.88135
+offset_bottom = 525.8329
 theme = ExtResource("2_ie3tb")
 theme_override_fonts/font = ExtResource("2_avjdi")
-text = "Gevonden Soundbank:"
-horizontal_alignment = 1
+text = "DEBUG ONLY - Gevonden Soundbank:"
 vertical_alignment = 1
 
-[node name="SelectionLabel" type="Label" parent="SoundBankSelectionMenu/SelectieLabelTitle" unique_id=80078663]
-layout_mode = 0
-offset_left = -10.0
-offset_top = 30.0
-offset_right = 322.0
-offset_bottom = 72.0
-theme = ExtResource("2_ie3tb")
-text = "....."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Ready" type="Panel" parent="SoundBankSelectionMenu" unique_id=1484130741]
+[node name="StartButtonSprite" type="Panel" parent="SoundBankSelectionMenu" unique_id=1484130741]
 layout_mode = 0
 offset_left = 593.68225
 offset_top = 67.8494
-offset_right = 793.6823
+offset_right = 784.1233
 offset_bottom = 146.49304
 theme_override_styles/panel = SubResource("StyleBoxEmpty_18n7q")
 
-[node name="Ready" type="Button" parent="SoundBankSelectionMenu/Ready" unique_id=1703942918]
+[node name="StartButton" type="Button" parent="SoundBankSelectionMenu/StartButtonSprite" unique_id=1703942918]
 layout_mode = 0
 offset_right = 190.0
 offset_bottom = 78.0
@@ -934,46 +919,29 @@ disabled = true
 text = "Start "
 icon_alignment = 1
 
-[node name="Label" type="Label" parent="SoundBankSelectionMenu" unique_id=1617777208]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 16.0
-
-[node name="Robot" parent="." unique_id=399824719 instance=ExtResource("3_a7rio")]
-position = Vector2(474, 152)
-
-[node name="AchievementsPanel" parent="Robot" index="0" unique_id=1497439872]
-visible = false
-
-[node name="SubViewportContainer" parent="Robot" index="1" unique_id=2110113658]
-light_mask = 2
-offset_top = -133.5
-offset_bottom = 155.5
-
-[node name="DNT_001" parent="Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" parent_id_path=PackedInt32Array(399824719, 1167922712, 386737351, 1991320323) index="0" unique_id=560188361]
-transform = Transform3D(1.0000001, 0, 0, 0, 1.0000001, -2.842171e-14, 0, 2.842171e-14, 1.0000001, 0.00072655204, 0.00016041595, 0.0018097726)
-
-[node name="DirectionalLight3D" parent="Robot/SubViewportContainer/SubViewport/Klappy" parent_id_path=PackedInt32Array(399824719, 1167922712) index="2" unique_id=1731684434]
-transform = Transform3D(0.98480767, 0.0030305798, 0.1736215, -0.17144132, -0.14190595, 0.9749207, 0.027592069, -0.9898756, -0.13923067, 0, -3.29693, 0)
-
-[node name="KlappyLight" parent="Robot/SubViewportContainer" index="1" unique_id=1195742085]
-visible = false
-light_mask = 2
-position = Vector2(202.5, 57.499996)
-scale = Vector2(0.6, 0.6)
-color = Color(1, 0.654902, 0.34117648, 1)
-energy = 2.66
-range_item_cull_mask = 2
-texture_scale = 2.41
-
-[node name="Klappy respons bubble" parent="." unique_id=532752049 node_paths=PackedStringArray("talking") instance=ExtResource("4_saqfl")]
-position = Vector2(85, -27)
-talking = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy")
-
-[node name="Continue" parent="Klappy respons bubble/Panel" parent_id_path=PackedInt32Array(532752049, 1355785928) index="1" unique_id=1713570990]
-visible = false
+[node name="KlappyBackground" type="TextureRect" parent="SoundBankSelectionMenu" unique_id=179915471]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 539.057
+offset_top = 69.14899
+offset_right = 744.057
+offset_bottom = 274.14807
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+texture = ExtResource("17_h74sy")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1519508310]
+
+[node name="Robot" parent="." unique_id=509510474 instance=ExtResource("3_a7rio")]
+position = Vector2(479, 156)
 
 [node name="WorldBackPanel" type="Sprite2D" parent="." unique_id=808172695]
 modulate = Color(0.85, 0.85, 0.85, 1)
@@ -981,18 +949,11 @@ light_mask = 2
 z_index = -2
 texture_filter = 2
 texture_repeat = 1
-texture = ExtResource("6_lmhht")
-metadata/_edit_lock_ = true
-
-[node name="Gradient" type="Sprite2D" parent="." unique_id=342217268]
-modulate = Color(0.85, 0.85, 0.85, 1)
-z_index = -2
-texture_filter = 2
-texture_repeat = 1
-texture = ExtResource("7_avjdi")
+texture = ExtResource("20_18n7q")
 metadata/_edit_lock_ = true
 
 [node name="ClappyBG" type="Sprite2D" parent="." unique_id=1470871126]
+visible = false
 position = Vector2(477, 215)
 scale = Vector2(2, 2)
 texture = ExtResource("10_bt16w")
@@ -1056,9 +1017,3 @@ vertical_alignment = 1
 position = Vector2(51.8, 50.800003)
 scale = Vector2(0.45, 0.45)
 texture = ExtResource("22_18n7q")
-
-[editable path="Robot"]
-[editable path="Robot/AchievementsPanel"]
-[editable path="Robot/SubViewportContainer/SubViewport/Klappy"]
-[editable path="Robot/SubViewportContainer/SubViewport/Klappy/model"]
-[editable path="Klappy respons bubble"]

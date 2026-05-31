@@ -14,9 +14,11 @@ static var fallback_bank_name: String = ""
 
 func _ready() -> void:
 	# Defer loading the bank until the main scene is fully initialized, to ensure SongState and EventBus are ready to receive the loaded data.
-	call_deferred("_load_and_apply_bank")
+	EventBus.players_initialized.connect(_load_and_apply_bank)
 
 func _load_and_apply_bank() -> void:
+	# print(SongState.selected_soundbank.resource_path)
+	
 	if SongState.selected_soundbank != null:
 		var bank = SongState.selected_soundbank
 		fallback_bank_name = bank.resource_name

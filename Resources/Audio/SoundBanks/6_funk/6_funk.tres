@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://cb4887dwqn4yw" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Kick WatchOut 2.wav" id="4_5x8qn"]
 [ext_resource type="AudioStream" uid="uid://btbacjr6irux4" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Closed_Perc Am.wav" id="4_hgown"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_7xnpc"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_hyamu"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_hyamu"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="6_hgown"]
 [ext_resource type="Resource" uid="uid://bkw52bqhi76nt" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile_Bass.tres" id="6_loxld"]
 [ext_resource type="AudioStream" uid="uid://sefuiwp4k82o" path="res://Resources/Audio/SoundBanks/6_funk/mineur/Snare Bling.wav" id="7_05f0b"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="10_eprof"]
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
+[ext_resource type="Resource" uid="uid://d0vc5kasfpo5u" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile.tres" id="19_ur1dt"]
 
 [sub_resource type="Resource" id="Resource_iqkmn"]
 script = ExtResource("2_hyamu")
@@ -109,6 +110,6 @@ closed_alt = ExtResource("4_hgown")
 synth_soundfonts = Array[Resource]([ExtResource("5_7xnpc"), ExtResource("5_7xnpc")])
 synth_instrument_ids = Array[int]([5, 12])
 synth_beats = Array[float]([0.0, 0.0])
-synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_loxld"), ExtResource("6_loxld")])
+synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_loxld"), ExtResource("19_ur1dt")])
 noteplayer_settings = Array[ExtResource("9_hgown")]([ExtResource("11_bass"), ExtResource("12_syn1")])
 chord_progressions = SubResource("Resource_y8wnv")

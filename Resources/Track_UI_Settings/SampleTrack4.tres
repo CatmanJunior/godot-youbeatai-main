@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://dns1ah5cw3cf1" path="res://Resources/Textures_New/Shapes/Filled/SHAPES_Blue_Drop.png" id="1_5xxe8"]
 [ext_resource type="Texture2D" uid="uid://ipjmua8gcywv" path="res://Resources/Textures_New/Shapes/Outlines/SHAPES_Blue_Empty.png" id="2_m0enc"]
-[ext_resource type="Texture2D" uid="uid://bah65uwy1medd" path="res://Resources/Icons/Icons-_28_0027_Bell.png" id="3_gip15"]
-[ext_resource type="Texture2D" uid="uid://00laejpqxwks" path="res://Resources/Icons/Icons-_28_0026_Blast.png" id="4_cxsih"]
+[ext_resource type="Texture2D" uid="uid://bbuvh3dsbguls" path="res://Resources/Icons/Icons-_28_0015_Crash.png" id="3_gip15"]
+[ext_resource type="Texture2D" uid="uid://batnhixl4mfje" path="res://Resources/Icons/Icons-_28_0016_vHigh_Hat-.png" id="4_cxsih"]
 [ext_resource type="Script" uid="uid://c8umjx1f0tc6n" path="res://Scripts/DataClasses/Track_UI_Settings/sample_track_UI_settings.gd" id="6_jovnk"]
 
 [resource]

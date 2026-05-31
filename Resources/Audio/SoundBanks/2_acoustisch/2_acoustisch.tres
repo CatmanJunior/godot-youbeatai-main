@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_xdn7q"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="4_m4qsc"]
 [ext_resource type="AudioStream" uid="uid://dftnqqs3hjppb" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Closed_Tam.wav" id="4_sfolf"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_4deg6"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_4deg6"]
 [ext_resource type="Resource" uid="uid://d1gqo8nvqbqtp" path="res://Resources/Audio/SoundBanks/2_acoustisch/EffectProfile.tres" id="5_l8cde"]
 [ext_resource type="AudioStream" uid="uid://co7i5xf384x1j" path="res://Resources/Audio/SoundBanks/2_acoustisch/Kick Forest 1.wav" id="6_hey0b"]
 [ext_resource type="SoundFont" uid="uid://c0ncqrlqb7blj" path="res://Resources/SoundFonts/Jvbass.sf2" id="6_pb4c0"]

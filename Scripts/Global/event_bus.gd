@@ -2,9 +2,20 @@ extends Node
 
 @warning_ignore_start("unused_signal")
 
+##Animation trigger signal, carries an AnimationType enum value to specify which animation to play.
+signal trigger_animation_requested(animation_type: int)
+
+## level loading signals
+signal level_loaded()
+signal post_ready()
+signal section_data_initialized()
+signal players_initialized()
+
 ## Emitted when a full application restart is requested.
 signal restart_requested()
 
+## confirm popup signals
+signal open_prompt(action: Callable)
 
 ## Emitted when a soundbank has been selected, carrying its associated themes and emotions.
 signal soundbank_selected(themes: Array[String], emotions: Array[String])
@@ -197,6 +208,8 @@ signal on_tutorial_done()
 signal energy_points_changed(points: int)
 ## Emitted when an action is attempted that requires more energy than the player currently has.
 signal not_enough_energy()
+## Emitted to request a change in energy points by the given delta (positive = gain, negative = cost).
+signal energy_change_requested(delta: float)
 ## Emitted to request showing the achievements panel. If instruction_text is "", panel is closed.
 signal set_klappy_speech_bubble(instruction: String, title: String, show_continue: bool)
 
@@ -206,13 +219,22 @@ signal utterance_ended(utterance_id: int)
 
 signal utterance_started(utterance_id: int)
 
+## Emitted when a text-to-speech utterance was interrupted before finishing.
+signal utterance_canceled(utterance_id: int)
+
 signal utterance_content_changed(text: String)
+
+## Emitted by Tutorial when it starts speaking a tutorial step, carrying the utterance ID.
+## Allows TutorialConditions to track only tutorial-owned TTS events.
+signal tutorial_utterance_started(utterance_id: int)
 
 # ── Countdown ──
 ## Emitted to request showing the countdown overlay.
 signal countdown_show_requested()
 ## Emitted to request closing the countdown overlay.
 signal countdown_close_requested()
+## Emitted each time the displayed countdown integer decrements (e.g. 4→3→2→1).
+signal countdown_tick(seconds_remaining: int)
 
 # ── Keyboard ──
 ## Emitted to request toggling fullscreen mode.

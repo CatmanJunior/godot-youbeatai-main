@@ -3,10 +3,10 @@ class_name BeatManager
 
 @export var track_settings_registry: TrackUISettingsRegistry
 
-const BEATS_PER_BAR : int = 4
-const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
+@export var swing_reduce_amount: float = 0.5
 
-@onready var KlappyAnim = $"../../UserInterface/Robot/SubViewportContainer/SubViewport/Klappy"
+const BEATS_PER_BAR: int = 4
+const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
 
 var bpm: int:
 	get: return SongState.bpm
@@ -31,7 +31,7 @@ var current_beat: int:
 
 var swing: float:
 	get: return SongState.swing
-	set(value): 
+	set(value):
 		EventBus.swing_changed.emit(value)
 
 var beat_duration: float:
@@ -53,7 +53,7 @@ func _ready():
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
 	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
-	EventBus.beat_seek_requested.connect(func(beat): 
+	EventBus.beat_seek_requested.connect(func(beat):
 		current_beat = beat
 		
 		if playing:
@@ -67,17 +67,13 @@ func _ready():
 	EventBus.beat_set_requested.connect(_set_beat)
 	EventBus.template_set.connect(_on_template_set)
 
-	EventBus.beat_triggered.connect(trigger_beat)
-	# current_beat = 0
-
-
 func _on_template_set(actives: Array) -> void:
 	SongState.current_section.set_beat_actives(actives)
 
 func _on_soundbank_loaded(bank: SoundBank) -> void:
 	print("Soundbank loaded: %s" % bank)
 	bpm = bank.bpm
-	swing = bank.swing
+	swing = bank.swing * swing_reduce_amount
 
 # --- BPM functions ---
 func get_beat_progress() -> float:
@@ -92,7 +88,7 @@ func get_bar_progress() -> float:
 func _on_play_pause_toggled():
 	playing = not playing
 
-	if playing: 
+	if playing:
 		EventBus.beat_triggered.emit(current_beat)
 
 	if not playing:
@@ -113,7 +109,7 @@ func _process(_delta: float):
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
 	
-	if playing:		
+	if playing:
 		var current_time = Time.get_ticks_msec()
 		var elapsed = current_time - last_beat_time
 		var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
@@ -124,20 +120,28 @@ func _process(_delta: float):
 			current_beat = (current_beat + 1) % total_beats
 			EventBus.pre_beat_triggered.emit(current_beat)
 			EventBus.beat_triggered.emit(current_beat)
+
+			_trigger_animations_on_beat(current_beat)
+
 			last_beat_time = current_time
 
+func _trigger_animations_on_beat(beat: int) -> void:
+	if SongState.current_section.get_beat(0, beat):
+		EventBus.trigger_animation_requested.emit(KlappyAnimations.AnimationType.STAMP)
+	if SongState.current_section.get_beat(1, beat):
+		EventBus.trigger_animation_requested.emit(KlappyAnimations.AnimationType.CLAP)
 
 func _get_swing_offset() -> float:
 	if current_beat % 2 == 1:
 		return swing
 	else:
 		return -swing
-
+ 
 # --- Beat manager functions ---
 func _on_beat_sprite_clicked(p_track: int, beat: int):
-	var is_active = get_beat(p_track, beat)
-	if not is_active and not AchievementManager.has_energy_for_beat_addition():
-		EventBus.beat_state_changed.emit(p_track, beat, is_active) 
+	var is_active = SongState.current_section.get_beat(p_track, beat)
+	if not is_active and not (GameState.use_tutorial or GameState.energy_points >= 1.0):
+		EventBus.beat_state_changed.emit(p_track, beat, is_active)
 		EventBus.not_enough_energy.emit()
 		return
 	
@@ -154,17 +158,6 @@ func _set_beat(track: int, beat: int, active: bool):
 	SongState.current_section.set_beat(track, beat, active)
 	EventBus.beat_state_changed.emit(track, beat, active)
 
-
-func get_beat(track: int, beat: int) -> bool:
-	"""Get whether a beat is active"""
-	return SongState.current_section.get_beat(track, beat)
-
-
-func trigger_beat(beat: int):
-	if SongState.current_section.get_beat(0, beat):
-		KlappyAnim.on_stamp()
-	if SongState.current_section.get_beat(1, beat):
-		KlappyAnim.on_clap()
 
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat

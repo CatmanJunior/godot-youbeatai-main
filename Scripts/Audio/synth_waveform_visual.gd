@@ -36,7 +36,27 @@ func _compute_circular_offsets(samples: PackedFloat32Array, rate: float, length:
 		if samples.size() > 0 and length > 0.0:
 			var percentage := float(i) / float(point_count)
 			var sample_idx := clampi(int(percentage * length * rate), 0, samples.size() - 1)
-			volume_offset = abs(samples[sample_idx]) * volume_dist
+			
+			# --- START SMOOTHING LOGIC ---
+			var sum_abs_samples: float = 0.0
+			var count: int = 0
+			
+			# Define a small window size (e.g., 3 samples: previous, current, next) 
+			var window_size: int = 3
+			
+			for j in range(-window_size * 0.5, window_size, 1): # Iterates -1, 1, 3... (adjusting for window size)
+				var neighbor_idx = sample_idx + j
+				
+				# Check if the neighbor index is within the bounds of the samples array
+				if neighbor_idx >= 0 and neighbor_idx < samples.size():
+					sum_abs_samples += (samples[neighbor_idx])
+					count += 1
+					
+			# Calculate the average absolute value
+			var average_abs_sample: float = sum_abs_samples / count
+			volume_offset = average_abs_sample * volume_dist * 0.5
+
+			# --- END SMOOTHING LOGIC ---
 		var angle := -PI / 2.0 + TAU * float(i) / float(point_count)
 		var final_dist := (base_dist - volume_offset) if reversed else (base_dist + volume_offset)
 		result[i] = Vector2(cos(angle), sin(angle)) * final_dist

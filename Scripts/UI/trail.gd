@@ -3,10 +3,11 @@ extends Line2D
 var started := false
 
 func _ready() -> void:
-	await get_tree().process_frame
+	EventBus.level_loaded.connect(level_loaded)
+
+func level_loaded():
 	clear_points()
 	started = true
-
 
 func _process(_delta: float) -> void:
 	if not started:

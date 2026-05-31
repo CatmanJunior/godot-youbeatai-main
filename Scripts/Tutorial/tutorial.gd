@@ -2,11 +2,18 @@ class_name Tutorial
 extends Node
 
 @export var tutorial_steps_resource: TutorialStepsCollection
-@export var achievements_panel: Panel
+@export var klappy_speech_bubble: Panel
 @export var achievements_fx_sound: AudioStream
 @export var clap_stomp: ClapStompDetector
 @export var chaos_pad_ui: ChaosPadUI
 @export var chaos_pad_knob_top_position: Node2D
+
+var mix_target: TextureRect:
+	get: return chaos_pad_ui.mix_target
+var outside_target: TextureRect:
+	get: return chaos_pad_ui.outside_target
+var target: TextureRect:
+	get: return chaos_pad_ui.first_target
 
 # ── Constants ─────────────────────────────────────────────
 
@@ -21,7 +28,10 @@ const KICK_PRESET_BEAT_INDICES: Array[int] = [0, 4, 8]   # top, right, bottom
 const CLAP_PRESET_BEAT_INDICES: Array[int] = [4, 12]     # right, left
 
 ## Number of on-beat claps/stomps required to complete the interaction phase.
-const CLAP_REQUIRED_ON_BEAT_COUNT: int = 5
+const CLAP_STOMP_REQUIRED_ON_BEAT_COUNT: int = 5
+
+## Library of spoken tutorial lines, keyed by TutorialLine.Id.
+const TUTORIAL_LINES: KlappyLineLibrary = preload("res://Resources/Tutorial/tutorial_lines_registry.tres")
 
 # ── Tutorial state ────────────────────────────────────────────
 
@@ -39,8 +49,6 @@ var _previous_clap: int = -1
 var _previous_stomp: int = -1
 var stomping: bool = false
 var clapping: bool = false
-var clapped_on_beat: int = 0
-var stomped_on_beat: int = 0
 
 var _in_stomp_phase: bool = false
 var _in_clap_phase: bool = false
@@ -53,6 +61,8 @@ var _condition_map: Dictionary = {}
 var _outcome_map: Dictionary = {}
 
 var _last_knob_pos: Vector2 = Vector2.ZERO
+
+var section_played_once = false
 
 var _conditions: TutorialConditions
 var _outcomes: TutorialOutcomes
@@ -82,8 +92,6 @@ func _ready() -> void:
 	EventBus.chaos_pad_dragging.connect(_on_chaos_pad_knob_dragged)
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
-	EventBus.clap_on_beat_detected.connect(_on_has_clapped_on_beat)
-	EventBus.stomp_on_beat_detected.connect(_on_has_stomped_on_beat)
 	try_activate_tutorial()
 
 
@@ -93,23 +101,14 @@ func _turn_off_stars():
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.MIX_TARGET, false)
 	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.OUTSIDE_TARGET, false)
 
-func _on_has_clapped_on_beat() -> void:
-	clapped_on_beat += 1
-	print("clapped on beat: %d" % clapped_on_beat)
-
-func _on_has_stomped_on_beat() -> void:
-	stomped_on_beat += 1
-	print("stomped on beat: %d" % stomped_on_beat)
-	
 
 # ── EventBus handlers ───────────────────────────────────────────────────────────────────────────────────────────────────────
 
-# Disables the tutorial immediately, hides the achievements panel, and stops any active TTS speech.
+# Disables the tutorial immediately, hides the speech bubble, and stops any active TTS speech.
 func _on_skip_tutorial_requested() -> void:
 	GameState.use_tutorial = false
-	achievements_panel.visible = false
-	if DisplayServer.tts_is_speaking():
-		DisplayServer.tts_stop()
+	EventBus.set_klappy_speech_bubble.emit("", "", false)
+	TTSHelper.clear()
 
 # Updates the per-frame clapping/stomping state flags when ClapStompDetector emits an interaction.
 func _on_has_clapped_or_stomped(interaction_type: int) -> void:
@@ -156,13 +155,10 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		var i_event : InputEventKey = event
 		if i_event.keycode == Key.KEY_0 and i_event.pressed:
-			if _outcome.is_valid():
-				_outcome.call()
-			if tutorial_level >= tutorial_steps.size():
-				return
-			tutorial_level += 1
-			_speak_tutorial_instruction(tutorial_level)
-			_update_lists()
+			_goto_next_step()
+
+
+
 
 # Activates the tutorial if GameState.use_tutorial is set.
 # Sets the BPM to 60, hides the beat pointer, wires up continue and instrument buttons.
@@ -206,10 +202,8 @@ func setup_tutorial() -> void:
 func update_tutorial() -> void:
 	if GameState.use_tutorial == false:
 		return
-	_continue_button_visible(_active)
 
-	if not _first_tts_done and GameState.use_tutorial:
-		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, true)
+	if not _first_tts_done:
 		_speak_tutorial_instruction(tutorial_level)
 		_first_tts_done = true
 
@@ -218,7 +212,7 @@ func update_tutorial() -> void:
 	if tutorial_level != -1 and GameState.use_tutorial and tutorial_level < tutorial_steps.size():
 		_update_lists()
 		if _condition.is_valid() and _condition.call():
-			_next_line()
+			_goto_next_step()
 
 # ── Private helpers ─────────────────────────────────────────────────────────────────────────────────────────────────────
 
@@ -228,7 +222,7 @@ func _timer_setup() -> void:
 		_timer = Timer.new()
 		_timer.wait_time = 3
 		_timer.one_shot = true
-		achievements_panel.add_child(_timer)
+		klappy_speech_bubble.add_child(_timer)
 
 # Returns the number of active (filled) beats in the given ring of the current section.
 func _active_beats_per_ring(index_ring: int) -> int:
@@ -240,27 +234,19 @@ func _active_beats_per_ring(index_ring: int) -> int:
 			amount += 1
 	return amount
 
-# Shows or hides the main continue button depending on whether the current step allows it.
-func _continue_button_visible(vis : bool) -> void:
-	EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.KLAPPY_CONTINUE, vis)
-
 # Advances the tutorial when the main continue button is pressed,
 # but only if the current step has set _active = true.
 func _tutorial_continue() -> void:
 	if not _active:
 		return
-	_next_line()
-
-# Advances the tutorial when the Klappy robot's continue button is pressed.
-func _klappy_continue() -> void:
-	_next_line()
+	_goto_next_step()
 
 func _on_chaos_pad_knob_dragged(pos: Vector2) -> void:
 	_last_knob_pos = pos
 
 # Fires the current outcome callable, increments the step index, speaks the next instruction,
 # and refreshes the active condition and outcome callables for the new step.
-func _next_line() -> void:
+func _goto_next_step() -> void:
 	if _outcome.is_valid():
 		_outcome.call()
 	if tutorial_level >= tutorial_steps.size():
@@ -276,34 +262,31 @@ func _update_interaction_sfx() -> void:
 		_previous_stomp = clap_stomp.stomped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % (CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
+			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
 			false)
 	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
 		_previous_clap = clap_stomp.clapped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % (CLAP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
+			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
 			false)
 
-# Speaks the instruction text for the given step index via TTS.
-# Strips emoticons from the text and uses a faster rate if _increased_speed is set.
-# Does nothing if TTS text is suppressed, speech is muted, or the index is out of bounds.
+# Speaks the instruction text for the given step index via TTS and shows it in the Klappy bubble.
+# Uses a faster rate if _increased_speed is set.
+# Does nothing if TTS text is suppressed or the index is out of bounds.
 func _speak_tutorial_instruction(instruction_index: int) -> void:
 	if not GameState.use_tutorial:
 		return
 	if not _text_allowed:
 		return
-	if GameState.mute_speech:
-		return
 	if instruction_index < 0 or instruction_index >= tutorial_steps.size():
 		return
-	var text: String = tutorial_steps[instruction_index].instruction
-	var clean_text: String = TTSHelper.text_without_emoticons(text)
-	if _increased_speed:
-		TTSHelper.speak(clean_text, 2.5)
-	else:
-		TTSHelper.speak(clean_text)
+	var line: KlappyLineData = _line_data(tutorial_steps[instruction_index].line)
+	if line == null:
+		return
+	var uid: int = TTSHelper.say(line.text, "", line.show_continue, 2.5 if _increased_speed else TTSHelper.BASE_RATE)
+	EventBus.tutorial_utterance_started.emit(uid)
 
 # Suppresses TTS text output if the song is currently playing, so instructions don't
 # overlap with music. Returns true if playback is active, false otherwise.
@@ -318,11 +301,20 @@ func _skip_play() -> bool:
 func _update_lists() -> void:
 	if tutorial_level >= 0 and tutorial_level < tutorial_steps.size():
 		var current_step: TutorialStepData = tutorial_steps[tutorial_level]
-		_instruction = current_step.instruction
+		_instruction = _line_text(current_step.line)
 		_condition = _get_condition_callable(current_step.condition)
 		_outcome = _get_outcome_callable(current_step.outcome)
 
-		EventBus.tutorial_instruction_text_requested.emit(_instruction)
+# Resolves the authored text for a tutorial line id, or "" when the step has no line.
+func _line_text(line_id: TutorialLine.Id) -> String:
+	var line: KlappyLineData = _line_data(line_id)
+	return line.text if line != null else ""
+
+# Returns the full line resource for a tutorial line id, or null when the step has no line.
+func _line_data(line_id: TutorialLine.Id) -> KlappyLineData:
+	if line_id < 0:
+		return null
+	return TUTORIAL_LINES.get_line(line_id)
 
 # ── Enum dispatch ──────────────────────────────────────────────────────────────────────────────────────────────────
 

@@ -1,0 +1,34 @@
+id,text,title,use_tts,use_bubble,show_continue,interrupt,rate
+TUT_INTRO,"Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen.","",true,true,false,false,1.0
+TUT_KICK_RING,"Deze roze cirkels vormen een kick-ring","",true,true,false,false,1.0
+TUT_KICK_PLACE,"Op deze ring kun je de kick plaatsen van je Beat","",true,true,false,false,1.0
+TUT_KICK_START,"Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen","",true,true,false,false,1.0
+TUT_PAUSE,"Druk op de 2 streepjes ⏸️ om de Beat op pauze te zetten","",true,true,false,false,1.0
+TUT_KICK_FILL,"Nu jij! Vul nog 2 cirkels door er op te drukken","",true,true,false,false,1.0
+TUT_KICK_HEAR,"Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt ▶️","",true,true,false,false,1.0
+TUT_STOMP,"Stamp 👟 5 keer mee met de kick van je Beat!","",true,true,false,false,1.0
+TUT_STOMP_DONE,"Dat kickt er lekker in!","",true,true,false,false,1.0
+TUT_LEVEL2,"Op naar level 2!","",true,true,false,false,1.0
+TUT_CLAP_RING,"Deze oranje ring is de clap-ring","",true,true,false,false,1.0
+TUT_CLAP_HEAR,"Ik heb er net 2 ingevuld. Luister maar eens naar de clap ▶️!","",true,true,false,false,1.0
+TUT_CLAP_NICE,"Klinkt al leuk!","",true,true,false,false,1.0
+TUT_CLAP_FILL,"Jouw beurt! Vul nóg 2 oranje vormen in door er op te drukken","",true,true,false,false,1.0
+TUT_CLAP_REMOVE,"Haal nu ook 1 van de ingevulde vormen weg door er op te drukken","",true,true,false,false,1.0
+TUT_CLAP_HEAR2,"Ik ben benieuwd laat mij eens horen! ▶️","",true,true,false,false,1.0
+TUT_CLAP_ALONG,"Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen","",true,true,false,false,1.0
+TUT_TALENT,"Super goed gedaan, je hebt talent!","",true,true,false,false,1.0
+TUT_BASS_RING,"Dit is de gele bass-ring. Klik op de beer 🐻 om de gele laag te kiezen en een brommende melodie toe te voegen","",true,true,false,false,1.0
+TUT_BASS_MIC,"Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!","",true,true,false,false,1.0
+TUT_BASS_RECORD,"Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af van 4 naar 0","",true,true,false,false,1.0
+TUT_BASS_DONE,"Super gedaan, het klinkt al leuk","",true,true,false,false,1.0
+TUT_SAMPLE_FUN,"Laten we je sample nog leuker maken!","",true,true,false,false,1.0
+TUT_MIXER,"Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen","",true,true,false,false,1.0
+TUT_MIXER_EXPLAIN,"Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖 aan je sample geven","",true,true,false,false,1.0
+TUT_KNOB_TARGET,"Beweeg het witte rondje met drie streepjes naar het target ","",true,true,false,false,1.0
+TUT_KNOB_HEAR,"Luister maar eens!▶️","",true,true,false,false,1.0
+TUT_KNOB_SFEER,"Dit geeft een hele andere sfeer aan je beat","",true,true,false,false,1.0
+TUT_KNOB_MIX,"Beweeg het witte rondje met streepjes weer naar het target ","",true,true,false,false,1.0
+TUT_KNOB_MIX_DONE,"Zo krijg je een mix tussen jouw sample en het instrument!","",true,true,false,false,1.0
+TUT_KNOB_OUTSIDE,"Beweeg het witte rondje met streepjes nog 1 keer naar het target","",true,true,false,false,1.0
+TUT_KNOB_SOFT,"Zo maak je het geluid van je sample zachter. Als je hem helemaal buiten de driehoek zet hoor je niks meer","",true,true,false,false,1.0
+TUT_FINISH,"Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!","",true,true,false,false,1.0

@@ -52,7 +52,6 @@ func _ready() -> void:
 	EventBus.pre_beat_triggered.connect(pre_on_beat)
 	EventBus.section_switch_requested.connect(seek_to_position)
 
-
 func _process(delta: float) -> void:
 	if is_song_recording:
 		recording_timer += delta
@@ -77,6 +76,13 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 
 	players[SongLayer.VOICE_OVER].stream = recording_data.audio_stream
 	players[SongLayer.MIX].stream = recording_data.audio_stream # alt version with effects
+
+	# first recording set mixer to that position
+	if not _has_recording:
+		track_data.knob_position = Vector2(252.8054, 462.0462)
+		set_weights(Vector3(0,0,1))
+		TTSHelper.speak(KlappyVoice.line_text(KlappyLine.Id.CHORD_SCHEMA_READY))
+
 	_has_recording = true
 	set_weights(_weights)
 
@@ -89,10 +95,13 @@ func setup(index: int, parent_bus: String, _settings : ChordPlayerSettings = nul
 	chords.set_settings(_settings, sub_bus_names[SongLayer.CHORD] )
 	add_child(chords)
 
-	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
+
+func _on_soundbank_loaded(bank: SoundBank) -> void:
+	super._on_soundbank_loaded(bank)
+	apply_effect_profile(bank.synth_effect_profiles[0])
 
 func pre_on_beat(beat:int):
-	if beat == 0 and GameState.song_mode_active:
+	if beat == 0:
 		EventBus.section_next_requested.emit()
 
 func _on_beat_triggered(_beat: int) -> void:

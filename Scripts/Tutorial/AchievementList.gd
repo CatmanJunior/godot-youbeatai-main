@@ -12,42 +12,53 @@ func build() -> Array[AchievementDef]:
 	var list: Array[AchievementDef] = []
 	list.assign([
 		_def(N.TRACK_2,
-			"Verzamel meer energie om de Snare ring vrij te spelen",
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_TRACK_2),
 			func() -> bool: return true,
 			50.0,
-			func(): EventBus.track_sprites_visibility_requested.emit(2, true)),
+			func(): EventBus.track_sprites_visibility_requested.emit(2, true),
+			KlappyLine.Id.ACH_TRACK_2),
 
 		_def(N.SYNTH_2,
-			"Verzamel meer energie om een hoger geluid op te kunnen nemen",
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_SYNTH_2),
 			func() -> bool: return true,
 			70.0,
-			_unlock_big_line),
+			_unlock_big_line,
+			KlappyLine.Id.ACH_SYNTH_2),
 
 		_def(N.TEMPLATE_TIP,
-			"Als je hier op klikt, dan laat ik een voorbeeld liedje zien",
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_TEMPLATE),
 			func() -> bool: return true,
-			50.0,),
+			50.0,
+			Callable(),
+			KlappyLine.Id.ACH_TEMPLATE_TIP),
 
 		_def(N.ADD_SECTION,
-			"Als je een nieuwe patroon toevoegt, kan je hier een heel liedje opnemen.",
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_ADD_SECTION),
 			func() -> bool: return true,
 			50.0,
 			_unlock_sections,
-		),
+			KlappyLine.Id.ACH_ADD_SECTION),
 
 		_def(N.FIRST_SAMPLE,
-			"Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring.",
-			func() -> bool: return tracker.samples_recorded >= 1),
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_FIRST_SAMPLE),
+			func() -> bool: return tracker.samples_recorded >= 1,
+			-1.0,
+			Callable(),
+			KlappyLine.Id.ACH_FIRST_SAMPLE),
 
 		_def(N.SECOND_SAMPLE,
-			"Kan je hier voor mij een kort gek geluid opnemen?",
-			func() -> bool: return tracker.samples_recorded >= 2),
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_SECOND_SAMPLE),
+			func() -> bool: return tracker.samples_recorded >= 2,
+			-1.0,
+			Callable(),
+			KlappyLine.Id.ACH_SECOND_SAMPLE),
 
 		_def(N.TRACK_3,
-			"Verzamel meer energie om de hi-hat vrij te spelen",
+			KlappyVoice.line_text(KlappyLine.Id.ACH_TIP_TRACK_3),
 			func() -> bool: return true,
 			50.0,
-			func(): EventBus.track_sprites_visibility_requested.emit(3, true)),
+			func(): EventBus.track_sprites_visibility_requested.emit(3, true),
+			KlappyLine.Id.ACH_TRACK_3),
 	])
 	return list
 
@@ -71,6 +82,7 @@ func _def(
 	p_tooltip: String,
 	p_condition: Callable,
 	p_worth: float = -1.0,
-	p_result: Callable = Callable()
+	p_result: Callable = Callable(),
+	p_unlock_message: int = KlappyLine.Id.NONE
 ) -> AchievementDef:
-	return AchievementDef.new(p_node_id, p_tooltip, p_condition, p_worth, p_result)
+	return AchievementDef.new(p_node_id, p_tooltip, p_condition, p_worth, p_result, p_unlock_message)

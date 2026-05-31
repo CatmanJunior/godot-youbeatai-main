@@ -7,8 +7,8 @@ var is_visible: bool:
 	set(value): printerr("Settings Menu UI: Nuh-uh, can't do that here")
 
 ##How much the BPM changes when pressing the BPM up/down buttons
-@export var bpm_modifier: int = 5
-@export var swing_modifier: float = 0.05
+@export var bpm_modifier: int = 1
+@export var swing_modifier: float = 0.01
 
 @export_category("Settings Panel")
 @export var settings_panel: Panel
@@ -96,13 +96,13 @@ func _bpm_changed(new_bpm: float) -> void:
 func _on_swing_changed(new_swing: float) -> void:
 	swing_slider.value = new_swing
 	swing_progress_bar.value = new_swing
-	swing_label.text = "Swing: %.2f%%" % (new_swing * 100.0)
+	swing_label.text = "Swing: %.0f%%" % (new_swing * 100.0)
 	
 
 func _update_labels() -> void:
 	bpm_label.text = str(SongState.bpm)
 	recording_delay_label.text = "%.2fs" % recording_delay_slider.value
-	swing_label.text = "Swing: %.2f%%" % (swing_slider.value * 100.0)
+	swing_label.text = "Swing: %.0f%%" % (swing_slider.value * 100.0)
 
 func initial_values(bank: SoundBank):
 	_on_swing_changed(bank.swing)
@@ -164,7 +164,7 @@ func _on_save_beat_pressed():
 	settings_panel.visible = false
 	
 func _on_restart_button() -> void:
-	EventBus.restart_requested.emit()
+	EventBus.open_prompt.emit(EventBus.restart_requested.emit)
 
 func _on_metronome_toggle_toggled(button_pressed: bool):
 	GameState.metronome_enabled = button_pressed

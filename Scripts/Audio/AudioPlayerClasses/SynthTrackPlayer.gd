@@ -37,8 +37,6 @@ func setup(index: int, parent_bus: String, settings: NotePlayerSettings = null) 
 		apply_note_player_settings(settings)
 	else:
 		push_warning("Warning: No note player settings provided for SynthTrackPlayer %d, using defaults." % index)
-	
-	apply_effect_profile(SongState.selected_soundbank.synth_effect_profiles[0])
 
 func _set_recorded_stream(recording_data: RecordingData) -> void:
 	if recording_data.track_data.index != track_index:
@@ -75,9 +73,11 @@ func _on_section_switched(_new) -> void:
 		for i in [SynthLayer.ALT, SynthLayer.REC]:
 			players[i].stream = null
 		_has_recording = false
-
+	# set knob and weights to the recordedsample
+	var w = Vector3(0,0,1)
+	
 	# Always restore saved weights and master volume from track data (not the runtime cache).
-	set_weights(track_data.weights)
+	set_weights(w)
 	set_volume_db(track_data.master_volume)
 
 func _on_beat_triggered(beat: int) -> void:

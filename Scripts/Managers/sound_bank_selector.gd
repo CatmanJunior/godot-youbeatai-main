@@ -42,7 +42,7 @@ func _load_json(res_path: String) -> Variant:
 
 func update_soundbank_label(chosen_themes: Array[String], chosen_emotions: Array[String]) -> void:
 	chosen_soundbank = choose_soundbank(chosen_themes, chosen_emotions)
-	soundbank_selection_menu.gevonden_soundbank_label.text = generate_soundbank_label(chosen_themes)
+	soundbank_selection_menu.set_current_soundbank_label(generate_soundbank_label(chosen_themes))
 
 
 func _get_offset(chosen_themes: Array[String]) -> int:

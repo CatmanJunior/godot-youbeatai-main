@@ -10,7 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://2ih31s5r7ye" path="res://Resources/Audio/SoundBanks/7_metal/mineur/Kick AB 1.wav" id="4_iykbk"]
 [ext_resource type="AudioStream" uid="uid://dsq27fhqq0pje" path="res://Resources/Audio/SoundBanks/7_metal/mineur/OpenHH Beautiful.wav" id="4_l52x6"]
 [ext_resource type="AudioStream" uid="uid://s11ykx60biwj" path="res://Resources/Audio/SoundBanks/7_metal/Kick AlexBanks 2.wav" id="4_v1pk3"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_0apmr"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_0apmr"]
 [ext_resource type="Resource" uid="uid://615j407x8sbj" path="res://Resources/Audio/SoundBanks/7_metal/EffectProfile.tres" id="5_l52x6"]
 [ext_resource type="SoundFont" uid="uid://drkyib86jxdtn" path="res://Resources/SoundFonts/florestan-subset.sfo" id="5_n7rrv"]
 [ext_resource type="AudioStream" uid="uid://cadnf7sn3twr3" path="res://Resources/Audio/SoundBanks/7_metal/Snare DoubleDutch 2.wav" id="7_l52x6"]
@@ -103,4 +103,3 @@ synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("5_l52x6"), ExtResource("5_l52x6")])
 noteplayer_settings = Array[ExtResource("9_l52x6")]([ExtResource("11_bass"), ExtResource("12_syn1")])
 chord_progressions = SubResource("Resource_rsiks")
-metadata/_custom_type_script = "uid://d0cv5il7l6laj"

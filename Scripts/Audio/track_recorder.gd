@@ -8,12 +8,14 @@ var recording: bool:
 	get: return GameState.is_recording
 
 var current_recording_data: RecordingData = null
-var _thread: Thread = null
 var pre_recording_volume: float = 0
 
 @export var song_recording_progress_bar: ProgressBar
 @export var recording_sample_button: RecordSampleButton
 @export var waveform_visualizer: TrackWaveformVisualizer
+
+var timer: SceneTreeTimer 
+var timer_wait_time: float = 1.5
 
 func _ready():
 	EventBus.record_button_toggled.connect(_on_recording_button_toggled)
@@ -22,6 +24,9 @@ func _ready():
 func _process(delta: float):
 	if recording and current_recording_data:
 		_handle_recording(delta)
+
+	if timer and timer.time_left > 0:
+		recording_sample_button.update_button(1 - (timer.time_left / timer_wait_time), Color.CORNSILK)
 
 func _handle_recording(delta: float) -> void:
 	if current_recording_data.state != RecordingData.State.RECORDING:
@@ -57,7 +62,7 @@ func _start_recording() -> void:
 	# Step 2: Mute all tracks
 	# EventBus.mute_all_requested.emit(true)
 	pre_recording_volume = AudioServer.get_bus_volume_db(0)
-	EventBus.set_master_volume_db.emit(-20)
+	
 
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
@@ -84,10 +89,12 @@ func _start_recording() -> void:
 		GameState.metronome_enabled = false
 		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning
 		EventBus.countdown_close_requested.emit()
-	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
-		await get_tree().create_timer(0.4).timeout
-		
 
+	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
+		timer = get_tree().create_timer(timer_wait_time)
+		await timer.timeout
+		
+	EventBus.set_master_volume_db.emit(-20)
 	# Step 4: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING
 	EventBus.recording_started.emit(current_recording_data)
@@ -155,18 +162,7 @@ func _post_process_sample(recording_data: RecordingData) -> void:
 func _post_process_synth(recording_data: RecordingData) -> void:
 	waveform_visualizer.update_waveform(recording_data)
 	waveform_visualizer.reset_progress_bar(recording_data)
-	# State remains PROCESSING — thread sets RECORDING_DONE after voice analysis
-	_thread = Thread.new()
-	_thread.start(_run_voice_processing.bind(recording_data))
-
-func _run_voice_processing(recording_data: RecordingData) -> void:
-	var sequence: Sequence = VoiceProcessor.process_audio(recording_data.audio_stream, NOTES)
-	call_deferred("_on_voice_processed", sequence, recording_data)
-
-func _on_voice_processed(sequence: Sequence, recording_data: RecordingData) -> void:
-	_thread.wait_to_finish()
-	_thread = null
-	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+	# Voice analysis is finalized by SynthVoiceRecorder via EventBus.recording_stopped
 
 func _post_process_song(recording_data: RecordingData) -> void:
 	recording_data.state = RecordingData.State.RECORDING_DONE

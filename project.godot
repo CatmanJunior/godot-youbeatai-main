@@ -11,22 +11,23 @@ config_version=5
 [application]
 
 config/name="Ritme Robot"
+config/version="1.13"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
 run/max_fps=60
-run/low_processor_mode=true
 run/delta_smoothing=false
 boot_splash/bg_color=Color(0.05882353, 0.078431375, 0.19215687, 1)
 boot_splash/stretch_mode=3
-boot_splash/image="uid://c14pbvcc8bgpu"
+boot_splash/image="uid://cmv4ornhe2tof"
 config/icon="uid://bw7qlsn2o2s82"
 
 [audio]
 
 buses/default_bus_layout="uid://cc7g4ekfye5tq"
-general/default_playback_type.web=0
 general/text_to_speech=true
+driver/output_latency.web=100
 driver/enable_input=true
+driver/mix_rate.web=48000
 
 [autoload]
 
@@ -35,6 +36,7 @@ GameState="*res://Scripts/Global/game_state.gd"
 SongState="*res://Scripts/Global/song_state.gd"
 TTSHelper="*res://Scripts/Global/tts_helper.gd"
 FFT="*uid://xq15anvbve8x"
+KlappyVoice="*res://Scripts/Global/klappy_voice.gd"
 
 [debug]
 
@@ -44,7 +46,7 @@ file_logging/enable_file_logging=true
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/size/mode=3
+window/size/mode=4
 window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
@@ -54,7 +56,7 @@ project/assembly_name="youbeatai-godot"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg", "res://addons/synth/plugin.cfg")
+enabled=PackedStringArray("res://addons/csv-data-importer/plugin.cfg")
 
 [gui]
 

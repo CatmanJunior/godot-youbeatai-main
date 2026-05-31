@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_4fj2q"]
 [ext_resource type="AudioStream" uid="uid://cv1usun3tbiiy" path="res://Resources/Audio/SoundBanks/1_kampvuur/ClosedHH Cosmos.wav" id="3_cgpue"]
 [ext_resource type="AudioStream" uid="uid://coi6rfsowxm1a" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Closed_Snare G.wav" id="4_cn8us"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_4vbx7"]
+[ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_4vbx7"]
 [ext_resource type="Resource" uid="uid://b7ub1flq0y223" path="res://Resources/Audio/SoundBanks/1_kampvuur/EffectProfile.tres" id="5_atnbr"]
 [ext_resource type="AudioStream" uid="uid://dcxqgbn1rm7n0" path="res://Resources/Audio/SoundBanks/1_kampvuur/Kick Discaux 2.wav" id="6_5fy3c"]
 [ext_resource type="AudioStream" uid="uid://d3g22c6fs6tte" path="res://Resources/Audio/SoundBanks/1_kampvuur/mineur/Kick TwoTone.wav" id="7_133fl"]

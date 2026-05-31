@@ -8,6 +8,7 @@ func _ready() -> void:
 	EventBus.set_klappy_speech_bubble.connect(_on_klappy_speech_bubble)
 
 func _on_klappy_speech_bubble(instruction: String, title: String, show_continue: bool) -> void:
+	print ("Klappy speech bubble updated: instruction='" + instruction + "', title='" + title + "', show_continue=" + str(show_continue))
 	if instruction == "" and title == "":
 		visible = false
 		return

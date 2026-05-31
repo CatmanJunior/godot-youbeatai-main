@@ -75,11 +75,9 @@ func _on_beat(beat: int):
 			#also tween it back
 			tween.tween_property(self, "scale", target_scale, 0.1)
 			tween.tween_property(self, "scale", Vector2.ONE, 0.1)
-	elif track is SynthTrackData:
-		if len(track.sequence_notes) <= beat:
-			return
-		var note: SequenceNote = track.sequence.get_note_at_beat(beat)
-		glow_rect.visible = note.velocity > 0.03
+	# elif track is SynthTrackData:
+	# 	var note: SequenceNote = track.sequence.get_note_at_beat(beat)
+	# 	glow_rect.visible = note != null and note.velocity > 0.03
 
 func _on_press():
 	emit_signal("track_button_pressed", track_index)

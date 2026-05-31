@@ -8,7 +8,6 @@ var recording: bool:
 	get: return GameState.is_recording
 
 var current_recording_data: RecordingData = null
-var _thread: Thread = null
 var pre_recording_volume: float = 0
 
 @export var song_recording_progress_bar: ProgressBar
@@ -163,18 +162,7 @@ func _post_process_sample(recording_data: RecordingData) -> void:
 func _post_process_synth(recording_data: RecordingData) -> void:
 	waveform_visualizer.update_waveform(recording_data)
 	waveform_visualizer.reset_progress_bar(recording_data)
-	# State remains PROCESSING — thread sets RECORDING_DONE after voice analysis
-	_thread = Thread.new()
-	_thread.start(_run_voice_processing.bind(recording_data))
-
-func _run_voice_processing(recording_data: RecordingData) -> void:
-	var sequence: Sequence = VoiceProcessor.process_audio(recording_data.audio_stream, NOTES)
-	call_deferred("_on_voice_processed", sequence, recording_data)
-
-func _on_voice_processed(sequence: Sequence, recording_data: RecordingData) -> void:
-	_thread.wait_to_finish()
-	_thread = null
-	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+	# Voice analysis is finalized by SynthVoiceRecorder via EventBus.recording_stopped
 
 func _post_process_song(recording_data: RecordingData) -> void:
 	recording_data.state = RecordingData.State.RECORDING_DONE

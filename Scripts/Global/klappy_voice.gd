@@ -137,7 +137,7 @@ func _settle_current() -> void:
 	_current_uid = -1
 	if not _queue.is_empty():
 		_advance()
-	elif finished != null and not finished.show_continue:
+	elif finished != null and not finished.show_continue and finished.auto_close:
 		_auto_hide()
 
 

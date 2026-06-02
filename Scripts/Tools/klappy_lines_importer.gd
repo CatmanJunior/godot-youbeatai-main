@@ -10,7 +10,7 @@ extends EditorScript
 ##   3. A KlappyLineLibrary registry .tres used at runtime
 ##
 ## Line CSV columns (header row required):
-##   id,text,title,use_tts,use_bubble,show_continue,interrupt,rate
+##   id,text,title,use_tts,use_bubble,show_continue,interrupt,rate,auto_close
 ## The [code]id[/code] column is the enum member name (e.g. ACH_TRACK_2); its position in
 ## the file determines the enum integer value (members start at 0; NONE is -1).
 ##
@@ -53,7 +53,7 @@ func _import_lines(csv_path: String, enum_path: String, enum_name: String, lines
 	for i in headers.size():
 		col[headers[i].strip_edges()] = i
 
-	for required in ["id", "text", "title", "use_tts", "use_bubble", "show_continue", "interrupt", "rate"]:
+	for required in ["id", "text", "title", "use_tts", "use_bubble", "show_continue", "interrupt", "rate", "auto_close"]:
 		if not col.has(required):
 			push_error("KlappyLinesImporter: missing required column '%s' in CSV header" % required)
 			return
@@ -85,6 +85,7 @@ func _import_lines(csv_path: String, enum_path: String, enum_name: String, lines
 		line.show_continue = _to_bool(_field(fields, col, "show_continue"), false)
 		line.interrupt = _to_bool(_field(fields, col, "interrupt"), false)
 		line.rate = _to_float(_field(fields, col, "rate"), 1.0)
+		line.auto_close = _to_bool(_field(fields, col, "auto_close"), true)
 
 		var line_path: String = "%s/%s.tres" % [lines_dir, id_name]
 		var save_err: int = ResourceSaver.save(line, line_path)

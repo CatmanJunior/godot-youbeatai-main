@@ -209,6 +209,7 @@ outcome = 28
 [sub_resource type="Resource" id="Step_40"]
 script = ExtResource("2_step")
 line = 29
+condition = 1
 outcome = 29
 
 [sub_resource type="Resource" id="Step_41"]
@@ -220,10 +221,12 @@ outcome = 30
 [sub_resource type="Resource" id="Step_42"]
 script = ExtResource("2_step")
 line = 31
+condition = 1
 
 [sub_resource type="Resource" id="Step_43"]
 script = ExtResource("2_step")
 line = 32
+condition = 1
 outcome = 31
 
 [resource]

@@ -24,10 +24,11 @@ config/icon="uid://bw7qlsn2o2s82"
 [audio]
 
 buses/default_bus_layout="uid://cc7g4ekfye5tq"
+general/default_playback_type.web=0
 general/text_to_speech=true
 driver/output_latency.web=100
 driver/enable_input=true
-driver/mix_rate.web=48000
+driver/mix_rate.web=22500
 
 [autoload]
 

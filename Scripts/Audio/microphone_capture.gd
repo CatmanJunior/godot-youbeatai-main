@@ -53,6 +53,14 @@ func _stop_recording(recording_data: RecordingData) -> void:
 	if audio_effect_record:
 		audio_effect_record.set_recording_active(false)
 		var audio = audio_effect_record.get_recording()
+		if audio != null:
+			# On Web, AudioEffectRecord tags the WAV with the output mix rate
+			# (e.g. 48 kHz) while the captured samples come from the browser's
+			# input AudioContext at its own rate. Playing back at the wrong
+			# rate causes the recording to sound higher-pitched. Force the
+			# WAV's mix rate to match the actual capture rate.
+			if OS.has_feature("web"):
+				audio.mix_rate = int(AudioServer.get_input_mix_rate())
 		if recording_data:
 			recording_data.audio_stream = audio  # Put audio ON the RecordingData
 	EventBus.recording_stopped.emit(recording_data)

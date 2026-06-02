@@ -50,16 +50,18 @@ func speak(text: String, rate: float = BASE_RATE, volume: int = BASE_VOLUME) -> 
 	return uid
 
 ## Shows the Klappy speech bubble with [param text] and speaks it via TTS in one atomic call.
-## The bubble auto-hides shortly after the utterance ends, unless [param show_continue] is set
-## (in which case it stays until something else clears it).
+## The bubble auto-hides shortly after the utterance ends when [param auto_close] is true,
+## unless [param show_continue] is set (in which case it stays until something else clears it).
+## When [param auto_close] is false, the bubble stays visible until [method clear] or the next
+## [method say] call replaces it.
 ## Returns the utterance ID (same as [method speak]), or -1 if text is empty.
-func say(text: String, title: String = "", show_continue: bool = false, rate: float = BASE_RATE) -> int:
+func say(text: String, title: String = "", show_continue: bool = false, rate: float = BASE_RATE, auto_close: bool = true) -> int:
 	if text.strip_edges().is_empty():
 		return -1
 	_auto_hide_generation += 1
 	EventBus.set_klappy_speech_bubble.emit(text, title, show_continue)
 	var uid: int = speak(text, rate)
-	_auto_hide_uid = uid if not show_continue else -1
+	_auto_hide_uid = uid if (auto_close and not show_continue) else -1
 	return uid
 
 ## Stops TTS and hides the Klappy speech bubble atomically.

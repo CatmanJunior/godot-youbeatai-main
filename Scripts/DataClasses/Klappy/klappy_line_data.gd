@@ -29,3 +29,9 @@ extends Resource
 
 ## TTS speech rate multiplier (1.0 = normal speed).
 @export var rate: float = 1.0
+
+## Whether the bubble should auto-hide shortly after the line finishes speaking.
+## When [code]false[/code], the bubble stays visible until another line is played or
+## [method KlappyVoice.clear] is called. Ignored when [member show_continue] is true
+## (those lines always wait for the player to dismiss them).
+@export var auto_close: bool = true

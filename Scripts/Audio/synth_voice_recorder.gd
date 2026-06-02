@@ -5,6 +5,12 @@ extends Node
 ## EventBus.sequence_ready when pitch analysis is complete.
 ## Add this as a sibling of TrackRecorder under Managers/AudioManagers.
 
+## Maximum NSDF hops processed per _process() frame to keep frame time bounded.
+## At ANALYSIS_RATE=11025 / HOP_SIZE=512 each hop ~46 ms of audio, so 2 hops/frame
+## keeps up with real-time at any frame rate >= ~22 Hz while leaving slack for
+## render work. Backlog drains naturally; finalize() processes any tail in one go.
+const MAX_HOPS_PER_FRAME: int = 2
+
 var _voice_analyzer: VoiceAnalyzer = null
 var _audio_capture: AudioEffectCapture = null
 var _mic_bus_index: int = -1
@@ -45,7 +51,12 @@ func _init_audio_capture() -> void:
 
 func _start_voice_analyzer() -> void:
 	_voice_analyzer = VoiceAnalyzer.new()
+	# On Web, AudioEffectCapture delivers samples at the browser input AudioContext
+	# rate (not the engine's mix rate). Use input_mix_rate so the downsampler is
+	# correctly calibrated; falls back to mix rate on desktop/mobile.
 	var sample_rate := float(AudioServer.get_mix_rate())
+	if OS.has_feature("web"):
+		sample_rate = float(AudioServer.get_input_mix_rate())
 	_voice_analyzer.start(sample_rate, SongState.beats_per_section, SongState.beat_duration)
 	if _audio_capture:
 		AudioServer.set_bus_effect_enabled(_mic_bus_index, 0, true)
@@ -61,7 +72,7 @@ func _feed_voice_analyzer() -> void:
 		return
 	var stereo_buf := _audio_capture.get_buffer(frames_available)
 	var mono := _stereo_to_mono(stereo_buf)
-	_voice_analyzer.push_samples(mono)
+	_voice_analyzer.push_samples(mono, MAX_HOPS_PER_FRAME)
 
 func _finalize_voice_analysis(recording_data: RecordingData) -> void:
 	if _voice_analyzer and _voice_analyzer.is_active():

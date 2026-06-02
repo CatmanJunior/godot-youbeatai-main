@@ -42,6 +42,7 @@ text = "Goed gedaan! Nou wil ik wel eens horen hoe jij de Beat veranderd hebt �
 script = ExtResource("line")
 id = 7
 text = "Stamp 👟 5 keer mee met de kick van je Beat!"
+auto_close = false
 
 [sub_resource type="Resource" id="L8"]
 script = ExtResource("line")
@@ -87,6 +88,7 @@ text = "Ik ben benieuwd laat mij eens horen! ▶️"
 script = ExtResource("line")
 id = 16
 text = "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen"
+auto_close = false
 
 [sub_resource type="Resource" id="L17"]
 script = ExtResource("line")

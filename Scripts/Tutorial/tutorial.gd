@@ -285,7 +285,7 @@ func _speak_tutorial_instruction(instruction_index: int) -> void:
 	var line: KlappyLineData = _line_data(tutorial_steps[instruction_index].line)
 	if line == null:
 		return
-	var uid: int = TTSHelper.say(line.text, "", line.show_continue, 2.5 if _increased_speed else TTSHelper.BASE_RATE)
+	var uid: int = TTSHelper.say(line.text, line.title, line.show_continue, 2.5 if _increased_speed else TTSHelper.BASE_RATE, line.auto_close)
 	EventBus.tutorial_utterance_started.emit(uid)
 
 # Suppresses TTS text output if the song is currently playing, so instructions don't

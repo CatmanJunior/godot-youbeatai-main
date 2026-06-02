@@ -15,19 +15,24 @@ extends RefCounted
 # ── Configuration ────────────────────────────────────────────────────────────
 
 ## Internal analysis sample rate (downsample to this from mic rate).
-const ANALYSIS_RATE: float = 22050.0
+## 11025 Hz keeps the 60-1000 Hz vocal range fully resolvable while cutting
+## the NSDF inner loop work ~4x versus 22050 Hz (lower-spec web target).
+const ANALYSIS_RATE: float = 11025.0
 
 ## NSDF frame size in samples at ANALYSIS_RATE (~93 ms, resolves down to ~80 Hz).
-const FRAME_SIZE: int = 2048
+const FRAME_SIZE: int = 1024
 
 ## Hop size in samples (half frame, ~46 ms).
-const HOP_SIZE: int = 1024
+const HOP_SIZE: int = 512
 
 ## Minimum fundamental frequency to search (Hz). Determines max lag.
-const MIN_FREQ: float = 60.0
+## Bumped from 60 to 80 Hz since lowest assignable note is C3 (~131 Hz).
+const MIN_FREQ: float = 80.0
 
 ## Maximum fundamental frequency to search (Hz). Determines min lag.
-const MAX_FREQ: float = 1000.0
+## Trimmed from 1000 to 900 Hz since highest assignable note is B5 (~988 Hz);
+## the small reduction shortens the outer NSDF loop on the hot path.
+const MAX_FREQ: float = 900.0
 
 ## RMS threshold below which a frame is considered silent.
 const SILENCE_THRESHOLD: float = 0.015
@@ -169,8 +174,12 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 
 ## Feed new audio samples (at source sample rate, mono float32).
 ## Call this every _process frame with samples from AudioEffectCapture.
+## `max_hops` bounds how many NSDF hops are processed in this call (negative
+## = unbounded). Capping per-frame work keeps long sessions jank-free; any
+## leftover hops sit in the analysis buffer and are drained on later calls,
+## with finalize() processing whatever remains in one go.
 ## Returns the number of new hops processed this call.
-func push_samples(samples: PackedFloat32Array) -> int:
+func push_samples(samples: PackedFloat32Array, max_hops: int = -1) -> int:
 	if not _active:
 		return 0
 
@@ -204,6 +213,11 @@ func push_samples(samples: PackedFloat32Array) -> int:
 	# Process any complete hops.
 	_samples_since_last_hop += written
 	while _samples_since_last_hop >= HOP_SIZE:
+		if max_hops >= 0 and new_hops >= max_hops:
+			# Cap reached. Leave the leftover hops (and their samples) queued
+			# in _samples_since_last_hop / _analysis_buffer; subsequent calls
+			# or finalize() will drain them.
+			break
 		var hop_start := _hops_processed * HOP_SIZE
 		if hop_start + FRAME_SIZE <= _analysis_total_samples:
 			_process_frame(hop_start)
@@ -245,16 +259,20 @@ func is_active() -> bool:
 # ── Frame Processing (called per hop) ───────────────────────────────────────
 
 func _process_frame(start_sample: int) -> void:
-	# Read the frame directly from the analysis buffer (no copy).
+	# Slice the frame into a contiguous local buffer once per hop. Indexing a
+	# local PackedFloat32Array is significantly cheaper in GDScript than
+	# repeated global property + offset accesses inside the inner NSDF loop.
+	var frame := _analysis_buffer.slice(start_sample, start_sample + FRAME_SIZE)
+
 	# Compute RMS for voicing decision.
-	var rms := _compute_rms(_analysis_buffer, start_sample, FRAME_SIZE)
+	var rms := _compute_rms(frame, FRAME_SIZE)
 
 	# Detect pitch using NSDF/MPM.
 	var pitch := 0.0
 	var clarity := 0.0
 
 	if rms >= SILENCE_THRESHOLD:
-		var result := _nsdf_pitch(_analysis_buffer, start_sample, FRAME_SIZE)
+		var result := _nsdf_pitch(frame, FRAME_SIZE)
 		pitch = result.x  # Hz
 		clarity = result.y  # 0..1
 
@@ -307,7 +325,7 @@ func _process_frame(start_sample: int) -> void:
 
 ## Returns Vector2(frequency_hz, clarity) using Normalized Square Difference
 ## Function (McLeod Pitch Method).
-func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector2:
+func _nsdf_pitch(frame: PackedFloat32Array, length: int) -> Vector2:
 	var n := length
 	var max_lag := mini(_max_lag, n - 1)
 	var min_lag := _min_lag
@@ -320,50 +338,57 @@ func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector
 	# Prefix sum of squared samples so m_left/m_right become O(1) per tau.
 	# prefix_sq[k] = sum_{i=0..k-1} frame[i]^2, length n+1. Reused across calls.
 	var prefix_sq := _prefix_sq
+	var nsdf_buf := _nsdf_buffer
 	prefix_sq[0] = 0.0
 	var running := 0.0
-	for i in range(n):
-		var s := buffer[offset + i]
+	var i := 0
+	while i < n:
+		var s := frame[i]
 		running += s * s
 		prefix_sq[i + 1] = running
+		i += 1
 
-	for tau in range(min_lag, max_lag + 1):
+	var total_energy := prefix_sq[n]
+	var tau := min_lag
+	while tau <= max_lag:
 		var limit := n - tau
-		# Autocorrelation at lag tau.
+		# Autocorrelation at lag tau — tight while-loop on a local array.
 		var acf := 0.0
-		for i in range(limit):
-			acf += buffer[offset + i] * buffer[offset + i + tau]
+		var j := 0
+		while j < limit:
+			acf += frame[j] * frame[j + tau]
+			j += 1
 
 		# m_left = sum frame[i]^2 for i in [0, limit-1]
 		# m_right = sum frame[i]^2 for i in [tau, n-1]
-		var m_left := prefix_sq[limit]
-		var m_right := prefix_sq[n] - prefix_sq[tau]
-		var m := m_left + m_right
+		var m := prefix_sq[limit] + total_energy - prefix_sq[tau]
 
 		if m > 0.0:
-			_nsdf_buffer[tau] = 2.0 * acf / m
+			nsdf_buf[tau] = 2.0 * acf / m
 		else:
-			_nsdf_buffer[tau] = 0.0
+			nsdf_buf[tau] = 0.0
+		tau += 1
 
 	# Find the highest positive NSDF peak above threshold using MPM peak picking.
 	var best_lag := 0
 	var best_val := -1.0
 
 	# Find peaks: look for positive zero crossings then local maxima.
-	var in_positive := _nsdf_buffer[min_lag] > 0.0
+	var in_positive := nsdf_buf[min_lag] > 0.0
 	var peak_lag := min_lag
-	var peak_val := _nsdf_buffer[min_lag]
+	var peak_val := nsdf_buf[min_lag]
 
-	for tau in range(min_lag + 1, max_lag + 1):
-		var val := _nsdf_buffer[tau]
+	var t := min_lag + 1
+	while t <= max_lag:
+		var val := nsdf_buf[t]
 		if not in_positive:
 			if val > 0.0:
 				in_positive = true
-				peak_lag = tau
+				peak_lag = t
 				peak_val = val
 		else:
 			if val > peak_val:
-				peak_lag = tau
+				peak_lag = t
 				peak_val = val
 			elif val < 0.0:
 				# Crossed back to negative — end of this peak region.
@@ -372,6 +397,7 @@ func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector
 					best_lag = peak_lag
 				in_positive = false
 				peak_val = 0.0
+		t += 1
 
 	# Check the last positive region.
 	if in_positive and peak_val > best_val:
@@ -398,11 +424,13 @@ func _nsdf_pitch(buffer: PackedFloat32Array, offset: int, length: int) -> Vector
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
-func _compute_rms(buffer: PackedFloat32Array, offset: int, length: int) -> float:
+func _compute_rms(frame: PackedFloat32Array, length: int) -> float:
 	var sum := 0.0
-	for i in range(length):
-		var s := buffer[offset + i]
+	var i := 0
+	while i < length:
+		var s := frame[i]
 		sum += s * s
+		i += 1
 	return sqrt(sum / float(length))
 
 

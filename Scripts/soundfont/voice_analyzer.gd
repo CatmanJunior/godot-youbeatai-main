@@ -67,14 +67,13 @@ const PITCH_SMOOTH_ALPHA: float = 0.3
 ## Onset look-back compensation in seconds.
 const ONSET_LOOKBACK: float = 0.025
 
-## Octave range for MIDI note output (inclusive). Maps to note IDs.
-const OCTAVE_MIN: int = 3
-const OCTAVE_MAX: int = 5
+## Assignable MIDI note range: C3 (48) to B5 (83).
+const NOTE_ID_MIN: int = 48
+const NOTE_ID_MAX: int = 83
 
-## MIDI note range corresponding to octave 3..5 (C3=48, B5=83 in standard MIDI).
-## In this project, note IDs start at 0 for C1, so octave 3 starts at ID 36.
-const NOTE_ID_MIN: int = 36  # C3 in project's ID system (octave 3 * 12)
-const NOTE_ID_MAX: int = 83  # B5 in project's ID system (octave 5 * 12 + 11)
+## Scale resource used to snap detected pitches to allowed notes. Swap in a
+## diatonic/pentatonic Notes resource here to constrain output to that scale.
+const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 
 # ── Internal state ───────────────────────────────────────────────────────────
 
@@ -127,6 +126,10 @@ var _voiced_frames: int = 0
 ## Whether start() has been called and finalize() has not.
 var _active: bool = false
 
+## Flat list of (id, frequency) entries from NOTES within [NOTE_ID_MIN, NOTE_ID_MAX].
+var _scale_ids: PackedInt32Array = PackedInt32Array()
+var _scale_freqs: PackedFloat32Array = PackedFloat32Array()
+
 
 # ── Public API ───────────────────────────────────────────────────────────────
 
@@ -170,6 +173,8 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 	_silence_frames = 0
 	_voiced_frames = 0
 	_active = true
+
+	_build_scale_table()
 
 
 ## Feed new audio samples (at source sample rate, mono float32).
@@ -499,10 +504,35 @@ static func _midi_to_freq(midi: float) -> float:
 	return 440.0 * pow(2.0, (midi - 69.0) / 12.0)
 
 
-## Convert MIDI note to this project's note ID system.
-## Project uses: C1=0, so note_id = midi_note - 24 (since MIDI C1 = 24).
-static func _midi_to_note_id(midi_note: int) -> int:
-	return clampi(midi_note - 24, NOTE_ID_MIN, NOTE_ID_MAX)
+## Build the snap table from NOTES, restricted to [NOTE_ID_MIN, NOTE_ID_MAX].
+func _build_scale_table() -> void:
+	_scale_ids = PackedInt32Array()
+	_scale_freqs = PackedFloat32Array()
+	if NOTES == null:
+		return
+	for octave in NOTES.octaves:
+		if octave == null:
+			continue
+		for note in octave.notes:
+			if note == null:
+				continue
+			if note.id >= NOTE_ID_MIN and note.id <= NOTE_ID_MAX:
+				_scale_ids.append(note.id)
+				_scale_freqs.append(note.frequency)
+
+
+## Snap a frequency to the closest note id in the scale table.
+func _snap_freq_to_note_id(freq: float) -> int:
+	if _scale_ids.size() == 0 or freq <= 0.0:
+		return clampi(int(round(_freq_to_midi(freq))), NOTE_ID_MIN, NOTE_ID_MAX)
+	var best_id := _scale_ids[0]
+	var best_diff := absf(freq - _scale_freqs[0])
+	for i in range(1, _scale_ids.size()):
+		var diff := absf(freq - _scale_freqs[i])
+		if diff < best_diff:
+			best_diff = diff
+			best_id = _scale_ids[i]
+	return best_id
 
 
 ## Cent difference between two frequencies.
@@ -624,19 +654,24 @@ func _quantize_to_beats(candidates: Array[_NoteCandidate]) -> Array[SequenceNote
 		if duration < 1:
 			duration = 1
 
-		# Convert average pitch to MIDI note, then to project note ID.
+		# Snap average pitch to nearest note in the scale table.
 		var avg_freq := candidate.avg_pitch()
-		var midi_float := _freq_to_midi(avg_freq)
-		var midi_note := int(round(midi_float))
-
-		# Clamp to octave range (MIDI 48=C3 to 83=B5).
-		midi_note = clampi(midi_note, 48, 83)
-		var note_id := _midi_to_note_id(midi_note)
+		var note_id := _snap_freq_to_note_id(avg_freq)
 
 		# Velocity from RMS (normalize to 0..1 range).
 		var velocity := clampf(candidate.avg_rms() * 10.0, 0.1, 1.0)
 
-		# Check for overlapping existing notes at same beat.
+		# Merge with previous note if same pitch and contiguous (or overlapping).
+		if sequence_notes.size() > 0:
+			var prev: SequenceNote = sequence_notes[sequence_notes.size() - 1]
+			var prev_end := prev.beat + prev.duration
+			if prev.note == note_id and start_beat <= prev_end:
+				var new_end := maxi(prev_end, start_beat + duration)
+				prev.duration = new_end - prev.beat
+				prev.velocity = maxf(prev.velocity, velocity)
+				continue
+
+		# Skip if another note already starts on this beat (different pitch).
 		var overlap := false
 		for existing in sequence_notes:
 			if existing.beat == start_beat:

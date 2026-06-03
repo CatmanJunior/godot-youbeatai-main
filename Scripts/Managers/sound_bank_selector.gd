@@ -18,6 +18,7 @@ func _ready() -> void:
 
 	EventBus.soundbank_selected.connect(_on_soundbank_selected)
 
+
 func _on_soundbank_selected(themes: Array[String], emotions: Array[String]) -> void:
 	var chosen_bank : Dictionary = choose_soundbank(themes, emotions)
 	SongState.selected_soundbank = SoundBankLoader.load_soundbank(chosen_bank)

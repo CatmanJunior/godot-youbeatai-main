@@ -11,6 +11,12 @@ extends Node
 ## render work. Backlog drains naturally; finalize() processes any tail in one go.
 const MAX_HOPS_PER_FRAME: int = 2
 
+const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
+
+## When true, use the offline FFT-based VoiceProcessor (processes once on stop).
+## When false, use the streaming NSDF-based VoiceAnalyzer.
+@export var use_voice_processor: bool = false
+
 var _voice_analyzer: VoiceAnalyzer = null
 var _audio_capture: AudioEffectCapture = null
 var _mic_bus_index: int = -1
@@ -21,6 +27,8 @@ func _ready() -> void:
 	_init_audio_capture()
 
 func _process(_delta: float) -> void:
+	if use_voice_processor:
+		return
 	if _voice_analyzer and _voice_analyzer.is_active() and _audio_capture:
 		_feed_voice_analyzer()
 
@@ -29,12 +37,25 @@ func _process(_delta: float) -> void:
 func _on_recording_started(recording_data: RecordingData) -> void:
 	if recording_data.track_type != TrackData.TrackType.SYNTH:
 		return
+	if use_voice_processor:
+		return
 	_start_voice_analyzer()
 
 func _on_recording_stopped(recording_data: RecordingData) -> void:
 	if recording_data.track_type != TrackData.TrackType.SYNTH:
 		return
+	if use_voice_processor:
+		_run_voice_processor(recording_data)
+		return
 	_finalize_voice_analysis(recording_data)
+
+# ── Voice Processor (offline) ────────────────────────────────────────────────
+
+func _run_voice_processor(recording_data: RecordingData) -> void:
+	var sequence: Sequence = VoiceProcessor.process_audio(recording_data.audio_stream, NOTES)
+	if sequence == null:
+		sequence = Sequence.new([])
+	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
 
 # ── Voice Analyzer ────────────────────────────────────────────────────────────
 
@@ -57,6 +78,7 @@ func _start_voice_analyzer() -> void:
 	var sample_rate := float(AudioServer.get_mix_rate())
 	if OS.has_feature("web"):
 		sample_rate = float(AudioServer.get_input_mix_rate())
+		print("SynthVoiceRecorder: Detected web platform, using input mix rate of %d Hz for voice analysis." % int(sample_rate))
 	_voice_analyzer.start(sample_rate, SongState.beats_per_section, SongState.beat_duration)
 	if _audio_capture:
 		AudioServer.set_bus_effect_enabled(_mic_bus_index, 0, true)

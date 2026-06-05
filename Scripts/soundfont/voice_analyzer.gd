@@ -35,7 +35,7 @@ const MIN_FREQ: float = 80.0
 const MAX_FREQ: float = 900.0
 
 ## RMS threshold below which a frame is considered silent.
-const SILENCE_THRESHOLD: float = 0.015
+const SILENCE_THRESHOLD: float = 0.005
 
 ## NSDF peak clarity threshold (0..1). Below this, pitch is unreliable.
 const CLARITY_THRESHOLD: float = 0.25
@@ -71,9 +71,17 @@ const ONSET_LOOKBACK: float = 0.025
 const NOTE_ID_MIN: int = 48
 const NOTE_ID_MAX: int = 83
 
+const MAX_VELOCITY: float = 0.6
+
 ## Scale resource used to snap detected pitches to allowed notes. Swap in a
 ## diatonic/pentatonic Notes resource here to constrain output to that scale.
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
+
+# ── Public options ───────────────────────────────────────────────────────────
+
+## When true, every detected note is quantized to a single-beat duration
+## (no multi-beat sustains). Set before calling start().
+var one_beat_notes: bool = false
 
 # ── Internal state ───────────────────────────────────────────────────────────
 
@@ -252,6 +260,9 @@ func finalize() -> Sequence:
 
 	# Quantize to beat grid.
 	var sequence_notes := _quantize_to_beats(notes)
+
+	for index in range(len(sequence_notes)):
+		print("beat: %d, note: %d, duration: %d velocity: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration, sequence_notes[index].velocity])
 
 	return Sequence.new(sequence_notes)
 
@@ -634,8 +645,16 @@ func _segment_notes() -> Array[_NoteCandidate]:
 func _quantize_to_beats(candidates: Array[_NoteCandidate]) -> Array[SequenceNote]:
 	var sequence_notes: Array[SequenceNote] = []
 
-	if candidates.size() == 0 or _beat_duration <= 0.0:
+	if _beats_per_section <= 0 or _beat_duration <= 0.0:
 		return sequence_notes
+
+	# Per-beat coverage: -1 note id = uncovered (rest).
+	var coverage_notes: PackedInt32Array = PackedInt32Array()
+	coverage_notes.resize(_beats_per_section)
+	coverage_notes.fill(-1)
+	var coverage_velocity: PackedFloat32Array = PackedFloat32Array()
+	coverage_velocity.resize(_beats_per_section)
+	coverage_velocity.fill(0.0)
 
 	for candidate in candidates:
 		# Apply onset look-back compensation.
@@ -650,40 +669,29 @@ func _quantize_to_beats(candidates: Array[_NoteCandidate]) -> Array[SequenceNote
 		start_beat = clampi(start_beat, 0, _beats_per_section - 1)
 		end_beat = clampi(end_beat, start_beat + 1, _beats_per_section)
 
-		var duration := end_beat - start_beat
-		if duration < 1:
-			duration = 1
-
 		# Snap average pitch to nearest note in the scale table.
 		var avg_freq := candidate.avg_pitch()
 		var note_id := _snap_freq_to_note_id(avg_freq)
 
 		# Velocity from RMS (normalize to 0..1 range).
-		var velocity := clampf(candidate.avg_rms() * 10.0, 0.1, 1.0)
+		var velocity := clampf(candidate.avg_rms() * 10.0, 0.1, MAX_VELOCITY)
 
-		# Merge with previous note if same pitch and contiguous (or overlapping).
-		if sequence_notes.size() > 0:
-			var prev: SequenceNote = sequence_notes[sequence_notes.size() - 1]
-			var prev_end := prev.beat + prev.duration
-			if prev.note == note_id and start_beat <= prev_end:
-				var new_end := maxi(prev_end, start_beat + duration)
-				prev.duration = new_end - prev.beat
-				prev.velocity = maxf(prev.velocity, velocity)
-				continue
+		var last_beat := start_beat + 1 if one_beat_notes else end_beat
+		for beat in range(start_beat, last_beat):
+			if coverage_notes[beat] == -1:
+				coverage_notes[beat] = note_id
+				coverage_velocity[beat] = velocity
 
-		# Skip if another note already starts on this beat (different pitch).
-		var overlap := false
-		for existing in sequence_notes:
-			if existing.beat == start_beat:
-				overlap = true
-				break
-
-		if not overlap:
-			var seq_note := SequenceNote.new()
-			seq_note.note = note_id
-			seq_note.beat = start_beat
-			seq_note.duration = duration
-			seq_note.velocity = velocity
-			sequence_notes.append(seq_note)
+	for beat in range(_beats_per_section):
+		var seq_note := SequenceNote.new()
+		seq_note.beat = beat
+		seq_note.duration = 1
+		if coverage_notes[beat] == -1:
+			seq_note.note = -1
+			seq_note.velocity = 0.0
+		else:
+			seq_note.note = coverage_notes[beat]
+			seq_note.velocity = coverage_velocity[beat]
+		sequence_notes.append(seq_note)
 
 	return sequence_notes

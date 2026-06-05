@@ -212,6 +212,11 @@ func next_section():
 	if not GameState.song_mode_active:
 		return
 
+	# Don't auto-advance sections while recording SAMPLE/SYNTH; SONG recording
+	# sweeps all sections and must keep advancing.
+	if GameState.is_recording and SongState.current_track and SongState.current_track.track_type != TrackData.TrackType.SONG:
+		return
+
 	"""Switch to the next section (or loop to first)"""
 	if current_section_index == sections.size() - 1:
 		switch_section(0)

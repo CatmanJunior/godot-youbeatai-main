@@ -104,10 +104,7 @@ func _update_labels() -> void:
 	recording_delay_label.text = "%.2fs" % recording_delay_slider.value
 	swing_label.text = "Swing: %.0f%%" % (swing_slider.value * 100.0)
 
-func initial_values(bank: SoundBank):
-	_on_swing_changed(bank.swing)
-	_bpm_changed(bank.bpm)
-
+func initial_values(_bank: SoundBank):
 	recording_delay_progress.value = GameState.recording_delay_seconds 
 	recording_delay_slider.value = GameState.recording_delay_seconds 
 

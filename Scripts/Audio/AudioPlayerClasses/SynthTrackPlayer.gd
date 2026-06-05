@@ -124,9 +124,25 @@ func _on_sequence_ready(sequence: Sequence, p_track_data: TrackData) -> void:
 		return
 	var data: SynthTrackData = track_data
 	if sequence and data:
-		data.set_sequence(sequence)
+		data.set_sequence(_combine_consecutive_notes(sequence))
 		if data.recording_data:
 			data.recording_data.state = RecordingData.State.RECORDING_DONE
+
+## Merge runs of the same pitch on consecutive beats into a single longer note.
+## Rest sentinels (note == -1) are never merged.
+func _combine_consecutive_notes(sequence: Sequence) -> Sequence:
+	if sequence == null or sequence.notes.size() == 0:
+		return sequence
+	var merged: Array[SequenceNote] = []
+	for note in sequence.notes:
+		if merged.size() > 0:
+			var prev: SequenceNote = merged[merged.size() - 1]
+			if note.note != -1 and note.note == prev.note and note.beat == prev.beat + prev.duration:
+				prev.duration += note.duration
+				prev.velocity = maxf(prev.velocity, note.velocity)
+				continue
+		merged.append(note)
+	return Sequence.new(merged)
 
 ## Override to create NotePlayer for the NOTE layer
 func _make_player(bus: String) -> AudioStreamPlayer:

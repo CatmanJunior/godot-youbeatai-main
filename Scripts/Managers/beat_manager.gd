@@ -3,7 +3,7 @@ class_name BeatManager
 
 @export var track_settings_registry: TrackUISettingsRegistry
 
-@export var swing_reduce_amount: float = 0.5
+@export var swing_reduce_amount: float = 0.2
 
 const BEATS_PER_BAR: int = 4
 const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005

@@ -7,6 +7,8 @@ extends Resource
 @export var base_note: Note
 @export var allow_key_input: bool = false
 @export_range(0.05, 1) var gate: float = 0.5
+@export_range(0.0, 1.0) var min_velocity: float = 0.0
+@export var sustain_combined: bool = false
 @export var volume_db: float = 0.0
 @export var gain: float = 0.0
 

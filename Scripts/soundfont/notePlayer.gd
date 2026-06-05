@@ -10,6 +10,8 @@ var instrument: int:
 var base_note: Note
 var allow_key_input: bool = false
 var gate: float = 0.5
+var min_velocity: float = 0.0
+var sustain_combined: bool = false
 
 func apply_settings(settings: NotePlayerSettings) -> void:
 	soundfont = settings.soundfont
@@ -17,6 +19,8 @@ func apply_settings(settings: NotePlayerSettings) -> void:
 	base_note = settings.base_note
 	allow_key_input = settings.allow_key_input
 	gate = settings.gate
+	min_velocity = settings.min_velocity
+	sustain_combined = settings.sustain_combined
 	volume_db = settings.volume_db
 	instrument = settings.instrument
 	gain = settings.gain
@@ -65,17 +69,19 @@ func _process_midi_input(event: InputEventMIDI):
 		channel_note_off(0, event.channel, event.pitch)
 
 func play_note(sequence_note: SequenceNote) -> void:
-	var log_value = 20.0 * (log( sqrt(sequence_note.velocity) / 0.1) / log(10))
-
-	# convert to value around 0-1
-	# capped becasue soundfont does not play well with higher values
-	log_value = min(1, pow(10, log_value / 10))
-	if log_value < gate:
+	print("Playing note: %d with velocity %f for duration %f" % [sequence_note.note, sequence_note.velocity, sequence_note.duration])
+	if sequence_note.note < 0:
 		return
-	
+	if sequence_note.velocity < min_velocity:
+		return
+
+	var hold := gate
+	if sustain_combined and sequence_note.duration > 1:
+		hold = float(sequence_note.duration) * SongState.beat_duration
+
 	var t = get_time()
 	channel_note_on(t, 0, sequence_note.note, sequence_note.velocity)
-	channel_note_off(t + gate, 0, sequence_note.note)
+	channel_note_off(t + hold, 0, sequence_note.note)
 
 func play_note_raw(note: int, duration: float) -> void:
 	var t = get_time()

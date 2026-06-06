@@ -60,7 +60,7 @@ func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 	# Emit signals for next beat
 	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
 	var on_beat: bool = _is_clap_stomp_next_beat(interaction_type)
-	if on_beat:
+	if on_beat and GameState.playing:
 		if interaction_type == InteractionType.CLAP and not _clap_on_beat_registered:
 			_clap_on_beat_registered = true
 			clapped_on_beat_amount += 1

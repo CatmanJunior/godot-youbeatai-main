@@ -73,11 +73,10 @@ func _on_section_switched(_new) -> void:
 		for i in [SynthLayer.ALT, SynthLayer.REC]:
 			players[i].stream = null
 		_has_recording = false
-	# set knob and weights to the recordedsample
-	var w = Vector3(0,0,1)
+
 	
 	# Always restore saved weights and master volume from track data (not the runtime cache).
-	set_weights(w)
+	set_weights(track_data.weights)
 	set_volume_db(track_data.master_volume)
 
 func _on_beat_triggered(beat: int) -> void:

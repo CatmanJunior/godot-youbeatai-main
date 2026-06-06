@@ -227,6 +227,18 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
 theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
 text = "TERUG"
 
+[node name="Versie" type="Label" parent="CreditsPanel" unique_id=1755022541]
+layout_mode = 0
+offset_left = 1021.0
+offset_top = 692.0
+offset_right = 1274.0
+offset_bottom = 721.0
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_font_sizes/font_size = 24
+text = "Versie: 0.01 Build: Rene"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="names" type="Label" parent="CreditsPanel" unique_id=467177475]
 layout_mode = 0
 offset_left = 327.0

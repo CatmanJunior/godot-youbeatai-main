@@ -7,8 +7,9 @@ var is_showing_count_down: bool = false
 var _last_tick: int = -1
 
 func _ready():
-	EventBus.countdown_show_requested.connect(show_count_down)
-	EventBus.countdown_close_requested.connect(close_count_down)
+	pass
+	# EventBus.countdown_show_requested.connect(show_count_down)
+	# EventBus.countdown_close_requested.connect(close_count_down)
 
 func _process(_delta: float):
 	if is_showing_count_down:

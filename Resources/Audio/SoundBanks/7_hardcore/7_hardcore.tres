@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 [ext_resource type="Resource" uid="uid://pgoewkr5e6g2" path="res://Resources/Audio/SoundBanks/7_hardcore/EffectProfile.tres" id="19_67gow"]
+[ext_resource type="SoundFont" uid="uid://c2kol6oi2ukwu" path="res://Resources/SoundFonts/Hardy-Boy.sf2" id="21_mady3"]
 
 [sub_resource type="Resource" id="Resource_fjs6r"]
 script = ExtResource("2_fgo6n")
@@ -101,8 +102,8 @@ clap = ExtResource("1_7jbdn")
 clap_alt = ExtResource("2_ytapi")
 closed = ExtResource("2_120gr")
 closed_alt = ExtResource("4_tm1gk")
-synth_soundfonts = Array[Resource]([ExtResource("5_ytapi"), ExtResource("5_ytapi")])
-synth_instrument_ids = Array[int]([12, 9])
+synth_soundfonts = Array[SoundFont]([ExtResource("21_mady3"), ExtResource("5_ytapi")])
+synth_instrument_ids = Array[int]([2, 9])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_tm1gk"), ExtResource("19_67gow")])
 noteplayer_settings = Array[ExtResource("9_tm1gk")]([ExtResource("11_bass"), ExtResource("12_syn1")])

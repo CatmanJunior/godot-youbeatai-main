@@ -11,7 +11,6 @@
 [ext_resource type="Script" uid="uid://dcyn302mcq1vm" path="res://Scripts/DataClasses/SoundBanks/progression_offset.gd" id="5_4deg6"]
 [ext_resource type="Resource" uid="uid://d1gqo8nvqbqtp" path="res://Resources/Audio/SoundBanks/2_acoustisch/EffectProfile.tres" id="5_l8cde"]
 [ext_resource type="AudioStream" uid="uid://co7i5xf384x1j" path="res://Resources/Audio/SoundBanks/2_acoustisch/Kick Forest 1.wav" id="6_hey0b"]
-[ext_resource type="SoundFont" uid="uid://c0ncqrlqb7blj" path="res://Resources/SoundFonts/Jvbass.sf2" id="6_pb4c0"]
 [ext_resource type="AudioStream" uid="uid://bwoguevkloyrm" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Kick_Perc P.wav" id="7_hey0b"]
 [ext_resource type="Script" uid="uid://cnsj14lri3mfa" path="res://Scripts/DataClasses/SoundBanks/SoundBank.gd" id="9_nx8i2"]
 [ext_resource type="Script" uid="uid://cx6op5amucrek" path="res://Scripts/DataClasses/SoundBanks/note_player_settings.gd" id="9_sfolf"]
@@ -19,7 +18,6 @@
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="10_pb4c0"]
 [ext_resource type="AudioStream" uid="uid://c44vb5olmqmmh" path="res://Resources/Audio/SoundBanks/2_acoustisch/mineur/Snare_Perc Ph.wav" id="11_2nf2g"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="11_vnxl8"]
-[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Resources/SoundFonts/tencho.sfo" id="12_vnxl8"]
 [ext_resource type="Script" uid="uid://drxt80xgl6wxa" path="res://Scripts/DataClasses/SoundBanks/EffectProfile.gd" id="13_eprof"]
 
 [sub_resource type="Resource" id="Resource_io7hp"]
@@ -97,7 +95,7 @@ clap = ExtResource("1_l8cde")
 clap_alt = ExtResource("2_l8cde")
 closed = ExtResource("3_sfolf")
 closed_alt = ExtResource("4_sfolf")
-synth_soundfonts = Array[Resource]([ExtResource("6_pb4c0"), ExtResource("12_vnxl8")])
+synth_soundfonts = Array[Resource]([ExtResource("4_m4qsc"), ExtResource("4_m4qsc")])
 synth_instrument_ids = Array[int]([5, 2])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("13_eprof")]([ExtResource("5_l8cde"), ExtResource("5_l8cde")])

@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://cy33axifo2vk7" path="res://Experimental/chords/chord.gd" id="2_v06ke"]
 [ext_resource type="AudioStream" uid="uid://bfg1r2xu24fqn" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Clap DoubleDutch 3.wav" id="2_w2ik1"]
 [ext_resource type="Script" uid="uid://o7hwd8deti24" path="res://Scripts/DataClasses/SoundBanks/ChordSettings.gd" id="3_b4s1p"]
-[ext_resource type="SoundFont" uid="uid://vyn1uvtvn73t" path="res://Resources/SoundFonts/Jvbass.sfo" id="3_ofjox"]
 [ext_resource type="AudioStream" uid="uid://mrxaxt7o4bgd" path="res://Resources/Audio/SoundBanks/5_dance/mineur/ClosedHH Pueblo.wav" id="4_0u368"]
 [ext_resource type="AudioStream" uid="uid://c8ekvl7815v4i" path="res://Resources/Audio/SoundBanks/5_dance/Kick Acidy 2.wav" id="4_lcnh7"]
 [ext_resource type="AudioStream" uid="uid://dsbv88j5iiama" path="res://Resources/Audio/SoundBanks/5_dance/mineur/Kick VibeOffering 2.wav" id="4_ofjox"]
@@ -21,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 [ext_resource type="Resource" uid="uid://d3p00p13ehkir" path="res://Resources/Audio/SoundBanks/5_dance/EffectProfile.tres" id="19_b4s1p"]
+[ext_resource type="SoundFont" uid="uid://40le457a68am" path="res://Resources/SoundFonts/tencho.sfo" id="21_b4s1p"]
 
 [sub_resource type="Resource" id="Resource_hysh3"]
 script = ExtResource("2_v06ke")
@@ -98,7 +98,7 @@ clap = ExtResource("1_l4nox")
 clap_alt = ExtResource("2_w2ik1")
 closed = ExtResource("2_q2ho0")
 closed_alt = ExtResource("4_0u368")
-synth_soundfonts = Array[Resource]([ExtResource("3_ofjox"), ExtResource("5_w2ik1")])
+synth_soundfonts = Array[SoundFont]([ExtResource("21_b4s1p"), ExtResource("5_w2ik1")])
 synth_instrument_ids = Array[int]([0, 7])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_6veg5"), ExtResource("19_b4s1p")])

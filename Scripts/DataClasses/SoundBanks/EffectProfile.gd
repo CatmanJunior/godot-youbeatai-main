@@ -43,7 +43,6 @@ func apply_effects(bus_index: int) -> void:
 
 func _add_effect_bus(effect: AudioEffect, bus_index: int, effect_index: int, value):
 	AudioServer.add_bus_effect(bus_index, effect)
-	print(value)
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 
 func apply_chorus(_bus_effect: AudioEffectChorus, _enabled: bool) -> void:

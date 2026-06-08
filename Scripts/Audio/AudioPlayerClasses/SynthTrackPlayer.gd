@@ -47,7 +47,11 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	for i in [SynthLayer.ALT, SynthLayer.REC]: # update all non-note player layers with the new recording
 		players[i].stream = recording_data.audio_stream # all layers share the same recording
 	_has_recording = true
-	set_weights(_weights) # reapply weights now that streams are loaded
+	if GameState.use_tutorial:
+		var _w = Vector3(0.0, 0.0, 1.0)
+		set_weights(_w) # force alt layer on with full weight in tutorial to ensure player hears the recording clearly
+	else:
+		set_weights(_weights) # reapply weights now that streams are loaded
 
 	track_data.set_recording_audio_stream(recording_data)
 

@@ -39,6 +39,7 @@
 [ext_resource type="PackedScene" uid="uid://bx31iyxqitumv" path="res://Scenes/UI_Components/settings_button_control.tscn" id="48_jut3y"]
 [ext_resource type="Script" uid="uid://c3r8o0l2mqngi" path="res://Scripts/Audio/microphone_capture.gd" id="49_102yd"]
 [ext_resource type="PackedScene" uid="uid://d22yi3f65pq4g" path="res://Scenes/UI_Components/switch_section_buttons.tscn" id="49_v2nl5"]
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="50_my4ki"]
 [ext_resource type="Script" uid="uid://bpf2nmxt57k8t" path="res://Scripts/Audio/audio_player_manager.gd" id="51_eqnci"]
 [ext_resource type="PackedScene" uid="uid://jsbttb3fa3uy" path="res://Scenes/UI_Components/email_prompt.tscn" id="52_1semv"]
 [ext_resource type="PackedScene" uid="uid://caqcrls6ynrlt" path="res://Scenes/UI_Components/count_down.tscn" id="52_6ml46"]
@@ -253,11 +254,42 @@ grow_horizontal = 2
 [node name="Robot" parent="UserInterface" unique_id=1025278274 instance=ExtResource("42_6ml46")]
 position = Vector2(406, 139)
 
-[node name="KlappyLightPad" parent="UserInterface/Robot" index="2" unique_id=1352817312]
+[node name="KlappyLightPad" parent="UserInterface/Robot" index="2" unique_id=1352817312 node_paths=PackedStringArray("colorlights", "colormapje")]
 offset_left = -110.5
 offset_top = -161.5
-offset_right = 89.5
+offset_right = 108.5
 offset_bottom = 38.5
+colorlights = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors")
+colormapje = NodePath("../Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors")
+
+[node name="KlappyLight" parent="UserInterface/Robot/KlappyLightPad" index="1" unique_id=774408989]
+z_index = -4096
+color = Color(1, 1, 1, 0.5686275)
+energy = 0.77
+
+[node name="Colors" parent="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D" parent_id_path=PackedInt32Array(1025278274, 509510474, 1167922712, 1510419203) index="0" unique_id=1104109192]
+transform = Transform3D(0.009031146, -0.0001372144, 0.0042918045, -0.003933228, 0.003745788, 0.008396357, -0.0017228298, -0.009270937, 0.0033289068, 0.0029525042, -0.0017039418, 0.025207162)
+visible = true
+
+[node name="blue" parent="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="0" unique_id=604009490]
+transform = Transform3D(6.712081, 0.008380162, -0.76020694, -0.004124958, 6.7548933, 0.03804229, 0.7602408, -0.037336346, 6.7119794, -0.8024586, 4.458962, 0.91024363)
+
+[node name="Green" parent="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="1" unique_id=90235402]
+transform = Transform3D(6.712081, 0.008380162, -0.76020694, -0.004124958, 6.7548933, 0.03804229, 0.7602408, -0.037336346, 6.7119794, 0.2360034, 4.458322, 1.0278649)
+
+[node name="Red" parent="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="2" unique_id=405690465]
+transform = Transform3D(6.712081, 0.008380162, -0.76020694, -0.004124958, 6.7548933, 0.03804229, 0.7602408, -0.037336346, 6.7119794, -0.255496, 5.0385585, 0.96890837)
+
+[node name="Yellow" parent="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="3" unique_id=2054928033]
+transform = Transform3D(6.712081, 0.008380162, -0.76020694, -0.004124958, 6.7548933, 0.03804229, 0.7602408, -0.037336346, 6.7119794, -0.22104624, 3.7759776, 0.9799663)
+
+[node name="PointLight2D" type="PointLight2D" parent="UserInterface/Robot/Robot/SubViewportContainer" parent_id_path=PackedInt32Array(1025278274, 509510474, 2110113658) index="1" unique_id=2092104041]
+visible = false
+position = Vector2(181.66669, 70.416664)
+scale = Vector2(0.122807086, 0.19736843)
+color = Color(0.08627451, 0.33333334, 1, 1)
+energy = 17.35
+texture = ExtResource("50_my4ki")
 
 [node name="LoadingContainer" parent="UserInterface" unique_id=617797876 instance=ExtResource("36_s8vy0")]
 visible = false
@@ -475,6 +507,7 @@ script = ExtResource("56_ptfg5")
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_4"]
 [editable path="UserInterface/TrackSelectButtons/VBoxContainer/TrackSelectButton_5"]
 [editable path="UserInterface/Robot"]
+[editable path="UserInterface/Robot/KlappyLightPad"]
 [editable path="UserInterface/Robot/Robot"]
 [editable path="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy"]
 [editable path="UserInterface/Robot/Robot/SubViewportContainer/SubViewport/Klappy/model"]

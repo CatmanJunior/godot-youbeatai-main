@@ -95,8 +95,12 @@ func _start_recording() -> void:
 		await timer.timeout
 		
 	EventBus.set_master_volume_db.emit(-20)
-	# Step 4: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING
+	# delay the actual recording a bit to clean the buffer of audio that is now processing
+	timer = get_tree().create_timer(GameState.recording_delay_seconds)
+	await timer.timeout
+
+	# Step 4: Announce to the world that recording has started
 	EventBus.recording_started.emit(current_recording_data)
 
 func _stop_recording() -> void:

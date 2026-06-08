@@ -29,7 +29,7 @@ func set_settings(_settings: ChordPlayerSettings, _bus: StringName) -> void:
 	bus = _bus
 
 func on_beat(beat: int):
-	if SongState.song_track.recorded_audio_stream == null:
+	if not SongState.chords_active:
 		return
 
 	if beat % settings.chordDuration != 0:

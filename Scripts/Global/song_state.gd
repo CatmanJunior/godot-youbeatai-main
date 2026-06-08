@@ -73,6 +73,7 @@ var current_track: TrackData:
 
 var selected_soundbank: SoundBank = null
 var chosen_emoij: String = "😍😵‍💫🦄🏆"
+var chords_active: bool = false
 
 # ── Initialization ───────────────────────────────────────────────────────────
 

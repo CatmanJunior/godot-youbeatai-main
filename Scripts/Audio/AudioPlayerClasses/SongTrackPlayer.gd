@@ -77,12 +77,6 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	players[SongLayer.VOICE_OVER].stream = recording_data.audio_stream
 	players[SongLayer.MIX].stream = recording_data.audio_stream # alt version with effects
 
-	# first recording set mixer to that position
-	if not _has_recording:
-		track_data.knob_position = Vector2(252.8054, 462.0462)
-		set_weights(Vector3(0,0,1))
-		TTSHelper.speak(KlappyVoice.line_text(KlappyLine.Id.CHORD_SCHEMA_READY))
-
 	_has_recording = true
 	set_weights(_weights)
 
@@ -156,3 +150,11 @@ func _on_section_removed(section_index: int) -> void:
 func _on_track_selected(new_track_index: int) -> void:
 	if new_track_index != track_index:
 		stop()
+		return
+	
+	# selected for first time?
+	if not SongState.chords_active:
+		SongState.chords_active = true
+		track_data.knob_position = Vector2(252.8054, 462.0462)
+		set_weights(Vector3(0,0,1))
+		KlappyVoice.say(KlappyLine.Id.CHORD_SCHEMA_READY)

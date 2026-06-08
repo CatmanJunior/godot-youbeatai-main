@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://wpiofc8iuhrj"]
 
 [ext_resource type="PackedScene" uid="uid://ectokfb4nii4" path="res://Scenes/Klappy_components/klappy_speech_buble.tscn" id="1_f68tu"]
-[ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="2_8s4wd"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Resources/Klappy/Klappy.tscn" id="3_7cjo4"]
-[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="4_dcvsp"]
 
 [node name="Robot" type="Sprite2D" unique_id=509510474]
 z_index = 4
@@ -41,33 +39,11 @@ handle_input_locally = false
 size = Vector2i(403, 289)
 render_target_update_mode = 4
 
-[node name="chosen_emoticons_label" type="Label" parent="SubViewportContainer/SubViewport" unique_id=363485101]
-z_index = 1
-z_as_relative = false
-offset_left = 97.5
-offset_top = 0.833332
-offset_right = 297.5
-offset_bottom = 47.8333
-theme = ExtResource("2_8s4wd")
-theme_override_constants/shadow_offset_y = 0
-theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 32
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Klappy" parent="SubViewportContainer/SubViewport" unique_id=1167922712 instance=ExtResource("3_7cjo4")]
 
 [node name="Camera3D" parent="SubViewportContainer/SubViewport/Klappy" index="0" unique_id=948296298]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
-
-[node name="KlappyLight" type="PointLight2D" parent="SubViewportContainer" unique_id=1195742085]
-position = Vector2(204.067, 67.1816)
-scale = Vector2(0.833333, 0.833333)
-color = Color(1, 0.911449, 0.665059, 1)
-energy = 0.0
-texture = ExtResource("4_dcvsp")
-texture_scale = 1.71
 
 [editable path="SubViewportContainer/SubViewport/Klappy"]
 [editable path="SubViewportContainer/SubViewport/Klappy/model"]

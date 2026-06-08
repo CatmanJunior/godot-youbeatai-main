@@ -1,13 +1,14 @@
 [gd_scene format=3 uid="uid://dkd4xm6dcj43i"]
 
 [ext_resource type="Script" uid="uid://dm7r5d1s47gmy" path="res://Scripts/Klappy/klappy_light_pad.gd" id="1_omcsf"]
+[ext_resource type="Texture2D" uid="uid://c8ur7csxddwk8" path="res://Resources/Textures/brush.png" id="3_17xm6"]
 [ext_resource type="Script" uid="uid://c7gd4k7lmwgcu" path="res://Scripts/UI/trail.gd" id="3_cwede"]
 
 [sub_resource type="Curve" id="Curve_fob3f"]
 _data = [Vector2(0, 0.014961481), 0.0, 0.0, 0, 0, Vector2(0.9922482, 0.20945948), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[node name="KlappyLightPad" type="Control" unique_id=736149553]
+[node name="KlappyLightPad" type="Control" unique_id=736149553 node_paths=PackedStringArray("klappy_light2D")]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 3
 anchors_preset = 8
@@ -22,6 +23,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_omcsf")
+klappy_light2D = NodePath("KlappyLight")
 
 [node name="cursor" type="TextureRect" parent="." unique_id=112955615]
 layout_mode = 0
@@ -39,5 +41,13 @@ width_curve = SubResource("Curve_fob3f")
 default_color = Color(1, 1, 1, 0.5372549)
 texture_mode = 2
 script = ExtResource("3_cwede")
+
+[node name="KlappyLight" type="PointLight2D" parent="." unique_id=774408989]
+position = Vector2(132, 103.000015)
+scale = Vector2(0.833333, 0.833333)
+color = Color(0.78431374, 0, 0, 1)
+energy = 11.8
+texture = ExtResource("3_17xm6")
+texture_scale = 1.71
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -13,6 +13,6 @@ dest_files=["res://.godot/imported/data.csv-3ba10c5cb7d00aa89e155fc7de248e06.res
 [params]
 
 delimiter=0
-headers=true
-detect_numbers=true
+headers=false
+detect_numbers=false
 force_float=true

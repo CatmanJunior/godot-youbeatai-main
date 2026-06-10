@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://d0bkjin77dnje"]
+
+[ext_resource type="PackedScene" uid="uid://qoagtgg3tv3g" path="res://Resources/Klappy/Robot_UV_LampFix.fbx" id="1_koyvl"]
+
+[node name="Robot_UV_LampFix" unique_id=124920035 instance=ExtResource("1_koyvl")]
+
+[node name="Skeleton3D" parent="Robot" parent_id_path=PackedInt32Array(1216253880) index="0" unique_id=1998765177]
+bones/4/position = Vector3(-3.1793461e-12, 0.014834762, -3.9300735e-10)
+bones/4/rotation = Quaternion(0.6633437, 0.00024245204, 0.00052655925, 0.74831456)
+bones/4/scale = Vector3(1, 0.9999999, 0.9999998)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Robot/Skeleton3D/DNT_001" parent_id_path=PackedInt32Array(354722409) index="0" unique_id=2120872388]
+transform = Transform3D(1.0000001, 2.9103834e-11, 9.5402e-07, 3.9651064e-07, -0.90950614, -0.4156899, 8.672215e-07, 0.41568998, -0.90950614, -0.00013570703, 0.0099199265, 0.024130067)
+bone_name = "Mouth"
+bone_idx = 4

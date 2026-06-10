@@ -17,4 +17,4 @@ ACH_TIP_ADD_SECTION,"Als je een nieuwe patroon toevoegt, kan je hier een heel li
 ACH_TIP_FIRST_SAMPLE,"Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring.","",true,true,false,false,1.0,true
 ACH_TIP_SECOND_SAMPLE,"Kan je hier voor mij een kort gek geluid opnemen?","",true,true,false,false,1.0,true
 ACH_TIP_TRACK_3,"Verzamel meer energie om de hi-hat vrij te spelen","",true,true,false,false,1.0,true
-CHORD_SCHEMA_READY,"ik heb een accorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept","",true,false,false,false,1.0,true
+CHORD_SCHEMA_READY,"ik heb een accorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept","",true,true,false,true,1.0,true

@@ -1,217 +1,105 @@
-[gd_resource type="Resource" script_class="KlappyLineLibrary" load_steps=22 format=3]
+[gd_resource type="Resource" script_class="KlappyLineLibrary" format=3 uid="uid://dr373ak0ko0nh"]
 
-[ext_resource type="Script" path="res://Scripts/DataClasses/Klappy/klappy_line_library.gd" id="lib"]
-[ext_resource type="Script" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="line"]
+[ext_resource type="Script" uid="uid://cq1uva3o5pt1l" path="res://Scripts/DataClasses/Klappy/klappy_line_library.gd" id="lib"]
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="line"]
 
-[sub_resource type="Resource" id="L0"]
+[sub_resource type="Resource" id="Resource_fn5y7"]
 script = ExtResource("line")
 id = 0
 text = "hoi ik ben klappy en wij gaan samen een beat maken"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L1"]
+[sub_resource type="Resource" id="Resource_1xuv2"]
 script = ExtResource("line")
 id = 1
 text = "Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L2"]
+[sub_resource type="Resource" id="Resource_qh40h"]
 script = ExtResource("line")
 id = 2
 text = "Je hebt niet genoeg energie om meer beats toe te voegen!"
-title = ""
 use_tts = false
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L3"]
+[sub_resource type="Resource" id="Resource_5khwv"]
 script = ExtResource("line")
 id = 3
 text = "De 📣 Snare heeft een helder geluid, die wordt meestal op de lijntjes gezet."
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L4"]
+[sub_resource type="Resource" id="Resource_nj7t5"]
 script = ExtResource("line")
 id = 4
 text = "Dit korte ⌚ Hi-hat geluid laat de boel lekker swingen, zet er maar eens een hele hoop neer"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L5"]
+[sub_resource type="Resource" id="Resource_hj18e"]
 script = ExtResource("line")
 id = 5
 text = "Met de hoge 🐦 Synth, kan je het lekker druk maken, maar ook even een kort geluidje is die heel goed in."
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L6"]
+[sub_resource type="Resource" id="Resource_nqsb2"]
 script = ExtResource("line")
 id = 6
 text = "Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L7"]
+[sub_resource type="Resource" id="Resource_y4uun"]
 script = ExtResource("line")
 id = 7
 text = "Oke nu gaat het echte werk beginnen met de 🎵 Song Mode, alle rondjes worden achter elkaar afgespeeld, en met de microfoon kan je een hele lange opname maken"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L8"]
+[sub_resource type="Resource" id="Resource_kd4n8"]
 script = ExtResource("line")
 id = 8
 text = "Gaaf! Je hebt je eerste 🎤 geluid opgenomen, zet hem in de ring!"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L9"]
+[sub_resource type="Resource" id="Resource_s8u1o"]
 script = ExtResource("line")
 id = 9
 text = "Wat een leuke sample, daar krijg ik energie ⚡ van !"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L10"]
+[sub_resource type="Resource" id="Resource_tpvy3"]
 script = ExtResource("line")
 id = 10
 text = "Ik weet een leuke beat voor je, in de beat ring staan nu stipjes die je een hint geven"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L11"]
+[sub_resource type="Resource" id="Resource_ak0p7"]
 script = ExtResource("line")
 id = 11
 text = "Verzamel meer energie om de Snare ring vrij te spelen"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L12"]
+[sub_resource type="Resource" id="Resource_mynu2"]
 script = ExtResource("line")
 id = 12
 text = "Verzamel meer energie om een hoger geluid op te kunnen nemen"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L13"]
+[sub_resource type="Resource" id="Resource_2345b"]
 script = ExtResource("line")
 id = 13
 text = "Als je hier op klikt, dan laat ik een voorbeeld liedje zien"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L14"]
+[sub_resource type="Resource" id="Resource_c6pw7"]
 script = ExtResource("line")
 id = 14
 text = "Als je een nieuwe patroon toevoegt, kan je hier een heel liedje opnemen."
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L15"]
+[sub_resource type="Resource" id="Resource_ytpak"]
 script = ExtResource("line")
 id = 15
 text = "Een cadeautje van mij! neem met deze 🎤 microfoon een kort hard geluid op hem te gebruiken als instrument in de ring."
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L16"]
+[sub_resource type="Resource" id="Resource_as8gu"]
 script = ExtResource("line")
 id = 16
 text = "Kan je hier voor mij een kort gek geluid opnemen?"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L17"]
+[sub_resource type="Resource" id="Resource_bv87f"]
 script = ExtResource("line")
 id = 17
 text = "Verzamel meer energie om de hi-hat vrij te spelen"
-title = ""
-use_tts = true
-use_bubble = true
-show_continue = false
-interrupt = false
-rate = 1.0
 
-[sub_resource type="Resource" id="L18"]
+[sub_resource type="Resource" id="Resource_ti7lb"]
 script = ExtResource("line")
 id = 18
 text = "ik heb een accorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept"
-title = ""
-use_tts = true
-use_bubble = false
-show_continue = false
-interrupt = false
-rate = 1.0
+interrupt = true
 
 [resource]
 script = ExtResource("lib")
-lines = Array[ExtResource("line")]([SubResource("L0"), SubResource("L1"), SubResource("L2"), SubResource("L3"), SubResource("L4"), SubResource("L5"), SubResource("L6"), SubResource("L7"), SubResource("L8"), SubResource("L9"), SubResource("L10"), SubResource("L11"), SubResource("L12"), SubResource("L13"), SubResource("L14"), SubResource("L15"), SubResource("L16"), SubResource("L17"), SubResource("L18")])
+lines = Array[ExtResource("line")]([SubResource("Resource_fn5y7"), SubResource("Resource_1xuv2"), SubResource("Resource_qh40h"), SubResource("Resource_5khwv"), SubResource("Resource_nj7t5"), SubResource("Resource_hj18e"), SubResource("Resource_nqsb2"), SubResource("Resource_y4uun"), SubResource("Resource_kd4n8"), SubResource("Resource_s8u1o"), SubResource("Resource_tpvy3"), SubResource("Resource_ak0p7"), SubResource("Resource_mynu2"), SubResource("Resource_2345b"), SubResource("Resource_c6pw7"), SubResource("Resource_ytpak"), SubResource("Resource_as8gu"), SubResource("Resource_bv87f"), SubResource("Resource_ti7lb")])

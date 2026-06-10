@@ -147,6 +147,9 @@ var _countdown_ticked: bool = false
 var _countdown_closed: bool = false
 
 func _on_countdown_tick(seconds: int) -> void:
+	if not GameState.tutorial_activated:
+		return
+
 	_countdown_ticked = true
 	# Countdown numbers are shown in the bubble and spoken, but do NOT emit
 	# tutorial_utterance_started — they must not trigger _cond_tts_done.

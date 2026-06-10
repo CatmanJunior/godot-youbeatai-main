@@ -46,6 +46,7 @@ func set_knob_position(pos: Vector2, retry_count := 0) -> void:
 	knob.position = pos - knob.size / 2.0
 
 func _on_track_selected(track: int):
+	await get_tree().process_frame
 	if SongState.current_section != null:
 		if SongState.current_track.index == SongTrackData.SONG_TRACK_INDEX:
 			set_knob_position(SongState.song_track.knob_position)

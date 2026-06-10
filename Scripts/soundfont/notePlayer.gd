@@ -69,7 +69,7 @@ func _process_midi_input(event: InputEventMIDI):
 		channel_note_off(0, event.channel, event.pitch)
 
 func play_note(sequence_note: SequenceNote) -> void:
-	print("Playing note: %d with velocity %f for duration %f" % [sequence_note.note, sequence_note.velocity, sequence_note.duration])
+	# print("Playing note: %d with velocity %f for duration %f" % [sequence_note.note, sequence_note.velocity, sequence_note.duration])
 	if sequence_note.note < 0:
 		return
 	if sequence_note.velocity < min_velocity:

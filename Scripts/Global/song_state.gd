@@ -72,6 +72,7 @@ var current_track: TrackData:
 		return null
 
 var selected_soundbank: SoundBank = null
+var chords_active: bool = false
 var chosen_emoij: String = CHOSEN_EMOIJ_DEFAULT
 
 # ── Initialization ───────────────────────────────────────────────────────────

@@ -8,7 +8,7 @@ extends Node
 ## selected_track_index, selected_soundbank) lives directly on this node.
 
 const BEATS_AMOUNT_DEFAULT: int = 16
-
+const CHOSEN_EMOIJ_DEFAULT: String = "😍😵‍💫🦄🏆"
 ## The underlying serializable song data.
 ## All persistent song properties are read from / written to this instance.
 var data: SongData = SongData.new()
@@ -72,7 +72,7 @@ var current_track: TrackData:
 		return null
 
 var selected_soundbank: SoundBank = null
-var chosen_emoij: String = "😍😵‍💫🦄🏆"
+var chosen_emoij: String = CHOSEN_EMOIJ_DEFAULT
 
 # ── Initialization ───────────────────────────────────────────────────────────
 
@@ -145,3 +145,4 @@ func reset() -> void:
 	current_section = null
 	selected_track_index = 0
 	selected_soundbank = null
+	chosen_emoij = CHOSEN_EMOIJ_DEFAULT

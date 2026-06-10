@@ -61,7 +61,34 @@ var song_mode_active: bool = false
 
 
 func reset() -> void:
+	EventBus.all_players_stop_requested.emit()
 	SongState.reset()
+
+	notes = null
+
+	# Tutorial / achievements
+	use_achievements = true
+	achievements_active = false
+	energy_points = 0.0
+	tutorial_activated = false
+	use_tutorial = false
+	show_template = false
+	added_layer = false
+
+	# Export settings
+	export_name = ""
+	export_mail = ""
+
+	# Settings
+	microphone_volume = 0.0
+	recording_delay_seconds = 0.0
+	recording_volume_threshold = 1.0
+	track_button_add_beats = false
+	button_is_clap = false
+	clap_bias = 0.0
+	clap_adds_beats = false
+	metronome_enabled = false
+	mute_speech = false
 
 	# Playback
 	playing = false
@@ -71,6 +98,10 @@ func reset() -> void:
 
 	# Recording
 	is_recording = false
+
+	loop_cursor = 0
+	song_mode_active = false
+
 	SceneChanger.restart()
 
 # -- Initialization --

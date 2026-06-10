@@ -2,6 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://ectokfb4nii4" path="res://Scenes/Klappy_components/klappy_speech_buble.tscn" id="1_f68tu"]
 [ext_resource type="PackedScene" uid="uid://cawoo3gsyyym5" path="res://Resources/Klappy/Klappy.tscn" id="3_7cjo4"]
+[ext_resource type="Material" uid="uid://dnd3ulqwmqteq" path="res://Resources/Klappy/Materials/M_Klappy_body.tres" id="3_p4sun"]
+[ext_resource type="Material" uid="uid://c421qn87d0g6f" path="res://Resources/Klappy/Materials/M_Klappy_Lamp.tres" id="4_rjnos"]
+[ext_resource type="Material" uid="uid://bd57mrnx7ghq1" path="res://Resources/Klappy/Materials/M_Klappy_Legs.tres" id="5_xhqqu"]
+[ext_resource type="Material" uid="uid://b4ov3m707x820" path="res://Resources/Klappy/Materials/M_Klappy_Arms.tres" id="6_swrgv"]
+[ext_resource type="Material" uid="uid://cdlns5hnhw21u" path="res://Resources/Klappy/Materials/M_Klappy_Transparant.tres" id="7_ytrrs"]
 
 [node name="Robot" type="Sprite2D" unique_id=509510474]
 z_index = 4
@@ -44,6 +49,35 @@ render_target_update_mode = 4
 [node name="Camera3D" parent="SubViewportContainer/SubViewport/Klappy" index="0" unique_id=948296298]
 transform = Transform3D(0.951057, 0, 0.309017, 0, 1, 0, -0.309017, 0, 0.951057, 1.585, 2.722, 4.93)
 current = true
+
+[node name="Skeleton3D" parent="SubViewportContainer/SubViewport/Klappy/model/Robot" parent_id_path=PackedInt32Array(1167922712, 386737351, 1216253880) index="0" unique_id=1998765177]
+bones/4/position = Vector3(-3.1793461e-12, 0.014834762, -3.9300735e-10)
+bones/4/scale = Vector3(1, 0.9999999, 0.9999998)
+
+[node name="DNT_001" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" index="0" unique_id=354722409]
+surface_material_override/0 = ExtResource("3_p4sun")
+surface_material_override/1 = ExtResource("4_rjnos")
+surface_material_override/2 = ExtResource("5_xhqqu")
+surface_material_override/3 = ExtResource("6_swrgv")
+surface_material_override/4 = ExtResource("7_ytrrs")
+
+[node name="BoneAttachment3D" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D" index="1" unique_id=1510419203]
+transform = Transform3D(0.99999416, 0.003290141, -0.00088793214, 0.0027292878, -0.9292404, -0.3694651, -0.0020406959, 0.36946058, -0.9292438, -0.000135707, 0.009322002, 0.024059135)
+
+[node name="Colors" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D" index="0" unique_id=1104109192]
+visible = false
+
+[node name="blue" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="0" unique_id=604009490]
+transform = Transform3D(6.755, 2.3090015e-16, -7.195977e-16, -2.3090015e-16, 6.755, 6.241514e-33, 7.195977e-16, 1.835585e-32, 6.755, -0.5488096, 4.6622596, 0.37225282)
+
+[node name="Green" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="1" unique_id=90235402]
+transform = Transform3D(6.755, 2.3090015e-16, -7.195977e-16, -2.3090015e-16, 6.755, 6.241514e-33, 7.195977e-16, 1.835585e-32, 6.755, 0.49629295, 4.6622596, 0.37225282)
+
+[node name="Red" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="2" unique_id=405690465]
+transform = Transform3D(6.755, 2.3090015e-16, -7.195977e-16, -2.3090015e-16, 6.755, 6.241514e-33, 7.195977e-16, 1.835585e-32, 6.755, 0.0009263758, 5.2422013, 0.37225282)
+
+[node name="Yellow" parent="SubViewportContainer/SubViewport/Klappy/model/Robot/Skeleton3D/BoneAttachment3D/Colors" index="3" unique_id=2054928033]
+transform = Transform3D(6.755, 5.90699e-16, -7.195977e-16, -5.90699e-16, 6.755, 6.241514e-33, 7.195977e-16, 5.668456e-32, 6.755, 0.03717267, 3.9796207, 0.37225285)
 
 [editable path="SubViewportContainer/SubViewport/Klappy"]
 [editable path="SubViewportContainer/SubViewport/Klappy/model"]

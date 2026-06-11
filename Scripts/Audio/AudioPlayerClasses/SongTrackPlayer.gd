@@ -138,14 +138,14 @@ func _set_bus_effect(bus_idx: int, effect_profile: EffectProfile, bus: String):
 # ── Section add/remove handlers ──────────────────────────────────────────────
 
 func _on_section_added(section_index: int, _tex: Texture2D) -> void:
-	if track_data.has_recording():
-		track_data.insert_silence_for_section(section_index, SongState.beats_per_section, SongState.beat_duration)
-
+	# if track_data.has_recording():
+	# 	track_data.insert_silence_for_section(section_index, SongState.beats_per_section, SongState.beat_duration)
+	pass
 
 func _on_section_removed(section_index: int) -> void:
-	if track_data.has_recording():
-		track_data.remove_audio_for_section(section_index, SongState.beats_per_section, SongState.beat_duration)
-
+	# if track_data.has_recording():
+	# 	track_data.remove_audio_for_section(section_index, SongState.beats_per_section, SongState.beat_duration)
+	pass
 # When another track is selected stop playback of the songtrack
 func _on_track_selected(new_track_index: int) -> void:
 	if new_track_index != track_index:

@@ -25,8 +25,9 @@ var is_stamping: bool:
 var clap_volume: float = 0.0
 var stamp_volume: float = 0.0
 
-var _clap_on_beat_registered: bool = false
-var _stomp_on_beat_registered: bool = false
+var _beat_epoch: int = 0
+var _last_clap_registered_epoch: int = -1
+var _last_stomp_registered_epoch: int = -1
 
 func _process(_delta: float):
 	# Live volume analysis
@@ -53,20 +54,19 @@ func _ready() -> void:
 
 
 func _on_beat_triggered(_beat: int) -> void:
-	_clap_on_beat_registered = false
-	_stomp_on_beat_registered = false
+	_beat_epoch += 1
 
 func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 	# Emit signals for next beat
-	var track_index = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
-	var on_beat: bool = _is_clap_stomp_next_beat(interaction_type)
-	if on_beat and GameState.playing:
-		if interaction_type == InteractionType.CLAP and not _clap_on_beat_registered:
-			_clap_on_beat_registered = true
+	var track_index: int = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
+	var on_beat_epoch: int = _get_on_beat_target_epoch(interaction_type)
+	if on_beat_epoch >= 0 and GameState.playing:
+		if interaction_type == InteractionType.CLAP and on_beat_epoch != _last_clap_registered_epoch:
+			_last_clap_registered_epoch = on_beat_epoch
 			clapped_on_beat_amount += 1
 			EventBus.clap_on_beat_detected.emit()
-		elif interaction_type == InteractionType.STOMP and not _stomp_on_beat_registered:
-			_stomp_on_beat_registered = true
+		elif interaction_type == InteractionType.STOMP and on_beat_epoch != _last_stomp_registered_epoch:
+			_last_stomp_registered_epoch = on_beat_epoch
 			stomped_on_beat_amount += 1
 			EventBus.stomp_on_beat_detected.emit()
 	else:
@@ -79,20 +79,24 @@ func _handle_clap_stomp(interaction_type: InteractionType) -> void:
 		EventBus.beat_set_requested.emit(track_index, GameState.current_beat, true)
 
 
-func _is_clap_stomp_next_beat(interaction_type: InteractionType) -> bool:
+func _get_on_beat_target_epoch(interaction_type: InteractionType) -> int:
 	if not GameState.playing:
-		return false
+		return -1
 	var progress: float = GameState.beat_progress
 	var track_index: int = CLAP_TRACK if interaction_type == InteractionType.CLAP else STOMP_TRACK
 
 	# Head window: beat just fired, check if current beat is set
 	if progress < beat_on_beat_window:
-		return SongState.current_section.get_beat(track_index, GameState.current_beat)
+		if SongState.current_section.get_beat(track_index, GameState.current_beat):
+			return _beat_epoch
+		return -1
 
 	# Tail window: approaching next beat, check if next beat is set
 	if progress > 1.0 - beat_on_beat_window:
 		var next_beat: int = (GameState.current_beat + 1) % SongState.beats_per_section
-		return SongState.current_section.get_beat(track_index, next_beat)
+		if SongState.current_section.get_beat(track_index, next_beat):
+			return _beat_epoch + 1
+		return -1
 
 	# Outside both windows — not on beat
-	return false
+	return -1

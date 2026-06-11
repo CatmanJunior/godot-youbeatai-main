@@ -95,9 +95,13 @@ func _outcome_clap_stomp_setup(stomp_mode: bool) -> void:
 	var amount_left: int
 	if stomp_mode:
 		tutorial._in_stomp_phase = true
+		tutorial.clap_stomp.stomped_on_beat_amount = 0
+		tutorial._previous_stomp = -1
 		amount_left = Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.stomped_on_beat_amount
 	else:
 		tutorial._in_clap_phase = true
+		tutorial.clap_stomp.clapped_on_beat_amount = 0
+		tutorial._previous_clap = -1
 		amount_left = Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - tutorial.clap_stomp.clapped_on_beat_amount
 	
 	EventBus.set_klappy_speech_bubble.emit(

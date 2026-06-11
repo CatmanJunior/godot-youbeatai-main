@@ -108,12 +108,12 @@ text = "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample 
 [sub_resource type="Resource" id="Resource_wmumn"]
 script = ExtResource("line")
 id = 20
-text = "Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af van 4 naar 0"
+text = "Druk op de microfoon 🎙️ en neem een geluids sample op! Ik tel af van 4 naar 0"
 
 [sub_resource type="Resource" id="Resource_k5rv0"]
 script = ExtResource("line")
 id = 21
-text = "Super gedaan, het klinkt al leuk"
+text = "Super gedaan, wat een leuke sample!"
 
 [sub_resource type="Resource" id="Resource_rcs32"]
 script = ExtResource("line")

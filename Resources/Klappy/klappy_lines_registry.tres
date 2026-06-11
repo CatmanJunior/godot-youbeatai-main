@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="KlappyLineLibrary" format=3 uid="uid://dr373ak0ko0nh"]
+[gd_resource type="Resource" script_class="KlappyLineLibrary" format=3 uid="uid://cyd2dgedcdh34"]
 
 [ext_resource type="Script" uid="uid://cq1uva3o5pt1l" path="res://Scripts/DataClasses/Klappy/klappy_line_library.gd" id="lib"]
 [ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="line"]
@@ -6,7 +6,7 @@
 [sub_resource type="Resource" id="Resource_fn5y7"]
 script = ExtResource("line")
 id = 0
-text = "hoi ik ben klappy en wij gaan samen een beat maken"
+text = "Hoi ik ben klappy en wij gaan samen een beat maken"
 
 [sub_resource type="Resource" id="Resource_1xuv2"]
 script = ExtResource("line")
@@ -16,7 +16,7 @@ text = "Wow! Beweeg je muis over mijn lampje en hoor wat er gebeurt!"
 [sub_resource type="Resource" id="Resource_qh40h"]
 script = ExtResource("line")
 id = 2
-text = "Je hebt niet genoeg energie om meer beats toe te voegen!"
+text = "Je hebt niet genoeg energie om meer beats toe te voegen! Klap mee op de oranje clap om meer energie te krijgen!"
 use_tts = false
 
 [sub_resource type="Resource" id="Resource_5khwv"]
@@ -62,12 +62,12 @@ text = "Ik weet een leuke beat voor je, in de beat ring staan nu stipjes die je 
 [sub_resource type="Resource" id="Resource_ak0p7"]
 script = ExtResource("line")
 id = 11
-text = "Verzamel meer energie om de Snare ring vrij te spelen"
+text = "Verzamel meer energie om de Snare ring vrij te spelen. Klap mee op de oranje clap om meer energie te krijgen!"
 
 [sub_resource type="Resource" id="Resource_mynu2"]
 script = ExtResource("line")
 id = 12
-text = "Verzamel meer energie om een hoger geluid op te kunnen nemen"
+text = "Verzamel meer energie om een hoger geluid op te kunnen nemen. Klap mee op de oranje clap om meer energie te krijgen!"
 
 [sub_resource type="Resource" id="Resource_2345b"]
 script = ExtResource("line")
@@ -92,7 +92,7 @@ text = "Kan je hier voor mij een kort gek geluid opnemen?"
 [sub_resource type="Resource" id="Resource_bv87f"]
 script = ExtResource("line")
 id = 17
-text = "Verzamel meer energie om de hi-hat vrij te spelen"
+text = "Verzamel meer energie om de hi-hat vrij te spelen. Klap mee op de oranje clap om meer energie te krijgen!"
 
 [sub_resource type="Resource" id="Resource_ti7lb"]
 script = ExtResource("line")

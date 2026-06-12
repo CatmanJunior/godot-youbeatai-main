@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://cawoo3gsyyym5"]
 
 [ext_resource type="Script" uid="uid://bpoaf8o2cncdd" path="res://Resources/Klappy/klappy_animations.gd" id="2_d4ajq"]
-[ext_resource type="Material" uid="uid://dnd3ulqwmqteq" path="res://Resources/Klappy/Materials/M_Klappy_body.tres" id="3_n8s16"]
-[ext_resource type="Material" uid="uid://c421qn87d0g6f" path="res://Resources/Klappy/Materials/M_Klappy_Lamp.tres" id="4_1ku2n"]
-[ext_resource type="Material" uid="uid://cdlns5hnhw21u" path="res://Resources/Klappy/Materials/M_Klappy_Transparant.tres" id="4_haj43"]
-[ext_resource type="Material" uid="uid://b4ov3m707x820" path="res://Resources/Klappy/Materials/M_Klappy_Arms.tres" id="5_8c4xi"]
+[ext_resource type="Texture2D" uid="uid://cp6e65e63420p" path="res://Resources/Textures/brushy.png" id="3_7d5vt"]
 [ext_resource type="AnimationLibrary" uid="uid://eh6qcibh4sn2" path="res://Resources/Klappy/Animations/animations.res" id="8_rv124"]
 [ext_resource type="PackedScene" uid="uid://qoagtgg3tv3g" path="res://Resources/Klappy/Robot_UV_LampFix.fbx" id="17_8c4xi"]
-[ext_resource type="Material" uid="uid://bd57mrnx7ghq1" path="res://Resources/Klappy/Materials/M_Klappy_Legs.tres" id="19_phjtk"]
 
 [sub_resource type="Environment" id="Environment_vxk86"]
 background_mode = 1
@@ -113,7 +109,7 @@ compositor = SubResource("Compositor_igk12")
 
 [node name="model" parent="." unique_id=386737351 instance=ExtResource("17_8c4xi")]
 
-[node name="Skeleton3D" parent="model/Robot" parent_id_path=PackedInt32Array(386737351, 1264223871) index="0" unique_id=1991320323]
+[node name="Skeleton3D" parent="model/Robot" parent_id_path=PackedInt32Array(386737351, 1216253880) index="0" unique_id=1998765177]
 bones/0/position = Vector3(-0.00015215541, 0.005416186, 0.009747797)
 bones/0/rotation = Quaternion(0.6069233, 0.00046992436, -0.00033869268, 0.7947603)
 bones/1/position = Vector3(0.0111645, 0.00310582, 0.0112455)
@@ -156,14 +152,39 @@ bones/18/position = Vector3(-4.31259e-10, 0.00449158, 3.9602e-10)
 bones/18/rotation = Quaternion(-0.0010216191, 0.0006269256, 0.82169485, 0.56992644)
 bones/18/scale = Vector3(1, 1, 1)
 
-[node name="DNT_001" parent="model/Robot/Skeleton3D" index="0" unique_id=560188361]
-surface_material_override/0 = ExtResource("3_n8s16")
-surface_material_override/1 = ExtResource("4_1ku2n")
-surface_material_override/2 = ExtResource("19_phjtk")
-surface_material_override/3 = ExtResource("5_8c4xi")
-surface_material_override/4 = ExtResource("4_haj43")
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="model/Robot/Skeleton3D" index="1" unique_id=1510419203]
+transform = Transform3D(0.99999416, 0.0032901412, -0.0008879324, 0.0027292878, -0.92924047, -0.36946517, -0.0020406959, 0.36946064, -0.929244, -0.00013570696, 0.009322012, 0.024059173)
+bone_name = "Mouth"
+bone_idx = 4
 
-[node name="AnimationPlayer" parent="model" index="1" unique_id=1448152490]
+[node name="Colors" type="Node3D" parent="model/Robot/Skeleton3D/BoneAttachment3D" unique_id=1104109192]
+transform = Transform3D(0.009999943, -2.0406966e-05, -2.7292883e-05, 3.2901407e-05, 0.0036946093, 0.009292405, -8.879329e-06, -0.009292441, 0.0036946551, 0.00046788258, -0.00022506528, 0.02580061)
+
+[node name="blue" type="Sprite3D" parent="model/Robot/Skeleton3D/BoneAttachment3D/Colors" unique_id=604009490]
+transform = Transform3D(13.370309, -1.1541507e-09, 9.964465, -1.1541528e-09, 16.674997, 3.4800494e-09, -9.964466, -3.480011e-09, 13.370311, 0.5227415, 4.6681495, 0.80498505)
+modulate = Color(0.16078432, 1, 0.05882353, 1)
+pixel_size = 0.0001
+texture = ExtResource("3_7d5vt")
+
+[node name="Green" type="Sprite3D" parent="model/Robot/Skeleton3D/BoneAttachment3D/Colors" unique_id=90235402]
+transform = Transform3D(13.370308, -1.1541502e-09, 9.964465, -1.1541532e-09, 16.674997, 3.4800494e-09, -9.964466, -3.480011e-09, 13.37031, 1.1491753, 4.6681495, 0.26505834)
+modulate = Color(0.77254903, 0, 0, 1)
+pixel_size = 0.0001
+texture = ExtResource("3_7d5vt")
+
+[node name="Red" type="Sprite3D" parent="model/Robot/Skeleton3D/BoneAttachment3D/Colors" unique_id=405690465]
+transform = Transform3D(13.370308, -1.1541502e-09, 9.964465, -1.1541532e-09, 16.674997, 3.4800494e-09, -9.964466, -3.480011e-09, 13.37031, 0.7519816, 5.2480907, 0.5610742)
+modulate = Color(0.9882353, 0.96862745, 0, 1)
+pixel_size = 0.0001
+texture = ExtResource("3_7d5vt")
+
+[node name="Yellow" type="Sprite3D" parent="model/Robot/Skeleton3D/BoneAttachment3D/Colors" unique_id=2054928033]
+transform = Transform3D(13.370308, -1.1541502e-09, 9.964465, -1.1541541e-09, 16.674997, 3.4800491e-09, -9.964466, -3.480011e-09, 13.37031, 0.7810444, 3.9855103, 0.5394146)
+modulate = Color(0, 0, 0.8745098, 1)
+pixel_size = 0.0001
+texture = ExtResource("3_7d5vt")
+
+[node name="AnimationPlayer" parent="model" index="1" unique_id=840029905]
 libraries/animations = ExtResource("8_rv124")
 
 [node name="AnimationTree" type="AnimationTree" parent="model" unique_id=935396953]
@@ -180,33 +201,6 @@ parameters/sadTrigger/seek_request = -1.0
 "parameters/Add2 4/add_amount" = 1.0
 parameters/happyTrigger/seek_request = -1.0
 "parameters/Add2 5/add_amount" = 1.0
-
-[node name="Colors" type="Node3D" parent="model" unique_id=1104109192]
-visible = false
-
-[node name="blue" type="OmniLight3D" parent="model/Colors" unique_id=795980793]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.459, 0)
-light_color = Color(0.011764706, 0.047058824, 1, 1)
-light_energy = 5.0
-omni_range = 1.0
-
-[node name="red" type="OmniLight3D" parent="model/Colors" unique_id=911464193]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.698, 4.759, 0)
-light_color = Color(1, 0, 0.015686275, 1)
-light_energy = 5.0
-omni_range = 1.0
-
-[node name="green" type="OmniLight3D" parent="model/Colors" unique_id=57355826]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.671, 4.669, 0)
-light_color = Color(0, 1, 0.16078432, 1)
-light_energy = 5.0
-omni_range = 1.0
-
-[node name="yellow" type="OmniLight3D" parent="model/Colors" unique_id=667290617]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.009, 4.158, 0)
-light_color = Color(1, 0.9529412, 0.039215688, 1)
-light_energy = 5.0
-omni_range = 1.0
 
 [node name="Klappylight" type="OmniLight3D" parent="model" unique_id=746853411]
 transform = Transform3D(0.9848077, 0, 0.17364818, 0, 1, 0, -0.17364818, 0, 0.9848077, 0, 4.7, 0)

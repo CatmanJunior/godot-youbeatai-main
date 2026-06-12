@@ -4,20 +4,22 @@ enum PadEffect {
 	PHASER = 0,
 	DISTORTION = 1,
 	HIGHPASS = 2,
-	LOWPASS = 3,
+	BANDPASS = 3,
 }
+
+
 
 const CURSOR_RESET_POSITION: Vector2 = Vector2(100, 100)
 
 const FILTER_CENTER: float = 0.5
-const HIGHPASS_NEUTRAL_CUTOFF_HZ: float = 20.0
-const HIGHPASS_MAX_CUTOFF_HZ: float = 650.0
-const LOWPASS_NEUTRAL_CUTOFF_HZ: float = 20000.0
-const LOWPASS_MIN_CUTOFF_HZ: float = 6500.0
+const AXIS_FOCUS_MIN: float = 0.35
+@export var MIN_BAND_HIGH_CUTOFF_HZ: float = 20.0
+@export var MAX_BAND_HIGH_CUTOFF_HZ: float = 650.0
+@export var MIN_BAND_LOW_CUTOFF_HZ: float = 700.0
+@export var MAX_BAND_LOW_CUTOFF_HZ: float = 20000.0
 const FILTER_RESONANCE: float = 0.15
 const PHASER_MAX_DEPTH: float = 0.8
 const DISTORTION_MAX_DRIVE: float = 0.3
-
 
 const LIGHT_BASE_COLOR: Color = Color("#ffe8aa")
 const LIGHT_BLEND_STRENGTH: float = 0.8
@@ -29,8 +31,9 @@ var bus_index: int = -1
 var phaser: AudioEffectPhaser
 var distortion: AudioEffectDistortion
 var highpass: AudioEffectHighPassFilter
-var lowpass: AudioEffectLowPassFilter
+var bandpass: AudioEffectBandPassFilter
 
+@export var colorlights: Node
 @export var klappy_light2D: PointLight2D
 @export var klappy_light: OmniLight3D
 @export var klappy_energy: ProgressBar
@@ -57,6 +60,7 @@ func _on_gui_input(event: InputEvent) -> void:
 	if not unlocked:
 		return
 
+	colorlights.visible = true
 	colormapje.visible = true
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -101,21 +105,34 @@ func _setup_audio_effects() -> void:
 		push_warning("KlappyLightPad: Audio bus '%s' was not found." % BusNames.SUBMASTER_BUS)
 		return
 
-	if AudioServer.get_bus_effect_count(bus_index) <= PadEffect.LOWPASS:
+	if AudioServer.get_bus_effect_count(bus_index) <= PadEffect.BANDPASS:
 		push_warning("KlappyLightPad: Audio bus '%s' does not have the required light pad effects." % BusNames.SUBMASTER_BUS)
 		return
+
+	_ensure_bandpass_effect()
 
 	phaser = AudioServer.get_bus_effect(bus_index, PadEffect.PHASER) as AudioEffectPhaser
 	distortion = AudioServer.get_bus_effect(bus_index, PadEffect.DISTORTION) as AudioEffectDistortion
 	highpass = AudioServer.get_bus_effect(bus_index, PadEffect.HIGHPASS) as AudioEffectHighPassFilter
-	lowpass = AudioServer.get_bus_effect(bus_index, PadEffect.LOWPASS) as AudioEffectLowPassFilter
-	has_audio_effects = phaser != null and distortion != null and highpass != null and lowpass != null
+	bandpass = AudioServer.get_bus_effect(bus_index, PadEffect.BANDPASS) as AudioEffectBandPassFilter
+	has_audio_effects = phaser != null and distortion != null and highpass != null and bandpass != null
 
 	if not has_audio_effects:
-		push_warning("KlappyLightPad: SubMaster effects are not in the expected Phaser/Distortion/HighPass/LowPass order.")
+		push_warning("KlappyLightPad: SubMaster effects are not in the expected Phaser/Distortion/HighPass/BandPass order.")
 		return
 
 	_set_audio_effects_enabled(false)
+
+func _ensure_bandpass_effect() -> void:
+	if AudioServer.get_bus_effect(bus_index, PadEffect.BANDPASS) is AudioEffectBandPassFilter:
+		return
+
+	var new_bandpass: AudioEffectBandPassFilter = AudioEffectBandPassFilter.new()
+	new_bandpass.resource_name = "BandPassFilter"
+	new_bandpass.resonance = FILTER_RESONANCE
+	new_bandpass.cutoff_hz = MAX_BAND_LOW_CUTOFF_HZ
+	AudioServer.remove_bus_effect(bus_index, PadEffect.BANDPASS)
+	AudioServer.add_bus_effect(bus_index, new_bandpass, PadEffect.BANDPASS)
 
 func _set_audio_effects_enabled(enabled: bool) -> void:
 	if not has_audio_effects:
@@ -125,13 +142,14 @@ func _set_audio_effects_enabled(enabled: bool) -> void:
 		_reset_all_pad_effects()
 
 func _apply_pad_position(raw_position: Vector2) -> void:
+	colorlights.visible = false
 	var pad_position: Vector2 = _get_clamped_pad_position(raw_position)
 	var pad_percent: Vector2 = _get_pad_percent(pad_position)
 
 	$cursor.position = pad_position
 
 	if has_audio_effects:
-		_update_quadrant_effect(pad_percent.x, 1.0 - pad_percent.y)
+		_update_axis_effects(pad_percent)
 
 	_update_lights_from_pad_position(pad_percent)
 
@@ -174,46 +192,55 @@ func _set_light_nodes_visible(should_show: bool) -> void:
 	klappy_light2D.visible = should_show
 	klappy_light.visible = should_show
 
-func _update_quadrant_effect(x_percent: float, y_percent: float) -> void:
-	var effect_amount: float = clamp(max(abs(x_percent - FILTER_CENTER), abs(y_percent - FILTER_CENTER)) * 2.0, 0.0, 1.0)
-	var selected_effect: PadEffect = _get_quadrant_effect(x_percent, y_percent)
+func _update_axis_effects(pad_percent: Vector2) -> void:
+	var x_edge_amount: float = clamp(abs(pad_percent.x - FILTER_CENTER) * 2.0, 0.0, 1.0)
+	var y_edge_amount: float = clamp(abs(pad_percent.y - FILTER_CENTER) * 2.0, 0.0, 1.0)
+	var x_effect_amount: float = x_edge_amount * _get_axis_focus(pad_percent.y)
+	var y_effect_amount: float = y_edge_amount * _get_axis_focus(pad_percent.x)
 
 	_reset_all_pad_effects()
+	_update_x_axis_effect(pad_percent.x, x_effect_amount)
+	_update_y_axis_effect(pad_percent.y, y_effect_amount)
 
-	match selected_effect:
-		PadEffect.PHASER:
-			AudioServer.set_bus_effect_enabled(bus_index, PadEffect.PHASER, true)
-			phaser.depth = effect_amount * PHASER_MAX_DEPTH
-		PadEffect.DISTORTION:
-			AudioServer.set_bus_effect_enabled(bus_index, PadEffect.DISTORTION, true)
-			distortion.drive = effect_amount * DISTORTION_MAX_DRIVE
-		PadEffect.HIGHPASS:
-			AudioServer.set_bus_effect_enabled(bus_index, PadEffect.HIGHPASS, true)
-			highpass.cutoff_hz = lerp(HIGHPASS_NEUTRAL_CUTOFF_HZ, HIGHPASS_MAX_CUTOFF_HZ, effect_amount)
-		PadEffect.LOWPASS:
-			AudioServer.set_bus_effect_enabled(bus_index, PadEffect.LOWPASS, true)
-			lowpass.cutoff_hz = lerp(LOWPASS_NEUTRAL_CUTOFF_HZ, LOWPASS_MIN_CUTOFF_HZ, effect_amount)
+func _get_axis_focus(opposite_axis_percent: float) -> float:
+	var axis_proximity: float = 1.0 - clamp(abs(opposite_axis_percent - FILTER_CENTER) * 2.0, 0.0, 1.0)
+	return lerp(AXIS_FOCUS_MIN, 1.0, axis_proximity)
 
-func _get_quadrant_effect(x_percent: float, y_percent: float) -> PadEffect:
-	if x_percent < FILTER_CENTER and y_percent >= FILTER_CENTER:
-		return PadEffect.PHASER
-	if x_percent >= FILTER_CENTER and y_percent >= FILTER_CENTER:
-		return PadEffect.HIGHPASS
-	if x_percent < FILTER_CENTER and y_percent < FILTER_CENTER:
-		return PadEffect.LOWPASS
-	return PadEffect.DISTORTION
+func _update_x_axis_effect(x_percent: float, effect_amount: float) -> void:
+	if effect_amount <= 0.0:
+		return
+
+	if x_percent < FILTER_CENTER:
+		AudioServer.set_bus_effect_enabled(bus_index, PadEffect.PHASER, true)
+		phaser.depth = effect_amount * PHASER_MAX_DEPTH
+	else:
+		AudioServer.set_bus_effect_enabled(bus_index, PadEffect.DISTORTION, true)
+		distortion.drive = effect_amount * DISTORTION_MAX_DRIVE
+
+func _update_y_axis_effect(y_percent: float, effect_amount: float) -> void:
+	if effect_amount <= 0.0:
+		return
+
+	if y_percent < FILTER_CENTER:
+		AudioServer.set_bus_effect_enabled(bus_index, PadEffect.BANDPASS, false)
+		AudioServer.set_bus_effect_enabled(bus_index, PadEffect.HIGHPASS, true)
+		highpass.cutoff_hz = lerp(MIN_BAND_HIGH_CUTOFF_HZ, MAX_BAND_HIGH_CUTOFF_HZ, effect_amount)
+	else:
+		AudioServer.set_bus_effect_enabled(bus_index, PadEffect.HIGHPASS, false)
+		AudioServer.set_bus_effect_enabled(bus_index, PadEffect.BANDPASS, true)
+		bandpass.cutoff_hz = lerp(MAX_BAND_LOW_CUTOFF_HZ, MIN_BAND_LOW_CUTOFF_HZ, effect_amount)
 
 func _reset_all_pad_effects() -> void:
 	AudioServer.set_bus_effect_enabled(bus_index, PadEffect.PHASER, false)
 	AudioServer.set_bus_effect_enabled(bus_index, PadEffect.DISTORTION, false)
 	AudioServer.set_bus_effect_enabled(bus_index, PadEffect.HIGHPASS, false)
-	AudioServer.set_bus_effect_enabled(bus_index, PadEffect.LOWPASS, false)
+	AudioServer.set_bus_effect_enabled(bus_index, PadEffect.BANDPASS, false)
 	phaser.depth = 0.0
 	distortion.drive = 0.0
 	highpass.resonance = FILTER_RESONANCE
-	lowpass.resonance = FILTER_RESONANCE
-	highpass.cutoff_hz = HIGHPASS_NEUTRAL_CUTOFF_HZ
-	lowpass.cutoff_hz = LOWPASS_NEUTRAL_CUTOFF_HZ
+	bandpass.resonance = FILTER_RESONANCE
+	highpass.cutoff_hz = MIN_BAND_HIGH_CUTOFF_HZ
+	bandpass.cutoff_hz = MAX_BAND_LOW_CUTOFF_HZ
 
 func _reset_pad() -> void:
 	$cursor.position = CURSOR_RESET_POSITION

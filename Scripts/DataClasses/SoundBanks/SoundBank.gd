@@ -13,7 +13,7 @@ extends Resource
 @export var closed: AudioStream
 @export var closed_alt: AudioStream
 
-@export var synth_soundfonts: Array[Resource]
+@export var synth_soundfonts: Array[SoundFont]
 @export var synth_instrument_ids: Array[int]
 @export var synth_beats: Array[float]
 @export var synth_effect_profiles: Array[EffectProfile]

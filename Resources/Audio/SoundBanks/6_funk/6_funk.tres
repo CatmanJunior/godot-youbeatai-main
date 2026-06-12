@@ -20,6 +20,7 @@
 [ext_resource type="Resource" uid="uid://b51nkex63uhjh" path="res://Resources/NotePlayerSettings/Bass.tres" id="11_bass"]
 [ext_resource type="Resource" uid="uid://ckr0c8qx1pxod" path="res://Resources/NotePlayerSettings/Synth1.tres" id="12_syn1"]
 [ext_resource type="Resource" uid="uid://d0vc5kasfpo5u" path="res://Resources/Audio/SoundBanks/6_funk/EffectProfile.tres" id="19_ur1dt"]
+[ext_resource type="SoundFont" uid="uid://2o8wkqig5dne" path="res://Resources/SoundFonts/Emu Funky Guitars.sf2" id="21_fi1ya"]
 
 [sub_resource type="Resource" id="Resource_iqkmn"]
 script = ExtResource("2_hyamu")
@@ -107,8 +108,8 @@ clap = ExtResource("1_qv8qv")
 clap_alt = ExtResource("2_7xnpc")
 closed = ExtResource("2_7gpna")
 closed_alt = ExtResource("4_hgown")
-synth_soundfonts = Array[Resource]([ExtResource("5_7xnpc"), ExtResource("5_7xnpc")])
-synth_instrument_ids = Array[int]([5, 12])
+synth_soundfonts = Array[SoundFont]([ExtResource("21_fi1ya"), ExtResource("5_7xnpc")])
+synth_instrument_ids = Array[int]([2, 12])
 synth_beats = Array[float]([0.0, 0.0])
 synth_effect_profiles = Array[ExtResource("10_eprof")]([ExtResource("6_loxld"), ExtResource("19_ur1dt")])
 noteplayer_settings = Array[ExtResource("9_hgown")]([ExtResource("11_bass"), ExtResource("12_syn1")])

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ritme Robot"
-config/version="1.14"
+config/version="0.16"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
 run/max_fps=60
@@ -27,7 +27,8 @@ buses/default_bus_layout="uid://cc7g4ekfye5tq"
 general/default_playback_type.web=0
 general/text_to_speech=true
 driver/enable_input=true
-driver/mix_rate.web=44100
+driver/mix_rate=22050
+driver/mix_rate.web=22050
 
 [autoload]
 

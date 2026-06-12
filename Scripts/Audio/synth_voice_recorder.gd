@@ -8,7 +8,7 @@ extends Node
 ## Maximum NSDF hops processed per _process() frame to keep frame time bounded.
 ## At ANALYSIS_RATE=11025 / HOP_SIZE=512 each hop ~46 ms of audio, so 2 hops/frame
 ## keeps up with real-time at any frame rate >= ~22 Hz while leaving slack for
-## render work. Backlog drains naturally; finalize() processes any tail in one go.
+## render work. Backlog can also drain after recording when processing is deferred.
 const MAX_HOPS_PER_FRAME: int = 2
 
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
@@ -17,9 +17,18 @@ const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 ## When false, use the streaming NSDF-based VoiceAnalyzer.
 @export var use_voice_processor: bool = false
 
+## When true, analyze microphone samples while recording. When false, capture
+## during recording and spread all VoiceAnalyzer work over frames after stop.
+@export var process_during_recording: bool = true
+
+## Maximum VoiceAnalyzer hops processed per frame after recording stops.
+@export var post_stop_hops_per_frame: int = MAX_HOPS_PER_FRAME
+
 var _voice_analyzer: VoiceAnalyzer = null
 var _audio_capture: AudioEffectCapture = null
 var _mic_bus_index: int = -1
+var _post_stop_processing_active: bool = false
+var _pending_recording_data: RecordingData = null
 
 func _ready() -> void:
 	EventBus.recording_started.connect(_on_recording_started)
@@ -27,6 +36,9 @@ func _ready() -> void:
 	_init_audio_capture()
 
 func _process(_delta: float) -> void:
+	if _post_stop_processing_active:
+		_continue_post_stop_processing()
+		return
 	if use_voice_processor:
 		return
 	if _voice_analyzer and _voice_analyzer.is_active() and _audio_capture:
@@ -39,6 +51,8 @@ func _on_recording_started(recording_data: RecordingData) -> void:
 		return
 	if use_voice_processor:
 		return
+	if _post_stop_processing_active:
+		_complete_post_stop_processing()
 	_start_voice_analyzer()
 
 func _on_recording_stopped(recording_data: RecordingData) -> void:
@@ -94,25 +108,77 @@ func _feed_voice_analyzer() -> void:
 		return
 	var stereo_buf := _audio_capture.get_buffer(frames_available)
 	var mono := _stereo_to_mono(stereo_buf)
-	_voice_analyzer.push_samples(mono, MAX_HOPS_PER_FRAME)
+	var max_hops: int = MAX_HOPS_PER_FRAME if process_during_recording else 0
+	_voice_analyzer.push_samples(mono, max_hops)
 
 func _finalize_voice_analysis(recording_data: RecordingData) -> void:
 	if _voice_analyzer and _voice_analyzer.is_active():
-		if _audio_capture:
-			var remaining := _audio_capture.get_frames_available()
-			if remaining > 0:
-				var buf := _audio_capture.get_buffer(remaining)
-				var mono := _stereo_to_mono(buf)
-				_voice_analyzer.push_samples(mono)
-			_audio_capture.clear_buffer()
+		var drain_hops: int = -1 if process_during_recording else 0
+		_drain_audio_capture(drain_hops)
+		if not process_during_recording:
+			_start_post_stop_processing(recording_data)
+			return
 		var sequence: Sequence = _voice_analyzer.finalize()
-		_voice_analyzer = null
-		EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+		_emit_sequence_ready(sequence, recording_data)
 	else:
 		var sequence := Sequence.new([])
+		_emit_sequence_ready(sequence, recording_data)
+
+
+func _drain_audio_capture(max_hops: int) -> void:
+	if _audio_capture == null or _voice_analyzer == null:
+		return
+	var remaining := _audio_capture.get_frames_available()
+	if remaining > 0:
+		var buf := _audio_capture.get_buffer(remaining)
+		var mono := _stereo_to_mono(buf)
+		_voice_analyzer.push_samples(mono, max_hops)
+	_audio_capture.clear_buffer()
+
+
+func _start_post_stop_processing(recording_data: RecordingData) -> void:
+	_pending_recording_data = recording_data
+	_post_stop_processing_active = true
+	_voice_analyzer.begin_staged_finalize()
+	_set_microphone_capture_enabled(false)
+
+
+func _continue_post_stop_processing() -> void:
+	if _voice_analyzer == null or _pending_recording_data == null:
+		var sequence := Sequence.new([])
+		_emit_sequence_ready(sequence, _pending_recording_data)
+		return
+	var done := _voice_analyzer.process_finalize_step(post_stop_hops_per_frame)
+	if done:
+		_complete_post_stop_processing()
+
+
+func _complete_post_stop_processing() -> void:
+	if _voice_analyzer == null or _pending_recording_data == null:
+		_cleanup_voice_analyzer()
+		return
+	while _voice_analyzer.is_staged_finalizing():
+		_voice_analyzer.process_finalize_step()
+	var sequence: Sequence = _voice_analyzer.get_staged_sequence()
+	_emit_sequence_ready(sequence, _pending_recording_data)
+
+
+func _emit_sequence_ready(sequence: Sequence, recording_data: RecordingData) -> void:
+	if recording_data != null:
 		EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+	_cleanup_voice_analyzer()
+
+
+func _cleanup_voice_analyzer() -> void:
+	_voice_analyzer = null
+	_pending_recording_data = null
+	_post_stop_processing_active = false
+	_set_microphone_capture_enabled(false)
+
+
+func _set_microphone_capture_enabled(enabled: bool) -> void:
 	if _mic_bus_index >= 0:
-		AudioServer.set_bus_effect_enabled(_mic_bus_index, 0, false)
+		AudioServer.set_bus_effect_enabled(_mic_bus_index, 0, enabled)
 
 func _stereo_to_mono(stereo: PackedVector2Array) -> PackedFloat32Array:
 	var mono := PackedFloat32Array()

@@ -98,13 +98,15 @@ func _cond_timer_stopped() -> bool:
 func _cond_clapped() -> bool:
 	return tutorial.clapping
 
-## True when the given interaction phase ([param is_stomp]) has reached [constant Tutorial.REQUIRED_ON_BEAT_COUNT].
+## True when the given interaction phase ([param is_stomp]) has reached [constant Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT].
+## Gated on the stable phase flag (not the transient clapping/stomping flag, which mic noise
+## or per-frame resets could flip and wrongly block advancement).
 func _cond_interaction_count_reached(is_stomp: bool) -> bool:
 	if is_stomp:
-		return tutorial.stomping \
-			and tutorial.clap_stomp.stomped_on_beat_amount >= Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT
-	return tutorial.clapping \
-		and tutorial.clap_stomp.clapped_on_beat_amount >= Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT
+		return tutorial._in_stomp_phase \
+			and tutorial.stomped_on_beat_amount >= Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT
+	return tutorial._in_clap_phase \
+		and tutorial.clapped_on_beat_amount >= Tutorial.CLAP_STOMP_REQUIRED_ON_BEAT_COUNT
 
 # ── Ring beat counts ────────────────────────────────────────────────────────────────────────────────────────────────────
 

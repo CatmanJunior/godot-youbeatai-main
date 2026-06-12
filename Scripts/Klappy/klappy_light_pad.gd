@@ -7,8 +7,6 @@ enum PadEffect {
 	LOWPASS = 3,
 }
 
-
-
 const CURSOR_RESET_POSITION: Vector2 = Vector2(100, 100)
 
 const FILTER_CENTER: float = 0.5

@@ -11,6 +11,9 @@ resource_name = "HighPassFilter"
 cutoff_hz = 20.0
 resonance = 0.15
 
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_ydqv5"]
+resource_name = "LowPassFilter"
+
 [sub_resource type="AudioEffectRecord" id="AudioEffectRecord_6n6ik"]
 resource_name = "Record"
 
@@ -38,8 +41,10 @@ bus/1/effect/1/effect = SubResource("AudioEffectDistortion_6n6ik")
 bus/1/effect/1/enabled = false
 bus/1/effect/2/effect = SubResource("AudioEffectHighPassFilter_6n6ik")
 bus/1/effect/2/enabled = false
-bus/1/effect/3/effect = SubResource("AudioEffectRecord_6n6ik")
-bus/1/effect/3/enabled = true
+bus/1/effect/3/effect = SubResource("AudioEffectLowPassFilter_ydqv5")
+bus/1/effect/3/enabled = false
+bus/1/effect/4/effect = SubResource("AudioEffectRecord_6n6ik")
+bus/1/effect/4/enabled = true
 bus/2/name = &"Microphone"
 bus/2/solo = false
 bus/2/mute = true

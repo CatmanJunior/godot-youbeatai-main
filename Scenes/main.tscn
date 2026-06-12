@@ -104,6 +104,8 @@ waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visuali
 
 [node name="SynthRecorder" type="Node" parent="Managers/AudioManagers" unique_id=30698243]
 script = ExtResource("21_my4ki")
+process_during_recording = false
+post_stop_hops_per_frame = 5
 
 [node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
 script = ExtResource("29_s8vy0")

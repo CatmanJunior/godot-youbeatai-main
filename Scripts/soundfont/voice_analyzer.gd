@@ -12,6 +12,15 @@ extends RefCounted
 ##   # When recording stops:
 ##   var sequence: Sequence = analyzer.finalize()
 
+enum FinalizeStage {
+	IDLE,
+	PENDING_HOPS,
+	SEGMENT_NOTES,
+	QUANTIZE_BEATS,
+	BUILD_SEQUENCE,
+	DONE,
+}
+
 # ── Configuration ────────────────────────────────────────────────────────────
 
 ## Internal analysis sample rate (downsample to this from mic rate).
@@ -134,6 +143,16 @@ var _voiced_frames: int = 0
 ## Whether start() has been called and finalize() has not.
 var _active: bool = false
 
+## Current stage for frame-spread finalization.
+var _finalize_stage: FinalizeStage = FinalizeStage.IDLE
+
+## Last Sequence produced by staged finalization.
+var _staged_sequence: Sequence = null
+
+## Scratch data carried between frame-spread finalization stages.
+var _staged_note_candidates: Array[_NoteCandidate] = []
+var _staged_sequence_notes: Array[SequenceNote] = []
+
 ## Flat list of (id, frequency) entries from NOTES within [NOTE_ID_MIN, NOTE_ID_MAX].
 var _scale_ids: PackedInt32Array = PackedInt32Array()
 var _scale_freqs: PackedFloat32Array = PackedFloat32Array()
@@ -181,6 +200,10 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 	_silence_frames = 0
 	_voiced_frames = 0
 	_active = true
+	_finalize_stage = FinalizeStage.IDLE
+	_staged_sequence = null
+	_staged_note_candidates = []
+	_staged_sequence_notes = []
 
 	_build_scale_table()
 
@@ -223,22 +246,37 @@ func push_samples(samples: PackedFloat32Array, max_hops: int = -1) -> int:
 	else:
 		_input_buffer = _input_buffer.slice(consumed_input)
 
-	# Process any complete hops.
 	_samples_since_last_hop += written
-	while _samples_since_last_hop >= HOP_SIZE:
-		if max_hops >= 0 and new_hops >= max_hops:
-			# Cap reached. Leave the leftover hops (and their samples) queued
-			# in _samples_since_last_hop / _analysis_buffer; subsequent calls
-			# or finalize() will drain them.
-			break
-		var hop_start := _hops_processed * HOP_SIZE
-		if hop_start + FRAME_SIZE <= _analysis_total_samples:
-			_process_frame(hop_start)
-			_hops_processed += 1
-			new_hops += 1
-		_samples_since_last_hop -= HOP_SIZE
+	new_hops = process_pending_hops(max_hops)
 
 	return new_hops
+
+
+## Process already-downsampled analysis hops without requiring new input.
+## Use this after recording stops to spread queued NSDF work over frames.
+## Returns the number of hops processed this call.
+func process_pending_hops(max_hops: int = -1) -> int:
+	if not _active:
+		return 0
+
+	var processed_hops: int = 0
+	while has_pending_hops():
+		if max_hops >= 0 and processed_hops >= max_hops:
+			break
+		var hop_start: int = _hops_processed * HOP_SIZE
+		_process_frame(hop_start)
+		_hops_processed += 1
+		processed_hops += 1
+		if _samples_since_last_hop >= HOP_SIZE:
+			_samples_since_last_hop -= HOP_SIZE
+
+	return processed_hops
+
+
+## Returns true while at least one full analysis frame can still be processed.
+func has_pending_hops() -> bool:
+	var hop_start: int = _hops_processed * HOP_SIZE
+	return hop_start + FRAME_SIZE <= _analysis_total_samples
 
 
 ## Finalize analysis and return the Sequence. Call after recording stops.
@@ -249,17 +287,73 @@ func finalize() -> Sequence:
 	_active = false
 
 	# Process any remaining unprocessed hops.
-	var hop_start := _hops_processed * HOP_SIZE
-	while hop_start + FRAME_SIZE <= _analysis_total_samples:
-		_process_frame(hop_start)
-		_hops_processed += 1
-		hop_start = _hops_processed * HOP_SIZE
+	_active = true
+	process_pending_hops()
+	_active = false
+
+	return _build_sequence_from_results()
+
+
+## Begin frame-spread finalization. Call process_finalize_step() each frame
+## until it returns true, then read get_staged_sequence().
+func begin_staged_finalize() -> void:
+	if not _active:
+		_staged_sequence = Sequence.new([])
+		_finalize_stage = FinalizeStage.DONE
+		return
+	_staged_sequence = null
+	_finalize_stage = FinalizeStage.PENDING_HOPS
+
+
+## Advance finalization by one bounded step. Returns true when complete.
+func process_finalize_step(max_hops: int = -1) -> bool:
+	match _finalize_stage:
+		FinalizeStage.IDLE:
+			begin_staged_finalize()
+		FinalizeStage.PENDING_HOPS:
+			process_pending_hops(max_hops)
+			if not has_pending_hops():
+				_active = false
+				_finalize_stage = FinalizeStage.SEGMENT_NOTES
+		FinalizeStage.SEGMENT_NOTES:
+			_staged_note_candidates = _segment_notes()
+			_finalize_stage = FinalizeStage.QUANTIZE_BEATS
+		FinalizeStage.QUANTIZE_BEATS:
+			_staged_sequence_notes = _quantize_to_beats(_staged_note_candidates)
+			_finalize_stage = FinalizeStage.BUILD_SEQUENCE
+		FinalizeStage.BUILD_SEQUENCE:
+			_staged_sequence = _sequence_from_notes(_staged_sequence_notes)
+			_finalize_stage = FinalizeStage.DONE
+		FinalizeStage.DONE:
+			return true
+
+	return _finalize_stage == FinalizeStage.DONE
+
+
+## Return the Sequence produced by staged finalization, or an empty one if not ready.
+func get_staged_sequence() -> Sequence:
+	if _staged_sequence == null:
+		return Sequence.new([])
+	return _staged_sequence
+
+
+## Returns true while staged finalization is in progress.
+func is_staged_finalizing() -> bool:
+	return _finalize_stage != FinalizeStage.IDLE and _finalize_stage != FinalizeStage.DONE
+
+
+func _build_sequence_from_results() -> Sequence:
 
 	# Build note segments from frame results.
 	var notes := _segment_notes()
 
 	# Quantize to beat grid.
 	var sequence_notes := _quantize_to_beats(notes)
+
+	return _sequence_from_notes(sequence_notes)
+
+
+func _sequence_from_notes(sequence_notes: Array[SequenceNote]) -> Sequence:
 
 	for index in range(len(sequence_notes)):
 		print("beat: %d, note: %d, duration: %d velocity: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration, sequence_notes[index].velocity])

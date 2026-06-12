@@ -52,6 +52,12 @@ var clapping: bool = false
 
 var _in_stomp_phase: bool = false
 var _in_clap_phase: bool = false
+
+## On-beat interaction counts for the current phase.
+## Owned by the tutorial (not the detector) and reset when a phase begins.
+var stomped_on_beat_amount: int = 0
+var clapped_on_beat_amount: int = 0
+
 var _timer: Timer = null
 var _text_allowed: bool = true
 var _increased_speed: bool = false
@@ -92,6 +98,8 @@ func _ready() -> void:
 	EventBus.chaos_pad_dragging.connect(_on_chaos_pad_knob_dragged)
 	EventBus.skip_tutorial_requested.connect(_on_skip_tutorial_requested)
 	EventBus.clap_stomp_detected.connect(_on_has_clapped_or_stomped)
+	EventBus.stomp_on_beat_detected.connect(_on_stomp_on_beat)
+	EventBus.clap_on_beat_detected.connect(_on_clap_on_beat)
 	try_activate_tutorial()
 
 
@@ -119,6 +127,16 @@ func _on_has_clapped_or_stomped(interaction_type: int) -> void:
 		clapping = true
 		stomping = false
 
+# Counts a deduplicated on-beat stomp. The detector emits this at most once per beat.
+func _on_stomp_on_beat() -> void:
+	if GameState.use_tutorial:
+		stomped_on_beat_amount += 1
+
+# Counts a deduplicated on-beat clap. The detector emits this at most once per beat.
+func _on_clap_on_beat() -> void:
+	if GameState.use_tutorial:
+		clapped_on_beat_amount += 1
+
 # ── Public API ────────────────────────────────────────────────────────────────────────────────────────────
 
 # Requests playback of the achievement sound effect through the EventBus.
@@ -141,6 +159,8 @@ func reset() -> void:
 	_active = false
 	_previous_clap = -1
 	_previous_stomp = -1
+	stomped_on_beat_amount = 0
+	clapped_on_beat_amount = 0
 	stomping = false
 	clapping = false
 	_in_stomp_phase = false
@@ -257,19 +277,19 @@ func _goto_next_step() -> void:
 
 # Plays achievement sfx once each time a new on-beat stomp or clap is registered during its phase.
 func _update_interaction_sfx() -> void:
-	if _in_stomp_phase and stomping and clap_stomp.stomped_on_beat_amount > _previous_stomp:
+	if _in_stomp_phase and stomped_on_beat_amount > _previous_stomp:
 		play_achievement_sfx()
-		_previous_stomp = clap_stomp.stomped_on_beat_amount
+		_previous_stomp = stomped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.stomped_on_beat_amount),
+			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - stomped_on_beat_amount),
 			false)
-	if _in_clap_phase and clapping and clap_stomp.clapped_on_beat_amount > _previous_clap:
+	if _in_clap_phase and clapped_on_beat_amount > _previous_clap:
 		play_achievement_sfx()
-		_previous_clap = clap_stomp.clapped_on_beat_amount
+		_previous_clap = clapped_on_beat_amount
 		EventBus.set_klappy_speech_bubble.emit(
 			_instruction,
-			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clap_stomp.clapped_on_beat_amount),
+			"Nog %d te gaan" % max(0, CLAP_STOMP_REQUIRED_ON_BEAT_COUNT - clapped_on_beat_amount),
 			false)
 
 # Speaks the instruction text for the given step index via TTS and shows it in the Klappy bubble.

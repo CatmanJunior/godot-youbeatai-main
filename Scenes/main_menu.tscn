@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://ym1jq7ayco4s" path="res://Resources/Textures/fullscreen.png" id="8_t1dhk"]
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]
 [ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="10_t1dhk"]
-[ext_resource type="Script" uid="uid://2604un2vkhg8" path="res://Scripts/UI/version.gd" id="10_vr1f0"]
+[ext_resource type="Script" path="res://Scripts/UI/version.gd" id="10_vr1f0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
 bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)

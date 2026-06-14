@@ -6,7 +6,7 @@ var toggled_on: bool = false
 
 func _pressed() -> void:
 	toggled_on = !toggled_on
-	EventBus.beat_seek_requested.emit(0)
+
 	EventBus.record_button_toggled.emit(toggled_on)
 	fillTexture.value = 1 if toggled_on else 0
 

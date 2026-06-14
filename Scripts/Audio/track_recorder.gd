@@ -3,6 +3,9 @@ extends Node
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 const RECORDING_GRACE_FACTOR: float = 1.2
 const RECORDING_FALLBACK_BEATS: float = 2.0
+## Extra beats captured beyond the section length for SYNTH recordings, giving
+## headroom to trim the microphone delay off the front before capping to one section.
+const SYNTH_RECORDING_EXTRA_BEATS: int = 2
 
 var recording: bool:
 	get: return GameState.is_recording
@@ -17,9 +20,14 @@ var pre_recording_volume: float = 0
 var timer: SceneTreeTimer 
 var timer_wait_time: float = 1.5
 
+## Number of beats elapsed since the SYNTH capture truly started. Used to stop
+## the recording on the same beat clock the beat-ring pointer follows.
+var _synth_beats_recorded: int = 0
+
 func _ready():
 	EventBus.record_button_toggled.connect(_on_recording_button_toggled)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
+	EventBus.beat_triggered.connect(_on_beat_triggered_during_record)
 
 func _process(delta: float):
 	if recording and current_recording_data:
@@ -42,9 +50,10 @@ func _handle_recording(delta: float) -> void:
 	
 	recording_sample_button.update_button(current_recording_data.get_recording_progress())
 	
-	# Update progress bar (only for SYNTH tracks)
+	# Update progress bar (only for SYNTH tracks). Drive it from the same beat
+	# clock the beat-ring pointer uses so the two stay perfectly in sync.
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_progress_bar(current_recording_data, current_recording_data.get_recording_progress())
+		waveform_visualizer.update_progress_bar(current_recording_data, GameState.bar_progress)
 
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SONG:
 		song_recording_progress_bar.value = current_recording_data.get_recording_progress()
@@ -54,6 +63,10 @@ func _handle_recording(delta: float) -> void:
 		_stop_recording()
 
 func _start_recording() -> void:
+	if GameState.is_recording:
+		printerr("Attempted to start recording while already recording!")
+		return
+	EventBus.beat_seek_requested.emit(0)
 	GameState.is_recording = true
 	# Step 1: TrackData creates the RecordingData (no state change yet)
 	current_recording_data = SongState.current_track.create_recording_data()
@@ -95,11 +108,14 @@ func _start_recording() -> void:
 		await timer.timeout
 		
 	EventBus.set_master_volume_db.emit(-20)
-	# delay the actual recording a bit to clean the buffer of audio that is now processing
-	timer = get_tree().create_timer(GameState.recording_delay_seconds)
-	await timer.timeout
 
-	# Step 4: Announce to the world that recording has started
+	# Step 4: Align the beat clock so the pointer and progress bar both start at
+	# beat 0 the instant capture begins (removes count-in / delay drift).
+	_synth_beats_recorded = 0
+	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
+		EventBus.beat_seek_requested.emit(0)
+
+	# Step 5: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING
 	EventBus.recording_started.emit(current_recording_data)
 
@@ -116,7 +132,7 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 		TrackData.TrackType.SAMPLE:
 			return SongState.beat_duration * 2.1 # allow some extra time beyond 1 beat for user to finish playing
 		TrackData.TrackType.SYNTH:
-			return SongState.beat_duration * SongState.beats_per_section 
+			return SongState.beat_duration * (SongState.beats_per_section + SYNTH_RECORDING_EXTRA_BEATS)
 		TrackData.TrackType.SONG:
 			return SongState.beat_duration * SongState.beats_per_section * SongState.section_count() 
 	return SongState.beat_duration * RECORDING_FALLBACK_BEATS # default max length
@@ -124,11 +140,25 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 
 
 #------------------Event Handlers----------------------
-func _on_recording_button_toggled(toggled: bool) -> void:
-	if toggled and current_recording_data == null:
-		_start_recording()
-	elif recording:
+func _on_beat_triggered_during_record(_beat: int) -> void:
+	# Stop a SYNTH recording after exactly one full section, measured on the
+	# beat clock so the captured length matches the visible loop.
+	if not GameState.is_recording or current_recording_data == null:
+		return
+	if current_recording_data.state != RecordingData.State.RECORDING:
+		return
+	if current_recording_data.track_type != TrackData.TrackType.SYNTH:
+		return
+	_synth_beats_recorded += 1
+	if _synth_beats_recorded >= SongState.beats_per_section + SYNTH_RECORDING_EXTRA_BEATS:
 		_stop_recording()
+
+func _on_recording_button_toggled(toggled: bool) -> void:
+	if GameState.is_recording:
+		return
+		# _stop_recording()
+	if toggled and current_recording_data == null :
+		_start_recording()
 	elif not toggled:
 		# If button is toggled off but we're not recording, ensure everything is reset
 		EventBus.mute_all_requested.emit(false)
@@ -148,10 +178,12 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 
 	match recording_data.track_type:
 		TrackData.TrackType.SAMPLE: _post_process_sample(recording_data)
-		TrackData.TrackType.SYNTH:  _post_process_synth(recording_data)
 		TrackData.TrackType.SONG:   _post_process_song(recording_data)
 
-	EventBus.set_recorded_stream_requested.emit(recording_data)
+	# SYNTH recordings are finalized (trim/cap, waveform, recorded-stream emit)
+	# by SynthVoiceRecorder, which runs after this handler.
+	if recording_data.track_type != TrackData.TrackType.SYNTH:
+		EventBus.set_recorded_stream_requested.emit(recording_data)
 
 func _post_process_sample(recording_data: RecordingData) -> void:
 	var audio: AudioStream = recording_data.audio_stream
@@ -162,11 +194,6 @@ func _post_process_sample(recording_data: RecordingData) -> void:
 	audio = AudioHelpers.cap_audio_duration(audio, _calculate_max_recording_length(current_recording_data.track_type) )
 	recording_data.audio_stream = audio
 	recording_data.state = RecordingData.State.RECORDING_DONE
-
-func _post_process_synth(recording_data: RecordingData) -> void:
-	waveform_visualizer.update_waveform(recording_data)
-	waveform_visualizer.reset_progress_bar(recording_data)
-	# Voice analysis is finalized by SynthVoiceRecorder via EventBus.recording_stopped
 
 func _post_process_song(recording_data: RecordingData) -> void:
 	recording_data.state = RecordingData.State.RECORDING_DONE

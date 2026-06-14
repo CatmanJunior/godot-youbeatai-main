@@ -110,6 +110,7 @@ func end_soundbank_selection() -> void:
 	change_to_main()
 	
 func change_to_main() -> void:
+	TTSHelper.stop_speaking()
 	SceneChanger.go_to_main()
 	
 func _set_beats(beats: int) -> void:

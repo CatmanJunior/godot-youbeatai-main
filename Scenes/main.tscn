@@ -102,10 +102,10 @@ song_recording_progress_bar = NodePath("../../../UserInterface/SwitchSectionButt
 recording_sample_button = NodePath("../../../UserInterface/ChaosPad/ChaosPadTriangle/ChaosButtonMic")
 waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
 
-[node name="SynthRecorder" type="Node" parent="Managers/AudioManagers" unique_id=30698243]
+[node name="SynthRecorder" type="Node" parent="Managers/AudioManagers" unique_id=30698243 node_paths=PackedStringArray("waveform_visualizer")]
 script = ExtResource("21_my4ki")
 process_during_recording = false
-post_stop_hops_per_frame = 5
+waveform_visualizer = NodePath("../../../UserInterface/BeatRing/Waveform_visualisers")
 
 [node name="SoundBankLoader" type="Node" parent="Managers/AudioManagers" unique_id=1437890393]
 script = ExtResource("29_s8vy0")

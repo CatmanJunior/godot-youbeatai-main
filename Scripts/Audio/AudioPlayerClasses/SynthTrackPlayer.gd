@@ -116,7 +116,9 @@ func stop() -> void:
 	for i in [SynthLayer.ALT, SynthLayer.REC]: # stop all non-note player layers
 		players[i].stop()
 	# Also stop all currently playing notes immediately
-	if note_player:
+	if GameState.restarting:
+		note_player.stop()
+	elif note_player:
 		note_player.note_off_all(0)
 		
 # -- Voice Processing ---

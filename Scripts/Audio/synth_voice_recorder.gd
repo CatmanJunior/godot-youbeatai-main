@@ -24,6 +24,38 @@ const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 ## Maximum VoiceAnalyzer hops processed per frame after recording stops.
 @export var post_stop_hops_per_frame: int = MAX_HOPS_PER_FRAME
 
+## Visualizer used to redraw the waveform and reset the progress bar once the
+## recorded synth audio has been trimmed and capped to one section.
+@export var waveform_visualizer: TrackWaveformVisualizer
+
+@export_group("Voice Analyzer Tuning")
+## Print one summary when analysis finishes. Useful while tuning note detection.
+@export var analyzer_summary_diagnostics_enabled: bool = true
+## Force every detected note to occupy exactly one beat.
+@export var analyzer_one_beat_notes: bool = false
+## RMS below this is treated as silence before pitch detection.
+@export var analyzer_silence_threshold: float = VoiceAnalyzer.SILENCE_THRESHOLD
+## NSDF peak clarity required for reliable pitch detection.
+@export var analyzer_clarity_threshold: float = VoiceAnalyzer.CLARITY_THRESHOLD
+## RMS required to start a voiced note.
+@export var analyzer_onset_rms_threshold: float = VoiceAnalyzer.ONSET_RMS_THRESHOLD
+## RMS below this can end a voiced note.
+@export var analyzer_offset_rms_threshold: float = VoiceAnalyzer.OFFSET_RMS_THRESHOLD
+## Shorter candidates are discarded before beat quantization.
+@export var analyzer_min_note_duration: float = VoiceAnalyzer.MIN_NOTE_DURATION
+## Silence duration required before ending the voiced state.
+@export var analyzer_min_silence_duration: float = VoiceAnalyzer.MIN_SILENCE_DURATION
+## Pitch movement beyond this many cents starts drift splitting.
+@export var analyzer_max_pitch_drift_cents: float = VoiceAnalyzer.MAX_PITCH_DRIFT_CENTS
+## Consecutive drifted frames required before splitting into a new note.
+@export var analyzer_drift_frame_count: int = VoiceAnalyzer.DRIFT_FRAME_COUNT
+## One-pole pitch smoothing factor.
+@export var analyzer_pitch_smooth_alpha: float = VoiceAnalyzer.PITCH_SMOOTH_ALPHA
+## Pull detected onsets earlier before beat quantization.
+@export var analyzer_onset_lookback: float = VoiceAnalyzer.ONSET_LOOKBACK
+
+@export_group("")
+
 var _voice_analyzer: VoiceAnalyzer = null
 var _audio_capture: AudioEffectCapture = null
 var _mic_bus_index: int = -1
@@ -58,10 +90,29 @@ func _on_recording_started(recording_data: RecordingData) -> void:
 func _on_recording_stopped(recording_data: RecordingData) -> void:
 	if recording_data.track_type != TrackData.TrackType.SYNTH:
 		return
+	recording_data = _finalize_recorded_audio(recording_data)
 	if use_voice_processor:
 		_run_voice_processor(recording_data)
 		return
 	_finalize_voice_analysis(recording_data)
+
+# ── Recorded Audio Finalization ──────────────────────────────────────────────
+
+## Trims the microphone delay off the front, then caps the captured WAV to
+## exactly one section so the loop always lines up. TrackRecorder captures a few
+## extra beats to give the front trim enough headroom. Runs after TrackRecorder's
+## recording_stopped handler, so this node owns the recorded-stream emit to ensure
+## playback uses the finalized audio.
+func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
+	if recording_data.audio_stream != null:
+		recording_data.audio_stream = AudioHelpers.trim_audio_by_time_offset(recording_data.audio_stream, GameState.recording_delay_seconds)
+		var section_length: float = SongState.beat_duration * SongState.beats_per_section
+		recording_data.audio_stream = AudioHelpers.cap_audio_duration(recording_data.audio_stream, section_length)
+	if waveform_visualizer:
+		waveform_visualizer.update_waveform(recording_data)
+		waveform_visualizer.reset_progress_bar(recording_data)
+	EventBus.set_recorded_stream_requested.emit(recording_data)
+	return recording_data
 
 # ── Voice Processor (offline) ────────────────────────────────────────────────
 
@@ -86,6 +137,7 @@ func _init_audio_capture() -> void:
 
 func _start_voice_analyzer() -> void:
 	_voice_analyzer = VoiceAnalyzer.new()
+	_apply_voice_analyzer_settings()
 	# On Web, AudioEffectCapture delivers samples at the browser input AudioContext
 	# rate (not the engine's mix rate). Use input_mix_rate so the downsampler is
 	# correctly calibrated; falls back to mix rate on desktop/mobile.
@@ -99,6 +151,23 @@ func _start_voice_analyzer() -> void:
 		_audio_capture.clear_buffer()
 	else:
 		push_warning("SynthVoiceRecorder: No AudioEffectCapture available for streaming voice analysis.")
+
+
+func _apply_voice_analyzer_settings() -> void:
+	if _voice_analyzer == null:
+		return
+	_voice_analyzer.summary_diagnostics_enabled = analyzer_summary_diagnostics_enabled
+	_voice_analyzer.one_beat_notes = analyzer_one_beat_notes
+	_voice_analyzer.silence_threshold = analyzer_silence_threshold
+	_voice_analyzer.clarity_threshold = analyzer_clarity_threshold
+	_voice_analyzer.onset_rms_threshold = analyzer_onset_rms_threshold
+	_voice_analyzer.offset_rms_threshold = analyzer_offset_rms_threshold
+	_voice_analyzer.min_note_duration = analyzer_min_note_duration
+	_voice_analyzer.min_silence_duration = analyzer_min_silence_duration
+	_voice_analyzer.max_pitch_drift_cents = analyzer_max_pitch_drift_cents
+	_voice_analyzer.drift_frame_count = analyzer_drift_frame_count
+	_voice_analyzer.pitch_smooth_alpha = analyzer_pitch_smooth_alpha
+	_voice_analyzer.onset_lookback = analyzer_onset_lookback
 
 func _feed_voice_analyzer() -> void:
 	if _audio_capture == null or _voice_analyzer == null:

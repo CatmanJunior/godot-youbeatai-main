@@ -4,6 +4,8 @@ extends Node
 ## Provides easy access to session state.
 var notes: Notes
 
+var restarting: bool = false
+
 ##Set to true to use achievements after tutorial.
 var use_achievements: bool = true
 ## used to set when to activate the achievements (after tutorial or immediately)
@@ -61,9 +63,9 @@ var song_mode_active: bool = false
 
 
 func reset() -> void:
-	EventBus.all_players_stop_requested.emit()
+	restarting = true
 	SongState.reset()
-
+	
 	notes = null
 
 	# Tutorial / achievements
@@ -102,6 +104,7 @@ func reset() -> void:
 	loop_cursor = 0
 	song_mode_active = false
 
+	restarting = false
 	SceneChanger.restart()
 
 # -- Initialization --
@@ -111,4 +114,3 @@ func _ready() -> void:
 	EventBus.recording_started.connect(func(_rd: RecordingData): is_recording = true)
 	EventBus.recording_stopped.connect(func(_rd: RecordingData): is_recording = false)
 	EventBus.restart_requested.connect(reset)
-

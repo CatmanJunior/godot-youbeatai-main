@@ -6,6 +6,9 @@ class_name BeatManager
 @export var swing_reduce_amount: float = 0.2
 
 const BEATS_PER_BAR: int = 4
+## Number of grid steps per BPM beat. Keep this fixed so increasing
+## beats_per_section extends the section instead of speeding up each step.
+const STEPS_PER_BPM_BEAT: int = 4
 const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
 
 var bpm: int:
@@ -54,8 +57,11 @@ func _ready():
 	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
 	EventBus.beat_seek_requested.connect(func(beat):
+		#reset beat progress to ensure accurate seeking
+		beat_elapsed = 0.0
+		beat_progress = 0.0
+		bar_progress = 0.0
 		current_beat = beat
-		
 		if playing:
 			EventBus.beat_triggered.emit(0)
 	)
@@ -132,6 +138,10 @@ func _trigger_animations_on_beat(beat: int) -> void:
 		EventBus.trigger_animation_requested.emit(KlappyAnimations.AnimationType.CLAP)
 
 func _get_swing_offset() -> float:
+	# Run on a steady (un-swung) grid while recording so the beat-ring pointer
+	# and the recording progress bar stay locked to the same clock.
+	if GameState.is_recording:
+		return 0.0
 	if current_beat % 2 == 1:
 		return swing
 	else:
@@ -165,6 +175,8 @@ static func calculate_time_until_top() -> float:
 	var duration_until_top: float = (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
 	return duration_until_top
 
-static func calculate_beat_duration(p_bpm: int, p_total_beats: int, beats_per_bar: int) -> float:
-	var _beat_duration: float = snapped((60.0 / p_bpm) / p_total_beats * beats_per_bar, 0.001)
+static func calculate_beat_duration(p_bpm: int, _p_total_beats: int, _beats_per_bar: int) -> float:
+	if p_bpm <= 0:
+		return 0.0
+	var _beat_duration: float = snapped((60.0 / float(p_bpm)) / float(STEPS_PER_BPM_BEAT), 0.001)
 	return _beat_duration

@@ -48,7 +48,6 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_update_pointer_rotation()
 
-
 # -- Event handlers --
 ## Update all beat sprites to match the new template actives
 func _on_template_set(actives: Array) -> void:
@@ -65,7 +64,6 @@ func _on_beat_triggered(beat: int):
 func _on_play_pause_button_toggled() -> void:
 	if not play_pause_button.disabled:
 		EventBus.play_pause_toggle_requested.emit()
-
 
 # -- Utility functions --
 func _update_beats_active(actives: Array) -> void:
@@ -84,7 +82,6 @@ func _get_beat_button(track: int, beat: int) -> BeatButton:
 		return _beat_buttons[track][beat]
 	push_error("Beat button not found for track " + str(track) + " beat " + str(beat))
 	return null
-
 
 ## Rotate the pointer based on the current bar progress
 func _update_pointer_rotation() -> void:
@@ -177,7 +174,6 @@ func _update_beat_sprites(current_beat: int) -> void:
 			
 			_tween_beat_button_scale(beatButton, on_beat and active, beats_amount)
 
-
 func _tween_beat_button_scale(beatButton: BeatButton, active: bool, beats_amount: int) -> void:
 		var scale_factor: float = _scale_factor_for_beats_amount(beats_amount)
 		var tween: Tween = get_tree().create_tween()
@@ -197,7 +193,6 @@ func _reset_scales() -> void:
 			if sprite:
 				var scale_factor: float = _scale_factor_for_beats_amount(beats_amount)
 				sprite.scale = Vector2.ONE * scale_factor * GLOBAL_SPRITE_SCALE_FACTOR
-
 
 ## Set the sprites for a specific track visible 
 func _set_track_sprites_visible(track: int, visible: bool) -> void:

@@ -92,6 +92,23 @@ const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 ## (no multi-beat sustains). Set before calling start().
 var one_beat_notes: bool = false
 
+## Runtime-tunable analyzer settings. Defaults mirror the constants above;
+## SynthVoiceRecorder can override these per scene for quick inspector tuning.
+var silence_threshold: float = SILENCE_THRESHOLD
+var clarity_threshold: float = CLARITY_THRESHOLD
+var onset_rms_threshold: float = ONSET_RMS_THRESHOLD
+var offset_rms_threshold: float = OFFSET_RMS_THRESHOLD
+var min_note_duration: float = MIN_NOTE_DURATION
+var min_silence_duration: float = MIN_SILENCE_DURATION
+var max_pitch_drift_cents: float = MAX_PITCH_DRIFT_CENTS
+var drift_frame_count: int = DRIFT_FRAME_COUNT
+var pitch_smooth_alpha: float = PITCH_SMOOTH_ALPHA
+var onset_lookback: float = ONSET_LOOKBACK
+
+## Temporary diagnostics: prints one analyzer summary when finalization builds
+## the output sequence. Disable after collecting RMS/clarity evidence.
+var summary_diagnostics_enabled: bool = true
+
 # ── Internal state ───────────────────────────────────────────────────────────
 
 var _source_rate: float = 44100.0
@@ -322,6 +339,7 @@ func process_finalize_step(max_hops: int = -1) -> bool:
 			_staged_sequence_notes = _quantize_to_beats(_staged_note_candidates)
 			_finalize_stage = FinalizeStage.BUILD_SEQUENCE
 		FinalizeStage.BUILD_SEQUENCE:
+			_print_summary_diagnostics("staged", _staged_note_candidates, _staged_sequence_notes)
 			_staged_sequence = _sequence_from_notes(_staged_sequence_notes)
 			_finalize_stage = FinalizeStage.DONE
 		FinalizeStage.DONE:
@@ -349,6 +367,7 @@ func _build_sequence_from_results() -> Sequence:
 
 	# Quantize to beat grid.
 	var sequence_notes := _quantize_to_beats(notes)
+	_print_summary_diagnostics("sync", notes, sequence_notes)
 
 	return _sequence_from_notes(sequence_notes)
 
@@ -359,6 +378,65 @@ func _sequence_from_notes(sequence_notes: Array[SequenceNote]) -> Sequence:
 		print("beat: %d, note: %d, duration: %d velocity: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration, sequence_notes[index].velocity])
 
 	return Sequence.new(sequence_notes)
+
+
+func _print_summary_diagnostics(context: String, candidates: Array[_NoteCandidate], sequence_notes: Array[SequenceNote]) -> void:
+	if not summary_diagnostics_enabled:
+		return
+
+	var frame_count: int = _frame_results.size()
+	var voiced_frame_count: int = 0
+	var rms_sum: float = 0.0
+	var rms_max: float = 0.0
+	var clarity_sum: float = 0.0
+	var clarity_max: float = 0.0
+	var voiced_rms_sum: float = 0.0
+	var voiced_clarity_sum: float = 0.0
+
+	for frame in _frame_results:
+		var rms: float = frame["rms"]
+		var clarity: float = frame["clarity"]
+		var voiced: bool = frame["voiced"]
+		rms_sum += rms
+		clarity_sum += clarity
+		rms_max = maxf(rms_max, rms)
+		clarity_max = maxf(clarity_max, clarity)
+		if voiced:
+			voiced_frame_count += 1
+			voiced_rms_sum += rms
+			voiced_clarity_sum += clarity
+
+	var avg_rms: float = rms_sum / float(frame_count) if frame_count > 0 else 0.0
+	var avg_clarity: float = clarity_sum / float(frame_count) if frame_count > 0 else 0.0
+	var avg_voiced_rms: float = voiced_rms_sum / float(voiced_frame_count) if voiced_frame_count > 0 else 0.0
+	var avg_voiced_clarity: float = voiced_clarity_sum / float(voiced_frame_count) if voiced_frame_count > 0 else 0.0
+	var non_rest_count: int = 0
+	for note in sequence_notes:
+		if note.note != -1:
+			non_rest_count += 1
+
+	print("VoiceAnalyzer summary [%s]: source_rate=%.1fHz analysis_rate=%.1fHz downsample_ratio=%.3f beats=%d beat_duration=%.3fs analysis_samples=%d processed_hops=%d frames=%d voiced_frames=%d candidates=%d sequence_notes=%d non_rest_notes=%d avg_rms=%.5f max_rms=%.5f avg_clarity=%.3f max_clarity=%.3f avg_voiced_rms=%.5f avg_voiced_clarity=%.3f scale_notes=%d" % [
+		context,
+		_source_rate,
+		ANALYSIS_RATE,
+		_downsample_ratio,
+		_beats_per_section,
+		_beat_duration,
+		_analysis_total_samples,
+		_hops_processed,
+		frame_count,
+		voiced_frame_count,
+		candidates.size(),
+		sequence_notes.size(),
+		non_rest_count,
+		avg_rms,
+		rms_max,
+		avg_clarity,
+		clarity_max,
+		avg_voiced_rms,
+		avg_voiced_clarity,
+		_scale_ids.size(),
+	])
 
 
 ## Returns true if the analyzer is currently active (between start/finalize).
@@ -381,17 +459,17 @@ func _process_frame(start_sample: int) -> void:
 	var pitch := 0.0
 	var clarity := 0.0
 
-	if rms >= SILENCE_THRESHOLD:
+	if rms >= silence_threshold:
 		var result := _nsdf_pitch(frame, FRAME_SIZE)
 		pitch = result.x  # Hz
 		clarity = result.y  # 0..1
 
 	# Apply median filter to pitch.
-	var filtered_pitch := _median_filter_pitch(pitch if clarity >= CLARITY_THRESHOLD else 0.0)
+	var filtered_pitch := _median_filter_pitch(pitch if clarity >= clarity_threshold else 0.0)
 
 	# One-pole smooth.
 	if filtered_pitch > 0.0 and _smoothed_pitch > 0.0:
-		_smoothed_pitch = _smoothed_pitch + PITCH_SMOOTH_ALPHA * (filtered_pitch - _smoothed_pitch)
+		_smoothed_pitch = _smoothed_pitch + pitch_smooth_alpha * (filtered_pitch - _smoothed_pitch)
 	elif filtered_pitch > 0.0:
 		_smoothed_pitch = filtered_pitch
 	# If filtered_pitch is 0, keep previous smoothed value (will be marked unvoiced).
@@ -399,7 +477,7 @@ func _process_frame(start_sample: int) -> void:
 	# Voicing state machine with hysteresis.
 	var frame_voiced := false
 	if not _is_voiced:
-		if rms >= ONSET_RMS_THRESHOLD and clarity >= CLARITY_THRESHOLD and filtered_pitch > 0.0:
+		if rms >= onset_rms_threshold and clarity >= clarity_threshold and filtered_pitch > 0.0:
 			_voiced_frames += 1
 			_silence_frames = 0
 			if _voiced_frames >= 2:  # Require 2 consecutive voiced frames.
@@ -409,11 +487,11 @@ func _process_frame(start_sample: int) -> void:
 			_voiced_frames = 0
 			_silence_frames += 1
 	else:
-		if rms < OFFSET_RMS_THRESHOLD or clarity < CLARITY_THRESHOLD * 0.7:
+		if rms < offset_rms_threshold or clarity < clarity_threshold * 0.7:
 			_silence_frames += 1
 			_voiced_frames = 0
 			var silence_duration_s := float(_silence_frames) * (float(HOP_SIZE) / ANALYSIS_RATE)
-			if silence_duration_s >= MIN_SILENCE_DURATION:
+			if silence_duration_s >= min_silence_duration:
 				_is_voiced = false
 		else:
 			_silence_frames = 0
@@ -514,7 +592,7 @@ func _nsdf_pitch(frame: PackedFloat32Array, length: int) -> Vector2:
 		best_val = peak_val
 		best_lag = peak_lag
 
-	if best_lag <= 0 or best_val < CLARITY_THRESHOLD:
+	if best_lag <= 0 or best_val < clarity_threshold:
 		return Vector2(0.0, 0.0)
 
 	# Parabolic interpolation around best_lag for sub-sample accuracy.
@@ -691,7 +769,7 @@ func _segment_notes() -> Array[_NoteCandidate]:
 			# End current note if it meets minimum duration.
 			if current_note != null:
 				current_note.end_time = time
-				if current_note.duration() >= MIN_NOTE_DURATION:
+				if current_note.duration() >= min_note_duration:
 					notes.append(current_note)
 				current_note = null
 			drift_count = 0
@@ -708,12 +786,12 @@ func _segment_notes() -> Array[_NoteCandidate]:
 		else:
 			# Check if pitch has drifted too far from current note's average.
 			var cents := _cent_diff(pitch, current_note.avg_pitch())
-			if cents > MAX_PITCH_DRIFT_CENTS:
+			if cents > max_pitch_drift_cents:
 				drift_count += 1
-				if drift_count >= DRIFT_FRAME_COUNT:
+				if drift_count >= drift_frame_count:
 					# Split: end current note, start new one.
 					current_note.end_time = time
-					if current_note.duration() >= MIN_NOTE_DURATION:
+					if current_note.duration() >= min_note_duration:
 						notes.append(current_note)
 					current_note = _NoteCandidate.new()
 					current_note.start_time = time
@@ -728,7 +806,7 @@ func _segment_notes() -> Array[_NoteCandidate]:
 				current_note.rms_values.append(rms)
 
 	# Close last note.
-	if current_note != null and current_note.duration() >= MIN_NOTE_DURATION:
+	if current_note != null and current_note.duration() >= min_note_duration:
 		notes.append(current_note)
 
 	return notes
@@ -752,7 +830,7 @@ func _quantize_to_beats(candidates: Array[_NoteCandidate]) -> Array[SequenceNote
 
 	for candidate in candidates:
 		# Apply onset look-back compensation.
-		var onset_time := maxf(0.0, candidate.start_time - ONSET_LOOKBACK)
+		var onset_time := maxf(0.0, candidate.start_time - onset_lookback)
 		var offset_time := candidate.end_time
 
 		# Convert times to beat positions.

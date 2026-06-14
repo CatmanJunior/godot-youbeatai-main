@@ -41,6 +41,17 @@ func _ready() -> void:
 	EventBus.soundbank_loaded.connect(_on_soundbank_loaded)
 	EventBus.mixing_weights_changed.connect(_on_mixing_weights_changed)
 	EventBus.chaos_pad_dragging.connect(_on_knob_position_changed)
+	EventBus.restart_requested.connect(_restart_requested)
+
+func _restart_requested():
+	# Stop all players
+	for p in players:
+		p.stop()
+
+	#break down all buses 
+	BusHelper.remove_bus(bus_name)
+	for b in sub_bus_names:
+		BusHelper.remove_bus(b)
 
 func _on_knob_position_changed(knobPos: Vector2) -> void:
 	if SongState.selected_track_index == track_index and track_data:

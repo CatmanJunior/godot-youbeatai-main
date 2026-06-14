@@ -170,5 +170,4 @@ func _set_bus_effect(bus_idx: int, effect_profile: EffectProfile):
 	if bus_idx == -1:
 		push_error("Bus '%s' not found for applying effect profile." % sub_bus_names[1])
 		return
-	print("apply effects to %s" % bus_idx)
 	effect_profile.apply_effects(bus_idx)

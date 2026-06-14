@@ -23,14 +23,6 @@ enum SongLayer {
 var BUS_SUFFIXES: Array[String] = ["Mix", "Chord", "VoiceOver"]
 var BUS_PREFIX: String = "Song"
 
-## Recording timer (for progress calculation).
-var recording_timer: float = 0.0
-
-## Whether we're in song-recording mode.
-var is_song_recording: bool = false
-
-var _is_playing: bool = false
-
 #Chord Noteplayer object
 var chords: Chords
 
@@ -52,20 +44,14 @@ func _ready() -> void:
 	EventBus.pre_beat_triggered.connect(pre_on_beat)
 	EventBus.section_switch_requested.connect(seek_to_position)
 
-func _process(delta: float) -> void:
-	if is_song_recording:
-		recording_timer += delta
-
 # ── Playback ─────────────────────────────────────────────────────────────────
 
 func play(offset: float = 0.0) -> void:
 	if track_data and track_data.recorded_audio_stream:
-		_is_playing = true
 		players[SongLayer.VOICE_OVER].play(offset)
 		players[SongLayer.MIX].play(offset)
 
 func stop() -> void:
-	_is_playing = false
 	for p in players:
 		p.stop()
 

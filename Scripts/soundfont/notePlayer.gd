@@ -24,6 +24,7 @@ func apply_settings(settings: NotePlayerSettings) -> void:
 	volume_db = settings.volume_db
 	instrument = settings.instrument
 	gain = settings.gain
+	sustain_combined = settings.sustain_combined
 
 func _ready():
 	setup()

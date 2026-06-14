@@ -109,7 +109,8 @@ func _start_recording() -> void:
 	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
 		timer = get_tree().create_timer(timer_wait_time)
 		await timer.timeout
-		
+	
+	#Set the master volume to -20 dB to avoid feedback during recording
 	EventBus.set_master_volume_db.emit(-20)
 
 	# Step 4: Align the beat clock so the pointer and progress bar both start at

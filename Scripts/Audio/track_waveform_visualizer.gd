@@ -13,7 +13,7 @@ extends Node
 	{"points": 196, "base_dist": 280, "volume_dist": 28, "reversed": false},  # Track 0 (4) – big line
 	{"points": 80, "base_dist": 50, "volume_dist": 15, "reversed": false},    # Track 1 (5) – small line
 ]
-var tween : Array[Tween] = []
+var _tween : Array[Tween] = []
 var _counting_down: bool = false
 var _countdown_total_time: float = 0.0
 var _countdown_bar_index: int = -1
@@ -22,7 +22,7 @@ var _sample_track_amount: int = SectionData.SAMPLE_TRACKS_PER_SECTION  # Number 
 
 func _ready() -> void:
 	for i in range(progress_bars.size()):
-		tween.append(null)
+		_tween.append(null)
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.song_loaded.connect(_on_song_loaded)
@@ -74,14 +74,14 @@ func _on_track_selected(track_index: int):
 
 	if track_index >= _sample_track_amount:  # Only update colors for SYNTH tracks
 		var synth_index = track_index - _sample_track_amount
-		if tween[synth_index] != null and tween[synth_index].is_running():
+		if _tween[synth_index] != null and _tween[synth_index].is_running():
 			return
-		#pulse the scale of the progress bar with a tween
+		#pulse the scale of the progress bar with a _tween
 		if synth_index >= 0 and synth_index < progress_bars.size() and progress_bars[synth_index]:
 			var bar = progress_bars[synth_index]
 			var current_size = bar.scale
 			var t := create_tween()
-			tween[synth_index] = t
+			_tween[synth_index] = t
 			t.tween_property(bar, "scale", current_size * 1.2, 0.2)
 			t.tween_property(bar, "scale", current_size, 0.2)	
 			

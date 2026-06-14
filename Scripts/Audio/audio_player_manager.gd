@@ -1,8 +1,6 @@
 extends Node
 class_name AudioPlayerManager
 
-
-
 var track_players: Array[TrackPlayerBase] = []
 var song_track_player: SongTrackPlayer
 var sfx_player: AudioStreamPlayer

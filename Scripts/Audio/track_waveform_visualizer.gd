@@ -129,6 +129,14 @@ func update_progress_bar(rec_data: RecordingData, percentage: float) -> void:
 		progress_bars[track_index].value = percentage
 
 
+## Show or hide the waveform line for the given recording's track. Used to hide
+## the previously drawn line while a new take is being recorded.
+func set_waveform_visible(rec_data: RecordingData, visible: bool) -> void:
+	var track_index = rec_data.track_data.index - _sample_track_amount
+	if track_index >= 0 and track_index < waveform_lines.size() and waveform_lines[track_index]:
+		waveform_lines[track_index].visible = visible
+
+
 func update_waveform(rec_data: RecordingData) -> void:
 	var track_index = rec_data.track_data.index
 	track_index = track_index - _sample_track_amount  # Adjust index for waveform visualizers (only for SYNTH tracks)
@@ -140,6 +148,7 @@ func update_waveform(rec_data: RecordingData) -> void:
 		var rate := float(rec_data.audio_stream.mix_rate)
 		rec_data.track_data.synth_waveform_visualizer.update_line(samples, rate, length)
 		waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
+		waveform_lines[track_index].visible = true  # Reveal the freshly drawn waveform
 
 
 func reset_progress_bar(rec_data: RecordingData) -> void:

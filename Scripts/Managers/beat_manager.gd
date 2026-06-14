@@ -56,15 +56,7 @@ func _ready():
 	EventBus.bpm_set_requested.connect(func(value): bpm = value)
 	EventBus.play_pause_toggle_requested.connect(_on_play_pause_toggled)
 	EventBus.playing_change_requested.connect(_on_playing_change_requested)
-	EventBus.beat_seek_requested.connect(func(beat):
-		#reset beat progress to ensure accurate seeking
-		beat_elapsed = 0.0
-		beat_progress = 0.0
-		bar_progress = 0.0
-		current_beat = beat
-		if playing:
-			EventBus.beat_triggered.emit(0)
-	)
+	EventBus.beat_seek_requested.connect(_on_beat_seek_requested)
 	EventBus.swing_set_requested.connect(func(v: float): swing = v)
 
 	EventBus.soundbank_loaded.connect(_on_soundbank_loaded)
@@ -73,13 +65,7 @@ func _ready():
 	EventBus.beat_set_requested.connect(_set_beat)
 	EventBus.template_set.connect(_on_template_set)
 
-func _on_template_set(actives: Array) -> void:
-	SongState.current_section.set_beat_actives(actives)
 
-func _on_soundbank_loaded(bank: SoundBank) -> void:
-	print("Soundbank loaded: %s" % bank)
-	bpm = bank.bpm
-	swing = bank.swing * swing_reduce_amount
 
 # --- BPM functions ---
 func get_beat_progress() -> float:
@@ -168,7 +154,6 @@ func _set_beat(track: int, beat: int, active: bool):
 	SongState.current_section.set_beat(track, beat, active)
 	EventBus.beat_state_changed.emit(track, beat, active)
 
-
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
 	var beats_until_top: int = SongState.beats_per_section - cur_beat - 1
@@ -180,3 +165,22 @@ static func calculate_beat_duration(p_bpm: int, _p_total_beats: int, _beats_per_
 		return 0.0
 	var _beat_duration: float = snapped((60.0 / float(p_bpm)) / float(STEPS_PER_BPM_BEAT), 0.001)
 	return _beat_duration
+
+#-------------------Event Handlers----------------------
+
+func _on_beat_seek_requested(beat: int):
+		#reset beat progress to ensure accurate seeking
+		beat_elapsed = 0.0
+		beat_progress = 0.0
+		bar_progress = 0.0
+		current_beat = beat
+		if playing:
+			EventBus.beat_triggered.emit(0)
+
+func _on_template_set(actives: Array) -> void:
+	SongState.current_section.set_beat_actives(actives)
+
+func _on_soundbank_loaded(bank: SoundBank) -> void:
+	print("Soundbank loaded: %s" % bank)
+	bpm = bank.bpm
+	swing = bank.swing * swing_reduce_amount

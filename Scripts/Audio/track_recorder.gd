@@ -33,8 +33,8 @@ func _process(delta: float):
 	if recording and current_recording_data:
 		_handle_recording(delta)
 
-	if timer and timer.time_left > 0:
-		recording_sample_button.update_button(1 - (timer.time_left / timer_wait_time), Color.CORNSILK)
+		if timer and timer.time_left > 0:
+			recording_sample_button.update_button(1 - (timer.time_left / timer_wait_time), Color.CORNSILK)
 
 func _handle_recording(delta: float) -> void:
 	if current_recording_data.state != RecordingData.State.RECORDING:
@@ -79,16 +79,18 @@ func _start_recording() -> void:
 
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
+		waveform_visualizer.set_waveform_visible(current_recording_data, false)
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true)
 		GameState.metronome_enabled = true
 		#Wait for 4 seconds (countdown duration) before starting recording
-		var amount_to_wait = BeatManager.calculate_time_until_top()
-		await get_tree().create_timer(amount_to_wait).timeout
+		timer_wait_time = BeatManager.calculate_time_until_top()
+		timer = get_tree().create_timer(timer_wait_time)
+		await timer.timeout
 		
 		GameState.metronome_enabled = false
 		EventBus.countdown_close_requested.emit()
-		print("Starting recording after countdown, waited for: " + str(amount_to_wait) + " seconds")
+		print("Starting recording after countdown, waited for: " + str(timer_wait_time) + " seconds")
 
 	elif current_recording_data.track_type == TrackData.TrackType.SONG:
 		GameState.song_mode_active = false
@@ -96,8 +98,9 @@ func _start_recording() -> void:
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true) # start playing
 		
-		var amount_to_wait = BeatManager.calculate_time_until_top()
-		await get_tree().create_timer(amount_to_wait).timeout
+		timer_wait_time = BeatManager.calculate_time_until_top()
+		timer = get_tree().create_timer(timer_wait_time)
+		await timer.timeout
 		GameState.song_mode_active = true
 		GameState.metronome_enabled = false
 		EventBus.section_switch_requested.emit(0) # switch to first section to ensure recording starts from the beginning

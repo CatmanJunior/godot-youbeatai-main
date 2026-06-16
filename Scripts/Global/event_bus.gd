@@ -4,7 +4,7 @@ extends Node
 
 ##Animation trigger signal, carries an AnimationType enum value to specify which animation to play.
 signal trigger_animation_requested(animation_type: int)
-
+signal metronome_do_amount(amount: int)
 ## level loading signals
 signal level_loaded()
 signal post_ready()

@@ -104,13 +104,13 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 ## recording_stopped handler, so this node owns the recorded-stream emit to ensure
 ## playback uses the finalized audio.
 func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
+	if waveform_visualizer:
+		waveform_visualizer.update_waveform(recording_data)
+		waveform_visualizer.reset_progress_bar(recording_data)
 	if recording_data.audio_stream != null:
 		recording_data.audio_stream = AudioHelpers.trim_audio_by_time_offset(recording_data.audio_stream, GameState.recording_delay_seconds)
 		var section_length: float = SongState.beat_duration * SongState.beats_per_section
 		recording_data.audio_stream = AudioHelpers.cap_audio_duration(recording_data.audio_stream, section_length)
-	if waveform_visualizer:
-		waveform_visualizer.update_waveform(recording_data)
-		waveform_visualizer.reset_progress_bar(recording_data)
 	EventBus.set_recorded_stream_requested.emit(recording_data)
 	return recording_data
 

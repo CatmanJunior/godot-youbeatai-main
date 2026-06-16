@@ -434,7 +434,7 @@ top_level = false
 alignment = 0
 
 [node name="DownLoopCount" parent="UserInterface/SwitchSectionButtons/CopyPasteClearButtons" index="4" unique_id=1472787063]
-tooltip_text = "Herhaal deze laag meer"
+tooltip_text = "Herhaal deze laag minder"
 
 [node name="UpLoopCount" parent="UserInterface/SwitchSectionButtons/CopyPasteClearButtons" index="5" unique_id=1702701368]
 tooltip_text = "Herhaal deze laag meer"

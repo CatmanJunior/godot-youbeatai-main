@@ -82,7 +82,7 @@ func _start_recording() -> void:
 		waveform_visualizer.set_waveform_visible(current_recording_data, false)
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true)
-		GameState.metronome_enabled = true
+		EventBus.metronome_do_amount.emit(3)
 		#Wait for 4 seconds (countdown duration) before starting recording
 		timer_wait_time = BeatManager.calculate_time_until_top()
 		timer = get_tree().create_timer(timer_wait_time)
@@ -116,8 +116,8 @@ func _start_recording() -> void:
 	# Step 4: Align the beat clock so the pointer and progress bar both start at
 	# beat 0 the instant capture begins (removes count-in / delay drift).
 	_synth_beats_recorded = 0
-	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
-		EventBus.beat_seek_requested.emit(0)
+	# if current_recording_data.track_type == TrackData.TrackType.SYNTH:
+	# 	EventBus.beat_seek_requested.emit(0)
 
 	# Step 5: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING

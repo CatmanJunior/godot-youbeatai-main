@@ -24,6 +24,10 @@ const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 ## Maximum VoiceAnalyzer hops processed per frame after recording stops.
 @export var post_stop_hops_per_frame: int = MAX_HOPS_PER_FRAME
 
+## Keep the final synth cap one audio frame shy of the loop boundary so the
+## next section's first beat never bleeds into the exported tail.
+const SYNTH_END_GUARD_FRAMES: int = 1
+
 ## Visualizer used to redraw the waveform and reset the progress bar once the
 ## recorded synth audio has been trimmed and capped to one section.
 @export var waveform_visualizer: TrackWaveformVisualizer
@@ -110,7 +114,11 @@ func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
 	if recording_data.audio_stream != null:
 		recording_data.audio_stream = AudioHelpers.trim_audio_by_time_offset(recording_data.audio_stream, GameState.recording_delay_seconds)
 		var section_length: float = SongState.beat_duration * SongState.beats_per_section
-		recording_data.audio_stream = AudioHelpers.cap_audio_duration(recording_data.audio_stream, section_length)
+		var end_guard_seconds: float = 0.0
+		if recording_data.audio_stream.mix_rate > 0:
+			end_guard_seconds = float(SYNTH_END_GUARD_FRAMES) / float(recording_data.audio_stream.mix_rate)
+		var safe_section_length: float = maxf(0.0, section_length - end_guard_seconds)
+		recording_data.audio_stream = AudioHelpers.cap_audio_duration(recording_data.audio_stream, safe_section_length)
 	EventBus.set_recorded_stream_requested.emit(recording_data)
 	return recording_data
 

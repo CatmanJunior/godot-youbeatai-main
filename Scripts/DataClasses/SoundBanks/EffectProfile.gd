@@ -20,21 +20,21 @@ enum EffectType {
 
 
 
-var effect_values: Dictionary = {
-	EffectType.PITCH_SHIFT: [AudioEffectPitchShift, apply_pitch_shift, func(): return pitch_shift],
-	EffectType.DISTORTION: [AudioEffectDistortion, apply_distortion, func(): return distortion_db],
-	EffectType.PHASER: [AudioEffectPhaser, apply_phaser, func(): return phaser],
-	EffectType.CHORUS: [AudioEffectChorus, apply_chorus, func(): return 1 if chorus else 0],
-	EffectType.DELAY: [AudioEffectDelay, apply_delay, func(): return delay],
-	EffectType.REVERB: [AudioEffectReverb, apply_reverb, func(): return reverb]
+var _effect_values: Dictionary = {
+	EffectType.PITCH_SHIFT: [AudioEffectPitchShift, _apply_pitch_shift, func(): return pitch_shift],
+	EffectType.DISTORTION: [AudioEffectDistortion, _apply_distortion, func(): return distortion_db],
+	EffectType.PHASER: [AudioEffectPhaser, _apply_phaser, func(): return phaser],
+	EffectType.CHORUS: [AudioEffectChorus, _apply_chorus, func(): return 1 if chorus else 0],
+	EffectType.DELAY: [AudioEffectDelay, _apply_delay, func(): return delay],
+	EffectType.REVERB: [AudioEffectReverb, _apply_reverb, func(): return reverb]
 }
 
 func apply_effects(bus_index: int) -> void:
 	var i : int = 0
 	for effect_type in EffectType.values():
-		var effect_class = effect_values[effect_type][0]
-		var callable : Callable = effect_values[effect_type][1]
-		var value = effect_values[effect_type][2].call()
+		var effect_class = _effect_values[effect_type][0]
+		var callable : Callable = _effect_values[effect_type][1]
+		var value = _effect_values[effect_type][2].call()
 		var effect_instance = effect_class.new()
 		_add_effect_bus(effect_instance, bus_index, i, value)
 		if callable:
@@ -45,21 +45,21 @@ func _add_effect_bus(effect: AudioEffect, bus_index: int, effect_index: int, val
 	AudioServer.add_bus_effect(bus_index, effect)
 	AudioServer.set_bus_effect_enabled(bus_index, effect_index, value > 0)
 
-func apply_chorus(_bus_effect: AudioEffectChorus, _enabled: bool) -> void:
+func _apply_chorus(_bus_effect: AudioEffectChorus, _enabled: bool) -> void:
 	pass
 
-func apply_pitch_shift(bus_effect: AudioEffectPitchShift, value: float) -> void:
+func _apply_pitch_shift(bus_effect: AudioEffectPitchShift, value: float) -> void:
 	bus_effect.pitch_scale = value if value > 0 else 1.0
 
-func apply_distortion(bus_effect: AudioEffectDistortion, value: float) -> void:
+func _apply_distortion(bus_effect: AudioEffectDistortion, value: float) -> void:
 	bus_effect.pre_gain = value
 
-func apply_phaser(bus_effect: AudioEffectPhaser, value: float) -> void:
+func _apply_phaser(bus_effect: AudioEffectPhaser, value: float) -> void:
 	bus_effect.rate_hz = value
 
-func apply_delay(bus_effect: AudioEffectDelay, value: float) -> void:
+func _apply_delay(bus_effect: AudioEffectDelay, value: float) -> void:
 	bus_effect.tap1_delay_ms = value
 	bus_effect.tap2_delay_ms = value * 2
 
-func apply_reverb(bus_effect: AudioEffectReverb, value: float) -> void:
+func _apply_reverb(bus_effect: AudioEffectReverb, value: float) -> void:
 	bus_effect.room_size = value

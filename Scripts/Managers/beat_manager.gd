@@ -66,7 +66,6 @@ func _ready():
 	EventBus.template_set.connect(_on_template_set)
 
 
-
 # --- BPM functions ---
 func get_beat_progress() -> float:
 	var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
@@ -154,6 +153,8 @@ func _set_beat(track: int, beat: int, active: bool):
 	SongState.current_section.set_beat(track, beat, active)
 	EventBus.beat_state_changed.emit(track, beat, active)
 
+
+#--------------------Static Functions----------------------
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
 	var beats_until_top: int = SongState.beats_per_section - cur_beat - 1

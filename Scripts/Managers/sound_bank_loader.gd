@@ -17,8 +17,6 @@ func _ready() -> void:
 	EventBus.players_initialized.connect(_load_and_apply_bank)
 
 func _load_and_apply_bank() -> void:
-	# print(SongState.selected_soundbank.resource_path)
-	
 	if SongState.selected_soundbank != null:
 		var bank = SongState.selected_soundbank
 		fallback_bank_name = bank.resource_name
@@ -53,7 +51,7 @@ static func load_soundbank(bank_dict: Dictionary) -> SoundBank:
 		return null
 
 	_apply_bpm_swing(bank, bank_dict)
-	_create_apply_note_player_settings(bank)
+	_patch_note_player_settings(bank)
 
 	print("SoundBankLoader: loaded '%s'" % [bank_name])
 	return bank
@@ -65,12 +63,11 @@ static func _apply_bpm_swing(bank: SoundBank, bank_dict: Dictionary) -> void:
 	bank.swing = swing_normalized
 
 
-#TODO: this is a bit hacky — we have to create new NotePlayerSettings instances to apply the new AudioStreamSample references from the loaded bank, since NotePlayerSettings is a Resource and its properties are not directly editable at runtime. We should consider refactoring this in the future for better clarity and maintainability.
-static func _create_apply_note_player_settings(bank: SoundBank) -> Array[NotePlayerSettings]:
-	var new_noteplayer_settings : Array[NotePlayerSettings] = []
+## Duplicates each NotePlayerSettings from the cached resource and injects the
+## bank-specific soundfont and instrument, without mutating the cached originals.
+static func _patch_note_player_settings(bank: SoundBank) -> void:
 	for i in range(bank.noteplayer_settings.size()):
-		new_noteplayer_settings.append(
-		NotePlayerSettings.create(bank.synth_soundfonts[i], bank.noteplayer_settings[i].notes, bank.synth_instrument_ids[i], bank.noteplayer_settings[i].base_note, bank.noteplayer_settings[i].allow_key_input, bank.noteplayer_settings[i].gate, bank.noteplayer_settings[i].volume_db, bank.noteplayer_settings[i].gain),
-		)
-	bank.noteplayer_settings = new_noteplayer_settings
-	return new_noteplayer_settings
+		var settings: NotePlayerSettings = bank.noteplayer_settings[i].duplicate()
+		settings.soundfont = bank.synth_soundfonts[i]
+		settings.instrument = bank.synth_instrument_ids[i]
+		bank.noteplayer_settings[i] = settings

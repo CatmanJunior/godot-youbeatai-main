@@ -25,4 +25,3 @@ extends Resource
 
 @export var chord_progressions: ChordSettings
 
-#THIS SHOULD BE REPLACED BY SETTING NOTEPLAYER SETTINGS IN THE AUDIO BANKS

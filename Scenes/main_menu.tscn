@@ -10,6 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://dfv1vg176kkbg" path="res://Resources/Textures_New/Backgrounds/_0001_BG-Inverse-1080p.png" id="10_16hvj"]
 [ext_resource type="Texture2D" uid="uid://cgbool4auf0vy" path="res://Resources/Textures_New/prompt_background.png" id="10_t1dhk"]
 [ext_resource type="Script" path="res://Scripts/UI/version.gd" id="10_vr1f0"]
+[ext_resource type="Texture2D" uid="uid://lhanmhp63mdd" path="res://Resources/Textures_Settings/_0002_Toggle-ON.png" id="11_t1dhk"]
+[ext_resource type="Texture2D" uid="uid://vlpkgc7maesp" path="res://Resources/Textures_Settings/_0003_Toggle-OFF.png" id="12_5egv6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
 bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
@@ -43,7 +45,7 @@ texture = ExtResource("10_16hvj")
 
 [node name="scene" type="Node2D" unique_id=451630034]
 
-[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "tutorial_button", "credits_panel", "fullscreen_button")]
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "tutorial_button", "credits_panel", "fullscreen_button", "mute_toggle")]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(1280, 720)
 anchors_preset = 8
@@ -65,6 +67,7 @@ back_button = NodePath("../CreditsPanel/Back")
 tutorial_button = NodePath("VBoxContainer/TutorialButton")
 credits_panel = NodePath("../CreditsPanel")
 fullscreen_button = NodePath("FullScreenButton")
+mute_toggle = NodePath("../CreditsPanel/MuteSpeachToggle")
 
 [node name="TitleLabel" type="Label" parent="MainMenuPanel" unique_id=1650576418]
 layout_mode = 1
@@ -271,4 +274,35 @@ Gemeente Utrecht
 KFHein fonds		
 Stimuleringsfonds voor Creatieve Industrie"
 horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MuteSpeachToggle" type="CheckButton" parent="CreditsPanel" unique_id=1403814823]
+light_mask = 2
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15078124
+anchor_top = 0.9
+anchor_right = 0.23046875
+anchor_bottom = 0.96944445
+focus_mode = 0
+theme = ExtResource("2_1ehe0")
+theme_override_constants/icon_max_width = 90
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_font_sizes/font_size = 35
+theme_override_icons/checked = ExtResource("11_t1dhk")
+theme_override_icons/unchecked = ExtResource("12_5egv6")
+expand_icon = true
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="CreditsPanel/MuteSpeachToggle" unique_id=337871553]
+light_mask = 2
+layout_mode = 0
+offset_left = -173.0
+offset_right = 127.0
+offset_bottom = 50.0
+theme_override_colors/font_color = Color(0.58431375, 0.57254905, 0.87058824, 1)
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_font_sizes/font_size = 33
+text = "Klappy stil"
 vertical_alignment = 1

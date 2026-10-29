@@ -50,6 +50,8 @@ var is_visible: bool:
 @export var save_song_button: Button
 @export var save_beat_button: Button
 @export var restart_button: Button
+@export var save_project_button: Button
+@export var load_project_button: Button
 @export var metronome_toggle: CheckButton
 @export var mute_speech: CheckButton
 
@@ -71,9 +73,11 @@ func _ready():
 	recording_delay_slider.value_changed.connect(_on_recording_delay_changed)
 	save_beat_button.pressed.connect(_on_save_beat_pressed)
 	save_song_button.button_up.connect(_on_export_song_pressed)
-	
+
 	restart_button.pressed.connect(_on_restart_button)
-	
+	save_project_button.pressed.connect(_on_save_project_pressed)
+	load_project_button.pressed.connect(_on_load_project_pressed)
+
 	settings_back_button.pressed.connect(_on_settings_button_pressed)
 	mute_speech.toggled.connect(_on_mute_speech_toggled)
 
@@ -82,6 +86,8 @@ func _ready():
 	EventBus.bpm_changed.connect(_bpm_changed)
 	EventBus.swing_changed.connect(_on_swing_changed)
 	EventBus.soundbank_loaded.connect(initial_values)
+	initial_values(null)
+	_update_labels()
 
 
 func _process(_delta: float) -> void:
@@ -97,7 +103,7 @@ func _on_swing_changed(new_swing: float) -> void:
 	swing_slider.value = new_swing
 	swing_progress_bar.value = new_swing
 	swing_label.text = "Swing: %.0f%%" % (new_swing * 100.0)
-	
+
 
 func _update_labels() -> void:
 	bpm_label.text = str(SongState.bpm)
@@ -105,8 +111,8 @@ func _update_labels() -> void:
 	swing_label.text = "Swing: %.0f%%" % (swing_slider.value * 100.0)
 
 func initial_values(_bank: SoundBank):
-	recording_delay_progress.value = GameState.recording_delay_seconds 
-	recording_delay_slider.value = GameState.recording_delay_seconds 
+	recording_delay_progress.value = GameState.recording_delay_seconds
+	recording_delay_slider.value = GameState.recording_delay_seconds
 
 # --- Event Handlers ---
 func _on_mute_speech_toggled(button_pressed: bool):
@@ -144,10 +150,10 @@ func _on_bpm_down_pressed():
 	EventBus.bpm_down_requested.emit(bpm_modifier)
 
 func _on_swing_up_pressed():
-	EventBus.swing_set_requested.emit(swing_slider.value+swing_modifier)
+	EventBus.swing_set_requested.emit(swing_slider.value + swing_modifier)
 
 func _on_swing_down_pressed():
-	EventBus.swing_set_requested.emit(swing_slider.value-swing_modifier)
+	EventBus.swing_set_requested.emit(swing_slider.value - swing_modifier)
 
 func _on_swing_slider_changed(value: float):
 	EventBus.swing_set_requested.emit(value)
@@ -159,9 +165,17 @@ func _on_export_song_pressed():
 func _on_save_beat_pressed():
 	EventBus.open_export_dialog_requested.emit(true) # false for beat export, true for song export
 	settings_panel.visible = false
-	
+
 func _on_restart_button() -> void:
 	EventBus.open_prompt.emit(EventBus.restart_requested.emit)
+
+func _on_save_project_pressed() -> void:
+	settings_panel.visible = false
+	EventBus.save_song_requested.emit()
+
+func _on_load_project_pressed() -> void:
+	settings_panel.visible = false
+	EventBus.load_song_requested.emit()
 
 func _on_metronome_toggle_toggled(button_pressed: bool):
 	GameState.metronome_enabled = button_pressed

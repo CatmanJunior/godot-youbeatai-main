@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://Scripts/UI/version.gd" id="10_vr1f0"]
 [ext_resource type="Texture2D" uid="uid://lhanmhp63mdd" path="res://Resources/Textures_Settings/_0002_Toggle-ON.png" id="11_t1dhk"]
 [ext_resource type="Texture2D" uid="uid://vlpkgc7maesp" path="res://Resources/Textures_Settings/_0003_Toggle-OFF.png" id="12_5egv6"]
+[ext_resource type="Script" uid="uid://ppyeq7qlq642" path="res://Scripts/Managers/song_save_load_manager.gd" id="13_sslm1"]
+[ext_resource type="PackedScene" uid="uid://nj873e6ibi15" path="res://Scenes/UI_Components/saving_label.tscn" id="14_svlbl"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_16hvj"]
 bg_color = Color(0.8784314, 0.43137255, 1, 0.15294118)
@@ -45,7 +47,7 @@ texture = ExtResource("10_16hvj")
 
 [node name="scene" type="Node2D" unique_id=451630034]
 
-[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "tutorial_button", "credits_panel", "fullscreen_button", "mute_toggle")]
+[node name="MainMenuPanel" type="Panel" parent="." unique_id=1489629993 node_paths=PackedStringArray("pro_button", "credits_button", "back_button", "tutorial_button", "credits_panel", "fullscreen_button", "mute_toggle", "load_project_button")]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(1280, 720)
 anchors_preset = 8
@@ -68,6 +70,7 @@ tutorial_button = NodePath("VBoxContainer/TutorialButton")
 credits_panel = NodePath("../CreditsPanel")
 fullscreen_button = NodePath("FullScreenButton")
 mute_toggle = NodePath("../CreditsPanel/MuteSpeachToggle")
+load_project_button = NodePath("LoadProjectButton")
 
 [node name="TitleLabel" type="Label" parent="MainMenuPanel" unique_id=1650576418]
 layout_mode = 1
@@ -85,7 +88,7 @@ theme_override_colors/font_outline_color = Color(0.050980393, 0.06666667, 0.1647
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("3_trj04")
 theme_override_font_sizes/font_size = 48
-text = "Klappy 
+text = "Klappy
 de Ritme Robot"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -108,6 +111,41 @@ theme_override_fonts/font = ExtResource("4_16hvj")
 theme_override_font_sizes/font_size = 34
 text = "Credits"
 flat = true
+
+[node name="LoadProjectButton" type="Button" parent="MainMenuPanel"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -100.0
+offset_right = 196.0
+offset_bottom = -56.0
+grow_vertical = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_fonts/font = ExtResource("4_16hvj")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxFlat_16hvj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_yhxw7")
+theme_override_styles/hover = SubResource("StyleBoxFlat_yhxw7")
+text = "Project openen"
+
+[node name="SavingLabel" parent="MainMenuPanel" instance=ExtResource("14_svlbl")]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 27.0
+offset_top = -270.0
+offset_right = 182.0
+offset_bottom = -118.0
+grow_vertical = 0
+
+[node name="SongSaveLoadManager" type="Node" parent="MainMenuPanel"]
+script = ExtResource("13_sslm1")
+main_menu_mode = true
 
 [node name="KlappyBackground" type="TextureRect" parent="MainMenuPanel" unique_id=2086948664]
 z_index = 3
@@ -252,26 +290,26 @@ offset_right = 947.0
 offset_bottom = 719.0
 theme_override_fonts/font = ExtResource("4_16hvj")
 theme_override_font_sizes/font_size = 24
-text = "Monobanda.nl	
+text = "Monobanda.nl
 
-Simon van der Linden	
-Sjoerd Wouterse 	
+Simon van der Linden
+Sjoerd Wouterse
 Jesse van Leeuwen
 René 't Hart
 Roland MacDonald
-Keano Dussel	
-Esmée Veldhuizen	
+Keano Dussel
+Esmée Veldhuizen
 
-Rian Evers	
-Nastasia Griffioen	
-Luc Berendsen 	
+Rian Evers
+Nastasia Griffioen
+Luc Berendsen
 
-Kirsten Oppeneer (Kunst Centraal)		
-Erwin Spaan (Tech Explorers)		
-		
-Fonds21		
-Gemeente Utrecht		
-KFHein fonds		
+Kirsten Oppeneer (Kunst Centraal)
+Erwin Spaan (Tech Explorers)
+
+Fonds21
+Gemeente Utrecht
+KFHein fonds
 Stimuleringsfonds voor Creatieve Industrie"
 horizontal_alignment = 1
 vertical_alignment = 1

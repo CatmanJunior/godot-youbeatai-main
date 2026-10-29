@@ -74,6 +74,8 @@ var current_track: TrackData:
 var selected_soundbank: SoundBank = null
 var chords_active: bool = false
 var chosen_emoij: String = CHOSEN_EMOIJ_DEFAULT
+## Song opened from the main menu, applied once the game scene has initialized.
+var pending_song: SongData = null
 
 # ── Initialization ───────────────────────────────────────────────────────────
 
@@ -85,7 +87,7 @@ func _ready() -> void:
 	EventBus.swing_changed.connect(func(value): swing = value)
 	EventBus.track_selected.connect(func(track: int): selected_track_index = track)
 	EventBus.soundbank_loaded.connect(func(bank: SoundBank): selected_soundbank = bank)
-	EventBus.soundbank_selected.connect(func (th, em): chosen_emoij = "".join(em) + "".join(th) )
+	EventBus.soundbank_selected.connect(func(th, em): chosen_emoij = "".join(em) + "".join(th))
 
 ## Ensure data has sensible runtime defaults (song_track).
 func _apply_data_defaults() -> void:
@@ -106,7 +108,7 @@ func _on_section_switched(section: SectionData) -> void:
 # ── Helpers ──────────────────────────────────────────────────────────────────
 
 func section_count() -> int:
-	return data.sections.map(func(e): return e.loop_count).reduce(func(i, accum): return accum + i )
+	return data.sections.map(func(e): return e.loop_count).reduce(func(i, accum): return accum + i)
 
 
 func get_section(index: int) -> SectionData:

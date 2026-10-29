@@ -18,6 +18,14 @@ const DEFAULT_BPM: int = 120
 const DEFAULT_BEATS_PER_SECTION: int = 16
 const DEFAULT_SWING: float = 0.05
 
+## Bump when the saved layout changes and add a step to [method migrate].
+const FORMAT_VERSION: int = 2
+## Saves made before [member format_version] existed load with this value.
+const LEGACY_FORMAT_VERSION: int = 1
+
+const ERROR_NEWER_VERSION: String = "Dit liedje is gemaakt met een nieuwere versie van Ritme Robot. Update het spel om het te openen."
+const ERROR_INVALID: String = "Dit bestand is geen geldig Ritme Robot liedje."
+
 
 # ── Playback ─────────────────────────────────────────────────────────────────
 
@@ -43,7 +51,10 @@ const DEFAULT_SWING: float = 0.05
 
 @export var title: String = ""
 @export var created_at: String = ""
+## Game version (project config/version) that wrote the file.
 @export var version: String = "1.0"
+@export var format_version: int = LEGACY_FORMAT_VERSION
+@export var chosen_emoij: String = ""
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -76,9 +87,16 @@ static func from_current() -> SongData:
 	song.current_section_index = SongState.current_section_index
 
 	# State originating outside SongData
-	song.soundbank = live.soundbank
+	# The active bank lives in SongState.selected_soundbank; live.soundbank is only set by a load.
+	song.soundbank = SongState.selected_soundbank if SongState.selected_soundbank else live.soundbank
 	song.soundbank_name = live.soundbank_name
+	if song.soundbank and song.soundbank_name.is_empty():
+		song.soundbank_name = song.soundbank.resource_path.get_file().get_basename()
+	song.title = live.title
+	song.chosen_emoij = SongState.chosen_emoij
 	song.created_at = Time.get_datetime_string_from_system(true)
+	song.version = str(ProjectSettings.get_setting("application/config/version", ""))
+	song.format_version = FORMAT_VERSION
 
 	return song
 
@@ -97,12 +115,19 @@ func apply_to_current() -> void:
 	# a stale section that may have wrong track types) for the entire rebuild window.
 	SongState.current_section = null
 
+	# Emit the soundbank first: BeatManager copies the bank's bpm/swing on
+	# soundbank_loaded, so the saved values must be applied after it.
+	if soundbank:
+		SoundBankLoader._patch_note_player_settings(soundbank)
+		EventBus.soundbank_loaded.emit(soundbank)
+
 	# Playback settings (via signals so BeatManager picks them up)
 	EventBus.bpm_set_requested.emit(bpm)
 	EventBus.swing_set_requested.emit(swing)
 
 	# BeatManager has its own swing var and does NOT echo back to SongState,
 	# so we also write directly to keep data in sync.
+	SongState.bpm = bpm
 	SongState.beats_per_section = beats_per_section
 	SongState.swing = swing
 
@@ -129,18 +154,58 @@ func apply_to_current() -> void:
 	SongState.data.title = title
 	SongState.data.created_at = created_at
 	SongState.data.version = version
+	SongState.data.format_version = format_version
+	if not chosen_emoij.is_empty():
+		SongState.chosen_emoij = chosen_emoij
 
 	# Notify listeners (SectionUI, TrackWaveformVisualizer) to rebuild runtime objects
 	# before the section_switch_requested signal triggers the full UI cascade below.
 	EventBus.song_loaded.emit()
 
+	for section: SectionData in SongState.sections:
+		EventBus.on_set_loop_count.emit(section.index, section.loop_count)
+
 	# Switch to saved section
 	if current_section_index >= 0 and current_section_index < SongState.sections.size():
 		EventBus.section_switch_requested.emit(current_section_index)
 
-	# Restore soundbank
-	if soundbank:
-		EventBus.soundbank_loaded.emit(soundbank)
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Versioning
+# ══════════════════════════════════════════════════════════════════════════════
+
+## Returns a player-facing (Dutch) error message, or an empty string when the
+## loaded data can safely be applied.
+func validate() -> String:
+	if format_version > FORMAT_VERSION:
+		return ERROR_NEWER_VERSION
+	if sections.is_empty() or bpm <= 0 or beats_per_section <= 0:
+		return ERROR_INVALID
+	for section: SectionData in sections:
+		if section == null or section.tracks.size() != SectionData.TRACKS_PER_SECTION:
+			return ERROR_INVALID
+		for i in range(section.tracks.size()):
+			var track: TrackData = section.tracks[i]
+			if i < SectionData.SAMPLE_TRACKS_PER_SECTION:
+				if not track is SampleTrackData:
+					return ERROR_INVALID
+			elif not track is SynthTrackData:
+				return ERROR_INVALID
+	return ""
+
+
+## Upgrade data from older format versions to [constant FORMAT_VERSION].
+## Call after [method validate] succeeded.
+func migrate() -> void:
+	# Version 1 did not store loop counts or chord progressions; the defaults are used.
+	for section: SectionData in sections:
+		section.loop_count = clampi(section.loop_count, 1, SectionData.LOOP_COUNT_MAX)
+		for track: TrackData in section.tracks:
+			if track is SampleTrackData:
+				(track as SampleTrackData).beats.resize(beats_per_section)
+	if current_section_index < 0 or current_section_index >= sections.size():
+		current_section_index = 0
+	format_version = FORMAT_VERSION
 
 
 # ══════════════════════════════════════════════════════════════════════════════

@@ -29,7 +29,7 @@ static func get_samples(audio: AudioStreamWAV, downsample_factor: int = 1) -> Pa
 			value = raw.decode_s16(i) / 32768.0
 		else:
 			var v := raw[i] as int
-			value = (v - 256 if v > 127 else v) / 128.0
+			value = float(v - 128) / 128.0
 		samples[out] = value
 		out += 1
 		i += byte_step
@@ -151,12 +151,7 @@ static func compute_spectrum(chunk: PackedFloat32Array) -> Array:
 	if chunk.size() == 0:
 		return []
 	var n := mini(next_power_of_2(chunk.size()), MAX_FFT_SIZE)
-	var fft_input: Array = []
-	fft_input.resize(n)
-	var step := float(chunk.size()) / float(n)
-	for i in range(n):
-		fft_input[i] = float(chunk[int(i * step)])
-	return Fft.fft(fft_input)
+	return Fft.fft(_prepare_fft_input(chunk, n))
 
 
 ## Positive-frequency magnitudes from a chunk of samples.
@@ -164,12 +159,7 @@ static func compute_magnitudes(chunk: PackedFloat32Array) -> PackedFloat32Array:
 	if chunk.size() == 0:
 		return PackedFloat32Array()
 	var n := mini(next_power_of_2(chunk.size()), MAX_FFT_SIZE)
-	var fft_input: Array = []
-	fft_input.resize(n)
-	var step := float(chunk.size()) / float(n)
-	for i in range(n):
-		fft_input[i] = float(chunk[int(i * step)])
-	var spectrum: Array = Fft.fft(fft_input)
+	var spectrum: Array = Fft.fft(_prepare_fft_input(chunk, n))
 	@warning_ignore("integer_division")
 	var half := n / 2
 	var mags := PackedFloat32Array()
@@ -184,12 +174,9 @@ static func compute_magnitudes(chunk: PackedFloat32Array) -> PackedFloat32Array:
 ## Find the dominant frequency in a chunk of samples using FFT.
 static func dominant_frequency(chunk: PackedFloat32Array, sample_rate: float) -> float:
 	var n := mini(next_power_of_2(chunk.size()), MAX_FFT_SIZE)
-	var fft_input: Array = []
-	fft_input.resize(n)
-	var step: float = float(chunk.size()) / float(n)
-	for i in range(n):
-		fft_input[i] = float(chunk[int(i * step)])
-	var spectrum: Array = Fft.fft(fft_input)
+	if n == 0:
+		return 0.0
+	var spectrum: Array = Fft.fft(_prepare_fft_input(chunk, n))
 	@warning_ignore("integer_division")
 	var half := n / 2
 	var max_magnitude := 0.0
@@ -201,7 +188,24 @@ static func dominant_frequency(chunk: PackedFloat32Array, sample_rate: float) ->
 		if magnitude > max_magnitude:
 			max_magnitude = magnitude
 			max_bin = i
-	return float(max_bin) * sample_rate / float(n)
+	var effective_sample_rate: float = sample_rate
+	if chunk.size() > n:
+		effective_sample_rate *= float(n) / float(chunk.size())
+	return float(max_bin) * effective_sample_rate / float(n)
+
+
+static func _prepare_fft_input(chunk: PackedFloat32Array, size: int) -> Array:
+	var fft_input: Array = []
+	fft_input.resize(size)
+	fft_input.fill(0.0)
+	if chunk.size() <= size:
+		for i in range(chunk.size()):
+			fft_input[i] = float(chunk[i])
+	else:
+		var step: float = float(chunk.size()) / float(size)
+		for i in range(size):
+			fft_input[i] = float(chunk[int(i * step)])
+	return fft_input
 
 
 static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:

@@ -27,7 +27,7 @@ var export_mail: String = ""
 
 var microphone_volume: float = 0.0
 
-var recording_delay_seconds: float = 0.0
+var recording_delay_seconds: float = 0.2
 
 var recording_volume_threshold: float = 1.0
 
@@ -83,7 +83,7 @@ func reset() -> void:
 
 	# Settings
 	microphone_volume = 0.0
-	recording_delay_seconds = 0.0
+	recording_delay_seconds = 0.2
 	recording_volume_threshold = 1.0
 	track_button_add_beats = false
 	button_is_clap = false

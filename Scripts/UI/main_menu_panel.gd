@@ -8,19 +8,21 @@ extends Panel
 
 @export var fullscreen_button: Button
 @export var mute_toggle: CheckButton
+@export var load_project_button: Button
 
 func _ready():
+	load_project_button.pressed.connect(EventBus.load_song_requested.emit)
 	tutorial_button.pressed.connect(_on_tutorial_button_pressed)
 	pro_button.pressed.connect(_on_pro_button_pressed)
 	credits_button.pressed.connect(_on_credits_button_pressed)
 	back_button.pressed.connect(_on_back_button_pressed)
-	mute_toggle.toggled.connect(func(value: bool): GameState.mute_speech = value)	
-	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN) 
-	fullscreen_button.pressed.connect(func(): 
+	mute_toggle.toggled.connect(func(value: bool): GameState.mute_speech = value)
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
+	fullscreen_button.pressed.connect(func():
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN:
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED) 
-		else:	
-			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN) 
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
 	)
 
 func _on_tutorial_button_pressed():

@@ -20,21 +20,20 @@ enum EffectType {
 
 
 
-var _effect_values: Dictionary = {
-	EffectType.PITCH_SHIFT: [AudioEffectPitchShift, _apply_pitch_shift, func(): return pitch_shift],
-	EffectType.DISTORTION: [AudioEffectDistortion, _apply_distortion, func(): return distortion_db],
-	EffectType.PHASER: [AudioEffectPhaser, _apply_phaser, func(): return phaser],
-	EffectType.CHORUS: [AudioEffectChorus, _apply_chorus, func(): return 1 if chorus else 0],
-	EffectType.DELAY: [AudioEffectDelay, _apply_delay, func(): return delay],
-	EffectType.REVERB: [AudioEffectReverb, _apply_reverb, func(): return reverb]
-}
-
 func apply_effects(bus_index: int) -> void:
+	var effect_values: Dictionary = {
+		EffectType.PITCH_SHIFT: [AudioEffectPitchShift, _apply_pitch_shift, func(): return pitch_shift],
+		EffectType.DISTORTION: [AudioEffectDistortion, _apply_distortion, func(): return distortion_db],
+		EffectType.PHASER: [AudioEffectPhaser, _apply_phaser, func(): return phaser],
+		EffectType.CHORUS: [AudioEffectChorus, _apply_chorus, func(): return 1 if chorus else 0],
+		EffectType.DELAY: [AudioEffectDelay, _apply_delay, func(): return delay],
+		EffectType.REVERB: [AudioEffectReverb, _apply_reverb, func(): return reverb]
+	}
 	var i : int = 0
 	for effect_type in EffectType.values():
-		var effect_class = _effect_values[effect_type][0]
-		var callable : Callable = _effect_values[effect_type][1]
-		var value = _effect_values[effect_type][2].call()
+		var effect_class = effect_values[effect_type][0]
+		var callable : Callable = effect_values[effect_type][1]
+		var value = effect_values[effect_type][2].call()
 		var effect_instance = effect_class.new()
 		_add_effect_bus(effect_instance, bus_index, i, value)
 		if callable:

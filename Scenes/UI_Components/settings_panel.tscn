@@ -139,7 +139,7 @@ corner_radius_bottom_left = 60
 [sub_resource type="LabelSettings" id="LabelSettings_g4ckg"]
 font_size = 21
 
-[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_adds_beats_toggle", "recording_delay_slider", "recording_delay_progress", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "save_song_button", "save_beat_button", "restart_button", "metronome_toggle", "mute_speech")]
+[node name="SettingsPanel" type="Panel" unique_id=248245984 node_paths=PackedStringArray("settings_panel", "settings_back_button", "button_is_clap", "button_add_beats", "clap_adds_beats_toggle", "recording_delay_slider", "recording_delay_progress", "recording_delay_label", "bpm_label", "bpm_up_button", "bpm_down_button", "bpm_slider", "bpm_progress_bar", "swing_up_button", "swing_down_button", "swing_slider", "swing_label", "swing_progress_bar", "template_button", "save_song_button", "save_beat_button", "restart_button", "save_project_button", "load_project_button", "metronome_toggle", "mute_speech")]
 top_level = true
 light_mask = 2
 z_index = 1000
@@ -170,6 +170,8 @@ template_button = NodePath("Panel/stijl_tip/TemplateButton")
 save_song_button = NodePath("Panel/bot_buttons_h_container/SaveSongButton")
 save_beat_button = NodePath("Panel/bot_buttons_h_container/SaveBeatButton")
 restart_button = NodePath("Panel/bot_buttons_h_container/RestartGameButton")
+save_project_button = NodePath("Panel/project_buttons_h_container/SaveProjectButton")
+load_project_button = NodePath("Panel/project_buttons_h_container/LoadProjectButton")
 metronome_toggle = NodePath("Panel/MarginContainer/toggle_v_container/MetronomeToggle")
 mute_speech = NodePath("Panel/MarginContainer/toggle_v_container/MuteSpeachToggle")
 
@@ -428,7 +430,7 @@ mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_8dylv")
 theme_override_styles/fill = SubResource("StyleBoxFlat_0wopu")
 max_value = 0.8
-value = 0.5
+value = 0.2
 show_percentage = false
 
 [node name="RecordingDelaySlider" type="HSlider" parent="Panel/delay" unique_id=56271380]
@@ -448,7 +450,7 @@ theme_override_icons/grabber_highlight = ExtResource("4_xbhen")
 theme_override_styles/slider = SubResource("StyleBoxFlat_na2ur")
 max_value = 0.8
 step = 0.01
-value = 0.23
+value = 0.2
 metadata/_edit_use_anchors_ = true
 
 [node name="delay_sprite_clock" type="Sprite2D" parent="Panel/delay" unique_id=1900299613]
@@ -468,7 +470,7 @@ offset_right = 48.515663
 offset_bottom = 37.94731
 theme_override_fonts/font = ExtResource("3_5tpfg")
 theme_override_font_sizes/font_size = 35
-text = "0.4s"
+text = "0.20s"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -814,6 +816,44 @@ text = "Instellingen"
 horizontal_alignment = 1
 vertical_alignment = 1
 metadata/_edit_use_anchors_ = true
+
+[node name="project_buttons_h_container" type="HBoxContainer" parent="Panel"]
+light_mask = 2
+layout_mode = 0
+offset_left = 715.0
+offset_top = -72.0
+offset_right = 1055.0
+offset_bottom = -8.0
+theme_override_constants/separation = 12
+alignment = 2
+
+[node name="SaveProjectButton" type="Button" parent="Panel/project_buttons_h_container"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
+text = "Project bewaren"
+autowrap_mode = 2
+
+[node name="LoadProjectButton" type="Button" parent="Panel/project_buttons_h_container"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+focus_mode = 0
+theme = ExtResource("2_yaket")
+theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
+theme_override_fonts/font = ExtResource("3_5tpfg")
+theme_override_font_sizes/font_size = 22
+theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
+theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
+text = "Project openen"
+autowrap_mode = 2
 
 [node name="DelayText" type="Label" parent="." unique_id=1065496162]
 light_mask = 2

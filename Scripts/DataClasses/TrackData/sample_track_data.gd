@@ -27,7 +27,7 @@ func has_active_beats() -> bool:
 	return false
 
 func get_beat_active(beat: int) -> bool:
-	if beat < beats.size():
+	if beat >= 0 and beat < beats.size():
 		return beats[beat]
 	return false
 
@@ -39,8 +39,7 @@ func clear_beats() -> void:
 
 func duplicate_track() -> TrackData:
 	var copy: SampleTrackData = SampleTrackData.new(index, section_index, knob_position)
-	for i in range(beats.size()):
-		copy.beats[i] = beats[i]
+	copy.beats = beats.duplicate()
 	copy.master_volume = master_volume
 	copy.weights = weights
 	copy.main_audio_stream = main_audio_stream

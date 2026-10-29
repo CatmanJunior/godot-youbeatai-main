@@ -6,12 +6,19 @@ extends Resource
 
 enum State { NOT_STARTED, RECORDING, PROCESSING, RECORDING_DONE }
 
+# Avoid a reference cycle: TrackData owns RecordingData, which points back to its track.
+var _track_data_ref: WeakRef
+
 @export var state: State = State.NOT_STARTED
 @export var has_detected_sound: bool = false
 @export var section_index: int = -1
 ## Back-reference to the owning TrackData. Not exported to avoid circular refs.
 ## Re-linked by TrackData after load via its recording_data setter.
-var track_data: TrackData
+var track_data: TrackData:
+	get:
+		return _track_data_ref.get_ref() as TrackData if _track_data_ref != null else null
+	set(value):
+		_track_data_ref = weakref(value) if value != null else null
 @export var max_recording_length: float = 0.0
 @export var actual_recording_length: float = 0.0
 @export var length_since_detected_sound: float = 0.0

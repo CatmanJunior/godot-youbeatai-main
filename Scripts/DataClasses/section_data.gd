@@ -18,7 +18,7 @@ static func get_next_id() -> int:
 var id: int
 @export var index: int
 
-## Combined array of sample and synth tracks 
+## Combined array of sample and synth tracks
 @export var tracks: Array[TrackData] = []
 
 ## Emoji shown on the section button
@@ -33,11 +33,11 @@ var id: int
 ## Initialize with a new unique ID. Tracks are NOT created here to avoid
 ## ghost sub-resources that corrupt Godot's typed-array serialization.
 ## Call [method create_default_tracks] explicitly when creating a brand-new section.
-func _init(section_tex: Texture2D, new_index: int = 0) -> void:
+func _init(section_tex: Texture2D = null, new_index: int = 0) -> void:
 	self.id = get_next_id()
 	self.index = new_index
 	tex = section_tex
-	
+
 
 ## Populate [member tracks] with the default set of [SampleTrackData] and
 ## [SynthTrackData] instances. Must be called explicitly after constructing a
@@ -49,7 +49,7 @@ func create_default_tracks() -> void:
 		tracks.append(SampleTrackData.new(i, index))
 	for i in range(SYNTH_TRACKS_PER_SECTION):
 		tracks.append(SynthTrackData.new(i + SAMPLE_TRACKS_PER_SECTION, index))
-	
+
 # ── Post-load rebuild ────────────────────────────────────────────────────────
 
 ## Call after loading from disk to restore runtime-only state (Sequence, id, etc.).
@@ -95,7 +95,7 @@ func get_beat(track: int, beat: int) -> bool:
 	if track >= 0 and track < SAMPLE_TRACKS_PER_SECTION and beat >= 0 and beat < tracks[track].beats.size():
 		return tracks[track].beats[beat]
 	return false
-	
+
 ## Check if any beats are active on any sample track.
 func has_active_beats() -> bool:
 	for track in tracks:
@@ -138,6 +138,9 @@ func set_track_knob_position(track_index: int, position: Vector2) -> void:
 
 func duplicate_section() -> SectionData:
 	var copy: SectionData = SectionData.new(tex, index)
+	copy.progression = progression
+	copy.progression_offset = progression_offset
+	copy.loop_count = loop_count
 
 	for i in range(tracks.size()):
 		var track_copy = tracks[i].duplicate_track()

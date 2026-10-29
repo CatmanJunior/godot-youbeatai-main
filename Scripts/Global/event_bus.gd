@@ -177,10 +177,12 @@ signal export_progress_update(progress: float)
 
 ## Emitted when saving has completed successfully, carrying the output file path.
 signal saving_completed(path: String)
-## Emitted to request saving the current song data to disk.
+## Emitted to request saving the current song to a location chosen by the player.
 signal save_song_requested()
-## Emitted to request loading the last saved song data from disk.
+## Emitted to request loading a song file chosen by the player.
 signal load_song_requested()
+## Emitted when saving or loading a song file failed, with a player-facing (Dutch) message.
+signal song_file_failed(message: String)
 ## Emitted after a song has been fully loaded into SongState.
 ## Handlers should rebuild any runtime objects (section buttons, waveform visualizers)
 ## before the section_switch_requested signal fires the full UI cascade.
@@ -269,5 +271,3 @@ signal chaos_pad_knob_position_set_requested(position: Vector2)
 signal chaos_pad_button_animation_stop_requested()
 ## Emitted to request stopping the record button's animation player.
 signal record_button_animation_stop_requested()
-
-

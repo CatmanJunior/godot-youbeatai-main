@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://nj873e6ibi15"]
 
 [ext_resource type="Theme" uid="uid://c0bwj08madm3f" path="res://Themes/default_theme.tres" id="1_a1hq5"]
+[ext_resource type="Script" path="res://Scripts/UI/saving_label.gd" id="2_svlbl"]
 
 [node name="SavingLabel" type="Label" unique_id=945421672]
 offset_right = 155.0
@@ -12,6 +13,8 @@ text = "Opgeslagen naar:
 \"muziekbestand.mp3\""
 horizontal_alignment = 1
 vertical_alignment = 1
+autowrap_mode = 3
+script = ExtResource("2_svlbl")
 
 [node name="Panel" type="Panel" parent="." unique_id=1403458071]
 show_behind_parent = true

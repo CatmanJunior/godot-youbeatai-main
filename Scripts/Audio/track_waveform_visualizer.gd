@@ -61,11 +61,15 @@ func _set_progress_bar_visible(bar: int, visible: bool) -> void:
 	if bar >= 0 and bar < progress_bars.size() and progress_bars[bar]:
 		progress_bars[bar].visible = visible
 
-func _on_section_switched(new_section_data: SectionData):
+func _on_section_switched(new_section_data: SectionData) -> void:
 	for i in range(waveform_lines.size()):
+		var track: SynthTrackData = new_section_data.tracks[i + _sample_track_amount] as SynthTrackData
+		var has_waveform: bool = track.synth_waveform_visualizer != null and not track.synth_waveform_visualizer.offsets.is_empty()
 		if waveform_lines[i]:
-			if new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer:
-				waveform_lines[i].points = new_section_data.tracks[i+_sample_track_amount].synth_waveform_visualizer.offsets  # Update waveform points for new section
+			waveform_lines[i].points = track.synth_waveform_visualizer.offsets if has_waveform else PackedVector2Array()
+			waveform_lines[i].visible = has_waveform
+		if i < progress_bars.size() and progress_bars[i]:
+			progress_bars[i].value = 0.0 if track.recorded_audio_stream != null else 1.0
 
 func _on_track_selected(track_index: int):
 

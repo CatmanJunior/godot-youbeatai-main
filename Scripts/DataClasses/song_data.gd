@@ -137,6 +137,7 @@ func apply_to_current() -> void:
 		SongState.song_track.rebuild_runtime()
 	else:
 		SongState.song_track = SongTrackData.new()
+	SongState.chords_active = SongState.song_track.knob_position != TrackData.KNOB_POSITION_UNSET
 
 	# Rebuild sections into the live array (preserves existing references)
 	SongState.sections.clear()
@@ -155,8 +156,8 @@ func apply_to_current() -> void:
 	SongState.data.created_at = created_at
 	SongState.data.version = version
 	SongState.data.format_version = format_version
-	if not chosen_emoij.is_empty():
-		SongState.chosen_emoij = chosen_emoij
+	SongState.chosen_emoij = chosen_emoij if not chosen_emoij.is_empty() else SongState.CHOSEN_EMOIJ_DEFAULT
+	SongState.data.chosen_emoij = SongState.chosen_emoij
 
 	# Notify listeners (SectionUI, TrackWaveformVisualizer) to rebuild runtime objects
 	# before the section_switch_requested signal triggers the full UI cascade below.

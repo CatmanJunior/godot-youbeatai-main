@@ -75,7 +75,7 @@ func _set_recorded_stream(recording_data: RecordingData) -> void:
 	_has_recording = true
 	if track_data:
 		track_data.set_recording_audio_stream(recording_data)
-	set_weights(_weights) # update volumes to include recording bus
+	set_weights(track_data.weights)
 
 ## Playback control (called by Section when starting/stopping playback)
 ## Offset: for starting in the middle of a track. Value is in seconds.

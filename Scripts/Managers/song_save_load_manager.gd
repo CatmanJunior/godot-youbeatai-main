@@ -16,6 +16,7 @@ const TEMP_DIR: String = "user://songs"
 const TEMP_SAVE_PATH: String = "user://songs/_save_tmp.tres"
 const TEMP_LOAD_PATH: String = "user://songs/_load_tmp.tres"
 const MAX_FILE_SIZE: int = 256 * 1024 * 1024
+const LOADING_OVERLAY_SCENE: PackedScene = preload("res://Scenes/UI_Components/song_loading_overlay.tscn")
 ## Only scripts from these folders may be referenced by a song file.
 const ALLOWED_SCRIPT_DIRS: Array[String] = [
 	"res://Scripts/DataClasses/",
@@ -76,6 +77,8 @@ var _save_dialog: FileDialog
 var _load_dialog: FileDialog
 var _pending_save_bytes: PackedByteArray
 var _pending_save_name: String = ""
+## Root-owned so it stays visible while the main-menu scene is replaced.
+static var _loading_overlay: CanvasLayer
 
 ## In the main menu, a loaded song is stored in [member SongState.pending_song]
 ## and the game scene is opened; saving and key shortcuts are disabled.
@@ -128,6 +131,8 @@ func _on_load_song_requested() -> void:
 # ── Private ───────────────────────────────────────────────────────────────────
 
 func _save_song() -> void:
+	if is_instance_valid(_loading_overlay):
+		return
 	# Snapshot now so the saved song matches the moment the player pressed save.
 	var bytes := _serialize_current_song()
 	if bytes.is_empty():
@@ -150,6 +155,8 @@ func _save_song() -> void:
 
 
 func _load_song() -> void:
+	if is_instance_valid(_loading_overlay):
+		return
 	if OS.has_feature("web"):
 		if _js_files != null:
 			_js_files.call("open", _js_load_callback)
@@ -170,6 +177,38 @@ func _serialize_current_song() -> PackedByteArray:
 
 
 func _load_from_bytes(bytes: PackedByteArray, source_name: String) -> void:
+	if not await _begin_loading():
+		return
+	await _restore_from_bytes(bytes, source_name)
+
+
+func _begin_loading() -> bool:
+	if is_instance_valid(_loading_overlay):
+		push_warning("SongSaveLoadManager: a song is already loading.")
+		return false
+	_loading_overlay = LOADING_OVERLAY_SCENE.instantiate() as CanvasLayer
+	get_tree().root.add_child(_loading_overlay)
+	# Allow a rendered frame before blocking work such as file reads and deserialization.
+	await get_tree().process_frame
+	await get_tree().process_frame
+	return true
+
+
+func _finish_loading() -> void:
+	# Keep the overlay through deferred UI updates and the first complete game frame.
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_clear_loading_overlay()
+
+
+func _clear_loading_overlay() -> void:
+	if is_instance_valid(_loading_overlay):
+		_loading_overlay.get_parent().remove_child(_loading_overlay)
+		_loading_overlay.queue_free()
+		_loading_overlay = null
+
+
+func _restore_from_bytes(bytes: PackedByteArray, source_name: String) -> void:
 	if bytes.size() > MAX_FILE_SIZE:
 		_fail(ERROR_TOO_LARGE)
 		return
@@ -203,6 +242,7 @@ func _load_from_bytes(bytes: PackedByteArray, source_name: String) -> void:
 	print("SongSaveLoadManager: song loaded ← %s (saved with game version %s)" % [source_name, song.version])
 	if not main_menu_mode:
 		song.apply_to_current()
+		await _finish_loading()
 		return
 
 	SongState.pending_song = song
@@ -211,7 +251,11 @@ func _load_from_bytes(bytes: PackedByteArray, source_name: String) -> void:
 		SongState.selected_soundbank = song.soundbank
 	GameState.use_tutorial = false
 	TTSHelper.init()
-	SceneChanger.go_to_main()
+	var error: Error = get_tree().change_scene_to_file(SceneChanger.SCENE_MAIN)
+	if error != OK:
+		push_error("SongSaveLoadManager: cannot open game scene (error %d)." % error)
+		SongState.pending_song = null
+		_fail(SongData.ERROR_INVALID)
 
 
 func _apply_pending_song() -> void:
@@ -222,6 +266,7 @@ func _apply_pending_song() -> void:
 	# Wait for SectionManager's initial next-frame section switch so it can't override the loaded section.
 	await get_tree().process_frame
 	song.apply_to_current()
+	await _finish_loading()
 
 
 ## Returns an error message when the text is not a safe [SongData] file of a
@@ -266,6 +311,7 @@ func _get_attribute(attributes: String, attribute_name: String) -> String:
 
 
 func _fail(message: String) -> void:
+	_clear_loading_overlay()
 	push_warning("SongSaveLoadManager: %s" % message)
 	EventBus.song_file_failed.emit(message)
 
@@ -306,6 +352,8 @@ func _on_save_path_selected(path: String) -> void:
 
 
 func _on_load_path_selected(path: String) -> void:
+	if not await _begin_loading():
+		return
 	var file := FileAccess.open(path, FileAccess.READ)
 	if file == null:
 		push_error("SongSaveLoadManager: cannot read %s (error %d)" % [path, FileAccess.get_open_error()])
@@ -316,7 +364,7 @@ func _on_load_path_selected(path: String) -> void:
 		return
 	var bytes := file.get_buffer(file.get_length())
 	file.close()
-	_load_from_bytes(bytes, path)
+	await _restore_from_bytes(bytes, path)
 
 
 # ── Web ─────────────────────────────────────────────────────────────────────────────────
@@ -342,6 +390,8 @@ func _on_web_save_finished(args: Array) -> void:
 func _on_web_file_opened(args: Array) -> void:
 	if args.size() < 3:
 		return
+	if not await _begin_loading():
+		return
 	var source_name := str(args[0])
 	if int(args[2]) > MAX_FILE_SIZE:
 		_fail(ERROR_TOO_LARGE)
@@ -350,4 +400,4 @@ func _on_web_file_opened(args: Array) -> void:
 	if base64.is_empty():
 		_fail(SongData.ERROR_INVALID)
 		return
-	_load_from_bytes(Marshalls.base64_to_raw(base64), source_name)
+	await _restore_from_bytes(Marshalls.base64_to_raw(base64), source_name)

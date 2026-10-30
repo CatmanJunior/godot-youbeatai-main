@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="nl">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#111632">
+	<title>$GODOT_PROJECT_NAME</title>
+	<base href="__PLAYER_ASSET_BASE__">
+	$GODOT_HEAD_INCLUDE
+	<link rel="stylesheet" href="__PLAYER_ASSET_BASE__player.css">
+</head>
+<body>
+	<div id="player-root"></div>
+	<canvas id="canvas" hidden tabindex="0" aria-label="Ritme Robot spel"></canvas>
+	<noscript>Schakel JavaScript in om Ritme Robot te openen.</noscript>
+	<script>
+		const GODOT_CONFIG = $GODOT_CONFIG;
+		const GODOT_THREADS_ENABLED = $GODOT_THREADS_ENABLED;
+		window.ritmeRobotGodot = {
+			config: GODOT_CONFIG,
+			threadsEnabled: GODOT_THREADS_ENABLED,
+			scriptUrl: "$GODOT_URL",
+			assetBase: "__PLAYER_ASSET_BASE__",
+			version: "__PLAYER_VERSION__"
+		};
+	</script>
+	<script type="module" src="__PLAYER_ASSET_BASE__player.js"></script>
+</body>
+</html>

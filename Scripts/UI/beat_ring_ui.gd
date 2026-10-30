@@ -43,12 +43,23 @@ func _ready() -> void:
 	EventBus.beat_state_changed.connect(_set_beat_active)
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.track_sprites_visibility_requested.connect(_set_track_sprites_visible)
+	EventBus.song_loaded.connect(_on_song_loaded)
 	play_pause_button.pressed.connect(_on_play_pause_button_toggled)
 
 func _process(_delta: float) -> void:
 	_update_pointer_rotation()
 
 # -- Event handlers --
+func _on_song_loaded() -> void:
+	if not _beat_buttons.is_empty() and _beat_buttons[0].size() == SongState.beats_per_section:
+		return
+	for control: Control in _track_controls:
+		beat_ring_pivot_point.remove_child(control)
+		control.queue_free()
+	_track_controls.clear()
+	_init_beat_button_positions()
+
+
 ## Update all beat sprites to match the new template actives
 func _on_template_set(actives: Array) -> void:
 	_update_beats_active(actives)

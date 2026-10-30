@@ -43,6 +43,15 @@ func _ready() -> void:
 	EventBus.section_removed.connect(_on_section_removed)
 	EventBus.pre_beat_triggered.connect(pre_on_beat)
 	EventBus.section_switch_requested.connect(seek_to_position)
+	EventBus.song_loaded.connect(_on_song_loaded)
+
+
+func _on_song_loaded() -> void:
+	for layer: int in [SongLayer.VOICE_OVER, SongLayer.MIX]:
+		players[layer].stream = track_data.recorded_audio_stream
+	_has_recording = track_data.recorded_audio_stream != null
+	set_weights(track_data.weights)
+	set_volume_db(track_data.master_volume)
 
 # ── Playback ─────────────────────────────────────────────────────────────────
 

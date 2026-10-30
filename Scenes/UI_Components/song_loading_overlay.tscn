@@ -1,0 +1,43 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/UI/song_loading_overlay.gd" id="1_overlay"]
+
+[node name="SongLoadingOverlay" type="CanvasLayer"]
+process_mode = 3
+layer = 128
+script = ExtResource("1_overlay")
+
+[node name="Background" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05882353, 0.078431375, 0.19215687, 1)
+
+[node name="Center" type="CenterContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Text" type="VBoxContainer" parent="Background/Center"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="Background/Center/Text"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.972549, 0.95686275, 0.8117647, 1)
+theme_override_font_sizes/font_size = 40
+text = "Liedje laden..."
+horizontal_alignment = 1
+
+[node name="Subtitle" type="Label" parent="Background/Center/Text"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Even geduld!"
+horizontal_alignment = 1

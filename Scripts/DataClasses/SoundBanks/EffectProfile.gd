@@ -21,6 +21,12 @@ enum EffectType {
 
 
 func apply_effects(bus_index: int) -> void:
+	if bus_index < 0 or bus_index >= AudioServer.bus_count:
+		push_error("EffectProfile: invalid audio bus index %d." % bus_index)
+		return
+	# These layer buses are owned by the profile; replace the previous chain.
+	for effect_index: int in range(AudioServer.get_bus_effect_count(bus_index) - 1, -1, -1):
+		AudioServer.remove_bus_effect(bus_index, effect_index)
 	var effect_values: Dictionary = {
 		EffectType.PITCH_SHIFT: [AudioEffectPitchShift, _apply_pitch_shift, func(): return pitch_shift],
 		EffectType.DISTORTION: [AudioEffectDistortion, _apply_distortion, func(): return distortion_db],

@@ -4,7 +4,7 @@ class_name SongSaveLoadManager
 ##
 ## Desktop uses the native file dialog. Web uses the browser save picker when
 ## available (otherwise a download) and a file input for loading.
-## Press [kbd]S[/kbd] to save and [kbd]L[/kbd] to load, or emit
+## Press [kbd].[/kbd] to save and [kbd],[/kbd] to load, or emit
 ## [signal EventBus.save_song_requested] / [signal EventBus.load_song_requested].
 ##
 ## A [code].ritme[/code] file is a text [SongData] resource. Files are checked
@@ -113,9 +113,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		return
 	if event is InputEventKey:
 		match event.keycode:
-			KEY_S:
+			KEY_PERIOD:
 				_save_song()
-			KEY_L:
+			KEY_COMMA:
 				_load_song()
 
 

@@ -19,3 +19,6 @@ addons/soundfont/lib/~soundfont*
 addons/soundfont/lib/~libgdexample.windows.template_debug.x86_64.dll
 
 .github/
+docs/superpowers/plans/2026-10-27-pwa-shell-progress.md
+docs/superpowers/plans/2026-10-27-pwa-shell.md
+docs/superpowers/specs/2026-10-27-pwa-shell-design.md

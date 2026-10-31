@@ -1,0 +1,17 @@
+# Local Ritme Robot MCP setup. This file is excluded by .codex/.gitignore.
+
+[mcp_servers.godot]
+command = 'C:/Program Files/nodejs/node.exe'
+args = ['C:/Users/Rene/AppData/Local/Godot-AI/godot-mcp/node_modules/@coding-solo/godot-mcp/build/index.js']
+cwd = 'C:/Users/Rene/Desktop/RitmeRobot Active/youbeatai-godot-web'
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+
+[mcp_servers.godot.env]
+GODOT_PATH = 'D:/Godot 4.6/godot.exe'
+DEBUG = 'false'
+
+[mcp_servers.context7]
+url = 'https://mcp.context7.com/mcp'
+startup_timeout_sec = 20
+tool_timeout_sec = 60

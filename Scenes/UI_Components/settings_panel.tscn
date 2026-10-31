@@ -23,6 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://c662cafamy8wc" path="res://Resources/Textures_Settings/shadows__0000s_0004_Button-Arrow-.png" id="17_vlckr"]
 [ext_resource type="Texture2D" uid="uid://csy0i4358q73o" path="res://Resources/Textures_Settings/Settings__0006_Small-Button.png" id="18_sm01b"]
 [ext_resource type="Texture2D" uid="uid://duxksnnig6727" path="res://Resources/Textures_Settings/Settings__0007_Small-Button-Glow.png" id="21_8qhib"]
+[ext_resource type="Theme" path="res://Themes/project_icon_button_theme.tres" id="22_project_buttons"]
+[ext_resource type="Texture2D" path="res://Resources/Icons/Save_icon.png" id="23_save_project"]
+[ext_resource type="Texture2D" path="res://Resources/Icons/Load_Icon.png" id="24_load_project"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_p4gyq"]
 texture = ExtResource("1_8qhib")
@@ -828,32 +831,26 @@ theme_override_constants/separation = 12
 alignment = 2
 
 [node name="SaveProjectButton" type="Button" parent="Panel/project_buttons_h_container"]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Project bewaren"
 focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
-theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
-text = "Project bewaren"
-autowrap_mode = 2
+theme = ExtResource("22_project_buttons")
+icon = ExtResource("23_save_project")
+expand_icon = true
 
 [node name="LoadProjectButton" type="Button" parent="Panel/project_buttons_h_container"]
-custom_minimum_size = Vector2(160, 0)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "Project openen"
 focus_mode = 0
-theme = ExtResource("2_yaket")
-theme_override_colors/font_color = Color(0.6117647, 0.5921569, 0.88235295, 1)
-theme_override_fonts/font = ExtResource("3_5tpfg")
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxFlat_ceghn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_3h4bx")
-theme_override_styles/hover = SubResource("StyleBoxFlat_3h4bx")
-text = "Project openen"
-autowrap_mode = 2
+theme = ExtResource("22_project_buttons")
+icon = ExtResource("24_load_project")
+expand_icon = true
 
 [node name="DelayText" type="Label" parent="." unique_id=1065496162]
 light_mask = 2

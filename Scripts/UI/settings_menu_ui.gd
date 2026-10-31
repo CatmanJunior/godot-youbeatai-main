@@ -119,6 +119,8 @@ func _on_mute_speech_toggled(button_pressed: bool):
 	GameState.mute_speech = button_pressed
 
 func _on_settings_button_pressed():
+	save_project_button.visible = not GameState.use_tutorial
+	load_project_button.visible = not GameState.use_tutorial
 	settings_panel.visible = !settings_panel.visible
 
 func _on_recording_delay_changed(value: float) -> void:

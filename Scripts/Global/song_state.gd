@@ -148,4 +148,5 @@ func reset() -> void:
 	current_section = null
 	selected_track_index = 0
 	selected_soundbank = null
+	chords_active = false
 	chosen_emoij = CHOSEN_EMOIJ_DEFAULT

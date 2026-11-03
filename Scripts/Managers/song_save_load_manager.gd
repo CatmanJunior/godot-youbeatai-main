@@ -2,8 +2,8 @@ extends Node
 class_name SongSaveLoadManager
 ## Saves and loads [SongData] as [code].ritme[/code] files at a location chosen by the player.
 ##
-## Desktop uses the native file dialog. Web uses the browser save picker when
-## available (otherwise a download) and a file input for loading.
+## Desktop uses a native file dialog. Android web uses a browser-local song
+## library; other web browsers use the browser's file picker or downloads.
 ## Press [kbd].[/kbd] to save and [kbd],[/kbd] to load, or emit
 ## [signal EventBus.save_song_requested] / [signal EventBus.load_song_requested].
 ##
@@ -29,6 +29,53 @@ const ERROR_TOO_LARGE: String = "Dit bestand is te groot."
 
 const JS_HELPERS: String = """
 window.ritmeRobotFiles = {
+	isAndroid: function () {
+		return /Android/i.test(navigator.userAgent) ||
+			!!(navigator.userAgentData && navigator.userAgentData.platform === 'Android');
+	},
+	localDatabase: function () {
+		return new Promise(function (resolve, reject) {
+			const request = indexedDB.open('ritme-robot-songs', 1);
+			request.onupgradeneeded = function () {
+				request.result.createObjectStore('songs');
+			};
+			request.onsuccess = function () { resolve(request.result); };
+			request.onerror = function () { reject(request.error); };
+			request.onblocked = function () { reject(new Error('Storage is blocked')); };
+		});
+	},
+	listLocal: function (callback) {
+		window.ritmeRobotFiles.localDatabase().then(function (db) {
+			const tx = db.transaction('songs', 'readonly');
+			const request = tx.objectStore('songs').getAllKeys();
+			tx.oncomplete = function () { db.close(); callback('ok', JSON.stringify(request.result)); };
+			tx.onabort = function () { db.close(); callback('error', ''); };
+		}).catch(function () { callback('error', ''); });
+	},
+	saveLocal: function (name, b64, overwrite, callback) {
+		window.ritmeRobotFiles.localDatabase().then(function (db) {
+			const tx = db.transaction('songs', 'readwrite');
+			const store = tx.objectStore('songs');
+			const request = overwrite ? store.put(b64, name) : store.add(b64, name);
+			tx.oncomplete = function () { db.close(); callback('ok'); };
+			tx.onabort = function () {
+				const duplicate = request.error && request.error.name === 'ConstraintError';
+				db.close(); callback(duplicate ? 'exists' : 'error');
+			};
+		}).catch(function () { callback('error'); });
+	},
+	loadLocal: function (name, callback) {
+		window.ritmeRobotFiles.localDatabase().then(function (db) {
+			const tx = db.transaction('songs', 'readonly');
+			const request = tx.objectStore('songs').get(name);
+			tx.oncomplete = function () {
+				const value = request.result;
+				db.close();
+				callback(typeof value === 'string' ? 'ok' : 'missing', name, value || '');
+			};
+			tx.onabort = function () { db.close(); callback('error', name, ''); };
+		}).catch(function () { callback('error', name, ''); });
+	},
 	hasSavePicker: function () {
 		return typeof window.showSaveFilePicker === 'function' && window.self === window.top;
 	},
@@ -88,6 +135,21 @@ static var _loading_overlay: CanvasLayer
 var _js_files: JavaScriptObject
 var _js_save_callback: JavaScriptObject
 var _js_load_callback: JavaScriptObject
+var _js_local_list_callback: JavaScriptObject
+var _js_local_save_callback: JavaScriptObject
+var _js_local_load_callback: JavaScriptObject
+var _use_local_library: bool = false
+var _local_dialog: ConfirmationDialog
+var _local_overwrite_dialog: ConfirmationDialog
+var _local_name: LineEdit
+var _local_name_label: Label
+var _local_list: ItemList
+var _local_status: Label
+var _local_names: Array[String] = []
+var _local_saving: bool = false
+var _local_busy: bool = false
+var _local_available: bool = false
+var _local_pending_name: String = ""
 
 
 func _ready() -> void:
@@ -100,6 +162,12 @@ func _ready() -> void:
 		_js_files = JavaScriptBridge.get_interface("ritmeRobotFiles")
 		_js_save_callback = JavaScriptBridge.create_callback(_on_web_save_finished)
 		_js_load_callback = JavaScriptBridge.create_callback(_on_web_file_opened)
+		_use_local_library = _js_files != null and bool(_js_files.call("isAndroid"))
+		if _use_local_library:
+			_js_local_list_callback = JavaScriptBridge.create_callback(_on_local_listed)
+			_js_local_save_callback = JavaScriptBridge.create_callback(_on_local_saved)
+			_js_local_load_callback = JavaScriptBridge.create_callback(_on_local_loaded)
+			_create_local_library_dialog()
 	else:
 		_save_dialog = _create_file_dialog(FileDialog.FILE_MODE_SAVE_FILE, "Liedje opslaan")
 		_save_dialog.file_selected.connect(_on_save_path_selected)
@@ -131,7 +199,7 @@ func _on_load_song_requested() -> void:
 # ── Private ───────────────────────────────────────────────────────────────────
 
 func _save_song() -> void:
-	if is_instance_valid(_loading_overlay):
+	if is_instance_valid(_loading_overlay) or _local_busy or (is_instance_valid(_local_dialog) and _local_dialog.visible):
 		return
 	# Snapshot now so the saved song matches the moment the player pressed save.
 	var bytes := _serialize_current_song()
@@ -141,6 +209,13 @@ func _save_song() -> void:
 	var file_name := "Ritme Robot liedje %s.%s" % [Time.get_date_string_from_system(), FILE_EXTENSION]
 
 	if OS.has_feature("web"):
+		if _use_local_library:
+			if bytes.size() > MAX_FILE_SIZE:
+				_fail(ERROR_TOO_LARGE)
+				return
+			_pending_save_bytes = bytes
+			_open_local_library(true)
+			return
 		if _js_files != null and bool(_js_files.call("hasSavePicker")):
 			_pending_save_bytes = bytes
 			_pending_save_name = file_name
@@ -155,9 +230,12 @@ func _save_song() -> void:
 
 
 func _load_song() -> void:
-	if is_instance_valid(_loading_overlay):
+	if is_instance_valid(_loading_overlay) or _local_busy or (is_instance_valid(_local_dialog) and _local_dialog.visible):
 		return
 	if OS.has_feature("web"):
+		if _use_local_library:
+			_open_local_library(false)
+			return
 		if _js_files != null:
 			_js_files.call("open", _js_load_callback)
 		return
@@ -365,6 +443,205 @@ func _on_load_path_selected(path: String) -> void:
 	var bytes := file.get_buffer(file.get_length())
 	file.close()
 	await _restore_from_bytes(bytes, path)
+
+
+# ── Android web song library ───────────────────────────────────────────────────
+
+func _create_local_library_dialog() -> void:
+	_local_dialog = ConfirmationDialog.new()
+	_local_dialog.dialog_hide_on_ok = false
+	_local_dialog.cancel_button_text = "Annuleren"
+	_local_dialog.confirmed.connect(_on_local_confirmed)
+	_local_dialog.canceled.connect(_on_local_canceled)
+	add_child(_local_dialog)
+	_local_dialog.get_ok_button().add_theme_font_size_override("font_size", 24)
+	_local_dialog.get_cancel_button().add_theme_font_size_override("font_size", 24)
+
+	var content := VBoxContainer.new()
+	content.custom_minimum_size = Vector2(620, 350)
+	content.add_theme_constant_override("separation", 8)
+	_local_dialog.add_child(content)
+
+	var explanation := Label.new()
+	explanation.custom_minimum_size.x = 600
+	explanation.size.x = 600
+	explanation.text = "Je liedjes staan in deze browser op dit apparaat. Als je browsergegevens wist, verdwijnen ze."
+	explanation.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	explanation.add_theme_font_size_override("font_size", 22)
+	content.add_child(explanation)
+
+	_local_name_label = Label.new()
+	_local_name_label.text = "Naam van je liedje"
+	_local_name_label.add_theme_font_size_override("font_size", 22)
+	content.add_child(_local_name_label)
+	_local_name = LineEdit.new()
+	_local_name.max_length = 80
+	_local_name.add_theme_font_size_override("font_size", 24)
+	_local_name.text_changed.connect(func(_value: String) -> void: _update_local_controls())
+	content.add_child(_local_name)
+
+	_local_list = ItemList.new()
+	_local_list.custom_minimum_size = Vector2(0, 180)
+	_local_list.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	_local_list.add_theme_font_size_override("font_size", 24)
+	_local_list.add_theme_constant_override("v_separation", 12)
+	_local_list.item_selected.connect(_on_local_item_selected)
+	content.add_child(_local_list)
+
+	_local_status = Label.new()
+	_local_status.custom_minimum_size.x = 600
+	_local_status.size.x = 600
+	_local_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_local_status.add_theme_font_size_override("font_size", 22)
+	content.add_child(_local_status)
+
+	_local_overwrite_dialog = ConfirmationDialog.new()
+	_local_overwrite_dialog.title = "Liedje vervangen?"
+	_local_overwrite_dialog.ok_button_text = "Vervangen"
+	_local_overwrite_dialog.cancel_button_text = "Annuleren"
+	_local_overwrite_dialog.confirmed.connect(func() -> void: _save_local_song(true))
+	_local_dialog.add_child(_local_overwrite_dialog)
+	_local_overwrite_dialog.get_label().add_theme_font_size_override("font_size", 22)
+	_local_overwrite_dialog.get_ok_button().add_theme_font_size_override("font_size", 24)
+	_local_overwrite_dialog.get_cancel_button().add_theme_font_size_override("font_size", 24)
+
+
+func _open_local_library(saving: bool) -> void:
+	_local_saving = saving
+	_local_available = false
+	_local_pending_name = ""
+	_local_names.clear()
+	_local_list.clear()
+	_local_name.visible = saving
+	_local_name_label.visible = saving
+	_local_name.text = "Liedje " + Time.get_datetime_string_from_system().replace("T", " ")
+	_local_dialog.title = "Liedje opslaan" if saving else "Liedje openen"
+	_local_dialog.ok_button_text = "Opslaan" if saving else "Openen"
+	_local_status.text = "Liedjes laden..."
+	_local_busy = true
+	_update_local_controls()
+	_local_dialog.popup_centered(Vector2i(720, 500))
+	_js_files.call("listLocal", _js_local_list_callback)
+
+
+func _update_local_controls() -> void:
+	if not is_instance_valid(_local_dialog):
+		return
+	var can_confirm: bool = not _local_name.text.strip_edges().is_empty() if _local_saving else not _local_list.get_selected_items().is_empty()
+	_local_dialog.get_ok_button().disabled = _local_busy or not _local_available or not can_confirm
+	_local_dialog.get_cancel_button().disabled = _local_busy
+	_local_name.editable = not _local_busy
+	_local_list.mouse_filter = Control.MOUSE_FILTER_IGNORE if _local_busy else Control.MOUSE_FILTER_STOP
+
+
+func _on_local_listed(args: Array) -> void:
+	_local_busy = false
+	_local_available = false
+	if not _local_dialog.visible:
+		_pending_save_bytes = PackedByteArray()
+		return
+	if args.size() < 2 or str(args[0]) != "ok":
+		_local_status.text = "Je liedjes kunnen niet worden geladen. Controleer of opslag in je browser is toegestaan."
+		_update_local_controls()
+		return
+	var names: Variant = JSON.parse_string(str(args[1]))
+	if not names is Array:
+		_local_status.text = "Je liedjes kunnen niet worden geladen."
+		_update_local_controls()
+		return
+	_local_available = true
+	for entry: Variant in names:
+		if entry is String:
+			_local_names.append(entry)
+			_local_list.add_item(entry)
+	if _local_names.is_empty():
+		_local_status.text = "Nog geen liedjes opgeslagen."
+	elif _local_saving:
+		_local_status.text = "Typ een naam of kies een liedje om te vervangen."
+	else:
+		_local_status.text = "Kies een liedje uit de lijst."
+	_update_local_controls()
+
+
+func _on_local_item_selected(index: int) -> void:
+	if _local_saving and index >= 0 and index < _local_names.size():
+		_local_name.text = _local_names[index]
+	_update_local_controls()
+
+
+func _on_local_confirmed() -> void:
+	if _local_busy:
+		return
+	if _local_saving:
+		_local_pending_name = _local_name.text.strip_edges()
+		if _local_pending_name.is_empty() or "/" in _local_pending_name or "\\" in _local_pending_name:
+			_local_status.text = "Kies een naam zonder / of \\."
+			return
+		if _local_pending_name in _local_names:
+			_confirm_local_overwrite()
+		else:
+			_save_local_song(false)
+	else:
+		var selected: PackedInt32Array = _local_list.get_selected_items()
+		if selected.is_empty():
+			return
+		_local_busy = true
+		_local_status.text = "Liedje openen..."
+		_update_local_controls()
+		_js_files.call("loadLocal", _local_names[selected[0]], _js_local_load_callback)
+
+
+func _confirm_local_overwrite() -> void:
+	_local_overwrite_dialog.dialog_text = "Wil je '%s' vervangen?" % _local_pending_name
+	_local_overwrite_dialog.popup_centered()
+
+
+func _save_local_song(overwrite: bool) -> void:
+	_local_busy = true
+	_local_status.text = "Liedje opslaan..."
+	_update_local_controls()
+	_js_files.call("saveLocal", _local_pending_name, Marshalls.raw_to_base64(_pending_save_bytes), overwrite, _js_local_save_callback)
+
+
+func _on_local_saved(args: Array) -> void:
+	_local_busy = false
+	var result: String = str(args[0]) if not args.is_empty() else "error"
+	if result == "ok":
+		_local_dialog.hide()
+		_pending_save_bytes = PackedByteArray()
+		EventBus.saving_completed.emit(_local_pending_name)
+	elif not _local_dialog.visible:
+		_pending_save_bytes = PackedByteArray()
+		_fail(ERROR_SAVE_FAILED)
+	elif result == "exists":
+		_local_status.text = "Er bestaat al een liedje met deze naam."
+		_update_local_controls()
+		_confirm_local_overwrite()
+	else:
+		_local_status.text = "Opslaan is niet gelukt. Controleer de opslagruimte en browserinstellingen."
+		_update_local_controls()
+
+
+func _on_local_loaded(args: Array) -> void:
+	_local_busy = false
+	if not _local_dialog.visible:
+		return
+	if args.size() < 3 or str(args[0]) != "ok":
+		_local_status.text = "Dit liedje kon niet worden geopend. Probeer het opnieuw."
+		_update_local_controls()
+		return
+	var base64: String = str(args[2])
+	if base64.length() > int(ceil(float(MAX_FILE_SIZE) / 3.0)) * 4:
+		_local_status.text = ERROR_TOO_LARGE
+		_update_local_controls()
+		return
+	_local_dialog.hide()
+	await _load_from_bytes(Marshalls.base64_to_raw(base64), str(args[1]))
+
+
+func _on_local_canceled() -> void:
+	if not _local_busy:
+		_pending_save_bytes = PackedByteArray()
 
 
 # ── Web ─────────────────────────────────────────────────────────────────────────────────

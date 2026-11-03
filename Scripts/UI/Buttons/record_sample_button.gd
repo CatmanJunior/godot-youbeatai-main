@@ -10,11 +10,11 @@ func _pressed() -> void:
 	EventBus.record_button_toggled.emit(toggled_on)
 	fillTexture.value = 1 if toggled_on else 0
 
-func update_button(percentage: float, color: Color = Color.RED) -> void:
-	if percentage >= 1.0:
+func update_button(progressRatio: float, color: Color = Color.RED) -> void:
+	if progressRatio >= 1.0:
 		toggled_on = false
 		fillTexture.value = 0
 	else:
-		fillTexture.value = 1 - percentage
+		fillTexture.value = 1 - progressRatio
 
 	fillTexture.tint_progress = color

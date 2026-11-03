@@ -17,7 +17,7 @@ var pre_recording_volume: float = 0
 @export var recording_sample_button: RecordSampleButton
 @export var waveform_visualizer: TrackWaveformVisualizer
 
-var timer: SceneTreeTimer 
+var timer: SceneTreeTimer
 var timer_wait_time: float = 1.5
 
 ## Number of beats elapsed since the SYNTH capture truly started. Used to stop
@@ -45,11 +45,11 @@ func _handle_recording(delta: float) -> void:
 			current_recording_data.has_detected_sound = true
 		if not current_recording_data.has_detected_sound:
 			return
-	
+
 	current_recording_data.actual_recording_length += delta
-	
+
 	recording_sample_button.update_button(current_recording_data.get_recording_progress())
-	
+
 	# Update progress bar (only for SYNTH tracks). Drive it from the same beat
 	# clock the beat-ring pointer uses so the two stay perfectly in sync.
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SYNTH:
@@ -75,7 +75,7 @@ func _start_recording() -> void:
 	# Step 2: Mute all tracks
 	# EventBus.mute_all_requested.emit(true)
 	pre_recording_volume = AudioServer.get_bus_volume_db(0)
-	
+
 
 	# Step 3: If SYNTH → show countdown first, then start mic
 	if current_recording_data.track_type == TrackData.TrackType.SYNTH:
@@ -87,7 +87,7 @@ func _start_recording() -> void:
 		timer_wait_time = BeatManager.calculate_time_until_top()
 		timer = get_tree().create_timer(timer_wait_time)
 		await timer.timeout
-		
+
 		GameState.metronome_enabled = false
 		EventBus.countdown_close_requested.emit()
 		print("Starting recording after countdown, waited for: " + str(timer_wait_time) + " seconds")
@@ -97,7 +97,7 @@ func _start_recording() -> void:
 		GameState.metronome_enabled = true
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true) # start playing
-		
+
 		timer_wait_time = BeatManager.calculate_time_until_top()
 		timer = get_tree().create_timer(timer_wait_time)
 		await timer.timeout
@@ -109,7 +109,7 @@ func _start_recording() -> void:
 	elif current_recording_data.track_type == TrackData.TrackType.SAMPLE:
 		timer = get_tree().create_timer(timer_wait_time)
 		await timer.timeout
-	
+
 	#Set the master volume to -20 dB to avoid feedback during recording
 	EventBus.set_master_volume_db.emit(-20)
 
@@ -127,8 +127,9 @@ func _stop_recording() -> void:
 	GameState.is_recording = false
 	EventBus.mute_all_requested.emit(false)
 	EventBus.set_master_volume_db.emit(pre_recording_volume)
-	EventBus.stop_recording_requested.emit(current_recording_data)	
+	EventBus.stop_recording_requested.emit(current_recording_data)
 	current_recording_data = null
+	recording_sample_button.update_button(1.0)
 
 
 func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
@@ -138,9 +139,8 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 		TrackData.TrackType.SYNTH:
 			return SongState.beat_duration * (SongState.beats_per_section + SYNTH_RECORDING_EXTRA_BEATS)
 		TrackData.TrackType.SONG:
-			return SongState.beat_duration * SongState.beats_per_section * SongState.section_count() 
+			return SongState.beat_duration * SongState.beats_per_section * SongState.section_count()
 	return SongState.beat_duration * RECORDING_FALLBACK_BEATS # default max length
-
 
 
 #------------------Event Handlers----------------------
@@ -161,7 +161,7 @@ func _on_recording_button_toggled(toggled: bool) -> void:
 	if GameState.is_recording:
 		return
 		# _stop_recording()
-	if toggled and current_recording_data == null :
+	if toggled and current_recording_data == null:
 		_start_recording()
 	elif not toggled:
 		# If button is toggled off but we're not recording, ensure everything is reset
@@ -182,7 +182,7 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 
 	match recording_data.track_type:
 		TrackData.TrackType.SAMPLE: _post_process_sample(recording_data)
-		TrackData.TrackType.SONG:   _post_process_song(recording_data)
+		TrackData.TrackType.SONG: _post_process_song(recording_data)
 
 	# SYNTH recordings are finalized (trim/cap, waveform, recorded-stream emit)
 	# by SynthVoiceRecorder, which runs after this handler.
@@ -195,7 +195,7 @@ func _post_process_sample(recording_data: RecordingData) -> void:
 	# scan on a small window around that point to find the precise attack onset.
 	var silent_lead_time: float = audio.get_length() - recording_data.actual_recording_length
 	audio = AudioHelpers.trim_sample_smart(audio, silent_lead_time)
-	audio = AudioHelpers.cap_audio_duration(audio, _calculate_max_recording_length(current_recording_data.track_type) )
+	audio = AudioHelpers.cap_audio_duration(audio, _calculate_max_recording_length(current_recording_data.track_type))
 	recording_data.audio_stream = audio
 	recording_data.state = RecordingData.State.RECORDING_DONE
 

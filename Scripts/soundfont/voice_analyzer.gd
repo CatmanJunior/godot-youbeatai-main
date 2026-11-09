@@ -104,6 +104,10 @@ var max_pitch_drift_cents: float = MAX_PITCH_DRIFT_CENTS
 var drift_frame_count: int = DRIFT_FRAME_COUNT
 var pitch_smooth_alpha: float = PITCH_SMOOTH_ALPHA
 var onset_lookback: float = ONSET_LOOKBACK
+## Offset removed from the recorded audio before playback.
+var recording_delay_seconds: float = 0.0
+## Swing used by the beat clock while the recording was captured.
+var swing: float = 0.0
 
 ## Temporary diagnostics: prints one analyzer summary when finalization builds
 ## the output sequence. Disable after collecting RMS/clarity evidence.
@@ -829,13 +833,18 @@ func _quantize_to_beats(candidates: Array[_NoteCandidate]) -> Array[SequenceNote
 	coverage_velocity.fill(0.0)
 
 	for candidate in candidates:
+		# The capture stream includes the same leading delay trimmed from the WAV.
+		var start_time: float = candidate.start_time - recording_delay_seconds
+		var end_time: float = candidate.end_time - recording_delay_seconds
+		if end_time <= 0.0 or start_time >= _total_duration:
+			continue
 		# Apply onset look-back compensation.
-		var onset_time := maxf(0.0, candidate.start_time - onset_lookback)
-		var offset_time := candidate.end_time
+		var onset_time := maxf(0.0, start_time - onset_lookback)
+		var offset_time := minf(end_time, _total_duration)
 
 		# Convert times to beat positions.
-		var start_beat := int(round(onset_time / _beat_duration))
-		var end_beat := int(round(offset_time / _beat_duration))
+		var start_beat := int(round(_time_to_beat(onset_time)))
+		var end_beat := int(round(_time_to_beat(offset_time)))
 
 		# Clamp to valid range.
 		start_beat = clampi(start_beat, 0, _beats_per_section - 1)
@@ -867,3 +876,16 @@ func _quantize_to_beats(candidates: Array[_NoteCandidate]) -> Array[SequenceNote
 		sequence_notes.append(seq_note)
 
 	return sequence_notes
+
+
+func _time_to_beat(time: float) -> float:
+	var pair_duration: float = 2.0 * _beat_duration
+	var pair: float = floor(time / pair_duration)
+	var remainder: float = time - pair * pair_duration
+	var first_duration: float = _beat_duration * (1.0 - swing)
+	var second_duration: float = _beat_duration * (1.0 + swing)
+	if first_duration <= 0.0 or second_duration <= 0.0:
+		return time / _beat_duration
+	if remainder < first_duration:
+		return pair * 2.0 + remainder / first_duration
+	return pair * 2.0 + 1.0 + (remainder - first_duration) / second_duration

@@ -9,7 +9,6 @@ const BEATS_PER_BAR: int = 4
 ## Number of grid steps per BPM beat. Keep this fixed so increasing
 ## beats_per_section extends the section instead of speeding up each step.
 const STEPS_PER_BPM_BEAT: int = 4
-const BEAT_EARLY_FIRE_TOLERANCE_SWING: float = 0.005
 
 var bpm: int:
 	get: return SongState.bpm
@@ -45,7 +44,7 @@ var beat_elapsed: float = 0.0
 var beat_progress: float = 0.0
 var bar_progress: float = 0.0
 
-var last_beat_time = Time.get_ticks_msec()
+var last_beat_time: float = float(Time.get_ticks_usec()) / 1000.0
 
 func _ready():
 	if track_settings_registry == null:
@@ -80,41 +79,41 @@ func _on_play_pause_toggled():
 	playing = not playing
 
 	if playing:
+		last_beat_time = float(Time.get_ticks_usec()) / 1000.0
 		EventBus.beat_triggered.emit(current_beat)
 
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
 func _on_playing_change_requested(is_playing: bool):
+	if playing == is_playing:
+		return
 	playing = is_playing
 
 	if playing:
+		last_beat_time = float(Time.get_ticks_usec()) / 1000.0
 		EventBus.beat_triggered.emit(current_beat)
 	
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
 func _process(_delta: float):
-	beat_progress = get_beat_progress()
-	bar_progress = get_bar_progress()
-	GameState.beat_progress = beat_progress
-	GameState.bar_progress = bar_progress
-	
 	if playing:
-		var current_time = Time.get_ticks_msec()
-		var elapsed = current_time - last_beat_time
-		var swing_adjusted_duration = beat_duration + (beat_duration * _get_swing_offset())
-		beat_elapsed = elapsed / 1000.0
-	
-		if elapsed >= (swing_adjusted_duration - BEAT_EARLY_FIRE_TOLERANCE_SWING) * 1000:
-			beat_elapsed = 0
+		var current_time: float = float(Time.get_ticks_usec()) / 1000.0
+		var step_ms: float = beat_duration * (1.0 + _get_swing_offset()) * 1000.0
+		while playing and step_ms > 0.0 and current_time - last_beat_time >= step_ms:
+			last_beat_time += step_ms
 			current_beat = (current_beat + 1) % total_beats
 			EventBus.pre_beat_triggered.emit(current_beat)
 			EventBus.beat_triggered.emit(current_beat)
 
 			_trigger_animations_on_beat(current_beat)
-
-			last_beat_time = current_time
+			step_ms = beat_duration * (1.0 + _get_swing_offset()) * 1000.0
+		beat_elapsed = maxf(0.0, (current_time - last_beat_time) / 1000.0)
+	beat_progress = get_beat_progress()
+	bar_progress = get_bar_progress()
+	GameState.beat_progress = beat_progress
+	GameState.bar_progress = bar_progress
 
 func _trigger_animations_on_beat(beat: int) -> void:
 	if SongState.current_section.get_beat(0, beat):
@@ -123,10 +122,6 @@ func _trigger_animations_on_beat(beat: int) -> void:
 		EventBus.trigger_animation_requested.emit(KlappyAnimations.AnimationType.CLAP)
 
 func _get_swing_offset() -> float:
-	# Run on a steady (un-swung) grid while recording so the beat-ring pointer
-	# and the recording progress bar stay locked to the same clock.
-	if GameState.is_recording:
-		return 0.0
 	if current_beat % 2 == 1:
 		return swing
 	else:
@@ -157,8 +152,11 @@ func _set_beat(track: int, beat: int, active: bool):
 #--------------------Static Functions----------------------
 static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
-	var beats_until_top: int = SongState.beats_per_section - cur_beat - 1
-	var duration_until_top: float = (beats_until_top + 1 - GameState.beat_progress) * SongState.beat_duration
+	var duration_until_top: float = 0.0
+	for beat: int in range(cur_beat, SongState.beats_per_section):
+		var swing_offset: float = SongState.swing if beat % 2 == 1 else -SongState.swing
+		var duration: float = SongState.beat_duration * (1.0 + swing_offset)
+		duration_until_top += duration * (1.0 - GameState.beat_progress if beat == cur_beat else 1.0)
 	return duration_until_top
 
 static func calculate_beat_duration(p_bpm: int, _p_total_beats: int, _beats_per_bar: int) -> float:
@@ -174,9 +172,12 @@ func _on_beat_seek_requested(beat: int):
 		beat_elapsed = 0.0
 		beat_progress = 0.0
 		bar_progress = 0.0
+		GameState.beat_progress = 0.0
+		GameState.bar_progress = float(beat) / float(total_beats)
+		last_beat_time = float(Time.get_ticks_usec()) / 1000.0
 		current_beat = beat
 		if playing:
-			EventBus.beat_triggered.emit(0)
+			EventBus.beat_triggered.emit(beat)
 
 func _on_template_set(actives: Array) -> void:
 	SongState.current_section.set_beat_actives(actives)

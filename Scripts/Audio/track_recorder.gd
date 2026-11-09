@@ -3,8 +3,7 @@ extends Node
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 const RECORDING_GRACE_FACTOR: float = 1.2
 const RECORDING_FALLBACK_BEATS: float = 2.0
-## Extra beats captured beyond the section length for SYNTH recordings, giving
-## headroom to trim the microphone delay off the front before capping to one section.
+## Minimum extra beats captured beyond the section length for SYNTH recordings.
 const SYNTH_RECORDING_EXTRA_BEATS: int = 2
 
 var recording: bool:
@@ -50,15 +49,15 @@ func _handle_recording(delta: float) -> void:
 
 	recording_sample_button.update_button(current_recording_data.get_recording_progress())
 
-	# Update progress bar (only for SYNTH tracks). Drive it from the same beat
-	# clock the beat-ring pointer uses so the two stay perfectly in sync.
+	# Follow the pointer for one loop, then stay full during the extra capture.
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SYNTH:
-		waveform_visualizer.update_progress_bar(current_recording_data, GameState.bar_progress)
+		var progress: float = 1.0 if _synth_beats_recorded >= SongState.beats_per_section else GameState.bar_progress
+		waveform_visualizer.update_progress_bar(current_recording_data, progress)
 
 	if current_recording_data.track_data.track_type == TrackData.TrackType.SONG:
 		song_recording_progress_bar.value = current_recording_data.get_recording_progress()
 
-	if current_recording_data.get_recording_progress() >= 1.0:
+	if current_recording_data.track_type != TrackData.TrackType.SYNTH and current_recording_data.get_recording_progress() >= 1.0:
 		print("Max recording length reached, stopping recording.")
 		_stop_recording()
 
@@ -83,14 +82,15 @@ func _start_recording() -> void:
 		EventBus.countdown_show_requested.emit()
 		EventBus.playing_change_requested.emit(true)
 		EventBus.metronome_do_amount.emit(3)
-		#Wait for 4 seconds (countdown duration) before starting recording
-		timer_wait_time = BeatManager.calculate_time_until_top()
-		timer = get_tree().create_timer(timer_wait_time)
-		await timer.timeout
+		# Start capture on the actual next loop boundary, not an estimated timer.
+		while true:
+			var beat: int = await EventBus.beat_triggered
+			if beat == 0:
+				break
 
 		GameState.metronome_enabled = false
 		EventBus.countdown_close_requested.emit()
-		print("Starting recording after countdown, waited for: " + str(timer_wait_time) + " seconds")
+		print("Starting recording at the loop boundary")
 
 	elif current_recording_data.track_type == TrackData.TrackType.SONG:
 		GameState.song_mode_active = false
@@ -113,11 +113,8 @@ func _start_recording() -> void:
 	#Set the master volume to -20 dB to avoid feedback during recording
 	EventBus.set_master_volume_db.emit(-20)
 
-	# Step 4: Align the beat clock so the pointer and progress bar both start at
-	# beat 0 the instant capture begins (removes count-in / delay drift).
+	# Count beats after capture starts; the starting beat has already fired.
 	_synth_beats_recorded = 0
-	# if current_recording_data.track_type == TrackData.TrackType.SYNTH:
-	# 	EventBus.beat_seek_requested.emit(0)
 
 	# Step 5: Announce to the world that recording has started
 	current_recording_data.state = RecordingData.State.RECORDING
@@ -137,10 +134,17 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 		TrackData.TrackType.SAMPLE:
 			return SongState.beat_duration * 2.1 # allow some extra time beyond 1 beat for user to finish playing
 		TrackData.TrackType.SYNTH:
-			return SongState.beat_duration * (SongState.beats_per_section + SYNTH_RECORDING_EXTRA_BEATS)
+			return SongState.beat_duration * (SongState.beats_per_section + _synth_extra_beats())
 		TrackData.TrackType.SONG:
 			return SongState.beat_duration * SongState.beats_per_section * SongState.section_count()
 	return SongState.beat_duration * RECORDING_FALLBACK_BEATS # default max length
+
+# Calculates extra beats needed for SYNTH recordings to account for recording delay.
+func _synth_extra_beats() -> int:
+	var shortest_beat: float = SongState.beat_duration * (1.0 - absf(SongState.swing))
+	if shortest_beat <= 0.0:
+		return SYNTH_RECORDING_EXTRA_BEATS
+	return maxi(SYNTH_RECORDING_EXTRA_BEATS, int(ceil(GameState.recording_delay_seconds / shortest_beat)) + 1)
 
 
 #------------------Event Handlers----------------------
@@ -154,7 +158,7 @@ func _on_beat_triggered_during_record(_beat: int) -> void:
 	if current_recording_data.track_type != TrackData.TrackType.SYNTH:
 		return
 	_synth_beats_recorded += 1
-	if _synth_beats_recorded >= SongState.beats_per_section + SYNTH_RECORDING_EXTRA_BEATS:
+	if _synth_beats_recorded >= SongState.beats_per_section + _synth_extra_beats():
 		_stop_recording()
 
 func _on_recording_button_toggled(toggled: bool) -> void:

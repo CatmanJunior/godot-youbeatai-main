@@ -35,7 +35,8 @@ func _compute_circular_offsets(samples: PackedFloat32Array, rate: float, length:
 		var volume_offset := 0.0
 		if samples.size() > 0 and length > 0.0:
 			var percentage := float(i) / float(point_count)
-			var sample_idx := clampi(int(percentage * length * rate), 0, samples.size() - 1)
+			var time_fraction: float = _time_fraction_for_position(percentage, SongState.beats_per_section, SongState.swing)
+			var sample_idx := clampi(int(time_fraction * length * rate), 0, samples.size() - 1)
 			
 			# --- START SMOOTHING LOGIC ---
 			var sum_abs_samples: float = 0.0
@@ -61,6 +62,17 @@ func _compute_circular_offsets(samples: PackedFloat32Array, rate: float, length:
 		var final_dist := (base_dist - volume_offset) if reversed else (base_dist + volume_offset)
 		result[i] = Vector2(cos(angle), sin(angle)) * final_dist
 	return result
+
+
+static func _time_fraction_for_position(percentage: float, beat_count: int, swing: float) -> float:
+	if beat_count <= 0:
+		return percentage
+	var step: float = percentage * float(beat_count)
+	var pairs: float = floor(step / 2.0)
+	var remainder: float = step - pairs * 2.0
+	var elapsed: float = pairs * 2.0 + minf(remainder, 1.0) * (1.0 - swing) + maxf(remainder - 1.0, 0.0) * (1.0 + swing)
+	var total: float = float(beat_count) - (swing if beat_count % 2 == 1 else 0.0)
+	return elapsed / total if total > 0.0 else percentage
 
 
 func _apply_offsets(new_offsets) -> void:

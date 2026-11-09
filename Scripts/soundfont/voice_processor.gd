@@ -235,8 +235,12 @@ static func process_audio(audio: AudioStream, notes: Notes) -> Sequence:
 	# Analyze each beat window: extract dominant frequency and volume
 	var result: PackedVector3Array = []
 	for i in range(length):
-		var start_idx := i * samples_per_beat
-		var end_idx := mini((i + 1) * samples_per_beat, samples.size())
+		# Match the alternating step lengths used by the beat clock.
+		var start_time: float = (float(i) - (SongState.swing if i % 2 == 1 else 0.0)) * SongState.beat_duration
+		var next_beat: int = i + 1
+		var end_time: float = (float(next_beat) - (SongState.swing if next_beat % 2 == 1 else 0.0)) * SongState.beat_duration
+		var start_idx: int = mini(int(start_time * sample_rate), samples.size())
+		var end_idx: int = mini(int(end_time * sample_rate), samples.size())
 		var chunk := samples.slice(start_idx, end_idx)
 
 		var freq := dominant_frequency(chunk, sample_rate)

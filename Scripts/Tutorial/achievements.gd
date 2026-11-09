@@ -58,31 +58,6 @@ func _ready() -> void:
 	if GameState.achievements_active:
 		activate_achievements()
 
-	EventBus.achievement_done.connect(_on_achievement_done)
-
-func _on_achievement_done(i: int) -> void:
-	print("Achievement %d done, showing instruction for it" % i)
-	if not GameState.achievements_active:
-		return
-	match i:
-		AchievementDef.AchievementNode.TRACK_2:
-			KlappyVoice.say(KlappyLine.Id.ACH_TRACK_2)
-		AchievementDef.AchievementNode.TRACK_3:
-			KlappyVoice.say(KlappyLine.Id.ACH_TRACK_3)
-		AchievementDef.AchievementNode.SYNTH_2:
-			KlappyVoice.say(KlappyLine.Id.ACH_SYNTH_2)
-		AchievementDef.AchievementNode.ADD_SECTION:
-			KlappyVoice.say(KlappyLine.Id.ACH_ADD_SECTION)
-		AchievementDef.AchievementNode.SONG_MODE:
-			KlappyVoice.say(KlappyLine.Id.ACH_SONG_MODE)
-		AchievementDef.AchievementNode.FIRST_SAMPLE:
-			KlappyVoice.say(KlappyLine.Id.ACH_FIRST_SAMPLE)
-		AchievementDef.AchievementNode.SECOND_SAMPLE:
-			KlappyVoice.say(KlappyLine.Id.ACH_SECOND_SAMPLE)
-		AchievementDef.AchievementNode.TEMPLATE_TIP:
-			KlappyVoice.say(KlappyLine.Id.ACH_TEMPLATE_TIP)
-
-
 func _process(_delta: float) -> void:
 	##if section 2 is not yet unlocked, and selected section is 2, set selected section back to 0 to avoid confusion, since section 2 button is locked and not visibly selectable.
 	if not btn_section_2:
@@ -201,7 +176,7 @@ func show_and_speak_tooltip(text: String, cost: float = 0) -> void:
 	var cost_text: String = ""
 	if cost > 0:
 		cost_text = "Dit kost " + str(int(cost)) + " energie"
-	
+
 	text = text + "\n" + cost_text if cost_text != "" else text
 	if text.is_empty():
 		return
@@ -245,7 +220,7 @@ func _setup_default_ui_state() -> void:
 	section_ui.hide_all_context_buttons()
 	if not GameState.use_tutorial:
 		EventBus.ui_visibility_requested.emit(UIVisibilityListener.UIElement.ACHIEVEMENTS_PANEL, false)
-	
+
 
 # ── Lock / unlock helpers ─────────────────────────────────────────────────────
 
@@ -289,8 +264,8 @@ func _build_locked_buttons_map() -> void:
 
 	if btn_section_2:
 		pairs.append([node.ADD_SECTION, btn_section_2])
-	
-	# Build the locked_buttons map from the exported button variables. 
+
+	# Build the locked_buttons map from the exported button variables.
 	for pair: Array in pairs:
 		# Only register non-null buttons, so we can have achievements without locked buttons.
 		if pair[1] != null:

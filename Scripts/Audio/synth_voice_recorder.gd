@@ -108,9 +108,6 @@ func _on_recording_stopped(recording_data: RecordingData) -> void:
 ## recording_stopped handler, so this node owns the recorded-stream emit to ensure
 ## playback uses the finalized audio.
 func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
-	if waveform_visualizer:
-		waveform_visualizer.update_waveform(recording_data)
-		waveform_visualizer.reset_progress_bar(recording_data)
 	if recording_data.audio_stream != null:
 		recording_data.audio_stream = AudioHelpers.trim_audio_by_time_offset(recording_data.audio_stream, GameState.recording_delay_seconds)
 		var section_length: float = SongState.beat_duration * SongState.beats_per_section
@@ -119,6 +116,9 @@ func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
 			end_guard_seconds = float(SYNTH_END_GUARD_FRAMES) / float(recording_data.audio_stream.mix_rate)
 		var safe_section_length: float = maxf(0.0, section_length - end_guard_seconds)
 		recording_data.audio_stream = AudioHelpers.cap_audio_duration(recording_data.audio_stream, safe_section_length)
+	if waveform_visualizer:
+		waveform_visualizer.update_waveform(recording_data)
+		waveform_visualizer.reset_progress_bar(recording_data)
 	EventBus.set_recorded_stream_requested.emit(recording_data)
 	return recording_data
 
@@ -176,6 +176,8 @@ func _apply_voice_analyzer_settings() -> void:
 	_voice_analyzer.drift_frame_count = analyzer_drift_frame_count
 	_voice_analyzer.pitch_smooth_alpha = analyzer_pitch_smooth_alpha
 	_voice_analyzer.onset_lookback = analyzer_onset_lookback
+	_voice_analyzer.recording_delay_seconds = GameState.recording_delay_seconds
+	_voice_analyzer.swing = SongState.swing
 
 func _feed_voice_analyzer() -> void:
 	if _audio_capture == null or _voice_analyzer == null:

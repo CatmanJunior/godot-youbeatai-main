@@ -28,7 +28,6 @@ general/default_playback_type.web=0
 general/text_to_speech=true
 driver/enable_input=true
 driver/mix_rate=22050
-driver/mix_rate.web=22050
 
 [autoload]
 

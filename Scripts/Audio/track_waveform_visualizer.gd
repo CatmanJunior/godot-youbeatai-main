@@ -26,7 +26,6 @@ func _ready() -> void:
 	EventBus.section_added.connect(_on_section_added)
 	EventBus.section_switched.connect(_on_section_switched)
 	EventBus.song_loaded.connect(_on_song_loaded)
-	EventBus.swing_changed.connect(_on_swing_changed)
 	EventBus.synth_progress_bar_visible_requested.connect(_set_progress_bar_visible)
 	EventBus.track_selected.connect(_on_track_selected)
 	EventBus.countdown_show_requested.connect(_on_countdown_show_requested)
@@ -117,31 +116,6 @@ func _on_song_loaded() -> void:
 				var length := wav.get_length()
 				visualizer.update_line(samples, rate, length)
 			visualizer.set_color(track_settings.get_synth_track(i).track_color)
-
-
-func _on_swing_changed(_swing: float) -> void:
-	# Waveform positions follow the current swung beat grid, including saved sections.
-	if SongState.sections.is_empty():
-		return
-	for section: SectionData in SongState.sections:
-		for i: int in range(waveform_lines.size()):
-			if i + _sample_track_amount >= section.tracks.size():
-				continue
-			var track: SynthTrackData = section.tracks[i + _sample_track_amount] as SynthTrackData
-			if track == null or track.synth_waveform_visualizer == null or not track.recorded_audio_stream is AudioStreamWAV:
-				continue
-			var wav: AudioStreamWAV = track.recorded_audio_stream as AudioStreamWAV
-			track.synth_waveform_visualizer.update_line(VoiceProcessor.get_samples(wav), float(wav.mix_rate), wav.get_length())
-	# Each section uses the same Line2D; restore the selected section after rebuilding.
-	var current: SectionData = SongState.current_section
-	if current == null:
-		return
-	for i: int in range(waveform_lines.size()):
-		if i + _sample_track_amount >= current.tracks.size():
-			continue
-		var track: SynthTrackData = current.tracks[i + _sample_track_amount] as SynthTrackData
-		if waveform_lines[i] and track and track.synth_waveform_visualizer:
-			waveform_lines[i].points = track.synth_waveform_visualizer.offsets
 
 
 func _on_section_added(section_index: int, _tex: Texture2D):

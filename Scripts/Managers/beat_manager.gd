@@ -122,6 +122,8 @@ func _trigger_animations_on_beat(beat: int) -> void:
 		EventBus.trigger_animation_requested.emit(KlappyAnimations.AnimationType.CLAP)
 
 func _get_swing_offset() -> float:
+	if GameState.is_recording:
+		return 0.0
 	if current_beat % 2 == 1:
 		return swing
 	else:
@@ -154,7 +156,9 @@ static func calculate_time_until_top() -> float:
 	var cur_beat: int = GameState.current_beat
 	var duration_until_top: float = 0.0
 	for beat: int in range(cur_beat, SongState.beats_per_section):
-		var swing_offset: float = SongState.swing if beat % 2 == 1 else -SongState.swing
+		var swing_offset: float = 0.0
+		if not GameState.is_recording:
+			swing_offset = SongState.swing if beat % 2 == 1 else -SongState.swing
 		var duration: float = SongState.beat_duration * (1.0 + swing_offset)
 		duration_until_top += duration * (1.0 - GameState.beat_progress if beat == cur_beat else 1.0)
 	return duration_until_top

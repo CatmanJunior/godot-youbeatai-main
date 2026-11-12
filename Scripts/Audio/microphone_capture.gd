@@ -5,6 +5,8 @@ extends Node
 ## volume level) AND audio recording via AudioEffectRecord.
 
 @export var bus_name: String = BusNames.MICROPHONE_BUS
+## Print one timing summary after each browser recording.
+@export var web_audio_diagnostics_enabled: bool = true
 
 static var analyzer: AudioEffectSpectrumAnalyzerInstance
 
@@ -13,6 +15,7 @@ var microphone: AudioStreamMicrophone
 
 # Recording
 var audio_effect_record: AudioEffectRecord
+var _recording_started_usec: int = 0
 
 func _ready():
 	EventBus.recording_started.connect(_start_recording)
@@ -45,14 +48,17 @@ func _process(_delta: float):
 # -- Recording -----------------------------------------------------------------
 func _start_recording(_recording_data: RecordingData) -> void:
 	if audio_effect_record:
+		if OS.has_feature("web") and web_audio_diagnostics_enabled:
+			_recording_started_usec = Time.get_ticks_usec()
 		audio_effect_record.set_recording_active(true)
 	else:
 		push_error("Cannot start recording: no AudioEffectRecord found on bus '%s'." % bus_name)
 
 func _stop_recording(recording_data: RecordingData) -> void:
 	if audio_effect_record:
+		var recording_stopped_usec: int = Time.get_ticks_usec() if OS.has_feature("web") and web_audio_diagnostics_enabled else 0
 		audio_effect_record.set_recording_active(false)
-		var audio = audio_effect_record.get_recording()
+		var audio: AudioStreamWAV = audio_effect_record.get_recording()
 		if audio != null:
 			# On Web, AudioEffectRecord tags the WAV with the output mix rate
 			# (e.g. 48 kHz) while the captured samples come from the browser's
@@ -60,10 +66,27 @@ func _stop_recording(recording_data: RecordingData) -> void:
 			# rate causes the recording to sound higher-pitched. Force the
 			# WAV's mix rate to match the actual capture rate.
 			if OS.has_feature("web"):
-				audio.mix_rate = int(AudioServer.get_input_mix_rate())
+				var original_rate: int = audio.mix_rate
+				var original_duration: float = audio.get_length()
+				var input_rate: float = AudioServer.get_input_mix_rate()
+				if input_rate > 0.0:
+					audio.mix_rate = int(input_rate)
+				if web_audio_diagnostics_enabled:
+					var requested_duration: float = float(recording_stopped_usec - _recording_started_usec) / 1000000.0
+					_log_web_audio_diagnostics(audio, input_rate, original_rate, original_duration, requested_duration)
 		if recording_data:
 			recording_data.audio_stream = audio  # Put audio ON the RecordingData
 	EventBus.recording_stopped.emit(recording_data)
+
+
+func _log_web_audio_diagnostics(audio: AudioStreamWAV, input_rate: float, original_rate: int, original_duration: float, requested_duration: float) -> void:
+	var mix_rate: float = AudioServer.get_mix_rate()
+	var output_latency_ms: float = AudioServer.get_output_latency() * 1000.0
+	print("Web microphone diagnostics: input_rate=%d Hz, mix_rate=%d Hz, output_latency=%.1f ms, original_wav_rate=%d Hz, original_wav_duration=%.3f s, playback_wav_rate=%d Hz, playback_wav_duration=%.3f s, requested_capture=%.3f s, delay_correction=%.3f s" % [
+		int(input_rate), int(mix_rate), output_latency_ms, original_rate, original_duration,
+		audio.mix_rate, audio.get_length(), requested_duration, GameState.recording_delay_seconds
+	])
+
 
 # -- Helpers -------------------------------------------------------------------
 static func get_magnitude(freq_min: float, freq_max: float, p_analyzer: AudioEffectSpectrumAnalyzerInstance = analyzer) -> float:

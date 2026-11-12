@@ -177,7 +177,6 @@ func _apply_voice_analyzer_settings() -> void:
 	_voice_analyzer.pitch_smooth_alpha = analyzer_pitch_smooth_alpha
 	_voice_analyzer.onset_lookback = analyzer_onset_lookback
 	_voice_analyzer.recording_delay_seconds = GameState.recording_delay_seconds
-	_voice_analyzer.swing = SongState.swing
 
 func _feed_voice_analyzer() -> void:
 	if _audio_capture == null or _voice_analyzer == null:

@@ -141,10 +141,10 @@ func _calculate_max_recording_length(track_type: TrackData.TrackType) -> float:
 
 # Calculates extra beats needed for SYNTH recordings to account for recording delay.
 func _synth_extra_beats() -> int:
-	var shortest_beat: float = SongState.beat_duration * (1.0 - absf(SongState.swing))
-	if shortest_beat <= 0.0:
+	var beat_duration: float = SongState.beat_duration
+	if beat_duration <= 0.0:
 		return SYNTH_RECORDING_EXTRA_BEATS
-	return maxi(SYNTH_RECORDING_EXTRA_BEATS, int(ceil(GameState.recording_delay_seconds / shortest_beat)) + 1)
+	return maxi(SYNTH_RECORDING_EXTRA_BEATS, int(ceil(GameState.recording_delay_seconds / beat_duration)) + 1)
 
 
 #------------------Event Handlers----------------------

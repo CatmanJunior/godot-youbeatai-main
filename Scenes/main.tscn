@@ -354,8 +354,10 @@ offset_bottom = 125.0
 
 [node name="ParticleSystems" type="Control" parent="UserInterface" unique_id=2112743489 node_paths=PackedStringArray("beat_particles", "pbar_particles", "achievement_particles")]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -320.0
+offset_top = -677.0
+offset_right = -280.0
+offset_bottom = -637.0
 mouse_filter = 1
 mouse_behavior_recursive = 1
 script = ExtResource("14_xg142")

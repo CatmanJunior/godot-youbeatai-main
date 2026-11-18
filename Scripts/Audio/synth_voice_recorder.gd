@@ -8,7 +8,7 @@ extends Node
 ## Hop ceiling in addition to the elapsed-time budget. Slow devices may yield
 ## within one hop; deferred analysis drains after recording without blocking.
 const MAX_HOPS_PER_FRAME: int = 2
-const ANALYSIS_BUDGET_USEC: int = 2000
+const ANALYSIS_BUDGET_USEC: int = 6000
 const CAPTURE_CHUNK_FRAMES: int = 4096
 
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")

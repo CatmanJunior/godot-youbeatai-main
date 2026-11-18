@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_nc32v")
 id = 18
-text = "ik heb een akoorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept"
+text = "ik heb een akkoorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept"
 interrupt = true

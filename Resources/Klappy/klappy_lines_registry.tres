@@ -97,7 +97,7 @@ text = "Verzamel meer energie om de hi-hat vrij te spelen"
 [sub_resource type="Resource" id="Resource_ti7lb"]
 script = ExtResource("line")
 id = 18
-text = "ik heb een akoorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept"
+text = "ik heb een akkoorden schema voor je gemaakt, je kan hem horen als je hem naar het muziek nootje sleept"
 interrupt = true
 
 [resource]

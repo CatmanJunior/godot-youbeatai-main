@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://bqaqhrmmrn6at"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_tn0nj"]
+
+[resource]
+script = ExtResource("1_tn0nj")
+id = 16
+text = "Klap 👏 nu 5 keer mee met de claps van je Beat! Let dus op de oranje vormen"
+auto_close = false

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://dvi4m5qq5fhh3"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_e8qgr"]
+
+[resource]
+script = ExtResource("1_e8qgr")
+id = 8
+text = "Gaaf! Je hebt je eerste 🎤 geluid opgenomen, zet hem in de ring!"

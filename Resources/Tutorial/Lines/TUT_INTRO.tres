@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://dh5hdo3psdirq"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_sttjl"]
+
+[resource]
+script = ExtResource("1_sttjl")
+id = 0
+text = "Hoi! Mijn naam is Klappy en wij gaan samen een Beat maken! Klap 👏 in je handen om te beginnen."

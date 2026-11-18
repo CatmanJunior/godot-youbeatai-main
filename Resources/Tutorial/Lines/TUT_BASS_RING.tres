@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://dmorfk314f12g"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_wonci"]
+
+[resource]
+script = ExtResource("1_wonci")
+id = 18
+text = "Dit is de gele bass-ring. Klik op de beer 🐻 om de gele laag te kiezen en een brommende melodie toe te voegen"

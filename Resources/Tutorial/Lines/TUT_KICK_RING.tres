@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://dod5fayuv4fo3"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_tr0se"]
+
+[resource]
+script = ExtResource("1_tr0se")
+id = 1
+text = "Deze roze cirkels vormen een kick-ring"

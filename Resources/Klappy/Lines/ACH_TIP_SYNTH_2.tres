@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://d4f2g23yu84x7"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_0wfwe"]
+
+[resource]
+script = ExtResource("1_0wfwe")
+id = 12
+text = "Verzamel meer energie om een hoger geluid op te kunnen nemen"

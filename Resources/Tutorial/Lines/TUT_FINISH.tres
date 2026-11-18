@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://d8dykxaktykn"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_4hvi4"]
+
+[resource]
+script = ExtResource("1_4hvi4")
+id = 32
+text = "Je bent klaar om nu zelf verder te werken aan je lied. Veel plezier!"

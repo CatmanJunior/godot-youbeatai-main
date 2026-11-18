@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://2d048wt6d7bq"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_va487"]
+
+[resource]
+script = ExtResource("1_va487")
+id = 10
+text = "Deze oranje ring is de clap-ring"

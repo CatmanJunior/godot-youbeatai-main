@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://b0784dslw0cll"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_vcwrw"]
+
+[resource]
+script = ExtResource("1_vcwrw")
+id = 3
+text = "De 📣 Snare heeft een helder geluid, die wordt meestal op de lijntjes gezet."

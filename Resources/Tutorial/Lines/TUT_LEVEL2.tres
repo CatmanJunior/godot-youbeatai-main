@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://dqnfiimq0h6s"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_ahbhs"]
+
+[resource]
+script = ExtResource("1_ahbhs")
+id = 9
+text = "Op naar level 2!"

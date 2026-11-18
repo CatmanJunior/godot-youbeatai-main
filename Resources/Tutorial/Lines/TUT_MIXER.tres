@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://burgol44uwile"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_jpub1"]
+
+[resource]
+script = ExtResource("1_jpub1")
+id = 23
+text = "Deze driehoek is de mixer! Hiermee kun je het geluid van jouw net opgenomen sample veranderen"

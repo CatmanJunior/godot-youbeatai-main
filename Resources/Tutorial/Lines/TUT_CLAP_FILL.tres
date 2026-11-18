@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://b3gni256ahyp0"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_3fkf5"]
+
+[resource]
+script = ExtResource("1_3fkf5")
+id = 13
+text = "Jouw beurt! Vul nóg 2 oranje vormen in door er op te drukken"

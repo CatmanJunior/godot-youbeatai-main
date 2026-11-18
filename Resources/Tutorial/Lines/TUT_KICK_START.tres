@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://basyt0824tuj4"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_lg1om"]
+
+[resource]
+script = ExtResource("1_lg1om")
+id = 3
+text = "Kijk, ik heb er net drie ingevuld. Druk nu op '▶️ Start' om de Beat te horen"

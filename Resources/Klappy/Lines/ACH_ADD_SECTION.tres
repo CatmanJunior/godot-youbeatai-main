@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://su08dh30jwq8"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_2cra1"]
+
+[resource]
+script = ExtResource("1_2cra1")
+id = 6
+text = "Met de + kan je het liedje nog langer maken, de icoontjes kunnen je helpen structuur te geven"

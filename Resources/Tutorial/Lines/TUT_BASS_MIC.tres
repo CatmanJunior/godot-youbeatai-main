@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://diialfsrr2hbn"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_8g5mv"]
+
+[resource]
+script = ExtResource("1_8g5mv")
+id = 19
+text = "Deze bass-ring kun je invullen door met je microfoon 🎙️ een sample op te nemen!"

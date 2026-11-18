@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://p5d6l8asjauc"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_57i7m"]
+
+[resource]
+script = ExtResource("1_57i7m")
+id = 8
+text = "Dat kickt er lekker in!"

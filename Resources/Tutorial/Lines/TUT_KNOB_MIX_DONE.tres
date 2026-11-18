@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://bp22mx48qjcr5"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_egh37"]
+
+[resource]
+script = ExtResource("1_egh37")
+id = 29
+text = "Zo krijg je een mix tussen jouw sample en het instrument!"

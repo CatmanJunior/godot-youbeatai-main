@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://b11fwguvgah6y"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_ejj73"]
+
+[resource]
+script = ExtResource("1_ejj73")
+id = 20
+text = "Druk op de microfoon 🎙️ en neem een baslijn op! Ik tel af van 4 naar 0"

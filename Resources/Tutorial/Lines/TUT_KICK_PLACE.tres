@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://ipocrfmtsc4k"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_g2j72"]
+
+[resource]
+script = ExtResource("1_g2j72")
+id = 2
+text = "Op deze ring kun je de kick plaatsen van je Beat"

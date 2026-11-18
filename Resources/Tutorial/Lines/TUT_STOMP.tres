@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://cogyhxhl2iq2u"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_7pihx"]
+
+[resource]
+script = ExtResource("1_7pihx")
+id = 7
+text = "Stamp 👟 5 keer mee met de kick van je Beat!"
+auto_close = false

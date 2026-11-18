@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://cxua52o60fms4"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_ndjqs"]
+
+[resource]
+script = ExtResource("1_ndjqs")
+id = 24
+text = "Je kunt jouw sample 🎙️ bijvoorbeeld veranderen in het geluid van een instrument 🐻 óf een effect 🤖 aan je sample geven"

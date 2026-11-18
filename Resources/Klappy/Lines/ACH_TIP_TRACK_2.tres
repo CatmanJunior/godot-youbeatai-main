@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="KlappyLineData" format=3 uid="uid://bpagmykb4li6s"]
+
+[ext_resource type="Script" uid="uid://c4fw8v2swkwtt" path="res://Scripts/DataClasses/Klappy/klappy_line_data.gd" id="1_c5o41"]
+
+[resource]
+script = ExtResource("1_c5o41")
+id = 11
+text = "Verzamel meer energie om de Snare ring vrij te spelen"

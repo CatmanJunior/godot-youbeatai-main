@@ -5,11 +5,11 @@ extends Node
 ## EventBus.sequence_ready when pitch analysis is complete.
 ## Add this as a sibling of TrackRecorder under Managers/AudioManagers.
 
-## Maximum NSDF hops processed per _process() frame to keep frame time bounded.
-## At ANALYSIS_RATE=11025 / HOP_SIZE=512 each hop ~46 ms of audio, so 2 hops/frame
-## keeps up with real-time at any frame rate >= ~22 Hz while leaving slack for
-## render work. Backlog can also drain after recording when processing is deferred.
+## Hop ceiling in addition to the elapsed-time budget. Slow devices may yield
+## within one hop; deferred analysis drains after recording without blocking.
 const MAX_HOPS_PER_FRAME: int = 2
+const ANALYSIS_BUDGET_USEC: int = 2000
+const CAPTURE_CHUNK_FRAMES: int = 4096
 
 const NOTES: Notes = preload("res://Experimental/VoiceToSynth/notes.tres")
 
@@ -65,10 +65,14 @@ var _audio_capture: AudioEffectCapture = null
 var _mic_bus_index: int = -1
 var _post_stop_processing_active: bool = false
 var _pending_recording_data: RecordingData = null
+var _capture_discarded_at_start: int = 0
 
 func _ready() -> void:
 	EventBus.recording_started.connect(_on_recording_started)
 	EventBus.recording_stopped.connect(_on_recording_stopped)
+	EventBus.recording_cancelled.connect(_cleanup_voice_analyzer)
+	EventBus.load_song_requested.connect(_cleanup_voice_analyzer)
+	EventBus.restart_requested.connect(_cleanup_voice_analyzer)
 	_init_audio_capture()
 
 func _process(_delta: float) -> void:
@@ -88,13 +92,24 @@ func _on_recording_started(recording_data: RecordingData) -> void:
 	if use_voice_processor:
 		return
 	if _post_stop_processing_active:
-		_complete_post_stop_processing()
+		push_error("SynthVoiceRecorder: cannot replace pending voice analysis.")
+		return
 	_start_voice_analyzer()
 
 func _on_recording_stopped(recording_data: RecordingData) -> void:
 	if recording_data.track_type != TrackData.TrackType.SYNTH:
 		return
+	if recording_data.audio_stream == null:
+		_fail_analysis()
+		return
+	if _audio_capture and _audio_capture.get_discarded_frames() > _capture_discarded_at_start:
+		EventBus.recording_interrupted.emit()
+		return
+	GameState.is_processing_recording = true
+	EventBus.recording_processing_changed.emit(true)
+	var started: int = Time.get_ticks_usec()
 	recording_data = _finalize_recorded_audio(recording_data)
+	EventBus.performance_sample.emit(&"recording_trim_ms", float(Time.get_ticks_usec() - started) / 1000.0)
 	if use_voice_processor:
 		_run_voice_processor(recording_data)
 		return
@@ -116,10 +131,6 @@ func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
 			end_guard_seconds = float(SYNTH_END_GUARD_FRAMES) / float(recording_data.audio_stream.mix_rate)
 		var safe_section_length: float = maxf(0.0, section_length - end_guard_seconds)
 		recording_data.audio_stream = AudioHelpers.cap_audio_duration(recording_data.audio_stream, safe_section_length)
-	if waveform_visualizer:
-		waveform_visualizer.update_waveform(recording_data)
-		waveform_visualizer.reset_progress_bar(recording_data)
-	EventBus.set_recorded_stream_requested.emit(recording_data)
 	return recording_data
 
 # ── Voice Processor (offline) ────────────────────────────────────────────────
@@ -127,8 +138,9 @@ func _finalize_recorded_audio(recording_data: RecordingData) -> RecordingData:
 func _run_voice_processor(recording_data: RecordingData) -> void:
 	var sequence: Sequence = VoiceProcessor.process_audio(recording_data.audio_stream, NOTES)
 	if sequence == null:
-		sequence = Sequence.new([])
-	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+		_fail_analysis()
+		return
+	_emit_sequence_ready(sequence, recording_data)
 
 # ── Voice Analyzer ────────────────────────────────────────────────────────────
 
@@ -157,6 +169,7 @@ func _start_voice_analyzer() -> void:
 	if _audio_capture:
 		AudioServer.set_bus_effect_enabled(_mic_bus_index, 0, true)
 		_audio_capture.clear_buffer()
+		_capture_discarded_at_start = _audio_capture.get_discarded_frames()
 	else:
 		push_warning("SynthVoiceRecorder: No AudioEffectCapture available for streaming voice analysis.")
 
@@ -184,23 +197,22 @@ func _feed_voice_analyzer() -> void:
 	var frames_available := _audio_capture.get_frames_available()
 	if frames_available <= 0:
 		return
-	var stereo_buf := _audio_capture.get_buffer(frames_available)
+	if _audio_capture.get_discarded_frames() > _capture_discarded_at_start:
+		EventBus.performance_sample.emit(&"capture_dropped_frames", float(_audio_capture.get_discarded_frames() - _capture_discarded_at_start))
+		EventBus.recording_interrupted.emit()
+		return
+	var started: int = Time.get_ticks_usec()
+	var stereo_buf := _audio_capture.get_buffer(mini(frames_available, CAPTURE_CHUNK_FRAMES))
 	var mono := _stereo_to_mono(stereo_buf)
 	var max_hops: int = MAX_HOPS_PER_FRAME if process_during_recording else 0
-	_voice_analyzer.push_samples(mono, max_hops)
+	_voice_analyzer.push_samples(mono, max_hops, ANALYSIS_BUDGET_USEC)
+	EventBus.performance_sample.emit(&"capture_feed_ms", float(Time.get_ticks_usec() - started) / 1000.0)
 
 func _finalize_voice_analysis(recording_data: RecordingData) -> void:
 	if _voice_analyzer and _voice_analyzer.is_active():
-		var drain_hops: int = -1 if process_during_recording else 0
-		_drain_audio_capture(drain_hops)
-		if not process_during_recording:
-			_start_post_stop_processing(recording_data)
-			return
-		var sequence: Sequence = _voice_analyzer.finalize()
-		_emit_sequence_ready(sequence, recording_data)
+		_start_post_stop_processing(recording_data)
 	else:
-		var sequence := Sequence.new([])
-		_emit_sequence_ready(sequence, recording_data)
+		_fail_analysis()
 
 
 func _drain_audio_capture(max_hops: int) -> void:
@@ -208,10 +220,9 @@ func _drain_audio_capture(max_hops: int) -> void:
 		return
 	var remaining := _audio_capture.get_frames_available()
 	if remaining > 0:
-		var buf := _audio_capture.get_buffer(remaining)
+		var buf := _audio_capture.get_buffer(mini(remaining, CAPTURE_CHUNK_FRAMES))
 		var mono := _stereo_to_mono(buf)
 		_voice_analyzer.push_samples(mono, max_hops)
-	_audio_capture.clear_buffer()
 
 
 func _start_post_stop_processing(recording_data: RecordingData) -> void:
@@ -223,10 +234,15 @@ func _start_post_stop_processing(recording_data: RecordingData) -> void:
 
 func _continue_post_stop_processing() -> void:
 	if _voice_analyzer == null or _pending_recording_data == null:
-		var sequence := Sequence.new([])
-		_emit_sequence_ready(sequence, _pending_recording_data)
+		_fail_analysis()
 		return
-	var done := _voice_analyzer.process_finalize_step(post_stop_hops_per_frame)
+	var started: int = Time.get_ticks_usec()
+	if _audio_capture and _audio_capture.get_frames_available() > 0:
+		_drain_audio_capture(0)
+		EventBus.performance_sample.emit(&"analysis_feed_ms", float(Time.get_ticks_usec() - started) / 1000.0)
+		return
+	var done := _voice_analyzer.process_finalize_step(post_stop_hops_per_frame, ANALYSIS_BUDGET_USEC)
+	EventBus.performance_sample.emit(&"analysis_step_ms", float(Time.get_ticks_usec() - started) / 1000.0)
 	if done:
 		_complete_post_stop_processing()
 
@@ -235,23 +251,41 @@ func _complete_post_stop_processing() -> void:
 	if _voice_analyzer == null or _pending_recording_data == null:
 		_cleanup_voice_analyzer()
 		return
-	while _voice_analyzer.is_staged_finalizing():
-		_voice_analyzer.process_finalize_step()
 	var sequence: Sequence = _voice_analyzer.get_staged_sequence()
 	_emit_sequence_ready(sequence, _pending_recording_data)
 
 
 func _emit_sequence_ready(sequence: Sequence, recording_data: RecordingData) -> void:
-	if recording_data != null:
-		EventBus.sequence_ready.emit(sequence, recording_data.track_data)
+	if recording_data == null or recording_data.track_data == null or SongState.get_track(recording_data.section_index, recording_data.track_data.index) != recording_data.track_data:
+		if sequence != null:
+			sequence.free()
+		_fail_analysis()
+		return
+	recording_data.track_data.recording_data = recording_data
+	recording_data.track_data.set_recording_audio_stream(recording_data)
+	if waveform_visualizer:
+		waveform_visualizer.update_waveform(recording_data)
+		waveform_visualizer.reset_progress_bar(recording_data)
+	EventBus.set_recorded_stream_requested.emit(recording_data)
+	EventBus.sequence_ready.emit(sequence, recording_data.track_data)
 	_cleanup_voice_analyzer()
 
+func _fail_analysis() -> void:
+	push_error("SynthVoiceRecorder: voice analysis could not be completed.")
+	EventBus.status_message_requested.emit("Je geluid kon niet worden verwerkt. Probeer het nog een keer.")
+	_cleanup_voice_analyzer()
 
 func _cleanup_voice_analyzer() -> void:
+	if waveform_visualizer:
+		waveform_visualizer.refresh_current_section()
 	_voice_analyzer = null
 	_pending_recording_data = null
 	_post_stop_processing_active = false
 	_set_microphone_capture_enabled(false)
+	if _audio_capture:
+		_audio_capture.clear_buffer()
+	GameState.is_processing_recording = false
+	EventBus.recording_processing_changed.emit(false)
 
 
 func _set_microphone_capture_enabled(enabled: bool) -> void:

@@ -9,17 +9,22 @@ extends Node
 var recorder: AudioEffectRecord
 
 var data: ExportRecordingData
+var _generation: int = 0
 
-func _ready():
+func _ready() -> void:
 	_get_recorder()
 
 	EventBus.beat_triggered.connect(on_beat)
 	EventBus.section_switched.connect(section_switched)
 	
 	EventBus.export_requested.connect(start_recording)
+	EventBus.export_failed.connect(_on_export_failed)
 
 
-func start_recording(mail: bool, mode_export_song: bool):
+func start_recording(mail: bool, mode_export_song: bool) -> void:
+	_generation += 1
+	var generation: int = _generation
+	GameState.is_exporting = true
 	mail_when_done = mail
 	song_mode = mode_export_song
 
@@ -29,6 +34,8 @@ func start_recording(mail: bool, mode_export_song: bool):
 
 	# wait 1 frame to resolve play state
 	await get_tree().process_frame
+	if generation != _generation:
+		return
 
 	EventBus.beat_seek_requested.emit(0)
 	if song_mode:
@@ -38,21 +45,38 @@ func start_recording(mail: bool, mode_export_song: bool):
 
 	# wait 1 frame to resolve ring state
 	await get_tree().process_frame
+	if generation != _generation:
+		return
 	# start 
 	recorder.set_recording_active(true)
 	## 0.1 seconds of silence at the start of the recording
 	await get_tree().create_timer(0.1).timeout
+	if generation != _generation:
+		return
 
 	EventBus.playing_change_requested.emit(true)
 	recording = true
 
-func stop_recording():
+func stop_recording() -> void:
+	var generation: int = _generation
 	recording = false
 	## 0.1 seconds of silence at the end of the recording
 	await get_tree().create_timer(0.1).timeout
+	if generation != _generation:
+		return
 	recorder.set_recording_active(false)
+	GameState.is_exporting = false
 	data.audio_stream = recorder.get_recording()
 	EventBus.export_recording_requested.emit(data)
+
+func _on_export_failed(message: String) -> void:
+	_generation += 1
+	recording = false
+	started = false
+	GameState.is_exporting = false
+	recorder.set_recording_active(false)
+	push_warning(message)
+	EventBus.status_message_requested.emit(message)
 
 func on_beat(beat: int):
 	if not recording:

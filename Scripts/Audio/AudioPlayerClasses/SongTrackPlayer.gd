@@ -44,6 +44,7 @@ func _ready() -> void:
 	EventBus.pre_beat_triggered.connect(pre_on_beat)
 	EventBus.section_switch_requested.connect(seek_to_position)
 	EventBus.song_loaded.connect(_on_song_loaded)
+	EventBus.transport_resynchronised.connect(_on_transport_resynchronised)
 
 
 func _on_song_loaded() -> void:
@@ -104,6 +105,14 @@ func seek_to_position(section_index: int):
 	if players[SongLayer.VOICE_OVER].playing:
 		stop()
 		play( _calculate_play_offset(section_index) )
+
+func _on_transport_resynchronised(_steps: int, _loops: int) -> void:
+	if GameState.song_mode_active:
+		var section_start: float = 0.0
+		for section: SectionData in SongState.sections:
+			if section.index < SongState.current_section_index:
+				section_start += section.loop_count * SongState.beats_per_section * SongState.beat_duration
+		play(section_start + GameState.loop_cursor * SongState.beats_per_section * SongState.beat_duration + BeatManager.get_section_playback_time())
 
 
 func _calculate_play_offset(section_index: int) -> float:

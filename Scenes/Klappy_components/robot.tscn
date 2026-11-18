@@ -7,9 +7,11 @@
 [ext_resource type="Material" uid="uid://bd57mrnx7ghq1" path="res://Resources/Klappy/Materials/M_Klappy_Legs.tres" id="5_xhqqu"]
 [ext_resource type="Material" uid="uid://b4ov3m707x820" path="res://Resources/Klappy/Materials/M_Klappy_Arms.tres" id="6_swrgv"]
 [ext_resource type="Material" uid="uid://cdlns5hnhw21u" path="res://Resources/Klappy/Materials/M_Klappy_Transparant.tres" id="7_ytrrs"]
+[ext_resource type="Script" path="res://Scripts/UI/robot_quality.gd" id="8_quality"]
 
 [node name="Robot" type="Sprite2D" unique_id=509510474]
 z_index = 4
+script = ExtResource("8_quality")
 
 [node name="KlappySpeechBubble" parent="." unique_id=37829949 instance=ExtResource("1_f68tu")]
 visible = false

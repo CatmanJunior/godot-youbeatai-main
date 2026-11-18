@@ -55,6 +55,10 @@ var bar_progress: float = 0.0
 
 # -- Recording --
 var is_recording: bool = false
+var is_processing_recording: bool = false
+var is_exporting: bool = false
+var performance_mode: int = 0
+var lightweight_graphics: bool = false
 
 var loop_cursor: int = 0
 
@@ -100,6 +104,8 @@ func reset() -> void:
 
 	# Recording
 	is_recording = false
+	is_processing_recording = false
+	is_exporting = false
 
 	loop_cursor = 0
 	song_mode_active = false

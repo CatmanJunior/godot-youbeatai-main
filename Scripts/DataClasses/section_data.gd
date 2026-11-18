@@ -55,6 +55,7 @@ func create_default_tracks() -> void:
 ## Call after loading from disk to restore runtime-only state (Sequence, id, etc.).
 func rebuild_runtime() -> void:
 	self.id = get_next_id()
+	sync_track_indexes()
 	for track in tracks:
 		if track is SynthTrackData:
 			track.rebuild_sequence()
@@ -62,6 +63,15 @@ func rebuild_runtime() -> void:
 		if track.recorded_audio_stream is AudioStreamWAV:
 			track.recording_data = RecordingData.new(track, track.recorded_audio_stream as AudioStreamWAV)
 			track.recording_data.state = RecordingData.State.RECORDING_DONE
+
+## Track addresses follow their owning section, including after paste or load.
+func sync_track_indexes() -> void:
+	for track_index: int in range(tracks.size()):
+		var track: TrackData = tracks[track_index]
+		track.index = track_index
+		track.section_index = index
+		if track.recording_data != null:
+			track.recording_data.section_index = index
 
 # ── Beat access helpers ──────────────────────────────────────────────────────
 

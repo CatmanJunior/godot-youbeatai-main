@@ -56,7 +56,7 @@ var is_visible: bool:
 @export var mute_speech: CheckButton
 
 
-func _ready():
+func _ready() -> void:
 	metronome_toggle.toggled.connect(_on_metronome_toggle_toggled)
 	button_is_clap.toggled.connect(_on_button_is_clap_toggled)
 	button_add_beats.toggled.connect(_on_button_add_beats_toggled)
@@ -89,11 +89,6 @@ func _ready():
 	initial_values(null)
 	_update_labels()
 
-
-func _process(_delta: float) -> void:
-	_update_labels()
-
-
 func _bpm_changed(new_bpm: float) -> void:
 	bpm_slider.value = new_bpm
 	bpm_progress_bar.value = new_bpm
@@ -110,9 +105,10 @@ func _update_labels() -> void:
 	recording_delay_label.text = "%.2fs" % recording_delay_slider.value
 	swing_label.text = "Swing: %.0f%%" % (swing_slider.value * 100.0)
 
-func initial_values(_bank: SoundBank):
+func initial_values(_bank: SoundBank) -> void:
 	recording_delay_progress.value = GameState.recording_delay_seconds
 	recording_delay_slider.value = GameState.recording_delay_seconds
+	_update_labels()
 
 # --- Event Handlers ---
 func _on_mute_speech_toggled(button_pressed: bool):
@@ -126,6 +122,7 @@ func _on_settings_button_pressed():
 func _on_recording_delay_changed(value: float) -> void:
 	GameState.recording_delay_seconds = value
 	recording_delay_progress.value = value
+	recording_delay_label.text = "%.2fs" % value
 
 func _on_button_is_clap_toggled(button_pressed: bool):
 	GameState.button_is_clap = button_pressed

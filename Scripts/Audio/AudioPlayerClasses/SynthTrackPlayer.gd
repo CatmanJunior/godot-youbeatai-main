@@ -25,6 +25,7 @@ func _get_bus_prefix() -> String:
 func _ready() -> void:
 	super._ready()
 	EventBus.sequence_ready.connect(_on_sequence_ready)
+	EventBus.transport_resynchronised.connect(_on_transport_resynchronised)
 
 # --- Public API ---
 func apply_note_player_settings(new_settings: NotePlayerSettings) -> void:
@@ -96,6 +97,9 @@ func _on_beat_triggered(beat: int) -> void:
 func _on_all_players_stop():
 	stop()
 
+func _on_transport_resynchronised(_steps: int, _loops: int) -> void:
+	play(BeatManager.get_section_playback_time())
+
 
 ## Playback control
 func play(offset: float = 0.0) -> void:
@@ -125,9 +129,9 @@ func stop() -> void:
 func _on_sequence_ready(sequence: Sequence, p_track_data: TrackData) -> void:
 	if p_track_data.index != track_index:
 		return
-	if p_track_data.section_index != track_data.section_index:
+	if SongState.get_track(p_track_data.section_index, track_index) != p_track_data:
 		return
-	var data: SynthTrackData = track_data
+	var data: SynthTrackData = p_track_data as SynthTrackData
 	if sequence and data:
 		data.set_sequence(_combine_consecutive_notes(sequence))
 		if data.recording_data:
@@ -147,7 +151,9 @@ func _combine_consecutive_notes(sequence: Sequence) -> Sequence:
 				prev.velocity = maxf(prev.velocity, note.velocity)
 				continue
 		merged.append(note)
-	return Sequence.new(merged)
+	sequence.notes = merged
+	sequence.build_beat_map()
+	return sequence
 
 ## Override to create NotePlayer for the NOTE layer
 func _make_player(bus: String) -> AudioStreamPlayer:
@@ -158,6 +164,7 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 		new_player = AudioStreamPlayer.new()
 	new_player.name = bus
 	new_player.bus = bus
+	new_player.add_to_group("performance_track_streams")
 	add_child(new_player)
 	
 	return new_player

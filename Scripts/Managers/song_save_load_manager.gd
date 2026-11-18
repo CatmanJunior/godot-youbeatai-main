@@ -187,6 +187,7 @@ func _begin_loading() -> bool:
 		push_warning("SongSaveLoadManager: a song is already loading.")
 		return false
 	_loading_overlay = LOADING_OVERLAY_SCENE.instantiate() as CanvasLayer
+	EventBus.performance_sampling_paused.emit(true)
 	get_tree().root.add_child(_loading_overlay)
 	# Allow a rendered frame before blocking work such as file reads and deserialization.
 	await get_tree().process_frame
@@ -202,6 +203,7 @@ func _finish_loading() -> void:
 
 
 func _clear_loading_overlay() -> void:
+	EventBus.performance_sampling_paused.emit(false)
 	if is_instance_valid(_loading_overlay):
 		_loading_overlay.get_parent().remove_child(_loading_overlay)
 		_loading_overlay.queue_free()

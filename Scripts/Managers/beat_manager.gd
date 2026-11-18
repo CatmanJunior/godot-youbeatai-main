@@ -97,23 +97,59 @@ func _on_playing_change_requested(is_playing: bool):
 	if not playing:
 		EventBus.all_players_stop_requested.emit()
 
-func _process(_delta: float):
+func _process(_delta: float) -> void:
 	if playing:
-		var current_time: float = float(Time.get_ticks_usec()) / 1000.0
-		var step_ms: float = beat_duration * (1.0 + _get_swing_offset()) * 1000.0
-		while playing and step_ms > 0.0 and current_time - last_beat_time >= step_ms:
-			last_beat_time += step_ms
-			current_beat = (current_beat + 1) % total_beats
-			EventBus.pre_beat_triggered.emit(current_beat)
-			EventBus.beat_triggered.emit(current_beat)
+		_advance_clock(float(Time.get_ticks_usec()) / 1000.0)
+	_update_progress()
 
-			_trigger_animations_on_beat(current_beat)
-			step_ms = beat_duration * (1.0 + _get_swing_offset()) * 1000.0
-		beat_elapsed = maxf(0.0, (current_time - last_beat_time) / 1000.0)
+func _update_progress() -> void:
 	beat_progress = get_beat_progress()
 	bar_progress = get_bar_progress()
 	GameState.beat_progress = beat_progress
 	GameState.bar_progress = bar_progress
+
+func _advance_clock(current_time: float) -> void:
+	var duration_ms: float = beat_duration * 1000.0
+	if duration_ms <= 0.0 or total_beats <= 0:
+		return
+	var elapsed_ms: float = maxf(0.0, current_time - last_beat_time)
+	var first_step_ms: float = duration_ms * (1.0 + _get_swing_offset())
+	if first_step_ms <= 0.0:
+		push_error("BeatManager: invalid swing duration.")
+		return
+	# Swing cancels across each pair; recovery cost is independent of stall length.
+	var pairs: int = int(elapsed_ms / (2.0 * duration_ms))
+	var steps: int = pairs * 2
+	var advanced_ms: float = float(pairs) * 2.0 * duration_ms
+	if elapsed_ms - advanced_ms >= first_step_ms:
+		steps += 1
+		advanced_ms += first_step_ms
+	if steps == 0:
+		beat_elapsed = elapsed_ms / 1000.0
+		return
+	var loops: int = (current_beat + steps) / total_beats
+	last_beat_time += advanced_ms
+	current_beat = (current_beat + steps) % total_beats
+	beat_elapsed = maxf(0.0, (current_time - last_beat_time) / 1000.0)
+	_update_progress()
+	EventBus.performance_sample.emit(&"beat_lateness_ms", elapsed_ms - first_step_ms)
+	if steps > 1:
+		if GameState.is_exporting:
+			EventBus.export_failed.emit("Het bewaren is onderbroken. Probeer het nog een keer.")
+		if GameState.is_recording:
+			var phase: float = GameState.beat_progress
+			EventBus.recording_interrupted.emit()
+			beat_elapsed = phase * beat_duration * (1.0 + _get_swing_offset())
+			last_beat_time = current_time - beat_elapsed * 1000.0
+			_update_progress()
+		EventBus.all_players_stop_requested.emit()
+		EventBus.transport_loops_skipped.emit(loops)
+		EventBus.transport_resynchronised.emit(steps, loops)
+		EventBus.performance_sample.emit(&"skipped_steps", float(steps))
+		return
+	EventBus.pre_beat_triggered.emit(current_beat)
+	EventBus.beat_triggered.emit(current_beat)
+	_trigger_animations_on_beat(current_beat)
 
 func _trigger_animations_on_beat(beat: int) -> void:
 	if SongState.current_section.get_beat(0, beat):
@@ -162,6 +198,13 @@ static func calculate_time_until_top() -> float:
 		var duration: float = SongState.beat_duration * (1.0 + swing_offset)
 		duration_until_top += duration * (1.0 - GameState.beat_progress if beat == cur_beat else 1.0)
 	return duration_until_top
+
+static func get_section_playback_time() -> float:
+	var swing_value: float = 0.0 if GameState.is_recording else SongState.swing
+	var odd: bool = GameState.current_beat % 2 == 1
+	var elapsed_steps: float = float(GameState.current_beat) - (swing_value if odd else 0.0)
+	elapsed_steps += GameState.beat_progress * (1.0 + (swing_value if odd else -swing_value))
+	return elapsed_steps * SongState.beat_duration
 
 static func calculate_beat_duration(p_bpm: int, _p_total_beats: int, _beats_per_bar: int) -> float:
 	if p_bpm <= 0:

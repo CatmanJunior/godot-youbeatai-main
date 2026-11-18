@@ -40,6 +40,7 @@ func _ready() -> void:
 	EventBus.section_switch_requested.connect(switch_section_ui)
 	EventBus.section_remove_requested.connect(remove_section_request)
 	EventBus.section_next_requested.connect(next_section)
+	EventBus.transport_loops_skipped.connect(_on_transport_loops_skipped)
 	EventBus.set_loop_count_requested.connect(_set_loop_count_requested)
 	EventBus.post_ready.connect(post_ready)
 
@@ -155,6 +156,7 @@ func _paste_section():
 	current_section.set_section_knob_positions(clipboard_section.get_section_knob_positions())
 	for i in range(SectionData.TRACKS_PER_SECTION):
 		current_section.tracks[i] = clipboard_section.tracks[i].duplicate_track()
+	current_section.sync_track_indexes()
 	EventBus.template_set.emit(current_section.get_beat_actives())
 	EventBus.section_switched.emit(SongState.get_section(current_section_index))
 
@@ -178,6 +180,7 @@ func _resolve_section_indexes():
 	# resolve indices
 	for i in range(sections.size()):
 		sections[i].index = i
+		sections[i].sync_track_indexes()
 
 func switch_section_ui(section_index: int):
 	EventBus.beat_seek_requested.emit(0)
@@ -222,6 +225,25 @@ func next_section():
 		switch_section(0)
 	else:
 		switch_section(current_section_index + 1)
+
+func _on_transport_loops_skipped(loops: int) -> void:
+	if loops <= 0 or sections.is_empty():
+		return
+	var cursor: int = GameState.loop_cursor + loops
+	if not GameState.song_mode_active:
+		GameState.loop_cursor = cursor % current_section.loop_count
+		return
+	var cycle: int = 0
+	for section: SectionData in sections:
+		cycle += section.loop_count
+	cursor %= cycle
+	var index: int = current_section_index
+	while cursor >= sections[index].loop_count:
+		cursor -= sections[index].loop_count
+		index = (index + 1) % sections.size()
+	if index != current_section_index:
+		EventBus.section_switched.emit(sections[index])
+	GameState.loop_cursor = cursor
 
 func section_has_beats(section: int) -> bool:
 	"""Check if a section has any active beats"""

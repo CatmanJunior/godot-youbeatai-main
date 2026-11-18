@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Ritme Robot"
-config/version="1.18"
+config/version="1.19"
 run/main_scene="uid://88rxelg1bo3"
 config/features=PackedStringArray("4.6", "Mobile")
 run/max_fps=60
@@ -37,6 +37,7 @@ SongState="*res://Scripts/Global/song_state.gd"
 TTSHelper="*res://Scripts/Global/tts_helper.gd"
 FFT="*uid://xq15anvbve8x"
 KlappyVoice="*res://Scripts/Global/klappy_voice.gd"
+PerformanceSettings="*res://Scripts/Managers/performance_manager.gd"
 
 [debug]
 

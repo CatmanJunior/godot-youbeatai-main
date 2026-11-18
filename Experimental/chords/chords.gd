@@ -7,14 +7,19 @@ var settings: ChordPlayerSettings
 
 func _ready():
 	super._ready()
+	add_to_group("performance_track_streams")
 	base_note = Note.new()
 	gain = -2
 
 	EventBus.beat_triggered.connect(on_beat)
+	EventBus.all_players_stop_requested.connect(_on_all_players_stop)
 	print("chord player ready")
 
 func _exit_tree():
 	EventBus.beat_triggered.disconnect(on_beat)
+
+func _on_all_players_stop() -> void:
+	note_off_all(0)
 
 func set_settings(_settings: ChordPlayerSettings, _bus: StringName) -> void:
 	settings = _settings

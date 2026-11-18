@@ -25,6 +25,8 @@ func rebuild_sequence() -> void:
 
 ## Set a new sequence and keep the serializable notes array in sync.
 func set_sequence(new_sequence: Sequence) -> void:
+	if is_instance_valid(sequence) and sequence != new_sequence:
+		sequence.free()
 	sequence = new_sequence
 	if new_sequence:
 		sequence_notes = new_sequence.notes.duplicate_deep()

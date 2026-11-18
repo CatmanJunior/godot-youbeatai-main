@@ -5,6 +5,7 @@ var _saving_label_timer: float = 0.0
 func _ready() -> void:
 	EventBus.saving_completed.connect(_on_saving_completed)
 	EventBus.song_file_failed.connect(_on_song_file_failed)
+	EventBus.status_message_requested.connect(_on_song_file_failed)
 	visible = false
 
 func _process(delta: float) -> void:

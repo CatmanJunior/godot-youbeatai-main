@@ -144,6 +144,9 @@ var _frame_results: Array[Dictionary] = []
 
 ## Hop counter (how many hops have been fully processed).
 var _hops_processed: int = 0
+var _pending_frame: PackedFloat32Array = PackedFloat32Array()
+var _pending_rms: float = 0.0
+var _pending_lag: int = 0
 
 ## Samples consumed so far for hop tracking.
 var _samples_since_last_hop: int = 0
@@ -191,7 +194,8 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 	_min_lag = int(floor(ANALYSIS_RATE / MAX_FREQ))
 
 	# Allocate analysis ring buffer (enough for full recording + margin).
-	var max_analysis_samples := int(ceil(_total_duration * ANALYSIS_RATE * 1.3))
+	var capture_duration: float = _total_duration + recording_delay_seconds + 2.0 * beat_duration
+	var max_analysis_samples: int = int(ceil(capture_duration * ANALYSIS_RATE))
 	_analysis_buffer = PackedFloat32Array()
 	_analysis_buffer.resize(max_analysis_samples)
 	_analysis_buffer.fill(0.0)
@@ -210,6 +214,7 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 	_input_buffer = PackedFloat32Array()
 	_frame_results = []
 	_hops_processed = 0
+	_pending_frame = PackedFloat32Array()
 	_samples_since_last_hop = 0
 	_pitch_history = PackedFloat32Array()
 	_pitch_history.resize(MEDIAN_WINDOW)
@@ -234,7 +239,7 @@ func start(source_sample_rate: float, beats_per_section: int, beat_duration: flo
 ## leftover hops sit in the analysis buffer and are drained on later calls,
 ## with finalize() processing whatever remains in one go.
 ## Returns the number of new hops processed this call.
-func push_samples(samples: PackedFloat32Array, max_hops: int = -1) -> int:
+func push_samples(samples: PackedFloat32Array, max_hops: int = -1, budget_usec: int = 0) -> int:
 	if not _active:
 		return 0
 
@@ -266,7 +271,7 @@ func push_samples(samples: PackedFloat32Array, max_hops: int = -1) -> int:
 		_input_buffer = _input_buffer.slice(consumed_input)
 
 	_samples_since_last_hop += written
-	new_hops = process_pending_hops(max_hops)
+	new_hops = process_pending_hops(max_hops, budget_usec)
 
 	return new_hops
 
@@ -274,20 +279,24 @@ func push_samples(samples: PackedFloat32Array, max_hops: int = -1) -> int:
 ## Process already-downsampled analysis hops without requiring new input.
 ## Use this after recording stops to spread queued NSDF work over frames.
 ## Returns the number of hops processed this call.
-func process_pending_hops(max_hops: int = -1) -> int:
+func process_pending_hops(max_hops: int = -1, budget_usec: int = 0) -> int:
 	if not _active:
 		return 0
 
 	var processed_hops: int = 0
+	var deadline: int = Time.get_ticks_usec() + budget_usec if budget_usec > 0 else 0
 	while has_pending_hops():
 		if max_hops >= 0 and processed_hops >= max_hops:
 			break
 		var hop_start: int = _hops_processed * HOP_SIZE
-		_process_frame(hop_start)
+		if not _process_frame(hop_start, deadline):
+			break
 		_hops_processed += 1
 		processed_hops += 1
 		if _samples_since_last_hop >= HOP_SIZE:
 			_samples_since_last_hop -= HOP_SIZE
+		if deadline > 0 and Time.get_ticks_usec() >= deadline:
+			break
 
 	return processed_hops
 
@@ -325,12 +334,12 @@ func begin_staged_finalize() -> void:
 
 
 ## Advance finalization by one bounded step. Returns true when complete.
-func process_finalize_step(max_hops: int = -1) -> bool:
+func process_finalize_step(max_hops: int = -1, budget_usec: int = 2000) -> bool:
 	match _finalize_stage:
 		FinalizeStage.IDLE:
 			begin_staged_finalize()
 		FinalizeStage.PENDING_HOPS:
-			process_pending_hops(max_hops)
+			process_pending_hops(max_hops, budget_usec)
 			if not has_pending_hops():
 				_active = false
 				_finalize_stage = FinalizeStage.SEGMENT_NOTES
@@ -375,10 +384,6 @@ func _build_sequence_from_results() -> Sequence:
 
 
 func _sequence_from_notes(sequence_notes: Array[SequenceNote]) -> Sequence:
-
-	for index in range(len(sequence_notes)):
-		print("beat: %d, note: %d, duration: %d velocity: %d" % [sequence_notes[index].beat, sequence_notes[index].note, sequence_notes[index].duration, sequence_notes[index].velocity])
-
 	return Sequence.new(sequence_notes)
 
 
@@ -448,23 +453,26 @@ func is_active() -> bool:
 
 # ── Frame Processing (called per hop) ───────────────────────────────────────
 
-func _process_frame(start_sample: int) -> void:
-	# Slice the frame into a contiguous local buffer once per hop. Indexing a
-	# local PackedFloat32Array is significantly cheaper in GDScript than
-	# repeated global property + offset accesses inside the inner NSDF loop.
-	var frame := _analysis_buffer.slice(start_sample, start_sample + FRAME_SIZE)
+func _process_frame(start_sample: int, deadline: int = 0) -> bool:
+	if _pending_frame.is_empty():
+		_pending_frame = _analysis_buffer.slice(start_sample, start_sample + FRAME_SIZE)
+		_pending_rms = _compute_rms(_pending_frame, FRAME_SIZE)
+		_pending_lag = _min_lag
+		if _pending_rms >= silence_threshold:
+			_prepare_nsdf(_pending_frame, FRAME_SIZE)
+	var result := Vector2.ZERO
+	if _pending_rms >= silence_threshold:
+		while _pending_lag <= _max_lag:
+			_write_nsdf_lag(_pending_frame, FRAME_SIZE, _pending_lag)
+			_pending_lag += 1
+			if deadline > 0 and Time.get_ticks_usec() >= deadline:
+				return false
+		result = _pick_nsdf_peak(_min_lag, _max_lag)
+	_finish_frame(start_sample, _pending_rms, result.x, result.y)
+	_pending_frame = PackedFloat32Array()
+	return true
 
-	# Compute RMS for voicing decision.
-	var rms := _compute_rms(frame, FRAME_SIZE)
-
-	# Detect pitch using NSDF/MPM.
-	var pitch := 0.0
-	var clarity := 0.0
-
-	if rms >= silence_threshold:
-		var result := _nsdf_pitch(frame, FRAME_SIZE)
-		pitch = result.x  # Hz
-		clarity = result.y  # 0..1
+func _finish_frame(start_sample: int, rms: float, pitch: float, clarity: float) -> void:
 
 	# Apply median filter to pitch.
 	var filtered_pitch := _median_filter_pitch(pitch if clarity >= clarity_threshold else 0.0)
@@ -516,49 +524,36 @@ func _process_frame(start_sample: int) -> void:
 ## Returns Vector2(frequency_hz, clarity) using Normalized Square Difference
 ## Function (McLeod Pitch Method).
 func _nsdf_pitch(frame: PackedFloat32Array, length: int) -> Vector2:
-	var n := length
-	var max_lag := mini(_max_lag, n - 1)
-	var min_lag := _min_lag
+	_prepare_nsdf(frame, length)
+	var max_lag: int = mini(_max_lag, length - 1)
+	for lag: int in range(_min_lag, max_lag + 1):
+		_write_nsdf_lag(frame, length, lag)
+	return _pick_nsdf_peak(_min_lag, max_lag)
 
-	# Compute NSDF for each lag.
-	# NSDF(tau) = 2 * r(tau) / m(tau)
-	# where r(tau) = autocorrelation, m(tau) = energy normalization term.
+func _prepare_nsdf(frame: PackedFloat32Array, length: int) -> void:
 	_nsdf_buffer.fill(0.0)
-
-	# Prefix sum of squared samples so m_left/m_right become O(1) per tau.
-	# prefix_sq[k] = sum_{i=0..k-1} frame[i]^2, length n+1. Reused across calls.
 	var prefix_sq := _prefix_sq
-	var nsdf_buf := _nsdf_buffer
 	prefix_sq[0] = 0.0
 	var running := 0.0
 	var i := 0
-	while i < n:
+	while i < length:
 		var s := frame[i]
 		running += s * s
 		prefix_sq[i + 1] = running
 		i += 1
 
-	var total_energy := prefix_sq[n]
-	var tau := min_lag
-	while tau <= max_lag:
-		var limit := n - tau
-		# Autocorrelation at lag tau — tight while-loop on a local array.
-		var acf := 0.0
-		var j := 0
-		while j < limit:
-			acf += frame[j] * frame[j + tau]
-			j += 1
+func _write_nsdf_lag(frame: PackedFloat32Array, length: int, tau: int) -> void:
+	var limit: int = length - tau
+	var acf: float = 0.0
+	var j: int = 0
+	while j < limit:
+		acf += frame[j] * frame[j + tau]
+		j += 1
+	var m: float = _prefix_sq[limit] + _prefix_sq[length] - _prefix_sq[tau]
+	_nsdf_buffer[tau] = 2.0 * acf / m if m > 0.0 else 0.0
 
-		# m_left = sum frame[i]^2 for i in [0, limit-1]
-		# m_right = sum frame[i]^2 for i in [tau, n-1]
-		var m := prefix_sq[limit] + total_energy - prefix_sq[tau]
-
-		if m > 0.0:
-			nsdf_buf[tau] = 2.0 * acf / m
-		else:
-			nsdf_buf[tau] = 0.0
-		tau += 1
-
+func _pick_nsdf_peak(min_lag: int, max_lag: int) -> Vector2:
+	var nsdf_buf := _nsdf_buffer
 	# Find the highest positive NSDF peak above threshold using MPM peak picking.
 	var best_lag := 0
 	var best_val := -1.0
@@ -735,22 +730,24 @@ class _NoteCandidate:
 	var end_time: float = 0.0
 	var pitches: PackedFloat32Array = PackedFloat32Array()
 	var rms_values: PackedFloat32Array = PackedFloat32Array()
+	var _pitch_sum: float = 0.0
+	var _rms_sum: float = 0.0
+
+	func append_frame(pitch: float, rms: float) -> void:
+		pitches.append(pitch)
+		rms_values.append(rms)
+		_pitch_sum += pitches[-1]
+		_rms_sum += rms_values[-1]
 
 	func avg_pitch() -> float:
 		if pitches.size() == 0:
 			return 0.0
-		var sum := 0.0
-		for p in pitches:
-			sum += p
-		return sum / float(pitches.size())
+		return _pitch_sum / float(pitches.size())
 
 	func avg_rms() -> float:
 		if rms_values.size() == 0:
 			return 0.0
-		var sum := 0.0
-		for r in rms_values:
-			sum += r
-		return sum / float(rms_values.size())
+		return _rms_sum / float(rms_values.size())
 
 	func duration() -> float:
 		return end_time - start_time
@@ -782,8 +779,7 @@ func _segment_notes() -> Array[_NoteCandidate]:
 			current_note = _NoteCandidate.new()
 			current_note.start_time = time
 			current_note.end_time = time + float(HOP_SIZE) / ANALYSIS_RATE
-			current_note.pitches.append(pitch)
-			current_note.rms_values.append(rms)
+			current_note.append_frame(pitch, rms)
 			drift_count = 0
 		else:
 			# Check if pitch has drifted too far from current note's average.
@@ -798,14 +794,12 @@ func _segment_notes() -> Array[_NoteCandidate]:
 					current_note = _NoteCandidate.new()
 					current_note.start_time = time
 					current_note.end_time = time + float(HOP_SIZE) / ANALYSIS_RATE
-					current_note.pitches.append(pitch)
-					current_note.rms_values.append(rms)
+					current_note.append_frame(pitch, rms)
 					drift_count = 0
 			else:
 				drift_count = 0
 				current_note.end_time = time + float(HOP_SIZE) / ANALYSIS_RATE
-				current_note.pitches.append(pitch)
-				current_note.rms_values.append(rms)
+				current_note.append_frame(pitch, rms)
 
 	# Close last note.
 	if current_note != null and current_note.duration() >= min_note_duration:

@@ -33,6 +33,8 @@ const RING_BASE_32: int = 110
 
 var _beat_buttons: Array = [] # 2D array [ring][beat]
 var _track_controls: Array = [] # Array of Control nodes, one per track, that hold the beat buttons for that track
+var _highlighted_beat: int = -1
+var _scale_tweens: Dictionary[BeatButton, Tween] = {}
 
 # -- Godot lifecycle --
 func _ready() -> void:
@@ -44,6 +46,7 @@ func _ready() -> void:
 	EventBus.template_set.connect(_on_template_set)
 	EventBus.track_sprites_visibility_requested.connect(_set_track_sprites_visible)
 	EventBus.song_loaded.connect(_on_song_loaded)
+	EventBus.transport_resynchronised.connect(_on_transport_resynchronised)
 	play_pause_button.pressed.connect(_on_play_pause_button_toggled)
 
 func _process(_delta: float) -> void:
@@ -53,6 +56,7 @@ func _process(_delta: float) -> void:
 func _on_song_loaded() -> void:
 	if not _beat_buttons.is_empty() and _beat_buttons[0].size() == SongState.beats_per_section:
 		return
+	_reset_scales()
 	for control: Control in _track_controls:
 		beat_ring_pivot_point.remove_child(control)
 		control.queue_free()
@@ -87,6 +91,8 @@ func _set_beat_active(track: int, beat: int, active: bool):
 	var beat_button = _get_beat_button(track, beat)
 	if beat_button:
 		beat_button.set_pressed_no_signal(active)
+		if beat == _highlighted_beat:
+			_update_beat_button(track, beat, active)
 
 func _get_beat_button(track: int, beat: int) -> BeatButton:
 	if track < _beat_buttons.size() and beat < _beat_buttons[track].size():
@@ -169,34 +175,48 @@ func _create_template_sprite(beat: int, track_index: int, beats_amount: int) -> 
 	return sprite
 
 func _update_beat_sprites(current_beat: int) -> void:
-	var beats_amount = SongState.beats_per_section
-
+	if current_beat == _highlighted_beat:
+		return
 	for track in range(_beat_buttons.size()):
-		for beat in range(_beat_buttons[track].size()):
-			#scale up the beat button if it's the current beat and active, and scale back down if it's not
-			var on_beat = (beat == current_beat)
-			var active = SongState.is_beat_active(track, beat)
-			var beatButton: BeatButton = _get_beat_button(track, beat)
+		if _highlighted_beat >= 0:
+			_update_beat_button(track, _highlighted_beat, false)
+		_update_beat_button(track, current_beat, SongState.is_beat_active(track, current_beat))
+	_highlighted_beat = current_beat
 
-			if on_beat and active:
-				beatButton.modulate *= 1.3
-			else:
-				beatButton.modulate = Color.WHITE
-			
-			_tween_beat_button_scale(beatButton, on_beat and active, beats_amount)
+func _update_beat_button(track: int, beat: int, active: bool) -> void:
+	var button: BeatButton = _get_beat_button(track, beat)
+	if button == null:
+		return
+	button.modulate = Color.WHITE * 1.3 if active else Color.WHITE
+	_tween_beat_button_scale(button, active, SongState.beats_per_section)
+
+func _on_transport_resynchronised(_skipped: int, _loops: int) -> void:
+	_reset_scales()
+	_update_beat_sprites(GameState.current_beat)
 
 func _tween_beat_button_scale(beatButton: BeatButton, active: bool, beats_amount: int) -> void:
-		var scale_factor: float = _scale_factor_for_beats_amount(beats_amount)
-		var tween: Tween = get_tree().create_tween()
-
-		var target_scale: Vector2 = Vector2.ONE * scale_factor * GLOBAL_SPRITE_SCALE_FACTOR
-		if active:
-			target_scale *= scale_tween_factor
-		
-		tween.tween_property(beatButton, "scale", target_scale, scale_tween_duration).set_trans(Tween.TRANS_EXPO)
+	var target_scale: Vector2 = Vector2.ONE * _scale_factor_for_beats_amount(beats_amount) * GLOBAL_SPRITE_SCALE_FACTOR
+	if active:
+		target_scale *= scale_tween_factor
+	if _scale_tweens.has(beatButton):
+		_scale_tweens[beatButton].kill()
+		_scale_tweens.erase(beatButton)
+	if beatButton.scale.is_equal_approx(target_scale):
+		return
+	if not beatButton.is_visible_in_tree():
+		beatButton.scale = target_scale
+		return
+	var tween: Tween = beatButton.create_tween()
+	_scale_tweens[beatButton] = tween
+	tween.tween_property(beatButton, "scale", target_scale, scale_tween_duration).set_trans(Tween.TRANS_EXPO)
+	tween.finished.connect(func() -> void: _scale_tweens.erase(beatButton))
 
 # Reset all beat sprite scales (called after a section switch)
 func _reset_scales() -> void:
+	for tween: Tween in _scale_tweens.values():
+		tween.kill()
+	_scale_tweens.clear()
+	_highlighted_beat = -1
 	var beats_amount = SongState.beats_per_section
 	for track in range(_beat_buttons.size()):
 		for beat in range(_beat_buttons[track].size()):
@@ -204,6 +224,7 @@ func _reset_scales() -> void:
 			if sprite:
 				var scale_factor: float = _scale_factor_for_beats_amount(beats_amount)
 				sprite.scale = Vector2.ONE * scale_factor * GLOBAL_SPRITE_SCALE_FACTOR
+				sprite.modulate = Color.WHITE
 
 ## Set the sprites for a specific track visible 
 func _set_track_sprites_visible(track: int, visible: bool) -> void:

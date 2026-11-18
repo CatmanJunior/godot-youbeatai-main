@@ -17,9 +17,10 @@ var microphone: AudioStreamMicrophone
 var audio_effect_record: AudioEffectRecord
 var _recording_started_usec: int = 0
 
-func _ready():
+func _ready() -> void:
 	EventBus.recording_started.connect(_start_recording)
 	EventBus.stop_recording_requested.connect(_stop_recording)
+	EventBus.recording_cancelled.connect(_cancel_recording)
 	microphone = AudioStreamMicrophone.new()
 	audio_stream_player = AudioStreamPlayer.new()
 	add_child(audio_stream_player)
@@ -44,6 +45,10 @@ func _ready():
 
 func _process(_delta: float):
 	GameState.microphone_volume = get_magnitude(0.0, 20000.0)
+
+func _cancel_recording() -> void:
+	if audio_effect_record:
+		audio_effect_record.set_recording_active(false)
 
 # -- Recording -----------------------------------------------------------------
 func _start_recording(_recording_data: RecordingData) -> void:

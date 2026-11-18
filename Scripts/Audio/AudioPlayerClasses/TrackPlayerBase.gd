@@ -109,6 +109,7 @@ func _make_player(bus: String) -> AudioStreamPlayer:
 	p.name = bus
 	p.bus = bus
 	p.max_polyphony = 2
+	p.add_to_group("performance_track_streams")
 	add_child(p)
 	return p
 

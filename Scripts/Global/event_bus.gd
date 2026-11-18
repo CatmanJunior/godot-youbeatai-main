@@ -53,6 +53,17 @@ signal beat_triggered(beat: int)
 signal pre_beat_triggered(beat: int)
 ## Emitted to request seeking the beat clock to a specific beat.
 signal beat_seek_requested(beat: int)
+## Advance section state before notifying players of the recovered position.
+signal transport_loops_skipped(loops: int)
+signal transport_resynchronised(skipped_steps: int, loops: int)
+signal recording_interrupted()
+signal recording_cancelled()
+signal recording_processing_changed(active: bool)
+signal status_message_requested(message: String)
+signal performance_mode_requested(mode: int)
+signal performance_quality_changed(lightweight: bool)
+signal performance_sampling_paused(paused: bool)
+signal performance_sample(metric: StringName, value: float)
 
 # ── Beat State ──
 ## Emitted when a beat sprite is clicked, identifying the track and beat.
@@ -174,6 +185,7 @@ signal set_master_volume_db(value: float)
 signal export_recording_requested(recording_data: ExportRecordingData)
 
 signal export_progress_update(progress: float)
+signal export_failed(message: String)
 
 ## Emitted when saving has completed successfully, carrying the output file path.
 signal saving_completed(path: String)

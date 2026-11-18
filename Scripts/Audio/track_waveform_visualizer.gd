@@ -71,6 +71,10 @@ func _on_section_switched(new_section_data: SectionData) -> void:
 		if i < progress_bars.size() and progress_bars[i]:
 			progress_bars[i].value = 0.0 if track.recorded_audio_stream != null else 1.0
 
+func refresh_current_section() -> void:
+	if not SongState.sections.is_empty():
+		_on_section_switched(SongState.current_section)
+
 func _on_track_selected(track_index: int):
 
 	if track_index == SongState.song_track.SONG_TRACK_INDEX:
@@ -111,10 +115,7 @@ func _on_song_loaded() -> void:
 			track.synth_waveform_visualizer = visualizer
 			if track.recorded_audio_stream is AudioStreamWAV:
 				var wav := track.recorded_audio_stream as AudioStreamWAV
-				var samples := VoiceProcessor.get_samples(wav)
-				var rate := float(wav.mix_rate)
-				var length := wav.get_length()
-				visualizer.update_line(samples, rate, length)
+				visualizer.update_from_wav(wav)
 			visualizer.set_color(track_settings.get_synth_track(i).track_color)
 
 
@@ -147,10 +148,7 @@ func update_waveform(rec_data: RecordingData) -> void:
 	if track_index >= 0 and track_index < waveform_lines.size() and waveform_lines[track_index]:
 		if rec_data == null or rec_data.audio_stream == null:
 			return
-		var samples := VoiceProcessor.get_samples(rec_data.audio_stream)
-		var length := rec_data.audio_stream.get_length()
-		var rate := float(rec_data.audio_stream.mix_rate)
-		rec_data.track_data.synth_waveform_visualizer.update_line(samples, rate, length)
+		rec_data.track_data.synth_waveform_visualizer.update_from_wav(rec_data.audio_stream)
 		waveform_lines[track_index].self_modulate = track_settings.get_synth_track(track_index).track_color
 		waveform_lines[track_index].visible = true  # Reveal the freshly drawn waveform
 

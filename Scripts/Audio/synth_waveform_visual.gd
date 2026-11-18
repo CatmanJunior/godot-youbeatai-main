@@ -23,6 +23,30 @@ func update_line(samples: PackedFloat32Array, rate: float, length: float) -> voi
 	offsets = _compute_circular_offsets(samples, rate, length, points)
 	_apply_offsets(offsets)
 
+func update_from_wav(wav: AudioStreamWAV) -> void:
+	if wav.format != AudioStreamWAV.FORMAT_16_BITS and wav.format != AudioStreamWAV.FORMAT_8_BITS:
+		push_error("SynthWaveform: expected uncompressed PCM.")
+		return
+	var raw: PackedByteArray = wav.data
+	var bytes_per_sample: int = 2 if wav.format == AudioStreamWAV.FORMAT_16_BITS else 1
+	var stride: int = bytes_per_sample * (2 if wav.stereo else 1)
+	var sample_count: int = raw.size() / stride
+	offsets.resize(points)
+	for i: int in range(points):
+		var sample_index: int = mini(int(float(i) / float(points) * sample_count), sample_count - 1)
+		var sum: float = 0.0
+		var count: int = 0
+		for neighbor: int in range(sample_index - 1, sample_index + 3):
+			if neighbor >= 0 and neighbor < sample_count:
+				var offset: int = neighbor * stride
+				sum += raw.decode_s16(offset) / 32768.0 if bytes_per_sample == 2 else float(raw[offset] - 128) / 128.0
+				count += 1
+		var volume: float = sum / count * volume_dist * 0.5 if count > 0 else 0.0
+		var angle: float = -PI / 2.0 + TAU * float(i) / float(points)
+		var radius: float = base_dist - volume if reversed else base_dist + volume
+		offsets[i] = Vector2(cos(angle), sin(angle)) * radius
+	_apply_offsets(offsets)
+
 func set_color(color: Color) -> void:
 	if line:
 		line.self_modulate = color
@@ -63,7 +87,5 @@ func _compute_circular_offsets(samples: PackedFloat32Array, rate: float, length:
 	return result
 
 
-func _apply_offsets(new_offsets) -> void:
-	line.clear_points()
-	for offset in new_offsets:
-		line.add_point(offset)
+func _apply_offsets(new_offsets: PackedVector2Array) -> void:
+	line.points = new_offsets
